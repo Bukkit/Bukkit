@@ -1,7 +1,4 @@
-
 package org.bukkit.event;
-
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 
 /**
  * Represents an event
@@ -321,12 +318,17 @@ public abstract class Event {
          * Called when a LivingEntity is damaged by the environment (for example,
          * falling or lava)
          */
-        ENTITY_DAMAGED_ENVIRONMENT (Category.LIVING_ENTITY),
+        ENTITY_DAMAGEDBY_BLOCK (Category.LIVING_ENTITY),
 
         /**
          * Called when a LivingEntity is damaged by another LivingEntity
          */
-        ENTITY_DAMAGED (Category.LIVING_ENTITY),
+        ENTITY_DAMAGEDBY_ENTITY (Category.LIVING_ENTITY),
+
+        /**
+         * Called when a LivingEntity is damaged with no source.
+         */
+        ENTITY_DAMAGED(Category.LIVING_ENTITY),
 
         /**
          * Called when a LivingEntity dies
@@ -340,12 +342,12 @@ public abstract class Event {
         /** 
          * Called when a vehicle is placed by a player
          */
-        VEHICLE_PLACED (Category.VEHICLE),
+        VEHICLE_CREATE (Category.VEHICLE),
 
         /**
          * Called when a vehicle is damaged by a LivingEntity
          */
-        VEHICLE_DAMAGED (Category.VEHICLE),
+        VEHICLE_DAMAGE (Category.VEHICLE),
 
         /**
          * Called when a vehicle collides with an Entity
@@ -360,12 +362,12 @@ public abstract class Event {
         /**
          * Called when a vehicle is entered by a LivingEntity
          */
-        VEHICLE_ENTERED (Category.VEHICLE),
+        VEHICLE_ENTER (Category.VEHICLE),
 
         /**
          * Called when a vehicle is exited by a LivingEntity
          */
-        VEHICLE_EXITED (Category.VEHICLE),
+        VEHICLE_EXIT (Category.VEHICLE),
 
         /**
          * Called when a vehicle moves position in the world

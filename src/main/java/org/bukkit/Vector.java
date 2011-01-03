@@ -8,6 +8,11 @@ package org.bukkit;
 public class Vector implements Cloneable {
     private static final long serialVersionUID = -2657651106777219169L;
     
+    /**
+     * Threshold for fuzzy equals().
+     */
+    private static final double epsilon = 0.000001;
+    
     protected double x;
     protected double y;
     protected double z;
@@ -85,7 +90,9 @@ public class Vector implements Cloneable {
     /**
      * Gets the magnitude of the vector, defined as sqrt(x^2+y^2+z^2). The value
      * of this method is not cached and uses a costly square-root function, so
-     * do not repeatedly call this method to get the vector's magnitude.
+     * do not repeatedly call this method to get the vector's magnitude. NaN
+     * will be returned if the inner result of the sqrt() function overflows,
+     * which will be caused if the length is too long.
      * 
      * @return the magnitude
      */
@@ -94,15 +101,61 @@ public class Vector implements Cloneable {
     }
     
     /**
+     * Gets the magnitude of the vector squared.
+     * 
+     * @return the magnitude
+     */
+    public double lengthSquared() {
+        return Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2);
+    }
+    
+    /**
      * Get the distance between this vector and another.  The value
      * of this method is not cached and uses a costly square-root function, so
-     * do not repeatedly call this method to get the vector's magnitude.
+     * do not repeatedly call this method to get the vector's magnitude. NaN
+     * will be returned if the inner result of the sqrt() function overflows,
+     * which will be caused if the distance is too long.
      * 
      * @return the distance
      */
     public double distance(Vector o) {
         return Math.sqrt(Math.pow(x - o.x, 2) + Math.pow(y - o.y, 2)
                 + Math.pow(z - o.z, 2));
+    }
+    
+    /**
+     * Get the squared distance between this vector and another.
+     * 
+     * @return the distance
+     */
+    public double distanceSquared(Vector o) {
+        return Math.pow(x - o.x, 2) + Math.pow(y - o.y, 2)
+                + Math.pow(z - o.z, 2);
+    }
+    
+    /**
+     * Gets the angle between this vector and another in radians.
+     * 
+     * @param other
+     * @return angle in radians
+     */
+    public float angle(Vector other) {
+        double dot = dot(other) / (length() * other.length());
+        return (float)Math.acos(dot);
+    }
+    
+    /**
+     * Sets this vector to the midpoint between this vector and another.
+     * You may want to use Vector.clone() to keep the old vector unchanged.
+     * 
+     * @param other
+     * @return this same vector (now a midpoint)
+     */
+    public Vector midpoint(Vector other) {
+        x = (x + other.x) / 2;
+        y = (y + other.y) / 2;
+        z = (z + other.z) / 2;
+        return this;
     }
     
     /**
@@ -151,7 +204,7 @@ public class Vector implements Cloneable {
      * @param other
      * @return dot product
      */
-    public double getDotProduct(Vector other) {
+    public double dot(Vector other) {
         return x * other.x + y * other.y + z * other.z;
     }
     
@@ -181,7 +234,7 @@ public class Vector implements Cloneable {
      * 
      * @return the same vector
      */
-    public Vector unitVector() {
+    public Vector normalize() {
         double length = length();
         
         x /= length;
@@ -192,25 +245,15 @@ public class Vector implements Cloneable {
     }
     
     /**
-     * Gets a unit vector of this vector. This vector will not be chagned.
-     * 
-     * @return a brand new vector
-     */
-    public Vector getUnitVector() {
-        double length = length();
-        return new Vector(x / length, y / length, z / length);
-    }
-    
-    /**
-     * Returns whether this vector is in a cuboid. The minimum and maximum
-     * vectors given must be truly the minimum and maximum X, Y and Z
-     * components.
+     * Returns whether this vector is in an axis-aligned bounding box.
+     * The minimum and maximum vectors given must be truly the minimum and
+     * maximum X, Y and Z components.
      * 
      * @param min
      * @param max
-     * @return whether this vector is in the cuboid
+     * @return whether this vector is in the AABB
      */
-    public boolean isInCuboid(Vector min, Vector max) {
+    public boolean isInAABB(Vector min, Vector max) {
         return x >= min.x && x <= max.x
                 && y >= min.y && y <= max.y
                 && z >= min.z && z <= max.z;
@@ -224,19 +267,52 @@ public class Vector implements Cloneable {
      * @return whether this vector is in the sphere
      */
     public boolean isInSphere(Vector origin, double radius) {
-        return origin.clone().subtract(this).length() <= radius;
+        return (Math.pow(origin.x - x, 2)
+                + Math.pow(origin.y - y, 2)
+                + Math.pow(origin.z - z, 2))
+                <= Math.pow(radius, 2);
     }
     
     public double getX() {
         return x;
     }
     
+    /**
+     * Gets the floored value of the X component, indicating the block that
+     * this vector is contained with.
+     * 
+     * @return block X
+     */
+    public int getBlockX() {
+        return (int)Math.floor(x);
+    }
+    
     public double getY() {
         return y;
+    }
+
+    /**
+     * Gets the floored value of the Y component, indicating the block that
+     * this vector is contained with.
+     * 
+     * @return block y
+     */
+    public int getBlockY() {
+        return (int)Math.floor(y);
     }
     
     public double getZ() {
         return z;
+    }
+
+    /**
+     * Gets the floored value of the Z component, indicating the block that
+     * this vector is contained with.
+     * 
+     * @return block z
+     */
+    public int getBlockZ() {
+        return (int)Math.floor(z);
     }
     
     public Vector setX(int x) {
@@ -284,6 +360,10 @@ public class Vector implements Cloneable {
         return this;
     }
 
+    /**
+     * Checks to see if two objects are equal. Only two Vectors can ever
+     * return true
+     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Vector)) {
@@ -292,9 +372,9 @@ public class Vector implements Cloneable {
         
         Vector other = (Vector)obj;
         
-        return Double.doubleToLongBits(x) == Double.doubleToLongBits(other.x)
-            && Double.doubleToLongBits(y) == Double.doubleToLongBits(other.y)
-            && Double.doubleToLongBits(z) == Double.doubleToLongBits(other.z);
+        return Math.abs(x - other.x) < epsilon
+                && Math.abs(y - other.y) < epsilon
+                && Math.abs(z - other.z) < epsilon;
     }
 
     @Override
@@ -320,6 +400,15 @@ public class Vector implements Cloneable {
     
     public Location toLocation(World world, float yaw, float pitch) {
         return new Location(world, x, y, z, yaw, pitch);
+    }
+    
+    /**
+     * Get the threshold used for equals().
+     * 
+     * @return
+     */
+    public static double getEpsilon() {
+        return epsilon;
     }
     
     /**
