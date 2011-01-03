@@ -27,4 +27,13 @@ public interface World {
      */
     public ArrowEntity spawnArrow(Location loc, Vector velocity,
             float speed, float spread);
+    
+    /**
+     * Spawns a dungeon. Dungeons can only be spawned in some
+     * appropriate areas.
+     * 
+     * @param loc
+     * @return whether the dungeon was created
+     */
+    public boolean spawnDungeon(Location loc);
 }
