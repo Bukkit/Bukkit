@@ -8,13 +8,41 @@ package org.bukkit;
  * may change with the addition of a functional Nether world
  */
 public interface World {
+    /**
+     * Gets the block at the given location
+     *
+     * This block will always represent the latest state
+     *
+     * @param x X-coordinate of the block
+     * @param y Y-coordinate of the block
+     * @param z Z-coordinate of the block
+     * @return Block at the given location
+     */
     public Block getBlockAt(int x, int y, int z);
 
+    /**
+     * Gets the chunk at the given location
+     *
+     * @param x X-coordinate of the chunk
+     * @param z Z-coordinate of the chunk
+     * @return Chunk at the given location
+     */
     public Chunk getChunkAt(int x, int z);
 
+    /**
+     * Gets the chunk which contains the given block
+     *
+     * @param block Block to get the parent chunk from
+     * @return Chunk that contains the given block
+     */
     public Chunk getChunkAt(Block block);
 
-    public boolean isChunkLoaded();
+    /**
+     * Checks if the specified chunk is loaded
+     *
+     * @return true if the chunk is loaded, otherwise false
+     */
+    public boolean isChunkLoaded(Chunk chunk);
     
     /**
      * Spawns an arrow.
@@ -27,4 +55,20 @@ public interface World {
      */
     public ArrowEntity spawnArrow(Location loc, Vector velocity,
             float speed, float spread);
+    
+    /**
+     * Spawns a tree at a location.
+     * 
+     * @param loc
+     * @return whether the tree was created
+     */
+    public boolean generateTree(Location loc);
+    
+    /**
+     * Spawns a big tree at a location.
+     * 
+     * @param loc
+     * @return whether the tree was created
+     */
+    public boolean generateBigTree(Location loc);
 }

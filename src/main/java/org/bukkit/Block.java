@@ -42,6 +42,13 @@ public interface Block {
      * @return block type-ID
      */
     int getTypeID();
+    
+    /**
+     * Gets the light level between 0-15
+     * 
+     * @return light level
+     */
+    byte getLightLevel();
 
     /**
      * Gets the world which contains this Block
