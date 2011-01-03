@@ -35,5 +35,5 @@ public interface World {
      * @param loc
      * @return whether the dungeon was created
      */
-    public boolean spawnDungeon(Location loc);
+    public boolean generateDungeon(Location loc);
 }
