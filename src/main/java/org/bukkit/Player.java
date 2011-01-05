@@ -21,12 +21,12 @@ public interface Player extends HumanEntity {
     public void sendMessage(String message);
     
     /**
-     * Deletes a player, doesn't disconnect them, essentially makes them invisible
+     * Deletes player from this objects view, doesn't disconnect them, essentially makes them invisible
      */
-    public void delete();
+    public void delete(Player player);
     
     /**
-     * Spawns a player, if they were not previously deleted will create a frozen clone of the player
+     * Spawns player in this objects view, if they were not previously deleted will create a frozen clone of the player
      */
-    public void spawn();
+    public void spawn(Player player);
 }
