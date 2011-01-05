@@ -19,4 +19,14 @@ public interface Player extends HumanEntity {
      * @param message Message to be displayed
      */
     public void sendMessage(String message);
+    
+    /**
+     * Deletes a player, doesn't disconnect them, essentially makes them invisible
+     */
+    public void delete();
+    
+    /**
+     * Spawns a player, if they were not previously deleted will create a frozen clone of the player
+     */
+    public void spawn();
 }
