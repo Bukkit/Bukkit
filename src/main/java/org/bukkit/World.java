@@ -27,6 +27,14 @@ public interface World {
      * @return Y-coordinate of the highest non-air block
      */
     public int getHighestBlockYAt(int x, int z);
+    
+    /**
+     * Gets the exact coordinates of the spawn point.
+     * It's recommended to use getHighestBlockYAt() in conjunction.
+     *
+     * @return Location of the spawn point
+     */
+    public Location getSpawnCoords();
 
     /**
      * Gets the chunk at the given location
