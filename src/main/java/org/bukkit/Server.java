@@ -51,4 +51,19 @@ public interface Server {
      * @return An array of worlds
      */
     public World[] getWorlds();
+    
+    /**
+     * Displays a message to all users in chat and in the console
+     *
+     * @param Message to print
+     */
+    public void displayMessage(String message);
+    
+    /**
+     * Notifies all operators of an action and prints it to console
+     *
+     * @param Name of player who performed action
+     * @param Message to print
+     */
+    public void notifyOps(String name, String action);
 }
