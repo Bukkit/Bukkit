@@ -11,7 +11,7 @@ public interface Player extends HumanEntity {
      *
      * @return true if they are an operator
      */
-    public boolean isOperator();
+    public boolean isOp();
 
     /**
      * Sends this player a message, which will be displayed in their chat
