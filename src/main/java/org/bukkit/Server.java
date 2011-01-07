@@ -66,4 +66,18 @@ public interface Server {
      * @param Message to print
      */
     public void notifyOps(String name, String action);
+
+    /**
+     * Gets the in-game time on the server (in hours*1000)
+     *
+     * @return The current time in hours*1000
+     */
+    public long getTime();
+
+    /**
+     * Sets the in-game time on the server (in hours*1000)
+     *
+     * @param time The time to set the in-game time to (in hours*1000)
+     */
+    public void setTime(long time);
 }
