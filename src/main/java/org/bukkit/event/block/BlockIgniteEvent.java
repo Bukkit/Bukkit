@@ -23,8 +23,9 @@ public class BlockIgniteEvent extends BlockEvent implements Cancellable {
     public BlockIgniteEvent(Block theBlock, IgniteCause cause, Player thePlayer) {
         super(Event.Type.BLOCK_IGNITE, theBlock);
         this.cause = cause;
-        this.theBlock = block;
+        this.theBlock = theBlock;
         this.thePlayer = thePlayer;
+        this.cancel = false;
     }
 
     public BlockIgniteEvent(Event.Type type, Block theBlock, IgniteCause cause, Player thePlayer) {
@@ -32,7 +33,7 @@ public class BlockIgniteEvent extends BlockEvent implements Cancellable {
         this.cause = cause;
         this.theBlock = theBlock;
         this.thePlayer = thePlayer;
-        // TODO Auto-generated constructor stub
+        this.cancel = false;
     }
 
     /**
