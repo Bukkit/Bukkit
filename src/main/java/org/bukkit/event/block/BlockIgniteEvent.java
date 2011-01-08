@@ -18,18 +18,10 @@ public class BlockIgniteEvent extends BlockEvent implements Cancellable {
     private Block theBlock;
 
     /**
-     * @param type
+     * @param Block, IgniteCause, Player
      */
     public BlockIgniteEvent(Block theBlock, IgniteCause cause, Player thePlayer) {
         super(Event.Type.BLOCK_IGNITE, theBlock);
-        this.cause = cause;
-        this.theBlock = theBlock;
-        this.thePlayer = thePlayer;
-        this.cancel = false;
-    }
-
-    public BlockIgniteEvent(Event.Type type, Block theBlock, IgniteCause cause, Player thePlayer) {
-        super(type, theBlock);
         this.cause = cause;
         this.theBlock = theBlock;
         this.thePlayer = thePlayer;
