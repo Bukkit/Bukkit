@@ -25,7 +25,6 @@ public class BlockIgniteEvent extends BlockEvent implements Cancellable {
         this.cause = cause;
         this.theBlock = block;
         this.thePlayer = thePlayer;
-        // TODO Auto-generated constructor stub
     }
 
     public BlockIgniteEvent(Event.Type type, Block theBlock, IgniteCause cause, Player thePlayer) {
