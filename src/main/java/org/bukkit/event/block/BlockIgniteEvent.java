@@ -16,6 +16,7 @@ public class BlockIgniteEvent extends BlockEvent implements Cancellable {
     private boolean cancel;
     private Player thePlayer;
     private Block theBlock;
+<<<<<<< HEAD
 
     /**
      * @param Block, IgniteCause, Player
@@ -26,6 +27,91 @@ public class BlockIgniteEvent extends BlockEvent implements Cancellable {
         this.theBlock = theBlock;
         this.thePlayer = thePlayer;
         this.cancel = false;
+    }
+
+    /**
+     * Gets the cancellation state of this event. A cancelled event will not
+     * be executed in the server, but will still pass to other plugins.
+     *
+     * If an ignite event is cancelled, the block will not be ignited.
+     * This will not fire an event.
+     *
+     * @return true if this event is cancelled
+     */
+    public boolean isCancelled() {
+        return cancel;
+    }
+
+    /**
+     * Sets the cancellation state of this event. A cancelled event will not
+     * be executed in the server, but will still pass to other plugins.
+     *
+     * If an ignite event is cancelled, the block will not be ignited.
+     * This will not fire an event.
+     *
+     * @param cancel true if you wish to cancel this event
+     */
+    public void setCancelled(boolean cancel) {
+        this.cancel = cancel;
+    }
+
+    /**
+     * Gets the cause of block ignite.
+     * @return An IgniteCause value detailing the cause of block ignition.
+     */
+    public IgniteCause getCause()
+    {
+        return cause;
+    }
+=======
+>>>>>>> 3096975832ce3b3e0c76f1d09cf346028264a908
+
+    /**
+     * Gets the player who ignited this block
+     *
+     * @return Player who placed the block, if not ignited by player returns null.
+     */
+<<<<<<< HEAD
+    public Player getPlayer() {
+        return thePlayer;
+    }
+
+    /**
+     * An enum to specify the cause of the ignite
+     */
+    public enum IgniteCause {
+        /**
+         * Block ignition caused by lava.
+         */
+        LAVA,
+        /**
+         * Block ignition caused by player using flint-and-steel.
+         */
+        FLINT_AND_STEEL,
+        /**
+         * Block ignition caused by dynamic spreading of fire.
+         */
+        SPREAD,
+        /**
+         * Block ignition caused by VERY SLOW dynamic spreading of fire.
+         */
+        SLOW_SPREAD
+
+=======
+    public BlockIgniteEvent(Block theBlock, IgniteCause cause, Player thePlayer) {
+        super(Event.Type.BLOCK_IGNITE, theBlock);
+        this.cause = cause;
+        this.theBlock = block;
+        this.thePlayer = thePlayer;
+    }
+
+    public BlockIgniteEvent(Event.Type type, Block theBlock, IgniteCause cause, Player thePlayer) {
+        super(type, theBlock);
+        this.cause = cause;
+        this.theBlock = theBlock;
+        this.thePlayer = thePlayer;
+        // TODO Auto-generated constructor stub
+>>>>>>> 3096975832ce3b3e0c76f1d09cf346028264a908
     }
 
     /**
