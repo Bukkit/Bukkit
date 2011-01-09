@@ -1,6 +1,7 @@
 
 package org.bukkit;
 
+import java.util.List;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.time.Scheduler;
 
@@ -38,6 +39,18 @@ public interface Server {
      * @return Player if it was found, otherwise null
      */
     public Player getPlayer(String name);
+
+    /**
+     * Attempts to match any players with the given name, and returns a list
+     * of all possibly matches
+     *
+     * This list is not sorted in any particular order. If an exact match is found,
+     * the returned list will only contain a single result.
+     *
+     * @param name Name to match
+     * @return List of all possible players
+     */
+    public List<Player> matchPlayer(String name);
 
     /**
      * Gets the PluginManager for interfacing with plugins

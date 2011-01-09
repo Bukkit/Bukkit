@@ -169,7 +169,12 @@ public abstract class Event {
          * Called when a player undergoes an animation, such as arm swinging
          */
         PLAYER_ANIMATION (Category.PLAYER),
-
+        
+        /**
+         * Called when a player uses an item
+         */
+        PLAYER_ITEM (Category.PLAYER),
+        
         /**
          * Called when a player teleports from one position to another
          */
@@ -185,7 +190,8 @@ public abstract class Event {
         BLOCK_DAMAGED (Category.BLOCK),
 
         /**
-         * Called when a block is undergoing a check on whether it can be built
+         * Called when a block is undergoing a universe physics
+         * check on whether it can be built
          *
          * For example, cacti cannot be built on grass unless overridden here
          */
@@ -210,12 +216,22 @@ public abstract class Event {
          * type
          */
         BLOCK_PHYSICS (Category.BLOCK),
-
+        
+        /**
+         * Called when a player is attempting to place a block
+         */
+        BLOCK_RIGHTCLICKED (Category.BLOCK),
+        
         /**
          * Called when a player is attempting to place a block
          */
         BLOCK_PLACED (Category.BLOCK),
 
+        /**
+         * Called when an entity interacts with a block (lever, door, pressure plate, chest, furnace)
+         */
+        BLOCK_INTERACT (Category.BLOCK),
+        
         /**
          * Called when leaves are decaying naturally
          */
