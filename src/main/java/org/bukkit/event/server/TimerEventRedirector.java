@@ -11,20 +11,24 @@ package org.bukkit.event.server;
  */
  
 import org.bukkit.Timer;
+import org.bukkit.event.Event;
 import org.bukkit.event.server.TimerEvent;
-import java.util.TreeMap;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.event.Event.Priority;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeSet;
+import java.util.HashSet;
 import java.util.Collection;
 
 public class TimerEventRedirector extends ServerListener {
-	private class TimerInfo extends TreeSet<Callback> {
+	private class TimerInfo extends HashSet<Callback> {
 		public TimerInfo() {
 			super();
 		}
 	}
 	
-	private TreeMap<Timer, TimerInfo> m_registered; 
+	private HashMap<Timer, TimerInfo> m_registered; 
 	
 	/**
 	 * Look up timer registery information, possibly creating a new
@@ -52,7 +56,7 @@ public class TimerEventRedirector extends ServerListener {
 	/* Constructors */
 	
 	public TimerEventRedirector() {
-		m_registered = new TreeMap<Timer, TimerInfo>();
+		m_registered = new HashMap<Timer, TimerInfo>();
 	}
 	
 	/* Inherited from ServerListener */
@@ -129,7 +133,7 @@ public class TimerEventRedirector extends ServerListener {
 	 */
 	public java.util.Collection<Timer>  getAssociatedTimers(
 		Callback callback) {
-		TreeSet ret = new TreeSet<Timer>();
+		HashSet ret = new HashSet<Timer>();
 		
 		/* Build the timer set */
 		for (Map.Entry<Timer, TimerInfo> e : 
@@ -139,5 +143,26 @@ public class TimerEventRedirector extends ServerListener {
 		}
 			
 		return ret;
+	}
+	
+	/**
+	 * Set up event hooks for this TimerEventRedirector
+	 */
+	public void performRegistration(PluginManager manager, 
+		Plugin plugin, Priority onExpire, Priority onUnregister) {
+		manager.registerEvent(Event.Type.TIMER_EXPIRED, this,
+			onExpire, plugin);
+		manager.registerEvent(Event.Type.TIMER_UNREGISTERED, 
+			this, onUnregister, plugin);
+	}
+	
+	/**
+	 * Synonymous with performRegistration(manager, plugin,
+	 * Priority.Normal, Priority.Low)
+	 */
+	public void performRegistration(PluginManager manager,
+		Plugin plugin) {
+		performRegistration(manager, plugin, Priority.Normal, 
+			Priority.Low);
 	}
 };

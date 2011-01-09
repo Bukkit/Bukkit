@@ -91,6 +91,16 @@ public class MinecraftTime implements Comparable {
 	/**
 	 * Named constructor that constructs a Minecraft time relative to the start
 	 * of the closest day.
+	 *
+	 * This method divides the curTime by the number of ticks in a day
+	 * and rounds the result down. Offset is then added to this value
+	 * to generate the final MinecraftTime.
+	 *
+	 * @note If you want a MinecraftTime relative to the day after
+	 * the time calculated here, use relToNextDay()
+	 *
+	 * @see relToNextDay
+	 * @see relToHour
 	 */
 	public static MinecraftTime relToDay(long curTime, long offset) {
 		/* See if we were given a valid time */
@@ -111,8 +121,56 @@ public class MinecraftTime implements Comparable {
 	}
 	
 	/**
+	 * Named constructor that constructs a Minecraft time relative to the start
+	 * of the day after the closest day.
+	 *
+	 * This method is like relToDay(), except that is counts one day
+	 * ahead. It can be useful when setting times that you do not want
+	 * to expire immediately after being set.
+	 *
+	 * @note If you want a MinecraftTime relative to the day before
+	 * the time calculated here, use relToDay()
+	 *
+	 * @see relToDay
+	 * @see relToHour
+	 */
+	public static MinecraftTime relToNextDay(long curTime, 
+		long offset) {
+		/* See if we were given a valid time */
+		assertTime(curTime);
+		int t = Metric.DAY.ticks();
+		
+		/* Find closest day */
+		long effectiveTime = curTime/t;
+		if (curTime % t > 0)
+			effectiveTime++;
+		
+		effectiveTime *= t;
+		
+		return new MinecraftTime(effectiveTime + offset);
+	}
+	
+	/**
+	 * Named constructor that constructs a Minecraft time relative to the start
+	 * of the day after the closest day.
+	 */
+	public static MinecraftTime relToNextDay(Server server, 
+		long offset) {
+		return relToNextDay(server.getTime(), offset);
+	}	
+	
+	/**
 	 * Named constructor that instantiates a MinecraftTime relative to the start
 	 * of the closest hour.
+	This method divides the curTime by the number of ticks in an hour
+	 * and rounds the result down. Offset is then added to this value
+	 * to generate the final MinecraftTime.
+	 *
+	 * @note If you want a MinecraftTime relative to the day after
+	 * the time calculated here, use relToNextHour()
+	 *
+	 * @see relToNextHour
+	 * @see relToDay
 	 */
 	public static MinecraftTime relToHour(long curTime, long offset) {
 		/* See if we were given a valid time */
@@ -130,6 +188,45 @@ public class MinecraftTime implements Comparable {
 	 */
 	public static MinecraftTime relToHour(Server server, long offset) {
 		return relToHour(server.getTime(), offset);
+	}
+	
+	/**
+	 * Named constructor that constructs a Minecraft time relative to the start
+	 * of start of hour the following the current one.
+	 *
+	 * This method is like relToHour(), except that is counts one hour
+	 * ahead. It can be useful when setting times that you do not want
+	 * to expire immediately after being set.
+	 *
+	 * @note If you want a MinecraftTime relative to the hour before
+	 * the time calculated here, use relToHour()
+	 *
+	 * @see relToDay
+	 * @see relToDay
+	 */
+	public static MinecraftTime relToNextHour(long curTime, 
+		long offset) {
+		/* See if we were given a valid time */
+		assertTime(curTime);
+		int t = Metric.HOUR.ticks();
+		
+		/* Find closest day */
+		long effectiveTime = curTime/t;
+		if (curTime % t > 0)
+			effectiveTime++;
+		
+		effectiveTime *= t;
+		
+		return new MinecraftTime(effectiveTime + offset);
+	}
+	
+	/**
+	 * Named constructor that instantiates a MinecraftTime relative to
+	 * the start of the hour following the current one.
+	 */
+	public static MinecraftTime relToNextHour(Server server, 
+		long offset) {
+		return relToNextHour(server.getTime(), offset);
 	}
 	
 	/**
