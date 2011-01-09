@@ -1,5 +1,7 @@
 package org.bukkit.time;
 
+import org.bukkit.Server;
+
 /**
  * An org.bukkit.Timer that operates with continuous-oscillation semantics.
  * @author thylordroot
@@ -41,6 +43,58 @@ public class AstableTimer extends AbstractTimer {
 		super(target);
 		assertPeriod(period);
 		m_period = period;
+	}
+	
+	/**
+	 * Instantiate a new Monostable timer with a target equal to the current
+	 * server time + offset.
+	 */
+	public AstableTimer(Server server, long offset, int period) {
+		super(server.getTime() + offset);
+		assertPeriod(period);
+		m_period = period;
+	}
+	
+	/**
+	 * Instantiate a new Monostable timer with a target equal to the current
+	 * server time.
+	 */
+	public AstableTimer(Server server, int period) {
+		super(server.getTime());
+		assertPeriod(period);
+		m_period = period;
+	}
+	
+	/**
+	 * Named constructor that constructs a AstableTimer relative to the start
+	 * of the closest day.
+	 */
+	public static AstableTimer relToDay(long time, long offset, int period) {
+		return new AstableTimer(MinecraftTime.relToDay(time, offset), 
+			period);
+	}
+	
+	/**
+	 * Named constructor that constructs a AstableTimer relative to the start
+	 * of the closest day.
+	 */
+	public static AstableTimer relToDay(Server server, long offset, int period) {
+		return new AstableTimer(MinecraftTime.relToDay(server, offset), 
+			period);
+	}
+	
+	/**
+	 * Named constructor that constructs an AstableTimer relative to the start
+	 * of the closest day.
+	 */
+	public static AstableTimer relToHour(long time, long offset, int period) {
+		return new AstableTimer(MinecraftTime.relToHour(time, offset), 
+			period);
+	}
+	
+	public static AstableTimer relToHour(Server server, long offset, int period) {
+		return new AstableTimer(MinecraftTime.relToHour(server, 
+			offset), period);
 	}
 	
 	/**

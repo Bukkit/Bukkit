@@ -13,27 +13,23 @@ public class TimerEvent extends ServerEvent {
 	private long m_fireTime;
 	private Timer m_timer;
 	
-	TimerEvent(Type type, Timer timer, long fireTime) {
+	public TimerEvent(Type type, Timer timer, long fireTime) {
 		super(type);
 		m_fireTime = fireTime;
 		m_timer = timer;
 	}
 	
-	/* Todo: convenience constructor which uses the current Minecraft time
-	 * reported by the server.
-	 */
-	
 	/**
 	 * @brief Obtain the time that the TimerEvent was actually fired
 	 */
-	public long fireTime() {
+	public long getFireTime() {
 		return m_fireTime;
 	}
 	
 	/**
 	 * @brief Obtain the Timer associated with this TimerEvent.
 	 */
-	public Timer timer() {
+	public Timer getTimer() {
 		return m_timer;
 	}
 }

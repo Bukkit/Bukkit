@@ -1,5 +1,7 @@
 package org.bukkit.time;
 
+import org.bukkit.Server;
+
 /**
  * An org.bukkit.Timer that operates with one-shot semantics.
  *
@@ -28,6 +30,41 @@ public class MonostableTimer extends AbstractTimer {
 	 * Signal the scheduler that this timer is invalid
 	 */
 	public boolean update(long time) {
-		return time < target();
+		return !hasExpired(time);
+	}
+	
+	/**
+	 * Named constructor that constructs a MonostableTimer relative 
+	 * to the start of the closest day.
+	 */
+	public static MonostableTimer relToDay(long time, long offset) {
+		return new MonostableTimer(MinecraftTime.relToDay(time, 
+			offset));
+	}
+	
+	
+	/**
+	 * Named constructor that constructs a MonostableTimer relative 
+	 * to the start of the closest day.
+	 */
+	public static MonostableTimer relToDay(Server server, 
+		long offset) {
+		return new MonostableTimer(
+			MinecraftTime.relToDay(server, offset));
+	}
+	
+	/**
+	 * Named constructor that constructs an MonostableTimer relative to the start
+	 * of the closest day.
+	 */
+	public static MonostableTimer relToHour(long time, long offset) {
+		return new MonostableTimer(MinecraftTime.relToHour(time, 
+			offset));
+	}
+	
+	public static MonostableTimer relToHour(Server server, 
+		long offset) {
+		return new MonostableTimer(MinecraftTime.relToHour(
+			server, offset));
 	}
 };

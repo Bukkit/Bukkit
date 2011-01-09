@@ -1,5 +1,7 @@
 package org.bukkit.time;
 
+import org.bukkit.Server;
+
 /**
  * A thin wrapper around a Minecraft Timestamp.
  *
@@ -11,6 +13,9 @@ package org.bukkit.time;
  * event, herein referred to as "Genesis", when the Minecraft clock started ticking.
  */
 public class MinecraftTime implements Comparable {
+	/**
+	 * Constants expressing units of time used by Minecraft.
+	 */
 	public static enum Metric {
 		/** The duration of a single Minecraft day. */
 		DAY(24000),
@@ -30,6 +35,10 @@ public class MinecraftTime implements Comparable {
 		}
 	};
 	
+	/**
+	 * Constants expressing the exact time (in ticks) of certain events in 
+	 * Minecraft.
+	 */
 	public static enum DailyEvent {
 		/** The relative time when noon occurs in standard Minecraft time */
 		NOON(6000),
@@ -65,14 +74,63 @@ public class MinecraftTime implements Comparable {
 	}
 	
 	/**
-	 * @brief Instantiate a new time value from absolute time
-	 *
-	 * 
+	 * Instantiate a new time value from absolute time
 	 */
 	public MinecraftTime(long day, int hour, int ticks) {
 		assertTime(day, hour, ticks);
 		m_time = day * Metric.DAY.ticks() + hour * Metric.HOUR.ticks() + ticks; 
 	};
+	
+	/**
+	 * Instantiate a new time value by using the Server's local time
+	 */
+	public MinecraftTime(Server server) {
+		m_time = server.getTime();
+	}
+	
+	/**
+	 * Named constructor that constructs a Minecraft time relative to the start
+	 * of the closest day.
+	 */
+	public static MinecraftTime relToDay(long curTime, long offset) {
+		/* See if we were given a valid time */
+		assertTime(curTime);
+		
+		/* Find closest day */
+		curTime = curTime/Metric.DAY.ticks() * Metric.DAY.ticks();
+		
+		return new MinecraftTime(curTime + offset);
+	}
+	
+	/**
+	 * Named constructor that constructs a Minecraft time relative to the start
+	 * of current day.
+	 */
+	public static MinecraftTime relToDay(Server server, long offset) {
+		return relToDay(server.getTime(), offset);
+	}
+	
+	/**
+	 * Named constructor that instantiates a MinecraftTime relative to the start
+	 * of the closest hour.
+	 */
+	public static MinecraftTime relToHour(long curTime, long offset) {
+		/* See if we were given a valid time */
+		assertTime(curTime);
+		
+		/* Find closest day */
+		curTime = curTime/Metric.HOUR.ticks() * Metric.HOUR.ticks();
+		
+		return new MinecraftTime(curTime + offset);
+	}
+	
+	/**
+	 * Named constructor that instantiates a MinecraftTime relative to the start
+	 * of the current hour.
+	 */
+	public static MinecraftTime relToHour(Server server, long offset) {
+		return relToHour(server.getTime(), offset);
+	}
 	
 	/**
 	 * Assert the correctness of a timestamp
@@ -148,15 +206,6 @@ public class MinecraftTime implements Comparable {
 	 */
 	public int ticksOfHour() {
 		return (int) (m_time % Metric.HOUR.ticks());
-	}
-	
-	/**
-	 * @brief Obtain a timestamp for the current time
-	 *
-	 * @todo Actually use the server time
-	 */
-	public static MinecraftTime now() {
-		return new MinecraftTime(0);
 	}
 	
 	/**
