@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityDamagedByEntityEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.PluginEvent;
+import org.bukkit.event.server.TimerEvent;
 import org.bukkit.event.server.ServerListener;
 import org.bukkit.event.vehicle.*;
 import org.bukkit.event.world.ChunkLoadedEvent;
@@ -157,6 +158,12 @@ public final class JavaPluginLoader implements PluginLoader {
                     break;
                 case PLUGIN_DISABLE:
                     trueListener.onPluginDisabled((PluginEvent)event);
+                    break;
+                case TIMER_EXPIRE:
+                    trueListener.onTimerExpired((TimerEvent)event);
+                    break;
+                case TIMER_UNREGISTER:
+                    trueListener.onTimerUnregistered((TimerEvent)event);
                     break;
             }
         } else if(listener instanceof WorldListener) {

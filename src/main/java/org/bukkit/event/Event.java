@@ -347,6 +347,21 @@ public abstract class Event {
          * @see org.bukkit.event.server.PluginEvent
          */
         PLUGIN_DISABLE (Category.SERVER),
+        
+	/**
+         * Called when a timer expires
+         * 
+         * @see org.bukkit.event.server.TimerEvent
+         */
+        TIMER_EXPIRE (Category.SERVER),
+
+        /**
+         * Called when a timer is unscheduled
+         * 
+         * @see org.bukkit.event.server.TimerEvent
+         */
+        TIMER_UNREGISTER (Category.SERVER),
+
 
         /**
          * WORLD EVENTS

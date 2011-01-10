@@ -3,6 +3,7 @@ package org.bukkit;
 
 import java.util.List;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.time.Scheduler;
 
 /**
  * Represents a server implementation
@@ -71,11 +72,16 @@ public interface Server {
      * @return The current time in hours*1000
      */
     public long getTime();
-
+    
     /**
      * Sets the in-game time on the server (in hours*1000)
      *
      * @param time The time to set the in-game time to (in hours*1000)
      */
     public void setTime(long time);
+    
+    /**
+     * Get the scheduler associated with this Server
+     */
+    public Scheduler getScheduler();
 }
