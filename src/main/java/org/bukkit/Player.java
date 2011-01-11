@@ -1,6 +1,8 @@
 
 package org.bukkit;
 
+import java.net.InetSocketAddress;
+
 /**
  * Represents a player, connected or not
  * 
@@ -49,4 +51,10 @@ public interface Player extends HumanEntity {
      * @return String containing a color formatted name to display for this player
      */
     public void setDisplayName(String name);
+    
+    /**
+     * Gets the socket address of this player
+     * @return the player's address
+     */
+    public InetSocketAddress getAddress();
 }
