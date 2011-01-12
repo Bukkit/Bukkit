@@ -8,6 +8,9 @@ import org.bukkit.event.Listener;
 public class EntityListener implements Listener {
     public EntityListener() {
     }
+    
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+    }
 
     public void onEntityDamagedByBlock(EntityDamagedByBlockEvent event) {
     }

@@ -188,6 +188,9 @@ public final class JavaPluginLoader implements PluginLoader {
             EntityListener trueListener = (EntityListener) listener;
             switch(event.getType())
             {
+                case CREATURE_SPAWN:
+                    trueListener.onCreatureSpawn((CreatureSpawnEvent)event);
+                    break;
                 case ENTITY_DAMAGEDBY_BLOCK:
                     trueListener.onEntityDamagedByBlock((EntityDamagedByBlockEvent)event);
                     break;
