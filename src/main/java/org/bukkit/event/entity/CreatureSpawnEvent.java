@@ -73,12 +73,24 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
     public enum CreatureType
     {
         /**
-         * A harmless creature such as a sheep or cow.
+         * The general value for a harmless mob.
+         * Only used when a more specific type cannot be resolved.
          */
         ANIMAL,
         /**
-         * A hostile creature such as a zombie or spider.
+         * The general value for a hostile mob.
+         * Only used when a more specific type cannot be resolved.
          */
         MONSTER,
+        CHICKEN,
+        COW,
+        CREEPER,
+        GHAST,
+        PIG,
+        PIG_ZOMBIE,
+        SHEEP,
+        SKELETON,
+        SPIDER,
+        ZOMBIE
     }
 }
