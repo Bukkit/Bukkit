@@ -1,11 +1,7 @@
 package org.bukkit.fillr;
 
-import org.bukkit.*;
-import org.bukkit.plugin.*;
 import org.bukkit.plugin.java.*;
 import org.bukkit.event.*;
-
-import java.io.File;
 
 public class Fillr extends JavaPlugin {
 	private FillrListener listener;
@@ -13,8 +9,7 @@ public class Fillr extends JavaPlugin {
 	public static final String VERSION = "1.0";
 	public static final String DIRECTORY = "plugins";
 
-	public Fillr(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File plugin, ClassLoader cLoader) {
-		super(pluginLoader, instance, desc, plugin, cLoader);
+	public void onInitialize() {
 	}
 
 	public void onDisable() {

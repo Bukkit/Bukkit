@@ -12,29 +12,57 @@ import org.bukkit.plugin.PluginLoader;
  */
 public abstract class JavaPlugin implements Plugin {
     private boolean isEnabled = false;
-    private final PluginLoader loader;
-    private final Server server;
-    private final File file;
-    private final PluginDescriptionFile description;
-    private final ClassLoader classLoader;
-
+    private PluginLoader loader;
+    private Server server;
+    private File file;
+    private PluginDescriptionFile description;
+    private ClassLoader classLoader;
+   
     /**
-     * Constructs a new Java plugin instance
+     * Sets this plugin's PluginLoader instance
      *
      * @param pluginLoader PluginLoader that is responsible for this plugin
-     * @param instance Server instance that is running this plugin
-     * @param desc PluginDescriptionFile containing metadata on this plugin
-     * @param plugin File containing this plugin
-     * @param cLoader ClassLoader which holds this plugin
      */
-    public JavaPlugin(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File plugin, ClassLoader cLoader) {
+    public void setPluginLoader(PluginLoader pluginLoader) {
         loader = pluginLoader;
-        server = instance;
-        file = plugin;
-        description = desc;
-        classLoader = cLoader;
     }
 
+    /**
+     * Sets this plugin's Server instance
+     *
+     * @param instance Server instance that is running this plugin
+     */
+    public void setServer(Server instance) {
+        server = instance;
+    }
+    
+    /**
+     * Sets this plugin's PluginLoader
+     *
+     * @param desc PluginDescriptionFile containing metadata on this plugin
+     */
+    public void setDescription(PluginDescriptionFile desc) {
+        description = desc;
+    }
+    
+    /**
+     * Sets this plugin's File instance
+     *
+     * @param plugin File containing this plugin
+     */
+    public void setFile(File pluginFile) {
+        file = pluginFile;
+    }
+    
+    /**
+     * Sets this plugin's ClassLoader instance
+     *
+     * @param cLoader ClassLoader which holds this plugin
+     */
+    public void setLoader(ClassLoader cLoader) {
+        classLoader = cLoader;
+    }
+        
     /**
      * Gets the associated PluginLoader responsible for this plugin
      *

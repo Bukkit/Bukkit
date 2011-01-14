@@ -5,9 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Constructor;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarEntry;
@@ -73,9 +71,18 @@ public final class JavaPluginLoader implements PluginLoader {
             ClassLoader loader = new PluginClassLoader(this, new URL[]{file.toURI().toURL()}, getClass().getClassLoader());
             Class<?> jarClass = Class.forName(description.getMain(), true, loader);
             Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
-            Constructor<? extends JavaPlugin> constructor = plugin.getConstructor(PluginLoader.class, Server.class, PluginDescriptionFile.class, File.class, ClassLoader.class);
 
-            result = constructor.newInstance(this, server, description, file, loader);
+            // Initialize plugin
+            result = plugin.newInstance();
+
+            result.setLoader(loader);
+            result.setPluginLoader(this);
+            result.setFile(file);
+            result.setDescription(description);
+            result.setServer(server);
+            
+            result.onInitialize();
+            
         } catch (Throwable ex) {
             throw new InvalidPluginException(ex);
         }
