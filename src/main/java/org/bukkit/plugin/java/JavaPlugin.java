@@ -59,7 +59,7 @@ public abstract class JavaPlugin implements Plugin {
      *
      * @param cLoader ClassLoader which holds this plugin
      */
-    public void setLoader(ClassLoader cLoader) {
+    public void setClassLoader(ClassLoader cLoader) {
         classLoader = cLoader;
     }
         

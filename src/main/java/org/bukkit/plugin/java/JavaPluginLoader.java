@@ -75,7 +75,7 @@ public final class JavaPluginLoader implements PluginLoader {
             // Initialize plugin
             result = plugin.newInstance();
 
-            result.setLoader(loader);
+            result.setClassLoader(loader);
             result.setPluginLoader(this);
             result.setFile(file);
             result.setDescription(description);
