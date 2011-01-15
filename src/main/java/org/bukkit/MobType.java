@@ -10,6 +10,7 @@ public enum MobType {
     SHEEP("Sheep"),
     SKELETON("Skeleton"),
     SPIDER("Spider"),
+    SQUID("Squid"),
     ZOMBIE("Zombie");
 
     private String name;
