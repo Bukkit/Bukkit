@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,16 +72,32 @@ public final class JavaPluginLoader implements PluginLoader {
             ClassLoader loader = new PluginClassLoader(this, new URL[]{file.toURI().toURL()}, getClass().getClassLoader());
             Class<?> jarClass = Class.forName(description.getMain(), true, loader);
             Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
-
-            // Initialize plugin
-            result = plugin.newInstance();
-
+            Constructor<? extends JavaPlugin> constructor = null;
+            try 
+            {
+            	constructor = plugin.getConstructor(PluginLoader.class, Server.class, PluginDescriptionFile.class, File.class, ClassLoader.class);
+            }
+            catch (NoSuchMethodException ex)
+            {
+            	
+            }
+            if (constructor != null)
+            {
+            	result = constructor.newInstance(this, server, description, file, loader);
+            }
+            else
+            {
+            	 result = plugin.newInstance();
+            }
+            
+            // Initialize plugin = may be redundant for old-style constructor, but that's ok.
             result.setClassLoader(loader);
             result.setPluginLoader(this);
             result.setFile(file);
             result.setDescription(description);
             result.setServer(server);
             
+            // Give default-constructor-style plugins a chance to initialize.
             result.onInitialize();
             
         } catch (Throwable ex) {

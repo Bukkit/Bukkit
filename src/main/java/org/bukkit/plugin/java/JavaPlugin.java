@@ -18,6 +18,33 @@ public abstract class JavaPlugin implements Plugin {
     private PluginDescriptionFile description;
     private ClassLoader classLoader;
    
+
+    /**   *
+          * Constructs a new Java plugin instance, using the default constructor.
+          *
+          * Initialization in this case should be done in onInitialization.
+          * 
+          */
+    public JavaPlugin() {
+    }
+    
+    /**   *
+          * Constructs a new Java plugin instance
+          *
+          * @param pluginLoader PluginLoader that is responsible for this plugin
+          * @param instance Server instance that is running this plugin
+          * @param desc PluginDescriptionFile containing metadata on this plugin
+          * @param plugin File containing this plugin
+          * @param cLoader ClassLoader which holds this plugin
+          */
+    public JavaPlugin(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File plugin, ClassLoader cLoader) { 
+    	loader = pluginLoader;
+    	server = instance;
+		file = plugin;
+		description = desc;
+    	classLoader = cLoader;
+    }
+    
     /**
      * Sets this plugin's PluginLoader instance
      *
@@ -132,5 +159,13 @@ public abstract class JavaPlugin implements Plugin {
                 onDisable();
             }
         }
+    }
+   
+    /**
+     * Called when this plugin is initialized
+     */
+    public void onInitialize()
+    {
+    	
     }
 }
