@@ -1,6 +1,6 @@
 package org.bukkit.event.player;
 
-import org.bukkit.Player;
+import org.bukkit.entity.Player;
 
 /*
  * Represents a player animation event

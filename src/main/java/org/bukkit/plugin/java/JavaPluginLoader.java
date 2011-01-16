@@ -1,4 +1,3 @@
-
 package org.bukkit.plugin.java;
 
 import java.io.File;
@@ -70,6 +69,8 @@ public final class JavaPluginLoader implements PluginLoader {
             throw new InvalidPluginException(ex);
         }
 
+        File dataFolder = getDataFolder(file);
+
         try {
             ClassLoader loader = new PluginClassLoader(this, new URL[]{file.toURI().toURL()}, getClass().getClassLoader());
             Class<?> jarClass = Class.forName(description.getMain(), true, loader);
@@ -77,7 +78,7 @@ public final class JavaPluginLoader implements PluginLoader {
             Constructor<? extends JavaPlugin> constructor = null;
             try 
             {
-            	constructor = plugin.getConstructor(PluginLoader.class, Server.class, PluginDescriptionFile.class, File.class, ClassLoader.class);
+            	constructor = plugin.getConstructor(PluginLoader.class, Server.class, PluginDescriptionFile.class, File.class, File.class, ClassLoader.class);
             }
             catch (NoSuchMethodException ex)
             {
@@ -85,7 +86,7 @@ public final class JavaPluginLoader implements PluginLoader {
             }
             if (constructor != null)
             {
-            	result = constructor.newInstance(this, server, description, file, loader);
+            	result = constructor.newInstance(this, server, description, dataFolder, file, loader);
             }
             else
             {
@@ -97,16 +98,38 @@ public final class JavaPluginLoader implements PluginLoader {
             result.setPluginLoader(this);
             result.setFile(file);
             result.setDescription(description);
+            result.setDataFolder(dataFolder);
             result.setServer(server);
             
             // Give default-constructor-style plugins a chance to initialize.
             result.onInitialize();
-            
+
+
         } catch (Throwable ex) {
             throw new InvalidPluginException(ex);
         }
 
         return (Plugin)result;
+    }
+    
+    private File getDataFolder(File file) {
+        File dataFolder = null;
+        
+        String filename = file.getName();
+        int index = file.getName().lastIndexOf(".");
+        
+        if (index != -1) {
+            String name = filename.substring(0, index);
+            dataFolder = new File(file.getParentFile(), name);
+        } else {
+            // This is if there is no extension, which should not happen
+            // Using _ to prevent name collision
+            dataFolder = new File(file.getParentFile(), filename + "_");
+        }
+        
+        //dataFolder.mkdirs();
+        
+        return dataFolder;
     }
 
     public Pattern[] getPluginFileFilters() {

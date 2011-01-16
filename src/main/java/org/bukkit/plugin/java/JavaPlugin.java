@@ -1,11 +1,12 @@
-
 package org.bukkit.plugin.java;
 
 import java.io.File;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
+import org.bukkit.util.config.Configuration;
 
 /**
  * Represents a Java plugin
@@ -16,35 +17,43 @@ public abstract class JavaPlugin implements Plugin {
     private Server server;
     private File file;
     private PluginDescriptionFile description;
+    private File dataFolder;
     private ClassLoader classLoader;
-   
+    private Configuration config;
 
     /**   *
-          * Constructs a new Java plugin instance, using the default constructor.
-          *
-          * Initialization in this case should be done in onInitialization.
-          * 
-          */
+     * Constructs a new Java plugin instance, using the default constructor.
+     *
+     * Initialization in this case should be done in onInitialization.
+     * 
+     */
     public JavaPlugin() {
-    }
+    } 
     
-    /**   *
-          * Constructs a new Java plugin instance
-          *
-          * @param pluginLoader PluginLoader that is responsible for this plugin
-          * @param instance Server instance that is running this plugin
-          * @param desc PluginDescriptionFile containing metadata on this plugin
-          * @param plugin File containing this plugin
-          * @param cLoader ClassLoader which holds this plugin
-          */
-    public JavaPlugin(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File plugin, ClassLoader cLoader) { 
-    	loader = pluginLoader;
-    	server = instance;
-		file = plugin;
-		description = desc;
-    	classLoader = cLoader;
+    /**
+     * Constructs a new Java plugin instance
+     *
+     * @param pluginLoader PluginLoader that is responsible for this plugin
+     * @param instance Server instance that is running this plugin
+     * @param desc PluginDescriptionFile containing metadata on this plugin
+     * @param folder Folder containing the plugin's data
+     * @param plugin File containing this plugin
+     * @param cLoader ClassLoader which holds this plugin
+     */
+    public JavaPlugin(PluginLoader pluginLoader, Server instance,
+            PluginDescriptionFile desc, File folder, File plugin,
+            ClassLoader cLoader) {
+        loader = pluginLoader;
+        server = instance;
+        file = plugin;
+        description = desc;
+        dataFolder = folder;
+        classLoader = cLoader;
+        config = new Configuration(new File(dataFolder, "config.yml"));
+        config.load();
     }
-    
+
+
     /**
      * Sets this plugin's PluginLoader instance
      *
@@ -80,6 +89,17 @@ public abstract class JavaPlugin implements Plugin {
     public void setFile(File pluginFile) {
         file = pluginFile;
     }
+
+    /**
+     * Sets this plugin's data folder
+     *
+     * @param dataFolder the plugin's data folder
+     */
+    public void setDataFolder(File dataFolder) {
+        this.dataFolder = dataFolder;
+        config = new Configuration(new File(dataFolder, "config.yml"));
+        config.load();
+    }
     
     /**
      * Sets this plugin's ClassLoader instance
@@ -89,7 +109,17 @@ public abstract class JavaPlugin implements Plugin {
     public void setClassLoader(ClassLoader cLoader) {
         classLoader = cLoader;
     }
-        
+    
+    /**
+     * Returns the folder that the plugin data's files are located in. The
+     * folder may not yet exist.
+     * 
+     * @return
+     */
+    public File getDataFolder() {
+        return dataFolder;
+    }
+
     /**
      * Gets the associated PluginLoader responsible for this plugin
      *
@@ -134,6 +164,18 @@ public abstract class JavaPlugin implements Plugin {
     public PluginDescriptionFile getDescription() {
         return description;
     }
+    
+    /**
+     * Returns the main configuration located at
+     * <plugin name>/config.yml and loads the file. If the configuration file
+     * does not exist and it cannot be loaded, no error will be emitted and
+     * the configuration file will have no values.
+     * 
+     * @return
+     */
+    public Configuration getConfiguration() {
+        return config;
+    }
 
     /**
      * Returns the ClassLoader which holds this plugin
@@ -160,12 +202,19 @@ public abstract class JavaPlugin implements Plugin {
             }
         }
     }
-   
+    
+    /**
+     * Called when a command registered by this plugin is received.
+     */
+    public void onCommand(Player player, String command, String[] args) {
+        // default implementation:  do nothing!
+    }
+    
     /**
      * Called when this plugin is initialized
      */
-    public void onInitialize()
-    {
+    public void onInitialize() {
     	
     }
 }
+
