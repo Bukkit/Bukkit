@@ -1,4 +1,3 @@
-
 package org.bukkit.material;
 
 import org.bukkit.block.BlockFace;
@@ -44,12 +43,16 @@ public class Button extends MaterialData implements Redstone, Attachable {
 
         switch (data) {
             case 0x1:
+            case 0x9:
                 return BlockFace.NORTH;
             case 0x2:
+            case 0x10:
                 return BlockFace.SOUTH;
             case 0x3:
+            case 0x11:
                 return BlockFace.EAST;
             case 0x4:
+            case 0x12:
                 return BlockFace.WEST;
         }
 
