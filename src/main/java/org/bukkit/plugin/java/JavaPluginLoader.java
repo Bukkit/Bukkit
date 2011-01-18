@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,8 +44,11 @@ public final class JavaPluginLoader implements PluginLoader {
     };
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
 
+    private final PluginClassLoader classLoader;
+    
     public JavaPluginLoader(Server instance) {
         server = instance;
+        classLoader = new PluginClassLoader(getClass().getClassLoader());
     }
 
     public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException {
@@ -72,18 +77,51 @@ public final class JavaPluginLoader implements PluginLoader {
 
         File dataFolder = getDataFolder(file);
 
+        // Add the Plugin JAR's URL to the single class loader
         try {
-            ClassLoader loader = new PluginClassLoader(this, new URL[]{file.toURI().toURL()}, getClass().getClassLoader());
-            Class<?> jarClass = Class.forName(description.getMain(), true, loader);
-            Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
-            Constructor<? extends JavaPlugin> constructor = plugin.getConstructor(PluginLoader.class, Server.class, PluginDescriptionFile.class, File.class, File.class, ClassLoader.class);
-            
-            result = constructor.newInstance(this, server, description, dataFolder, file, loader);
-        } catch (Throwable ex) {
-            throw new InvalidPluginException(ex);
-        }
+			classLoader.addURL(file.toURI().toURL());
+		} catch(MalformedURLException ex) {
+			throw new InvalidPluginException(ex);
+		}
+		
+		Class<?> jarClass;
+		try {
+			jarClass = Class.forName(description.getMain(), true, classLoader);
+		} catch(ClassNotFoundException ex) {
+			throw new InvalidPluginException(ex);
+		}
+		
+        Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
+        
+        Constructor<? extends JavaPlugin> constructor;
+		try {
+			constructor = plugin.getConstructor(PluginLoader.class, Server.class, PluginDescriptionFile.class, File.class, File.class, ClassLoader.class);
+			
+		} catch(SecurityException ex) {
+			throw new InvalidPluginException(ex);
+			
+		} catch(NoSuchMethodException ex) {
+			throw new InvalidPluginException(ex);
+		}
+        
+        try {
+			result = constructor.newInstance(this, server, description, dataFolder, file, classLoader);
+			
+		} catch(IllegalArgumentException ex) {
+			throw new InvalidPluginException(ex);
+			
+		} catch(InstantiationException ex) {
+			throw new InvalidPluginException(ex);
+			
+		} catch(IllegalAccessException ex) {
+			throw new InvalidPluginException(ex);
+			
+		} catch(InvocationTargetException ex) {
+			throw new InvalidPluginException(ex);
+		}
+		
 
-        return (Plugin)result;
+        return (Plugin) result;
     }
     
     private File getDataFolder(File file) {
