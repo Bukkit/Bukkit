@@ -4,15 +4,19 @@ package org.bukkit.plugin;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
+
 import org.bukkit.Server;
+
 import java.util.regex.Pattern;
 
 import org.bukkit.event.Event;
@@ -23,13 +27,13 @@ import org.bukkit.event.Listener;
  * Handles all plugin management from the Server
  */
 public final class SimplePluginManager implements PluginManager {
-    private final Server server;
-    private final Map<Pattern, PluginLoader> fileAssociations = new HashMap<Pattern, PluginLoader>();
-    private final List<Plugin> plugins = new ArrayList<Plugin>();
-    private final Map<String, Plugin> lookupNames = new HashMap<String, Plugin>();
-    private final Map<Event.Type, List<RegisteredListener>> listeners = new EnumMap<Event.Type, List<RegisteredListener>>(Event.Type.class);
+	private final Server server;
+	private final Map<Pattern, PluginLoader> fileAssociations = new HashMap<Pattern, PluginLoader>();
+	private final List<Plugin> plugins = new ArrayList<Plugin>();
+	private final Map<String, Plugin> lookupNames = new HashMap<String, Plugin>();
+	private final Map<Event.Type, PriorityQueue<RegisteredListener>> listeners = new EnumMap<Event.Type, PriorityQueue<RegisteredListener>>(Event.Type.class);
 
-    public SimplePluginManager(Server instance) {
+	public SimplePluginManager(Server instance) {
         server = instance;
     }
 
@@ -187,7 +191,7 @@ public final class SimplePluginManager implements PluginManager {
      * @param event Event details
      */
     public void callEvent(Event event) {
-        List<RegisteredListener> eventListeners = listeners.get(event.getType());
+        PriorityQueue<RegisteredListener> eventListeners = listeners.get(event.getType());
 
         if (eventListeners != null) {
             for (RegisteredListener registration : eventListeners) {
@@ -214,24 +218,23 @@ public final class SimplePluginManager implements PluginManager {
      * @param plugin Plugin to register
      */
     public RegisteredListener registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin) {
-        List<RegisteredListener> eventListeners = listeners.get(type);
-        int position = 0;
+        PriorityQueue<RegisteredListener> eventListeners = listeners.get(type);
 
-        if (eventListeners != null) {
-            for (RegisteredListener registration : eventListeners) {
-                if (registration.getPriority().compareTo(priority) < 0) {
-                    break;
-                }
+	    if (eventListeners == null) {
+		    eventListeners = new PriorityQueue<RegisteredListener>(11,
+			    new Comparator<RegisteredListener>()
+			    {
+				    public int compare(RegisteredListener i, RegisteredListener j) {
+					    return i.getPriority().compareTo(j.getPriority());
+				    }
+			    }
+		    );
+		    listeners.put(type, eventListeners);
+	    }
 
-                position++;
-            }
-        } else {
-            eventListeners = new ArrayList<RegisteredListener>();
-            listeners.put(type, eventListeners);
-        }
 
 	    RegisteredListener registeredListener = new RegisteredListener(type, listener, priority, plugin);
-        eventListeners.add(position, registeredListener);
+	    eventListeners.offer(registeredListener);
 	    return registeredListener;
     }
 
@@ -244,7 +247,7 @@ public final class SimplePluginManager implements PluginManager {
 	public void unregisterEvent(RegisteredListener registeredListener) {
 		if (registeredListener != null) {
 			Event.Type type = registeredListener.getType();
-			List<RegisteredListener> eventListeners = listeners.get(type);
+			PriorityQueue<RegisteredListener> eventListeners = listeners.get(type);
 
 			if (eventListeners.contains(registeredListener)) {
 				eventListeners.remove(registeredListener);
