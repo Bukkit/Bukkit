@@ -4,12 +4,10 @@ package org.bukkit.plugin;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +27,7 @@ public final class SimplePluginManager implements PluginManager {
     private final Map<Pattern, PluginLoader> fileAssociations = new HashMap<Pattern, PluginLoader>();
     private final List<Plugin> plugins = new ArrayList<Plugin>();
     private final Map<String, Plugin> lookupNames = new HashMap<String, Plugin>();
-    private final Map<Event.Type, PriorityQueue<RegisteredListener>> listeners = new EnumMap<Event.Type, PriorityQueue<RegisteredListener>>(Event.Type.class);
+    private final Map<Event.Type, List<RegisteredListener>> listeners = new EnumMap<Event.Type, List<RegisteredListener>>(Event.Type.class);
 
     public SimplePluginManager(Server instance) {
         server = instance;
@@ -189,7 +187,7 @@ public final class SimplePluginManager implements PluginManager {
      * @param event Event details
      */
     public void callEvent(Event event) {
-        PriorityQueue<RegisteredListener> eventListeners = listeners.get(event.getType());
+        List<RegisteredListener> eventListeners = listeners.get(event.getType());
 
         if (eventListeners != null) {
             for (RegisteredListener registration : eventListeners) {
@@ -215,21 +213,43 @@ public final class SimplePluginManager implements PluginManager {
      * @param priority Priority of this event
      * @param plugin Plugin to register
      */
-    public void registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin) {
-        PriorityQueue<RegisteredListener> eventListeners = listeners.get(type);
+    public RegisteredListener registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin) {
+        List<RegisteredListener> eventListeners = listeners.get(type);
         int position = 0;
 
-        if (eventListeners == null) {
-            eventListeners = new PriorityQueue<RegisteredListener>(11,
-                    	new Comparator<RegisteredListener>( ) {
-                            public int compare(RegisteredListener i, RegisteredListener j) {
-                                return i.getPriority().compareTo(j.getPriority());
-                            }
-			}
-            );
+        if (eventListeners != null) {
+            for (RegisteredListener registration : eventListeners) {
+                if (registration.getPriority().compareTo(priority) < 0) {
+                    break;
+                }
+
+                position++;
+            }
+        } else {
+            eventListeners = new ArrayList<RegisteredListener>();
             listeners.put(type, eventListeners);
         }
 
-        eventListeners.offer(new RegisteredListener(listener, priority, plugin));
+	    RegisteredListener registeredListener = new RegisteredListener(type, listener, priority, plugin);
+        eventListeners.add(position, registeredListener);
+	    return registeredListener;
     }
+
+
+	/**
+	 * Unregisters the given registered listener (returned from registerEvent)
+	 *
+	 * @param registeredListener
+	 */
+	public void unregisterEvent(RegisteredListener registeredListener) {
+		if (registeredListener != null) {
+			Event.Type type = registeredListener.getType();
+			List<RegisteredListener> eventListeners = listeners.get(type);
+
+			if (eventListeners.contains(registeredListener)) {
+				eventListeners.remove(registeredListener);
+			}
+		}
+	}
+
 }

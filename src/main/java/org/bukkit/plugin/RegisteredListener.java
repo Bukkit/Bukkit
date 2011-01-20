@@ -8,15 +8,25 @@ import org.bukkit.event.Listener;
  * Stores relevant information for plugin listeners
  */
 public class RegisteredListener {
+	private final Event.Type type;
     private final Listener listener;
     private final Event.Priority priority;
     private final Plugin plugin;
 
-    public RegisteredListener(final Listener pluginListener, final Event.Priority eventPriority, final Plugin registeredPlugin) {
-        listener = pluginListener;
+    public RegisteredListener(final Event.Type eventType, final Listener pluginListener, final Event.Priority eventPriority, final Plugin registeredPlugin) {
+        type = eventType;
+	    listener = pluginListener;
         priority = eventPriority;
         plugin = registeredPlugin;
     }
+
+	/**
+	 * Gets the type for which this listener was registered
+	 * @return Registered Type
+	 */
+	public Event.Type getType() {
+		return type;
+	}
 
     /**
      * Gets the listener for this registration
