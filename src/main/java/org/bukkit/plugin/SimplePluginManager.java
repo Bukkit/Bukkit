@@ -215,7 +215,7 @@ public final class SimplePluginManager implements PluginManager {
      * @param priority Priority of this event
      * @param plugin Plugin to register
      */
-    public void registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin) {
+    public RegisteredListener registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin) {
         PriorityQueue<RegisteredListener> eventListeners = listeners.get(type);
 
         if (eventListeners == null) {
@@ -229,6 +229,26 @@ public final class SimplePluginManager implements PluginManager {
             listeners.put(type, eventListeners);
         }
 
-        eventListeners.offer(new RegisteredListener(listener, priority, plugin));
+
+	    RegisteredListener registeredListener = new RegisteredListener(type, listener, priority, plugin);
+	    eventListeners.offer(registeredListener);
+	    return registeredListener;
     }
+
+	/**
+	 * Unregisters the given registered listener (returned from registerEvent)
+	 *
+	 * @param registeredListener
+	 */
+	public void unregisterEvent(RegisteredListener registeredListener) {
+		if (registeredListener != null) {
+			Event.Type type = registeredListener.getType();
+			PriorityQueue<RegisteredListener> eventListeners = listeners.get(type);
+
+			if (eventListeners.contains(registeredListener)) {
+				eventListeners.remove(registeredListener);
+			}
+		}
+	}
+
 }
