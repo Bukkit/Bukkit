@@ -50,10 +50,6 @@ public class Button extends MaterialData implements Redstone, Attachable {
                 return BlockFace.EAST;
             case 0x4:
                 return BlockFace.WEST;
-            case 0x5:
-            case 0x6:
-                return BlockFace.DOWN;
-
         }
 
         return null;
