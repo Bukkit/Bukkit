@@ -1,4 +1,3 @@
-
 package org.bukkit.material;
 
 import org.bukkit.block.BlockFace;
@@ -40,7 +39,7 @@ public class Button extends MaterialData implements Redstone, Attachable {
      * @return BlockFace attached to
      */
     public BlockFace getAttachedFace() {
-        byte data = (byte) (getData() ^ 0x7);
+        byte data = (byte) (getData() & 0x7);
 
         switch (data) {
             case 0x1:
@@ -51,6 +50,10 @@ public class Button extends MaterialData implements Redstone, Attachable {
                 return BlockFace.EAST;
             case 0x4:
                 return BlockFace.WEST;
+            case 0x5:
+            case 0x6:
+                return BlockFace.DOWN;
+
         }
 
         return null;
