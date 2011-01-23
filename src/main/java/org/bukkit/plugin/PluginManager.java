@@ -56,6 +56,13 @@ public interface PluginManager {
     public boolean isPluginEnabled(Plugin plugin);
 
     /**
+     * Loads the specified plugin class.
+     *
+     * @param plugin Plugin instance to load
+     */
+    public void loadPlugin(Plugin plugin);
+
+    /**
      * Loads the plugin in the specified file
      *
      * File must be valid according to the current enabled Plugin interfaces

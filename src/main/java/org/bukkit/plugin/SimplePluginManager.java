@@ -97,6 +97,16 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     /**
+     * Loads the specified plugin class.
+     *
+     * @param plugin Plugin instance to load
+     */
+    public void loadPlugin(Plugin plugin) {
+        plugins.add(plugin);
+        lookupNames.put(plugin.getDescription().getName(), plugin);
+    }
+
+    /**
      * Loads the plugin in the specified file
      *
      * File must be valid according to the current enabled Plugin interfaces
@@ -121,8 +131,7 @@ public final class SimplePluginManager implements PluginManager {
         }
 
         if (result != null) {
-            plugins.add(result);
-            lookupNames.put(result.getDescription().getName(), result);
+            loadPlugin(result);
         }
 
         return result;
