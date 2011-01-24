@@ -1,8 +1,13 @@
 package org.bukkit.util;
 
-import java.util.*;
-import java.io.*;
-import java.text.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.io.IOException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * The Log class provides a simple way to open log files and write to them
@@ -33,6 +38,8 @@ public class Log {
 	private long max_size;
 	private long current_size;
 	private int max_count;
+	
+	private final Lock rotateLock = new ReentrantLock();
 	
 	/* out defaults to stdout. The reason we set it here is so that we can
 	 * print to stdout later on if something goes wrong. 
@@ -178,7 +185,12 @@ public class Log {
 		
 		out.println(finished_line);
 		
-		current_size += finished_line.getBytes().length;
+		// Multiple threads my update this, thats ok because any race condition
+		// would only affect accuracy; some files might end up being a little
+		// smaller or a little larger than necessary. I think that might be pretty
+		// rare case in reality.
+		
+		current_size += finished_line.getBytes().length;						
 		
 		// The next part of the method only applies to actual files, not stdout.
 		
@@ -189,56 +201,72 @@ public class Log {
 		// old one.
 		
 		if (current_size > max_size) {
-			// Remove the last file if we have one.
 			
-			File old_log = new File(dir + File.separator + file.getName() + "." + max_count);
+			// We need to rotate the file, but only one thread should be doing this at a time.
+			// So, we try to lock it, and if we fail, we immediately bail, as another thread
+			// is already doing the file rotations.
 			
-			if (old_log.exists())
-				old_log.delete();
-			
-			// Rename each log file we find to the next number up.
-			
-			for (int i = max_count; i > 0; i--) {
-				old_log = new File(dir + File.separator + file.getName() + "." + i);
-				
-				if (old_log.exists()) {
-					old_log.renameTo(new File(dir + File.separator + file.getName() + "." + (i + 1)));
-				}
-			}
-			
-			// Rename the current log file and reopen the new one.
-			
-			String filename = file.getName();
-			File new_file = new File(dir + File.separator + filename + "." + 1);
-
-			out.close();
-			current_size = 0;
-			out = new PrintStream(System.out, true);
-
-			System.out.printf("%s [INFO] Rotating log file: %s", date, file.getAbsoluteFile());
-			System.out.println();
-			
-			if (!file.renameTo(new_file)) {
-				System.out.printf("%s [WARNING] Unable to rotate log file: %s", date, file.getAbsoluteFile());
-				System.out.println();
-			}
-			
-			// Reopen the logfile.
-			
-			file = new File(dir + File.separator + filename);
+			if (!rotateLock.tryLock())
+				return;
 			
 			try {
-				// Open the printstream to the file.
+			
+				// Remove the last file if we have one.
 				
-				out = new PrintStream(new FileOutputStream(file, true), true);				
-			} catch (IOException e) {
-				// Even if this fails, you can still print to the Log. The output
-				// will just end up in stdout.
+				File old_log = new File(dir + File.separator + file.getName() + "." + max_count);
 				
-				System.out.printf("%s [CRITICAL] Unable to open new PrintStream for: %s", date, file.getAbsoluteFile());
+				if (old_log.exists())
+					old_log.delete();
+				
+				// Rename each log file we find to the next number up.
+				
+				for (int i = max_count; i > 0; i--) {
+					old_log = new File(dir + File.separator + file.getName() + "." + i);
+					
+					if (old_log.exists()) {
+						old_log.renameTo(new File(dir + File.separator + file.getName() + "." + (i + 1)));
+					}
+				}
+				
+				// Rename the current log file and reopen the new one.
+				
+				String filename = file.getName();
+				File new_file = new File(dir + File.separator + filename + "." + 1);
+	
+				out.close();
+				current_size = 0;
+				out = new PrintStream(System.out, true);
+	
+				System.out.printf("%s [INFO] Rotating log file: %s", date, file.getAbsoluteFile());
 				System.out.println();
 				
-				e.printStackTrace();
+				if (!file.renameTo(new_file)) {
+					System.out.printf("%s [WARNING] Unable to rotate log file: %s", date, file.getAbsoluteFile());
+					System.out.println();
+				}
+				
+				// Reopen the logfile.
+				
+				file = new File(dir + File.separator + filename);
+				
+				try {
+					// Open the printstream to the file.
+					
+					out = new PrintStream(new FileOutputStream(file, true), true);				
+				} catch (IOException e) {
+					// Even if this fails, you can still print to the Log. The output
+					// will just end up in stdout.
+					
+					System.out.printf("%s [CRITICAL] Unable to open new PrintStream for: %s", date, file.getAbsoluteFile());
+					System.out.println();
+					
+					e.printStackTrace();
+				}
+			} finally {
+				
+				// Make sure that we unlock the rotateLock no matter what.
+				
+				rotateLock.unlock();
 			}
 		}
 	}
