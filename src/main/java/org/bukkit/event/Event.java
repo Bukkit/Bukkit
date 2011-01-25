@@ -187,6 +187,13 @@ public abstract class Event {
         PLAYER_ANIMATION (Category.PLAYER),
 
         /**
+         * Called when a player toggles sneak mode
+         *
+         * @todo: add javadoc see comment
+         */
+        PLAYER_TOGGLE_SNEAK (Category.PLAYER),
+
+        /**
          * Called when a player uses an item
          *
          * @see org.bukkit.event.player.PlayerItemEvent

@@ -154,7 +154,10 @@ public final class JavaPluginLoader implements PluginLoader {
                     break;
                 case PLAYER_ANIMATION:
                     trueListener.onPlayerAnimation((PlayerAnimationEvent)event);
-                    break;                    
+                    break;
+                case PLAYER_TOGGLE_SNEAK:
+                    trueListener.onPlayerToggleSneak((PlayerToggleSneakEvent)event);
+                    break;
             }
         } else if (listener instanceof BlockListener) {
             BlockListener trueListener = (BlockListener)listener;

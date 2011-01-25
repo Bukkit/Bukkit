@@ -69,4 +69,16 @@ public interface Player extends HumanEntity {
      * @return
      */
     public void kickPlayer(String message);
+
+    /**
+     * Returns if the player is in sneak mode
+     * @return true if player is in sneak mode
+     */
+    public boolean isSneaking();
+
+    /**
+     * Sets the sneak mode the player
+     * @param sneak true if player should appear sneaking
+     */
+    public void setSneaking(boolean sneak);
 }
