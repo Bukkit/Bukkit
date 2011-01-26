@@ -7,8 +7,8 @@ import java.util.Map;
 /**
  * Represents an array permission description node, for simple true/false access
  */
-public class ArrayPermissionDescriptionNode extends PermissionDescriptionNode {
-    public ArrayPermissionDescriptionNode(final PermissionDescriptionNode parent, Map<String, Object> map)
+public class ListPermissionDescriptionNode extends PermissionDescriptionNode {
+    public ListPermissionDescriptionNode(final PermissionDescriptionNode parent, Map<String, Object> map)
             throws PermissionDescriptionException, PermissionDescriptionNodeException {
         super(parent, map);
     }

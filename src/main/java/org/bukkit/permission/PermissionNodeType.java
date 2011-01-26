@@ -10,7 +10,7 @@ public enum PermissionNodeType {
     BOOLEAN(BooleanPermissionDescriptionNode.class),
     INTEGER(IntegerPermissionDescriptionNode.class),
     MAP(MapPermissionDescriptionNode.class),
-    ARRAY(ArrayPermissionDescriptionNode.class);
+    LIST(ListPermissionDescriptionNode.class);
     
     private final Class<? extends PermissionDescriptionNode> desc;
     private static final Map<String, PermissionNodeType> lookup = new HashMap<String, PermissionNodeType>();
