@@ -9,9 +9,10 @@ import java.util.Map;
 public class IntegerPermissionDescriptionNode extends PermissionDescriptionNode {
     private int minimum = Integer.MIN_VALUE;
     private int maximum = Integer.MAX_VALUE;
-    
-    public IntegerPermissionDescriptionNode(final PermissionDescription parent, Map<String, Object> map) {
-        super(parent, map);
+
+    public IntegerPermissionDescriptionNode(final PermissionDescription root,
+            final PermissionDescriptionNode parent, Map<String, Object> map) {
+        super(root, parent, map);
     }
 
     @Override

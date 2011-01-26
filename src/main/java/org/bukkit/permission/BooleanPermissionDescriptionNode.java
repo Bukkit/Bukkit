@@ -7,8 +7,9 @@ import java.util.Map;
  * Represents a boolean permission description node, for simple true/false access
  */
 public class BooleanPermissionDescriptionNode extends PermissionDescriptionNode {
-    public BooleanPermissionDescriptionNode(final PermissionDescription parent, Map<String, Object> map) {
-        super(parent, map);
+    public BooleanPermissionDescriptionNode(final PermissionDescription root,
+            final PermissionDescriptionNode parent, Map<String, Object> map) {
+        super(root, parent, map);
     }
     
     @Override

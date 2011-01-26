@@ -12,7 +12,6 @@ public class PermissionDescriptionException extends Exception {
     public PermissionDescriptionException() {
     }
 
-
     /**
      * Constructs an instance of <code>PermissionDescriptionException</code> with the specified detailed message.
      * @param msg the detailed message.

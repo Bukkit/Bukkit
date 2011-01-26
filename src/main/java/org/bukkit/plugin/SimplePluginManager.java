@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Listener;
+import org.bukkit.permission.PermissionDescription;
 
 /**
  * Handles all plugin management from the Server
@@ -29,7 +30,9 @@ public final class SimplePluginManager implements PluginManager {
     private final Map<Pattern, PluginLoader> fileAssociations = new HashMap<Pattern, PluginLoader>();
     private final List<Plugin> plugins = new ArrayList<Plugin>();
     private final Map<String, Plugin> lookupNames = new HashMap<String, Plugin>();
-    private final Map<Event.Type, PriorityQueue<RegisteredListener>> listeners = new EnumMap<Event.Type, PriorityQueue<RegisteredListener>>(Event.Type.class);
+    private final Map<String, PermissionDescription> permissions = new HashMap<String, PermissionDescription>();
+    private final Map<Event.Type, PriorityQueue<RegisteredListener>> listeners = 
+            new EnumMap<Event.Type, PriorityQueue<RegisteredListener>>(Event.Type.class);
 
     public SimplePluginManager(Server instance) {
         server = instance;
@@ -120,7 +123,19 @@ public final class SimplePluginManager implements PluginManager {
 
         if (result != null) {
             plugins.add(result);
-            lookupNames.put(result.getDescription().getName(), result);
+
+            PluginDescriptionFile desc = result.getDescription();
+            PermissionDescription perm = desc.getPermissions();
+
+            lookupNames.put(desc.getName(), result);
+            
+            if (perm != null) {
+                String[] names = perm.getNames();
+
+                for (String name : names) {
+                    permissions.put(name, perm);
+                }
+            }
         }
 
         return result;
@@ -180,6 +195,11 @@ public final class SimplePluginManager implements PluginManager {
         if (plugin.isEnabled()) {
             plugin.getPluginLoader().disablePlugin(plugin);
         }
+    }
+
+    public PermissionDescription getPermissions(final String path) {
+        String root = path.split("\\.", 2)[0];
+        return permissions.get(root);
     }
 
     /**

@@ -7,7 +7,10 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.permission.PermissionDescription;
+import org.bukkit.permission.PermissionDescriptionException;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
@@ -108,6 +111,10 @@ public final class PluginDescriptionFile {
         return website;
     }
 
+    public PermissionDescription getPermissions() {
+        return permissions;
+    }
+
     private void loadMap(Map<String, Object> map) throws InvalidDescriptionException {
         try {
             name = map.get("name").toString();
@@ -177,10 +184,12 @@ public final class PluginDescriptionFile {
 
         if (map.containsKey("permissions")) {
             try {
-                Map<String, Object> perms = (Map<String, Object>)map.get("permissions");
+                Map<String, Map> perms = (Map<String, Map>)map.get("permissions");
                 this.permissions = new PermissionDescription(perms);
             } catch (ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "permissions are of wrong type");
+            } catch (PermissionDescriptionException ex) {
+                throw new InvalidDescriptionException(ex, "permissions are invalid");
             }
         }
     }
