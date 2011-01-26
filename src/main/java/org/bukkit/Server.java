@@ -32,6 +32,13 @@ public interface Server {
     public Player[] getOnlinePlayers();
     
     /**
+     * Gets the current playerlimit for the server
+     *
+     * @return An integer with the limit
+     */
+    public int getPlayerLimit();
+    
+    /**
      * Broadcast a message to all players.
      * 
      * @param message the message
