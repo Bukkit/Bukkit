@@ -6,6 +6,7 @@ import java.io.File;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Listener;
+import org.bukkit.permission.PermissionDescriptionNode;
 import org.bukkit.permission.RootPermissionDescription;
 
 /**
@@ -118,5 +119,14 @@ public interface PluginManager {
      * @param path Permission path to get
      * @return RootPermissionDescription registered to the given path, or null if none exist
      */
-    public RootPermissionDescription getPermissions(String path);
+    public RootPermissionDescription getPermissionRoot(String path);
+
+    /**
+     * Gets the PermissionDescriptionNode at the given permission path
+     *
+     * @param path Permission path to get
+     * @return PermissionDescriptionNode registered to the given path
+     * @throws IllegalArgumentException Thrown when the path does not exist
+     */
+    public PermissionDescriptionNode getPermissionPath(String path);
 }

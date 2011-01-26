@@ -16,10 +16,10 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import org.bukkit.Server;
 import java.util.regex.Pattern;
-
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Listener;
+import org.bukkit.permission.PermissionDescriptionNode;
 import org.bukkit.permission.RootPermissionDescription;
 
 /**
@@ -197,9 +197,19 @@ public final class SimplePluginManager implements PluginManager {
         }
     }
 
-    public RootPermissionDescription getPermissions(final String path) {
+    public RootPermissionDescription getPermissionRoot(final String path) {
         String root = path.split("\\.", 2)[0];
         return permissions.get(root);
+    }
+
+    public PermissionDescriptionNode getPermissionPath(final String path) {
+        RootPermissionDescription root = getPermissionRoot(path);
+
+        if (root == null) {
+            throw new IllegalArgumentException("No permissions are defined for " + path);
+        }
+
+        return root.getPath(path);
     }
 
     /**

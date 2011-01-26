@@ -62,14 +62,6 @@ public class MapPermissionDescriptionNode extends PermissionDescriptionNode {
         throw new UnsupportedOperationException("Map cannot have a default value");
     }
 
-    public PermissionDescriptionNode getMap() throws PermissionDescriptionException {
-        try {
-            return createNode(this, (Map<String, Object>)map.get("map"));
-        } catch (PermissionDescriptionNodeException ex) {
-            throw new PermissionDescriptionException("Cannot parse " , ex);
-        }
-    }
-
     public String[] getNames() {
         return nodes.keySet().toArray(new String[0]);
     }
