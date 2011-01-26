@@ -2,22 +2,17 @@
 package org.bukkit.permission;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Represents a node of a permission description block
  */
 public abstract class PermissionDescriptionNode {
-    protected final PermissionDescription root;
     protected final PermissionDescriptionNode parent;
     protected final Map<String, Object> map;
 
-    public PermissionDescriptionNode(final PermissionDescription root,
-            final PermissionDescriptionNode parent, Map<String, Object> map) {
-        this.root = root;
+    public PermissionDescriptionNode(final PermissionDescriptionNode parent, Map<String, Object> map)
+            throws PermissionDescriptionException, PermissionDescriptionNodeException {
         this.parent = parent;
         this.map = map;
     }
@@ -50,8 +45,8 @@ public abstract class PermissionDescriptionNode {
      */
     public abstract boolean isValid(final Object value);
 
-    public static PermissionDescriptionNode createNode(final PermissionDescription root,
-            final PermissionDescriptionNode parent, final Map<String, Object> map) throws PermissionDescriptionNodeException {
+    public static PermissionDescriptionNode createNode(final PermissionDescriptionNode parent,
+            final Map<String, Object> map) throws PermissionDescriptionNodeException {
         Class<? extends PermissionDescriptionNode> clazz = null;
         
         if (map.containsKey("type")) {
@@ -70,8 +65,8 @@ public abstract class PermissionDescriptionNode {
         }
 
         try {
-            Constructor<? extends PermissionDescriptionNode> ctor = clazz.getConstructor(PermissionDescription.class, PermissionDescriptionNode.class, Map.class);
-            return ctor.newInstance(root, parent, map);
+            Constructor<? extends PermissionDescriptionNode> ctor = clazz.getConstructor(PermissionDescriptionNode.class, Map.class);
+            return ctor.newInstance(parent, map);
         } catch (Exception ex) {
             throw new PermissionDescriptionNodeException(ex);
         }

@@ -34,7 +34,7 @@ public class InvalidDescriptionException extends Exception {
      * @param throwable Exception that triggered this Exception
      */
     public InvalidDescriptionException(final Throwable throwable, final String message) {
-        this.cause = null;
+        this.cause = throwable;
         this.message = message;
     }
 

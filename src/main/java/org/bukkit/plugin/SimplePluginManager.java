@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Listener;
-import org.bukkit.permission.PermissionDescription;
+import org.bukkit.permission.RootPermissionDescription;
 
 /**
  * Handles all plugin management from the Server
@@ -30,7 +30,7 @@ public final class SimplePluginManager implements PluginManager {
     private final Map<Pattern, PluginLoader> fileAssociations = new HashMap<Pattern, PluginLoader>();
     private final List<Plugin> plugins = new ArrayList<Plugin>();
     private final Map<String, Plugin> lookupNames = new HashMap<String, Plugin>();
-    private final Map<String, PermissionDescription> permissions = new HashMap<String, PermissionDescription>();
+    private final Map<String, RootPermissionDescription> permissions = new HashMap<String, RootPermissionDescription>();
     private final Map<Event.Type, PriorityQueue<RegisteredListener>> listeners = 
             new EnumMap<Event.Type, PriorityQueue<RegisteredListener>>(Event.Type.class);
 
@@ -125,7 +125,7 @@ public final class SimplePluginManager implements PluginManager {
             plugins.add(result);
 
             PluginDescriptionFile desc = result.getDescription();
-            PermissionDescription perm = desc.getPermissions();
+            RootPermissionDescription perm = desc.getPermissions();
 
             lookupNames.put(desc.getName(), result);
             
@@ -197,7 +197,7 @@ public final class SimplePluginManager implements PluginManager {
         }
     }
 
-    public PermissionDescription getPermissions(final String path) {
+    public RootPermissionDescription getPermissions(final String path) {
         String root = path.split("\\.", 2)[0];
         return permissions.get(root);
     }

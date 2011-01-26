@@ -6,7 +6,7 @@ import java.io.File;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Listener;
-import org.bukkit.permission.PermissionDescription;
+import org.bukkit.permission.RootPermissionDescription;
 
 /**
  * Handles all plugin management from the Server
@@ -113,10 +113,10 @@ public interface PluginManager {
     public void disablePlugin(Plugin plugin);
 
     /**
-     * Gets the PermissionDescription associated with the given permission path
+     * Gets the RootPermissionDescription associated with the given permission path
      *
      * @param path Permission path to get
-     * @return PermissionDescription registered to the given path, or null if none exist
+     * @return RootPermissionDescription registered to the given path, or null if none exist
      */
-    public PermissionDescription getPermissions(String path);
+    public RootPermissionDescription getPermissions(String path);
 }
