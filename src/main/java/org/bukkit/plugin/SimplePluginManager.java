@@ -205,6 +205,12 @@ public final class SimplePluginManager implements PluginManager {
     public PermissionDescriptionNode getPermissionPath(final String path) {
         RootPermissionDescription root = getPermissionRoot(path);
 
+        /*
+         * TODO: Add a path cache to avoid having to keep searching for nodes
+         * It will be much more efficient. Need to invalidate the cache every time
+         * a plugin changes one of the node descriptions though (not that they should...)
+         */
+
         if (root == null) {
             throw new IllegalArgumentException("No permissions are defined for " + path);
         }

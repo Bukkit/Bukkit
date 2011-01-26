@@ -9,7 +9,8 @@ import java.util.Map;
 public enum PermissionNodeType {
     BOOLEAN(BooleanPermissionDescriptionNode.class),
     INTEGER(IntegerPermissionDescriptionNode.class),
-    MAP(MapPermissionDescriptionNode.class);
+    MAP(MapPermissionDescriptionNode.class),
+    ARRAY(ArrayPermissionDescriptionNode.class);
     
     private final Class<? extends PermissionDescriptionNode> desc;
     private static final Map<String, PermissionNodeType> lookup = new HashMap<String, PermissionNodeType>();

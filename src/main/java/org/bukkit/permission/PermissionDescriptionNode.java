@@ -3,6 +3,7 @@ package org.bukkit.permission;
 
 import java.lang.reflect.Constructor;
 import java.util.Map;
+import org.bukkit.permission.PermissionNodeType;
 
 /**
  * Represents a node of a permission description block

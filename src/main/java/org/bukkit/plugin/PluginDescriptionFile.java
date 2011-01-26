@@ -7,8 +7,6 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.permission.RootPermissionDescription;
 import org.bukkit.permission.PermissionDescriptionException;
 import org.bukkit.permission.PermissionDescriptionNodeException;
