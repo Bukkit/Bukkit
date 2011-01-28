@@ -19,4 +19,9 @@ public interface NoteBlock extends BlockState {
      * @param note
      */
     public void setNote(byte note);
+
+    /**
+     * Plays the noteblock
+     */
+    public void play();
 }
