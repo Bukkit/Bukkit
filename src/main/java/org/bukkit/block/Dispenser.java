@@ -6,4 +6,8 @@ package org.bukkit.block;
  * @author sk89q
  */
 public interface Dispenser extends BlockState, ContainerBlock {
+    /**
+     * Dispense a random block
+     */
+    public void dispense();
 }
