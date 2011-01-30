@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.AsyncEventManager;
 
 /**
  * Represents a server implementation
@@ -67,6 +68,14 @@ public interface Server {
      * @return PluginManager for this Server instance
      */
     public PluginManager getPluginManager();
+
+    /**
+     * Gets the AsyncEventManager for interfacing with plugins from other 
+     * threads.
+     *
+     * @return AsyncEventManager for this Server instance
+     */
+    public AsyncEventManager getAsyncEventManager();
 
     /**
      * Gets a list of all worlds on this server
