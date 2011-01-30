@@ -38,8 +38,7 @@ public abstract class Event {
      * @return Name of this event
      */
     public final String getEventName() {
-        if(type!=Type.CUSTOM_EVENT) return type.toString();
-        else return name;
+        return ( type != Type.CUSTOM_EVENT) ? type.toString() : name;
     }
 
     /**
@@ -364,6 +363,13 @@ public abstract class Event {
         PLUGIN_DISABLE (Category.SERVER),
 
         /**
+         * Called when a server command is called
+         *
+         * @see org.bukkit.event.server.PluginEvent
+         */
+        SERVER_COMMAND (Category.SERVER),
+
+        /**
          * WORLD EVENTS
          */
 
@@ -424,7 +430,7 @@ public abstract class Event {
          * @see org.bukkit.event.entity.EntityDamageByEntityEvent
          */
         ENTITY_DAMAGEDBY_ENTITY (Category.LIVING_ENTITY),
-        
+
         /**
          * Called when a LivingEntity is damaged by a projectile Entity
          *
@@ -452,7 +458,7 @@ public abstract class Event {
          * @todo: add javadoc see comment
          */
         ENTITY_COMBUST (Category.LIVING_ENTITY),
-        
+
         /**
          * Called when an entity explodes, either TNT, Creeper, or Ghast Fireball
          *

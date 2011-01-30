@@ -4,7 +4,7 @@ import org.bukkit.event.Listener;
 
 /**
  * Handles all events thrown in relation to Blocks
- * 
+ *
  * @author durron597
  */
 public class BlockListener implements Listener {
@@ -59,10 +59,10 @@ public class BlockListener implements Listener {
      */
     public void onBlockPlace(BlockPlaceEvent event) {
     }
-    
+
     /**
      * Called when a block is interacted with
-     * 
+     *
      * @param event Relevant event details
      */
     public void onBlockInteract(BlockInteractEvent event) {
@@ -83,7 +83,7 @@ public class BlockListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onBlockRedstoneChange(BlockFromToEvent event) {    	
+    public void onBlockRedstoneChange(BlockFromToEvent event) {
     }
 
     /**
@@ -101,5 +101,4 @@ public class BlockListener implements Listener {
      */
     public void onBlockBurn(BlockBurnEvent event) {
     }
-
 }
