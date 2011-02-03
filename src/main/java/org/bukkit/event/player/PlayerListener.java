@@ -113,4 +113,12 @@ public class PlayerListener implements Listener {
      */
     public void onPlayerDropItem(PlayerDropItemEvent event) {
     }
+
+    /**
+     * Called when a player picks up an item from the ground
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerPickupItem(PlayerPickupItemEvent event) {
+    }
 }

@@ -183,6 +183,11 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((PlayerListener)listener).onPlayerDropItem( (PlayerDropItemEvent)event );
                 }
             };
+        case PLAYER_PICKUP_ITEM:
+            return new EventExecutor() { public void execute( Listener listener, Event event ) {
+                    ((PlayerListener)listener).onPlayerPickupItem( (PlayerPickupItemEvent)event );
+                }
+            };
 
         // Block Events
         case BLOCK_PHYSICS:
