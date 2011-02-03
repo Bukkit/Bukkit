@@ -123,7 +123,7 @@ public abstract class Event {
         /**
          * Any miscellaneous events
          */
-        MISCELLANEOUS;
+        MISCELLANEOUS, FURNANCE;
     }
 
     /**
@@ -547,6 +547,14 @@ public abstract class Event {
          */
         VEHICLE_UPDATE (Category.VEHICLE),
 
+        
+        FURNANCE_MATERIAL (Category.FURNANCE), 
+        
+        
+        FURNANCE_RESULT (Category.FURNANCE), 
+        
+        
+        FURNANCE_BURN_MATERIAL (Category.FURNANCE),
         /**
          * MISCELLANEOUS EVENTS
          */
