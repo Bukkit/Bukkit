@@ -18,6 +18,11 @@ import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.furnance.FurnanceAddBurnMaterialEvent;
+import org.bukkit.event.furnance.FurnanceAddRawMaterial;
+import org.bukkit.event.furnance.FurnanceEvent;
+import org.bukkit.event.furnance.FurnanceListener;
+import org.bukkit.event.furnance.FurnanceProduceResultEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.*;
 import org.bukkit.event.vehicle.*;
@@ -355,6 +360,28 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((VehicleListener)listener).onVehicleUpdate((VehicleEvent)event);
                 }
             };
+            
+        case FURNANCE_BURN_MATERIAL:
+        	EventExecutor ee =  new EventExecutor() { public void execute(Listener listener, Event event) {    			
+                    ((FurnanceListener)listener).onFurnanceAddFuel((FurnanceAddBurnMaterialEvent)event);
+        		}				
+			};
+			System.out.println(ee);
+			return ee;
+			
+        case FURNANCE_MATERIAL:
+        	return new EventExecutor() { public void execute(Listener listener, Event event) {
+                    ((FurnanceListener)listener).onFurnanceAddRawMaterial((FurnanceAddRawMaterial)event);
+        		}				
+			};
+				
+        case FURNANCE_RESULT:
+        	return new EventExecutor() { public void execute(Listener listener, Event event) {
+        			((FurnanceListener)listener).onFurnanceProduceResult((FurnanceProduceResultEvent)event);
+    			}				
+        	};
+
+
 
         // Custom Events
         case CUSTOM_EVENT:

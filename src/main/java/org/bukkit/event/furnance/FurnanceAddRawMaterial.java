@@ -1,5 +1,6 @@
 package org.bukkit.event.furnance;
 
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event.Type;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
  * @author sheepy
  *
  */
-public class FurnanceAddRawMaterial extends FurnanceEvent {
+public class FurnanceAddRawMaterial extends FurnanceEvent implements Cancellable {
 
     private boolean 	_cancel;
     private boolean 	_burnable;

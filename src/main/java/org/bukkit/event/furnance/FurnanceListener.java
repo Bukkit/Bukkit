@@ -4,7 +4,11 @@ import org.bukkit.event.Listener;
 
 public class FurnanceListener implements Listener {
 
-	public void onFurnanceAddFuel(FurnanceAddRawMaterial fafe){
+	public FurnanceListener(){
+		
+	}
+	
+	public void onFurnanceAddFuel(FurnanceAddBurnMaterialEvent fafe){
 		
 	}
 	
@@ -13,6 +17,8 @@ public class FurnanceListener implements Listener {
 		
 	}
 	
-	
+	public void onFurnanceAddRawMaterial(FurnanceAddRawMaterial farm){
+		
+	}
 	
 }

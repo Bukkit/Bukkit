@@ -1,9 +1,10 @@
 package org.bukkit.event.furnance;
 
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event.Type;
 import org.bukkit.inventory.ItemStack;
 
-public class FurnanceProduceResultEvent extends FurnanceEvent {
+public class FurnanceProduceResultEvent extends FurnanceEvent implements Cancellable {
 
 	private boolean _cancel;
 	private ItemStack _rawItemStack;
