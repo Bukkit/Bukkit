@@ -362,12 +362,10 @@ public final class JavaPluginLoader implements PluginLoader {
             };
             
         case FURNANCE_BURN_MATERIAL:
-        	EventExecutor ee =  new EventExecutor() { public void execute(Listener listener, Event event) {    			
+        	return new EventExecutor() { public void execute(Listener listener, Event event) {    			
                     ((FurnanceListener)listener).onFurnanceAddFuel((FurnanceAddBurnMaterialEvent)event);
         		}				
 			};
-			System.out.println(ee);
-			return ee;
 			
         case FURNANCE_MATERIAL:
         	return new EventExecutor() { public void execute(Listener listener, Event event) {

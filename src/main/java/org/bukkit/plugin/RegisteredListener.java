@@ -57,10 +57,6 @@ public class RegisteredListener {
      * @return Registered Priority
      */
     public void callEvent(Event event) {
-    	System.out.println("CallEvent");
-    	System.out.println(executor);
-    	System.out.println(listener);
-    	System.out.println(event);
         executor.execute( listener, event );
     }
 }

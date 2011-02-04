@@ -210,7 +210,6 @@ public final class SimplePluginManager implements PluginManager {
             for (RegisteredListener registration : eventListeners) {
                 // NOTE: no need to check isEnabled as all disabled plugins have their listeners disabled
                 try {
-                	System.out.println(registration);
                     registration.callEvent( event );
                 } catch (Throwable ex) {
                     Logger.getLogger(SimplePluginManager.class.getName()).log(Level.SEVERE, "Could not pass event " + event.getType() + " to " + registration.getPlugin().getDescription().getName(), ex);
