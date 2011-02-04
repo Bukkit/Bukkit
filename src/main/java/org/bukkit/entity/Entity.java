@@ -35,7 +35,7 @@ public interface Entity {
      * @param damageAmount
      * @param damageSource
      */
-    public void damage(int damageAmount, Entity damageSource);
+    public void damage(int damageAmount, net.minecraft.server.Entity damageSource);
     
     /**
      * Removes the entity from world
