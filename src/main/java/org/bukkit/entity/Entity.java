@@ -23,6 +23,26 @@ public interface Entity {
     public World getWorld();
 
     /**
+     * Deals the given amount of damage to the entity
+     * 
+     * @param damageAmount
+     */
+    public void damage(int damageAmount);
+    
+    /**
+     * Deals the given amount of damage to the entity
+     * 
+     * @param damageAmount
+     * @param damageSource
+     */
+    public void damage(int damageAmount, Entity damageSource);
+    
+    /**
+     * Removes the entity from world
+     */
+    public void remove();
+    
+    /**
      * Teleports this entity to the given location
      *
      * @param location New location to teleport this entity to
