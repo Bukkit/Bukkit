@@ -18,11 +18,11 @@ import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
-import org.bukkit.event.furnance.FurnanceAddBurnMaterialEvent;
-import org.bukkit.event.furnance.FurnanceAddRawMaterial;
-import org.bukkit.event.furnance.FurnanceEvent;
-import org.bukkit.event.furnance.FurnanceListener;
-import org.bukkit.event.furnance.FurnanceProduceResultEvent;
+import org.bukkit.event.furnace.FurnaceFuelEvent;
+import org.bukkit.event.furnace.FurnaceMaterialEvent;
+import org.bukkit.event.furnace.FurnaceEvent;
+import org.bukkit.event.furnace.FurnaceListener;
+import org.bukkit.event.furnace.FurnaceTransformationEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.*;
 import org.bukkit.event.vehicle.*;
@@ -361,21 +361,21 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
             
-        case FURNANCE_BURN_MATERIAL:
+        case FURNACE_FUEL:
         	return new EventExecutor() { public void execute(Listener listener, Event event) {    			
-                    ((FurnanceListener)listener).onFurnanceAddFuel((FurnanceAddBurnMaterialEvent)event);
+                    ((FurnaceListener)listener).onFurnanceAddFuel((FurnaceFuelEvent)event);
         		}				
 			};
 			
-        case FURNANCE_MATERIAL:
+        case FURNACE_MATERIAL_CHECK:
         	return new EventExecutor() { public void execute(Listener listener, Event event) {
-                    ((FurnanceListener)listener).onFurnanceAddRawMaterial((FurnanceAddRawMaterial)event);
+                    ((FurnaceListener)listener).onFurnanceAddRawMaterial((FurnaceMaterialEvent)event);
         		}				
 			};
 				
-        case FURNANCE_RESULT:
+        case FURNACE_TRANSFORMATION:
         	return new EventExecutor() { public void execute(Listener listener, Event event) {
-        			((FurnanceListener)listener).onFurnanceProduceResult((FurnanceProduceResultEvent)event);
+        			((FurnaceListener)listener).onFurnanceProduceResult((FurnaceTransformationEvent)event);
     			}				
         	};
 

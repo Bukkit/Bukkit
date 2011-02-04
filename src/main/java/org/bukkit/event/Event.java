@@ -547,14 +547,27 @@ public abstract class Event {
          */
         VEHICLE_UPDATE (Category.VEHICLE),
 
+        /**
+         * Called when a furnace material should be checked whether it can be transformed or not
+         *
+         * @see org.bukkit.event.furnace.FurnaceMaterialEvent
+         */
+        FURNACE_MATERIAL_CHECK (Category.FURNANCE), 
         
-        FURNANCE_MATERIAL (Category.FURNANCE), 
+        /**
+         * Called when a transformation should be done in a furnace
+         * 
+         * @see org.bukkit.event.furnace.FurnaceTransformationEvent
+         */
+        FURNACE_TRANSFORMATION (Category.FURNANCE), 
         
+        /**
+         * Called when the time of a fuel should be determined 
+         * 
+         * @see org.bukkit.event.furnace.FurnaceFuelEvent
+         */
+        FURNACE_FUEL (Category.FURNANCE),
         
-        FURNANCE_RESULT (Category.FURNANCE), 
-        
-        
-        FURNANCE_BURN_MATERIAL (Category.FURNANCE),
         /**
          * MISCELLANEOUS EVENTS
          */

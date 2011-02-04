@@ -1,16 +1,22 @@
-package org.bukkit.event.furnance;
+package org.bukkit.event.furnace;
 
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event.Type;
 import org.bukkit.inventory.ItemStack;
 
-public class FurnanceProduceResultEvent extends FurnanceEvent implements Cancellable {
+/**
+ * This Event is called when a Material should be transformed into a Result ItemStack
+ * When this Event is canceled the _rawItemStack.count will be reduced by 1
+ * and the _resultItemStack will be produced with the count given in this ItemStack
+ * @author sheepy 
+ */
+public class FurnaceTransformationEvent extends FurnaceEvent implements Cancellable {
 
-	private boolean _cancel;
-	private ItemStack _rawItemStack;
-	private ItemStack _resultItemStack;
+	private boolean 	_cancel;
+	private ItemStack 	_rawItemStack;
+	private ItemStack 	_resultItemStack;
 
-	public FurnanceProduceResultEvent(Type type) {
+	public FurnaceTransformationEvent(Type type) {
 		super(type);
 		_cancel = false;
 	}
