@@ -37,10 +37,12 @@ public class YamlPluginDescription extends PluginDescription {
      * @param writer Writer to output this file to
      */
     public void save(Writer writer) {
-        yaml.dump(saveMap(), writer);
+        Map<String, Object> map = new HashMap<String, Object>();
+        saveMap(map);
+        yaml.dump(map, writer);
     }
 
-    private void loadMap(Map<String, Object> map) throws InvalidDescriptionException {
+    protected void loadMap(Map<String, Object> map) throws InvalidDescriptionException {
         try {
             name = map.get("name").toString();
         } catch (NullPointerException ex) {
@@ -107,8 +109,7 @@ public class YamlPluginDescription extends PluginDescription {
         }
     }
 
-    private Map<String, Object> saveMap() {
-        Map<String, Object> map = new HashMap<String, Object>();
+    protected void saveMap(Map<String, Object> map) {
         map.put("name", name);
         map.put("main", main);
         map.put("version", version);
@@ -122,8 +123,6 @@ public class YamlPluginDescription extends PluginDescription {
         } else if (authors.size() > 1) {
             map.put("authors", authors);
         }
-
-        return map;
     }
 
     @SuppressWarnings("unchecked")
