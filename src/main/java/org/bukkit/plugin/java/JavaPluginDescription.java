@@ -1,7 +1,6 @@
 package org.bukkit.plugin.java;
 
 import java.io.InputStream;
-import java.io.Reader;
 import java.util.Map;
 
 import org.bukkit.plugin.InvalidDescriptionException;
@@ -12,10 +11,6 @@ public final class JavaPluginDescription extends YamlPluginDescription {
 
     public JavaPluginDescription(final InputStream stream) throws InvalidDescriptionException {
         super(stream);
-    }
-
-    public JavaPluginDescription(final Reader reader) throws InvalidDescriptionException {
-        super(reader);
     }
 
     /**

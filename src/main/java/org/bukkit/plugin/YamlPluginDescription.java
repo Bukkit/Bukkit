@@ -1,7 +1,6 @@
 package org.bukkit.plugin;
 
 import java.io.InputStream;
-import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,15 +19,6 @@ public class YamlPluginDescription extends PluginDescription {
     @SuppressWarnings("unchecked")
     public YamlPluginDescription(final InputStream stream) throws InvalidDescriptionException {
         loadMap((Map<String, Object>)yaml.load(stream));
-    }
-
-    /**
-     * Loads a PluginDescriptionFile from the specified reader
-     * @param reader
-     */
-    @SuppressWarnings("unchecked")
-    public YamlPluginDescription(final Reader reader) throws InvalidDescriptionException {
-        loadMap((Map<String, Object>)yaml.load(reader));
     }
 
     /**
