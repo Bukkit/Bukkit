@@ -57,7 +57,7 @@ public final class JavaPluginLoader implements PluginLoader {
             }
 
             InputStream stream = jar.getInputStream(entry);
-            description = new PluginDescription(stream);
+            description = new YamlPluginDescription(stream);
 
             stream.close();
             jar.close();
