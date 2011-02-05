@@ -7,7 +7,7 @@ import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginDescription;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.util.config.Configuration;
 
@@ -20,7 +20,7 @@ public abstract class JavaPlugin implements Plugin {
     private PluginLoader loader = null;
     private Server server = null;
     private File file = null;
-    private PluginDescriptionFile description = null;
+    private PluginDescription description = null;
     private File dataFolder = null;
     private ClassLoader classLoader = null;
     private Configuration config = null;
@@ -36,7 +36,7 @@ public abstract class JavaPlugin implements Plugin {
      * @param cLoader ClassLoader which holds this plugin
      */
     public JavaPlugin(PluginLoader pluginLoader, Server instance,
-            PluginDescriptionFile desc, File folder, File plugin,
+            PluginDescription desc, File folder, File plugin,
             ClassLoader cLoader) {
         initialize(pluginLoader, instance, desc, folder, plugin, cLoader);
         
@@ -102,7 +102,7 @@ public abstract class JavaPlugin implements Plugin {
      *
      * @return Contents of the plugin.yaml file
      */
-    public PluginDescriptionFile getDescription() {
+    public PluginDescription getDescription() {
         return description;
     }
 
@@ -164,7 +164,7 @@ public abstract class JavaPlugin implements Plugin {
      * @param classLoader ClassLoader which holds this plugin
      */
     protected final void initialize(PluginLoader loader, Server server,
-            PluginDescriptionFile description, File dataFolder, File file,
+            PluginDescription description, File dataFolder, File file,
             ClassLoader classLoader) {
         if (!initialized) {
             this.initialized = true;

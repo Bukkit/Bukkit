@@ -9,7 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Server;
 
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginDescription;
 
 public final class SimpleCommandMap implements CommandMap {
     private final Map<String, Command> knownCommands = new HashMap<String, Command>();
@@ -121,7 +121,7 @@ public final class SimpleCommandMap implements CommandMap {
                 Plugin plugin = server.getPluginManager().getPlugin(name.toString());
 
                 if (plugin != null) {
-                    PluginDescriptionFile desc = plugin.getDescription();
+                    PluginDescription desc = plugin.getDescription();
                     sender.sendMessage(ChatColor.GREEN + desc.getName() + ChatColor.WHITE + " version " + ChatColor.GREEN + desc.getVersion());
 
                     if (desc.getDescription() != null) {
@@ -148,7 +148,7 @@ public final class SimpleCommandMap implements CommandMap {
             return true;
         }
 
-        private String getAuthors(final PluginDescriptionFile desc) {
+        private String getAuthors(final PluginDescription desc) {
             StringBuilder result = new StringBuilder();
             ArrayList<String> authors = desc.getAuthors();
 

@@ -43,7 +43,7 @@ public final class JavaPluginLoader implements PluginLoader {
 
     public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException {
         JavaPlugin result = null;
-        PluginDescriptionFile description = null;
+        PluginDescription description = null;
 
         if (!file.exists()) {
             throw new InvalidPluginException(new FileNotFoundException(String.format("%s does not exist", file.getPath())));
@@ -57,7 +57,7 @@ public final class JavaPluginLoader implements PluginLoader {
             }
 
             InputStream stream = jar.getInputStream(entry);
-            description = new PluginDescriptionFile(stream);
+            description = new PluginDescription(stream);
 
             stream.close();
             jar.close();
@@ -73,7 +73,7 @@ public final class JavaPluginLoader implements PluginLoader {
             Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
 
             try {
-                Constructor<? extends JavaPlugin> constructor = plugin.getConstructor(PluginLoader.class, Server.class, PluginDescriptionFile.class, File.class, File.class, ClassLoader.class);
+                Constructor<? extends JavaPlugin> constructor = plugin.getConstructor(PluginLoader.class, Server.class, PluginDescription.class, File.class, File.class, ClassLoader.class);
                 result = constructor.newInstance(this, server, description, dataFolder, file, loader);
             } catch (NoSuchMethodException ex) {
                 Constructor<? extends JavaPlugin> constructor = plugin.getConstructor();

@@ -24,7 +24,7 @@ public interface Plugin {
      *
      * @return Contents of the plugin.yaml file
      */
-    public PluginDescriptionFile getDescription();
+    public PluginDescription getDescription();
 
     /**
      * Returns the main configuration file. It should be loaded.

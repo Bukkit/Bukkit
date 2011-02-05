@@ -1,4 +1,3 @@
-
 package org.bukkit.plugin;
 
 import java.io.InputStream;
@@ -12,9 +11,9 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 /**
- * Provides access to a Plugins description file, plugin.yaml
+ * Encapsulates description and other metadata on a plugin.
  */
-public final class PluginDescriptionFile {
+public final class PluginDescription {
     private static final Yaml yaml = new Yaml(new SafeConstructor());
     private String name = null;
     private String main = null;
@@ -25,7 +24,7 @@ public final class PluginDescriptionFile {
     private String website = null;
 
     @SuppressWarnings("unchecked")
-    public PluginDescriptionFile(final InputStream stream) throws InvalidDescriptionException {
+    public PluginDescription(final InputStream stream) throws InvalidDescriptionException {
         loadMap((Map<String, Object>)yaml.load(stream));
     }
 
@@ -34,7 +33,7 @@ public final class PluginDescriptionFile {
      * @param reader
      */
     @SuppressWarnings("unchecked")
-    public PluginDescriptionFile(final Reader reader) throws InvalidDescriptionException {
+    public PluginDescription(final Reader reader) throws InvalidDescriptionException {
         loadMap((Map<String, Object>)yaml.load(reader));
     }
 
@@ -44,7 +43,7 @@ public final class PluginDescriptionFile {
      * @param pluginName Name of this plugin
      * @param mainClass Full location of the main class of this plugin
      */
-    public PluginDescriptionFile(final String pluginName, final String pluginVersion, final String mainClass) {
+    public PluginDescription(final String pluginName, final String pluginVersion, final String mainClass) {
         name = pluginName;
         version = pluginVersion;
         main = mainClass;
