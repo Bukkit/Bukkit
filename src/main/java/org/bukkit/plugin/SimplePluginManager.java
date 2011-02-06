@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -188,6 +189,7 @@ public final class SimplePluginManager implements PluginManager {
      */
     public void disablePlugin(final Plugin plugin) {
         plugin.getDescription().getLoader().disablePlugin(plugin);
+        clearEvents(plugin);
         commandMap.clearCommands(plugin);
         server.getScheduler().cancelTasks(plugin);
     }
@@ -262,6 +264,24 @@ public final class SimplePluginManager implements PluginManager {
         eventListeners = new TreeSet<RegisteredListener>(comparer);
         listeners.put(type, eventListeners);
         return eventListeners;
+    }
+
+
+    /**
+     * Clears all events for a specific plugin.
+     *
+     * @param plugin The plugin to filter on.
+     */
+    private void clearEvents(Plugin plugin) {
+        for (PriorityQueue<RegisteredListener> eventListeners : listeners.values()) {
+            Iterator<RegisteredListener> iterator = eventListeners.iterator();
+            while (iterator.hasNext()) {
+                RegisteredListener listener = iterator.next();
+                if (listener.getPlugin() == plugin) {
+                    iterator.remove();
+                }
+            }
+        }
     }
 
     public CommandMap getCommandMap() {
