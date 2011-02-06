@@ -33,8 +33,7 @@ public final class SimplePluginManager implements PluginManager {
     private final File pluginFolder;
     private final CommandMap commandMap;
     private final Map<Pattern, PluginLoader> fileAssociations = new HashMap<Pattern, PluginLoader>();
-    private final List<Plugin> plugins = new ArrayList<Plugin>();
-    private final Map<String, Plugin> lookupNames = new HashMap<String, Plugin>();
+    private final Map<String, Plugin> plugins = new HashMap<String, Plugin>();
     private final Map<Event.Type, SortedSet<RegisteredListener>> listeners = new EnumMap<Event.Type, SortedSet<RegisteredListener>>(Event.Type.class);
     private final Comparator<RegisteredListener> comparer = new Comparator<RegisteredListener>() {
         public int compare(RegisteredListener i, RegisteredListener j) {
@@ -126,11 +125,11 @@ public final class SimplePluginManager implements PluginManager {
      * @return Plugin if it exists, otherwise null
      */
     public Plugin getPlugin(String name) {
-        return lookupNames.get(name);
+        return plugins.get(name);
     }
 
     public Plugin[] getPlugins() {
-        return plugins.toArray(new Plugin[0]);
+        return plugins.values().toArray(new Plugin[0]);
     }
 
     public Plugin enablePlugin(final File file) throws InvalidDescriptionException, InvalidPluginException {
@@ -150,8 +149,7 @@ public final class SimplePluginManager implements PluginManager {
         }
 
         if (plugin != null) {
-            plugins.add(plugin);
-            lookupNames.put(plugin.getDescription().getName(), plugin);
+            plugins.put(plugin.getDescription().getName(), plugin);
         }
 
         return plugin;
@@ -172,7 +170,6 @@ public final class SimplePluginManager implements PluginManager {
         synchronized (this) {
             disablePlugins();
             plugins.clear();
-            lookupNames.clear();
             listeners.clear();
             commandMap.clearCommands();
         }
