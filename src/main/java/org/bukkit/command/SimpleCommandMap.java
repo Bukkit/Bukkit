@@ -21,9 +21,9 @@ public final class SimpleCommandMap implements CommandMap {
     }
 
     private void setDefaultCommands(final Server server) {
-        register("bukkit", new VersionCommand("version", server));
-        register("bukkit", new ReloadCommand("reload", server));
-        register("bukkit", new PluginsCommand("plugins",server));
+        register("bukkit", new VersionCommand(server));
+        register("bukkit", new ReloadCommand(server));
+        register("bukkit", new PluginsCommand(server));
     }
 
     /**
@@ -94,8 +94,8 @@ public final class SimpleCommandMap implements CommandMap {
     private static class VersionCommand extends Command {
         private final Server server;
 
-        public VersionCommand(String name, Server server) {
-            super(name);
+        public VersionCommand(Server server) {
+            super(null, "version");
             this.server = server;
             this.tooltip = "Gets the version of this server including any plugins in use";
             this.usageMessage = "/version [plugin name]";
@@ -175,8 +175,8 @@ public final class SimpleCommandMap implements CommandMap {
 
         private final Server server;
 
-        public ReloadCommand(String name, Server server) {
-            super(name);
+        public ReloadCommand(Server server) {
+            super(null, "reload");
             this.server = server;
             this.tooltip = "Reloads the server configuration and plugins";
             this.usageMessage = "/reload";
@@ -199,8 +199,8 @@ public final class SimpleCommandMap implements CommandMap {
         
         private final Server server;
         
-        public PluginsCommand(String name, Server server) {
-            super(name);
+        public PluginsCommand(Server server) {
+            super(null, "plugins");
             this.server = server;
             this.tooltip = "Gets a list of plugins running on the server";
             this.usageMessage = "/plugins";

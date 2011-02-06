@@ -118,11 +118,11 @@ public abstract class YamlPluginDescription extends PluginDescription {
      *
      * The arguments are extracted from the YAML input.
      *
-     * @param name The primary command name
      * @param plugin The plugin to create the command for
+     * @param name The primary command name
      * @return The new Command instance
      */
-    protected abstract Command createCommand(String name, Plugin plugin);
+    protected abstract Command createCommand(Plugin plugin, String name);
 
     /**
      * Build Command instances for the command descriptions
@@ -140,7 +140,7 @@ public abstract class YamlPluginDescription extends PluginDescription {
         }
 
         for(Entry<String, Map<String, Object>> entry : commands.entrySet()) {
-            Command newCmd = createCommand(entry.getKey(), plugin);
+            Command newCmd = createCommand(plugin, entry.getKey());
             Object description = entry.getValue().get("description");
             Object usage = entry.getValue().get("usage");
             Object aliases = entry.getValue().get("aliases");

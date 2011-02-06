@@ -74,7 +74,7 @@ public final class JavaPluginDescription extends YamlPluginDescription {
         map.put("main", main);
     }
 
-    protected Command createCommand(String name, Plugin plugin) {
-        return new JavaPluginCommand(name, plugin);
+    protected Command createCommand(Plugin plugin, String name) {
+        return new JavaPluginCommand(plugin, name);
     }
 }
