@@ -15,7 +15,7 @@ import org.bukkit.plugin.PluginDescription;
 public abstract class JavaPlugin implements Plugin {
     private boolean initialized = false;
     private Server server = null;
-    private PluginDescription description = null;
+    private JavaPluginDescription description = null;
 
     /**
      * Constructs a new Java plugin instance
@@ -23,11 +23,10 @@ public abstract class JavaPlugin implements Plugin {
      * @param instance Server instance that is running this plugin
      * @param desc PluginDescriptionFile containing metadata on this plugin
      */
-    public JavaPlugin(Server instance, PluginDescription desc) {
+    public JavaPlugin(Server instance, JavaPluginDescription desc) {
         initialize(instance, desc);
         
-        JavaPluginDescription jDesc = (JavaPluginDescription)desc;
-        server.getLogger().warning("Using the stupidly long constructor " + jDesc.getMain() + "(PluginLoader, Server, PluginDescriptionFile, File, File, ClassLoader) is no longer recommended. Go nag the plugin author of " + jDesc.getName() + " to remove it! (Nothing is broken, we just like to keep code clean.)");
+        server.getLogger().warning("Using the stupidly long constructor " + desc.getMain() + "(PluginLoader, Server, PluginDescriptionFile, File, File, ClassLoader) is no longer recommended. Go nag the plugin author of " + desc.getName() + " to remove it! (Nothing is broken, we just like to keep code clean.)");
 
         ArrayList<String> authors = desc.getAuthors();
         if (authors.size() > 0) {
@@ -89,7 +88,7 @@ public abstract class JavaPlugin implements Plugin {
      * @param file File containing this plugin
      * @param classLoader ClassLoader which holds this plugin
      */
-    protected final void initialize(Server server, PluginDescription description) {
+    protected final void initialize(Server server, JavaPluginDescription description) {
         if (initialized) {
             throw new UnsupportedOperationException("Cannot reinitialize a plugin");
         }

@@ -411,7 +411,7 @@ public final class JavaPluginLoader implements PluginLoader {
             Class<? extends JavaPlugin> pluginClass = jarClass.asSubclass(JavaPlugin.class);
 
             try {
-                Constructor<? extends JavaPlugin> constructor = pluginClass.getConstructor(Server.class, PluginDescription.class);
+                Constructor<? extends JavaPlugin> constructor = pluginClass.getConstructor(Server.class, JavaPluginDescription.class);
                 plugin = constructor.newInstance(server, description);
             } catch (NoSuchMethodException ex) {
                 Constructor<? extends JavaPlugin> constructor = pluginClass.getConstructor();
