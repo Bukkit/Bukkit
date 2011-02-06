@@ -288,7 +288,7 @@ public final class SimplePluginManager implements PluginManager {
         return eventListeners;
     }
 
-    public boolean dispatchCommand(CommandSender sender, String commandLine) {
-        return commandMap.dispatch(sender, commandLine);
+    public CommandMap getCommandMap() {
+        return commandMap;
     }
 }

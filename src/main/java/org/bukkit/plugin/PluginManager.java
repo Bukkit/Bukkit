@@ -3,6 +3,7 @@ package org.bukkit.plugin;
 
 import java.io.File;
 
+import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
@@ -133,5 +134,10 @@ public interface PluginManager {
      */
     public void disablePlugin(Plugin plugin);
 
-    public boolean dispatchCommand(CommandSender sender, String commandLine);
+    /**
+     * Get the command map used to keep track of plugin commands
+     *
+     * @return A CommandMap instance
+     */
+    public CommandMap getCommandMap();
 }
