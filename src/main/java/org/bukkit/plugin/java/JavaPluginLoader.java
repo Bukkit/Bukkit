@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
 import org.bukkit.Server;
+import org.bukkit.command.Command;
 import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -395,9 +397,15 @@ public final class JavaPluginLoader implements PluginLoader {
         }
 
         if (!plugin.isEnabled()) {
+            PluginManager pm = server.getPluginManager();
             JavaPlugin jPlugin = (JavaPlugin)plugin;
 
-            server.getPluginManager().callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
+            pm.callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
+
+            List<Command> pluginCommands = YamlPluginDescription.parse(plugin);
+            if (!pluginCommands.isEmpty()) {
+                pm.getCommandMap().registerAll(plugin.getDescription().getName(), pluginCommands);
+            }
 
             jPlugin.setEnabled(true);
         }

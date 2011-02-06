@@ -191,11 +191,6 @@ public final class SimplePluginManager implements PluginManager {
     public void enablePlugin(final Plugin plugin) {
         if (!plugin.isEnabled()) {
             plugin.getDescription().getLoader().enablePlugin(plugin);
-
-            List<Command> pluginCommands = YamlPluginDescription.parse(plugin);
-            if (!pluginCommands.isEmpty()) {
-                commandMap.registerAll(plugin.getDescription().getName(), pluginCommands);
-            }
         }
     }
 
