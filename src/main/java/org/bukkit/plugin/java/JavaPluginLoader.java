@@ -43,7 +43,7 @@ public final class JavaPluginLoader implements PluginLoader {
 
     public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException {
         JavaPlugin result = null;
-        PluginDescription description = null;
+        JavaPluginDescription description = null;
 
         if (!file.exists()) {
             throw new InvalidPluginException(new FileNotFoundException(String.format("%s does not exist", file.getPath())));
@@ -57,7 +57,7 @@ public final class JavaPluginLoader implements PluginLoader {
             }
 
             InputStream stream = jar.getInputStream(entry);
-            description = new YamlPluginDescription(stream);
+            description = new JavaPluginDescription(stream);
 
             stream.close();
             jar.close();

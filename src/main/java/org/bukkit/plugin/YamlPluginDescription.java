@@ -59,14 +59,6 @@ public class YamlPluginDescription extends PluginDescription {
             throw new InvalidDescriptionException(ex, "version is of wrong type");
         }
 
-        try {
-            main = map.get("main").toString();
-        } catch (NullPointerException ex) {
-            throw new InvalidDescriptionException(ex, "main is not defined");
-        } catch (ClassCastException ex) {
-            throw new InvalidDescriptionException(ex, "main is of wrong type");
-        }
-
         if (map.containsKey("commands")) {
             try {
                 commands = map.get("commands");
@@ -111,7 +103,6 @@ public class YamlPluginDescription extends PluginDescription {
 
     protected void saveMap(Map<String, Object> map) {
         map.put("name", name);
-        map.put("main", main);
         map.put("version", version);
 
         if (commands != null) map.put("command", commands);

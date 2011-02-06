@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public abstract class PluginDescription {
     protected String name;
-    protected String main;
     protected String version;
     protected Object commands;
     protected String description;
@@ -42,15 +41,6 @@ public abstract class PluginDescription {
      */
     public String getFullName() {
         return name + " v" + version;
-    }
-
-    /**
-     * Returns the main class for a plugin
-     *
-     * @return Java classpath
-     */
-    public String getMain() {
-        return main;
     }
 
     public Object getCommands() {
