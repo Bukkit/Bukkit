@@ -3,6 +3,7 @@ package org.bukkit.plugin;
 
 import java.io.File;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Listener;
@@ -131,4 +132,6 @@ public interface PluginManager {
      * @param plugin Plugin to disable
      */
     public void disablePlugin(Plugin plugin);
+
+    public boolean dispatchCommand(CommandSender sender, String commandLine);
 }

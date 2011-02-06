@@ -18,6 +18,10 @@ import java.util.regex.Matcher;
 import org.bukkit.Server;
 import java.util.regex.Pattern;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Listener;
@@ -27,6 +31,7 @@ import org.bukkit.event.Listener;
  */
 public final class SimplePluginManager implements PluginManager {
     private final Server server;
+    private final CommandMap commandMap;
     private final Map<Pattern, PluginLoader> fileAssociations = new HashMap<Pattern, PluginLoader>();
     private final List<Plugin> plugins = new ArrayList<Plugin>();
     private final Map<String, Plugin> lookupNames = new HashMap<String, Plugin>();
@@ -43,8 +48,9 @@ public final class SimplePluginManager implements PluginManager {
         }
     };
 
-    public SimplePluginManager(Server instance) {
-        server = instance;
+    public SimplePluginManager(Server server) {
+        this.server = server;
+        this.commandMap = new SimpleCommandMap(server);
     }
 
     /**
@@ -185,6 +191,11 @@ public final class SimplePluginManager implements PluginManager {
     public void enablePlugin(final Plugin plugin) {
         if (!plugin.isEnabled()) {
             plugin.getDescription().getLoader().enablePlugin(plugin);
+
+            List<Command> pluginCommands = YamlPluginDescription.parse(plugin);
+            if (!pluginCommands.isEmpty()) {
+                commandMap.registerAll(plugin.getDescription().getName(), pluginCommands);
+            }
         }
     }
 
@@ -207,6 +218,7 @@ public final class SimplePluginManager implements PluginManager {
             plugins.clear();
             lookupNames.clear();
             listeners.clear();
+            commandMap.clearCommands();
         }
     }
 
@@ -274,5 +286,9 @@ public final class SimplePluginManager implements PluginManager {
         eventListeners = new TreeSet<RegisteredListener>(comparer);
         listeners.put(type, eventListeners);
         return eventListeners;
+    }
+
+    public boolean dispatchCommand(CommandSender sender, String commandLine) {
+        return commandMap.dispatch(sender, commandLine);
     }
 }
