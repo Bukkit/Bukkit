@@ -23,6 +23,7 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.event.server.PluginEvent;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
@@ -177,6 +178,9 @@ public final class SimplePluginManager implements PluginManager {
             return null;
         }
         plugins.put(description.getName(), plugin);
+
+        callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
+
         return plugin;
     }
 
@@ -193,7 +197,10 @@ public final class SimplePluginManager implements PluginManager {
      * {@inheritDoc}
      */
     public void disablePlugin(final Plugin plugin) {
+        callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
+
         plugin.getDescription().getLoader().disablePlugin(plugin);
+
         clearEvents(plugin);
         commandMap.clearCommands(plugin);
         server.getScheduler().cancelTasks(plugin);

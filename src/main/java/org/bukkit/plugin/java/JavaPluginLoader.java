@@ -14,6 +14,7 @@ import java.util.jar.JarFile;
 import java.util.regex.Pattern;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
 import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -392,13 +393,10 @@ public final class JavaPluginLoader implements PluginLoader {
             throw new InvalidPluginException(ex);
         }
 
-        PluginManager pm = server.getPluginManager();
-
-        pm.callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
-
         List<Command> pluginCommands = description.buildCommands(plugin);
         if (!pluginCommands.isEmpty()) {
-            pm.getCommandMap().registerAll(plugin.getDescription().getName(), pluginCommands);
+            final CommandMap commandMap = server.getPluginManager().getCommandMap();
+            commandMap.registerAll(plugin.getDescription().getName(), pluginCommands);
         }
 
         plugin.onEnable();
@@ -413,8 +411,6 @@ public final class JavaPluginLoader implements PluginLoader {
         JavaPlugin jPlugin = (JavaPlugin)plugin;
         JavaPluginDescription description = (JavaPluginDescription)plugin.getDescription();
         ClassLoader cloader = description.getClassLoader();
-
-        server.getPluginManager().callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
 
         jPlugin.onDisable();
 
