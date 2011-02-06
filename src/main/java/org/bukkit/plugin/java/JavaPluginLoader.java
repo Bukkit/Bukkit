@@ -1,6 +1,7 @@
 package org.bukkit.plugin.java;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -348,6 +349,9 @@ public final class JavaPluginLoader implements PluginLoader {
         throw new IllegalArgumentException( "Event " + type + " is not supported" );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public PluginDescription readDescription(File file) throws InvalidDescriptionException {
         JavaPluginDescription result = null;
 
@@ -362,10 +366,36 @@ public final class JavaPluginLoader implements PluginLoader {
             }
 
             InputStream stream = jar.getInputStream(entry);
-            result = new JavaPluginDescription(this, file, stream);
+            result = new JavaPluginDescription(this, file, stream, false);
 
             stream.close();
             jar.close();
+        } catch (IOException ex) {
+            throw new InvalidDescriptionException(ex);
+        }
+        return result;
+    }
+
+    /**
+     * Similar to readDescription, but for system plugins.
+     *
+     * This builds a PluginDescription for a system plugin. Because a system
+     * plugin does not have a containing JAR file, the file points directly
+     * to the YAML description file.
+     *
+     * @param file The YAML description file
+     * @return A filled PluginDescription object
+     * @throws InvalidDescriptionException Thrown when the metadata was not understood
+     */
+    public PluginDescription readSystemPluginDescription(File file) throws InvalidDescriptionException {
+        if (!file.exists()) {
+            throw new InvalidDescriptionException(new FileNotFoundException(String.format("%s does not exist", file.getPath())));
+        }
+        JavaPluginDescription result = null;
+        try {
+            InputStream stream = new FileInputStream(file);
+            result = new JavaPluginDescription(this, file, stream, true);
+            stream.close();
         } catch (IOException ex) {
             throw new InvalidDescriptionException(ex);
         }

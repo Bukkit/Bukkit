@@ -33,8 +33,10 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 public final class SimplePluginManager implements PluginManager {
     private final Server server;
     private final File pluginFolder;
+    private final List<File> systemPlugins;
     private final CommandMap commandMap;
     private final List<PluginLoader> pluginLoaders = new ArrayList<PluginLoader>();
+    private final JavaPluginLoader javaPluginLoader;
     private final Map<String, PluginDescription> pluginDescriptions = new HashMap<String, PluginDescription>();
     private final Map<String, Plugin> plugins = new HashMap<String, Plugin>();
     private final Map<Event.Type, SortedSet<RegisteredListener>> listeners = new EnumMap<Event.Type, SortedSet<RegisteredListener>>(Event.Type.class);
@@ -50,12 +52,13 @@ public final class SimplePluginManager implements PluginManager {
         }
     };
 
-    public SimplePluginManager(Server server, File pluginFolder) {
+    public SimplePluginManager(Server server, File pluginFolder, List<File> systemPlugins) {
         this.server = server;
         this.pluginFolder = pluginFolder;
+        this.systemPlugins = systemPlugins;
         this.commandMap = new SimpleCommandMap(server);
 
-        registerInterface(JavaPluginLoader.class);
+        javaPluginLoader = (JavaPluginLoader)registerInterface(JavaPluginLoader.class);
     }
 
     /**
@@ -94,6 +97,19 @@ public final class SimplePluginManager implements PluginManager {
 
         for (PluginLoader loader : pluginLoaders) {
             updateIndexForInterface(loader);
+        }
+
+        for (File file : systemPlugins) {
+            try {
+                PluginDescription description = javaPluginLoader.readSystemPluginDescription(file);
+                String name = description.getName();
+                if (pluginDescriptions.containsKey(name)) {
+                    throw new InvalidDescriptionException("A plugin with this name already exists: " + name);
+                }
+                pluginDescriptions.put(name, description);
+            } catch (InvalidDescriptionException ex) {
+                log.log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
+            }
         }
     }
 

@@ -17,11 +17,14 @@ import org.bukkit.plugin.YamlPluginDescription;
 
 public final class JavaPluginDescription extends YamlPluginDescription {
     private static final Logger log = Logger.getLogger(JavaPluginDescription.class.getName());
+    private final boolean systemPlugin;
     private String main;
     private ClassLoader classLoader = null;
 
-    public JavaPluginDescription(final PluginLoader loader, final File file, final InputStream stream) throws InvalidDescriptionException {
+    public JavaPluginDescription(final PluginLoader loader, final File file,
+            final InputStream stream, final boolean systemPlugin) throws InvalidDescriptionException {
         super(loader, file, stream);
+        this.systemPlugin = systemPlugin;
     }
 
     /**
@@ -43,11 +46,13 @@ public final class JavaPluginDescription extends YamlPluginDescription {
             final JavaPluginLoader pluginLoader = (JavaPluginLoader)getLoader();
             final ClassLoader parentLoader = getClass().getClassLoader();
             final ArrayList<URL> urls = new ArrayList<URL>();
-            try {
-                urls.add(getFile().toURI().toURL());
-            }
-            catch (MalformedURLException ex) {
-                log.log(Level.SEVERE, "Unable to turn JAR-path into URL", ex);
+            if (!systemPlugin) {
+                try {
+                    urls.add(getFile().toURI().toURL());
+                }
+                catch (MalformedURLException ex) {
+                    log.log(Level.SEVERE, "Unable to turn JAR-path into URL", ex);
+                }
             }
             classLoader = new PluginClassLoader(pluginLoader, urls.toArray(new URL[0]), parentLoader);
         }
