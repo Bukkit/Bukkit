@@ -486,7 +486,7 @@ public abstract class Event {
          * @todo: add javadoc see comment
          */
         ENTITY_EXPLODE (Category.LIVING_ENTITY),
-        
+
         /**
          * Called when an entity has made a decision to explode.
          * 

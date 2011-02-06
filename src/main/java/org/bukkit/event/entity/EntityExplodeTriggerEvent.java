@@ -7,13 +7,13 @@ public class EntityExplodeTriggerEvent extends EntityEvent implements Cancellabl
     private boolean cancel;
     private float radius;
     private boolean fire;
-    
-	public EntityExplodeTriggerEvent(Type type, Entity what, float radius, boolean fire) {
-		super(type.ENTITY_EXPLODETRIGGER, what);
+
+    public EntityExplodeTriggerEvent(Type type, Entity what, float radius, boolean fire) {
+        super(type.ENTITY_EXPLODETRIGGER, what);
         this.cancel = false;
         this.radius = radius;
         this.fire = fire;
-	}
+    }
 
     public boolean isCancelled() {
         return cancel;
@@ -24,19 +24,19 @@ public class EntityExplodeTriggerEvent extends EntityEvent implements Cancellabl
     }
     
     public float getRadius() {
-    	return radius;
+        return radius;
     }
     
     public void setRadius(float radius) {
-    	this.radius = radius;
+        this.radius = radius;
     }
 
-	public boolean getFire() {
-		return fire;
-	}
+    public boolean getFire() {
+        return fire;
+    }
 
-	public void setFire(boolean fire) {
-		this.fire = fire;
-	}
+    public void setFire(boolean fire) {
+        this.fire = fire;
+    }
 
 }
