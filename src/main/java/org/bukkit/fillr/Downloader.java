@@ -1,141 +1,106 @@
 package org.bukkit.fillr;
 
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.Server;
+import org.bukkit.plugin.SimplePluginManager;
 
 import java.io.*;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Downloader {
-	private final static String DIRECTORY = Fillr.DIRECTORY;
-	private final static String DOWNLOAD_DIR = DIRECTORY + File.separator + "downloads";
-	private final static String BACKUP = DIRECTORY + File.separator + "backups";
+    private static final Logger logger = Logger.getLogger(Downloader.class.getName());
+    private final File pluginFolder;
+    private final File downloadFolder;
+    private final File backupFolder;
 
-	/**
-	 * Downloads the jar from a given url. If it is a compressed archive, it
-	 * tries to get the .jars out of it
-	 * 
-	 * @param url
-	 *            The url to download from
-	 */
-	static void downloadJar(String url) throws Exception {
-		int index = url.lastIndexOf('/');
-		String name = url.substring(index + 1);
+    public Downloader(Server server) {
+        SimplePluginManager pm = (SimplePluginManager) server.getPluginManager();
+        pluginFolder = pm.getPluginFolder();
+        downloadFolder = new File(pluginFolder, "downloads");
+        backupFolder = new File(pluginFolder, "backups");
+    }
 
-		File file = new File(DIRECTORY, name);
-		if (url.endsWith(".jar") && file.exists()) {
-			backupFile(file);
-		}
+    /**
+     * Downloads the plugin from the given URL. If it is a compressed archive,
+     * it tries to get the .jars out of it
+     *
+     * @param url The url to download from
+     * @return True on success, false otherwise
+     */
+    public boolean download(URL url) {
+        if (!pluginFolder.exists()) {
+            pluginFolder.mkdir();
+        }
 
-		download(new URL(url), name, DIRECTORY);
-		file = new File("plugins", name);
-	}
+        String path = url.getPath();
+        int index = path.lastIndexOf('/');
+        File file = new File(pluginFolder, path.substring(index + 1));
 
-	/**
-	 * Downloads the file for a given plugin
-	 * 
-	 * @param name
-	 *            The name of the plugin to download
-	 * @param player
-	 *            The player to send info to
-	 */
-	void downloadFile(String name, Player player) throws Exception {
-		File file = new File(DIRECTORY, name + ".jar");
-		if (file.exists()) {
-			player.sendMessage("Downloading " + name + "'s file");
-			PluginDescriptionFile pdfFile = Checker.getPDF(file);
-			FillReader reader = Checker.needsUpdate(pdfFile);
-			downloadFile(new URL(reader.getFile()));
-			player.sendMessage("Finished download");
-		} else {
-			System.out.println("Can't find " + name);
-		}
-	}
+        return download(url, file);
+    }
 
-	/**
-	 * Downloads the file to the plugin/downloads directory
-	 * 
-	 * @param u
-	 *            The url of the file to download
-	 */
-	private void downloadFile(URL u) throws Exception {
-		String name = u.getFile();
-		int index = name.lastIndexOf('/');
-		name = name.substring(index + 1);
-		download(u, name, DOWNLOAD_DIR);
-	}
+    /**
+     * Downloads the file to a given location
+     *
+     * @param url The url of the file to download
+     * @param file The location to store the file
+     */
+    private boolean download(URL url, File file) {
+        if (!downloadFolder.exists()) {
+            downloadFolder.mkdir();
+        }
 
-	/**
-	 * Downloads the file to a given directory with a given name
-	 * 
-	 * @param u
-	 *            The url of the file to download
-	 * @param name
-	 *            The name to give the file
-	 * @param directory
-	 *            The directory to put the file
-	 */
-	private static void download(URL u, String name, String directory) throws Exception {
-		InputStream inputStream = null;
-		// try {
-		inputStream = u.openStream();
+        File temp = new File(downloadFolder, file.getName());
+        if (temp.exists()) {
+            temp.delete();
+        }
+        try {
+            temp.createNewFile();
+            OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(temp));
+            InputStream inputStream = url.openStream();
+            copyInputStream(inputStream, outputStream);
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException ex) {
+            logger.log(Level.SEVERE, "Download failed", ex);
+            return false;
+        }
 
-		if (!new File(directory).exists()) {
-			new File(directory).mkdir();
-		}
+        if (file.exists()) {
+            backupFile(file);
+            file.delete();
+        }
+        temp.renameTo(file);
+        return true;
+    }
 
-		File f = new File(directory, name);
-		if (f.exists()) {
-			f.delete();
-		}
-		f.createNewFile();
+    /**
+     * Copies to an output stream, from an input stream, until EOF
+     *
+     * @param in The input stream
+     * @param out The output stream
+     * @throws IOException Thrown when the read or write operation fails
+     */
+    private static final void copyInputStream(InputStream in, OutputStream out) throws IOException {
+        int len;
+        byte[] buffer = new byte[4096];
 
-		copyInputStream(inputStream, new BufferedOutputStream(new FileOutputStream(f)));
+        while ((len = in.read(buffer)) >= 0) {
+            out.write(buffer, 0, len);
+        }
+    }
 
-		try {
-			if (inputStream != null) {
-				inputStream.close();
-			}
-		} catch (IOException ioe) {
-			System.out.println("[UPDATR]: Error closing inputStream");
-		}
-		// }
-	}
-
-	/**
-	 * Copies an InputStream to an OutputStream!
-	 * 
-	 * @param in
-	 *            InputStream
-	 * @param out
-	 *            OutputStream
-	 * @throws IOException
-	 */
-	private static final void copyInputStream(InputStream in, OutputStream out) throws IOException {
-		byte[] buffer = new byte[1024];
-		int len;
-
-		while ((len = in.read(buffer)) >= 0) {
-			out.write(buffer, 0, len);
-		}
-
-		in.close();
-		out.close();
-	}
-
-	/**
-	 * Moves the file to the backup folder.
-	 * 
-	 * @param file
-	 *            The file to backup
-	 */
-	private static void backupFile(File file) {
-		if (file.exists()) {
-			System.out.println("Backing up old file: " + file.getName());
-			if (!new File(BACKUP).exists()) {
-				new File(BACKUP).mkdir();
-			}
-			file.renameTo(new File(BACKUP, file.getName() + ".bak"));
-		}
-	}
+    /**
+     * Moves the file to the backup folder.
+     *
+     * @param file The file to backup
+     */
+    private void backupFile(File file) {
+        System.out.println("Backing up old file: " + file.getName());
+        if (!backupFolder.exists()) {
+            backupFolder.mkdir();
+        }
+        file.renameTo(new File(backupFolder, file.getName() + ".bak"));
+    }
 }

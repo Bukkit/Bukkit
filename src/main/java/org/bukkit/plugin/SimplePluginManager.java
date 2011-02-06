@@ -319,4 +319,8 @@ public final class SimplePluginManager implements PluginManager {
     public CommandMap getCommandMap() {
         return commandMap;
     }
+
+    public File getPluginFolder() {
+        return pluginFolder;
+    }
 }

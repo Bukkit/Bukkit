@@ -1,27 +1,33 @@
 package org.bukkit.fillr;
 
-import org.bukkit.*;
-import org.bukkit.plugin.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.*;
 import org.bukkit.event.*;
 
-import java.io.File;
-
 public class Fillr extends JavaPlugin {
-    private FillrListener listener;
     public static final String NAME = "Fillr";
     public static final String VERSION = "1.0";
     public static final String DIRECTORY = "plugins";
 
+    private static final Logger logger = Logger.getLogger(Fillr.class.getName());
+
+    public void onEnable() {
+        if (getServer().getPluginManager() instanceof SimplePluginManager) {
+            registerEvents();
+        } else {
+            logger.log(Level.WARNING, "Fillr only works with SimplePluginManager");
+        }
+    }
+
     public void onDisable() {
     }
 
-    public void onEnable() {
-        registerEvents();
-    }
-
     private void registerEvents() {
-        listener = new FillrListener(getServer());
-        getServer().getPluginManager().registerEvent(Event.Type.PLAYER_COMMAND, listener, Event.Priority.Normal, this);
+        FillrListener listener = new FillrListener(getServer());
+        getServer().getPluginManager().registerEvent(Event.Type.PLAYER_COMMAND, listener,
+                Event.Priority.Normal, this);
     }
 }

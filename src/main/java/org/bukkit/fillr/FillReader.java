@@ -15,7 +15,7 @@ public class FillReader {
     //TODO change this to what it will actually be...
     private static final String BASE_URL = "http://taylorkelly.me/pnfo.php";
     private String currVersion;
-    private String file;
+    private URL file;
     private String name;
     private String notes;
     private boolean stable;
@@ -42,7 +42,7 @@ public class FillReader {
                 JSONObject jsonObj = (JSONObject) obj;
                 this.currVersion = (String) jsonObj.get("plugin_version");
                 this.name = (String) jsonObj.get("plugin_name");
-                this.file = (String) jsonObj.get("plugin_file");
+                this.file = new URL((String) jsonObj.get("plugin_file"));
                 this.stable = (Boolean) jsonObj.get("plugin_stable");
                 this.notes = (String) jsonObj.get("plugin_notes");
             } catch (ParseException e) {
@@ -57,7 +57,7 @@ public class FillReader {
         return currVersion;
     }
 
-    public String getFile() {
+    public URL getFile() {
         return file;
     }
 

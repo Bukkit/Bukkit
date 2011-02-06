@@ -17,7 +17,7 @@ public class FillrListener extends PlayerListener {
 		Player player = event.getPlayer();
 
 		if (split[0].equalsIgnoreCase("/check")) {
-			new Checker().check(player);
+			new Checker(server).check(player);
 			event.setCancelled(true);
 		} else if (split[0].equalsIgnoreCase("/updateAll")) {
 			new Updater(server).updateAll(player);
