@@ -26,16 +26,29 @@ public interface PluginLoader {
     public EventExecutor createExecutor(Event.Type type, Listener listener);
 
     /**
+     * Reads the description for the plugin in the specified file
+     *
+     * The implementation gathers the necessary information, usually
+     * with help from metadata included with the plugin, and returns
+     * a PluginDescription subclass.
+     *
+     * @param pluginFile The file containing the plugin
+     * @return A filled PluginDescription object
+     * @throws InvalidDescriptionException Thrown when the metadata was not understood
+     * @see PluginDescription
+     */
+    public PluginDescription readDescription(File pluginFile) throws InvalidDescriptionException;
+
+    /**
      * Enables the specified plugin
      *
      * Attempting to enable a plugin that is already enabled will have no effect
      *
-     * @param file File to attempt to load
-     * @return Plugin that was contained in the specified file
-     * @throws InvalidDescriptionException Thrown when the description file was not understood
+     * @param description Description of the plugin to enable
+     * @return Plugin instance that was enabled
      * @throws InvalidPluginException Thrown when the specified file is not a plugin
      */
-    public Plugin enablePlugin(File file) throws InvalidDescriptionException, InvalidPluginException;
+    public Plugin enablePlugin(PluginDescription description) throws InvalidPluginException;
 
     /**
      * Disables the specified plugin

@@ -347,29 +347,33 @@ public final class JavaPluginLoader implements PluginLoader {
         throw new IllegalArgumentException( "Event " + type + " is not supported" );
     }
 
-    public Plugin enablePlugin(File file) throws InvalidDescriptionException, InvalidPluginException {
-        JavaPlugin plugin = null;
-        JavaPluginDescription description = null;
+    public PluginDescription readDescription(File file) throws InvalidDescriptionException {
+        JavaPluginDescription result = null;
 
         if (!file.exists()) {
-            throw new InvalidPluginException(new FileNotFoundException(String.format("%s does not exist", file.getPath())));
+            throw new InvalidDescriptionException(new FileNotFoundException(String.format("%s does not exist", file.getPath())));
         }
         try {
             JarFile jar = new JarFile(file);
             JarEntry entry = jar.getJarEntry("plugin.yml");
-
             if (entry == null) {
-                throw new InvalidPluginException(new FileNotFoundException("Jar does not contain plugin.yml"));
+                throw new InvalidDescriptionException(new FileNotFoundException("Jar does not contain plugin.yml"));
             }
 
             InputStream stream = jar.getInputStream(entry);
-            description = new JavaPluginDescription(this, file, stream);
+            result = new JavaPluginDescription(this, file, stream);
 
             stream.close();
             jar.close();
         } catch (IOException ex) {
-            throw new InvalidPluginException(ex);
+            throw new InvalidDescriptionException(ex);
         }
+        return result;
+    }
+
+    public Plugin enablePlugin(PluginDescription abstractDescription) throws InvalidPluginException {
+        JavaPluginDescription description = (JavaPluginDescription)abstractDescription;
+        JavaPlugin plugin = null;
 
         try {
             Class<?> jarClass = Class.forName(description.getMain(), true, description.getClassLoader());

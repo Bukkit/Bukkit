@@ -145,7 +145,8 @@ public final class SimplePluginManager implements PluginManager {
 
             if (match.find()) {
                 PluginLoader loader = fileAssociations.get(filter);
-                plugin = loader.enablePlugin(file);
+                PluginDescription description = loader.readDescription(file);
+                plugin = loader.enablePlugin(description);
                 break;
             }
         }
