@@ -10,14 +10,13 @@ import org.bukkit.event.Listener;
  * Handles all plugin management from the Server
  */
 public interface PluginManager {
-
     /**
      * Registers the specified plugin loader
      *
      * @param loader Class name of the PluginLoader to register
      * @throws IllegalArgumentException Thrown when the given Class is not a valid PluginLoader
      */
-    public void registerInterface(Class<? extends PluginLoader> loader) throws IllegalArgumentException;
+    public PluginLoader registerInterface(Class<? extends PluginLoader> loader) throws IllegalArgumentException;
 
     /**
      * Rediscover and reindex all plugins
