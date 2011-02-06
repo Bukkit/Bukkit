@@ -25,6 +25,7 @@ import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPluginLoader;
 
 /**
  * Handles all plugin management from the Server
@@ -51,6 +52,8 @@ public final class SimplePluginManager implements PluginManager {
     public SimplePluginManager(Server server) {
         this.server = server;
         this.commandMap = new SimpleCommandMap(server);
+
+        registerInterface(JavaPluginLoader.class);
     }
 
     /**
