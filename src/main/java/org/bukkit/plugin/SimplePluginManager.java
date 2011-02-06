@@ -3,9 +3,11 @@ package org.bukkit.plugin;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -30,7 +32,7 @@ public final class SimplePluginManager implements PluginManager {
     private final Server server;
     private final File pluginFolder;
     private final CommandMap commandMap;
-    private final Map<Pattern, PluginLoader> fileAssociations = new HashMap<Pattern, PluginLoader>();
+    private final List<PluginLoader> pluginLoaders = new ArrayList<PluginLoader>();
     private final Map<String, PluginDescription> pluginDescriptions = new HashMap<String, PluginDescription>();
     private final Map<String, Plugin> plugins = new HashMap<String, Plugin>();
     private final Map<Event.Type, SortedSet<RegisteredListener>> listeners = new EnumMap<Event.Type, SortedSet<RegisteredListener>>(Event.Type.class);
@@ -77,11 +79,7 @@ public final class SimplePluginManager implements PluginManager {
             throw new IllegalArgumentException(String.format("Class %s does not implement interface PluginLoader", loader.getName()));
         }
 
-        Pattern[] patterns = instance.getPluginFileFilters();
-
-        for (Pattern pattern : patterns) {
-            fileAssociations.put(pattern, instance);
-        }
+        pluginLoaders.add(instance);
     }
 
     /**
@@ -90,31 +88,42 @@ public final class SimplePluginManager implements PluginManager {
     public void rebuildIndex() {
         pluginDescriptions.clear();
 
+        for (PluginLoader loader : pluginLoaders) {
+            updateIndexForInterface(loader);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public PluginDescription[] updateIndexForInterface(PluginLoader loader) {
         if (!pluginFolder.exists()) {
             pluginFolder.mkdir();
         }
 
         File[] files = pluginFolder.listFiles();
-        Set<Pattern> filters = fileAssociations.keySet();
-        for (File file : files) {
-            for (Pattern filter : filters) {
+        Pattern[] filters = loader.getPluginFileFilters();
+        ArrayList<PluginDescription> result = new ArrayList<PluginDescription>();
+        for (Pattern filter : filters) {
+            for (File file : files) {
                 Matcher match = filter.matcher(file.getName());
                 if (match.find()) {
                     try {
-                        PluginLoader loader = fileAssociations.get(filter);
                         PluginDescription description = loader.readDescription(file);
                         String name = description.getName();
                         if (pluginDescriptions.containsKey(name)) {
                             throw new InvalidDescriptionException("A plugin with this name already exists: " + name);
                         }
                         pluginDescriptions.put(name, description);
+                        result.add(description);
                     } catch (InvalidDescriptionException ex) {
                         server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
                     }
-                    break;
                 }
             }
         }
+
+        return result.toArray(new PluginDescription[0]);
     }
 
     /**

@@ -28,6 +28,23 @@ public interface PluginManager {
     public void rebuildIndex();
 
     /**
+     * Discover and add to the index plugins handled by the given loader.
+     *
+     * This method is similar to {@link #rebuildIndex()}, but iterates only
+     * the plugins that match the given loader's filename filters, and adds
+     * those to the index, (rather than clearing the index and rebuilding
+     * from scratch.)
+     *
+     * This method is useful for plugins defining new interfaces. Those
+     * should call this method to index newly available plugins, and then
+     * call {@link #enablePlugin(PluginDescription)} for each returned.
+     *
+     * @param loader The loader of the type of plugin to index.
+     * @return A list of plugin descriptions that was indexed.
+     */
+    public PluginDescription[] updateIndexForInterface(PluginLoader loader);
+
+    /**
      * Checks if the given plugin is loaded and returns it when applicable
      *
      * Please note that the name of the plugin is case-sensitive
