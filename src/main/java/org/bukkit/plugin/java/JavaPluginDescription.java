@@ -1,5 +1,6 @@
 package org.bukkit.plugin.java;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -9,8 +10,8 @@ import org.bukkit.plugin.YamlPluginDescription;
 public final class JavaPluginDescription extends YamlPluginDescription {
     private String main;
 
-    public JavaPluginDescription(final InputStream stream) throws InvalidDescriptionException {
-        super(stream);
+    public JavaPluginDescription(final File file, final InputStream stream) throws InvalidDescriptionException {
+        super(file, stream);
     }
 
     /**

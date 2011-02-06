@@ -1,5 +1,6 @@
 package org.bukkit.plugin;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ public class YamlPluginDescription extends PluginDescription {
     private static final Yaml yaml = new Yaml(new SafeConstructor());
 
     @SuppressWarnings("unchecked")
-    public YamlPluginDescription(final InputStream stream) throws InvalidDescriptionException {
+    public YamlPluginDescription(final File file, final InputStream stream) throws InvalidDescriptionException {
+        super(file);
         loadMap((Map<String, Object>)yaml.load(stream));
     }
 

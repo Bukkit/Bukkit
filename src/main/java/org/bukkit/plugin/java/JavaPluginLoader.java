@@ -57,7 +57,7 @@ public final class JavaPluginLoader implements PluginLoader {
             }
 
             InputStream stream = jar.getInputStream(entry);
-            description = new JavaPluginDescription(stream);
+            description = new JavaPluginDescription(file, stream);
 
             stream.close();
             jar.close();
@@ -65,47 +65,25 @@ public final class JavaPluginLoader implements PluginLoader {
             throw new InvalidPluginException(ex);
         }
 
-        File dataFolder = getDataFolder(file);
-
         try {
             ClassLoader loader = new PluginClassLoader(this, new URL[]{file.toURI().toURL()}, getClass().getClassLoader());
             Class<?> jarClass = Class.forName(description.getMain(), true, loader);
             Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
 
             try {
-                Constructor<? extends JavaPlugin> constructor = plugin.getConstructor(PluginLoader.class, Server.class, PluginDescription.class, File.class, File.class, ClassLoader.class);
-                result = constructor.newInstance(this, server, description, dataFolder, file, loader);
+                Constructor<? extends JavaPlugin> constructor = plugin.getConstructor(PluginLoader.class, Server.class, PluginDescription.class, ClassLoader.class);
+                result = constructor.newInstance(this, server, description, loader);
             } catch (NoSuchMethodException ex) {
                 Constructor<? extends JavaPlugin> constructor = plugin.getConstructor();
                 result = constructor.newInstance();
             }
 
-            result.initialize(this, server, description, dataFolder, file, loader);
+            result.initialize(this, server, description, loader);
         } catch (Throwable ex) {
             throw new InvalidPluginException(ex);
         }
 
         return (Plugin)result;
-    }
-
-    private File getDataFolder(File file) {
-        File dataFolder = null;
-
-        String filename = file.getName();
-        int index = file.getName().lastIndexOf(".");
-
-        if (index != -1) {
-            String name = filename.substring(0, index);
-            dataFolder = new File(file.getParentFile(), name);
-        } else {
-            // This is if there is no extension, which should not happen
-            // Using _ to prevent name collision
-            dataFolder = new File(file.getParentFile(), filename + "_");
-        }
-
-        //dataFolder.mkdirs();
-
-        return dataFolder;
     }
 
     public Pattern[] getPluginFileFilters() {

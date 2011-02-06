@@ -1,15 +1,14 @@
 
 package org.bukkit.plugin.java;
 
-import java.io.File;
 import java.util.ArrayList;
+
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescription;
 import org.bukkit.plugin.PluginLoader;
-import org.bukkit.util.config.Configuration;
 
 /**
  * Represents a Java plugin
@@ -19,11 +18,8 @@ public abstract class JavaPlugin implements Plugin {
     private boolean initialized = false;
     private PluginLoader loader = null;
     private Server server = null;
-    private File file = null;
     private PluginDescription description = null;
-    private File dataFolder = null;
     private ClassLoader classLoader = null;
-    private Configuration config = null;
 
     /**
      * Constructs a new Java plugin instance
@@ -31,16 +27,14 @@ public abstract class JavaPlugin implements Plugin {
      * @param pluginLoader PluginLoader that is responsible for this plugin
      * @param instance Server instance that is running this plugin
      * @param desc PluginDescriptionFile containing metadata on this plugin
-     * @param folder Folder containing the plugin's data
-     * @param plugin File containing this plugin
      * @param cLoader ClassLoader which holds this plugin
      */
     public JavaPlugin(PluginLoader pluginLoader, Server instance,
-            PluginDescription desc, File folder, File plugin,
-            ClassLoader cLoader) {
-        initialize(pluginLoader, instance, desc, folder, plugin, cLoader);
+            PluginDescription desc, ClassLoader cLoader) {
+        initialize(pluginLoader, instance, desc, cLoader);
         
-        server.getLogger().warning("Using the stupidly long constructor " + desc.getMain() + "(PluginLoader, Server, PluginDescriptionFile, File, File, ClassLoader) is no longer recommended. Go nag the plugin author of " + desc.getName() + " to remove it! (Nothing is broken, we just like to keep code clean.)");
+        JavaPluginDescription jDesc = (JavaPluginDescription)desc;
+        server.getLogger().warning("Using the stupidly long constructor " + jDesc.getMain() + "(PluginLoader, Server, PluginDescriptionFile, File, File, ClassLoader) is no longer recommended. Go nag the plugin author of " + jDesc.getName() + " to remove it! (Nothing is broken, we just like to keep code clean.)");
 
         ArrayList<String> authors = desc.getAuthors();
         if (authors.size() > 0) {
@@ -49,16 +43,6 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     public JavaPlugin() {
-    }
-
-    /**
-     * Returns the folder that the plugin data's files are located in. The
-     * folder may not yet exist.
-     *
-     * @return
-     */
-    public File getDataFolder() {
-        return dataFolder;
     }
 
     /**
@@ -89,33 +73,12 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     /**
-     * Returns the file which contains this plugin
-     *
-     * @return File containing this plugin
-     */
-    protected File getFile() {
-        return file;
-    }
-
-    /**
      * Returns the plugin.yaml file containing the details for this plugin
      *
      * @return Contents of the plugin.yaml file
      */
     public PluginDescription getDescription() {
         return description;
-    }
-
-    /**
-     * Returns the main configuration located at
-     * <plugin name>/config.yml and loads the file. If the configuration file
-     * does not exist and it cannot be loaded, no error will be emitted and
-     * the configuration file will have no values.
-     *
-     * @return
-     */
-    public Configuration getConfiguration() {
-        return config;
     }
 
     /**
@@ -164,19 +127,16 @@ public abstract class JavaPlugin implements Plugin {
      * @param classLoader ClassLoader which holds this plugin
      */
     protected final void initialize(PluginLoader loader, Server server,
-            PluginDescription description, File dataFolder, File file,
-            ClassLoader classLoader) {
-        if (!initialized) {
-            this.initialized = true;
-            this.loader = loader;
-            this.server = server;
-            this.file = file;
-            this.description = description;
-            this.dataFolder = dataFolder;
-            this.classLoader = classLoader;
-            this.config = new Configuration(new File(dataFolder, "config.yml"));
-            this.config.load();
+            PluginDescription description, ClassLoader classLoader) {
+        if (initialized) {
+            throw new UnsupportedOperationException("Cannot reinitialize a plugin");
         }
+
+        this.initialized = true;
+        this.loader = loader;
+        this.server = server;
+        this.description = description;
+        this.classLoader = classLoader;
     }
 
     /**
