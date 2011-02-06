@@ -85,8 +85,17 @@ public interface World {
     /**
      * Loads the specified chunk
      *
+     * @param chunk Chunk to be loaded
      */
     public void loadChunk(Chunk chunk);
+
+    /**
+     * Requests that the server unloads the specified chunk
+     *
+     * @param chunk Chunk to be unloaded
+     * @return returns true if the unload request was accepted
+     */
+    public boolean unloadChunkRequest(Chunk chunk);
 
     /**
      * Checks if the chunk at the specified coordinates is loaded
@@ -104,6 +113,15 @@ public interface World {
      *
      */
     public void loadChunk(int x, int z);
+
+    /**
+     * Requests that the server unloads the chunk at the specified coordinates
+     *
+     * @param x X-coordinate of the chunk
+     * @param z Z-coordinate of the chunk
+     * @return returns true if the unload request was accepted
+     */
+    public boolean unloadChunkRequest(int x, int z);
 
     /**
      * Drop an item exactly at the specified location.
