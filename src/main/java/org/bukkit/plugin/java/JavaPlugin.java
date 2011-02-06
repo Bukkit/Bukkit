@@ -84,6 +84,20 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     /**
+     * Called when this plugin is disabled
+     */
+    public void onDisable() {
+        // default implementation:  do nothing!
+    }
+
+    /**
+     * Called when this plugin is enabled
+     */
+    public void onEnable() {
+        // default implementation:  do nothing!
+    }
+
+    /**
      * Called when a command registered by this plugin is received.
      */
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {

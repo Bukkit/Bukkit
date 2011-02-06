@@ -31,16 +31,6 @@ public interface Plugin {
     public boolean isEnabled();
 
     /**
-     * Called when this plugin is disabled
-     */
-    public void onDisable();
-
-    /**
-     * Called when this plugin is enabled
-     */
-    public void onEnable();
-
-    /**
      * Called when a command registered by this plugin is received.
      * @param commandLabel
      * @return TODO
