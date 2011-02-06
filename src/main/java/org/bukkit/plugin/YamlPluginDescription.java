@@ -34,6 +34,7 @@ public abstract class YamlPluginDescription extends PluginDescription {
         yaml.dump(map, writer);
     }
 
+    @SuppressWarnings("unchecked")
     protected void loadMap(Map<String, Object> map) throws InvalidDescriptionException {
         try {
             name = map.get("name").toString();

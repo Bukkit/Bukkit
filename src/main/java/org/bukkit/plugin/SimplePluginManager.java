@@ -18,9 +18,7 @@ import java.util.regex.Matcher;
 import org.bukkit.Server;
 import java.util.regex.Pattern;
 
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
-import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;

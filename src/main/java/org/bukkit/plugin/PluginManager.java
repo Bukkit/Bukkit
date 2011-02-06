@@ -4,7 +4,6 @@ package org.bukkit.plugin;
 import java.io.File;
 
 import org.bukkit.command.CommandMap;
-import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Listener;
