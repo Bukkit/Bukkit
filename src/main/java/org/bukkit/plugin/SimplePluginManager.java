@@ -197,10 +197,12 @@ public final class SimplePluginManager implements PluginManager {
      * {@inheritDoc}
      */
     public void disablePlugin(final Plugin plugin) {
+        PluginDescription description = plugin.getDescription();
+
         callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
 
-        plugin.getDescription().getLoader().disablePlugin(plugin);
-
+        description.getLoader().disablePlugin(plugin);
+        plugins.remove(description.getName());
         clearEvents(plugin);
         commandMap.clearCommands(plugin);
         server.getScheduler().cancelTasks(plugin);
