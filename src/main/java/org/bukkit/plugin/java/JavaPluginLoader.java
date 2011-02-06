@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -66,19 +65,18 @@ public final class JavaPluginLoader implements PluginLoader {
         }
 
         try {
-            ClassLoader loader = new PluginClassLoader(this, new URL[]{file.toURI().toURL()}, getClass().getClassLoader());
-            Class<?> jarClass = Class.forName(description.getMain(), true, loader);
+            Class<?> jarClass = Class.forName(description.getMain(), true, description.getClassLoader());
             Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
 
             try {
-                Constructor<? extends JavaPlugin> constructor = plugin.getConstructor(Server.class, PluginDescription.class, ClassLoader.class);
-                result = constructor.newInstance(server, description, loader);
+                Constructor<? extends JavaPlugin> constructor = plugin.getConstructor(Server.class, PluginDescription.class);
+                result = constructor.newInstance(server, description);
             } catch (NoSuchMethodException ex) {
                 Constructor<? extends JavaPlugin> constructor = plugin.getConstructor();
                 result = constructor.newInstance();
             }
 
-            result.initialize(server, description, loader);
+            result.initialize(server, description);
         } catch (Throwable ex) {
             throw new InvalidPluginException(ex);
         }
@@ -412,7 +410,8 @@ public final class JavaPluginLoader implements PluginLoader {
 
         if (plugin.isEnabled()) {
             JavaPlugin jPlugin = (JavaPlugin)plugin;
-            ClassLoader cloader = jPlugin.getClassLoader();
+            JavaPluginDescription description = (JavaPluginDescription)plugin.getDescription();
+            ClassLoader cloader = description.getClassLoader();
 
             server.getPluginManager().callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
 

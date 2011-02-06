@@ -17,17 +17,15 @@ public abstract class JavaPlugin implements Plugin {
     private boolean initialized = false;
     private Server server = null;
     private PluginDescription description = null;
-    private ClassLoader classLoader = null;
 
     /**
      * Constructs a new Java plugin instance
      *
      * @param instance Server instance that is running this plugin
      * @param desc PluginDescriptionFile containing metadata on this plugin
-     * @param cLoader ClassLoader which holds this plugin
      */
-    public JavaPlugin(Server instance, PluginDescription desc, ClassLoader cLoader) {
-        initialize(instance, desc, cLoader);
+    public JavaPlugin(Server instance, PluginDescription desc) {
+        initialize(instance, desc);
         
         JavaPluginDescription jDesc = (JavaPluginDescription)desc;
         server.getLogger().warning("Using the stupidly long constructor " + jDesc.getMain() + "(PluginLoader, Server, PluginDescriptionFile, File, File, ClassLoader) is no longer recommended. Go nag the plugin author of " + jDesc.getName() + " to remove it! (Nothing is broken, we just like to keep code clean.)");
@@ -69,15 +67,6 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     /**
-     * Returns the ClassLoader which holds this plugin
-     *
-     * @return ClassLoader holding this plugin
-     */
-    protected ClassLoader getClassLoader() {
-        return classLoader;
-    }
-
-    /**
      * Sets the enabled state of this plugin
      *
      * @param enabled true if enabled, otherwise false
@@ -113,7 +102,7 @@ public abstract class JavaPlugin implements Plugin {
      * @param file File containing this plugin
      * @param classLoader ClassLoader which holds this plugin
      */
-    protected final void initialize(Server server, PluginDescription description, ClassLoader classLoader) {
+    protected final void initialize(Server server, PluginDescription description) {
         if (initialized) {
             throw new UnsupportedOperationException("Cannot reinitialize a plugin");
         }
@@ -121,7 +110,6 @@ public abstract class JavaPlugin implements Plugin {
         this.initialized = true;
         this.server = server;
         this.description = description;
-        this.classLoader = classLoader;
     }
 
     /**
