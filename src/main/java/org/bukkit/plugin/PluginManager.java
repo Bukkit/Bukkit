@@ -42,10 +42,9 @@ public interface PluginManager {
     /**
      * Loads the plugins contained within the specified directory
      *
-     * @param directory Directory to check for plugins
      * @return A list of all plugins loaded
      */
-    public Plugin[] loadPlugins(File directory);
+    public Plugin[] loadPlugins();
 
     /**
      * Disables all the loaded plugins

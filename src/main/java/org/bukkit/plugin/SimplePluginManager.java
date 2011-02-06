@@ -32,6 +32,7 @@ import org.bukkit.plugin.java.JavaPluginLoader;
  */
 public final class SimplePluginManager implements PluginManager {
     private final Server server;
+    private final File pluginFolder;
     private final CommandMap commandMap;
     private final Map<Pattern, PluginLoader> fileAssociations = new HashMap<Pattern, PluginLoader>();
     private final List<Plugin> plugins = new ArrayList<Plugin>();
@@ -49,8 +50,9 @@ public final class SimplePluginManager implements PluginManager {
         }
     };
 
-    public SimplePluginManager(Server server) {
+    public SimplePluginManager(Server server, File pluginFolder) {
         this.server = server;
+        this.pluginFolder = pluginFolder;
         this.commandMap = new SimpleCommandMap(server);
 
         registerInterface(JavaPluginLoader.class);
@@ -89,22 +91,24 @@ public final class SimplePluginManager implements PluginManager {
     /**
      * Loads the plugins contained within the specified directory
      *
-     * @param directory Directory to check for plugins
      * @return A list of all plugins loaded
      */
-    public Plugin[] loadPlugins(File directory) {
-        List<Plugin> result = new ArrayList<Plugin>();
-        File[] files = directory.listFiles();
+    public Plugin[] loadPlugins() {
+        if (!pluginFolder.exists()) {
+            pluginFolder.mkdir();
+        }
+        File[] files = pluginFolder.listFiles();
 
+        List<Plugin> result = new ArrayList<Plugin>();
         for (File file : files) {
             Plugin plugin = null;
 
             try {
                 plugin = enablePlugin(file);
             } catch (InvalidPluginException ex) {
-                server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + directory.getPath() + ": " + ex.getMessage(), ex);
+                server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
             } catch (InvalidDescriptionException ex) {
-                server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + directory.getPath() + ": " + ex.getMessage(), ex);
+                server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
             }
 
             if (plugin != null) {
