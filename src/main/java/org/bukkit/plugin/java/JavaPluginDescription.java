@@ -16,7 +16,7 @@ import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.YamlPluginDescription;
 
 public final class JavaPluginDescription extends YamlPluginDescription {
-    private static final Logger logger = Logger.getLogger(JavaPluginDescription.class.getName());
+    private static final Logger log = Logger.getLogger(JavaPluginDescription.class.getName());
     private String main;
     private ClassLoader classLoader = null;
 
@@ -47,7 +47,7 @@ public final class JavaPluginDescription extends YamlPluginDescription {
                 urls.add(getFile().toURI().toURL());
             }
             catch (MalformedURLException ex) {
-                logger.log(Level.SEVERE, "Unable to turn JAR-path into URL", ex);
+                log.log(Level.SEVERE, "Unable to turn JAR-path into URL", ex);
             }
             classLoader = new PluginClassLoader(pluginLoader, urls.toArray(new URL[0]), parentLoader);
         }

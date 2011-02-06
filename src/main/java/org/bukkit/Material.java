@@ -203,6 +203,7 @@ public enum Material {
     GOLD_RECORD(2256, 1),
     GREEN_RECORD(2257, 1);
 
+    private static final Logger log = Logger.getLogger(Material.class.getName());
     private final int id;
     private final Class<? extends MaterialData> data;
     private static final Map<Integer, Material> lookupId = new HashMap<Integer, Material>();
@@ -289,17 +290,17 @@ public enum Material {
             Constructor<? extends MaterialData> ctor = data.getConstructor(int.class, byte.class);
             return ctor.newInstance(id, raw);
         } catch (InstantiationException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         } catch (InvocationTargetException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         } catch (NoSuchMethodException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         }
 
         return null;
