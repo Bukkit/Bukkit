@@ -127,18 +127,6 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     /**
-     * Loads the plugins contained within the plugin directory
-     *
-     * @return A list of all plugins loaded
-     */
-    public void loadPlugins() {
-        rebuildIndex();
-        for (PluginDescription description : pluginDescriptions.values()) {
-            enablePlugin(description);
-        }
-    }
-
-    /**
      * Returns the given plugin's description from the index
      *
      * Please note that the name of the plugin is case-sensitive
@@ -170,6 +158,9 @@ public final class SimplePluginManager implements PluginManager {
         return plugins.values().toArray(new Plugin[0]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Plugin enablePlugin(final PluginDescription description) {
         PluginLoader loader = description.getLoader();
         Plugin plugin;
@@ -183,23 +174,29 @@ public final class SimplePluginManager implements PluginManager {
         return plugin;
     }
 
-    public void disablePlugins() {
-        for(Plugin plugin: getPlugins()) {
-            disablePlugin(plugin);
+    /**
+     * {@inheritDoc}
+     */
+    public void enableAllPlugins() {
+        for (PluginDescription description : pluginDescriptions.values()) {
+            enablePlugin(description);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void disablePlugin(final Plugin plugin) {
         plugin.getDescription().getLoader().disablePlugin(plugin);
         server.getScheduler().cancelTasks(plugin);
     }
 
-    public void clearPlugins() {
-        synchronized (this) {
-            disablePlugins();
-            plugins.clear();
-            listeners.clear();
-            commandMap.clearCommands();
+    /**
+     * {@inheritDoc}
+     */
+    public void disableAllPlugins() {
+        for (Plugin plugin : plugins.values()) {
+            disablePlugin(plugin);
         }
     }
 

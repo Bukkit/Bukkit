@@ -62,13 +62,6 @@ public interface PluginManager {
     public Plugin[] getPlugins();
 
     /**
-     * Loads the plugins contained within the specified directory
-     *
-     * @return A list of all plugins loaded
-     */
-    public void loadPlugins();
-
-    /**
      * Returns the given plugin's description from the index
      *
      * Please note that the name of the plugin is case-sensitive
@@ -79,16 +72,6 @@ public interface PluginManager {
     public PluginDescription getPluginDescription(String name);
 
     public PluginDescription[] getPluginDescriptions();
-
-    /**
-     * Disables all the loaded plugins
-     */
-    public void disablePlugins();
-
-    /**
-     * Disables and removes all plugins
-     */
-    public void clearPlugins();
 
     /**
      * Calls a player related event with the given details
@@ -130,6 +113,11 @@ public interface PluginManager {
     public Plugin enablePlugin(PluginDescription description);
 
     /**
+     * Enable all plugins in the index
+     */
+    public void enableAllPlugins();
+
+    /**
      * Disables the specified plugin
      *
      * Attempting to disable a plugin that is not enabled will have no effect
@@ -137,6 +125,11 @@ public interface PluginManager {
      * @param plugin Plugin to disable
      */
     public void disablePlugin(Plugin plugin);
+
+    /**
+     * Disables all the loaded plugins
+     */
+    public void disableAllPlugins();
 
     /**
      * Get the command map used to keep track of plugin commands
