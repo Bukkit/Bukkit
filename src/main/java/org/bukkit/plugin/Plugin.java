@@ -2,8 +2,6 @@
 package org.bukkit.plugin;
 
 import org.bukkit.Server;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 
 /**
  * Represents a Plugin
@@ -29,11 +27,4 @@ public interface Plugin {
      * @return true if this plugin is enabled, otherwise false
      */
     public boolean isEnabled();
-
-    /**
-     * Called when a command registered by this plugin is received.
-     * @param commandLabel
-     * @return TODO
-     */
-    public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args);
 }

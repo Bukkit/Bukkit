@@ -15,7 +15,6 @@ public abstract class PluginDescription {
     private final Configuration config;
     protected String name;
     protected String version;
-    protected Object commands;
     protected String description;
     protected ArrayList<String> authors;
     protected String website;
@@ -73,10 +72,6 @@ public abstract class PluginDescription {
      */
     public String getFullName() {
         return name + " v" + version;
-    }
-
-    public Object getCommands() {
-        return commands;
     }
 
     /**

@@ -9,7 +9,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bukkit.command.Command;
 import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.YamlPluginDescription;
 
@@ -70,5 +72,9 @@ public final class JavaPluginDescription extends YamlPluginDescription {
         super.saveMap(map);
 
         map.put("main", main);
+    }
+
+    protected Command createCommand(String name, Plugin plugin) {
+        return new JavaPluginCommand(name, plugin);
     }
 }

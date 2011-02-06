@@ -399,10 +399,11 @@ public final class JavaPluginLoader implements PluginLoader {
         if (!plugin.isEnabled()) {
             PluginManager pm = server.getPluginManager();
             JavaPlugin jPlugin = (JavaPlugin)plugin;
+            JavaPluginDescription description = (JavaPluginDescription)plugin.getDescription();
 
             pm.callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
 
-            List<Command> pluginCommands = YamlPluginDescription.parse(plugin);
+            List<Command> pluginCommands = description.buildCommands(plugin);
             if (!pluginCommands.isEmpty()) {
                 pm.getCommandMap().registerAll(plugin.getDescription().getName(), pluginCommands);
             }

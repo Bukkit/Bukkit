@@ -10,12 +10,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.command.Command;
-import org.bukkit.command.PluginCommand;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
-public class YamlPluginDescription extends PluginDescription {
+public abstract class YamlPluginDescription extends PluginDescription {
     private static final Yaml yaml = new Yaml(new SafeConstructor());
+    private Map<String, Map<String, Object>> commands = null;
 
     @SuppressWarnings("unchecked")
     public YamlPluginDescription(final PluginLoader loader, final File file, final InputStream stream) throws InvalidDescriptionException {
@@ -53,7 +53,7 @@ public class YamlPluginDescription extends PluginDescription {
 
         if (map.containsKey("commands")) {
             try {
-                commands = map.get("commands");
+                commands = (Map<String, Map<String, Object>>)map.get("commands");
             } catch (ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "commands are of wrong type");
             }
@@ -108,45 +108,64 @@ public class YamlPluginDescription extends PluginDescription {
         }
     }
 
+    /**
+     * A factory method for creating Command instances
+     *
+     * {@link #buildCommands()} relies on this method to be overridden by
+     * subclasses and provide it with the instances of the Command class.
+     * This way, plugins can provide instances of Command subclasses.
+     *
+     * The arguments are extracted from the YAML input.
+     *
+     * @param name The primary command name
+     * @param plugin The plugin to create the command for
+     * @return The new Command instance
+     */
+    protected abstract Command createCommand(String name, Plugin plugin);
+
+    /**
+     * Build Command instances for the command descriptions
+     *
+     * Loaders can call this after they have instantiated the plugin to
+     * get the command objects they have to register.
+     *
+     * @return A list of Command instances
+     */
     @SuppressWarnings("unchecked")
-    public static List<Command> parse(Plugin plugin) {
+    public final List<Command> buildCommands(Plugin plugin) {
         List<Command> pluginCmds = new ArrayList<Command>();
-        Object object = plugin.getDescription().getCommands();
-        if (object == null)
+        if (commands == null) {
             return pluginCmds;
+        }
 
-        Map<String, Map<String, Object>> map = (Map<String, Map<String, Object>>)object;
+        for(Entry<String, Map<String, Object>> entry : commands.entrySet()) {
+            Command newCmd = createCommand(entry.getKey(), plugin);
+            Object description = entry.getValue().get("description");
+            Object usage = entry.getValue().get("usage");
+            Object aliases = entry.getValue().get("aliases");
 
-        if (map != null) {
-            for(Entry<String, Map<String, Object>> entry : map.entrySet()) {
-                Command newCmd = new PluginCommand(entry.getKey(),plugin);
-                Object description = entry.getValue().get("description");
-                Object usage = entry.getValue().get("usage");
-                Object aliases = entry.getValue().get("aliases");
+            if (description != null)
+                newCmd.setTooltip(description.toString());
 
-                if (description != null)
-                    newCmd.setTooltip(description.toString());
-
-                if (usage != null) {
-                    newCmd.setUsage(usage.toString());
-                }
-
-                if (aliases != null) {
-                    List<String> aliasList = new ArrayList<String>();
-
-                    if (aliases instanceof List) {
-                        for (Object o : (List<Object>)aliases) {
-                            aliasList.add(o.toString());
-                        }
-                    } else {
-                        aliasList.add(aliases.toString());
-                    }
-
-                    newCmd.setAliases(aliasList);
-                }
-
-                pluginCmds.add(newCmd);
+            if (usage != null) {
+                newCmd.setUsage(usage.toString());
             }
+
+            if (aliases != null) {
+                List<String> aliasList = new ArrayList<String>();
+
+                if (aliases instanceof List) {
+                    for (Object o : (List<Object>)aliases) {
+                        aliasList.add(o.toString());
+                    }
+                } else {
+                    aliasList.add(aliases.toString());
+                }
+
+                newCmd.setAliases(aliasList);
+            }
+
+            pluginCmds.add(newCmd);
         }
         return pluginCmds;
     }
