@@ -3,11 +3,9 @@ package org.bukkit.plugin;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -33,6 +31,7 @@ public final class SimplePluginManager implements PluginManager {
     private final File pluginFolder;
     private final CommandMap commandMap;
     private final Map<Pattern, PluginLoader> fileAssociations = new HashMap<Pattern, PluginLoader>();
+    private final Map<String, PluginDescription> pluginDescriptions = new HashMap<String, PluginDescription>();
     private final Map<String, Plugin> plugins = new HashMap<String, Plugin>();
     private final Map<Event.Type, SortedSet<RegisteredListener>> listeners = new EnumMap<Event.Type, SortedSet<RegisteredListener>>(Event.Type.class);
     private final Comparator<RegisteredListener> comparer = new Comparator<RegisteredListener>() {
@@ -86,34 +85,64 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     /**
-     * Loads the plugins contained within the specified directory
-     *
-     * @return A list of all plugins loaded
+     * {@inheritDoc}
      */
-    public Plugin[] loadPlugins() {
+    public void rebuildIndex() {
+        pluginDescriptions.clear();
+
         if (!pluginFolder.exists()) {
             pluginFolder.mkdir();
         }
+
         File[] files = pluginFolder.listFiles();
-
-        List<Plugin> result = new ArrayList<Plugin>();
+        Set<Pattern> filters = fileAssociations.keySet();
         for (File file : files) {
-            Plugin plugin = null;
-
-            try {
-                plugin = enablePlugin(file);
-            } catch (InvalidPluginException ex) {
-                server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
-            } catch (InvalidDescriptionException ex) {
-                server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
-            }
-
-            if (plugin != null) {
-                result.add(plugin);
+            for (Pattern filter : filters) {
+                Matcher match = filter.matcher(file.getName());
+                if (match.find()) {
+                    try {
+                        PluginLoader loader = fileAssociations.get(filter);
+                        PluginDescription description = loader.readDescription(file);
+                        String name = description.getName();
+                        if (pluginDescriptions.containsKey(name)) {
+                            throw new InvalidDescriptionException("A plugin with this name already exists: " + name);
+                        }
+                        pluginDescriptions.put(name, description);
+                    } catch (InvalidDescriptionException ex) {
+                        server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
+                    }
+                    break;
+                }
             }
         }
+    }
 
-        return result.toArray(new Plugin[result.size()]);
+    /**
+     * Loads the plugins contained within the plugin directory
+     *
+     * @return A list of all plugins loaded
+     */
+    public void loadPlugins() {
+        rebuildIndex();
+        for (PluginDescription description : pluginDescriptions.values()) {
+            enablePlugin(description);
+        }
+    }
+
+    /**
+     * Returns the given plugin's description from the index
+     *
+     * Please note that the name of the plugin is case-sensitive
+     *
+     * @param name Name of the plugin to check
+     * @return PluginDescription if it exists, otherwise null
+     */
+    public PluginDescription getPluginDescription(String name) {
+        return pluginDescriptions.get(name);
+    }
+
+    public PluginDescription[] getPluginDescriptions() {
+        return pluginDescriptions.values().toArray(new PluginDescription[0]);
     }
 
     /**
@@ -132,26 +161,16 @@ public final class SimplePluginManager implements PluginManager {
         return plugins.values().toArray(new Plugin[0]);
     }
 
-    public Plugin enablePlugin(final File file) throws InvalidDescriptionException, InvalidPluginException {
-        Set<Pattern> filters = fileAssociations.keySet();
-        Plugin plugin = null;
-
-        for (Pattern filter : filters) {
-            String name = file.getName();
-            Matcher match = filter.matcher(name);
-
-            if (match.find()) {
-                PluginLoader loader = fileAssociations.get(filter);
-                PluginDescription description = loader.readDescription(file);
-                plugin = loader.enablePlugin(description);
-                break;
-            }
+    public Plugin enablePlugin(final PluginDescription description) {
+        PluginLoader loader = description.getLoader();
+        Plugin plugin;
+        try {
+            plugin = loader.enablePlugin(description);
+        } catch (InvalidPluginException ex) {
+            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + ex.getMessage(), ex);
+            return null;
         }
-
-        if (plugin != null) {
-            plugins.put(plugin.getDescription().getName(), plugin);
-        }
-
+        plugins.put(description.getName(), plugin);
         return plugin;
     }
 

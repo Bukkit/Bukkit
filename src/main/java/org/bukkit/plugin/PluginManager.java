@@ -1,8 +1,6 @@
 
 package org.bukkit.plugin;
 
-import java.io.File;
-
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
@@ -20,6 +18,14 @@ public interface PluginManager {
      * @throws IllegalArgumentException Thrown when the given Class is not a valid PluginLoader
      */
     public void registerInterface(Class<? extends PluginLoader> loader) throws IllegalArgumentException;
+
+    /**
+     * Rediscover and reindex all plugins
+     *
+     * Walks the plugin directory, reads descriptions and rebuilds the index
+     * of all plugins it can find for the registered loaders.
+     */
+    public void rebuildIndex();
 
     /**
      * Checks if the given plugin is loaded and returns it when applicable
@@ -43,7 +49,19 @@ public interface PluginManager {
      *
      * @return A list of all plugins loaded
      */
-    public Plugin[] loadPlugins();
+    public void loadPlugins();
+
+    /**
+     * Returns the given plugin's description from the index
+     *
+     * Please note that the name of the plugin is case-sensitive
+     *
+     * @param name Name of the plugin to check
+     * @return PluginDescription if it exists, otherwise null
+     */
+    public PluginDescription getPluginDescription(String name);
+
+    public PluginDescription[] getPluginDescriptions();
 
     /**
      * Disables all the loaded plugins
@@ -87,12 +105,12 @@ public interface PluginManager {
     /**
      * Enables the specified plugin
      *
-     * @param file File containing the plugin to load
+     * @param descriptionPluginDescription of the plugin to load
      * @return The Plugin loaded, or null if it was invalid
      * @throws InvalidPluginException Thrown when the specified file is not a valid plugin
      * @throws InvalidDescriptionException Thrown when the specified file contains an invalid description
      */
-    public Plugin enablePlugin(File file) throws InvalidDescriptionException, InvalidPluginException;
+    public Plugin enablePlugin(PluginDescription description);
 
     /**
      * Disables the specified plugin
