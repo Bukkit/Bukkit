@@ -105,10 +105,10 @@ public interface PluginManager {
     /**
      * Enables the specified plugin
      *
-     * @param descriptionPluginDescription of the plugin to load
-     * @return The Plugin loaded, or null if it was invalid
-     * @throws InvalidPluginException Thrown when the specified file is not a valid plugin
-     * @throws InvalidDescriptionException Thrown when the specified file contains an invalid description
+     * Attempting to enable a plugin that is already enabled will simply
+     * return the existing Plugin object.
+     *
+     * @param description Description of the plugin to enable
      */
     public Plugin enablePlugin(PluginDescription description);
 
@@ -119,8 +119,6 @@ public interface PluginManager {
 
     /**
      * Disables the specified plugin
-     *
-     * Attempting to disable a plugin that is not enabled will have no effect
      *
      * @param plugin Plugin to disable
      */

@@ -163,6 +163,11 @@ public final class SimplePluginManager implements PluginManager {
      * {@inheritDoc}
      */
     public Plugin enablePlugin(final PluginDescription description) {
+        String name = description.getName();
+        if (plugins.containsKey(name)) {
+            return plugins.get(name);
+        }
+
         PluginLoader loader = description.getLoader();
         Plugin plugin;
         try {
