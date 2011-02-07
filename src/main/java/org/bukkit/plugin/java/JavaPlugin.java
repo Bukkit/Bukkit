@@ -1,4 +1,3 @@
-
 package org.bukkit.plugin.java;
 
 import java.util.ArrayList;
@@ -20,15 +19,17 @@ public abstract class JavaPlugin implements Plugin {
     /**
      * Constructs a new Java plugin instance
      *
-     * @param instance Server instance that is running this plugin
-     * @param desc PluginDescriptionFile containing metadata on this plugin
+     * A plugin typically does not much more than calling super here.
+     *
+     * @param server Server instance that is running this plugin
+     * @param description Description containing metadata on this plugin
      */
-    public JavaPlugin(Server instance, JavaPluginDescription desc) {
-        initialize(instance, desc);
+    public JavaPlugin(Server server, JavaPluginDescription description) {
+        initialize(server, description);
         
-        server.getLogger().warning("Using the stupidly long constructor " + desc.getMain() + "(PluginLoader, Server, PluginDescriptionFile, File, File, ClassLoader) is no longer recommended. Go nag the plugin author of " + desc.getName() + " to remove it! (Nothing is broken, we just like to keep code clean.)");
+        server.getLogger().warning("Using the stupidly long constructor " + description.getMain() + "(PluginLoader, Server, PluginDescriptionFile, File, File, ClassLoader) is no longer recommended. Go nag the plugin author of " + description.getName() + " to remove it! (Nothing is broken, we just like to keep code clean.)");
 
-        ArrayList<String> authors = desc.getAuthors();
+        ArrayList<String> authors = description.getAuthors();
         if (authors.size() > 0) {
             server.getLogger().info("Hint! It's probably someone called '" + authors.get(0) + "'");
         }
@@ -47,30 +48,39 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     /**
-     * Returns the plugin.yaml file containing the details for this plugin
-     *
-     * @return Contents of the plugin.yaml file
+     * {@inheritDoc}
      */
     public PluginDescription getDescription() {
         return description;
     }
 
     /**
-     * Called when this plugin is disabled
-     */
-    public void onDisable() {
-        // default implementation:  do nothing!
-    }
-
-    /**
      * Called when this plugin is enabled
+     *
+     * This is the place to do initialization, such as installing listeners.
      */
     public void onEnable() {
         // default implementation:  do nothing!
     }
 
     /**
+     * Called when this plugin is disabled
+     *
+     * The PluginManager sees to cleaning up listeners and scheduled tasks,
+     * but any other resources held by the plugin should be cleaned up here.
+     */
+    public void onDisable() {
+        // default implementation:  do nothing!
+    }
+
+    /**
      * Called when a command registered by this plugin is received.
+     *
+     * @param sender The sender who issued the command
+     * @param command The command object that was triggered
+     * @param commandLabel The command literally as entered (sans the '/' prefix)
+     * @param args A list of arguments (not including the command itself)
+     * @return Whether the command was executed successfully. Returning false will display usage.
      */
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         return false; // default implementation:  do nothing!

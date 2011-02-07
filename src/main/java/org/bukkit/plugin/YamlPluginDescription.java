@@ -17,6 +17,14 @@ public abstract class YamlPluginDescription extends PluginDescription {
     private static final Yaml yaml = new Yaml(new SafeConstructor());
     private Map<String, Map<String, Object>> commands = null;
 
+    /**
+     * Constructor for YAML-based plugin descriptions
+     *
+     * @param loader The loader instance, passed to super
+     * @param file The plugin file, passed to super
+     * @param stream The YAML stream for plugin.yml
+     * @throws InvalidDescriptionException Thrown when the input was not understood
+     */
     @SuppressWarnings("unchecked")
     public YamlPluginDescription(final PluginLoader loader, final File file, final InputStream stream) throws InvalidDescriptionException {
         super(loader, file);
@@ -34,6 +42,14 @@ public abstract class YamlPluginDescription extends PluginDescription {
         yaml.dump(map, writer);
     }
 
+    /**
+     * Fills the attributes from the given YAML input
+     *
+     * Subclasses may override this to parse additional fields
+     *
+     * @param map The Map instance read from the YAML input
+     * @throws InvalidDescriptionException Thrown when the input was not understood
+     */
     @SuppressWarnings("unchecked")
     protected void loadMap(Map<String, Object> map) throws InvalidDescriptionException {
         try {
@@ -94,6 +110,14 @@ public abstract class YamlPluginDescription extends PluginDescription {
         }
     }
 
+    /**
+     * Fills a Map with all the plugin metadata, so it may be written out
+     * to YAML by {@link #save(Writer)}.
+     *
+     * Subclasses may override this to save additional fields
+     *
+     * @param map The Map instance to fill with data
+     */
     protected void saveMap(Map<String, Object> map) {
         map.put("name", name);
         map.put("version", version);

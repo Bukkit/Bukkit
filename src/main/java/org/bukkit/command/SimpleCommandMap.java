@@ -21,6 +21,9 @@ public final class SimpleCommandMap implements CommandMap {
         setDefaultCommands(server);
     }
 
+    /**
+     * Helper for installing the built-in Bukkit commands
+     */
     private void setDefaultCommands(final Server server) {
         register("bukkit", new VersionCommand(server));
         register("bukkit", new ReloadCommand(server));
@@ -28,9 +31,7 @@ public final class SimpleCommandMap implements CommandMap {
     }
 
     /**
-     * Registers multiple commands. Returns name of first command for which fallback had to be used if any.
-     * @param plugin
-     * @return
+     * {@inheritDoc}
      */
     public void registerAll(String fallbackPrefix, List<Command> commands) {
         if (commands != null) {
@@ -40,6 +41,9 @@ public final class SimpleCommandMap implements CommandMap {
         }
     }
 
+    /**
+     * Helper that registers a single command
+     */
     private void register(String fallbackPrefix, Command command) {
         List<String> names = new ArrayList<String>();
         names.add(command.getName());
@@ -85,6 +89,10 @@ public final class SimpleCommandMap implements CommandMap {
         return isRegisteredCommand;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     public void clearCommands() {
         synchronized (this) {
             knownCommands.clear();
@@ -107,6 +115,9 @@ public final class SimpleCommandMap implements CommandMap {
         }
     }
 
+    /**
+     * Implements the "/bukkit version" command
+     */
     private static class VersionCommand extends Command {
         private final Server server;
 
@@ -164,6 +175,9 @@ public final class SimpleCommandMap implements CommandMap {
             return true;
         }
 
+        /**
+         * Helper that builds a string description of a plugin's authors
+         */
         private String getAuthors(final PluginDescription desc) {
             StringBuilder result = new StringBuilder();
             ArrayList<String> authors = desc.getAuthors();
@@ -187,8 +201,10 @@ public final class SimpleCommandMap implements CommandMap {
         }
     }
 
+    /**
+     * Implements the "/bukkit reload" command
+     */
     private static class ReloadCommand extends Command {
-
         private final Server server;
 
         public ReloadCommand(Server server) {
@@ -210,9 +226,11 @@ public final class SimpleCommandMap implements CommandMap {
             return true;
         }
     }
-    
+
+    /**
+     * Implements the "/bukkit plugins" command
+     */
     private static class PluginsCommand extends Command {
-        
         private final Server server;
         
         public PluginsCommand(Server server) {
@@ -228,7 +246,10 @@ public final class SimpleCommandMap implements CommandMap {
             sender.sendMessage("Plugins: " + getPluginList());
             return true;
         }
-        
+
+        /**
+         * Helper that builds a string description of all loaded plugins
+         */
         private String getPluginList() {
             StringBuilder pluginList = new StringBuilder();
             Plugin[] plugins = server.getPluginManager().getPlugins();

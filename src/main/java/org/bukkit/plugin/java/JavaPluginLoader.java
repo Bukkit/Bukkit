@@ -35,27 +35,47 @@ import org.bukkit.plugin.*;
  */
 public final class JavaPluginLoader implements PluginLoader {
     private final Server server;
-    private final Pattern[] fileFilters = new Pattern[] {
-            Pattern.compile("\\.jar$"),
-    };
+    private final Pattern[] fileFilters = new Pattern[] { Pattern.compile("\\.jar$"), };
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
 
     public JavaPluginLoader(Server instance) {
         server = instance;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Pattern[] getPluginFileFilters() {
         return fileFilters;
     }
 
+    /**
+     * Look up a class by name in the shared class cache.
+     *
+     * This is used by PluginClassLoader to access the shared cache.
+     *
+     * @param name The class name
+     * @return The class, if found
+     */
     public Class<?> getClassByName(final String name) {
         return classes.get(name);
     }
 
+    /**
+     * Add a class to the shared class cache.
+     *
+     * This is used by PluginClassLoader to update the shared cache.
+     *
+     * @param name The class name
+     * @param clazz The class to store
+     */
     public void setClass(final String name, final Class<?> clazz) {
         classes.put(name, clazz);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public EventExecutor createExecutor( Event.Type type, Listener listener ) {
         // TODO: remove multiple Listener type and hence casts
         switch (type) {
@@ -402,6 +422,9 @@ public final class JavaPluginLoader implements PluginLoader {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Plugin enablePlugin(PluginDescription abstractDescription) throws InvalidPluginException {
         JavaPluginDescription description = (JavaPluginDescription)abstractDescription;
         JavaPlugin plugin = null;
@@ -433,6 +456,9 @@ public final class JavaPluginLoader implements PluginLoader {
         return plugin;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void disablePlugin(Plugin plugin) {
         if (!(plugin instanceof JavaPlugin)) {
             throw new IllegalArgumentException("Plugin is not associated with this PluginLoader");

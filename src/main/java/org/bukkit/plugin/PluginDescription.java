@@ -6,7 +6,16 @@ import java.util.ArrayList;
 import org.bukkit.util.config.Configuration;
 
 /**
- * Encapsulates description and other metadata on a plugin.
+ * Encapsulates all the metadata on a plugin.
+ *
+ * Plugin interfaces implement a subclass of this, and return instances from
+ * {@link PluginLoader#readDescription(File)}. Plugins themselves can use
+ * {@link Plugin#getDescription()} to get access to all this metadata.
+ *
+ * This class contains all the metadata necessary for PluginManager and
+ * PluginLoader to run the plugin, and for the plugin itself to easily
+ * follow guidelines on where to store data, for example. This includes
+ * the metadata included with plugins, such as plugin.yml for Java plugins.
  */
 public abstract class PluginDescription {
     private final File file;
@@ -83,37 +92,57 @@ public abstract class PluginDescription {
         return description;
     }
 
+    /**
+     * Gets the authors of this plugin.
+     *
+     * @return A list of authors
+     */
     public ArrayList<String> getAuthors() {
         return authors;
     }
 
+    /**
+     * Gets the website of this plugin.
+     *
+     * @return A string containing the URL
+     */
     public String getWebsite() {
         return website;
     }
 
     /**
-     * Gets the associated PluginLoader responsible for this plugin
+     * Returns the loader responsible for this plugin
      *
-     * @return PluginLoader that controls this plugin
+     * Used internally by PluginManager. A plugin should never have to
+     * use a PluginLoader, and should instead talk to the PluginManager.
+     *
+     * @return The associated plugin loader
      */
     public PluginLoader getLoader() {
         return loader;
     }
 
     /**
-     * Returns the folder that the plugin data's files are located in. The
-     * folder may not yet exist.
+     * Returns a folder the plugin may store data in
      *
-     * @return
+     * There is no requirement for the plugin to use this folder, and plugin
+     * itself is responsible for creating it if it wants to use it.
+     *
+     * @return File The data folder
      */
     public File getDataFolder() {
         return dataFolder;
     }
 
     /**
-     * Returns the main configuration file. It should be loaded.
+     * Returns the plugin configuration.
      *
-     * @return
+     * The configuration lives in a YAML file in the plugin's data directory,
+     * and it's use is completely optional. To use it, a plugin should first
+     * call {@link Configuration#load()}.
+     *
+     * @return The plugin Configuration instance.
+     * @see Configuration
      */
     public Configuration getConfiguration() {
         return config;

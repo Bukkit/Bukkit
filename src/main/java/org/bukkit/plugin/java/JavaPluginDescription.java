@@ -39,6 +39,11 @@ public final class JavaPluginDescription extends YamlPluginDescription {
     /**
      * Returns the ClassLoader which holds this plugin
      *
+     * The ClassLoader instance is lazily instantiated as an instance of
+     * {@link PluginClassLoader}. Using a separate ClassLoader ensures the JRE
+     * can properly unload the plugin classes at runtime. It's also used to
+     * share classes among plugins.
+     *
      * @return ClassLoader holding this plugin
      */
     protected ClassLoader getClassLoader() {
@@ -59,6 +64,9 @@ public final class JavaPluginDescription extends YamlPluginDescription {
         return classLoader;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void loadMap(Map<String, Object> map) throws InvalidDescriptionException {
         super.loadMap(map);
@@ -72,6 +80,9 @@ public final class JavaPluginDescription extends YamlPluginDescription {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void saveMap(Map<String, Object> map) {
         super.saveMap(map);
@@ -79,6 +90,9 @@ public final class JavaPluginDescription extends YamlPluginDescription {
         map.put("main", main);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected Command createCommand(Plugin plugin, String name) {
         return new JavaPluginCommand(plugin, name);
     }

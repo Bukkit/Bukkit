@@ -13,8 +13,10 @@ public interface PluginManager {
     /**
      * Registers the specified plugin loader
      *
-     * @param loader Class name of the PluginLoader to register
+     * @param loader The PluginLoader subclass to register
+     * @return The instance of the loader
      * @throws IllegalArgumentException Thrown when the given Class is not a valid PluginLoader
+     * @see PluginLoader
      */
     public PluginLoader registerInterface(Class<? extends PluginLoader> loader) throws IllegalArgumentException;
 
@@ -70,12 +72,16 @@ public interface PluginManager {
      */
     public PluginDescription getPluginDescription(String name);
 
+    /**
+     * Gets a list of all currently known plugins' descriptions
+     *
+     * @return Array of PluginDescriptions
+     */
     public PluginDescription[] getPluginDescriptions();
 
     /**
      * Calls a player related event with the given details
      *
-     * @param type Type of player related event to call
      * @param event Event details
      */
     public void callEvent(Event event);
@@ -83,7 +89,7 @@ public interface PluginManager {
     /**
      * Registers the given event to the specified listener
      *
-     * @param type EventType to register
+     * @param type Event type to register
      * @param listener Listener to register
      * @param priority Priority of this event
      * @param plugin Plugin to register
@@ -93,7 +99,7 @@ public interface PluginManager {
     /**
      * Registers the given event to the specified executor
      *
-     * @param type EventType to register
+     * @param type Event type to register
      * @param listener Listener to register
      * @param executor EventExecutor to register
      * @param priority Priority of this event

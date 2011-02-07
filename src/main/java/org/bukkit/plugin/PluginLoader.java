@@ -1,4 +1,3 @@
-
 package org.bukkit.plugin;
 
 import java.io.File;
@@ -8,8 +7,15 @@ import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
 /**
- * Represents a plugin loader, which handles direct access to specific types
- * of plugins
+ * Represents a loader of, and interface to a type of plugin
+ *
+ * New plugin interfaces may be defined by subclassing this class,
+ * and registering them with {@link PluginManager#registerInterface(Class)}.
+ *
+ * This interface and its implementations are generally not used
+ * outside of the PluginManager.
+ *
+ * @see JavaPluginLoader
  */
 public interface PluginLoader {
     /**
@@ -40,22 +46,35 @@ public interface PluginLoader {
     public PluginDescription readDescription(File pluginFile) throws InvalidDescriptionException;
 
     /**
-     * Enables the specified plugin
+     * Called by PluginManager to enable a plugin
      *
-     * Attempting to enable a plugin that is already enabled will have no effect
+     * Typically, a Plugin instance is created, the plugin is allowed
+     * to do initialization, and the instance is then returned.
      *
-     * @param description Description of the plugin to enable
-     * @return Plugin instance that was enabled
+     * This method must not be used outside of the PluginManager. To enable a
+     * plugin from elsewhere, use
+     * {@link PluginManager#enablePlugin(PluginDescription)} instead.
+     *
+     * @param description The plugin description object identifying the plugin
+     * @return The plugin that was loaded
      * @throws InvalidPluginException Thrown when the specified file is not a plugin
      */
     public Plugin enablePlugin(PluginDescription description) throws InvalidPluginException;
 
     /**
-     * Disables the specified plugin
+     * Called by PluginManager to disable a plugin
      *
-     * Attempting to disable a plugin that is not enabled will have no effect
+     * Typically, the plugin is allowed to do some cleanup, after which the
+     * loader releases any resources it may have associated with the plugin.
      *
-     * @param plugin Plugin to disable
+     * The PluginManager takes care of unregistering commands, listeners and
+     * scheduled tasks.
+     *
+     * This method must not be used outside of the PluginManager. To disable a
+     * plugin from elsewhere, use {@link PluginManager#disablePlugin(Plugin)}
+     * instead.
+     *
+     * @param plugin The plugin to unload
      */
     public void disablePlugin(Plugin plugin);
 }

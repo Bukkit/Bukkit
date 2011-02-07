@@ -1,4 +1,3 @@
-
 package org.bukkit.plugin;
 
 import java.io.File;
@@ -28,7 +27,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 /**
- * Handles all plugin management from the Server
+ * Handles all plugin management for the Server
+ *
+ * This is the default implementation of {@link PluginManager}.
  */
 public final class SimplePluginManager implements PluginManager {
     private final Server server;
@@ -52,6 +53,15 @@ public final class SimplePluginManager implements PluginManager {
         }
     };
 
+    /**
+     * The constructor for this plugin manager
+     *
+     * The SimplePluginManager registers the Java interface by default
+     *
+     * @param server The server instance that is hosting plugins
+     * @param pluginFolder The plugin folder to use
+     * @param systemPlugins YAML files of additional Java system plugins to load
+     */
     public SimplePluginManager(Server server, File pluginFolder, List<File> systemPlugins) {
         this.server = server;
         this.pluginFolder = pluginFolder;
@@ -62,10 +72,7 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     /**
-     * Registers the specified plugin loader
-     *
-     * @param loader Class name of the PluginLoader to register
-     * @throws IllegalArgumentException Thrown when the given Class is not a valid PluginLoader
+     * {@inheritDoc}
      */
     public PluginLoader registerInterface(Class<? extends PluginLoader> loader) throws IllegalArgumentException {
         PluginLoader instance;
@@ -147,33 +154,29 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     /**
-     * Returns the given plugin's description from the index
-     *
-     * Please note that the name of the plugin is case-sensitive
-     *
-     * @param name Name of the plugin to check
-     * @return PluginDescription if it exists, otherwise null
+     * {@inheritDoc}
      */
     public PluginDescription getPluginDescription(String name) {
         return pluginDescriptions.get(name);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public PluginDescription[] getPluginDescriptions() {
         return pluginDescriptions.values().toArray(new PluginDescription[0]);
     }
 
     /**
-     * Checks if the given plugin is loaded and returns it when applicable
-     *
-     * Please note that the name of the plugin is case-sensitive
-     *
-     * @param name Name of the plugin to check
-     * @return Plugin if it exists, otherwise null
+     * {@inheritDoc}
      */
     public Plugin getPlugin(String name) {
         return plugins.get(name);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Plugin[] getPlugins() {
         return plugins.values().toArray(new Plugin[0]);
     }
@@ -236,10 +239,7 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     /**
-     * Calls a player related event with the given details
-     *
-     * @param type Type of player related event to call
-     * @param event Event details
+     * {@inheritDoc}
      */
     public void callEvent(Event event) {
         SortedSet<RegisteredListener> eventListeners = listeners.get(event.getType());
@@ -256,35 +256,25 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     /**
-     * Registers the given event to the specified listener
-     *
-     * @param type EventType to register
-     * @param listener PlayerListener to register
-     * @param priority Priority of this event
-     * @param plugin Plugin to register
+     * {@inheritDoc}
      */
     public void registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin) {
         getEventListeners( type ).add(new RegisteredListener(listener, priority, plugin, type));
     }
 
     /**
-     * Registers the given event to the specified listener using a directly passed EventExecutor
-     *
-     * @param type EventType to register
-     * @param listener PlayerListener to register
-     * @param executor EventExecutor to register
-     * @param priority Priority of this event
-     * @param plugin Plugin to register
+     * {@inheritDoc}
      */
     public void registerEvent(Event.Type type, Listener listener, EventExecutor executor, Priority priority, Plugin plugin) {
         getEventListeners( type ).add(new RegisteredListener(listener, executor, priority, plugin));
     }
 
     /**
-     * Returns a SortedSet of RegisteredListener for the specified event type creating a new queue if needed
+     * Returns a SortedSet of RegisteredListeners for the specified event
+     * type, creating a new set object if needed.
      *
-     * @param type EventType to lookup
-     * @return SortedSet<RegisteredListener> the looked up or create queue matching the requested type
+     * @param type Event type to lookup
+     * @return The SortedSet for the specified type
      */
     private SortedSet<RegisteredListener> getEventListeners(Event.Type type) {
         SortedSet<RegisteredListener> eventListeners = listeners.get(type);
@@ -298,14 +288,13 @@ public final class SimplePluginManager implements PluginManager {
         return eventListeners;
     }
 
-
     /**
      * Clears all events for a specific plugin.
      *
      * @param plugin The plugin to filter on.
      */
     private void clearEvents(Plugin plugin) {
-        for (PriorityQueue<RegisteredListener> eventListeners : listeners.values()) {
+        for (SortedSet<RegisteredListener> eventListeners : listeners.values()) {
             Iterator<RegisteredListener> iterator = eventListeners.iterator();
             while (iterator.hasNext()) {
                 RegisteredListener listener = iterator.next();
@@ -316,10 +305,19 @@ public final class SimplePluginManager implements PluginManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public CommandMap getCommandMap() {
         return commandMap;
     }
 
+    /**
+     * Returns the folder that is used as the primary source of plugins for
+     * this manager
+     *
+     * @return The plugin folder
+     */
     public File getPluginFolder() {
         return pluginFolder;
     }

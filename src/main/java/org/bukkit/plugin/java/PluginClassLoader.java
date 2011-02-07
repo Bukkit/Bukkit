@@ -19,6 +19,9 @@ public class PluginClassLoader extends URLClassLoader {
         this.loader = loader;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         Class<?> result = classes.get(name);
@@ -40,6 +43,14 @@ public class PluginClassLoader extends URLClassLoader {
         return result;
     }
 
+    /**
+     * Get a set of classes loaded by this loader
+     *
+     * Used by JavaPluginLoader to clean up the cache once the plugin that
+     * uses this ClassLoader is disabled.
+     *
+     * @return A set of classes
+     */
     public Set<String> getClasses() {
         return classes.keySet();
     }
