@@ -68,6 +68,14 @@ public abstract class YamlPluginDescription extends PluginDescription {
             throw new InvalidDescriptionException(ex, "version is of wrong type");
         }
 
+        if (map.containsKey("dependencies")) {
+            try {
+                dependencies = (ArrayList<String>)map.get("dependencies");
+            } catch (ClassCastException ex) {
+                throw new InvalidDescriptionException(ex, "dependencies are of wrong type");
+            }
+        }
+
         if (map.containsKey("commands")) {
             try {
                 commands = (Map<String, Map<String, Object>>)map.get("commands");

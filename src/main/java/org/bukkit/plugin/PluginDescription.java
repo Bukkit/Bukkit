@@ -24,6 +24,7 @@ public abstract class PluginDescription {
     private final Configuration config;
     protected String name;
     protected String version;
+    protected ArrayList<String> dependencies;
     protected String description;
     protected ArrayList<String> authors;
     protected String website;
