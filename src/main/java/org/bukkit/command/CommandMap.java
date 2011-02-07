@@ -2,6 +2,8 @@ package org.bukkit.command;
 
 import java.util.List;
 
+import org.bukkit.plugin.Plugin;
+
 public interface CommandMap {
     /**
      * Registers all the commands belonging to a certain plugin.
@@ -31,4 +33,11 @@ public interface CommandMap {
      * Clears all registered commands.
      */
     public void clearCommands();
+
+    /**
+     * Clears all registered commands associated with the given plugin.
+     *
+     * @param plugin The plugin to filter on.
+     */
+    public void clearCommands(Plugin plugin);
 }

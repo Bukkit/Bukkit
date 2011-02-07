@@ -188,6 +188,7 @@ public final class SimplePluginManager implements PluginManager {
      */
     public void disablePlugin(final Plugin plugin) {
         plugin.getDescription().getLoader().disablePlugin(plugin);
+        commandMap.clearCommands(plugin);
         server.getScheduler().cancelTasks(plugin);
     }
 

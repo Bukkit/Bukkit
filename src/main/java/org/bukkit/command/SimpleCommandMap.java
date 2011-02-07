@@ -3,6 +3,7 @@ package org.bukkit.command;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.ChatColor;
@@ -88,6 +89,21 @@ public final class SimpleCommandMap implements CommandMap {
         synchronized (this) {
             knownCommands.clear();
             setDefaultCommands(server);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void clearCommands(Plugin plugin) {
+        synchronized (this) {
+            Iterator<Command> iterator = knownCommands.values().iterator();
+            while (iterator.hasNext()) {
+                Command command = iterator.next();
+                if (command.getPlugin() == plugin) {
+                    iterator.remove();
+                }
+            }
         }
     }
 
