@@ -13,16 +13,6 @@ import org.bukkit.event.Listener;
  */
 public interface PluginLoader {
     /**
-     * Loads the plugin contained in the specified file
-     *
-     * @param file File to attempt to load
-     * @return Plugin that was contained in the specified file, or null if
-     * unsuccessful
-     * @throws InvalidPluginException Thrown when the specified file is not a plugin
-     */
-    public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException;
-
-    /**
      * Returns a list of all filename filters expected by this PluginLoader
      */
     public Pattern[] getPluginFileFilters();
@@ -40,9 +30,12 @@ public interface PluginLoader {
      *
      * Attempting to enable a plugin that is already enabled will have no effect
      *
-     * @param plugin Plugin to enable
+     * @param file File to attempt to load
+     * @return Plugin that was contained in the specified file
+     * @throws InvalidDescriptionException Thrown when the description file was not understood
+     * @throws InvalidPluginException Thrown when the specified file is not a plugin
      */
-    public void enablePlugin(Plugin plugin);
+    public Plugin enablePlugin(File file) throws InvalidDescriptionException, InvalidPluginException;
 
     /**
      * Disables the specified plugin

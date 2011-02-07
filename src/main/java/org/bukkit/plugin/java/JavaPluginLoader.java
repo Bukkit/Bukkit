@@ -42,50 +42,6 @@ public final class JavaPluginLoader implements PluginLoader {
         server = instance;
     }
 
-    public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException {
-        JavaPlugin result = null;
-        JavaPluginDescription description = null;
-
-        if (!file.exists()) {
-            throw new InvalidPluginException(new FileNotFoundException(String.format("%s does not exist", file.getPath())));
-        }
-        try {
-            JarFile jar = new JarFile(file);
-            JarEntry entry = jar.getJarEntry("plugin.yml");
-
-            if (entry == null) {
-                throw new InvalidPluginException(new FileNotFoundException("Jar does not contain plugin.yml"));
-            }
-
-            InputStream stream = jar.getInputStream(entry);
-            description = new JavaPluginDescription(this, file, stream);
-
-            stream.close();
-            jar.close();
-        } catch (IOException ex) {
-            throw new InvalidPluginException(ex);
-        }
-
-        try {
-            Class<?> jarClass = Class.forName(description.getMain(), true, description.getClassLoader());
-            Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
-
-            try {
-                Constructor<? extends JavaPlugin> constructor = plugin.getConstructor(Server.class, PluginDescription.class);
-                result = constructor.newInstance(server, description);
-            } catch (NoSuchMethodException ex) {
-                Constructor<? extends JavaPlugin> constructor = plugin.getConstructor();
-                result = constructor.newInstance();
-            }
-
-            result.initialize(server, description);
-        } catch (Throwable ex) {
-            throw new InvalidPluginException(ex);
-        }
-
-        return (Plugin)result;
-    }
-
     public Pattern[] getPluginFileFilters() {
         return fileFilters;
     }
@@ -391,25 +347,58 @@ public final class JavaPluginLoader implements PluginLoader {
         throw new IllegalArgumentException( "Event " + type + " is not supported" );
     }
 
-    public void enablePlugin(final Plugin plugin) {
-        if (!(plugin instanceof JavaPlugin)) {
-            throw new IllegalArgumentException("Plugin is not associated with this PluginLoader");
+    public Plugin enablePlugin(File file) throws InvalidDescriptionException, InvalidPluginException {
+        JavaPlugin plugin = null;
+        JavaPluginDescription description = null;
+
+        if (!file.exists()) {
+            throw new InvalidPluginException(new FileNotFoundException(String.format("%s does not exist", file.getPath())));
         }
+        try {
+            JarFile jar = new JarFile(file);
+            JarEntry entry = jar.getJarEntry("plugin.yml");
 
-        if (!plugin.isEnabled()) {
-            PluginManager pm = server.getPluginManager();
-            JavaPlugin jPlugin = (JavaPlugin)plugin;
-            JavaPluginDescription description = (JavaPluginDescription)plugin.getDescription();
-
-            pm.callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
-
-            List<Command> pluginCommands = description.buildCommands(plugin);
-            if (!pluginCommands.isEmpty()) {
-                pm.getCommandMap().registerAll(plugin.getDescription().getName(), pluginCommands);
+            if (entry == null) {
+                throw new InvalidPluginException(new FileNotFoundException("Jar does not contain plugin.yml"));
             }
 
-            jPlugin.setEnabled(true);
+            InputStream stream = jar.getInputStream(entry);
+            description = new JavaPluginDescription(this, file, stream);
+
+            stream.close();
+            jar.close();
+        } catch (IOException ex) {
+            throw new InvalidPluginException(ex);
         }
+
+        try {
+            Class<?> jarClass = Class.forName(description.getMain(), true, description.getClassLoader());
+            Class<? extends JavaPlugin> pluginClass = jarClass.asSubclass(JavaPlugin.class);
+
+            try {
+                Constructor<? extends JavaPlugin> constructor = pluginClass.getConstructor(Server.class, PluginDescription.class);
+                plugin = constructor.newInstance(server, description);
+            } catch (NoSuchMethodException ex) {
+                Constructor<? extends JavaPlugin> constructor = pluginClass.getConstructor();
+                plugin = constructor.newInstance();
+            }
+
+            plugin.initialize(server, description);
+        } catch (Throwable ex) {
+            throw new InvalidPluginException(ex);
+        }
+
+        PluginManager pm = server.getPluginManager();
+
+        pm.callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
+
+        List<Command> pluginCommands = description.buildCommands(plugin);
+        if (!pluginCommands.isEmpty()) {
+            pm.getCommandMap().registerAll(plugin.getDescription().getName(), pluginCommands);
+        }
+
+        plugin.onEnable();
+        return plugin;
     }
 
     public void disablePlugin(Plugin plugin) {
@@ -417,22 +406,20 @@ public final class JavaPluginLoader implements PluginLoader {
             throw new IllegalArgumentException("Plugin is not associated with this PluginLoader");
         }
 
-        if (plugin.isEnabled()) {
-            JavaPlugin jPlugin = (JavaPlugin)plugin;
-            JavaPluginDescription description = (JavaPluginDescription)plugin.getDescription();
-            ClassLoader cloader = description.getClassLoader();
+        JavaPlugin jPlugin = (JavaPlugin)plugin;
+        JavaPluginDescription description = (JavaPluginDescription)plugin.getDescription();
+        ClassLoader cloader = description.getClassLoader();
 
-            server.getPluginManager().callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
+        server.getPluginManager().callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
 
-            jPlugin.setEnabled(false);
+        jPlugin.onDisable();
 
-            if (cloader instanceof PluginClassLoader) {
-                PluginClassLoader loader = (PluginClassLoader)cloader;
-                Set<String> names = loader.getClasses();
+        if (cloader instanceof PluginClassLoader) {
+            PluginClassLoader loader = (PluginClassLoader)cloader;
+            Set<String> names = loader.getClasses();
 
-                for (String name : names) {
-                    classes.remove(name);
-                }
+            for (String name : names) {
+                classes.remove(name);
             }
         }
     }

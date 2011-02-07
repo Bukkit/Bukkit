@@ -20,11 +20,4 @@ public interface Plugin {
      * @return Server running this plugin
      */
     public Server getServer();
-
-    /**
-     * Returns a value indicating whether or not this plugin is currently enabled
-     *
-     * @return true if this plugin is enabled, otherwise false
-     */
-    public boolean isEnabled();
 }

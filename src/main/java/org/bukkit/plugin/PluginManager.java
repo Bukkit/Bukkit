@@ -40,36 +40,6 @@ public interface PluginManager {
     public Plugin[] getPlugins();
 
     /**
-     * Checks if the given plugin is enabled or not
-     *
-     * Please note that the name of the plugin is case-sensitive.
-     *
-     * @param name Name of the plugin to check
-     * @return true if the plugin is enabled, otherwise false
-     */
-    public boolean isPluginEnabled(String name);
-
-    /**
-     * Checks if the given plugin is enabled or not
-     *
-     * @param plugin Plugin to check
-     * @return true if the plugin is enabled, otherwise false
-     */
-    public boolean isPluginEnabled(Plugin plugin);
-
-    /**
-     * Loads the plugin in the specified file
-     *
-     * File must be valid according to the current enabled Plugin interfaces
-     *
-     * @param file File containing the plugin to load
-     * @return The Plugin loaded, or null if it was invalid
-     * @throws InvalidPluginException Thrown when the specified file is not a valid plugin
-     * @throws InvalidDescriptionException Thrown when the specified file contains an invalid description
-     */
-    public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException;
-
-    /**
      * Loads the plugins contained within the specified directory
      *
      * @param directory Directory to check for plugins
@@ -119,11 +89,12 @@ public interface PluginManager {
     /**
      * Enables the specified plugin
      *
-     * Attempting to enable a plugin that is already enabled will have no effect
-     *
-     * @param plugin Plugin to enable
+     * @param file File containing the plugin to load
+     * @return The Plugin loaded, or null if it was invalid
+     * @throws InvalidPluginException Thrown when the specified file is not a valid plugin
+     * @throws InvalidDescriptionException Thrown when the specified file contains an invalid description
      */
-    public void enablePlugin(Plugin plugin);
+    public Plugin enablePlugin(File file) throws InvalidDescriptionException, InvalidPluginException;
 
     /**
      * Disables the specified plugin

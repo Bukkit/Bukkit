@@ -97,7 +97,7 @@ public final class SimplePluginManager implements PluginManager {
             Plugin plugin = null;
 
             try {
-                plugin = loadPlugin(file);
+                plugin = enablePlugin(file);
             } catch (InvalidPluginException ex) {
                 server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + directory.getPath() + ": " + ex.getMessage(), ex);
             } catch (InvalidDescriptionException ex) {
@@ -110,38 +110,6 @@ public final class SimplePluginManager implements PluginManager {
         }
 
         return result.toArray(new Plugin[result.size()]);
-    }
-
-    /**
-     * Loads the plugin in the specified file
-     *
-     * File must be valid according to the current enabled Plugin interfaces
-     *
-     * @param file File containing the plugin to load
-     * @return The Plugin loaded, or null if it was invalid
-     * @throws InvalidPluginException Thrown when the specified file is not a valid plugin
-     * @throws InvalidDescriptionException Thrown when the specified file contains an invalid description
-     */
-    public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException {
-        Set<Pattern> filters = fileAssociations.keySet();
-        Plugin result = null;
-
-        for (Pattern filter : filters) {
-            String name = file.getName();
-            Matcher match = filter.matcher(name);
-
-            if (match.find()) {
-                PluginLoader loader = fileAssociations.get(filter);
-                result = loader.loadPlugin(file);
-            }
-        }
-
-        if (result != null) {
-            plugins.add(result);
-            lookupNames.put(result.getDescription().getName(), result);
-        }
-
-        return result;
     }
 
     /**
@@ -160,38 +128,27 @@ public final class SimplePluginManager implements PluginManager {
         return plugins.toArray(new Plugin[0]);
     }
 
-    /**
-     * Checks if the given plugin is enabled or not
-     *
-     * Please note that the name of the plugin is case-sensitive.
-     *
-     * @param name Name of the plugin to check
-     * @return true if the plugin is enabled, otherwise false
-     */
-    public boolean isPluginEnabled(String name) {
-        Plugin plugin = getPlugin(name);
+    public Plugin enablePlugin(final File file) throws InvalidDescriptionException, InvalidPluginException {
+        Set<Pattern> filters = fileAssociations.keySet();
+        Plugin plugin = null;
 
-        return isPluginEnabled(plugin);
-    }
+        for (Pattern filter : filters) {
+            String name = file.getName();
+            Matcher match = filter.matcher(name);
 
-    /**
-     * Checks if the given plugin is enabled or not
-     *
-     * @param plugin Plugin to check
-     * @return true if the plugin is enabled, otherwise false
-     */
-    public boolean isPluginEnabled(Plugin plugin) {
-        if ((plugin != null) && (plugins.contains(plugin))) {
-            return plugin.isEnabled();
-        } else {
-            return false;
+            if (match.find()) {
+                PluginLoader loader = fileAssociations.get(filter);
+                plugin = loader.enablePlugin(file);
+                break;
+            }
         }
-    }
 
-    public void enablePlugin(final Plugin plugin) {
-        if (!plugin.isEnabled()) {
-            plugin.getDescription().getLoader().enablePlugin(plugin);
+        if (plugin != null) {
+            plugins.add(plugin);
+            lookupNames.put(plugin.getDescription().getName(), plugin);
         }
+
+        return plugin;
     }
 
     public void disablePlugins() {
@@ -201,10 +158,8 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void disablePlugin(final Plugin plugin) {
-        if (plugin.isEnabled()) {
-            plugin.getDescription().getLoader().disablePlugin(plugin);
-            server.getScheduler().cancelTasks(plugin);
-        }
+        plugin.getDescription().getLoader().disablePlugin(plugin);
+        server.getScheduler().cancelTasks(plugin);
     }
 
     public void clearPlugins() {
@@ -246,9 +201,6 @@ public final class SimplePluginManager implements PluginManager {
      * @param plugin Plugin to register
      */
     public void registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin) {
-        if (!plugin.isEnabled()) {
-            server.getLogger().warning("Plugin '" + plugin.getDescription().getName() + "' (ver " + plugin.getDescription().getVersion() + ") is registering events before it is enabled. It may be misbehaving and the author needs to fix this.");
-        }
         getEventListeners( type ).add(new RegisteredListener(listener, priority, plugin, type));
     }
 

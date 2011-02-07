@@ -13,7 +13,6 @@ import org.bukkit.plugin.PluginDescription;
  * Represents a Java plugin
  */
 public abstract class JavaPlugin implements Plugin {
-    private boolean isEnabled = false;
     private boolean initialized = false;
     private Server server = null;
     private PluginDescription description = null;
@@ -49,38 +48,12 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     /**
-     * Returns a value indicating whether or not this plugin is currently enabled
-     *
-     * @return true if this plugin is enabled, otherwise false
-     */
-    public final boolean isEnabled() {
-        return isEnabled;
-    }
-
-    /**
      * Returns the plugin.yaml file containing the details for this plugin
      *
      * @return Contents of the plugin.yaml file
      */
     public PluginDescription getDescription() {
         return description;
-    }
-
-    /**
-     * Sets the enabled state of this plugin
-     *
-     * @param enabled true if enabled, otherwise false
-     */
-    protected void setEnabled(final boolean enabled) {
-        if (isEnabled != enabled) {
-            isEnabled = enabled;
-
-            if (isEnabled) {
-                onEnable();
-            }  else {
-                onDisable();
-            }
-        }
     }
 
     /**
