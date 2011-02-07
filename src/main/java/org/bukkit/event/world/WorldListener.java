@@ -22,4 +22,12 @@ public class WorldListener implements Listener {
      */
     public void onChunkUnloaded(ChunkUnloadEvent event) {
     }
+
+    /**
+     * Called when a world is saved
+     * 
+     * param event Relevant event details
+     */
+	public void onWorldSaved(WorldEvent event) {
+	}
 }

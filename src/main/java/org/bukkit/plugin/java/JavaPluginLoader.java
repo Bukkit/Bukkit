@@ -23,6 +23,7 @@ import org.bukkit.event.server.*;
 import org.bukkit.event.vehicle.*;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
+import org.bukkit.event.world.WorldEvent;
 import org.bukkit.event.world.WorldListener;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.*;
@@ -285,6 +286,11 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((WorldListener)listener).onChunkUnloaded( (ChunkUnloadEvent)event );
                 }
             };
+        case WORLD_SAVED:
+        	return new EventExecutor() { public void execute( Listener listener, Event event ) {
+        			((WorldListener)listener).onWorldSaved( (WorldEvent)event );
+        		}
+        	};
 
         // Entity Events
         case ENTITY_DAMAGEDBY_BLOCK:
