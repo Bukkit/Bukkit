@@ -287,10 +287,10 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
         case WORLD_SAVED:
-        	return new EventExecutor() { public void execute( Listener listener, Event event ) {
-        			((WorldListener)listener).onWorldSaved( (WorldEvent)event );
-        		}
-        	};
+            return new EventExecutor() { public void execute( Listener listener, Event event ) {
+                    ((WorldListener)listener).onWorldSaved( (WorldEvent)event );
+                }
+            };
 
         // Entity Events
         case ENTITY_DAMAGEDBY_BLOCK:
