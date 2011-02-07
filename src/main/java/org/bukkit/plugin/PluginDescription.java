@@ -10,6 +10,7 @@ import org.bukkit.util.config.Configuration;
  */
 public abstract class PluginDescription {
     private final File file;
+    private final PluginLoader loader;
     private final File dataFolder;
     private final Configuration config;
     protected String name;
@@ -19,8 +20,9 @@ public abstract class PluginDescription {
     protected ArrayList<String> authors;
     protected String website;
 
-    protected PluginDescription(final File file) {
+    protected PluginDescription(final PluginLoader loader, final File file) {
         this.file = file;
+        this.loader = loader;
 
         String filename = file.getName();
         int index = file.getName().lastIndexOf(".");
@@ -92,6 +94,15 @@ public abstract class PluginDescription {
 
     public String getWebsite() {
         return website;
+    }
+
+    /**
+     * Gets the associated PluginLoader responsible for this plugin
+     *
+     * @return PluginLoader that controls this plugin
+     */
+    public PluginLoader getLoader() {
+        return loader;
     }
 
     /**

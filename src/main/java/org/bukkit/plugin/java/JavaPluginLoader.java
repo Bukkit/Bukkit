@@ -57,7 +57,7 @@ public final class JavaPluginLoader implements PluginLoader {
             }
 
             InputStream stream = jar.getInputStream(entry);
-            description = new JavaPluginDescription(file, stream);
+            description = new JavaPluginDescription(this, file, stream);
 
             stream.close();
             jar.close();
@@ -71,14 +71,14 @@ public final class JavaPluginLoader implements PluginLoader {
             Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
 
             try {
-                Constructor<? extends JavaPlugin> constructor = plugin.getConstructor(PluginLoader.class, Server.class, PluginDescription.class, ClassLoader.class);
-                result = constructor.newInstance(this, server, description, loader);
+                Constructor<? extends JavaPlugin> constructor = plugin.getConstructor(Server.class, PluginDescription.class, ClassLoader.class);
+                result = constructor.newInstance(server, description, loader);
             } catch (NoSuchMethodException ex) {
                 Constructor<? extends JavaPlugin> constructor = plugin.getConstructor();
                 result = constructor.newInstance();
             }
 
-            result.initialize(this, server, description, loader);
+            result.initialize(server, description, loader);
         } catch (Throwable ex) {
             throw new InvalidPluginException(ex);
         }

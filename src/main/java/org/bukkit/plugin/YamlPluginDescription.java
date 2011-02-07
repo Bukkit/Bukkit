@@ -18,8 +18,8 @@ public class YamlPluginDescription extends PluginDescription {
     private static final Yaml yaml = new Yaml(new SafeConstructor());
 
     @SuppressWarnings("unchecked")
-    public YamlPluginDescription(final File file, final InputStream stream) throws InvalidDescriptionException {
-        super(file);
+    public YamlPluginDescription(final PluginLoader loader, final File file, final InputStream stream) throws InvalidDescriptionException {
+        super(loader, file);
         loadMap((Map<String, Object>)yaml.load(stream));
     }
 

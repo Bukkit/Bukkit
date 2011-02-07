@@ -24,7 +24,7 @@ public class RegisteredListener {
         listener = pluginListener;
         priority = eventPriority;
         plugin = registeredPlugin;
-        executor = registeredPlugin.getPluginLoader().createExecutor( type, pluginListener );
+        executor = registeredPlugin.getDescription().getLoader().createExecutor( type, pluginListener );
     }
 
     /**

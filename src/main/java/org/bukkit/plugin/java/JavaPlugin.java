@@ -8,7 +8,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescription;
-import org.bukkit.plugin.PluginLoader;
 
 /**
  * Represents a Java plugin
@@ -16,7 +15,6 @@ import org.bukkit.plugin.PluginLoader;
 public abstract class JavaPlugin implements Plugin {
     private boolean isEnabled = false;
     private boolean initialized = false;
-    private PluginLoader loader = null;
     private Server server = null;
     private PluginDescription description = null;
     private ClassLoader classLoader = null;
@@ -24,14 +22,12 @@ public abstract class JavaPlugin implements Plugin {
     /**
      * Constructs a new Java plugin instance
      *
-     * @param pluginLoader PluginLoader that is responsible for this plugin
      * @param instance Server instance that is running this plugin
      * @param desc PluginDescriptionFile containing metadata on this plugin
      * @param cLoader ClassLoader which holds this plugin
      */
-    public JavaPlugin(PluginLoader pluginLoader, Server instance,
-            PluginDescription desc, ClassLoader cLoader) {
-        initialize(pluginLoader, instance, desc, cLoader);
+    public JavaPlugin(Server instance, PluginDescription desc, ClassLoader cLoader) {
+        initialize(instance, desc, cLoader);
         
         JavaPluginDescription jDesc = (JavaPluginDescription)desc;
         server.getLogger().warning("Using the stupidly long constructor " + jDesc.getMain() + "(PluginLoader, Server, PluginDescriptionFile, File, File, ClassLoader) is no longer recommended. Go nag the plugin author of " + jDesc.getName() + " to remove it! (Nothing is broken, we just like to keep code clean.)");
@@ -43,15 +39,6 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     public JavaPlugin() {
-    }
-
-    /**
-     * Gets the associated PluginLoader responsible for this plugin
-     *
-     * @return PluginLoader that controls this plugin
-     */
-    public final PluginLoader getPluginLoader() {
-        return loader;
     }
 
     /**
@@ -126,14 +113,12 @@ public abstract class JavaPlugin implements Plugin {
      * @param file File containing this plugin
      * @param classLoader ClassLoader which holds this plugin
      */
-    protected final void initialize(PluginLoader loader, Server server,
-            PluginDescription description, ClassLoader classLoader) {
+    protected final void initialize(Server server, PluginDescription description, ClassLoader classLoader) {
         if (initialized) {
             throw new UnsupportedOperationException("Cannot reinitialize a plugin");
         }
 
         this.initialized = true;
-        this.loader = loader;
         this.server = server;
         this.description = description;
         this.classLoader = classLoader;

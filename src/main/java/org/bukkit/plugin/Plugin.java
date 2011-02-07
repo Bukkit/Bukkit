@@ -17,13 +17,6 @@ public interface Plugin {
     public PluginDescription getDescription();
 
     /**
-     * Gets the associated PluginLoader responsible for this plugin
-     *
-     * @return PluginLoader that controls this plugin
-     */
-    public PluginLoader getPluginLoader();
-
-    /**
      * Returns the Server instance currently running this plugin
      *
      * @return Server running this plugin

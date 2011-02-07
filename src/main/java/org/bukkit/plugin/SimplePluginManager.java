@@ -184,7 +184,7 @@ public final class SimplePluginManager implements PluginManager {
 
     public void enablePlugin(final Plugin plugin) {
         if (!plugin.isEnabled()) {
-            plugin.getPluginLoader().enablePlugin(plugin);
+            plugin.getDescription().getLoader().enablePlugin(plugin);
         }
     }
 
@@ -196,7 +196,7 @@ public final class SimplePluginManager implements PluginManager {
 
     public void disablePlugin(final Plugin plugin) {
         if (plugin.isEnabled()) {
-            plugin.getPluginLoader().disablePlugin(plugin);
+            plugin.getDescription().getLoader().disablePlugin(plugin);
             server.getScheduler().cancelTasks(plugin);
         }
     }
