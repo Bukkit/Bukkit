@@ -151,6 +151,20 @@ public abstract class Event {
         PLAYER_LOGIN (Category.PLAYER),
 
         /**
+         * Called when a player respawns
+         *
+         * @see org.bukkit.event.player.PlayerEvent
+         */
+        PLAYER_RESPAWN (Category.PLAYER),
+
+        /**
+         * Called when a player gets kicked a server
+         *
+         * @see org.bukkit.event.player.PlayerEvent
+         */
+        PLAYER_KICK (Category.PLAYER),
+
+        /**
          * Called when a player sends a chat message
          *
          * @see org.bukkit.event.player.PlayerChatEvent
@@ -327,6 +341,13 @@ public abstract class Event {
         REDSTONE_CHANGE (Category.BLOCK),
 
         /**
+         * Called when a block is destroyed by a player.
+         *
+         * @see org.bukkit.event.block.BlockBreakEvent
+         */
+        BLOCK_BREAK (Category.BLOCK),
+
+        /**
          * INVENTORY EVENTS
          */
 
@@ -424,6 +445,11 @@ public abstract class Event {
          * @todo: add javadoc see comment
          */
         ITEM_SPAWN (Category.WORLD),
+
+        /**
+         * Called when a World is loaded
+         */
+        WORLD_LOADED (Category.WORLD),
 
         /**
          * LIVING_ENTITY EVENTS

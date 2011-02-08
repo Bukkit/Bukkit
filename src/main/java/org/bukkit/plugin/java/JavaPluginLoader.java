@@ -23,6 +23,7 @@ import org.bukkit.event.server.*;
 import org.bukkit.event.vehicle.*;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
+import org.bukkit.event.world.WorldEvent;
 import org.bukkit.event.world.WorldListener;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.*;
@@ -126,6 +127,16 @@ public final class JavaPluginLoader implements PluginLoader {
         case PLAYER_QUIT:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
                     ((PlayerListener)listener).onPlayerQuit( (PlayerEvent)event );
+                }
+            };
+        case PLAYER_RESPAWN:
+            return new EventExecutor() { public void execute( Listener listener, Event event ) {
+                    ((PlayerListener)listener).onPlayerRespawn( (PlayerRespawnEvent)event );
+                }
+            };
+        case PLAYER_KICK:
+            return new EventExecutor() { public void execute( Listener listener, Event event ) {
+                    ((PlayerListener)listener).onPlayerKick( (PlayerKickEvent)event );
                 }
             };
         case PLAYER_COMMAND:
@@ -237,13 +248,17 @@ public final class JavaPluginLoader implements PluginLoader {
             };
         case REDSTONE_CHANGE:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((BlockListener)listener).onBlockRedstoneChange( (BlockFromToEvent)event );
+                    ((BlockListener)listener).onBlockRedstoneChange( (BlockRedstoneEvent)event );
                 }
             };
-
         case BLOCK_BURN:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
                     ((BlockListener)listener).onBlockBurn( (BlockBurnEvent)event );
+                }
+            };
+        case BLOCK_BREAK:
+            return new EventExecutor() { public void execute( Listener listener, Event event ) {
+                    ((BlockListener)listener).onBlockBreak( (BlockBreakEvent)event );
                 }
             };
 
@@ -274,6 +289,11 @@ public final class JavaPluginLoader implements PluginLoader {
         case CHUNK_UNLOADED:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
                     ((WorldListener)listener).onChunkUnloaded( (ChunkUnloadEvent)event );
+                }
+            };
+        case WORLD_LOADED:
+            return new EventExecutor() { public void execute( Listener listener, Event event ) {
+                    ((WorldListener)listener).onWorldLoaded( (WorldEvent)event );
                 }
             };
 
