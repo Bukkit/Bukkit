@@ -38,7 +38,7 @@ public final class SimplePluginManager implements PluginManager {
     private final CommandMap commandMap;
     private final List<PluginLoader> pluginLoaders = new ArrayList<PluginLoader>();
     private final JavaPluginLoader javaPluginLoader;
-    private final Map<String, PluginDescription> pluginDescriptions = new HashMap<String, PluginDescription>();
+    private final PluginDependencyGraph pluginDescriptions = new PluginDependencyGraph();
     private final Map<String, Plugin> plugins = new HashMap<String, Plugin>();
     private final Map<Event.Type, SortedSet<RegisteredListener>> listeners = new EnumMap<Event.Type, SortedSet<RegisteredListener>>(Event.Type.class);
     private final Comparator<RegisteredListener> comparer = new Comparator<RegisteredListener>() {
@@ -109,13 +109,12 @@ public final class SimplePluginManager implements PluginManager {
         for (File file : systemPlugins) {
             try {
                 PluginDescription description = javaPluginLoader.readSystemPluginDescription(file);
-                String name = description.getName();
-                if (pluginDescriptions.containsKey(name)) {
-                    throw new InvalidDescriptionException("A plugin with this name already exists: " + name);
+                if (pluginDescriptions.contains(description)) {
+                    throw new InvalidDescriptionException("A plugin with this name already exists: " + description.getName());
                 }
-                pluginDescriptions.put(name, description);
+                pluginDescriptions.insert(description);
             } catch (InvalidDescriptionException ex) {
-                log.log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
+                server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
             }
         }
     }
@@ -137,11 +136,10 @@ public final class SimplePluginManager implements PluginManager {
                 if (match.find()) {
                     try {
                         PluginDescription description = loader.readDescription(file);
-                        String name = description.getName();
-                        if (pluginDescriptions.containsKey(name)) {
-                            throw new InvalidDescriptionException("A plugin with this name already exists: " + name);
+                        if (pluginDescriptions.contains(description)) {
+                            throw new InvalidDescriptionException("A plugin with this name already exists: " + description.getName());
                         }
-                        pluginDescriptions.put(name, description);
+                        pluginDescriptions.insert(description);
                         result.add(description);
                     } catch (InvalidDescriptionException ex) {
                         server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
@@ -185,24 +183,35 @@ public final class SimplePluginManager implements PluginManager {
      * {@inheritDoc}
      */
     public Plugin enablePlugin(final PluginDescription description) {
-        String name = description.getName();
-        if (plugins.containsKey(name)) {
-            return plugins.get(name);
+        // Short circuit, to avoid expensive processing for already loaded plugins.
+        Plugin plugin = plugins.get(description.getName());
+        if (plugin != null) {
+            return plugin;
         }
 
-        PluginLoader loader = description.getLoader();
-        Plugin plugin;
         try {
-            plugin = loader.enablePlugin(description);
-        } catch (InvalidPluginException ex) {
-            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + ex.getMessage(), ex);
-            return null;
+            return (Plugin)pluginDescriptions.walkDependencies(description, new PluginDependencyGraph.Visitor() {
+                public Object visit(PluginDescription description) throws Throwable {
+                    Plugin plugin = plugins.get(description.getName());
+                    if (plugin == null) {
+                        PluginLoader loader = description.getLoader();
+                        plugin = loader.enablePlugin(description);
+
+                        plugins.put(description.getName(), plugin);
+                        callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
+                    }
+                    return plugin;
+                }
+            });
+        } catch (CircularDependencyException ex) {
+            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + " because of circular dependencies.");
+        } catch (MissingDependencyException ex) {
+            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + ex.getMessage());
+        } catch (GraphIterationAborted ex) {
+            Throwable inner = ex.getCause();
+            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + inner.getMessage(), inner);
         }
-        plugins.put(description.getName(), plugin);
-
-        callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
-
-        return plugin;
+        return null;
     }
 
     /**
@@ -220,13 +229,30 @@ public final class SimplePluginManager implements PluginManager {
     public void disablePlugin(final Plugin plugin) {
         PluginDescription description = plugin.getDescription();
 
-        callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
+        try {
+            pluginDescriptions.walkDependents(description, new PluginDependencyGraph.Visitor() {
+                public Object visit(PluginDescription description) throws Throwable {
+                    Plugin plugin = plugins.get(description.getName());
+                    if (plugin != null) {
+                        callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
 
-        description.getLoader().disablePlugin(plugin);
-        plugins.remove(description.getName());
-        clearEvents(plugin);
-        commandMap.clearCommands(plugin);
-        server.getScheduler().cancelTasks(plugin);
+                        description.getLoader().disablePlugin(plugin);
+                        plugins.remove(description.getName());
+                        clearEvents(plugin);
+                        commandMap.clearCommands(plugin);
+                        server.getScheduler().cancelTasks(plugin);
+                    }
+                    return null;
+                }
+            });
+        } catch (CircularDependencyException ex) {
+            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + " because of circular dependencies.");
+        } catch (MissingDependencyException ex) {
+            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + ex.getMessage());
+        } catch (GraphIterationAborted ex) {
+            Throwable inner = ex.getCause();
+            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + inner.getMessage(), inner);
+        }
     }
 
     /**
