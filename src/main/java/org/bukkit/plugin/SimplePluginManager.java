@@ -233,7 +233,8 @@ public final class SimplePluginManager implements PluginManager {
      * {@inheritDoc}
      */
     public void disableAllPlugins() {
-        for (Plugin plugin : plugins.values()) {
+        while (!plugins.isEmpty()) {
+            Plugin plugin = plugins.values().iterator().next();
             disablePlugin(plugin);
         }
     }
