@@ -27,6 +27,14 @@ public class PlayerListener implements Listener {
     }
 
     /**
+     * Called when a player gets kicked from the server
+     * 
+     * @param event Relevant event details
+     */
+    public void onPlayerKick(PlayerKickEvent event) {
+    }
+
+    /**
      * Called when a player sends a chat message
      *
      * @param event Relevant event details
@@ -57,10 +65,18 @@ public class PlayerListener implements Listener {
      */
     public void onPlayerTeleport(PlayerMoveEvent event) {
     }
-    
+
+    /**
+     * Called when a player respawns
+     * 
+     * @param event Relevant event details
+     */
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+    }
+
     /**
      * Called when a player uses an item
-     * 
+     *
      * @param event Relevant event details
      */
     public void onPlayerItem(PlayerItemEvent event) {
@@ -81,12 +97,44 @@ public class PlayerListener implements Listener {
      */
     public void onPlayerEggThrow(PlayerEggThrowEvent event) {
     }
-    
+
     /**
      * Called when a player plays an animation, such as an arm swing
-     * 
+     *
      * @param event Relevant event details
      */
     public void onPlayerAnimation(PlayerAnimationEvent event) {
+    }
+
+    /**
+     * Called when a player opens an inventory
+     *
+     * @param event Relevant event details
+     */
+    public void onInventoryOpen(PlayerInventoryEvent event) {
+    }
+
+    /**
+     * Called when a player changes their held item
+     *
+     * @param event Relevant event details
+     */
+    public void onItemHeldChange(PlayerItemHeldEvent event) {
+    }
+
+    /**
+     * Called when a player drops an item from their inventory
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+    }
+
+    /**
+     * Called when a player toggles sneak mode
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {
     }
 }

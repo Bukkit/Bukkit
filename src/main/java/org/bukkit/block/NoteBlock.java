@@ -21,7 +21,11 @@ public interface NoteBlock extends BlockState {
     public void setNote(byte note);
 
     /**
-     * Plays the noteblock
+     * Attempts to play the note at block<br />
+     * <br />
+     * If the block is no longer a note block, this will return false
+     *
+     * @return true if successful, otherwise false
      */
-    public void play();
+    public boolean play();
 }

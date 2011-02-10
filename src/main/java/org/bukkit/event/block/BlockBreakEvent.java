@@ -1,21 +1,21 @@
 package org.bukkit.event.block;
 
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockDamageLevel;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 
 /**
- * @author tkelly
+ *
+ * @author Meaglin
  */
-public class BlockDamageEvent extends BlockEvent implements Cancellable {
+public class BlockBreakEvent extends BlockEvent implements Cancellable {
+
     private Player player;
-    private BlockDamageLevel damageLevel;
     private boolean cancel;
 
-    public BlockDamageEvent(Type type, Block block, BlockDamageLevel level, Player player) {
-        super(type, block);
-        this.damageLevel = level;
+    public BlockBreakEvent(final Block theBlock, Player player) {
+        super(Event.Type.BLOCK_BREAK, theBlock);
         this.player = player;
         this.cancel = false;
     }
@@ -27,15 +27,6 @@ public class BlockDamageEvent extends BlockEvent implements Cancellable {
      */
     public Player getPlayer() {
         return player;
-    }
-
-    /**
-     * Returns the level of damage to the block
-     *
-     * @return
-     */
-    public BlockDamageLevel getDamageLevel() {
-        return damageLevel;
     }
 
     public boolean isCancelled() {
