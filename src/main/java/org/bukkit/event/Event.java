@@ -324,7 +324,14 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.BlockBurnEvent
          */
         BLOCK_BURN (Category.BLOCK),
-
+        
+        /**
+         * Called when a dispenser would eject an item
+         *
+         * @see org.bukkit.event.block.DispenserEjectEvent
+         */
+        DISPENSER_EJECT (Category.BLOCK),
+        
         /**
          * Called when leaves are decaying naturally
          *
