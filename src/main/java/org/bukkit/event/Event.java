@@ -322,6 +322,13 @@ public abstract class Event {
          * @see org.bukkit.event.block.LeavesDecayEvent
          */
         LEAVES_DECAY (Category.BLOCK),
+        
+        /**
+         * Called when a sign is modified
+         *
+         * @see org.bukkit.event.block.SignModifiedEvent
+         */
+        SIGN_MODIFIED (Category.BLOCK),
 
         /**
          * Called when a liquid attempts to flow into a block which already

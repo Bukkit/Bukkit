@@ -93,6 +93,14 @@ public class BlockListener implements Listener {
      */
     public void onLeavesDecay(LeavesDecayEvent event) {
     }
+    
+    /**
+     * Called when a sign is modified
+     *
+     * @param event Relevant event details
+     */
+    public void onSignModified(SignModifiedEvent event) {
+    }
 
     /**
      * Called when a block is destroyed from burning
