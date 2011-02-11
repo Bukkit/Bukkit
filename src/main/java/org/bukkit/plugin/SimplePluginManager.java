@@ -68,7 +68,7 @@ public final class SimplePluginManager implements PluginManager {
         }
 
         javaPluginLoader = new JavaPluginLoader(server, pluginFolder, systemPlugins);
-        registerInterface(javaPluginLoader);
+        pluginLoaders.add(javaPluginLoader);
     }
 
     /**
@@ -76,6 +76,7 @@ public final class SimplePluginManager implements PluginManager {
      */
     public void registerInterface(PluginLoader loader) {
         pluginLoaders.add(loader);
+        loader.discoverPlugins();
     }
 
     /**
