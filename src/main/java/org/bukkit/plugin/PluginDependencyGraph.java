@@ -257,16 +257,6 @@ public final class PluginDependencyGraph {
     }
 
     /**
-     * Checks whether a plugin is known.
-     *
-     * @param description The plugin's description.
-     * @return Whether the plugin is known or not.
-     */
-    public boolean contains(PluginDescription description) {
-        return nodesByDescription.containsKey(description);
-    }
-
-    /**
      * Inserts a new plugin in the graph.
      *
      * @param description The plugin's description.
