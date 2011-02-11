@@ -76,6 +76,15 @@ public abstract class PluginDescription {
     }
 
     /**
+     * Returns the list of dependencies
+     *
+     * @return A list of dependency names
+     */
+    public ArrayList<String> getDependencies() {
+        return dependencies;
+    }
+
+    /**
      * Returns the name of a plugin including the version
      *
      * @return String name

@@ -55,23 +55,25 @@ public final class PluginDependencyGraph {
      * A node in the dependency graph.
      */
     private final class Node {
-        private final PluginDescription description;
-        private Plugin plugin = null;
+        public final PluginDescription description;
+        public Plugin plugin = null;
 
-        private final HashSet<Node> dependencies;
-        private final HashSet<Node> dependents;
-        private final HashSet<String> unresolved;
+        public final HashSet<Node> dependencies;
+        public final HashSet<Node> dependents;
+        public final HashSet<String> unresolved;
 
-        private State state = State.NEW;
+        public State state = State.NEW;
 
-        private Node(PluginDescription description) {
+        public Node(PluginDescription description) {
             this.description = description;
 
             dependencies = new HashSet<Node>();
             dependents = new HashSet<Node>();
             unresolved = new HashSet<String>();
-            if (description.dependencies != null) {
-                unresolved.addAll(description.dependencies);
+
+            ArrayList<String> namedDeps = description.getDependencies();
+            if (namedDeps != null) {
+                unresolved.addAll(namedDeps);
             }
         }
 
@@ -80,7 +82,7 @@ public final class PluginDependencyGraph {
          *
          * This is called shortly after construction.
          */
-        private void resolveDependencies() {
+        public void resolveDependencies() {
             // Walk our named dependencies and resolve them to nodes where we can.
             Iterator<String> i = unresolved.iterator();
             while (i.hasNext()) {
@@ -97,10 +99,10 @@ public final class PluginDependencyGraph {
             registerUnresolved();
 
             // Update other nodes depending on this node, which is now available.
-            HashSet<Node> others = unresolvedNames.remove(description.name);
+            HashSet<Node> others = unresolvedNames.remove(description.getName());
             if (others != null) {
                 for (Node node : others) {
-                    node.unresolved.remove(description.name);
+                    node.unresolved.remove(description.getName());
                     node.dependencies.add(this);
                     dependents.add(node);
                 }
@@ -112,7 +114,7 @@ public final class PluginDependencyGraph {
          *
          * This is called during {@link PluginDependencyGraph#clear()}.
          */
-        private void clearLostDependencies() {
+        public void clearLostDependencies() {
             Iterator<Node> i = dependencies.iterator();
             while (i.hasNext()) {
                 Node node = i.next();
@@ -263,7 +265,7 @@ public final class PluginDependencyGraph {
      */
     public void insert(PluginDescription description) {
         Node node = new Node(description);
-        nodesByName.put(description.name, node);
+        nodesByName.put(description.getName(), node);
         nodesByDescription.put(description, node);
         node.resolveDependencies();
     }
@@ -342,7 +344,7 @@ public final class PluginDependencyGraph {
         HashSet<Node> toWalk = down ? node.dependencies : node.dependents;
         if (down && !node.unresolved.isEmpty()) {
             String oneOfTheDeps = node.unresolved.iterator().next(); 
-            throw new MissingDependencyException(node.description.name, oneOfTheDeps);
+            throw new MissingDependencyException(node.description.getName(), oneOfTheDeps);
         }
         for (Node dependency : toWalk) {
             walk(dependency, visitor, down);
