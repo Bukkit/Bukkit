@@ -241,9 +241,9 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((BlockListener)listener).onLeavesDecay( (LeavesDecayEvent)event );
                 }
             };
-        case SIGN_MODIFIED:
+        case SIGN_CHANGE:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((BlockListener)listener).onSignModified( (SignModifiedEvent)event );
+                    ((BlockListener)listener).onSignChange( (SignChangeEvent)event );
                 }
             };
         case BLOCK_IGNITE:

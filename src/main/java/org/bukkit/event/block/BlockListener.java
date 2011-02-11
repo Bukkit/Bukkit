@@ -95,11 +95,11 @@ public class BlockListener implements Listener {
     }
     
     /**
-     * Called when a sign is modified
+     * Called when a sign is changed
      *
      * @param event Relevant event details
      */
-    public void onSignModified(SignModifiedEvent event) {
+    public void onSignChange(SignChangeEvent event) {
     }
 
     /**
