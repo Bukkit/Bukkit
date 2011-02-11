@@ -371,7 +371,7 @@ public final class PluginDependencyGraph {
      * Helper to clear all visitor state on nodes.
      */
     private void clearVisitorState() {
-        for (Node node : nodesByName.values()) {
+        for (Node node : nodesByDescription.values()) {
             node.state = State.NEW;
         }
     }
