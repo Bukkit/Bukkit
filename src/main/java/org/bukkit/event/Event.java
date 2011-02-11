@@ -423,21 +423,21 @@ public abstract class Event {
          *
          * @see org.bukkit.event.server.UserUnbanEvent
          */
-        USER_UNBAN (Category.Server),
+        USER_UNBAN (Category.SERVER),
         
         /**
          * Called when an IP gets banned
          *
          * @see org.bukkit.event.server.IpBanEvent
          */
-        IP_BAN (Category.Server),
+        IP_BAN (Category.SERVER),
         
         /**
          * Called when an IP gets unbanned
          *
          * @see org.bukkit.event.server.IpUnbanEvent
          */
-        IP_UNBAN (Category.Server),
+        IP_UNBAN (Category.SERVER),
 
         /**
          * WORLD EVENTS
