@@ -74,7 +74,9 @@ public final class PluginDependencyGraph {
             // Add implicit dependency on the loader.
             Plugin loaderPlugin = description.getLoader().getContainingPlugin();
             if (loaderPlugin != null) {
-                dependencies.add(nodesByDescription.get(loaderPlugin.getDescription()));
+                Node loaderNode = nodesByDescription.get(loaderPlugin.getDescription());
+                dependencies.add(loaderNode);
+                loaderNode.dependents.add(this);
             }
 
             // Add all dependecies to unresolved.
