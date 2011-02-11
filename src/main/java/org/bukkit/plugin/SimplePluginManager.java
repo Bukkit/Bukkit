@@ -126,6 +126,44 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     /**
+     * Graph visitor used when enabling plugins.
+     */
+    private class EnablerVisitor implements PluginDependencyGraph.Visitor {
+        public Plugin visit(PluginDescription description) throws Exception {
+            Plugin plugin = plugins.get(description.getName());
+            if (plugin == null) {
+                PluginLoader loader = description.getLoader();
+                plugin = loader.enablePlugin(description);
+
+                plugins.put(description.getName(), plugin);
+                callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
+            }
+            return plugin;
+        }
+    }
+
+    /**
+     * An instance of EnablerVisitor, because we only ever need one.
+     */
+    private final EnablerVisitor enablerVisitor = new EnablerVisitor();
+
+    /**
+     * Helper used to log errors while enabling plugins.
+     */
+    private void logEnablePluginError(final PluginDescription description, final GraphIterationAborted ex) {
+        if (ex instanceof CircularDependencyException) {
+            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + " because of circular dependencies.");
+        }
+        else if (ex instanceof MissingDependencyException) {
+            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + ex.getMessage());
+        }
+        else {
+            Throwable inner = ex.getCause();
+            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + inner.getMessage(), inner);
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     public Plugin enablePlugin(final PluginDescription description) {
@@ -164,10 +202,68 @@ public final class SimplePluginManager implements PluginManager {
      * {@inheritDoc}
      */
     public void enableAllPlugins() {
-        for (PluginDescription description : pluginDescriptions.values()) {
-            enablePlugin(description);
+        HashMap<PluginDescription, GraphIterationAborted> problems = new HashMap<PluginDescription, GraphIterationAborted>();
+
+        // We need to make several passes here, because each plugin may add
+        // new loaders and thus new descriptions. And in theory, plugin
+        // dependencies may cross language barriers.
+        boolean done = false;
+        while (!done) {
+            done = true;
+
+            // Operate on a copy, to work around changes while iterating.
+            PluginDescription[] descriptions = pluginDescriptions.values().toArray(new PluginDescription[0]);
+            for (PluginDescription description : descriptions) {
+                // Don't just call enablePlugin here. Instead, we do our own
+                // processing and collect the exceptions, so we may dump them
+                // all at the user in one shot.
+                if (plugins.containsKey(description.getName())) {
+                    continue;
+                }
+                try {
+                    pluginDescriptions.walkDependencies(description, enablerVisitor);
+                } catch (GraphIterationAborted ex) {
+                    problems.put(description, ex);
+                    continue;
+                }
+                // Clear any problems we encountered earlier.
+                problems.remove(description);
+                // We're only done when we make a pass that didn't get us
+                // anywhere, thus know there's nothing more we can do.
+                done = false;
+            }
+        }
+
+        // Spit out everything.
+        for (Map.Entry<PluginDescription, GraphIterationAborted> entry : problems.entrySet()) {
+            logEnablePluginError(entry.getKey(), entry.getValue());
         }
     }
+
+    /**
+     * Graph visitor used when disabling plugins.
+     */
+    private class DisablerVisitor implements PluginDependencyGraph.Visitor {
+        public Plugin visit(PluginDescription description) throws Exception {
+            Plugin plugin = plugins.get(description.getName());
+            if (plugin != null) {
+                callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
+
+                description.getLoader().disablePlugin(plugin);
+                plugins.remove(description.getName());
+                clearEvents(plugin);
+                clearLoaders(plugin);
+                commandMap.clearCommands(plugin);
+                server.getScheduler().cancelTasks(plugin);
+            }
+            return null;
+        }
+    }
+
+    /**
+     * An instance of DisablerVisitor, because we only ever need one.
+     */
+    private final DisablerVisitor disablerVisitor = new DisablerVisitor();
 
     /**
      * {@inheritDoc}
@@ -176,29 +272,14 @@ public final class SimplePluginManager implements PluginManager {
         PluginDescription description = plugin.getDescription();
 
         try {
-            pluginDescriptions.walkDependents(description, new PluginDependencyGraph.Visitor() {
-                public Plugin visit(PluginDescription description) throws Exception {
-                    Plugin plugin = plugins.get(description.getName());
-                    if (plugin != null) {
-                        callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
-
-                        description.getLoader().disablePlugin(plugin);
-                        plugins.remove(description.getName());
-                        clearEvents(plugin);
-                        clearLoaders(plugin);
-                        commandMap.clearCommands(plugin);
-                        server.getScheduler().cancelTasks(plugin);
-                    }
-                    return null;
-                }
-            });
+            pluginDescriptions.walkDependents(description, disablerVisitor);
         } catch (CircularDependencyException ex) {
-            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + " because of circular dependencies.");
+            server.getLogger().log(Level.SEVERE, "Could not unload " + description.getName() + " because of circular dependencies.");
         } catch (MissingDependencyException ex) {
-            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + ex.getMessage());
+            server.getLogger().log(Level.SEVERE, "Could not unload " + description.getName() + ": " + ex.getMessage());
         } catch (GraphIterationAborted ex) {
             Throwable inner = ex.getCause();
-            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + inner.getMessage(), inner);
+            server.getLogger().log(Level.SEVERE, "Could not unload " + description.getName() + ": " + inner.getMessage(), inner);
         }
     }
 
@@ -206,6 +287,7 @@ public final class SimplePluginManager implements PluginManager {
      * {@inheritDoc}
      */
     public void disableAllPlugins() {
+        // This trick is to work around changes while iterating.
         while (!plugins.isEmpty()) {
             Plugin plugin = plugins.values().iterator().next();
             disablePlugin(plugin);
