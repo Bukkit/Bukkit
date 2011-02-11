@@ -71,6 +71,14 @@ public final class PluginDependencyGraph {
             dependents = new HashSet<Node>();
             unresolved = new HashSet<String>();
 
+            // Add implicit dependency on the loader.
+            Plugin loaderPlugin = description.getLoader().getContainingPlugin();
+            if (loaderPlugin != null) {
+                dependencies.add(nodesByDescription.get(loaderPlugin.getDescription()));
+            }
+
+            // Add all dependecies to unresolved.
+            // These will soon be handled by resolveDependencies.
             ArrayList<String> namedDeps = description.getDependencies();
             if (namedDeps != null) {
                 unresolved.addAll(namedDeps);
