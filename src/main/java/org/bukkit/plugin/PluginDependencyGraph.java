@@ -12,28 +12,43 @@ import java.util.Iterator;
  * PluginDescriptions are stored in a directed graph, where edges are plugin
  * dependencies. The graph can be walked when enabling and disabling plugins
  * to ensure related plugins are correctly enabled or disabled as well.
+ *
+ * The graph contains nodes for all plugins available, and all enabled
+ * plugins. It's possible for the graph to contain two nodes that both
+ * describe the same plugin in practice, because a different version is
+ * currently enabled than what's been indexed.
  */
-// FIXME: Better key for the index, probably name /and version/.
-// Right now, this doesn't account for reindexing at runtime at all.
 public final class PluginDependencyGraph {
     /**
-     * State values used while walking the graph.
+     * State values used for various purposes.
      */
-    private enum VisitorState {
+    private enum State {
         /**
          * The node has not been encountered yet.
+         *
+         * Used while walking the graph.
          */
         NEW,
         /**
          * We've looped over the node already, looping over it a second time
          * would indicate a circular dependency.
+         *
+         * Used while walking the graph.
          */
         ITERATED,
         /**
          * We've seen this node, and it's been visited already. We can safely
-         * ignore it. An example of this would be a diamond-like structure. 
+         * ignore it. An example of this would be a diamond-like structure.
+         *
+         * Used while walking the graph.
          */
-        VISITED
+        VISITED,
+        /**
+         * The node no longer exists in the graph.
+         *
+         * Used from {@link PluginDependencyGraph#clear()}.
+         */
+        DESTROYED
     };
 
     /**
@@ -47,7 +62,7 @@ public final class PluginDependencyGraph {
         private final HashSet<Node> dependents;
         private final HashSet<String> unresolved;
 
-        private VisitorState state = VisitorState.NEW;
+        private State state = State.NEW;
 
         private Node(PluginDescription description) {
             this.description = description;
@@ -55,18 +70,15 @@ public final class PluginDependencyGraph {
             dependencies = new HashSet<Node>();
             dependents = new HashSet<Node>();
             unresolved = new HashSet<String>();
-
-            nodesByName.put(description.name, this);
-            nodesByDescription.put(description, this);
-
             if (description.dependencies != null) {
                 unresolved.addAll(description.dependencies);
             }
-            resolveDependencies();
         }
 
         /**
          * Fix-up the graph edges to account for this new node.
+         *
+         * This is called shortly after construction.
          */
         private void resolveDependencies() {
             // Walk our named dependencies and resolve them to nodes where we can.
@@ -82,14 +94,7 @@ public final class PluginDependencyGraph {
             }
 
             // Register ourselves as dependent on the remaining named dependencies.
-            for (String name : unresolved) {
-                HashSet<Node> set = unresolvedNames.get(name);
-                if (set == null) {
-                    set = new HashSet<Node>();
-                    unresolvedNames.put(name, set);
-                }
-                set.add(this);
-            }
+            registerUnresolved();
 
             // Update other nodes depending on this node, which is now available.
             HashSet<Node> others = unresolvedNames.remove(description.name);
@@ -99,6 +104,50 @@ public final class PluginDependencyGraph {
                     node.dependencies.add(this);
                     dependents.add(node);
                 }
+            }
+        }
+
+        /**
+         * Fix-up the graph edges for nodes that no longer exist.
+         *
+         * This is called during {@link PluginDependencyGraph#clear()}.
+         */
+        private void clearLostDependencies() {
+            Iterator<Node> i = dependencies.iterator();
+            while (i.hasNext()) {
+                Node node = i.next();
+                if (node.state == State.DESTROYED) {
+                    unresolved.add(node.description.getName());
+                    i.remove();
+                }
+            }
+
+            i = dependents.iterator();
+            while (i.hasNext()) {
+                Node node = i.next();
+                if (node.state == State.DESTROYED) {
+                    unresolved.add(node.description.getName());
+                    i.remove();
+                }
+            }
+
+            registerUnresolved();
+        }
+
+        /**
+         * Register unresolved named dependencies with the index.
+         *
+         * Helper used from {@link #resolveDependencies()} and
+         * {@link #clearLostDependencies()}.
+         */
+        private void registerUnresolved() {
+            for (String name : unresolved) {
+                HashSet<Node> set = unresolvedNames.get(name);
+                if (set == null) {
+                    set = new HashSet<Node>();
+                    unresolvedNames.put(name, set);
+                }
+                set.add(this);
             }
         }
     }
@@ -122,8 +171,31 @@ public final class PluginDependencyGraph {
         public Plugin visit(PluginDescription description) throws Exception;
     }
 
+    /**
+     * An index of nodes by plugin name.
+     *
+     * This index reflects the filesystem. When a conflict occurs, the last
+     * insert prevails. This is because the last insert is assumed to be the
+     * most up-to-date with the filesystem.
+     */
     private final HashMap<String, Node> nodesByName = new HashMap<String, Node>();
+
+    /**
+     * An index of nodes by PluginDescription instance.
+     *
+     * This doubles as the complete list of nodes, because the description
+     * object is unique. A name may conflict while an update is occurring,
+     * and a name may not even exist for a plugin that is enabled, but no
+     * longer on the filesystem.
+     */
     private final HashMap<PluginDescription, Node> nodesByDescription = new HashMap<PluginDescription, Node>();
+
+    /**
+     * Named dependencies that are still to be resolved.
+     *
+     * Each name maps to a set of nodes that needs to know when the node
+     * for the named dependency is created, so it may link to it.
+     */
     private final HashMap<String, HashSet<Node>> unresolvedNames = new HashMap<String, HashSet<Node>>();
 
     /**
@@ -158,15 +230,6 @@ public final class PluginDependencyGraph {
         }
         clearVisitorState();
         walk(node, visitor, false);
-    }
-
-    /**
-     * Empties the graph.
-     */
-    public void clear() {
-        nodesByName.clear();
-        nodesByDescription.clear();
-        unresolvedNames.clear();
     }
 
     /**
@@ -209,7 +272,51 @@ public final class PluginDependencyGraph {
      * @param description The plugin's description.
      */
     public void insert(PluginDescription description) {
-        new Node(description);
+        Node node = new Node(description);
+        nodesByName.put(description.name, node);
+        nodesByDescription.put(description, node);
+        node.resolveDependencies();
+    }
+
+    /**
+     * Clears all but loaded plugin nodes from the graph.
+     */
+    public void clear() {
+        // First, clean up the canonical list of nodes.
+        Iterator<Node> i = nodesByDescription.values().iterator();
+        while (i.hasNext()) {
+            Node node = i.next();
+            if (node.plugin == null) {
+                node.state = State.DESTROYED;
+                i.remove();
+            }
+        }
+
+        // Ditch the name-based index, because we really don't want plugins
+        // that have been deleted but are still enabled to be referenced
+        // by their names. (disablePlugin doesn't need it.)
+        nodesByName.clear();
+
+        // Now, clean up destroyed nodes from the index of unresolved names.
+        Iterator<HashSet<Node>> j = unresolvedNames.values().iterator();
+        while (j.hasNext()) {
+            HashSet<Node> set = j.next();
+            i = set.iterator();
+            while (i.hasNext()) {
+                Node node = i.next();
+                if (node.state == State.DESTROYED) {
+                    i.remove();
+                }
+            }
+            if (set.isEmpty()) {
+                j.remove();
+            }
+        }
+
+        // For the remaining nodes, sever links to nodes that no longer exist.
+        for (Node node : nodesByDescription.values()) {
+            node.clearLostDependencies();
+        }
     }
 
     /**
@@ -217,7 +324,7 @@ public final class PluginDependencyGraph {
      */
     private void clearVisitorState() {
         for (Node node : nodesByName.values()) {
-            node.state = VisitorState.NEW;
+            node.state = State.NEW;
         }
     }
 
@@ -232,15 +339,15 @@ public final class PluginDependencyGraph {
      */
     // FIXME: Implement non-recursive algorithm.
     private Plugin walk(Node node, Visitor visitor, boolean down) throws GraphIterationAborted {
-        if (node.state == VisitorState.VISITED) {
+        if (node.state == State.VISITED) {
             // The return value in this situation is never used, so this is safe.
             return null;
         }
-        else if (node.state == VisitorState.ITERATED) {
+        else if (node.state == State.ITERATED) {
             // FIXME: Be more descriptive here.
             throw new CircularDependencyException();
         }
-        node.state = VisitorState.ITERATED;
+        node.state = State.ITERATED;
 
         HashSet<Node> toWalk = down ? node.dependencies : node.dependents;
         if (down && !node.unresolved.isEmpty()) {
@@ -251,7 +358,7 @@ public final class PluginDependencyGraph {
             walk(dependency, visitor, down);
         }
 
-        node.state = VisitorState.VISITED;
+        node.state = State.VISITED;
         try {
             return node.plugin = visitor.visit(node.description);
         }
