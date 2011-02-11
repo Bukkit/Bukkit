@@ -8,7 +8,6 @@ import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
@@ -66,15 +65,21 @@ public final class SimpleCommandMap implements CommandMap {
      * {@inheritDoc}
      */
     public boolean dispatch(CommandSender sender, String commandLine) {
-        String[] args = commandLine.split(" ");
-        String sentCommandLabel = args[0].toLowerCase();
-
-        args = Arrays.copyOfRange(args, 1, args.length);
-
+    	int delimiter = commandLine.indexOf(' ');
+    	String sentCommandLabel;
+    	String args;
+    	if (delimiter < 0) {
+    		sentCommandLabel = commandLine;
+    		args = "";
+    	} else {
+    		sentCommandLabel = commandLine.substring(0, delimiter);
+    		args = commandLine.substring(delimiter + 1);
+    	}
+    	
         Command target = knownCommands.get(sentCommandLabel);
         boolean isRegisteredCommand = (target != null);
         if (isRegisteredCommand) {
-            target.execute(sender, sentCommandLabel, args);
+            target.parse(sender, sentCommandLabel, args);
         }
         return isRegisteredCommand;
     }
@@ -98,7 +103,7 @@ public final class SimpleCommandMap implements CommandMap {
         }
 
         @Override
-        public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+        protected boolean execute(CommandSender sender, String currentAlias, String[] args) {
             if (args.length == 0) {
                 sender.sendMessage("This server is running " + ChatColor.GREEN
                         + server.getName() + ChatColor.WHITE + " version " + ChatColor.GREEN + server.getVersion());
@@ -179,7 +184,7 @@ public final class SimpleCommandMap implements CommandMap {
         }
 
         @Override
-        public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+        protected boolean execute(CommandSender sender, String currentAlias, String[] args) {
             if (sender.isOp()) {
                 server.reload();
                 sender.sendMessage(ChatColor.GREEN + "Reload complete.");
@@ -203,7 +208,7 @@ public final class SimpleCommandMap implements CommandMap {
         }
         
         @Override
-        public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+        protected boolean execute(CommandSender sender, String currentAlias, String[] args) {
             sender.sendMessage("Plugins: " + getPluginList());
             return true;
         }
