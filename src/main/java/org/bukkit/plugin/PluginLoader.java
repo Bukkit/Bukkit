@@ -1,8 +1,5 @@
 package org.bukkit.plugin;
 
-import java.io.File;
-import java.util.regex.Pattern;
-
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
@@ -19,11 +16,6 @@ import org.bukkit.event.Listener;
  */
 public interface PluginLoader {
     /**
-     * Returns a list of all filename filters expected by this PluginLoader
-     */
-    public Pattern[] getPluginFileFilters();
-
-    /**
      * Creates and returns an event executor
      *
      * @param type Type of the event executor to create
@@ -32,18 +24,22 @@ public interface PluginLoader {
     public EventExecutor createExecutor(Event.Type type, Listener listener);
 
     /**
-     * Reads the description for the plugin in the specified file
+     * Find plugins, and read their descriptions.
      *
-     * The implementation gathers the necessary information, usually
-     * with help from metadata included with the plugin, and returns
-     * a PluginDescription subclass.
+     * Called by the PluginManager to find out about, or get an update on
+     * plugins handled by this loader.
      *
-     * @param pluginFile The file containing the plugin
-     * @return A filled PluginDescription object
-     * @throws InvalidDescriptionException Thrown when the metadata was not understood
+     * The loader should look for plugins in the data folder of it's own
+     * containing plugin, which can be retrieved using
+     * {@link PluginDescription#getDataFolder()}.
+     *
+     * For each plugin it finds, the implementation constructs an instance of
+     * PluginDescription, and registers it using
+     * {@link PluginManager#register(PluginDescription)}.
+     *
      * @see PluginDescription
      */
-    public PluginDescription readDescription(File pluginFile) throws InvalidDescriptionException;
+    public void discoverPlugins();
 
     /**
      * Called by PluginManager to enable a plugin

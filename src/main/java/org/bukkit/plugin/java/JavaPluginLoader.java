@@ -12,7 +12,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.regex.Pattern;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -34,19 +36,16 @@ import org.bukkit.plugin.*;
  * Represents a Java plugin loader, allowing plugins in the form of .jar
  */
 public final class JavaPluginLoader implements PluginLoader {
+    private static final Logger log = Logger.getLogger(JavaPluginLoader.class.getName());
     private final Server server;
-    private final Pattern[] fileFilters = new Pattern[] { Pattern.compile("\\.jar$"), };
+    private final File pluginFolder;
+    private final List<File> systemPlugins;
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
 
-    public JavaPluginLoader(Server instance) {
-        server = instance;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Pattern[] getPluginFileFilters() {
-        return fileFilters;
+    public JavaPluginLoader(Server server, File pluginFolder, List<File> systemPlugins) {
+        this.server = server;
+        this.pluginFolder = pluginFolder;
+        this.systemPlugins = systemPlugins;
     }
 
     /**
@@ -372,7 +371,38 @@ public final class JavaPluginLoader implements PluginLoader {
     /**
      * {@inheritDoc}
      */
-    public PluginDescription readDescription(File file) throws InvalidDescriptionException {
+    public void discoverPlugins() {
+        PluginManager manager = server.getPluginManager();
+        for (File file : pluginFolder.listFiles()) {
+            if (!file.getName().endsWith(".jar")) {
+                continue;
+            }
+            try {
+                PluginDescription description = readDescription(file);
+                manager.register(description);
+            } catch (InvalidDescriptionException ex) {
+                log.log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
+            }
+        }
+
+        for (File file : systemPlugins) {
+            try {
+                PluginDescription description = readSystemPluginDescription(file);
+                manager.register(description);
+            } catch (InvalidDescriptionException ex) {
+                log.log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
+            }
+        }
+    }
+
+    /**
+     * Reads the description for the plugin in the specified JAR-file
+     *
+     * @param file The JAR-file containing the plugin
+     * @return A PluginDescription instance
+     * @throws InvalidDescriptionException Thrown when the metadata was not understood
+     */
+    private PluginDescription readDescription(File file) throws InvalidDescriptionException {
         JavaPluginDescription result = null;
 
         if (!file.exists()) {

@@ -13,9 +13,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
 import org.bukkit.Server;
-import java.util.regex.Pattern;
 
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.SimpleCommandMap;
@@ -33,7 +31,6 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 public final class SimplePluginManager implements PluginManager {
     private final Server server;
     private final File pluginFolder;
-    private final List<File> systemPlugins;
     private final CommandMap commandMap;
     private final List<PluginLoader> pluginLoaders = new ArrayList<PluginLoader>();
     private final JavaPluginLoader javaPluginLoader;
@@ -64,10 +61,13 @@ public final class SimplePluginManager implements PluginManager {
     public SimplePluginManager(Server server, File pluginFolder, List<File> systemPlugins) {
         this.server = server;
         this.pluginFolder = pluginFolder;
-        this.systemPlugins = systemPlugins;
         this.commandMap = new SimpleCommandMap(server);
 
-        javaPluginLoader = new JavaPluginLoader(server);
+        if (!pluginFolder.exists()) {
+            pluginFolder.mkdir();
+        }
+
+        javaPluginLoader = new JavaPluginLoader(server, pluginFolder, systemPlugins);
         registerInterface(javaPluginLoader);
     }
 
@@ -81,56 +81,19 @@ public final class SimplePluginManager implements PluginManager {
     /**
      * {@inheritDoc}
      */
-    public void rebuildIndex() {
-        pluginDescriptions.clear();
-
-        for (PluginLoader loader : pluginLoaders) {
-            updateIndexForInterface(loader);
-        }
-
-        for (File file : systemPlugins) {
-            try {
-                PluginDescription description = javaPluginLoader.readSystemPluginDescription(file);
-                if (pluginDescriptions.contains(description)) {
-                    throw new InvalidDescriptionException("A plugin with this name already exists: " + description.getName());
-                }
-                pluginDescriptions.insert(description);
-            } catch (InvalidDescriptionException ex) {
-                server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
-            }
-        }
+    public void register(PluginDescription description) {
+        pluginDescriptions.insert(description);
     }
 
     /**
      * {@inheritDoc}
      */
-    public PluginDescription[] updateIndexForInterface(PluginLoader loader) {
-        if (!pluginFolder.exists()) {
-            pluginFolder.mkdir();
-        }
+    public void rebuildIndex() {
+        pluginDescriptions.clear();
 
-        File[] files = pluginFolder.listFiles();
-        Pattern[] filters = loader.getPluginFileFilters();
-        ArrayList<PluginDescription> result = new ArrayList<PluginDescription>();
-        for (Pattern filter : filters) {
-            for (File file : files) {
-                Matcher match = filter.matcher(file.getName());
-                if (match.find()) {
-                    try {
-                        PluginDescription description = loader.readDescription(file);
-                        if (pluginDescriptions.contains(description)) {
-                            throw new InvalidDescriptionException("A plugin with this name already exists: " + description.getName());
-                        }
-                        pluginDescriptions.insert(description);
-                        result.add(description);
-                    } catch (InvalidDescriptionException ex) {
-                        server.getLogger().log(Level.SEVERE, "Could not load " + file.getPath() + " in " + pluginFolder.getPath() + ": " + ex.getMessage(), ex);
-                    }
-                }
-            }
+        for (PluginLoader loader : pluginLoaders) {
+            loader.discoverPlugins();
         }
-
-        return result.toArray(new PluginDescription[0]);
     }
 
     /**
