@@ -136,7 +136,7 @@ public final class SimplePluginManager implements PluginManager {
 
         try {
             return (Plugin)pluginDescriptions.walkDependencies(description, new PluginDependencyGraph.Visitor() {
-                public Object visit(PluginDescription description) throws Throwable {
+                public Plugin visit(PluginDescription description) throws Exception {
                     Plugin plugin = plugins.get(description.getName());
                     if (plugin == null) {
                         PluginLoader loader = description.getLoader();
@@ -176,7 +176,7 @@ public final class SimplePluginManager implements PluginManager {
 
         try {
             pluginDescriptions.walkDependents(description, new PluginDependencyGraph.Visitor() {
-                public Object visit(PluginDescription description) throws Throwable {
+                public Plugin visit(PluginDescription description) throws Exception {
                     Plugin plugin = plugins.get(description.getName());
                     if (plugin != null) {
                         callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));

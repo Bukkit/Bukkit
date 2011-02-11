@@ -41,6 +41,7 @@ public final class PluginDependencyGraph {
      */
     private final class Node {
         private final PluginDescription description;
+        private Plugin plugin = null;
 
         private final HashSet<Node> dependencies;
         private final HashSet<Node> dependents;
@@ -109,11 +110,16 @@ public final class PluginDependencyGraph {
         /**
          * Called for each node visited.
          *
+         * The returned Plugin will be stored with to node, to indicate that
+         * the node is use. Therefore, when enabling a plugin, a valid Plugin
+         * instance should be returned, but when disabling a plugin, null
+         * should always be returned.
+         *
          * @param description The PluginDescription object for the visited node.
-         * @return An object passed back to the user.
-         * @throws Throwable Any throwables caught are wrapped in a GraphIterationAborted
+         * @return The current Plugin instance.
+         * @throws Exception Any exception caught will be wrapped in a GraphIterationAborted
          */
-        public Object visit(PluginDescription description) throws Throwable;
+        public Plugin visit(PluginDescription description) throws Exception;
     }
 
     private final HashMap<String, Node> nodesByName = new HashMap<String, Node>();
@@ -128,7 +134,7 @@ public final class PluginDependencyGraph {
      * @throws GraphIterationAborted An exception was encountered while walking the graph
      * @return The return value of the call to {@link Visitor#visit(PluginDescription)} for the input description
      */
-    public Object walkDependencies(PluginDescription description, Visitor visitor) throws GraphIterationAborted {
+    public Plugin walkDependencies(PluginDescription description, Visitor visitor) throws GraphIterationAborted {
         Node node = nodesByDescription.get(description);
         if (node == null) {
             throw new IllegalArgumentException("Description does not belong to this graph");
@@ -145,13 +151,13 @@ public final class PluginDependencyGraph {
      * @throws GraphIterationAborted An exception was encountered while walking the graph
      * @return The return value of the call to {@link Visitor#visit(PluginDescription)} for the input description
      */
-    public Object walkDependents(PluginDescription description, Visitor visitor) throws GraphIterationAborted {
+    public void walkDependents(PluginDescription description, Visitor visitor) throws GraphIterationAborted {
         Node node = nodesByDescription.get(description);
         if (node == null) {
             throw new IllegalArgumentException("Description does not belong to this graph");
         }
         clearVisitorState();
-        return walk(node, visitor, false);
+        walk(node, visitor, false);
     }
 
     /**
@@ -225,7 +231,7 @@ public final class PluginDependencyGraph {
      * @return The return value of the call to {@link Visitor#visit(PluginDescription)} for the input node
      */
     // FIXME: Implement non-recursive algorithm.
-    private Object walk(Node node, Visitor visitor, boolean down) throws GraphIterationAborted {
+    private Plugin walk(Node node, Visitor visitor, boolean down) throws GraphIterationAborted {
         if (node.state == VisitorState.VISITED) {
             // The return value in this situation is never used, so this is safe.
             return null;
@@ -247,9 +253,9 @@ public final class PluginDependencyGraph {
 
         node.state = VisitorState.VISITED;
         try {
-            return visitor.visit(node.description);
+            return node.plugin = visitor.visit(node.description);
         }
-        catch (Throwable ex) {
+        catch (Exception ex) {
             throw new GraphIterationAborted(ex);
         }
     }
