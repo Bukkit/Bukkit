@@ -303,6 +303,11 @@ public final class JavaPluginLoader implements PluginLoader {
             };
 
         // Entity Events
+        case CREATURE_SPAWN:
+            return new EventExecutor() { public void execute( Listener listener, Event event ) {
+                    ((EntityListener)listener).onCreatureSpawn( (CreatureSpawnEvent)event );
+                }
+            };
         case ENTITY_DAMAGEDBY_BLOCK:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
                     ((EntityListener)listener).onEntityDamageByBlock( (EntityDamageByBlockEvent)event );

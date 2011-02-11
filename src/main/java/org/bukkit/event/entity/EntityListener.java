@@ -32,4 +32,12 @@ public class EntityListener implements Listener {
 
     public void onEntityTarget(EntityTargetEvent event) {
     }
+
+    /**
+     * Called when a creature is spawned
+     *
+     * @param event Relevant event details
+     */
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+    }
 }
