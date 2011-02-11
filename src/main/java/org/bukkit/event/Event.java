@@ -240,7 +240,7 @@ public abstract class Event {
          * @see org.bukkit.event.player.PlayerDropItemEvent
          */
         PLAYER_DROP_ITEM (Category.PLAYER),
-
+        
         /**
          * BLOCK EVENTS
          */
@@ -410,6 +410,34 @@ public abstract class Event {
          * @see org.bukkit.event.server.PluginEvent
          */
         SERVER_COMMAND (Category.SERVER),
+        
+        /**
+         * Called when a user gets banned
+         *
+         * @see org.bukkit.event.server.UserBanEvent
+         */
+        USER_BAN (Category.SERVER),
+        
+        /**
+         * Called when a user gets unbanned
+         *
+         * @see org.bukkit.event.server.UserUnbanEvent
+         */
+        USER_UNBAN (Category.Server),
+        
+        /**
+         * Called when an IP gets banned
+         *
+         * @see org.bukkit.event.server.IpBanEvent
+         */
+        IP_BAN (Category.Server),
+        
+        /**
+         * Called when an IP gets unbanned
+         *
+         * @see org.bukkit.event.server.IpUnbanEvent
+         */
+        IP_UNBAN (Category.Server),
 
         /**
          * WORLD EVENTS

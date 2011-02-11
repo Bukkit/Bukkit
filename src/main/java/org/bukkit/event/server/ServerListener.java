@@ -30,4 +30,36 @@ public class ServerListener implements Listener {
      */
     public void onServerCommand(ServerCommandEvent event) {
     }
+    
+    /**
+     * Called when a user gets banned
+     *
+     * @param event Relevant event details
+     */    
+    public void onUserBan(UserBanEvent event) {
+    }
+    
+    /**
+     * Called when a user gets unbanned
+     *
+     * @param event Relevant event details
+     */
+    public void onUserUnban(UserUnbanEvent event) {
+    }
+    
+    /**
+     * Called when an IP gets banned
+     *
+     * @param event Relevant event details
+     */
+    public void onIpBan(IpBanEvent event) {
+    }
+    
+    /**
+     * Called when an IP gets unbanned
+     *
+     * @param event Relevant event details
+     */
+    public void onIpUnban(IpUnbanEvent event) {
+    }
 }
