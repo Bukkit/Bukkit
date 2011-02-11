@@ -11,6 +11,7 @@ import org.bukkit.Server;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescription;
+import org.bukkit.plugin.PluginManager;
 
 public final class SimpleCommandMap implements CommandMap {
     private final Map<String, Command> knownCommands = new HashMap<String, Command>();
@@ -28,6 +29,8 @@ public final class SimpleCommandMap implements CommandMap {
         register("bukkit", new VersionCommand(server));
         register("bukkit", new ReloadCommand(server));
         register("bukkit", new PluginsCommand(server));
+        register("bukkit", new EnableCommand(server));
+        register("bukkit", new DisableCommand(server));
     }
 
     /**
@@ -265,6 +268,66 @@ public final class SimpleCommandMap implements CommandMap {
             }
 
             return pluginList.toString();
+        }
+    }
+
+    /**
+     * Implements the "/bukkit enable" command
+     */
+    private static class EnableCommand extends Command {
+        private final Server server;
+
+        public EnableCommand(Server server) {
+            super(null, "enable");
+            this.server = server;
+            this.tooltip = "Enable a plugin";
+            this.usageMessage = "/enable <name>";
+        }
+
+        @Override
+        public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+            if (args.length != 1) {
+                return false;
+            }
+            String pluginName = args[0];
+            PluginManager manager = server.getPluginManager();
+            PluginDescription description = manager.getPluginDescription(pluginName);
+            if (description == null) {
+                sender.sendMessage("Plugin " + pluginName + " not found");
+                return true;
+            }
+            manager.enablePlugin(description);
+            return true;
+        }
+    }
+
+    /**
+     * Implements the "/bukkit disable" command
+     */
+    private static class DisableCommand extends Command {
+        private final Server server;
+
+        public DisableCommand(Server server) {
+            super(null, "disable");
+            this.server = server;
+            this.tooltip = "Disable a plugin";
+            this.usageMessage = "/disable<name>";
+        }
+
+        @Override
+        public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+            if (args.length != 1) {
+                return false;
+            }
+            String pluginName = args[0];
+            PluginManager manager = server.getPluginManager();
+            Plugin plugin = manager.getPlugin(pluginName);
+            if (plugin == null) {
+                sender.sendMessage("There is no enabled plugin called " + pluginName);
+                return true;
+            }
+            manager.disablePlugin(plugin);
+            return true;
         }
     }
 }
