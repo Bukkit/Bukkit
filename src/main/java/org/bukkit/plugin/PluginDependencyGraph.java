@@ -249,7 +249,13 @@ public final class PluginDependencyGraph {
      * @return The associated PluginDescription, or null.
      */
     public PluginDescription get(String name) {
-        return nodesByName.get(name).description;
+        Node node = nodesByName.get(name);
+        if (node == null) {
+            return null;
+        }
+        else {
+            return node.description;
+        }
     }
 
     /**
