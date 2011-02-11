@@ -72,6 +72,10 @@ public final class JavaPluginLoader implements PluginLoader {
         classes.put(name, clazz);
     }
 
+    public Plugin getContainingPlugin() {
+        return null;
+    }
+
     /**
      * {@inheritDoc}
      */

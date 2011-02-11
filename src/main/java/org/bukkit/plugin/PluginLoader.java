@@ -16,6 +16,16 @@ import org.bukkit.event.Listener;
  */
 public interface PluginLoader {
     /**
+     * Return the plugin containing this loader.
+     *
+     * This is null for the default JavaPluginLoader, but should return an
+     * instance otherwise.
+     *
+     * @return A plugin instance.
+     */
+    public Plugin getContainingPlugin();
+
+    /**
      * Creates and returns an event executor
      *
      * @param type Type of the event executor to create
@@ -63,8 +73,8 @@ public interface PluginLoader {
      * Typically, the plugin is allowed to do some cleanup, after which the
      * loader releases any resources it may have associated with the plugin.
      *
-     * The PluginManager takes care of unregistering commands, listeners and
-     * scheduled tasks.
+     * The PluginManager takes care of unregistering commands, listeners,
+     * loaders and scheduled tasks.
      *
      * This method must not be used outside of the PluginManager. To disable a
      * plugin from elsewhere, use {@link PluginManager#disablePlugin(Plugin)}

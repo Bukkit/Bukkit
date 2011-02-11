@@ -289,11 +289,51 @@ public final class PluginDependencyGraph {
         // by their names. (disablePlugin doesn't need it.)
         nodesByName.clear();
 
-        // Now, clean up destroyed nodes from the index of unresolved names.
+        // Do common stuff.
+        commonClearCleanup();
+    }
+
+    /**
+     * Clears all nodes in the graph associated with the given loader.
+     *
+     * It is assumed that all plugins belonging to this loader have
+     * already been disabled.
+     *
+     * @param loader The PluginLoader to filter on.
+     */
+    public void clearLoader(PluginLoader loader) {
+        // First, clean up the canonical list of nodes.
+        Iterator<Node> i = nodesByDescription.values().iterator();
+        while (i.hasNext()) {
+            Node node = i.next();
+            if (node.description.getLoader() == loader) {
+                node.state = State.DESTROYED;
+                i.remove();
+            }
+        }
+
+        // Then, clean up the name-based index.
+        i = nodesByName.values().iterator();
+        while (i.hasNext()) {
+            Node node = i.next();
+            if (node.state == State.DESTROYED) {
+                i.remove();
+            }
+        }
+
+        // Do common stuff.
+        commonClearCleanup();
+    }
+
+    /**
+     * Helper that covers two tasks common between clear-methods.
+     */
+    private void commonClearCleanup() {
+        // Clean up destroyed nodes from the index of unresolved names.
         Iterator<HashSet<Node>> j = unresolvedNames.values().iterator();
         while (j.hasNext()) {
             HashSet<Node> set = j.next();
-            i = set.iterator();
+            Iterator<Node> i = set.iterator();
             while (i.hasNext()) {
                 Node node = i.next();
                 if (node.state == State.DESTROYED) {
@@ -305,7 +345,7 @@ public final class PluginDependencyGraph {
             }
         }
 
-        // For the remaining nodes, sever links to nodes that no longer exist.
+        // Sever links to nodes that no longer exist.
         for (Node node : nodesByDescription.values()) {
             node.clearLostDependencies();
         }

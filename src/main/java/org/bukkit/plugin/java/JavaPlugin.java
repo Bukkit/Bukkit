@@ -66,8 +66,9 @@ public abstract class JavaPlugin implements Plugin {
     /**
      * Called when this plugin is disabled
      *
-     * The PluginManager sees to cleaning up listeners and scheduled tasks,
-     * but any other resources held by the plugin should be cleaned up here.
+     * The PluginManager sees to cleaning up commands, listeners, loaders and
+     * scheduled tasks, but any other resources held by the plugin should be
+     * cleaned up here.
      */
     public void onDisable() {
         // default implementation:  do nothing!

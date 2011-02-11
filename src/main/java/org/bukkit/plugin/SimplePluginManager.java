@@ -185,6 +185,7 @@ public final class SimplePluginManager implements PluginManager {
                         description.getLoader().disablePlugin(plugin);
                         plugins.remove(description.getName());
                         clearEvents(plugin);
+                        clearLoaders(plugin);
                         commandMap.clearCommands(plugin);
                         server.getScheduler().cancelTasks(plugin);
                     }
@@ -274,6 +275,22 @@ public final class SimplePluginManager implements PluginManager {
                 if (listener.getPlugin() == plugin) {
                     iterator.remove();
                 }
+            }
+        }
+    }
+
+    /**
+     * Clears all loaders for a specific plugin.
+     *
+     * @param plugin The plugin to filter on.
+     */
+    private void clearLoaders(Plugin plugin) {
+        Iterator<PluginLoader> i = pluginLoaders.iterator();
+        while (i.hasNext()) {
+            PluginLoader loader = i.next();
+            if (loader.getContainingPlugin() == plugin) {
+                pluginDescriptions.clearLoader(loader);
+                i.remove();
             }
         }
     }
