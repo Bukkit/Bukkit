@@ -1,7 +1,6 @@
 package org.bukkit.plugin;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumMap;
@@ -68,32 +67,15 @@ public final class SimplePluginManager implements PluginManager {
         this.systemPlugins = systemPlugins;
         this.commandMap = new SimpleCommandMap(server);
 
-        javaPluginLoader = (JavaPluginLoader)registerInterface(JavaPluginLoader.class);
+        javaPluginLoader = new JavaPluginLoader(server);
+        registerInterface(javaPluginLoader);
     }
 
     /**
      * {@inheritDoc}
      */
-    public PluginLoader registerInterface(Class<? extends PluginLoader> loader) throws IllegalArgumentException {
-        PluginLoader instance;
-
-        if (PluginLoader.class.isAssignableFrom(loader)) {
-            Constructor<? extends PluginLoader> constructor;
-            try {
-                constructor = loader.getConstructor(Server.class);
-                instance = constructor.newInstance(server);
-            } catch (NoSuchMethodException ex) {
-                throw new IllegalArgumentException(String.format("Class %s does not have a public %s(Server) constructor", loader.getName()), ex);
-            } catch (Exception ex) {
-                throw new IllegalArgumentException(String.format("Unexpected exception %s while attempting to construct a new instance of %s", ex.getClass().getName(), loader.getName()), ex);
-            }
-        } else {
-            throw new IllegalArgumentException(String.format("Class %s does not implement interface PluginLoader", loader.getName()));
-        }
-
-        pluginLoaders.add(instance);
-
-        return instance;
+    public void registerInterface(PluginLoader loader) {
+        pluginLoaders.add(loader);
     }
 
     /**

@@ -13,12 +13,10 @@ public interface PluginManager {
     /**
      * Registers the specified plugin loader
      *
-     * @param loader The PluginLoader subclass to register
-     * @return The instance of the loader
-     * @throws IllegalArgumentException Thrown when the given Class is not a valid PluginLoader
+     * @param loader The PluginLoader instance to register
      * @see PluginLoader
      */
-    public PluginLoader registerInterface(Class<? extends PluginLoader> loader) throws IllegalArgumentException;
+    public void registerInterface(PluginLoader loader);
 
     /**
      * Rediscover and reindex all plugins
