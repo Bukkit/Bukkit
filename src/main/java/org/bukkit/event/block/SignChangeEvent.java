@@ -17,6 +17,16 @@ public class SignChangeEvent extends BlockEvent implements Cancellable {
         this.player = thePlayer;
         this.lines = theLines;
     }
+    
+    /**
+     * Gets the player for this event
+     *
+     * @return Player player
+     */
+    public Player getPlayer()
+    {
+        return player;
+    }
 
     /**
      * Gets all of the text lines from this event
