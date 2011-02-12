@@ -65,6 +65,15 @@ public final class JavaPluginDescription extends YamlPluginDescription {
     }
 
     /**
+     * Clear the ClassLoader instance, if there is one.
+     *
+     * This allows the plugin to be garbage collected.
+     */
+    public void clearClassLoader() {
+        classLoader = null;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

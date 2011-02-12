@@ -501,6 +501,7 @@ public final class JavaPluginLoader implements PluginLoader {
         JavaPlugin jPlugin = (JavaPlugin)plugin;
         JavaPluginDescription description = (JavaPluginDescription)plugin.getDescription();
         ClassLoader cloader = description.getClassLoader();
+        description.clearClassLoader();
 
         jPlugin.onDisable();
 
