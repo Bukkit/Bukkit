@@ -138,7 +138,6 @@ public final class PluginDependencyGraph {
             while (i.hasNext()) {
                 Node node = i.next();
                 if (node.state == State.DESTROYED) {
-                    unresolved.add(node.description.getName());
                     i.remove();
                 }
             }
