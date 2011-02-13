@@ -441,7 +441,7 @@ public final class JavaPluginLoader implements PluginLoader {
      * @return A filled PluginDescription object
      * @throws InvalidDescriptionException Thrown when the metadata was not understood
      */
-    public PluginDescription readSystemPluginDescription(File file) throws InvalidDescriptionException {
+    private PluginDescription readSystemPluginDescription(File file) throws InvalidDescriptionException {
         if (!file.exists()) {
             throw new InvalidDescriptionException(new FileNotFoundException(String.format("%s does not exist", file.getPath())));
         }
