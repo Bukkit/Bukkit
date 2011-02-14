@@ -1,9 +1,9 @@
 /**
- * 
+ *
  */
 package org.bukkit.event.block;
 
-import org.bukkit.Block;
+import org.bukkit.block.Block;
 import org.bukkit.Material;
 
 /**
@@ -22,7 +22,7 @@ public class BlockCanBuildEvent extends BlockEvent {
     /**
      * Returns whether or not the block can be built here. By default, returns
      * Minecraft's answer on whether the block can be built
-     * 
+     *
      * @return boolean whether or not the block can be built
      */
     public boolean isBuildable() {
@@ -40,7 +40,7 @@ public class BlockCanBuildEvent extends BlockEvent {
         return Material.getMaterial(material);
     }
 
-    public int getMaterialID() {
+    public int getMaterialId() {
         return material;
     }
 }

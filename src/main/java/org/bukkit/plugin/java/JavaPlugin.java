@@ -3,9 +3,12 @@ package org.bukkit.plugin.java;
 
 import java.io.File;
 import org.bukkit.Server;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
+import org.bukkit.util.config.Configuration;
 
 /**
  * Represents a Java plugin
@@ -16,7 +19,9 @@ public abstract class JavaPlugin implements Plugin {
     private final Server server;
     private final File file;
     private final PluginDescriptionFile description;
+    private final File dataFolder;
     private final ClassLoader classLoader;
+    private final Configuration config;
 
     /**
      * Constructs a new Java plugin instance
@@ -24,15 +29,31 @@ public abstract class JavaPlugin implements Plugin {
      * @param pluginLoader PluginLoader that is responsible for this plugin
      * @param instance Server instance that is running this plugin
      * @param desc PluginDescriptionFile containing metadata on this plugin
+     * @param folder Folder containing the plugin's data
      * @param plugin File containing this plugin
      * @param cLoader ClassLoader which holds this plugin
      */
-    public JavaPlugin(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File plugin, ClassLoader cLoader) {
+    public JavaPlugin(PluginLoader pluginLoader, Server instance,
+            PluginDescriptionFile desc, File folder, File plugin,
+            ClassLoader cLoader) {
         loader = pluginLoader;
         server = instance;
         file = plugin;
         description = desc;
+        dataFolder = folder;
         classLoader = cLoader;
+        config = new Configuration(new File(dataFolder, "config.yml"));
+        config.load();
+    }
+
+    /**
+     * Returns the folder that the plugin data's files are located in. The
+     * folder may not yet exist.
+     *
+     * @return
+     */
+    public File getDataFolder() {
+        return dataFolder;
     }
 
     /**
@@ -81,6 +102,18 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     /**
+     * Returns the main configuration located at
+     * <plugin name>/config.yml and loads the file. If the configuration file
+     * does not exist and it cannot be loaded, no error will be emitted and
+     * the configuration file will have no values.
+     *
+     * @return
+     */
+    public Configuration getConfiguration() {
+        return config;
+    }
+
+    /**
      * Returns the ClassLoader which holds this plugin
      *
      * @return ClassLoader holding this plugin
@@ -104,5 +137,12 @@ public abstract class JavaPlugin implements Plugin {
                 onDisable();
             }
         }
+    }
+
+    /**
+     * Called when a command registered by this plugin is received.
+     */
+    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        return false; // default implementation:  do nothing!
     }
 }

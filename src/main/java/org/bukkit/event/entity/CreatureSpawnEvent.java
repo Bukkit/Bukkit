@@ -1,6 +1,7 @@
 package org.bukkit.event.entity;
 
-import org.bukkit.Entity;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.MobType;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -12,19 +13,19 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
 
     private Location location;
     private boolean canceled;
-    private CreatureType creaturetype;
+    private MobType mobtype;
 
-    public CreatureSpawnEvent(Entity spawnee, CreatureType creaturetype, Location loc)
+    public CreatureSpawnEvent(Entity spawnee, MobType mobtype, Location loc)
     {
         super(Event.Type.CREATURE_SPAWN, spawnee);
-        this.creaturetype = creaturetype;
+        this.mobtype = mobtype;
         this.location = loc;
     }
 
-    protected CreatureSpawnEvent(Event.Type type, Entity spawnee, CreatureType creaturetype, Location loc)
+    protected CreatureSpawnEvent(Event.Type type, Entity spawnee, MobType mobtype, Location loc)
     {
         super(type, spawnee);
-        this.creaturetype = creaturetype;
+        this.mobtype = mobtype;
         this.location = loc;
     }
 
@@ -62,35 +63,8 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
      * 
      * @return A CreatureType value detailing the type of creature being spawned
      */
-    public CreatureType getCreatureType()
+    public MobType getMobType()
     {
-        return creaturetype;
-    }
-
-    /**
-     * An enum to specify the type of creature being spawned.
-     */
-    public enum CreatureType
-    {
-        /**
-         * The general value for a harmless mob.
-         * Only used when a more specific type cannot be resolved.
-         */
-        ANIMAL,
-        /**
-         * The general value for a hostile mob.
-         * Only used when a more specific type cannot be resolved.
-         */
-        MONSTER,
-        CHICKEN,
-        COW,
-        CREEPER,
-        GHAST,
-        PIG,
-        PIG_ZOMBIE,
-        SHEEP,
-        SKELETON,
-        SPIDER,
-        ZOMBIE
+        return mobtype;
     }
 }

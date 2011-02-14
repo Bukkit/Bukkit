@@ -4,7 +4,7 @@ import org.bukkit.event.Listener;
 
 /**
  * Handles all events thrown in relation to Blocks
- * 
+ *
  * @author durron597
  */
 public class BlockListener implements Listener {
@@ -19,7 +19,7 @@ public class BlockListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onBlockDamaged(BlockDamagedEvent event) {
+    public void onBlockDamage(BlockDamageEvent event) {
     }
 
     /**
@@ -57,15 +57,15 @@ public class BlockListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onBlockPlaced(BlockPlacedEvent event) {
+    public void onBlockPlace(BlockPlaceEvent event) {
     }
-    
+
     /**
      * Called when a block is interacted with
-     * 
+     *
      * @param event Relevant event details
      */
-    public void onBlockInteracted(BlockInteractEvent event) {
+    public void onBlockInteract(BlockInteractEvent event) {
     }
 
     /**
@@ -73,7 +73,7 @@ public class BlockListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onBlockRightClicked(BlockRightClickedEvent event) {
+    public void onBlockRightClick(BlockRightClickEvent event) {
     }
 
     /**
@@ -83,7 +83,7 @@ public class BlockListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onBlockRedstoneChange(BlockFromToEvent event) {    	
+    public void onBlockRedstoneChange(BlockRedstoneEvent event) {
     }
 
     /**
@@ -94,4 +94,27 @@ public class BlockListener implements Listener {
     public void onLeavesDecay(LeavesDecayEvent event) {
     }
 
+    /**
+     * Called when a sign is changed
+     *
+     * @param event Relevant event details
+     */
+    public void onSignChange(SignChangeEvent event) {
+    }
+
+    /**
+     * Called when a block is destroyed from burning
+     *
+     * @param event Relevant event details
+     */
+    public void onBlockBurn(BlockBurnEvent event) {
+    }
+
+    /**
+     * Called when a block is destroyed by a player.
+     *
+     * @param event Relevant event details
+     */
+    public void onBlockBreak(BlockBreakEvent event) {
+    }
 }

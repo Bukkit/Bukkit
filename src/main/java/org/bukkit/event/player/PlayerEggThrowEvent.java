@@ -1,7 +1,8 @@
 package org.bukkit.event.player;
 
-import org.bukkit.MobType;
-import org.bukkit.Player;
+import org.bukkit.entity.Egg;
+import org.bukkit.entity.MobType;
+import org.bukkit.entity.Player;
 
 
 /**
@@ -10,15 +11,26 @@ import org.bukkit.Player;
  *
  */
 public class PlayerEggThrowEvent extends PlayerEvent {
+    private Egg egg;
     private boolean hatching;
     private MobType hatchType;
     private byte numHatches;
 
-    public PlayerEggThrowEvent(Type type, Player player, boolean hatching, byte numHatches, MobType hatchType) {
+    public PlayerEggThrowEvent(Type type, Player player, Egg egg, boolean hatching, byte numHatches, MobType hatchType) {
         super(type, player);
+        this.egg = egg;
         this.hatching = hatching;
         this.numHatches = numHatches;
         this.hatchType = hatchType;
+    }
+
+    /**
+     * Get the egg.
+     *
+     * @return the egg
+     */
+    public Egg getEgg() {
+        return egg;
     }
 
     /**

@@ -1,5 +1,6 @@
 package org.bukkit.fillr;
 
+import org.bukkit.entity.Player;
 import java.io.*;
 import java.util.jar.*;
 import org.bukkit.*;
@@ -43,7 +44,7 @@ public class Checker {
 		PluginDescriptionFile pdfFile = Checker.getPDF(file);
 		FillReader reader = needsUpdate(pdfFile);
 		if (reader != null) {
-			player.sendMessage(Color.RED + reader.getName() + " " + pdfFile.getVersion() + " has an update to " + reader.getCurrVersion());
+			player.sendMessage(ChatColor.RED + reader.getName() + " " + pdfFile.getVersion() + " has an update to " + reader.getCurrVersion());
 		} else {
 			player.sendMessage(pdfFile.getName() + " " + pdfFile.getVersion() + " is up to date!");
 		}

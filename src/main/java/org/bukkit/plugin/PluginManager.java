@@ -76,6 +76,16 @@ public interface PluginManager {
     public Plugin[] loadPlugins(File directory);
 
     /**
+     * Disables all the loaded plugins
+     */
+    public void disablePlugins();
+
+    /**
+     * Disables and removes all plugins
+     */
+    public void clearPlugins();
+
+    /**
      * Calls a player related event with the given details
      *
      * @param type Type of player related event to call
@@ -92,6 +102,17 @@ public interface PluginManager {
      * @param plugin Plugin to register
      */
     public void registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin);
+
+    /**
+     * Registers the given event to the specified executor
+     *
+     * @param type EventType to register
+     * @param listener Listener to register
+     * @param executor EventExecutor to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerEvent(Event.Type type, Listener listener, EventExecutor executor, Priority priority, Plugin plugin);
 
     /**
      * Enables the specified plugin

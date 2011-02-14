@@ -12,12 +12,30 @@ public class EntityListener implements Listener {
     public void onCreatureSpawn(CreatureSpawnEvent event) {
     }
 
-    public void onEntityDamagedByBlock(EntityDamagedByBlockEvent event) {
+    public void onEntityDamageByBlock(EntityDamageByBlockEvent event) {
     }
 
-    public void onEntityDamagedByEntity(EntityDamagedByEntityEvent event) {
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
     }
-    
+
+    public void onEntityDamageByProjectile(EntityDamageByProjectileEvent event) {
+    }
+
     public void onEntityCombust(EntityCombustEvent event) {
+    }
+
+    public void onEntityDamage(EntityDamageEvent event) {
+    }
+
+    public void onEntityExplode(EntityExplodeEvent event) {
+    }
+
+    public void onExplosionPrimed(ExplosionPrimedEvent event) {
+    }
+
+    public void onEntityDeath(EntityDeathEvent event) {
+    }
+
+    public void onEntityTarget(EntityTargetEvent event) {
     }
 }

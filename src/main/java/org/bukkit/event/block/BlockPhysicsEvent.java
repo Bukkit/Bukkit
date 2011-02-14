@@ -1,12 +1,12 @@
 package org.bukkit.event.block;
 
-import org.bukkit.Block;
+import org.bukkit.block.Block;
 import org.bukkit.Material;
 import org.bukkit.event.Event;
 
 /**
  * Thrown when a block physics check is called
- * 
+ *
  * @author Dinnerbone
  */
 public class BlockPhysicsEvent extends BlockEvent {
@@ -21,9 +21,9 @@ public class BlockPhysicsEvent extends BlockEvent {
     /**
      * Gets the type of block that changed, causing this event
      *
-     * @return Changed block's type ID
+     * @return Changed block's type id
      */
-    public int getChangedTypeID() {
+    public int getChangedTypeId() {
         return changed;
     }
 

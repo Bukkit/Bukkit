@@ -1,7 +1,7 @@
 package org.bukkit.event.block;
 
-import org.bukkit.Block;
-import org.bukkit.BlockFace;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 
@@ -9,14 +9,14 @@ import org.bukkit.event.Event;
  * Holds information for events with a source block and a destination block
  */
 public class BlockFromToEvent extends BlockEvent implements Cancellable {
-    protected Block from;
+    protected Block to;
     protected BlockFace face;
     protected boolean cancel;
 
     public BlockFromToEvent(final Event.Type type, final Block block, final BlockFace face) {
         super(type, block);
         this.face = face;
-        this.from = block.getRelative(face.getModX(), face.getModY(), face.getModZ());
+        this.to = block.getRelative(face.getModX(), face.getModY(), face.getModZ());
         this.cancel = false;
     }
 
@@ -34,8 +34,8 @@ public class BlockFromToEvent extends BlockEvent implements Cancellable {
      * 
      * @return Block the faced block
      */
-    public Block getFromBlock() {
-        return from; 
+    public Block getToBlock() {
+        return to; 
     }
 
     public boolean isCancelled() {

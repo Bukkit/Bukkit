@@ -1,7 +1,7 @@
 package org.bukkit.event.block;
 
-import org.bukkit.Block;
-import org.bukkit.Player;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 
@@ -15,7 +15,6 @@ public class BlockIgniteEvent extends BlockEvent implements Cancellable {
     private IgniteCause cause;
     private boolean cancel;
     private Player thePlayer;
-    private Block theBlock;
 
     /**
      * @param Block, IgniteCause, Player or null.
@@ -23,7 +22,6 @@ public class BlockIgniteEvent extends BlockEvent implements Cancellable {
     public BlockIgniteEvent(Block theBlock, IgniteCause cause, Player thePlayer) {
         super(Event.Type.BLOCK_IGNITE, theBlock);
         this.cause = cause;
-        this.theBlock = theBlock;
         this.thePlayer = thePlayer;
         this.cancel = false;
     }
@@ -88,11 +86,6 @@ public class BlockIgniteEvent extends BlockEvent implements Cancellable {
          * Block ignition caused by dynamic spreading of fire.
          */
         SPREAD,
-        /**
-         * Block ignition caused by VERY SLOW dynamic spreading of fire.
-         */
-        SLOW_SPREAD
-
     }
 
 }

@@ -1,10 +1,10 @@
 package org.bukkit.event.player;
 
-import org.bukkit.Block;
-import org.bukkit.BlockFace;
-import org.bukkit.ItemStack;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
-import org.bukkit.Player;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
 /**
@@ -66,7 +66,7 @@ public class PlayerItemEvent extends PlayerEvent implements Cancellable {
      * @return Material the material of the item used
      */
     public Material getMaterial() {
-        if (this.item == null) return Material.Air;
+        if (this.item == null) return Material.AIR;
         
         return item.getType();
     }
