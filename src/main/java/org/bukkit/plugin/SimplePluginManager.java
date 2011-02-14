@@ -227,8 +227,10 @@ public final class SimplePluginManager implements PluginManager {
      * @param priority Priority of this event
      * @param plugin Plugin to register
      */
-    public void registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin) {
-        getEventListeners( type ).offer(new RegisteredListener(listener, priority, plugin, type));
+    public RegisteredListener registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin) {
+        RegisteredListener registeredListener = new RegisteredListener(listener, priority, plugin, type);
+        getEventListeners( type ).offer(registeredListener);
+        return registeredListener;
     }
 
     /**
@@ -240,9 +242,27 @@ public final class SimplePluginManager implements PluginManager {
      * @param priority Priority of this event
      * @param plugin Plugin to register
      */
-    public void registerEvent(Event.Type type, Listener listener, EventExecutor executor, Priority priority, Plugin plugin) {
-        getEventListeners( type ).offer(new RegisteredListener(listener, executor, priority, plugin));
+    public RegisteredListener registerEvent(Event.Type type, Listener listener, EventExecutor executor, Priority priority, Plugin plugin) {
+        RegisteredListener registeredListener = new RegisteredListener(listener, executor, priority, plugin, type);
+        getEventListeners( type ).offer(registeredListener);
+        return registeredListener;
     }
+
+    /**
+     * Unregisters the given registered listener (returned from registerEvent)
+     *
+     * @param registeredListener
+     */
+    public void unregisterEvent(RegisteredListener registeredListener) {
+        if (registeredListener != null) {
+            Event.Type type = registeredListener.getType();
+            PriorityQueue<RegisteredListener> eventListeners = listeners.get(type);
+            if (eventListeners.contains(registeredListener)) {
+                eventListeners.remove(registeredListener);
+            }
+        }
+    }
+
 
     /**
      * Returns a PriorityQueue of RegisteredListener for the specified event type creating a new queue if needed
