@@ -57,4 +57,11 @@ public interface Entity {
      */
     public int getMaxFireTicks();
     
+    /**
+     * Returns the entity's current fire ticks.
+     *
+     * @param ticks
+     */
+    public void setFireTicks(int ticks);
+    
 }
