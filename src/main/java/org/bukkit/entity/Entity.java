@@ -42,4 +42,19 @@ public interface Entity {
      * @return Entity id
      */
     public int getEntityId();
+
+    /**
+     * Returns the entity's current fire ticks.
+     *
+     * @return int fireTicks
+     */
+    public int getFireTicks();
+    
+    /**
+     * Returns the entity's maximum fire ticks.
+     *
+     * @return int maxFireTicks
+     */
+    public int getMaxFireTicks();
+    
 }
