@@ -26,16 +26,6 @@ public abstract class Command {
 		 */
 		QUOTED;
 		
-		/**
-		 * Returns a parsing option for the name.
-		 * <ul>
-		 * <li>none: No parser.</li>
-		 * <li>quoted: Quoted parser ({@link Command#parseLine(String)}).</li>
-		 * <li>all other names will be interpreted as split.</li> 
-		 * </ul>
-		 * @param name Name of the parser option.
-		 * @return The parser option.
-		 */
 		public static Parsing getParser(String name) {
 			if (name.equalsIgnoreCase("none")) {
 				return NONE;
@@ -60,13 +50,6 @@ public abstract class Command {
         this.parsing = Parsing.SPLIT;
     }
 
-    /**
-     * Parses the parameters of a command.
-     * @param sender The object initiating the command.
-     * @param currentAlias The command name.
-     * @param args The parameters as one line.
-     * @return If this command was executed.
-     */
     public boolean parse(CommandSender sender, String currentAlias, String args) {
     	switch (this.parsing) {
     	case NONE :
@@ -120,10 +103,10 @@ public abstract class Command {
 		this.parsing = parsing;
 	}
 	
-    /**
-     * Parses a string line using quoting and escaping. It will split the line where a space is, but ignores quoted or escaped spaces.
-     *  
-     * Examples:
+	/**
+	 * Parses a string line using quoting and escaping. It will split the line where a space is, but ignores quoted or escaped spaces.
+	 *  
+	 * Examples:
      * <blockquote><table>
      * <tr>
      *  <th>Input</th>
@@ -140,10 +123,10 @@ public abstract class Command {
      * </table></blockquote>
      * 
      * <b>Notice</b>: This method ignores illegal escapes.
-     * @param line
-     *            The command line.
-     * @return The parsed segments.
-     */
+	 * @param line
+	 *            The command line.
+	 * @return The parsed segments.
+	 */
 	public static String[] parseLine(String line) {
 		boolean quoted = false;
 		boolean escaped = false;
