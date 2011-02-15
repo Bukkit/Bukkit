@@ -1,23 +1,97 @@
 package org.bukkit.event;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * Represents an event
  */
 public abstract class Event {
     private final Type type;
     private final String name;
+    private final int nameId;
+    private final Enum customType;
+
+    static private final ConcurrentHashMap<String,Integer> nameMap = new ConcurrentHashMap<String,Integer>();
+    static private final ConcurrentHashMap<Integer,String> reverseNameMap = new ConcurrentHashMap<Integer,String>();
+    static private final Object nameIdCounterLock = new Object();
+    static private int nameIdCounter = 1;
 
     protected Event(final Type type) {
         exAssert(type != null, "type is null");
         exAssert(type != Type.CUSTOM_EVENT, "use Event(String) to make custom events");
         this.type = type;
         this.name = null;
+        this.nameId = -1;
+        this.customType = null;
     }
 
     protected Event(final String name) {
         exAssert(name != null, "name is null");
         this.type = Type.CUSTOM_EVENT;
         this.name = name;
+        this.nameId = -1;
+        this.customType = null;
+    }
+
+    protected Event(final Enum type, final String name) { 
+        exAssert(type != null, "type is null");
+        exAssert(name != null, "name is null");
+        this.type = Type.CUSTOM_EVENT;
+        this.name = name;
+        this.nameId = getNameId(name);
+        this.customType = type;
+    }
+
+    protected Event(final Enum type, final int nameId) {
+        exAssert(type != null, "type is null");
+        this.type = Type.CUSTOM_EVENT;
+        this.name = getNameString(nameId);
+        this.nameId = nameId;
+        exAssert(this.name != null, "unknown name id");
+        this.customType = type;
+    }
+
+    static private int getNextNameId() {
+        synchronized(nameIdCounterLock) {
+            return nameIdCounter++;
+        }
+    }
+
+    /**
+     * Gets the id number corresponding to name.  If the name doesn't exist, an id will be assigned for the string.
+     * Id numbers are not constant between server restarts
+     *
+     * @param String Name of custom event
+     * @return int Id number for the named event
+     */
+    static public final int getNameId(String name) {
+        if(!nameMap.containsKey(name)) {
+            Integer temp1 = getNextNameId();
+
+            reverseNameMap.put(temp1,name);  // This is safe since name ids are unique.  temp1 is not known to any other thread.
+
+            Integer temp2 = nameMap.putIfAbsent(name, temp1);
+
+            if(temp2 != null) { // Two string to (different) key mappings occured at almost the same time.  
+                return temp2;   // The other thread "won", return its mapping
+            } else {
+                return temp1;
+            }
+        } else {  // The name already existed, return its id.
+            return nameMap.get(name);
+        }
+    }
+
+    /**
+     * Gets the name corresponding to the given Id.  This function should only be called for ids that exist
+     *
+     * @param int Id number for the name
+     * @return String Name of event
+     */
+    static public final String getNameString(int id) {
+        String ret = reverseNameMap.get(id);
+        exAssert(ret != null, "Unknown name id");
+        return ret;
     }
 
     /**
@@ -28,17 +102,41 @@ public abstract class Event {
         return type;
     }
 
-    private void exAssert(boolean b, String s) {
+    /**
+     * Gets the custom type of this custom name event
+     * @return Enum type that this object represents
+     */
+    public final Enum getCustomType() {
+        exAssert(customType!=null, "No custom event type set");
+        return customType;
+    }
+
+    /**
+     * Gets the nameId of this custom name event
+     * @return int Id number for the current event's name
+     */
+    public final int getNameId() {
+        return nameId;
+    }
+
+
+    static private void exAssert(boolean b, String s) {
         if(!b) throw new IllegalArgumentException(s);
     }
 
     /**
-     * Gets the event's name. Should only be used if getType() == Type.CUSTOM
+     * Gets the event's name. 
      *
      * @return Name of this event
      */
     public final String getEventName() {
-        return ( type != Type.CUSTOM_EVENT) ? type.toString() : name;
+        if( type != Type.CUSTOM_EVENT) {
+            return type.toString();
+        } else if ( customType != null ) {
+            return customType.toString();
+        } else {
+            return name;
+        }
     }
 
     /**

@@ -104,6 +104,26 @@ public interface PluginManager {
     public void registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin);
 
     /**
+     * Registers the given event to the specified listener using a custom event name
+     *
+     * @param eventName Name of event to register
+     * @param listener PlayerListener to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerEvent(String eventName, Listener listener, Priority priority, Plugin plugin);
+
+    /**
+     * Registers the given event to the specified listener using a custom event id number
+     *
+     * @param id Event id to register
+     * @param listener PlayerListener to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerEvent(int id, Listener listener, Priority priority, Plugin plugin);
+
+    /**
      * Registers the given event to the specified executor
      *
      * @param type EventType to register
@@ -113,6 +133,28 @@ public interface PluginManager {
      * @param plugin Plugin to register
      */
     public void registerEvent(Event.Type type, Listener listener, EventExecutor executor, Priority priority, Plugin plugin);
+
+    /**
+     * Registers the given event to the specified listener using a directly passed EventExecutor and a custom event name
+     *
+     * @param eventName Name of event to register
+     * @param listener PlayerListener to register
+     * @param executor EventExecutor to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerEvent(String eventName, Listener listener, EventExecutor executor, Priority priority, Plugin plugin);
+
+    /**
+     * Registers the given event to the specified listener using a directly passed EventExecutor and a custom event id number
+     *
+     * @param int Event id to register
+     * @param listener PlayerListener to register
+     * @param executor EventExecutor to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerEvent(int id, Listener listener, EventExecutor executor, Priority priority, Plugin plugin);
 
     /**
      * Enables the specified plugin
