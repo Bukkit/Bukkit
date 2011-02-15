@@ -19,7 +19,7 @@ public final class JavaPluginDescription extends YamlPluginDescription {
     private static final Logger log = Logger.getLogger(JavaPluginDescription.class.getName());
     private final boolean systemPlugin;
     private String main;
-    private ClassLoader classLoader = null;
+    private PluginClassLoader classLoader = null;
 
     public JavaPluginDescription(final PluginLoader loader, final File file,
             final InputStream stream, final boolean systemPlugin) throws InvalidDescriptionException {
@@ -46,7 +46,7 @@ public final class JavaPluginDescription extends YamlPluginDescription {
      *
      * @return ClassLoader holding this plugin
      */
-    protected ClassLoader getClassLoader() {
+    protected PluginClassLoader getClassLoader() {
         if (classLoader == null) {
             final JavaPluginLoader pluginLoader = (JavaPluginLoader)getLoader();
             final ClassLoader parentLoader = getClass().getClassLoader();

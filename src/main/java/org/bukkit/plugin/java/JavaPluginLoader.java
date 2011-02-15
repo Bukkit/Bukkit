@@ -6,10 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
@@ -40,7 +38,7 @@ public final class JavaPluginLoader implements PluginLoader {
     private final Server server;
     private final File pluginFolder;
     private final List<File> systemPlugins;
-    private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
+    private final ArrayList<PluginClassLoader> pluginClassLoaders = new ArrayList<PluginClassLoader>();
 
     public JavaPluginLoader(Server server, File pluginFolder, List<File> systemPlugins) {
         this.server = server;
@@ -49,31 +47,22 @@ public final class JavaPluginLoader implements PluginLoader {
     }
 
     /**
-     * Look up a class by name in the shared class cache.
-     *
-     * This is used by PluginClassLoader to access the shared cache.
-     *
-     * @param name The class name
-     * @return The class, if found
+     * {@inheritDoc}
      */
-    public Class<?> getClassByName(final String name) {
-        return classes.get(name);
+    public Plugin getContainingPlugin() {
+        return null;
     }
 
     /**
-     * Add a class to the shared class cache.
+     * Get a list of ClassLoaders in use.
      *
-     * This is used by PluginClassLoader to update the shared cache.
+     * This allows PluginClassLoader to access neighbouring plugins'
+     * ClassLoaders, and thus their classes.
      *
-     * @param name The class name
-     * @param clazz The class to store
+     * @return A list of ClassLoaders.
      */
-    public void setClass(final String name, final Class<?> clazz) {
-        classes.put(name, clazz);
-    }
-
-    public Plugin getContainingPlugin() {
-        return null;
+    public List<PluginClassLoader> getClassLoaders() {
+        return pluginClassLoaders;
     }
 
     /**
@@ -463,8 +452,10 @@ public final class JavaPluginLoader implements PluginLoader {
         JavaPluginDescription description = (JavaPluginDescription)abstractDescription;
         JavaPlugin plugin = null;
 
+        PluginClassLoader cloader = description.getClassLoader();
+        pluginClassLoaders.add(cloader);
         try {
-            Class<?> jarClass = Class.forName(description.getMain(), true, description.getClassLoader());
+            Class<?> jarClass = Class.forName(description.getMain(), true, cloader);
             Class<? extends JavaPlugin> pluginClass = jarClass.asSubclass(JavaPlugin.class);
 
             try {
@@ -477,6 +468,7 @@ public final class JavaPluginLoader implements PluginLoader {
 
             plugin.initialize(server, description);
         } catch (Throwable ex) {
+            pluginClassLoaders.remove(cloader);
             throw new InvalidPluginException(ex);
         }
 
@@ -500,18 +492,9 @@ public final class JavaPluginLoader implements PluginLoader {
 
         JavaPlugin jPlugin = (JavaPlugin)plugin;
         JavaPluginDescription description = (JavaPluginDescription)plugin.getDescription();
-        ClassLoader cloader = description.getClassLoader();
+        pluginClassLoaders.remove(description.getClassLoader());
         description.clearClassLoader();
 
         jPlugin.onDisable();
-
-        if (cloader instanceof PluginClassLoader) {
-            PluginClassLoader loader = (PluginClassLoader)cloader;
-            Set<String> names = loader.getClasses();
-
-            for (String name : names) {
-                classes.remove(name);
-            }
-        }
     }
 }

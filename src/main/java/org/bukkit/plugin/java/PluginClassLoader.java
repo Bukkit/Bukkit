@@ -2,16 +2,13 @@ package org.bukkit.plugin.java;
 
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 /**
- * A ClassLoader for plugins, to allow shared classes across multiple plugins
+ * A ClassLoader that allows referencing classes in other plugins
  */
 public class PluginClassLoader extends URLClassLoader {
+
     private final JavaPluginLoader loader;
-    private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
 
     public PluginClassLoader(final JavaPluginLoader loader, final URL[] urls, final ClassLoader parent) {
         super(urls, parent);
@@ -24,33 +21,38 @@ public class PluginClassLoader extends URLClassLoader {
      */
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
-        Class<?> result = classes.get(name);
-
-        if (result == null) {
-            result = loader.getClassByName(name);
-
-            if (result == null) {
-                result = super.findClass(name);
-
-                if (result != null) {
-                    loader.setClass(name, result);
-                    classes.put(name, result);
+        try {
+            return super.findClass(name);
+        }
+        catch (ClassNotFoundException ex) {
+            for (PluginClassLoader neighbor : loader.getClassLoaders()) {
+                if (neighbor != this) {
+                    try {
+                        return neighbor.loadClassDirect(name);
+                    }
+                    catch (ClassNotFoundException ex2) {}
                 }
             }
+            throw ex;
         }
-
-        return result;
     }
 
     /**
-     * Get a set of classes loaded by this loader
+     * Variant of loadClass used to query a neighbor plugin's loader.
      *
-     * Used by JavaPluginLoader to clean up the cache once the plugin that
-     * uses this ClassLoader is disabled.
+     * Delegation is skipped, because ClassLoaders of plugins all have the
+     * same parent, and we can assume that has already been checked.
      *
-     * @return A set of classes
+     * This also doesn't recurse into {@link #findClass(String)}, but
+     * instead calls directly into URLClassLoader#findClass(String). This is
+     * to prevent infinite recursion.
      */
-    public Set<String> getClasses() {
-        return classes.keySet();
+    private Class<?> loadClassDirect(String name) throws ClassNotFoundException {
+        Class<?> c = findLoadedClass(name);
+        if (c == null) {
+            c = super.findClass(name);
+        }
+        return c;
     }
+
 }
