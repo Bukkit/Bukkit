@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.bukkit.command.Command.Parsing;
 import org.bukkit.plugin.Plugin;
 
 public class PluginCommandYamlParser {
@@ -24,6 +25,7 @@ public class PluginCommandYamlParser {
                 Object description = entry.getValue().get("description");
                 Object usage = entry.getValue().get("usage");
                 Object aliases = entry.getValue().get("aliases");
+                Object parser = entry.getValue().get("parser");
 
                 if (description != null)
                     newCmd.setTooltip(description.toString());
@@ -40,6 +42,10 @@ public class PluginCommandYamlParser {
                     }
 
                     newCmd.setAliases(aliasList);
+                }
+                
+                if (parser != null) {
+                	newCmd.setParsing(Parsing.getParser(parser.toString()));
                 }
 
                 pluginCmds.add(newCmd);
