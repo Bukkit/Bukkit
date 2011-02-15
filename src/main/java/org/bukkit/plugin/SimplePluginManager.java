@@ -20,7 +20,6 @@ import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.server.PluginEvent;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 /**
@@ -314,15 +313,8 @@ public final class SimplePluginManager implements PluginManager {
     /**
      * {@inheritDoc}
      */
-    public void registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin) {
-        getEventListeners( type ).add(new RegisteredListener(listener, priority, plugin, type));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void registerEvent(Event.Type type, Listener listener, EventExecutor executor, Priority priority, Plugin plugin) {
-        getEventListeners( type ).add(new RegisteredListener(listener, executor, priority, plugin));
+    public void registerEvent(Plugin plugin, Event.Type type, Priority priority, EventExecutor executor) {
+        getEventListeners(type).add(new RegisteredListener(plugin, priority, executor));
     }
 
     /**

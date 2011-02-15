@@ -27,7 +27,6 @@ public class Fillr extends JavaPlugin {
 
     private void registerEvents() {
         FillrListener listener = new FillrListener(getServer());
-        getServer().getPluginManager().registerEvent(Event.Type.PLAYER_COMMAND, listener,
-                Event.Priority.Normal, this);
+        registerEvent(Event.Type.PLAYER_COMMAND, Event.Priority.Normal, listener);
     }
 }

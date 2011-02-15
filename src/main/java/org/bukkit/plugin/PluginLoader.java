@@ -1,8 +1,5 @@
 package org.bukkit.plugin;
 
-import org.bukkit.event.Event;
-import org.bukkit.event.Listener;
-
 /**
  * Represents a loader of, and interface to a type of plugin
  *
@@ -24,14 +21,6 @@ public interface PluginLoader {
      * @return A plugin instance.
      */
     public Plugin getContainingPlugin();
-
-    /**
-     * Creates and returns an event executor
-     *
-     * @param type Type of the event executor to create
-     * @param listener the object that will handle the eventual call back
-     */
-    public EventExecutor createExecutor(Event.Type type, Listener listener);
 
     /**
      * Find plugins, and read their descriptions.

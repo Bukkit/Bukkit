@@ -4,7 +4,6 @@ package org.bukkit.plugin;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Listener;
 
 /**
  * Handles all plugin management from the Server
@@ -77,25 +76,14 @@ public interface PluginManager {
     public void callEvent(Event event);
 
     /**
-     * Registers the given event to the specified listener
-     *
-     * @param type Event type to register
-     * @param listener Listener to register
-     * @param priority Priority of this event
-     * @param plugin Plugin to register
-     */
-    public void registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin);
-
-    /**
      * Registers the given event to the specified executor
      *
+     * @param plugin Plugin that is registering a handler
      * @param type Event type to register
-     * @param listener Listener to register
-     * @param executor EventExecutor to register
      * @param priority Priority of this event
-     * @param plugin Plugin to register
+     * @param executor EventExecutor used to invoke the handler
      */
-    public void registerEvent(Event.Type type, Listener listener, EventExecutor executor, Priority priority, Plugin plugin);
+    public void registerEvent(Plugin plugin, Event.Type type, Priority priority, EventExecutor executor);
 
     /**
      * Enables the specified plugin
