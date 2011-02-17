@@ -38,8 +38,7 @@ public abstract class Event {
      * @return Name of this event
      */
     public final String getEventName() {
-        if(type!=Type.CUSTOM_EVENT) return type.toString();
-        else return name;
+        return ( type != Type.CUSTOM_EVENT) ? type.toString() : name;
     }
 
     /**
@@ -152,6 +151,20 @@ public abstract class Event {
         PLAYER_LOGIN (Category.PLAYER),
 
         /**
+         * Called when a player respawns
+         *
+         * @see org.bukkit.event.player.PlayerEvent
+         */
+        PLAYER_RESPAWN (Category.PLAYER),
+
+        /**
+         * Called when a player gets kicked a server
+         *
+         * @see org.bukkit.event.player.PlayerEvent
+         */
+        PLAYER_KICK (Category.PLAYER),
+
+        /**
          * Called when a player sends a chat message
          *
          * @see org.bukkit.event.player.PlayerChatEvent
@@ -182,9 +195,16 @@ public abstract class Event {
         /**
          * Called when a player undergoes an animation, such as arm swinging
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.player.PlayerAnimationEvent
          */
         PLAYER_ANIMATION (Category.PLAYER),
+
+        /**
+         * Called when a player toggles sneak mode
+         *
+         * @todo: add javadoc see comment
+         */
+        PLAYER_TOGGLE_SNEAK (Category.PLAYER),
 
         /**
          * Called when a player uses an item
@@ -206,6 +226,27 @@ public abstract class Event {
          * @see org.bukkit.event.player.PlayerMoveEvent
          */
         PLAYER_TELEPORT (Category.PLAYER),
+
+        /**
+         * Called when a player changes their held item
+         *
+         * @see org.bukkit.event.player.PlayerItemHeldEvent
+         */
+        PLAYER_ITEM_HELD (Category.PLAYER),
+
+        /**
+         * Called when a player drops an item
+         *
+         * @see org.bukkit.event.player.PlayerDropItemEvent
+         */
+        PLAYER_DROP_ITEM (Category.PLAYER),
+
+        /**
+         * Called when a player picks an item up off the ground
+         *
+         * @see org.bukkit.event.player.PlayerPickupItemEvent
+         */
+        PLAYER_PICKUP_ITEM (Category.PLAYER),
 
         /**
          * BLOCK EVENTS
@@ -276,11 +317,25 @@ public abstract class Event {
         BLOCK_INTERACT (Category.BLOCK),
 
         /**
+         * Called when a block is destroyed from being burnt by fire
+         *
+         * @see org.bukkit.event.block.BlockBurnEvent
+         */
+        BLOCK_BURN (Category.BLOCK),
+
+        /**
          * Called when leaves are decaying naturally
          *
          * @see org.bukkit.event.block.LeavesDecayEvent
          */
         LEAVES_DECAY (Category.BLOCK),
+
+        /**
+         * Called when a sign is changed
+         *
+         * @see org.bukkit.event.block.SignChangeEvent
+         */
+        SIGN_CHANGE (Category.BLOCK),
 
         /**
          * Called when a liquid attempts to flow into a block which already
@@ -298,6 +353,13 @@ public abstract class Event {
          * @see org.bukkit.event.block.BlockFromToEvent
          */
         REDSTONE_CHANGE (Category.BLOCK),
+
+        /**
+         * Called when a block is destroyed by a player.
+         *
+         * @see org.bukkit.event.block.BlockBreakEvent
+         */
+        BLOCK_BREAK (Category.BLOCK),
 
         /**
          * INVENTORY EVENTS
@@ -357,6 +419,13 @@ public abstract class Event {
         PLUGIN_DISABLE (Category.SERVER),
 
         /**
+         * Called when a server command is called
+         *
+         * @see org.bukkit.event.server.PluginEvent
+         */
+        SERVER_COMMAND (Category.SERVER),
+
+        /**
          * WORLD EVENTS
          */
 
@@ -392,6 +461,17 @@ public abstract class Event {
         ITEM_SPAWN (Category.WORLD),
 
         /**
+         * Called when a world is saved
+         * 
+         */
+        WORLD_SAVED (Category.WORLD),
+
+        /**
+         * Called when a World is loaded
+         */
+        WORLD_LOADED (Category.WORLD),
+
+        /**
          * LIVING_ENTITY EVENTS
          */
 
@@ -417,7 +497,7 @@ public abstract class Event {
          * @see org.bukkit.event.entity.EntityDamageByEntityEvent
          */
         ENTITY_DAMAGEDBY_ENTITY (Category.LIVING_ENTITY),
-        
+
         /**
          * Called when a LivingEntity is damaged by a projectile Entity
          *
@@ -445,13 +525,34 @@ public abstract class Event {
          * @todo: add javadoc see comment
          */
         ENTITY_COMBUST (Category.LIVING_ENTITY),
-        
+
         /**
          * Called when an entity explodes, either TNT, Creeper, or Ghast Fireball
          *
          * @todo: add javadoc see comment
          */
         ENTITY_EXPLODE (Category.LIVING_ENTITY),
+
+        /**
+         * Called when an entity has made a decision to explode.
+         * 
+         * Provides an opportunity to act on the entity, change the explosion radius,
+         * or to change the fire-spread flag.
+         * 
+         * Canceling the event negates the entity's decision to explode.
+         * For EntityCreeper, this resets the fuse but does not kill the Entity.
+         * For EntityFireball and EntityTNTPrimed....?
+         * 
+         * @see org.bukkit.event.entity.EntityExplodeTriggerEvent
+         */
+        EXPLOSION_PRIMED (Category.LIVING_ENTITY),
+
+        /**
+         * Called when an entity targets another entity
+         *
+         * @see org.bukkit.event.entity.EntityTargetEvent
+         */
+        ENTITY_TARGET (Category.LIVING_ENTITY),
 
         /**
          * VEHICLE EVENTS
@@ -505,6 +606,13 @@ public abstract class Event {
          * @see org.bukkit.event.vehicle.VehicleMoveEvent
          */
         VEHICLE_MOVE (Category.VEHICLE),
+
+        /**
+         * Called when a vehicle is going through an update cycle, rechecking itself
+         *
+         * @see org.bukkit.event.vehicle.VehicleUpdateEvent
+         */
+        VEHICLE_UPDATE (Category.VEHICLE),
 
         /**
          * MISCELLANEOUS EVENTS
