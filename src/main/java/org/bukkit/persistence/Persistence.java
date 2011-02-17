@@ -16,7 +16,6 @@ import org.bukkit.persistence.dao.CommandSenderData;
 import org.bukkit.persistence.dao.PlayerData;
 import org.bukkit.persistence.data.DataStore;
 import org.bukkit.persistence.data.sql.SqlLiteStore;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.util.BlockVector;
 
 /** 
