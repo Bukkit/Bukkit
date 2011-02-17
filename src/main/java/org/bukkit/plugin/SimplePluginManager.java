@@ -191,9 +191,25 @@ public final class SimplePluginManager implements PluginManager {
         }
     }
 
+    public void disablePlugins() {
+        for(Plugin plugin: getPlugins()) {
+            disablePlugin(plugin);
+        }
+    }
+
     public void disablePlugin(final Plugin plugin) {
         if (plugin.isEnabled()) {
             plugin.getPluginLoader().disablePlugin(plugin);
+            server.getScheduler().cancelTasks(plugin);
+        }
+    }
+
+    public void clearPlugins() {
+        synchronized (this) {
+            disablePlugins();
+            plugins.clear();
+            lookupNames.clear();
+            listeners.clear();
         }
     }
 
@@ -229,15 +245,11 @@ public final class SimplePluginManager implements PluginManager {
 
         if (eventListeners != null) {
             for (RegisteredListener registration : eventListeners) {
-                Plugin plugin = registration.getPlugin();
-                PluginLoader loader = plugin.getPluginLoader();
-
-                if (plugin.isEnabled()) {
-                    try {
-                        loader.callEvent(registration, event);
-                    } catch (Throwable ex) {
-                        Logger.getLogger(SimplePluginManager.class.getName()).log(Level.SEVERE, "Could not pass event " + event.getType() + " to " + plugin.getDescription().getName(), ex);
-                    }
+                // NOTE: no need to check isEnabled as all disabled plugins have their listeners disabled
+                try {
+                    registration.callEvent( event );
+                } catch (Throwable ex) {
+                    Logger.getLogger(SimplePluginManager.class.getName()).log(Level.SEVERE, "Could not pass event " + event.getType() + " to " + registration.getPlugin().getDescription().getName(), ex);
                 }
             }
         }
@@ -252,19 +264,44 @@ public final class SimplePluginManager implements PluginManager {
      * @param plugin Plugin to register
      */
     public void registerEvent(Event.Type type, Listener listener, Priority priority, Plugin plugin) {
+        getEventListeners( type ).offer(new RegisteredListener(listener, priority, plugin, type));
+    }
+
+    /**
+     * Registers the given event to the specified listener using a directly passed EventExecutor
+     *
+     * @param type EventType to register
+     * @param listener PlayerListener to register
+     * @param executor EventExecutor to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerEvent(Event.Type type, Listener listener, EventExecutor executor, Priority priority, Plugin plugin) {
+        getEventListeners( type ).offer(new RegisteredListener(listener, executor, priority, plugin));
+    }
+
+    /**
+     * Returns a PriorityQueue of RegisteredListener for the specified event type creating a new queue if needed
+     *
+     * @param type EventType to lookup
+     * @return PriorityQueue<RegisteredListener> the looked up or create queue matching the requested type
+     */
+    private PriorityQueue<RegisteredListener> getEventListeners( Event.Type type )
+    {
         PriorityQueue<RegisteredListener> eventListeners = listeners.get(type);
 
-        if (eventListeners == null) {
-            eventListeners = new PriorityQueue<RegisteredListener>(11,
-                    	new Comparator<RegisteredListener>( ) {
-                            public int compare(RegisteredListener i, RegisteredListener j) {
-                                return i.getPriority().compareTo(j.getPriority());
-                            }
-			}
-            );
-            listeners.put(type, eventListeners);
+        if (eventListeners != null) {
+            return eventListeners;
         }
 
-        eventListeners.offer(new RegisteredListener(listener, priority, plugin));
+        eventListeners = new PriorityQueue<RegisteredListener>(
+            11, new Comparator<RegisteredListener>() {
+                public int compare(RegisteredListener i, RegisteredListener j) {
+                    return i.getPriority().compareTo(j.getPriority());
+                }
+            }
+        );
+        listeners.put(type, eventListeners);
+        return eventListeners;
     }
 }

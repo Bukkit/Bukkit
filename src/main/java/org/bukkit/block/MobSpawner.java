@@ -6,6 +6,8 @@ import org.bukkit.entity.MobType;
  * Represents a mob spawner.
  * 
  * @author sk89q
+ * 
+ * @deprecated
  */
 public interface MobSpawner extends BlockState {
     /**
