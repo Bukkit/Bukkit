@@ -44,7 +44,7 @@ public interface Entity {
     public int getEntityId();
 
     /**
-     * Returns the entity's current fire ticks.
+     * Returns the entity's current fire ticks (ticks before the entity stops being on fire).
      *
      * @return int fireTicks
      */
@@ -58,7 +58,7 @@ public interface Entity {
     public int getMaxFireTicks();
     
     /**
-     * Returns the entity's current fire ticks.
+     * Sets the entity's current fire ticks (ticks before the entity stops being on fire).
      *
      * @param ticks
      */
