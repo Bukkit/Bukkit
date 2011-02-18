@@ -3,6 +3,7 @@ package org.bukkit;
 
 import java.util.List;
 import org.bukkit.block.Block;
+import org.bukkit.Chunk;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.bukkit.entity.Creature;
@@ -23,6 +24,39 @@ import org.bukkit.entity.Boat;
  * may change with the addition of a functional Nether world
  */
 public interface World {
+
+     /**
+     * Sets a cuboid area with data from 2 arrays.
+     *
+     * The arrays are arranged array[X][Z][Y].  A value of -1 means skip that block.
+     *
+     * @param chunk Chunk containing the blocks to update
+     * @param x X-coordinate of the block with lowest X in the cuboid
+     * @param y Y-coordinate of the block with lowest Y in the cuboid
+     * @param z Z-coordinate of the block with lowest Z in the cuboid
+     * @param type Array containing the type-id information for the blocks
+     * @param data Array containing the data information for the blocks (null means ignore)
+     * @return Returns true if there was no errors when updating the blocks
+     */
+    public boolean setBlockCuboid(int x, int y, int z, int[][][] type, int[][][] data);
+
+     /**
+     * Sets a cuboid area with data from 2 arrays.  The cuboid is restricted to a single Chunk
+     *
+     * Any volume of the cuboid outside the chunk is completely ignored
+     *
+     * The arrays are arranged array[X][Z][Y].  A value of -1 means skip that block.
+     *
+     * @param chunk Chunk containing the blocks to update
+     * @param x X-coordinate of the block with lowest X in the cuboid
+     * @param y Y-coordinate of the block with lowest Y in the cuboid
+     * @param z Z-coordinate of the block with lowest Z in the cuboid
+     * @param type Array containing the type-id information for the blocks
+     * @param data Array containing the data information for the blocks (null means ignore)
+     * @return Returns true if there was no errors when updating the blocks
+     */
+    public boolean setBlockCuboidChunk(Chunk chunk, int x, int y, int z, int[][][] type, int[][][] data);
+
     /**
      * Gets the block at the given location
      *
