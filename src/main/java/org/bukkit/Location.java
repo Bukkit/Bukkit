@@ -1,6 +1,7 @@
 
 package org.bukkit;
 
+import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
 
 /**
@@ -46,6 +47,15 @@ public class Location implements Cloneable {
     }
 
     /**
+     * Gets the block at the represented location
+     *
+     * @return Block at the represented location
+     */
+    public Block getBlock() {
+        return world.getBlockAt(this);
+    }
+
+    /**
      * Sets the x-coordinate of this location
      *
      * @param x X-coordinate
@@ -62,11 +72,11 @@ public class Location implements Cloneable {
     public double getX() {
         return x;
     }
-    
+
     /**
      * Gets the floored value of the X component, indicating the block that
      * this location is contained with.
-     * 
+     *
      * @return block X
      */
     public int getBlockX() {
@@ -94,7 +104,7 @@ public class Location implements Cloneable {
     /**
      * Gets the floored value of the Y component, indicating the block that
      * this location is contained with.
-     * 
+     *
      * @return block y
      */
     public int getBlockY() {
@@ -122,7 +132,7 @@ public class Location implements Cloneable {
     /**
      * Gets the floored value of the Z component, indicating the block that
      * this location is contained with.
-     * 
+     *
      * @return block z
      */
     public int getBlockZ() {
@@ -163,6 +173,26 @@ public class Location implements Cloneable {
      */
     public float getPitch() {
         return pitch;
+    }
+
+    /**
+     * Gets a Vector pointing in the direction that this Location is facing
+     *
+     * @return Vector
+     */
+    public Vector getDirection() {
+        Vector vector = new Vector();
+
+        double rotX = this.getYaw();
+        double rotY = this.getPitch();
+
+        vector.setY(-Math.sin(Math.toRadians(rotY)));
+
+        double h = Math.cos(Math.toRadians(rotY));
+        vector.setX(-h*Math.sin(Math.toRadians(rotX)));
+        vector.setZ(h*Math.cos(Math.toRadians(rotX)));
+
+        return vector;
     }
 
     @Override
@@ -211,7 +241,7 @@ public class Location implements Cloneable {
     public String toString() {
         return "Location{" + "world=" + world + "x=" + x + "y=" + y + "z=" + z + "pitch=" + pitch + "yaw=" + yaw + '}';
     }
-    
+
     public Vector toVector() {
         return new Vector(x, y, z);
     }

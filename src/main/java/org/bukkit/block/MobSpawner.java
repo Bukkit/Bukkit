@@ -6,6 +6,8 @@ import org.bukkit.entity.MobType;
  * Represents a mob spawner.
  * 
  * @author sk89q
+ * 
+ * @deprecated Use CreatureSpawner instead.
  */
 public interface MobSpawner extends BlockState {
     /**

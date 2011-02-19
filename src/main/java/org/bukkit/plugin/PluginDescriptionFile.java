@@ -81,6 +81,15 @@ public final class PluginDescriptionFile {
     }
 
     /**
+     * Returns the name of a plugin including the version
+     *
+     * @return String name
+     */
+    public String getFullName() {
+        return name + " v" + version;
+    }
+
+    /**
      * Returns the main class for a plugin
      *
      * @return Java classpath
@@ -88,7 +97,7 @@ public final class PluginDescriptionFile {
     public String getMain() {
         return main;
     }
-    
+
     public Object getCommands() {
         return commands;
     }
