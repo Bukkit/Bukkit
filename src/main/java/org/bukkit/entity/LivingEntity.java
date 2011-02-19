@@ -27,7 +27,7 @@ public interface LivingEntity extends Entity {
     /**
      * Gets the height of the entity's head above its Location
      *
-     * @return Double of the offet
+     * @return Height of the entity's eyes above its location
      */
     public double getEyeHeight();
 
@@ -35,7 +35,7 @@ public interface LivingEntity extends Entity {
      * Gets the height of the entity's head above its Location
      *
      * @param boolean If set to true, the effects of sneaking will be ignored
-     * @return Double of the offet
+     * @return Height of the entity's eyes above its location
      */
     public double getEyeHeight(boolean ignoreSneaking);
 
@@ -45,7 +45,7 @@ public interface LivingEntity extends Entity {
      *
      * @param HashSet<Byte> HashSet containing all transparent block ids.  If set to null only air is considered transparent.
      * @param int This is the maximum distance to scan. This may be further limited by the server, but never to less than 100 blocks.
-     * @return List<Block> List containing all blocks along the player's line of sight
+     * @return List containing all blocks along the entity's line of sight
      */
     public List<Block> getLineOfSight(HashSet<Byte> transparent, int maxDistance);
 
@@ -54,7 +54,7 @@ public interface LivingEntity extends Entity {
      *
      * @param HashSet<Byte> HashSet containing all transparent block ids.  If set to null only air is considered transparent.
      * @param int This is the maximum distance to scan. This may be further limited by the server, but never to less than 100 blocks.
-     * @return Block Block that the player has targeted
+     * @return Block that the entity has targeted
      */
     public Block getTargetBlock(HashSet<Byte> transparent, int maxDistance);
 
@@ -64,7 +64,7 @@ public interface LivingEntity extends Entity {
      *
      * @param HashSet<Byte> HashSet containing all transparent block ids.  If set to null only air is considered transparent.
      * @param int This is the maximum distance to scan. This may be further limited by the server, but never to less than 100 blocks
-     * @return List containing the last 2 blocks along the player's line of sight
+     * @return List containing the last 2 blocks along the entity's line of sight
      */
     public List<Block> getLastTwoTargetBlocks(HashSet<Byte> transparent, int maxDistance);
 
