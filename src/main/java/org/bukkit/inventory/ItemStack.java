@@ -1,4 +1,3 @@
-
 package org.bukkit.inventory;
 
 import org.bukkit.Material;
@@ -89,7 +88,7 @@ public class ItemStack {
      */
     public void setTypeId(int type) {
         this.type = type;
-        createData((byte)0);
+        createData((byte) 0);
     }
 
     /**
@@ -160,7 +159,7 @@ public class ItemStack {
     /**
      * Get the maximum stacksize for the material hold in this ItemStack
      * Returns -1 if it has no idea.
-     * 
+     *
      * @return The maximum you can stack this material to.
      */
     public int getMaxStackSize() {
@@ -178,15 +177,28 @@ public class ItemStack {
 
     @Override
     public String toString() {
-        return "ItemStack{"+getType().name()+" x "+getAmount()+"}";
+        return "ItemStack{" + getType().name() + " x " + getAmount() + "}";
     }
 
     @Override
-    public boolean equals(Object object) {
-        return false;
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + amount;
+        result = prime * result + type;
+        return result;
     }
 
-    public boolean equals(ItemStack item) {
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof ItemStack)) {
+            return false;
+        }
+        ItemStack item = (ItemStack) obj;
         return item.getAmount() == getAmount() && item.getTypeId() == getTypeId();
     }
+
 }
