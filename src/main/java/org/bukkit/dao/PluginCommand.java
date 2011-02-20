@@ -1,4 +1,4 @@
-package org.bukkit.persistence.dao;
+package org.bukkit.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;

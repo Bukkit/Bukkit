@@ -1,4 +1,4 @@
-package org.bukkit.persistence.dao;
+package org.bukkit.dao;
 
 public enum MigrationType
 {

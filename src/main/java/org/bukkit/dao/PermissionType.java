@@ -1,4 +1,4 @@
-package org.bukkit.persistence.dao;
+package org.bukkit.dao;
 
 // Enums don't need annotations to be persistable
 public enum PermissionType

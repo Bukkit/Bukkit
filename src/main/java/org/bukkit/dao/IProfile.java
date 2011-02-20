@@ -1,4 +1,4 @@
-package org.bukkit.persistence.dao;
+package org.bukkit.dao;
 
 /**
  * This should be temporary, I'm hoping once I get persisted inheretence
