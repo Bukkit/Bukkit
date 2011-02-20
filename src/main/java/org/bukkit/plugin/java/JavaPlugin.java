@@ -116,9 +116,12 @@ public abstract class JavaPlugin implements Plugin {
      * Called when this plugin is enabled
      *
      * This is the place to do initialization, such as installing listeners.
+     *
+     * @return True on success, false to abort enabling.
      */
-    public void onEnable() {
+    public boolean onEnable() {
         // default implementation:  do nothing!
+        return true;
     }
 
     /**
@@ -127,9 +130,12 @@ public abstract class JavaPlugin implements Plugin {
      * The PluginManager sees to cleaning up commands, listeners, loaders and
      * scheduled tasks, but any other resources held by the plugin should be
      * cleaned up here.
+     *
+     * @return True on success, false to abort enabling.
      */
-    public void onDisable() {
+    public boolean onDisable() {
         // default implementation:  do nothing!
+        return true;
     }
 
     /**

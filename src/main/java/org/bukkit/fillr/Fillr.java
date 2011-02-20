@@ -14,15 +14,14 @@ public class Fillr extends JavaPlugin {
 
     private static final Logger logger = Logger.getLogger(Fillr.class.getName());
 
-    public void onEnable() {
+    public boolean onEnable() {
         if (getServer().getPluginManager() instanceof SimplePluginManager) {
             registerEvents();
+            return true;
         } else {
             logger.log(Level.WARNING, "Fillr only works with SimplePluginManager");
+            return false;
         }
-    }
-
-    public void onDisable() {
     }
 
     private void registerEvents() {

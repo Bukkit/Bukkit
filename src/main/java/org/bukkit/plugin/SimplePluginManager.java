@@ -133,7 +133,6 @@ public final class SimplePluginManager implements PluginManager {
             if (plugin == null) {
                 PluginLoader loader = description.getLoader();
                 plugin = loader.enablePlugin(description);
-
                 plugins.put(description.getName(), plugin);
                 callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
             }
@@ -158,13 +157,21 @@ public final class SimplePluginManager implements PluginManager {
         }
         else {
             Throwable inner = ex.getCause();
-            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + inner.getMessage(), inner);
+            Plugin plugin = null;
 
-            if (inner instanceof InvalidPluginException) {
-                Plugin instance = ((InvalidPluginException)inner).getPlugin();
-                if (instance != null) {
-                    releasePluginResources(description.getName(), instance);
+            if (inner instanceof PluginInhibitException) {
+                server.getLogger().log(Level.INFO, "Plugin " + description.getName() + " inhibited loading.");
+                plugin = ((PluginInhibitException)inner).getPlugin();
+            }
+            else {
+                server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + inner.getMessage(), inner);
+                if (inner instanceof InvalidPluginException) {
+                    plugin = ((InvalidPluginException)inner).getPlugin();
                 }
+            }
+
+            if (plugin != null) {
+                releasePluginResources(description.getName(), plugin);
             }
         }
     }
@@ -264,7 +271,12 @@ public final class SimplePluginManager implements PluginManager {
             server.getLogger().log(Level.SEVERE, "Could not unload " + description.getName() + ": " + ex.getMessage());
         } catch (GraphIterationAborted ex) {
             Throwable inner = ex.getCause();
-            server.getLogger().log(Level.SEVERE, "Could not unload " + description.getName() + ": " + inner.getMessage(), inner);
+            if (inner instanceof PluginInhibitException) {
+                server.getLogger().log(Level.INFO, "Plugin " + description.getName() + " inhibited unloading.");
+            }
+            else {
+                server.getLogger().log(Level.SEVERE, "Could not unload " + description.getName() + ": " + inner.getMessage(), inner);
+            }
         }
     }
 

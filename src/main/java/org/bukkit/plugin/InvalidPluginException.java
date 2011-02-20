@@ -9,21 +9,10 @@ public class InvalidPluginException extends Exception {
     private final Plugin plugin;
 
     /**
-     * Constructs a new InvalidPluginException based on the given Exception
-     *
-     * @param throwable Exception that triggered this Exception
-     */
-    public InvalidPluginException(Throwable throwable) {
-        cause = throwable;
-        plugin = null;
-    }
-
-    /**
      * Constructs a new InvalidPluginException for the given Plugin and Exception
      *
-     * Even if a plugin failed to load, a Plugin instance may already have been
-     * created, and resources acquired in name of it. Throwing this exception
-     * using this constructor allows a manager to release these resources.
+     * Specifying a plugin using this constructor allows the PluginManager to
+     * do cleanup of any resources the plugin may have already registered.
      *
      * @param throwable Exception that triggered this Exception
      * @param plugin Plugin that caused the exception
@@ -31,6 +20,32 @@ public class InvalidPluginException extends Exception {
     public InvalidPluginException(Throwable throwable, Plugin plugin) {
         cause = throwable;
         this.plugin = plugin;
+    }
+
+    /**
+     * Constructs a new InvalidPluginException for the given Plugin
+     *
+     * Specifying a plugin using this constructor allows the PluginManager to
+     * do cleanup of any resources the plugin may have already registered.
+     *
+     * @param plugin Plugin that caused the exception
+     */
+    public InvalidPluginException(Plugin plugin) {
+        cause = null;
+        this.plugin = plugin;
+    }
+
+    /**
+     * Constructs a new InvalidPluginException based on the given Exception
+     *
+     * The constructors that accept a Plugin instance are preferred to this
+     * constructor. Only use this constructor if no cleanup is necessary.
+     *
+     * @param throwable Exception that triggered this Exception
+     */
+    public InvalidPluginException(Throwable throwable) {
+        cause = throwable;
+        plugin = null;
     }
 
     /**

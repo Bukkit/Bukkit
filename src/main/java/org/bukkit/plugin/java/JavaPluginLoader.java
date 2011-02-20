@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarEntry;
@@ -140,9 +141,9 @@ public final class JavaPluginLoader implements PluginLoader {
     /**
      * {@inheritDoc}
      */
-    public Plugin enablePlugin(PluginDescription abstractDescription) throws InvalidPluginException {
+    public Plugin enablePlugin(PluginDescription abstractDescription) throws InvalidPluginException, PluginInhibitException {
         JavaPluginDescription description = (JavaPluginDescription)abstractDescription;
-        JavaPlugin plugin = null;
+        Plugin retval = null;
 
         // The reflection voodoo, where we find the class and constructor.
         PluginClassLoader cloader = description.getClassLoader();
@@ -155,56 +156,87 @@ public final class JavaPluginLoader implements PluginLoader {
             throw new InvalidPluginException(ex);
         }
 
-        // Instantiate the plugin.
+        // The ClassLoader should be available during and after enabling,
+        // but should be cleaned up if things don't work out.
         pluginClassLoaders.add(cloader);
         try {
+            // Instantiate the plugin.
+            JavaPlugin plugin;
             try {
-                Constructor<? extends JavaPlugin> constructor = pluginClass.getConstructor(Server.class, JavaPluginDescription.class);
-                plugin = constructor.newInstance(server, description);
-            } catch (NoSuchMethodException ex) {
-                Constructor<? extends JavaPlugin> constructor = pluginClass.getConstructor();
-                plugin = constructor.newInstance();
+                try {
+                    Constructor<? extends JavaPlugin> constructor = pluginClass.getConstructor(Server.class, JavaPluginDescription.class);
+                    plugin = constructor.newInstance(server, description);
+                } catch (NoSuchMethodException ex) {
+                    Constructor<? extends JavaPlugin> constructor = pluginClass.getConstructor();
+                    plugin = constructor.newInstance();
+                }
+            }
+            catch (NoSuchMethodException ex) {
+                throw new InvalidPluginException(ex);
+            }
+            catch (IllegalArgumentException ex) {
+                throw new InvalidPluginException(ex);
+            }
+            catch (InstantiationException ex) {
+                throw new InvalidPluginException(ex);
+            }
+            catch (IllegalAccessException ex) {
+                throw new InvalidPluginException(ex);
+            }
+            catch (InvocationTargetException ex) {
+                throw new InvalidPluginException(ex.getCause());
+            }
+
+            // Set up private fields.
+            plugin.initialize(server, description);
+
+            // Install commands from plugin.yml.
+            List<Command> pluginCommands = description.buildCommands(plugin);
+            if (!pluginCommands.isEmpty()) {
+                final CommandMap commandMap = server.getPluginManager().getCommandMap();
+                commandMap.registerAll(plugin.getDescription().getName(), pluginCommands);
+            }
+
+            // Call the onEnable method.
+            boolean inhibit;
+            try {
+                inhibit = !plugin.onEnable();
+            }
+            catch (Throwable ex) {
+                throw new InvalidPluginException(ex, plugin);
+            }
+            if (inhibit) {
+                throw new PluginInhibitException(plugin);
+            }
+
+            retval = plugin;
+        }
+        finally {
+            if (retval == null) {
+                pluginClassLoaders.remove(cloader);
             }
         }
-        catch (Throwable ex) {
-            pluginClassLoaders.remove(cloader);
-            throw new InvalidPluginException(ex, plugin);
-        }
 
-        // Set up private fields.
-        plugin.initialize(server, description);
-
-        // Install commands from plugin.yml.
-        List<Command> pluginCommands = description.buildCommands(plugin);
-        if (!pluginCommands.isEmpty()) {
-            final CommandMap commandMap = server.getPluginManager().getCommandMap();
-            commandMap.registerAll(plugin.getDescription().getName(), pluginCommands);
-        }
-
-        // Call the onEnable method.
-        try {
-            plugin.onEnable();
-        }
-        catch (Throwable ex) {
-            pluginClassLoaders.remove(cloader);
-            throw new InvalidPluginException(ex, plugin);
-        }
-
-        return plugin;
+        return retval;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void disablePlugin(Plugin plugin) {
+    public void disablePlugin(Plugin plugin) throws PluginInhibitException {
         JavaPlugin jPlugin = (JavaPlugin)plugin;
         JavaPluginDescription description = (JavaPluginDescription)plugin.getDescription();
 
+        boolean inhibit = false;
         try {
-            jPlugin.onDisable();
+            inhibit = !jPlugin.onDisable();
         }
         catch (Throwable ex) {
+            // We log, but keep on unloading.
             log.log(Level.SEVERE, "Plugin " + description.getName() + " threw an exception while disabling.", ex);
+        }
+        if (inhibit) {
+            throw new PluginInhibitException(plugin);
         }
 
         pluginClassLoaders.remove(description.getClassLoader());

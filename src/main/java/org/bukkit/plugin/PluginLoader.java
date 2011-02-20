@@ -53,8 +53,9 @@ public interface PluginLoader {
      * @param description The plugin description object identifying the plugin
      * @return The plugin that was loaded
      * @throws InvalidPluginException Thrown when the specified file is not a plugin
+     * @throws PluginInhibitException Thrown by the plugin to cancel enabling
      */
-    public Plugin enablePlugin(PluginDescription description) throws InvalidPluginException;
+    public Plugin enablePlugin(PluginDescription description) throws InvalidPluginException, PluginInhibitException;
 
     /**
      * Called by PluginManager to disable a plugin
@@ -70,6 +71,7 @@ public interface PluginLoader {
      * instead.
      *
      * @param plugin The plugin to unload
+     * @throws PluginInhibitException Thrown by the plugin to cancel disabling
      */
-    public void disablePlugin(Plugin plugin);
+    public void disablePlugin(Plugin plugin) throws PluginInhibitException;
 }
