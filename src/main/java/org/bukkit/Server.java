@@ -1,6 +1,8 @@
 
 package org.bukkit;
 
+import org.bukkit.entity.CreatureType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.logging.Logger;
@@ -121,4 +123,12 @@ public interface Server {
      * @return Logger associated with this server
      */
     public Logger getLogger();
+    
+    /**
+     * Spawn a creature at the specified location (and world)
+     * 
+     * @param location The location to spawn the creature, and the world to spawn it with
+     * @param creatureType The type of creature to spawn
+     */
+    public LivingEntity spawn(Location location, CreatureType creatureType);
 }
