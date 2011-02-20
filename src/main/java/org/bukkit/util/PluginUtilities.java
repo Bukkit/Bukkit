@@ -11,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.Persistence;
 import org.bukkit.persistence.dao.CommandSenderData;
 import org.bukkit.persistence.dao.Message;
 import org.bukkit.persistence.dao.PermissionType;
@@ -20,8 +21,6 @@ import org.bukkit.persistence.dao.PluginData;
 import org.bukkit.persistence.dao.WorldData;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
-
-import com.elmakers.mine.craftbukkit.persistence.Persistence;
 
 /** 
  * An interface for displaying data-driven messages and processing data-driven commands.
@@ -419,5 +418,5 @@ public class PluginUtilities
 	private Plugin owner;
 	private PluginData plugin;
 	private CommandSenderData playerSender;
-	private static final Logger log = Persistence.getLogger();
+	private static final Logger log = Logger.getLogger(PluginUtilities.class.getName());
 }

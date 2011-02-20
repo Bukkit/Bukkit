@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.persistence.Persistence;
 import org.bukkit.persistence.annotation.PersistClass;
 import org.bukkit.persistence.annotation.PersistField;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-import com.elmakers.mine.craftbukkit.persistence.Persistence;
 /**
  * A class to encapsulate data for a plugin.
  * 
@@ -33,6 +33,7 @@ public class PluginData
 	
 	public void update(Plugin plugin)
 	{
+		this.plugin = plugin;
 		PluginDescriptionFile pdfFile = plugin.getDescription();
 		id = pdfFile.getName();
 		version = pdfFile.getVersion();
@@ -70,6 +71,8 @@ public class PluginData
 	
 	public Message getMessage(String messageId, String defaultValue)
 	{
+		if (plugin == null) return null;
+		
 		// First, look up existing message
 		Message message = messageMap.get(messageId);
 		if (message != null) return message;
@@ -79,7 +82,7 @@ public class PluginData
 		messageMap.put(messageId, message);
 		messages.add(message);
 		
-		Persistence persistence = Persistence.getInstance();
+		Persistence persistence = plugin.getServer().getPersistence();
 		persistence.put(message);
 		
 		return message;
@@ -87,6 +90,8 @@ public class PluginData
 	
 	public PluginCommand getCommand(String commandName, String defaultTooltip, String defaultUsage, CommandSenderData sender, String pNode, PermissionType pType)
 	{
+		if (plugin == null) return null;
+		
 		// First, look for a root command by this name-
 		// command map only holds root commands!
 		PluginCommand command = commandMap.get(commandName);
@@ -110,7 +115,7 @@ public class PluginData
 			command.addSender(sender);
 		}
 
-		Persistence persistence = Persistence.getInstance();
+		Persistence persistence = plugin.getServer().getPersistence();
 		persistence.put(command);
 		commandMap.put(commandName, command);
 		commands.add(command);
@@ -173,6 +178,11 @@ public class PluginData
 		this.id = id;
 	}
 	
+	public Plugin getPlugin()
+	{
+		return plugin;
+	}
+	
 	
 	// Transient accessors for cache map
 	public List<PluginCommand> getCommands()
@@ -196,4 +206,7 @@ public class PluginData
 	protected HashMap<String, PluginCommand> commandMap = new HashMap<String, PluginCommand>();
 	protected List<PluginCommand>	commands = new ArrayList<PluginCommand>();
 	protected List<Message>			messages = new ArrayList<Message>();
+	
+	// Transient
+	protected Plugin			plugin = null;
 }

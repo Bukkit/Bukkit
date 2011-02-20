@@ -7,10 +7,9 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permission.Security;
+import org.bukkit.persistence.Persistence;
 import org.bukkit.persistence.annotation.PersistClass;
 import org.bukkit.persistence.annotation.PersistField;
-
-import com.elmakers.mine.craftbukkit.persistence.Persistence;
 
 /**
  * A data class for encapsulating and storing a Command object.
@@ -140,6 +139,8 @@ public class PluginCommand implements Comparable<PluginCommand>
 	 */
 	public PluginCommand getSubCommand(String subCommandName, String defaultTooltip, String defaultUsage, String pNode, PermissionType pType)
 	{
+		if (plugin == null || plugin.getPlugin() == null) return null;
+		
 		PluginCommand child = childMap.get(subCommandName);
 		if (child == null)
 		{
@@ -159,7 +160,7 @@ public class PluginCommand implements Comparable<PluginCommand>
 			// adds senders
 			addSubCommand(child);	
 			
-			Persistence persistence = Persistence.getInstance();
+			Persistence persistence = plugin.getPlugin().getServer().getPersistence();
 			persistence.put(child);
 			persistence.put(this);
 		}

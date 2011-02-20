@@ -2,6 +2,8 @@ package org.bukkit.persistence;
 
 import java.util.List;
 
+import org.bukkit.persistence.data.DataStore;
+
 public interface Persistence
 {
 	/**
@@ -77,4 +79,16 @@ public interface Persistence
 	 * @return false if, for some reason, the storage failed.
 	 */
 	public boolean put(Object persist);
+	
+	/**
+	 * Retrieve or create the persistence store for a particular schema.
+	 * 
+	 * Each schema gets its own persistent connection and database schema.
+	 * 
+	 * This is an internal function that doesn't necessarily need to be called.
+	 * 
+	 * @param schema The schema name to retrieve
+	 * @return The data store for the given schema
+	 */
+	public DataStore getStore(String schema);
 }

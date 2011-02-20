@@ -1,5 +1,7 @@
 package org.bukkit.persistence.dao;
 
+import java.util.logging.Logger;
+
 import org.bukkit.persistence.annotation.PersistClass;
 import org.bukkit.persistence.annotation.PersistField;
 
@@ -42,7 +44,7 @@ public class CommandSenderData
 		}
 		catch (ClassNotFoundException e)
 		{
-			Persistence.getLogger().severe("Persistence: CommandSender type " + className + " unknown.");
+			Logger.getLogger("Persistence").severe("Persistence: CommandSender type " + className + " unknown.");
 			senderType = null;
 		}
 		return senderType;
