@@ -14,11 +14,12 @@ public interface DataRow
 	public DataField get(String columnName);
 	
 	/**
-	 * Retrieve all of the fields in this row.
+	 * Fills a list of DataFields- you must create the list first.
 	 * 
-	 * @return The internal list of fields
+	 * @param fields the list of fields to populate
+	 * @return How many items were added to the list
 	 */
-	public List<DataField> getFields();
+	public <T extends DataField> int getFields(List<T> fields);
 	
 	/**
 	 * Add a new field to this row.

@@ -6,8 +6,6 @@ public interface DataTable
 {
 	public String getName();
 	
-	public List<DataRow> getRows();
-	
 	public void addRow(DataRow row);
 	
 	public DataRow getHeader();
@@ -19,4 +17,13 @@ public interface DataTable
 	public void addIdFieldName(String idFieldName);
 	
 	public void createHeader();
+	
+	/**
+	 * Fills a list of DataRows- you must create the list first.
+	 * 
+	 * @param rows the list of rows to populate
+	 * @return How many items were added to the list
+	 */
+	public <T extends DataRow> int getRows(List<T> rows);
+	
 }
