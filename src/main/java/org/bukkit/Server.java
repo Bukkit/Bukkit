@@ -4,6 +4,7 @@ package org.bukkit;
 import org.bukkit.entity.Player;
 import java.util.List;
 
+import org.bukkit.permission.Security;
 import org.bukkit.persistence.Persistence;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -87,10 +88,16 @@ public interface Server {
     /**
      * Gets the persistence engine for saving and loading objects
      *
-     * @return Persistence for this Server instance
+     * @return An instance of Persistence for this Server instance
      */
     public Persistence getPersistence();
 
+    /**
+     * Gets the security engine for player permissions
+     *
+     * @return A Security instance for this server
+     */
+    public Security getSecurity();
     
     /**
      * Gets a list of all worlds on this server
