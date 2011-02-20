@@ -197,10 +197,6 @@ public final class JavaPluginLoader implements PluginLoader {
      * {@inheritDoc}
      */
     public void disablePlugin(Plugin plugin) {
-        if (!(plugin instanceof JavaPlugin)) {
-            throw new IllegalArgumentException("Plugin is not associated with this PluginLoader");
-        }
-
         JavaPlugin jPlugin = (JavaPlugin)plugin;
         JavaPluginDescription description = (JavaPluginDescription)plugin.getDescription();
 
