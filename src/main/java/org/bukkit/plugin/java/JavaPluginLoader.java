@@ -144,12 +144,20 @@ public final class JavaPluginLoader implements PluginLoader {
         JavaPluginDescription description = (JavaPluginDescription)abstractDescription;
         JavaPlugin plugin = null;
 
+        // The reflection voodoo, where we find the class and constructor.
         PluginClassLoader cloader = description.getClassLoader();
-        pluginClassLoaders.add(cloader);
+        Class<? extends JavaPlugin> pluginClass;
         try {
             Class<?> jarClass = Class.forName(description.getMain(), true, cloader);
-            Class<? extends JavaPlugin> pluginClass = jarClass.asSubclass(JavaPlugin.class);
+            pluginClass = jarClass.asSubclass(JavaPlugin.class);
+        }
+        catch (ClassNotFoundException ex) {
+            throw new InvalidPluginException(ex);
+        }
 
+        // Instantiate the plugin.
+        pluginClassLoaders.add(cloader);
+        try {
             try {
                 Constructor<? extends JavaPlugin> constructor = pluginClass.getConstructor(Server.class, JavaPluginDescription.class);
                 plugin = constructor.newInstance(server, description);
@@ -157,20 +165,31 @@ public final class JavaPluginLoader implements PluginLoader {
                 Constructor<? extends JavaPlugin> constructor = pluginClass.getConstructor();
                 plugin = constructor.newInstance();
             }
-
-            plugin.initialize(server, description);
-        } catch (Throwable ex) {
+        }
+        catch (Throwable ex) {
             pluginClassLoaders.remove(cloader);
-            throw new InvalidPluginException(ex);
+            throw new InvalidPluginException(ex, plugin);
         }
 
+        // Set up private fields.
+        plugin.initialize(server, description);
+
+        // Install commands from plugin.yml.
         List<Command> pluginCommands = description.buildCommands(plugin);
         if (!pluginCommands.isEmpty()) {
             final CommandMap commandMap = server.getPluginManager().getCommandMap();
             commandMap.registerAll(plugin.getDescription().getName(), pluginCommands);
         }
 
-        plugin.onEnable();
+        // Call the onEnable method.
+        try {
+            plugin.onEnable();
+        }
+        catch (Throwable ex) {
+            pluginClassLoaders.remove(cloader);
+            throw new InvalidPluginException(ex, plugin);
+        }
+
         return plugin;
     }
 
@@ -184,9 +203,15 @@ public final class JavaPluginLoader implements PluginLoader {
 
         JavaPlugin jPlugin = (JavaPlugin)plugin;
         JavaPluginDescription description = (JavaPluginDescription)plugin.getDescription();
+
+        try {
+            jPlugin.onDisable();
+        }
+        catch (Throwable ex) {
+            log.log(Level.SEVERE, "Plugin " + description.getName() + " threw an exception while disabling.", ex);
+        }
+
         pluginClassLoaders.remove(description.getClassLoader());
         description.clearClassLoader();
-
-        jPlugin.onDisable();
     }
 }

@@ -147,9 +147,9 @@ public final class SimplePluginManager implements PluginManager {
     private final EnablerVisitor enablerVisitor = new EnablerVisitor();
 
     /**
-     * Helper used to log errors while enabling plugins.
+     * Helper used to deal with errors while enabling plugins.
      */
-    private void logEnablePluginError(final PluginDescription description, final GraphIterationAborted ex) {
+    private void handleEnablePluginError(final PluginDescription description, final GraphIterationAborted ex) {
         if (ex instanceof CircularDependencyException) {
             server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + " because of circular dependencies.");
         }
@@ -159,6 +159,13 @@ public final class SimplePluginManager implements PluginManager {
         else {
             Throwable inner = ex.getCause();
             server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + inner.getMessage(), inner);
+
+            if (inner instanceof InvalidPluginException) {
+                Plugin instance = ((InvalidPluginException)inner).getPlugin();
+                if (instance != null) {
+                    releasePluginResources(description.getName(), instance);
+                }
+            }
         }
     }
 
@@ -173,26 +180,10 @@ public final class SimplePluginManager implements PluginManager {
         }
 
         try {
-            return (Plugin)pluginDescriptions.walkDependencies(description, new PluginDependencyGraph.Visitor() {
-                public Plugin visit(PluginDescription description) throws Exception {
-                    Plugin plugin = plugins.get(description.getName());
-                    if (plugin == null) {
-                        PluginLoader loader = description.getLoader();
-                        plugin = loader.enablePlugin(description);
-
-                        plugins.put(description.getName(), plugin);
-                        callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
-                    }
-                    return plugin;
-                }
-            });
-        } catch (CircularDependencyException ex) {
-            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + " because of circular dependencies.");
-        } catch (MissingDependencyException ex) {
-            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + ex.getMessage());
-        } catch (GraphIterationAborted ex) {
-            Throwable inner = ex.getCause();
-            server.getLogger().log(Level.SEVERE, "Could not load " + description.getName() + ": " + inner.getMessage(), inner);
+            return (Plugin)pluginDescriptions.walkDependencies(description, enablerVisitor);
+        }
+        catch (GraphIterationAborted ex) {
+            handleEnablePluginError(description, ex);
         }
         return null;
     }
@@ -235,7 +226,7 @@ public final class SimplePluginManager implements PluginManager {
 
         // Spit out everything.
         for (Map.Entry<PluginDescription, GraphIterationAborted> entry : problems.entrySet()) {
-            logEnablePluginError(entry.getKey(), entry.getValue());
+            handleEnablePluginError(entry.getKey(), entry.getValue());
         }
     }
 
@@ -247,13 +238,8 @@ public final class SimplePluginManager implements PluginManager {
             Plugin plugin = plugins.get(description.getName());
             if (plugin != null) {
                 callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
-
                 description.getLoader().disablePlugin(plugin);
-                plugins.remove(description.getName());
-                clearEvents(plugin);
-                clearLoaders(plugin);
-                commandMap.clearCommands(plugin);
-                server.getScheduler().cancelTasks(plugin);
+                releasePluginResources(description.getName(), plugin);
             }
             return null;
         }
@@ -291,6 +277,26 @@ public final class SimplePluginManager implements PluginManager {
             Plugin plugin = plugins.values().iterator().next();
             disablePlugin(plugin);
         }
+    }
+
+    /**
+     * Release any resources associated with a plugin.
+     *
+     * This method is a helper used to clean up events, loaders, commands and
+     * scheduled tasks associated with the given plugin.
+     *
+     * We're careful not to access any Plugin fields here, because this may
+     * be called as a result of a half-loaded exception-throwing plugin.
+     *
+     * @param name The name of the plugin
+     * @param plugin The plugin instance
+     */
+    private void releasePluginResources(String name, Plugin plugin) {
+        plugins.remove(name);
+        clearEvents(plugin);
+        clearLoaders(plugin);
+        commandMap.clearCommands(plugin);
+        server.getScheduler().cancelTasks(plugin);
     }
 
     /**
