@@ -60,7 +60,7 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
      *
      * @return A CreatureType value detailing the type of creature being spawned
      */
-    public CreatureType getMobType() {
+    public CreatureType getCreatureType() {
         return creatureType;
     }
 }
