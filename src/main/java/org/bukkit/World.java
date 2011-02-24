@@ -3,9 +3,18 @@ package org.bukkit;
 
 import java.util.List;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import org.bukkit.entity.Creature;
+import org.bukkit.entity.CreatureType;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.PoweredMinecart;
+import org.bukkit.entity.Minecart;
+import org.bukkit.entity.StorageMinecart;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Boat;
 
 /**
  * Represents a world, which may contain entities, chunks and blocks
@@ -207,7 +216,7 @@ public interface World {
      * @param item ItemStack to drop
      * @return ItemDrop entity created as a result of this method
      */
-    public ItemDrop dropItem(Location location, ItemStack item);
+    public Item dropItem(Location location, ItemStack item);
 
     /**
      * Drops an item at the specified {@link Location} with a random offset
@@ -216,7 +225,7 @@ public interface World {
      * @param item ItemStack to drop
      * @return ItemDrop entity created as a result of this method
      */
-    public ItemDrop dropItemNaturally(Location location, ItemStack item);
+    public Item dropItemNaturally(Location location, ItemStack item);
 
     /**
      * Creates an {@link Arrow} entity at the given {@link Location}
@@ -302,13 +311,6 @@ public interface World {
      * @return A List of all LivingEntities currently residing in this world
      */
     public List<LivingEntity> getLivingEntities();
-
-    /**
-     * Get a list of all players in this World
-     *
-     * @return A list of all Players currently residing in this world
-     */
-     public List<Player> getPlayers();
 
     /**
      * Gets the unique name of this world
