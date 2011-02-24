@@ -6,6 +6,19 @@ package org.bukkit.entity;
  * @author sk89q
  */
 public interface Boat extends Vehicle {
+      /**
+     * Sets a boat's damage.
+     *
+     * @param damage over 40 to "kill" a boat
+     */
+    public void setDamage(int damage);
+
+    /**
+     * Gets a boat's damage.
+     *
+     * @param damage
+     */
+    public int getDamage();
     /**
      * Gets the maximum speed of a boat. The speed is unrelated to the velocity.
      *
