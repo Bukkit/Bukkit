@@ -18,6 +18,9 @@ import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.painting.PaintingCreateEvent;
+import org.bukkit.event.painting.PaintingPlaceEvent;
+import org.bukkit.event.painting.PaintingRemoveEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.*;
 import org.bukkit.event.vehicle.*;
@@ -320,6 +323,19 @@ public final class JavaPluginLoader implements PluginLoader {
         case WORLD_LOADED:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
                     ((WorldListener)listener).onWorldLoaded( (WorldEvent)event );
+                }
+            };
+
+        // Painting Events
+        case PAINTING_CREATE:
+            return new EventExecutor() { public void execute(Listener listener, Event event) {
+                    ((EntityListener)listener).onPaintingCreate((PaintingCreateEvent) event);
+                }
+            };
+
+        case PAINTING_REMOVE:
+            return new EventExecutor() { public void execute(Listener listener, Event event) {
+                    ((EntityListener)listener).onPaintingRemove((PaintingRemoveEvent) event);
                 }
             };
 

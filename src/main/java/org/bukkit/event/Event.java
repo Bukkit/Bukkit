@@ -96,6 +96,11 @@ public abstract class Event {
         BLOCK,
 
         /**
+         * Represents Entity-based events
+         */
+        ENTITY,
+
+        /**
          * Represents LivingEntity-based events
          */
         LIVING_ENTITY,
@@ -477,6 +482,24 @@ public abstract class Event {
          * Called when a World is loaded
          */
         WORLD_LOADED (Category.WORLD),
+
+        /**
+         * ENTITY EVENTS
+         */
+
+        /**
+         * Called when a painting is placed by player
+         *
+         * @see org.bukkit.event.painting.PaintingCreateEvent
+         */
+        PAINTING_CREATE (Category.ENTITY),
+
+        /**
+         * Called when a painting is removed
+         *
+         * @see org.bukkit.event.painting.PaintingRemoveEvent
+         */
+        PAINTING_REMOVE(Category.ENTITY),
 
         /**
          * LIVING_ENTITY EVENTS

@@ -1,6 +1,9 @@
 package org.bukkit.event.entity;
 
 import org.bukkit.event.Listener;
+import org.bukkit.event.painting.PaintingCreateEvent;
+import org.bukkit.event.painting.PaintingPlaceEvent;
+import org.bukkit.event.painting.PaintingRemoveEvent;
 
 /**
  * Handles all events fired in relation to entities
@@ -29,4 +32,11 @@ public class EntityListener implements Listener {
 
     public void onEntityTarget(EntityTargetEvent event) {
     }
+
+    public void onPaintingCreate(PaintingCreateEvent event) {
+    }
+
+    public void onPaintingRemove(PaintingRemoveEvent event) {
+    }
+
 }
