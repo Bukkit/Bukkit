@@ -1,7 +1,5 @@
 package org.bukkit.plugin.java;
 
-import java.util.ArrayList;
-
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -73,28 +71,6 @@ public abstract class JavaPlugin implements Plugin {
     private boolean initialized = false;
     private Server server = null;
     private JavaPluginDescription description = null;
-
-    /**
-     * Constructs a new Java plugin instance
-     *
-     * A plugin typically does not much more than calling super here.
-     *
-     * @param server Server instance that is running this plugin
-     * @param description Description containing metadata on this plugin
-     */
-    public JavaPlugin(Server server, JavaPluginDescription description) {
-        initialize(server, description);
-        
-        server.getLogger().warning("Using the stupidly long constructor " + description.getMain() + "(PluginLoader, Server, PluginDescriptionFile, File, File, ClassLoader) is no longer recommended. Go nag the plugin author of " + description.getName() + " to remove it! (Nothing is broken, we just like to keep code clean.)");
-
-        ArrayList<String> authors = description.getAuthors();
-        if (authors.size() > 0) {
-            server.getLogger().info("Hint! It's probably someone called '" + authors.get(0) + "'");
-        }
-    }
-
-    public JavaPlugin() {
-    }
 
     /**
      * Returns the Server instance currently running this plugin
