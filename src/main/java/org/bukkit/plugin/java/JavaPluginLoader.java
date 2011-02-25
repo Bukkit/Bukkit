@@ -183,7 +183,8 @@ public final class JavaPluginLoader implements PluginLoader {
             }
 
             // Set up private fields.
-            plugin.initialize(server, description);
+            plugin.server = server;
+            plugin.description = description;
 
             // Install commands from plugin.yml.
             List<Command> pluginCommands = description.buildCommands(plugin);

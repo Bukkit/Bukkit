@@ -68,9 +68,8 @@ import org.bukkit.plugin.PluginDescription;
  * Represents a Java plugin
  */
 public abstract class JavaPlugin implements Plugin {
-    private boolean initialized = false;
-    private Server server = null;
-    private JavaPluginDescription description = null;
+    Server server = null;
+    JavaPluginDescription description = null;
 
     /**
      * Returns the Server instance currently running this plugin
@@ -128,37 +127,6 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     /**
-     * Initializes this plugin with the given variables.
-     *
-     * This method should never be called manually.
-     *
-     * @param loader PluginLoader that is responsible for this plugin
-     * @param server Server instance that is running this plugin
-     * @param description PluginDescriptionFile containing metadata on this plugin
-     * @param dataFolder Folder containing the plugin's data
-     * @param file File containing this plugin
-     * @param classLoader ClassLoader which holds this plugin
-     */
-    protected final void initialize(Server server, JavaPluginDescription description) {
-        if (initialized) {
-            throw new UnsupportedOperationException("Cannot reinitialize a plugin");
-        }
-
-        this.initialized = true;
-        this.server = server;
-        this.description = description;
-    }
-
-    /**
-     * Gets the initialization status of this plugin
-     *
-     * @return true if this plugin is initialized, otherwise false
-     */
-    public boolean isInitialized() {
-        return initialized;
-    }
-
-    /**
      * Register an event for the given listener.
      */
     public final void registerEvent(Event.Type type, Priority priority, Listener listener) {
@@ -184,7 +152,7 @@ public abstract class JavaPlugin implements Plugin {
     /**
      * Creates an executor for the given type and listener.
      */
-    private final EventExecutor createExecutor(Event.Type type, Listener listener) {
+    private static final EventExecutor createExecutor(Event.Type type, Listener listener) {
         // TODO: remove multiple Listener type and hence casts
         switch (type) {
         // Player Events
