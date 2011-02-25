@@ -65,17 +65,23 @@ public final class SimpleCommandMap implements CommandMap {
      * {@inheritDoc}
      */
     public boolean dispatch(CommandSender sender, String commandLine) {
-        String[] args = commandLine.split(" ");
-        String sentCommandLabel = args[0].toLowerCase();
-
-        args = Arrays.copyOfRange(args, 1, args.length);
-
+    	int delimiter = commandLine.indexOf(' ');
+    	String sentCommandLabel;
+    	String args;
+    	if (delimiter < 0) {
+    		sentCommandLabel = commandLine;
+    		args = "";
+    	} else {
+    		sentCommandLabel = commandLine.substring(0, delimiter);
+    		args = commandLine.substring(delimiter + 1);
+    	}
+    	
         Command target = knownCommands.get(sentCommandLabel);
         boolean isRegisteredCommand = (target != null);
         if (isRegisteredCommand) {
-            try {
-                target.execute(sender, sentCommandLabel, args);
-            } catch (CommandException ex) {
+        	try {
+        		target.parse(sender, sentCommandLabel, args);
+        	} catch (CommandException ex) {
                 throw ex;
             } catch (Throwable ex) {
                 throw new CommandException("Unhandled exception executing '" + commandLine + "' in " + target, ex);
