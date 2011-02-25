@@ -3,6 +3,7 @@ package org.bukkit.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
@@ -114,5 +115,25 @@ public abstract class Command {
     public Command setUsage(String usage) {
         this.usageMessage = usage;
         return this;
+    }
+
+    /**
+     * Displays the usage information.
+     *
+     * @param sender The command sender to display usage to
+     * @param label The label that was used to execute the command
+     */
+    public void displayUsage(CommandSender sender, String label) {
+        if (!usageMessage.isEmpty()) {
+            String tmpMsg = usageMessage.replace("<command>", label);
+            String[] usageLines = tmpMsg.split("\\n");
+            for(String line: usageLines) {
+                while (line.length() > 0) {
+                    int stripChars = (line.length() > 53 ? 53:line.length());
+                    sender.sendMessage(ChatColor.RED + line.substring(0, stripChars));
+                    line = line.substring(stripChars);
+                }
+            }
+        }
     }
 }
