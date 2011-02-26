@@ -400,4 +400,9 @@ public interface World {
          */
         NETHER
     }
+
+    /**
+     * Saves world to disk
+     */
+    public void save();
 }
