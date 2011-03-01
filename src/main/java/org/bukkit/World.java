@@ -52,6 +52,26 @@ public interface World {
     public int getBlockTypeIdAt(Location location);
 
     /**
+     * Gets the block meta-data at the given coordinates
+     *
+     * @param x X-coordinate of the block
+     * @param y Y-coordinate of the block
+     * @param z Z-coordinate of the block
+     * @return Meta-data of the block at the given coordinates
+     * @see #getBlockAt(org.bukkit.Location) Returns a live Block object at the given location
+     */
+    public byte getBlockMetaDataAt(int x, int y, int z);
+    
+    /**
+     * Gets the block meta-data at the given {@link Location}
+     *
+     * @param location Location of the block
+     * @return Meta-data of the block at the given location
+     * @see #getBlockAt(org.bukkit.Location) Returns a live Block object at the given location
+     */
+    public byte getBlockMetaDataAt(Location location);
+    
+    /**
      * Gets the highest non-air coordinate at the given coordinates
      *
      * @param x X-coordinate of the blocks
