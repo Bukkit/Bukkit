@@ -61,6 +61,29 @@ public interface World {
     public int getBlockTypeIdAt(Location location);
 
     /**
+     * Sets the block type ID for the block at the given coordinates
+     *
+     * @param x X-coordinate of the block
+     * @param y Y-coordinate of the block
+     * @param z Z-coordinate of the block
+     * @param id Id for the block at the given coordinates
+     * @return Returns true on success
+     */
+    public boolean setBlockTypeIdAt(int x, int y, int z, int typeId);
+
+    /**
+     * Sets the block type ID and data for the block at the given coordinates
+     *
+     * @param x X-coordinate of the block
+     * @param y Y-coordinate of the block
+     * @param z Z-coordinate of the block
+     * @param id Id for the block at the given coordinates
+     * @param data Data setting for block
+     * @return Returns true on success
+     */
+    public boolean setBlockTypeIdAndDataAt(int x, int y, int z, int typeId, int data);
+
+    /**
      * Gets the highest non-air coordinate at the given coordinates
      *
      * @param x X-coordinate of the blocks
