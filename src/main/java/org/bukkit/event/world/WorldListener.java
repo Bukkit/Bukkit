@@ -22,6 +22,14 @@ public class WorldListener implements Listener {
      */
     public void onChunkUnloaded(ChunkUnloadEvent event) {
     }
+    
+    /**
+     * Called when a chunk is generating
+     *
+     * @param event Relevant event details
+     */
+    public void onChunkGenerated(ChunkGeneratedEvent event) {
+    }
 
     /**
     * Called when a world is saved

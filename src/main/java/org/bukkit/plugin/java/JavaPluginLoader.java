@@ -21,10 +21,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.*;
 import org.bukkit.event.vehicle.*;
-import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.event.world.ChunkUnloadEvent;
-import org.bukkit.event.world.WorldEvent;
-import org.bukkit.event.world.WorldListener;
+import org.bukkit.event.world.*;
 import org.bukkit.plugin.*;
 
 /**
@@ -295,6 +292,11 @@ public final class JavaPluginLoader implements PluginLoader {
         case CHUNK_LOADED:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
                     ((WorldListener)listener).onChunkLoaded( (ChunkLoadEvent)event );
+                }
+            };
+        case CHUNK_GENERATED:
+            return new EventExecutor() { public void execute( Listener listener, Event event ) {
+                    ((WorldListener)listener).onChunkGenerated( (ChunkGeneratedEvent)event );
                 }
             };
         case CHUNK_UNLOADED:
