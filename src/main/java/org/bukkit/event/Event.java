@@ -435,7 +435,7 @@ public abstract class Event implements Serializable {
          * Called when a chunk is loaded
          *
          * If a new chunk is being generated for loading, it will call
-         * Type.CHUNK_GENERATION and then Type.CHUNK_LOADED upon completion
+         * Type.CHUNK_GENERATED and then Type.CHUNK_LOADED upon completion
          *
          * @see org.bukkit.event.world.ChunkLoadEvent
          */
@@ -453,7 +453,14 @@ public abstract class Event implements Serializable {
          *
          * @todo: add javadoc see comment
          */
-        CHUNK_GENERATION (Category.WORLD),
+        CHUNK_GENERATED (Category.WORLD),
+
+        /**
+         * Called when a chunk needs to be decorated
+         *
+         * @todo: add javadoc see comment
+         */
+        CHUNK_DECORATED (Category.WORLD),
 
         /**
          * Called when an ItemEntity spawns in the world
