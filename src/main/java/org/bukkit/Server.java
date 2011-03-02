@@ -121,4 +121,9 @@ public interface Server {
      * @return Logger associated with this server
      */
     public Logger getLogger();
+
+    /**
+     * Writes loaded players to disk
+     */
+    public void savePlayers();
 }
