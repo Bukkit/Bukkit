@@ -23,7 +23,7 @@ public final class SimpleCommandMap implements CommandMap {
     private void setDefaultCommands(final Server server) {
         register("bukkit", new VersionCommand("version", server));
         register("bukkit", new ReloadCommand("reload", server));
-        register("bukkit", new PluginsCommand("plugins",server));
+        register("bukkit", new PluginsCommand("plugins", server));
     }
 
     /**
@@ -53,14 +53,16 @@ public final class SimpleCommandMap implements CommandMap {
      * {@inheritDoc}
      */
     public boolean register(String name, String fallbackPrefix, Command command) {
-        boolean nameInUse = (knownCommands.get(name) != null);
-        if (nameInUse)
+        boolean nameInUse = (getCommand(name) != null);
+        
+        if (nameInUse) {
             name = fallbackPrefix + ":" + name;
+        }
 
-        knownCommands.put(name, command);
+        knownCommands.put(name.toLowerCase(), command);
         return !nameInUse;
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -75,8 +77,8 @@ public final class SimpleCommandMap implements CommandMap {
     		sentCommandLabel = commandLine.substring(0, delimiter);
     		args = commandLine.substring(delimiter + 1);
     	}
-    	
-        Command target = knownCommands.get(sentCommandLabel);
+
+        Command target = getCommand(sentCommandLabel);
         boolean isRegisteredCommand = (target != null);
         if (isRegisteredCommand) {
         	try {
@@ -97,13 +99,17 @@ public final class SimpleCommandMap implements CommandMap {
         }
     }
 
+    public Command getCommand(String name) {
+        return knownCommands.get(name.toLowerCase());
+    }
+
     private static class VersionCommand extends Command {
         private final Server server;
 
         public VersionCommand(String name, Server server) {
             super(name);
             this.server = server;
-            this.tooltip = "Gets the version of this server including any plugins in use";
+            this.description = "Gets the version of this server including any plugins in use";
             this.usageMessage = "/version [plugin name]";
             this.setAliases(Arrays.asList("ver", "about"));
         }
@@ -184,7 +190,7 @@ public final class SimpleCommandMap implements CommandMap {
         public ReloadCommand(String name, Server server) {
             super(name);
             this.server = server;
-            this.tooltip = "Reloads the server configuration and plugins";
+            this.description = "Reloads the server configuration and plugins";
             this.usageMessage = "/reload";
             this.setAliases(Arrays.asList("rl"));
         }
@@ -208,7 +214,7 @@ public final class SimpleCommandMap implements CommandMap {
         public PluginsCommand(String name, Server server) {
             super(name);
             this.server = server;
-            this.tooltip = "Gets a list of plugins running on the server";
+            this.description = "Gets a list of plugins running on the server";
             this.usageMessage = "/plugins";
             this.setAliases(Arrays.asList("pl"));
         }

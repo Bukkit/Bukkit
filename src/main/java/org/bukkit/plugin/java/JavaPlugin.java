@@ -2,10 +2,11 @@
 package org.bukkit.plugin.java;
 
 import java.io.File;
-import java.util.ArrayList;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
@@ -24,29 +25,6 @@ public abstract class JavaPlugin implements Plugin {
     private File dataFolder = null;
     private ClassLoader classLoader = null;
     private Configuration config = null;
-
-    /**
-     * Constructs a new Java plugin instance
-     *
-     * @param pluginLoader PluginLoader that is responsible for this plugin
-     * @param instance Server instance that is running this plugin
-     * @param desc PluginDescriptionFile containing metadata on this plugin
-     * @param folder Folder containing the plugin's data
-     * @param plugin File containing this plugin
-     * @param cLoader ClassLoader which holds this plugin
-     */
-    public JavaPlugin(PluginLoader pluginLoader, Server instance,
-            PluginDescriptionFile desc, File folder, File plugin,
-            ClassLoader cLoader) {
-        initialize(pluginLoader, instance, desc, folder, plugin, cLoader);
-        
-        server.getLogger().warning("Using the stupidly long constructor " + desc.getMain() + "(PluginLoader, Server, PluginDescriptionFile, File, File, ClassLoader) is no longer recommended. Go nag the plugin author of " + desc.getName() + " to remove it! (Nothing is broken, we just like to keep code clean.)");
-
-        ArrayList<String> authors = desc.getAuthors();
-        if (authors.size() > 0) {
-            server.getLogger().info("Hint! It's probably someone called '" + authors.get(0) + "'");
-        }
-    }
 
     public JavaPlugin() {
     }
@@ -145,13 +123,6 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     /**
-     * Called when a command registered by this plugin is received.
-     */
-    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        return false; // default implementation:  do nothing!
-    }
-
-    /**
      * Initializes this plugin with the given variables.
      *
      * This method should never be called manually.
@@ -186,5 +157,33 @@ public abstract class JavaPlugin implements Plugin {
      */
     public boolean isInitialized() {
         return initialized;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        return false;
+    }
+
+    /**
+     * Gets the command with the given name, specific to this plugin
+     *
+     * @param name Name or alias of the command
+     * @return PluginCommand if found, otherwise null
+     */
+    public PluginCommand getCommand(String name) {
+        String alias = name.toLowerCase();
+        PluginCommand command = getServer().getPluginCommand(alias);
+
+        if ((command != null) && (command.getPlugin() != this)) {
+            command = getServer().getPluginCommand(getDescription().getName().toLowerCase() + ":" + alias);
+        }
+
+        if ((command != null) && (command.getPlugin() == this)) {
+            return command;
+        } else {
+            return null;
+        }
     }
 }

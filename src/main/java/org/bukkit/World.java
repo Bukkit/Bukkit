@@ -3,18 +3,9 @@ package org.bukkit;
 
 import java.util.List;
 import org.bukkit.block.Block;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-import org.bukkit.entity.Creature;
-import org.bukkit.entity.CreatureType;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.PoweredMinecart;
-import org.bukkit.entity.Minecart;
-import org.bukkit.entity.StorageMinecart;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Boat;
 
 /**
  * Represents a world, which may contain entities, chunks and blocks
@@ -313,6 +304,13 @@ public interface World {
     public List<LivingEntity> getLivingEntities();
 
     /**
+     * Get a list of all players in this World
+     *
+     * @return A list of all Players currently residing in this world
+     */
+    public List<Player> getPlayers();
+
+    /**
      * Gets the unique name of this world
      *
      * @return Name of this world
@@ -335,6 +333,13 @@ public interface World {
      * @return The spawn location of this world
      */
     public Location getSpawnLocation();
+
+    /**
+     * Sets the spawn location of the world
+     * 
+     * @return True if it was successfully set.
+     */
+    public boolean setSpawnLocation(int x, int y, int z);
 
     /**
      * Gets the relative in-game time of this world.
@@ -400,4 +405,9 @@ public interface World {
          */
         NETHER
     }
+
+    /**
+     * Saves world to disk
+     */
+    public void save();
 }
