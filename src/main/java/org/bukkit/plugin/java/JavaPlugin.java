@@ -106,6 +106,13 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     /**
+     * Called after a plugin is loaded but before it has been enabled.
+     * When mulitple plugins are loaded, the onLoad() for all plugins is called before any onEnable() is called.
+     */
+    public void onLoad() {
+    }
+
+    /**
      * Sets the enabled state of this plugin
      *
      * @param enabled true if enabled, otherwise false
