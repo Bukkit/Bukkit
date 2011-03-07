@@ -237,7 +237,7 @@ public final class SimplePluginManager implements PluginManager {
             plugins.clear();
             lookupNames.clear();
             listeners.clear();
-	    fileAssociations.clear();
+            fileAssociations.clear();
         }
     }
 
