@@ -219,25 +219,26 @@ public final class SimplePluginManager implements PluginManager {
             plugin.getPluginLoader().enablePlugin(plugin);
             
             this.callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
-            // Calls the new enabled plugin the enable listener for each plugin previously enabled
+            // Calls the new enabled plugin the enable listener for each plugin
+            // previously enabled
             RegisteredListener listener = this.getListener(plugin, Type.PLUGIN_ENABLE);
-            
+
             for (Plugin otherPlugin : this.plugins) {
-				if (otherPlugin != plugin) {
-					listener.callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, otherPlugin));
-				}
+                if (otherPlugin != plugin) {
+                    listener.callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, otherPlugin));
+                }
             }
         }
     }
-    
+
     public RegisteredListener getListener(Plugin plugin, Type type) {
-    	SortedSet<RegisteredListener> eventListeners = this.listeners.get(Event.Type.PLUGIN_ENABLE);
+        SortedSet<RegisteredListener> eventListeners = this.listeners.get(Event.Type.PLUGIN_ENABLE);
         if (eventListeners != null) {
-        	for (RegisteredListener registeredListener : eventListeners) {
-				if (registeredListener.getPlugin() == plugin) {
-					return registeredListener;
-				}
-			}
+            for (RegisteredListener registeredListener : eventListeners) {
+                if (registeredListener.getPlugin() == plugin) {
+                    return registeredListener;
+                }
+            }
         }
         return null;
     }
