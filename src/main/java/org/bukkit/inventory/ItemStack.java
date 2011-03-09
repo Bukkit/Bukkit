@@ -1,4 +1,3 @@
-
 package org.bukkit.inventory;
 
 import org.bukkit.Material;
@@ -187,7 +186,7 @@ public class ItemStack {
             return false;
         
         ItemStack item = (ItemStack)obj;
-        return item.getAmount() == getAmount() && item.getTypeId() == getTypeId();
+        return item.getAmount() == getAmount() && item.getTypeId() == getTypeId() && item.getDurability() == getDurability();
     }
     
     @Override
