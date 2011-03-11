@@ -363,19 +363,19 @@ public final class JavaPluginLoader implements PluginLoader {
             
         case FURNACE_FUEL:
         	return new EventExecutor() { public void execute(Listener listener, Event event) {    			
-                    ((FurnaceListener)listener).onFurnanceAddFuel((FurnaceFuelEvent)event);
+                    ((FurnaceListener)listener).onFurnaceAddFuel((FurnaceFuelEvent)event);
         		}				
 			};
 			
         case FURNACE_MATERIAL_CHECK:
         	return new EventExecutor() { public void execute(Listener listener, Event event) {
-                    ((FurnaceListener)listener).onFurnanceAddRawMaterial((FurnaceMaterialEvent)event);
+                    ((FurnaceListener)listener).onFurnaceAddRawMaterial((FurnaceMaterialEvent)event);
         		}				
 			};
 				
         case FURNACE_TRANSFORMATION:
         	return new EventExecutor() { public void execute(Listener listener, Event event) {
-        			((FurnaceListener)listener).onFurnanceProduceResult((FurnaceTransformationEvent)event);
+        			((FurnaceListener)listener).onFurnaceProduceResult((FurnaceTransformationEvent)event);
     			}				
         	};
 

@@ -8,15 +8,15 @@ import org.bukkit.event.Listener;
  */
 public class FurnaceListener implements Listener {
 	
-	public void onFurnanceAddFuel(FurnaceFuelEvent event){
+	public void onFurnaceAddFuel(FurnaceFuelEvent event){
 
 	}
 	
-	public void onFurnanceProduceResult(FurnaceTransformationEvent event){
+	public void onFurnaceProduceResult(FurnaceTransformationEvent event){
 		
 	}
 	
-	public void onFurnanceAddRawMaterial(FurnaceMaterialEvent event){
+	public void onFurnaceAddRawMaterial(FurnaceMaterialEvent event){
 		
 	}
 	
