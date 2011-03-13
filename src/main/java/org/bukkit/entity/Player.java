@@ -99,4 +99,20 @@ public interface Player extends HumanEntity, CommandSender {
      * @deprecated This method should not be relied upon as it is a temporary work-around for a larger, more complicated issue.
      */
     public void updateInventory();
+
+    /**
+     * Gets whether another entity is invisible to just this player
+     *
+     * @param entity The other entity
+     * @return Whether the other entity is invisible
+     */
+    public boolean isEntityInvisible(Entity entity);
+
+    /**
+     * Sets whether another entity is invisible to just this player
+     *
+     * @param entity The other entity
+     * @param visible Whether the other entity is invisible
+     */
+    public void setEntityInvisible(Entity entity, boolean visible);
 }

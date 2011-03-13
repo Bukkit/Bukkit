@@ -109,4 +109,18 @@ public interface Entity {
      * @return Server instance running this Entity
      */
     public Server getServer();
+
+    /**
+     * Gets whether this entity is invisible
+     *
+     * @return Whether this entity is invisible
+     */
+    public boolean isInvisible();
+
+    /**
+     * Sets whether this entity is invisible
+     *
+     * @param invisible Whether this entity is invisible
+     */
+    public void setInvisible(boolean visible);
 }
