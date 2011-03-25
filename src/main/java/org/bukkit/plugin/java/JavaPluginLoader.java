@@ -39,7 +39,7 @@ public final class JavaPluginLoader implements PluginLoader {
             Pattern.compile("\\.jar$"),
     };
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
-    private final Map<String, File> files = new HashMap<String, File>();
+    private final Map<String, PluginClassLoader> loaders = new HashMap<String, PluginClassLoader>();
 
     public JavaPluginLoader(Server instance) {
         server = instance;
@@ -81,27 +81,21 @@ public final class JavaPluginLoader implements PluginLoader {
              throw new InvalidPluginException(ex);
         }
 
-        ArrayList<File> dependFiles = new ArrayList<File>();
-
         for(String pluginName : depend) {
-            if(files == null) {
+            if(loaders == null) {
                 throw new UnknownDependencyException(pluginName);
             }
-            File current = files.get(pluginName);
+            PluginClassLoader current = loaders.get(pluginName);
             if(current == null) {
                 throw new UnknownDependencyException(pluginName);
             }
-            dependFiles.add(current);
         }
 
+        PluginClassLoader loader = null;
         try {
-            URL[] urls = new URL[dependFiles.size() + 1];
+            URL[] urls = new URL[1];
             urls[0] = file.toURI().toURL();
-            int cnt = 1;
-            for(File f : dependFiles) {
-                urls[cnt++] = f.toURI().toURL();
-            }
-            ClassLoader loader = new PluginClassLoader(this, urls, getClass().getClassLoader());
+            loader = new PluginClassLoader(this, urls, getClass().getClassLoader());
             Class<?> jarClass = Class.forName(description.getMain(), true, loader);
             Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
 
@@ -113,7 +107,7 @@ public final class JavaPluginLoader implements PluginLoader {
             throw new InvalidPluginException(ex);
         }
 
-        files.put(description.getName(), file);
+        loaders.put(description.getName(), (PluginClassLoader)loader);
 
         return (Plugin)result;
     }
@@ -143,7 +137,22 @@ public final class JavaPluginLoader implements PluginLoader {
     }
 
     public Class<?> getClassByName(final String name) {
-        return classes.get(name);
+        Class<?> cachedClass = classes.get(name);
+        if(cachedClass != null) {
+            return cachedClass;
+        } else {
+            for(String current : loaders.keySet()) {
+                PluginClassLoader loader = loaders.get(current);
+                try {
+                    cachedClass = loader.findClass(name, false);
+                } catch (ClassNotFoundException cnfe) {
+                }
+                if(cachedClass != null) {
+                    return cachedClass;
+                }
+            }
+        }
+        return null;
     }
 
     public void setClass(final String name, final Class<?> clazz) {
@@ -197,9 +206,9 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((PlayerListener)listener).onPlayerTeleport( (PlayerMoveEvent)event );
                 }
             };
-        case PLAYER_ITEM:
+        case PLAYER_INTERACT:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((PlayerListener)listener).onPlayerItem( (PlayerItemEvent)event );
+                    ((PlayerListener)listener).onPlayerInteract( (PlayerInteractEvent)event );
                 }
             };
         case PLAYER_LOGIN:
@@ -243,6 +252,18 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case PLAYER_BUCKET_EMPTY:
+            return new EventExecutor() { public void execute( Listener listener, Event event) {
+                    ((PlayerListener) listener).onPlayerBucketEmpty((PlayerBucketEmptyEvent) event);
+                }
+            };
+
+        case PLAYER_BUCKET_FILL:
+            return new EventExecutor() { public void execute( Listener listener, Event event) {
+                    ((PlayerListener) listener).onPlayerBucketFill((PlayerBucketFillEvent) event);
+                }
+            };
+
         // Block Events
         case BLOCK_PHYSICS:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
@@ -254,27 +275,17 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((BlockListener)listener).onBlockCanBuild( (BlockCanBuildEvent)event );
                 }
             };
-        case BLOCK_RIGHTCLICKED:
-            return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((BlockListener)listener).onBlockRightClick( (BlockRightClickEvent)event );
-                }
-            };
-        case BLOCK_PLACED:
+        case BLOCK_PLACE:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
                     ((BlockListener)listener).onBlockPlace( (BlockPlaceEvent)event );
                 }
             };
-        case BLOCK_DAMAGED:
+        case BLOCK_DAMAGE:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
                     ((BlockListener)listener).onBlockDamage( (BlockDamageEvent)event );
                 }
             };
-        case BLOCK_INTERACT:
-            return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((BlockListener)listener).onBlockInteract( (BlockInteractEvent)event );
-                }
-            };
-        case BLOCK_FLOW:
+        case BLOCK_FROMTO:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
                     ((BlockListener)listener).onBlockFlow( (BlockFromToEvent)event );
                 }
@@ -313,12 +324,12 @@ public final class JavaPluginLoader implements PluginLoader {
         // Server Events
         case PLUGIN_ENABLE:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((ServerListener)listener).onPluginEnabled( (PluginEvent)event );
+                    ((ServerListener)listener).onPluginEnable( (PluginEvent)event );
                 }
             };
         case PLUGIN_DISABLE:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((ServerListener)listener).onPluginDisabled( (PluginEvent)event );
+                    ((ServerListener)listener).onPluginDisable( (PluginEvent)event );
                 }
             };
 
@@ -329,29 +340,29 @@ public final class JavaPluginLoader implements PluginLoader {
             };
 
         // World Events
-        case CHUNK_LOADED:
+        case CHUNK_LOAD:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((WorldListener)listener).onChunkLoaded( (ChunkLoadEvent)event );
+                    ((WorldListener)listener).onChunkLoad( (ChunkLoadEvent)event );
                 }
             };
-        case CHUNK_UNLOADED:
+        case CHUNK_UNLOAD:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((WorldListener)listener).onChunkUnloaded( (ChunkUnloadEvent)event );
+                    ((WorldListener)listener).onChunkUnload( (ChunkUnloadEvent)event );
                 }
             };
-        case WORLD_SAVED:
+        case WORLD_SAVE:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((WorldListener)listener).onWorldSaved( (WorldEvent)event );
+                    ((WorldListener)listener).onWorldSave( (WorldEvent)event );
                 }
             };
-        case WORLD_LOADED:
+        case WORLD_LOAD:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((WorldListener)listener).onWorldLoaded( (WorldEvent)event );
+                    ((WorldListener)listener).onWorldLoad( (WorldEvent)event );
                 }
             };
 
         // Entity Events
-        case ENTITY_DAMAGED:
+        case ENTITY_DAMAGE:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
                     ((EntityListener)listener).onEntityDamage( (EntityDamageEvent)event );
                 }
@@ -371,9 +382,9 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((EntityListener)listener).onEntityExplode( (EntityExplodeEvent)event );
                 }
             };
-        case EXPLOSION_PRIMED:
+        case EXPLOSION_PRIME:
             return new EventExecutor() { public void execute( Listener listener, Event event ) {
-                    ((EntityListener)listener).onExplosionPrimed( (ExplosionPrimedEvent)event );
+                    ((EntityListener)listener).onExplosionPrime( (ExplosionPrimeEvent)event );
                 }
             };
         case ENTITY_TARGET:
@@ -448,6 +459,11 @@ public final class JavaPluginLoader implements PluginLoader {
         if (!plugin.isEnabled()) {
             JavaPlugin jPlugin = (JavaPlugin)plugin;
 
+            String pluginName = jPlugin.getDescription().getName();
+            if(!loaders.containsKey(pluginName)) {
+                loaders.put(pluginName, (PluginClassLoader)jPlugin.getClassLoader());
+            }
+
             jPlugin.setEnabled(true);
             server.getPluginManager().callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
         }
@@ -466,7 +482,7 @@ public final class JavaPluginLoader implements PluginLoader {
 
             server.getPluginManager().callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
 
-            files.remove(jPlugin.getDescription().getName());
+            loaders.remove(jPlugin.getDescription().getName());
 
             if (cloader instanceof PluginClassLoader) {
                 PluginClassLoader loader = (PluginClassLoader)cloader;

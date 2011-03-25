@@ -139,14 +139,14 @@ public abstract class Event implements Serializable {
          */
 
         /**
-         * Called when a player joins a server
+         * Called when a player enters the world on a server
          *
          * @see org.bukkit.event.player.PlayerEvent
          */
         PLAYER_JOIN (Category.PLAYER),
 
         /**
-         * Called when a player is attempting to join a server
+         * Called when a player is attempting to connect to the server
          *
          * @see org.bukkit.event.player.PlayerLoginEvent
          */
@@ -213,7 +213,7 @@ public abstract class Event implements Serializable {
          *
          * @see org.bukkit.event.player.PlayerItemEvent
          */
-        PLAYER_ITEM (Category.PLAYER),
+        PLAYER_INTERACT (Category.PLAYER),
 
         /**
          * Called when a player throws an egg and it might hatch
@@ -251,6 +251,20 @@ public abstract class Event implements Serializable {
         PLAYER_PICKUP_ITEM (Category.PLAYER),
 
         /**
+         * Called when a player empties a bucket
+         * 
+         * @see org.bukkit.event.player.PlayerBucketEmptyEvent
+         */
+        PLAYER_BUCKET_EMPTY(Category.PLAYER),
+
+        /**
+         * Called when a player fills a bucket
+         * 
+         * @see org.bukkit.event.player.PlayerBucketFillEvent
+         */
+        PLAYER_BUCKET_FILL(Category.PLAYER),
+
+        /**
          * BLOCK EVENTS
          */
 
@@ -259,7 +273,7 @@ public abstract class Event implements Serializable {
          *
          * @see org.bukkit.event.block.BlockDamageEvent
          */
-        BLOCK_DAMAGED (Category.BLOCK),
+        BLOCK_DAMAGE (Category.BLOCK),
 
         /**
          * Called when a block is undergoing a universe physics
@@ -277,7 +291,7 @@ public abstract class Event implements Serializable {
          *
          * @see org.bukkit.event.block.BlockFromToEvent
          */
-        BLOCK_FLOW (Category.BLOCK),
+        BLOCK_FROMTO (Category.BLOCK),
 
         /**
          * Called when a block is being set on fire from another block, such as
@@ -300,23 +314,9 @@ public abstract class Event implements Serializable {
         /**
          * Called when a player is attempting to place a block
          *
-         * @see org.bukkit.event.block.BlockRightClickEvent
-         */
-        BLOCK_RIGHTCLICKED (Category.BLOCK),
-
-        /**
-         * Called when a player is attempting to place a block
-         *
          * @see org.bukkit.event.block.BlockPlaceEvent
          */
-        BLOCK_PLACED (Category.BLOCK),
-
-        /**
-         * Called when an entity interacts with a block (lever, door, pressure plate, chest, furnace)
-         *
-         * @see org.bukkit.event.block.BlockInteractEvent
-         */
-        BLOCK_INTERACT (Category.BLOCK),
+        BLOCK_PLACE (Category.BLOCK),
 
         /**
          * Called when a block is destroyed from being burnt by fire
@@ -338,14 +338,6 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.SignChangeEvent
          */
         SIGN_CHANGE (Category.BLOCK),
-
-        /**
-         * Called when a liquid attempts to flow into a block which already
-         * contains a "breakable" block, such as redstone wire
-         *
-         * @todo: add javadoc see comment
-         */
-        LIQUID_DESTROY (Category.BLOCK),
 
         /**
          * Called when a block changes redstone current. Only triggered on blocks
@@ -439,14 +431,14 @@ public abstract class Event implements Serializable {
          *
          * @see org.bukkit.event.world.ChunkLoadEvent
          */
-        CHUNK_LOADED (Category.WORLD),
+        CHUNK_LOAD (Category.WORLD),
 
         /**
          * Called when a chunk is unloaded
          *
          * @see org.bukkit.event.world.ChunkUnloadEvent
          */
-        CHUNK_UNLOADED (Category.WORLD),
+        CHUNK_UNLOAD (Category.WORLD),
 
         /**
          * Called when a chunk needs to be generated
@@ -466,12 +458,12 @@ public abstract class Event implements Serializable {
          * Called when a world is saved
          * 
          */
-        WORLD_SAVED (Category.WORLD),
+        WORLD_SAVE (Category.WORLD),
 
         /**
          * Called when a World is loaded
          */
-        WORLD_LOADED (Category.WORLD),
+        WORLD_LOAD (Category.WORLD),
 
         /**
          * LIVING_ENTITY EVENTS
@@ -490,7 +482,7 @@ public abstract class Event implements Serializable {
          *
          * @see org.bukkit.event.entity.EntityDamageEvent
          */
-        ENTITY_DAMAGED(Category.LIVING_ENTITY),
+        ENTITY_DAMAGE (Category.LIVING_ENTITY),
 
         /**
          * Called when a LivingEntity dies
@@ -525,7 +517,7 @@ public abstract class Event implements Serializable {
          * 
          * @see org.bukkit.event.entity.EntityExplodeTriggerEvent
          */
-        EXPLOSION_PRIMED (Category.LIVING_ENTITY),
+        EXPLOSION_PRIME (Category.LIVING_ENTITY),
 
         /**
          * Called when an entity targets another entity
@@ -617,5 +609,27 @@ public abstract class Event implements Serializable {
         public Category getCategory() {
             return category;
         }
+    }
+
+    public enum Result {
+        /**
+         * Deny the event.
+         * Depending on the event, the action indicated by the event will either not take place or will be reverted.
+         * Some actions may not be denied.
+         */
+        DENY,
+
+        /**
+         * Neither deny nor allow the event.
+         * The server will proceed with its normal handling.
+         */
+        DEFAULT,
+
+        /**
+         * Allow / Force the event.
+         * The action indicated by the event will take place if possible, even if the server would not normally allow the action.
+         * Some actions may not be allowed.
+         */
+        ALLOW;
     }
 }
