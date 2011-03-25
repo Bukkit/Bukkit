@@ -10,6 +10,7 @@ public enum CreatureType {
     CREEPER("Creeper"),
     GHAST("Ghast"),
     GIANT("Giant"),
+    HUMAN("Monster"),
     PIG("Pig"),
     PIG_ZOMBIE("PigZombie"),
     SHEEP("Sheep"),
@@ -17,9 +18,7 @@ public enum CreatureType {
     SPIDER("Spider"),
     ZOMBIE("Zombie"),
     SQUID("Squid"),
-    SLIME("Slime"),
-    GIANT_ZOMBIE("GiantZombie"),
-    HUMAN("Monster");
+    SLIME("Slime");
 
     private String name;
 
