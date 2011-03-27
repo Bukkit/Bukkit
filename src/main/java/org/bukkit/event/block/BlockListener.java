@@ -101,4 +101,12 @@ public class BlockListener implements Listener {
      */
     public void onBlockBreak(BlockBreakEvent event) {
     }
+
+    /**
+     * Called when a furnace successfully smelts an item
+     *
+     * @param event Relevant event details
+     */
+    public void onFurnaceSmelt(FurnaceSmeltEvent event) {
+    }
 }

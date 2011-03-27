@@ -312,6 +312,12 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((BlockListener) listener).onLeavesDecay((LeavesDecayEvent) event);
                 }
             };
+        case FURNACE_SMELT:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onFurnaceSmelt((FurnaceSmeltEvent) event);
+                }
+            };
         case SIGN_CHANGE:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
