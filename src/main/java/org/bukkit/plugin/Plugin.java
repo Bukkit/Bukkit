@@ -57,6 +57,11 @@ public interface Plugin extends CommandExecutor {
      * Called when this plugin is disabled
      */
     public void onDisable();
+    
+    /**
+     * Called when the server shuts down
+     */
+    public void onShutdown();
 
     /**
      * Called after a plugin is loaded but before it has been enabled.
@@ -68,4 +73,9 @@ public interface Plugin extends CommandExecutor {
      * Called when this plugin is enabled
      */
     public void onEnable();
+    
+    /**
+     * Called when the server starts
+     */
+    public void onStartup();
 }

@@ -61,29 +61,33 @@ public interface PluginManager {
      * File must be valid according to the current enabled Plugin interfaces
      *
      * @param file File containing the plugin to load
+     * @param boolean Whether or not this is the shutdown of the server
      * @return The Plugin loaded, or null if it was invalid
      * @throws InvalidPluginException Thrown when the specified file is not a valid plugin
      * @throws InvalidDescriptionException Thrown when the specified file contains an invalid description
      */
-    public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException;
+    public Plugin loadPlugin(File file, boolean startup) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException;
 
     /**
      * Loads the plugins contained within the specified directory
      *
      * @param directory Directory to check for plugins
+     * @param boolean Whether or not this is the startup of the server
      * @return A list of all plugins loaded
      */
-    public Plugin[] loadPlugins(File directory);
+    public Plugin[] loadPlugins(File directory, boolean startup );
 
     /**
      * Disables all the loaded plugins
+     * @param boolean Whether or not this is the shutting down of the server
      */
-    public void disablePlugins();
+    public void disablePlugins( boolean shutdown );
 
     /**
      * Disables and removes all plugins
+     * @param boolean Whether or not this is the shutting down of the server
      */
-    public void clearPlugins();
+    public void clearPlugins( boolean shutdown );
 
     /**
      * Calls a player related event with the given details
@@ -120,8 +124,9 @@ public interface PluginManager {
      * Attempting to enable a plugin that is already enabled will have no effect
      *
      * @param plugin Plugin to enable
+     * @param boolean Whether or not this is the starting of the server
      */
-    public void enablePlugin(Plugin plugin);
+    public void enablePlugin(Plugin plugin, boolean startup);
 
     /**
      * Disables the specified plugin
@@ -129,6 +134,7 @@ public interface PluginManager {
      * Attempting to disable a plugin that is not enabled will have no effect
      *
      * @param plugin Plugin to disable
+     * @param boolean Whether or not this is the shutting down of the server
      */
-    public void disablePlugin(Plugin plugin);
+    public void disablePlugin(Plugin plugin, boolean shutdown);
 }

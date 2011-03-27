@@ -39,8 +39,11 @@ public final class JavaPluginLoader implements PluginLoader {
     public JavaPluginLoader(Server instance) {
         server = instance;
     }
-
+    
     public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException {
+	return loadPlugin( file, false );
+    }
+    public Plugin loadPlugin(File file, boolean startup) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException {
         JavaPlugin result = null;
         PluginDescriptionFile description = null;
 
@@ -495,7 +498,10 @@ public final class JavaPluginLoader implements PluginLoader {
         throw new IllegalArgumentException( "Event " + type + " is not supported" );
     }
 
-    public void enablePlugin(final Plugin plugin) {
+    public void enablePlugin(Plugin plugin) {
+	enablePlugin( plugin, false );
+    }
+    public void enablePlugin(final Plugin plugin, boolean startup) {
         if (!(plugin instanceof JavaPlugin)) {
             throw new IllegalArgumentException("Plugin is not associated with this PluginLoader");
         }
@@ -508,12 +514,15 @@ public final class JavaPluginLoader implements PluginLoader {
                 loaders.put(pluginName, (PluginClassLoader)jPlugin.getClassLoader());
             }
 
-            jPlugin.setEnabled(true);
+            jPlugin.setEnabled(true, startup);
             server.getPluginManager().callEvent(new PluginEnableEvent(plugin));
         }
     }
 
     public void disablePlugin(Plugin plugin) {
+	disablePlugin( plugin, false );
+    }
+    public void disablePlugin(Plugin plugin, boolean shutdown) {
         if (!(plugin instanceof JavaPlugin)) {
             throw new IllegalArgumentException("Plugin is not associated with this PluginLoader");
         }
@@ -522,7 +531,7 @@ public final class JavaPluginLoader implements PluginLoader {
             JavaPlugin jPlugin = (JavaPlugin)plugin;
             ClassLoader cloader = jPlugin.getClassLoader();
 
-            jPlugin.setEnabled(false);
+            jPlugin.setEnabled(false, shutdown);
 
             server.getPluginManager().callEvent(new PluginDisableEvent(plugin));
 

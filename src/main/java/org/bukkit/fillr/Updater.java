@@ -96,7 +96,7 @@ public class Updater {
         //TODO again with the implicit jar support...
         File plugin = new File(DIRECTORY, name + ".jar");
         try {
-            server.getPluginManager().loadPlugin(plugin);
+            server.getPluginManager().loadPlugin(plugin, false);
         } catch (UnknownDependencyException ex) {
             server.getLogger().log(Level.SEVERE, null, ex);
         } catch (InvalidPluginException ex) {
@@ -109,6 +109,6 @@ public class Updater {
     private void disablePlugin(FillReader update) {
         String name = update.getName();
         Plugin plugin = server.getPluginManager().getPlugin(name);
-        server.getPluginManager().disablePlugin(plugin);
+        server.getPluginManager().disablePlugin(plugin, false);
     }
 }

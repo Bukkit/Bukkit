@@ -108,15 +108,22 @@ public abstract class JavaPlugin implements Plugin {
      * Sets the enabled state of this plugin
      *
      * @param enabled true if enabled, otherwise false
+     * @param boolean Whether or not this is the startup/shutdown of the server
      */
-    protected void setEnabled(final boolean enabled) {
+    protected void setEnabled(final boolean enabled, boolean startup) {
         if (isEnabled != enabled) {
             isEnabled = enabled;
 
             if (isEnabled) {
                 onEnable();
+                if( startup ) {
+                    onStartup();
+                }
             }  else {
                 onDisable();
+                if( startup ) {
+                    onShutdown();
+                }
             }
         }
     }
@@ -188,5 +195,13 @@ public abstract class JavaPlugin implements Plugin {
 
     public void onLoad() {
         // Empty!
+    }
+    
+    public void onStartup() {
+	// Empty!
+    }
+    
+    public void onShutdown() {
+	// Empty!
     }
 }

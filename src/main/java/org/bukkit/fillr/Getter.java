@@ -39,7 +39,7 @@ public class Getter {
         //TODO again with the implicit jar support...
         File plugin = new File(DIRECTORY, name + ".jar");
         try {
-            server.getPluginManager().loadPlugin(plugin);
+            server.getPluginManager().loadPlugin(plugin, false);
         } catch (UnknownDependencyException ex) {
             server.getLogger().log(Level.SEVERE, null, ex);
         } catch (InvalidPluginException ex) {

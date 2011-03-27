@@ -16,11 +16,12 @@ public interface PluginLoader {
      * Loads the plugin contained in the specified file
      *
      * @param file File to attempt to load
+     * @param boolean Whether or not this is the startup of the server
      * @return Plugin that was contained in the specified file, or null if
      * unsuccessful
      * @throws InvalidPluginException Thrown when the specified file is not a plugin
      */
-    public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException;
+    public Plugin loadPlugin(File file, boolean startup) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException;
 
     /**
      * Returns a list of all filename filters expected by this PluginLoader
@@ -41,8 +42,9 @@ public interface PluginLoader {
      * Attempting to enable a plugin that is already enabled will have no effect
      *
      * @param plugin Plugin to enable
+     * @param boolean Whether or not this is the startup of the server
      */
-    public void enablePlugin(Plugin plugin);
+    public void enablePlugin(Plugin plugin, boolean startup);
 
     /**
      * Disables the specified plugin
@@ -50,6 +52,7 @@ public interface PluginLoader {
      * Attempting to disable a plugin that is not enabled will have no effect
      *
      * @param plugin Plugin to disable
+     * @param boolean Whether or not this is the shutdown of the server
      */
-    public void disablePlugin(Plugin plugin);
+    public void disablePlugin(Plugin plugin, boolean shutdown);
 }

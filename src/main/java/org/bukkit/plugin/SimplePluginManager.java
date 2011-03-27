@@ -86,7 +86,7 @@ public final class SimplePluginManager implements PluginManager {
      * @param directory Directory to check for plugins
      * @return A list of all plugins loaded
      */
-    public Plugin[] loadPlugins(File directory) {
+    public Plugin[] loadPlugins(File directory, boolean startup) {
         List<Plugin> result = new ArrayList<Plugin>();
         File[] files = directory.listFiles();
 
@@ -103,7 +103,7 @@ public final class SimplePluginManager implements PluginManager {
                 Plugin plugin = null;
 
                 try {
-                    plugin = loadPlugin(file);
+                    plugin = loadPlugin(file, startup);
                     itr.remove();
                 } catch (UnknownDependencyException ex) {
                     if(finalPass) {
@@ -141,11 +141,12 @@ public final class SimplePluginManager implements PluginManager {
      * File must be valid according to the current enabled Plugin interfaces
      *
      * @param file File containing the plugin to load
+     * @param boolean Whether or not this is the startup of the server
      * @return The Plugin loaded, or null if it was invalid
      * @throws InvalidPluginException Thrown when the specified file is not a valid plugin
      * @throws InvalidDescriptionException Thrown when the specified file contains an invalid description
      */
-    public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException {
+    public Plugin loadPlugin(File file, boolean startup) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException {
         Set<Pattern> filters = fileAssociations.keySet();
         Plugin result = null;
 
@@ -155,7 +156,7 @@ public final class SimplePluginManager implements PluginManager {
 
             if (match.find()) {
                 PluginLoader loader = fileAssociations.get(filter);
-                result = loader.loadPlugin(file);
+                result = loader.loadPlugin(file, startup);
             }
         }
 
@@ -165,6 +166,9 @@ public final class SimplePluginManager implements PluginManager {
         }
 
         return result;
+    }
+    public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException {
+	return loadPlugin( file, false );
     }
 
     /**
@@ -212,27 +216,39 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void enablePlugin(final Plugin plugin) {
+	enablePlugin( plugin, false );
+    }
+    public void enablePlugin(final Plugin plugin, boolean startup) {
         if (!plugin.isEnabled()) {
-            plugin.getPluginLoader().enablePlugin(plugin);
+            plugin.getPluginLoader().enablePlugin(plugin, startup);
         }
     }
 
     public void disablePlugins() {
+	disablePlugins( false );
+    }
+    public void disablePlugins( boolean shutdown ) {
         for(Plugin plugin: getPlugins()) {
-            disablePlugin(plugin);
+            disablePlugin(plugin, shutdown);
         }
     }
-
+    
     public void disablePlugin(final Plugin plugin) {
+	disablePlugin( plugin, false );
+    }
+    public void disablePlugin(final Plugin plugin, boolean shutdown ) {
         if (plugin.isEnabled()) {
-            plugin.getPluginLoader().disablePlugin(plugin);
+            plugin.getPluginLoader().disablePlugin(plugin, shutdown);
             server.getScheduler().cancelTasks(plugin);
         }
     }
 
     public void clearPlugins() {
+	clearPlugins( false );
+    }
+    public void clearPlugins( boolean shutdown ) {
         synchronized (this) {
-            disablePlugins();
+            disablePlugins( shutdown );
             plugins.clear();
             lookupNames.clear();
             listeners.clear();
