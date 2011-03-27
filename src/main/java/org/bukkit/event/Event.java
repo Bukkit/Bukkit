@@ -354,6 +354,13 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.BlockBreakEvent
          */
         BLOCK_BREAK (Category.BLOCK),
+        
+        /**
+         * Called when a block is successfully smelted (fully) in a furnace.
+         *
+         * @see org.bukkit.event.block.FurnaceSmeltEvent
+         */
+        FURNACE_SMELT (Category.BLOCK),
 
         /**
          * INVENTORY EVENTS
