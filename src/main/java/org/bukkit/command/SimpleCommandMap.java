@@ -3,8 +3,11 @@ package org.bukkit.command;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 
@@ -14,6 +17,7 @@ import static org.bukkit.util.Java15Compat.Arrays_copyOfRange;
 
 public final class SimpleCommandMap implements CommandMap {
     private final Map<String, Command> knownCommands = new HashMap<String, Command>();
+    private final Set<String> aliases = new HashSet<String>();
     private final Server server;
 
     public SimpleCommandMap(final Server server) {
@@ -41,11 +45,11 @@ public final class SimpleCommandMap implements CommandMap {
     }
 
     private void register(String fallbackPrefix, Command command) {
-        List<String> names = new ArrayList<String>();
-        names.add(command.getName());
-        names.addAll(command.getAliases());
+        register(command.getName(), fallbackPrefix, command);
+        aliases.addAll(command.getAliases());
+        aliases.remove(command.getName());
 
-        for (String name : names) {
+        for (String name : command.getAliases()) {
             register(name, fallbackPrefix, command);
         }
     }
@@ -54,14 +58,20 @@ public final class SimpleCommandMap implements CommandMap {
      * {@inheritDoc}
      */
     public boolean register(String name, String fallbackPrefix, Command command) {
-        boolean nameInUse = (getCommand(name) != null);
-        
+        boolean nameInUse = nameInUse(name);
+
         if (nameInUse) {
             name = fallbackPrefix + ":" + name;
         }
 
         knownCommands.put(name.toLowerCase(), command);
         return !nameInUse;
+    }
+
+    private boolean nameInUse(String name) {
+        if(getCommand(name) != null)
+            return !aliases.contains(name);
+        return false;
     }
     
     /**
