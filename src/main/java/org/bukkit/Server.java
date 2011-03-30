@@ -174,4 +174,11 @@ public interface Server {
      * @throws CommandException Thrown when the executor for the given command fails with an unhandled exception
      */
     public boolean dispatchCommand(CommandSender sender, String commandLine);
+    
+    /**
+     * Send a message to the Console.
+     * 
+     * @param message the message to be sent to the Console
+     */
+    public void sendConsoleMessage(String message);
 }
