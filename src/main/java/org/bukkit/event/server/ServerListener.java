@@ -30,6 +30,14 @@ public class ServerListener implements Listener {
      */
     public void onServerCommand(ServerCommandEvent event) {
     }
+    
+    /**
+     * Called when a message is sent to the terminal/console
+     *
+     * @param event Relevant event details
+     */
+    public void onInternalMessage(InternalMessageEvent event) {
+    }
 
     // Prevent compilation of old signatures TODO: Remove after 1.4
     @Deprecated public final void onPluginDisable(PluginEvent event) {}

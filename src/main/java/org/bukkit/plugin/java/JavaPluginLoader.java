@@ -362,6 +362,12 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((ServerListener) listener).onServerCommand((ServerCommandEvent) event);
                 }
             };
+        case INTERNAL_MESSAGE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((ServerListener) listener).onInternalMessage((InternalMessageEvent) event);
+                }
+            };
 
         // World Events
         case CHUNK_LOAD:
