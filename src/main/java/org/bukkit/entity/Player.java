@@ -106,4 +106,11 @@ public interface Player extends HumanEntity, CommandSender {
      * @deprecated This method should not be relied upon as it is a temporary work-around for a larger, more complicated issue.
      */
     public void updateInventory();
+    
+    /**
+     * Returns true if the teleport() method was called and has not yet completed
+     * 
+     * @return
+     */
+    public boolean isTeleporting();
 }
