@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
 /**
- * Represents the different types of coals.
+ * Represents a door.
  * @author sunkid
  */
 public class Door extends MaterialData {
