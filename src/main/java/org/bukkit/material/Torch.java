@@ -8,6 +8,10 @@ import org.bukkit.Material;
  * MaterialData for torches
  */
 public class Torch extends MaterialData implements Attachable {
+    public Torch() {
+        super(Material.TORCH);
+    }
+    
     public Torch(final int type) {
         super(type);
     }

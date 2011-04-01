@@ -3,6 +3,9 @@ package org.bukkit.material;
 import org.bukkit.Material;
 
 public class Diode extends MaterialData {
+    public Diode() {
+        super(Material.DIODE_BLOCK_ON);
+    }
 
     public Diode(int type) {
         super(type);

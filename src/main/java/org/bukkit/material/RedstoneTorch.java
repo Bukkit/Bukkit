@@ -7,6 +7,10 @@ import org.bukkit.Material;
  * Represents a redstone torch
  */
 public class RedstoneTorch extends Torch implements Redstone {
+    public RedstoneTorch() {
+        super(Material.REDSTONE_TORCH_ON);
+    }
+    
     public RedstoneTorch(final int type) {
         super(type);
     }

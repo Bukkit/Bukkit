@@ -8,6 +8,15 @@ import org.bukkit.TreeSpecies;
  * @author sunkid
  */
 public class Tree extends MaterialData {
+    public Tree() {
+        super(Material.LOG);
+    }
+    
+    public Tree(TreeSpecies species) {
+        this();
+        setSpecies(species);
+    }
+    
     public Tree(final int type) {
         super(type);
     }

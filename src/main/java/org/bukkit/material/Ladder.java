@@ -8,6 +8,10 @@ import org.bukkit.Material;
  * Represents Ladder data
  */
 public class Ladder extends MaterialData implements Attachable {
+    public Ladder() {
+        super(Material.LADDER);
+    }
+    
     public Ladder(final int type) {
         super(type);
     }

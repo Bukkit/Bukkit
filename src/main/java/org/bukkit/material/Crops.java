@@ -8,6 +8,15 @@ import org.bukkit.Material;
  * @author sunkid
  */
 public class Crops extends MaterialData {
+    public Crops() {
+        super(Material.CROPS);
+    }
+    
+    public Crops(CropState species) {
+        this();
+        setSpecies(species);
+    }
+    
     public Crops(final int type) {
         super(type);
     }

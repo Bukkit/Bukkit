@@ -14,11 +14,11 @@ public class ItemStack {
     private short durability = 0;
 
     public ItemStack(final int type) {
-        this(type, 0);
+        this(type, 1);
     }
 
     public ItemStack(final Material type) {
-        this(type, 0);
+        this(type, 1);
     }
 
     public ItemStack(final int type, final int amount) {
@@ -49,6 +49,15 @@ public class ItemStack {
 
     public ItemStack(final Material type, final int amount, final short damage, final Byte data) {
         this(type.getId(), amount, damage, data);
+    }
+    
+    public ItemStack(final Material type, final int amount, final MaterialData data) {
+        this(type.getId(), amount, data);
+    }
+    
+    public ItemStack(final int type, final int amount, final MaterialData data) {
+        this(type, amount);
+        this.setData(data);
     }
 
     /**

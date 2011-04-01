@@ -7,6 +7,10 @@ import org.bukkit.Material;
  * Represents a lever
  */
 public class Lever extends MaterialData implements Redstone, Attachable {
+    public Lever() {
+        super(Material.LEVER);
+    }
+    
     public Lever(final int type) {
         super(type);
     }

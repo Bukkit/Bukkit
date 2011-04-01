@@ -8,6 +8,15 @@ import org.bukkit.Material;
  * @author sunkid
  */
 public class Coal extends MaterialData {
+       public Coal() {
+           super(Material.COAL);
+       }
+       
+       public Coal(CoalType type) {
+           this();
+           setType(type);
+       }
+       
        public Coal(final int type) {
             super(type);
         }
@@ -38,7 +47,7 @@ public class Coal extends MaterialData {
          *
          * @param type New type of this coal
          */
-        public void setSpecies(CoalType type) {
+        public void setType(CoalType type) {
             setData(type.getData());
         }
 }

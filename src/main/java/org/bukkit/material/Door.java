@@ -8,6 +8,10 @@ import org.bukkit.block.BlockFace;
  * @author sunkid
  */
 public class Door extends MaterialData {
+       public Door() {
+           super(Material.WOODEN_DOOR);
+       }
+       
        public Door(final int type) {
             super(type);
         }

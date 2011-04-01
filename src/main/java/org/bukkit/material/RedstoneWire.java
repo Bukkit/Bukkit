@@ -7,6 +7,10 @@ import org.bukkit.Material;
  * Represents redstone wire
  */
 public class RedstoneWire extends MaterialData implements Redstone {
+    public RedstoneWire() {
+        super(Material.REDSTONE_WIRE);
+    }
+    
     public RedstoneWire(final int type) {
         super(type);
     }

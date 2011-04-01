@@ -8,6 +8,15 @@ import org.bukkit.Material;
  * Represents a Wool/Cloth block
  */
 public class Wool extends MaterialData implements Colorable {
+    public Wool() {
+        super(Material.WOOL);
+    }
+    
+    public Wool(DyeColor color) {
+        this();
+        setColor(color);
+    }
+    
     public Wool(final int type) {
         super(type);
     }

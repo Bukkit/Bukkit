@@ -7,6 +7,10 @@ import org.bukkit.Material;
  * Represents a button
  */
 public class Button extends MaterialData implements Redstone, Attachable {
+    public Button() {
+        super(Material.STONE_BUTTON);
+    }
+    
     public Button(final int type) {
         super(type);
     }

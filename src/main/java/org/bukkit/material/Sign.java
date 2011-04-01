@@ -8,6 +8,10 @@ import org.bukkit.Material;
  * MaterialData for signs
  */
 public class Sign extends MaterialData implements Attachable {
+    public Sign() {
+        super(Material.SIGN_POST);
+    }
+    
     public Sign(final int type) {
         super(type);
     }
