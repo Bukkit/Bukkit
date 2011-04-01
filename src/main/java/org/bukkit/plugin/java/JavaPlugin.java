@@ -1,7 +1,15 @@
 
 package org.bukkit.plugin.java;
 
+import com.avaje.ebean.EbeanServer;
+import com.avaje.ebean.EbeanServerFactory;
+import com.avaje.ebean.config.DataSourceConfig;
+import com.avaje.ebean.config.ServerConfig;
+import com.avaje.ebeaninternal.api.SpiEbeanServer;
+import com.avaje.ebeaninternal.server.ddl.DdlGenerator;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,6 +32,8 @@ public abstract class JavaPlugin implements Plugin {
     private File dataFolder = null;
     private ClassLoader classLoader = null;
     private Configuration config = null;
+    private boolean naggable = true;
+    private EbeanServer ebean = null;
 
     public JavaPlugin() {
     }
@@ -146,7 +156,41 @@ public abstract class JavaPlugin implements Plugin {
             this.classLoader = classLoader;
             this.config = new Configuration(new File(dataFolder, "config.yml"));
             this.config.load();
+
+            if (description.isDatabaseEnabled()) {
+                ServerConfig db = new ServerConfig();
+
+                db.setDefaultServer(false);
+                db.setRegister(false);
+                db.setClasses(getDatabaseClasses());
+                db.setName(description.getName());
+                server.configureDbConfig(db);
+
+                DataSourceConfig ds = db.getDataSourceConfig();
+                ds.setUrl(replaceDatabaseString(ds.getUrl()));
+                getDataFolder().mkdirs();
+
+                ClassLoader previous = Thread.currentThread().getContextClassLoader();
+                Thread.currentThread().setContextClassLoader(classLoader);
+                ebean = EbeanServerFactory.create(db);
+                Thread.currentThread().setContextClassLoader(previous);
+            }
         }
+    }
+
+    /**
+     * Provides a list of all classes that should be persisted in the database
+     *
+     * @return List of Classes that are Ebeans
+     */
+    public List<Class<?>> getDatabaseClasses() {
+        return new ArrayList<Class<?>>();
+    }
+
+    private String replaceDatabaseString(String input) {
+        input = input.replaceAll("\\{DIR\\}", getDataFolder().getPath().replaceAll("\\\\", "/") + "/");
+        input = input.replaceAll("\\{NAME\\}", getDescription().getName().replaceAll("[^\\w_-]", ""));
+        return input;
     }
 
     /**
@@ -188,5 +232,31 @@ public abstract class JavaPlugin implements Plugin {
 
     public void onLoad() {
         // Empty!
+    }
+
+    public final boolean isNaggable() {
+        return naggable;
+    }
+
+    public final void setNaggable(boolean canNag) {
+        this.naggable = canNag;;
+    }
+
+    public EbeanServer getDatabase() {
+        return ebean;
+    }
+
+    protected void installDDL() {
+        SpiEbeanServer serv = (SpiEbeanServer)getDatabase();
+        DdlGenerator gen = serv.getDdlGenerator();
+
+        gen.runScript(false, gen.generateCreateDdl());
+    }
+
+    protected void removeDDL() {
+        SpiEbeanServer serv = (SpiEbeanServer)getDatabase();
+        DdlGenerator gen = serv.getDdlGenerator();
+
+        gen.runScript(true, gen.generateDropDdl());
     }
 }

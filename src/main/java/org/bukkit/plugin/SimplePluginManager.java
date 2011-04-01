@@ -236,6 +236,7 @@ public final class SimplePluginManager implements PluginManager {
             plugins.clear();
             lookupNames.clear();
             listeners.clear();
+            fileAssociations.clear();
         }
     }
 
@@ -252,6 +253,22 @@ public final class SimplePluginManager implements PluginManager {
             for (RegisteredListener registration : eventListeners) {
                 try {
                     registration.callEvent( event );
+                } catch (AuthorNagException ex) {
+                    Plugin plugin = registration.getPlugin();
+                    if (plugin.isNaggable()) {
+                        plugin.setNaggable(false);
+
+                        String author = "<NoAuthorGiven>";
+                        if (plugin.getDescription().getAuthors().size() > 0) {
+                            author = plugin.getDescription().getAuthors().get(0); 
+                        }
+                        server.getLogger().log(Level.SEVERE, String.format(
+                            "Nag author: '%s' of '%s' about the following: %s",
+                            author,
+                            plugin.getDescription().getName(),
+                            ex.getMessage()
+                        ));
+                    }
                 } catch (Throwable ex) {
                     server.getLogger().log(Level.SEVERE, "Could not pass event " + event.getType() + " to " + registration.getPlugin().getDescription().getName(), ex);
                 }
