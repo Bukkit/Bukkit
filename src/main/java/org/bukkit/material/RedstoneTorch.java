@@ -32,4 +32,9 @@ public class RedstoneTorch extends Torch implements Redstone {
     public boolean isPowered() {
         return getItemType() == Material.REDSTONE_TORCH_ON;
     }
+    
+    @Override
+    public String toString() {
+        return super.toString() + " " + (isPowered() ? "" : "NOT ") + "POWERED";
+    }
 }

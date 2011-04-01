@@ -41,4 +41,9 @@ public class Tree extends MaterialData {
     public void setSpecies(TreeSpecies species) {
         setData(species.getData());
     }
+    
+    @Override
+    public String toString() {
+        return getSpecies() + " " + super.toString();
+    }
 }

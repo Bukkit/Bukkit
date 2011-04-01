@@ -55,4 +55,10 @@ public class Jukebox extends MaterialData {
             setData((byte) 0x0);
         }
     }
+    
+    @Override
+    public String toString() {
+        return super.toString() + " playing " + getPlaying();
+    }
+
 }

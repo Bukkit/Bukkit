@@ -58,4 +58,10 @@ public class Cake extends MaterialData {
         if (n > 6) n = 6;
         setData((byte) (6 - n));
     }
+    
+    @Override
+    public String toString() {
+        return super.toString() + " " + getSlicesEaten() + "/" + getSlicesRemaining() + " slices eaten/remaining";
+    }
+
 }

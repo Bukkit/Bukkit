@@ -37,8 +37,24 @@ public class Coal extends MaterialData {
          * Sets the type of this coal
          *
          * @param type New type of this coal
+         * @deprecated use {@link #setType(CoalType)} instead
          */
         public void setSpecies(CoalType type) {
-            setData(type.getData());
+            setType(type);
         }
+        
+        /**
+         * Sets the type of this coal
+         *
+         * @param type New type of this coal
+         */
+        public void setType(CoalType type) {
+            setData(type.getData());    
+        }
+
+        @Override
+        public String toString() {
+            return getType() + " " + super.toString();
+        }
+
 }

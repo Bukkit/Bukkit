@@ -63,4 +63,9 @@ public class Step extends MaterialData {
             setData((byte) 0x0);
         }
     }
+    
+    @Override
+    public String toString() {
+        return getMaterial() + " " + super.toString();
+    }
 }

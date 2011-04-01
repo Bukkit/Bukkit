@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
 /**
- * Represents the different types of coals.
+ * Represents a door.
  * @author sunkid
  */
 public class Door extends MaterialData {
@@ -54,4 +54,10 @@ public class Door extends MaterialData {
             
             return BlockFace.NORTH_EAST;
         }
+        
+        @Override
+        public String toString() {
+            return (isTopHalf() ? "TOP" : "BOTTOM") + " half of " + (isOpen() ? "an OPEN " : "a CLOSED ") + super.toString() + " with hinges " + getHingeCorner();
+        }
+
 }

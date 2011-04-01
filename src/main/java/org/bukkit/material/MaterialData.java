@@ -72,4 +72,9 @@ public class MaterialData {
     public ItemStack toItemStack() {
         return new ItemStack(type);
     }
+    
+    @Override
+    public String toString() {
+        return getItemType() + "(" + getData() + ")";
+    }
 }

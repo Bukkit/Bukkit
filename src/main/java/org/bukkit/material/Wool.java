@@ -41,4 +41,9 @@ public class Wool extends MaterialData implements Colorable {
     public void setColor(DyeColor color) {
         setData(color.getData());
     }
+    
+    @Override
+    public String toString() {
+        return getColor() + " " + super.toString();
+    }
 }

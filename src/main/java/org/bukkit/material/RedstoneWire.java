@@ -32,4 +32,9 @@ public class RedstoneWire extends MaterialData implements Redstone {
     public boolean isPowered() {
         return getData() > 0;
     }
+    
+    @Override
+    public String toString() {
+        return super.toString() + " " + (isPowered() ? "" : "NOT ") + "POWERED";
+    }
 }

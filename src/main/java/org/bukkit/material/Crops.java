@@ -28,8 +28,18 @@ public class Crops extends MaterialData {
      * Gets the current growth state of this crop
      *
      * @return CropState of this leave
+     * @deprecated use {@link #getState()} instead
      */
     public CropState getSpecies() {
+        return getState();
+    }
+    
+    /**
+     * Gets the current growth state of this crop
+     *
+     * @return CropState of this leave
+     */
+    public CropState getState() {
         return CropState.getByData(getData());
     }
 
@@ -37,8 +47,24 @@ public class Crops extends MaterialData {
      * Sets the growth state of this crop
      *
      * @param state New growth state of this crop
+     * @deprecated use {@link #setState(CropState)} instead
      */
     public void setSpecies(CropState state) {
+        setState(state);
+    }
+    
+    /**
+     * Sets the growth state of this crop
+     *
+     * @param state New growth state of this crop
+     */
+    public void setState(CropState state) {
         setData(state.getData());
     }
+    
+    @Override
+    public String toString() {
+        return getState() + " " + super.toString();
+    }
+
 }
