@@ -32,4 +32,18 @@ public interface Wolf extends Animals {
      * @param sitting true if sitting
      */
     public void setSitting(boolean sitting);
+    
+    /**
+     * Gets the owner of the wolf
+     * 
+     * @return owner the owner of the wolf null if nobody
+     */
+    public String getOwner();
+    
+    /**
+     * Sets the owner of the wolf
+     * 
+     * @param name for the owner  null if nobody
+     */
+    public void setOwner(String name);
 }
