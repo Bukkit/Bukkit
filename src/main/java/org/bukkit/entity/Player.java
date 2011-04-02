@@ -4,6 +4,7 @@ package org.bukkit.entity;
 import java.net.InetSocketAddress;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.Inventory;
 
 /**
  * Represents a player, connected or not
@@ -97,6 +98,37 @@ public interface Player extends HumanEntity, CommandSender {
      * @param sneak true if player should appear sneaking
      */
     public void setSneaking(boolean sneak);
+
+    /**
+     * Closes any dialog windows the client may have open at the time. If no windows are open, it does nothing
+     */
+    public void closeWindow();
+
+    /**
+     * Opens an inventory dialog to the player, with the given inventory displayed in the upper pane, and the player's inventory in the lower pane;
+     * 
+     * @param inventory to use in the dialog GUI
+     */
+    public void openInventoryWindow(Inventory inventory);
+
+    /**
+     * Opens an workbench dialog to the player, using the workbench at the given location
+     * 
+     * @param location of the workbench to use. Must be a valid workbench.
+     */
+    public void openWorkbenchWindow(Location location);
+    
+    /**
+     * Saves the players current location, health, inventory, motion, and other information into the username.dat file, in the world/player folder
+     */
+    public void savePlayerData();
+    
+    /**
+     * Loads the players current location, health, inventory, motion, and other information from the username.dat file, in the world/player folder
+     * 
+     * Note: This will overwrite the players current inventory, health, motion, etc, with the state from the saved dat file.
+     */
+    public void loadPlayerData();
 
     /**
      * Forces an update of the player's entire inventory.
