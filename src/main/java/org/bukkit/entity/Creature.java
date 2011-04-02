@@ -20,4 +20,13 @@ public interface Creature extends LivingEntity {
      * @return Current target of this creature, or null if none exists
      */
     public LivingEntity getTarget();
+
+    /**
+     * Sets the entity's AI.
+     *
+     * @param entityAI the entity's AI, or null for default AI
+     * @return true if the AI was set
+     */
+    public boolean setEntityAI(EntityAI entityAI);
+
 }
