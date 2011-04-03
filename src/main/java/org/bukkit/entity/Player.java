@@ -125,18 +125,6 @@ public interface Player extends HumanEntity, CommandSender {
      * @param location of the workbench to use. Must be a valid workbench.
      */
     public void openWorkbenchWindow(Location location);
-    
-    /**
-     * Saves the players current location, health, inventory, motion, and other information into the username.dat file, in the world/player folder
-     */
-    public void savePlayerData();
-    
-    /**
-     * Loads the players current location, health, inventory, motion, and other information from the username.dat file, in the world/player folder
-     * 
-     * Note: This will overwrite the players current inventory, health, motion, etc, with the state from the saved dat file.
-     */
-    public void loadPlayerData();
 
     /**
      * Forces an update of the player's entire inventory.
