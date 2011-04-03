@@ -99,6 +99,28 @@ public interface Player extends HumanEntity, CommandSender {
     public void setSneaking(boolean sneak);
 
     /**
+     * Gets the number of ticks that a player will remain in the world after logging out
+     */
+    public int getMaximumLogoutDelayTicks();
+
+    /**
+     * Sets the number of ticks that a player will remain in the world after logging out
+     * @param delay the number of ticks
+     */
+    public void setMaximumLogoutDelayTicks(int delay);
+
+    /**
+     * Gets the number of ticks remaining before the player is removed from the world, after logout. If still online will return 0.
+     */
+    public int getLogoutDelayTicks();
+
+    /**
+     * Sets the number of ticks remaining before the player is removed, after logout. This can only be set after the player goes offline.
+     * @param delay the number of ticks
+     */
+    public void setLogoutDelayTicks(int delay);
+
+    /**
      * Forces an update of the player's entire inventory.
      *
      * @return
