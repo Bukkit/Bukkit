@@ -10,10 +10,9 @@ public class ServerLoadedEvent extends Event {
     
     /**
      * Create a new server loaded event
-     * @param type The type to use
      */
-    public ServerLoadedEvent(final Type type) {
-        super(type);
+    public ServerLoadedEvent() {
+        super(Type.SERVER_LOADED);
     }
 
 }
