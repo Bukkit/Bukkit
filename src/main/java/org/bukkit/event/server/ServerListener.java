@@ -27,6 +27,13 @@ public class ServerListener implements Listener {
         onPluginDisable((PluginEvent)event);
         throw new AuthorNagException("onPluginDisable has been replaced with a new signature, (PluginDisableEvent)");
     }
+    
+    /**
+     * Called when the server is loaded
+     * @param event A copy of the event
+     */
+    public void onServerLoad(ServerLoadEvent event) {
+    }
 
     /**
      * Called when a server command is used
