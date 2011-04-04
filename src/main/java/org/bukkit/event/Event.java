@@ -418,6 +418,13 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.server.PluginEvent
          */
         SERVER_COMMAND (Category.SERVER),
+        
+        /**
+         * Called when the server is loaded
+         *
+         * @see org.bukkit.event.server.PluginEvent
+         */
+        SERVER_LOADED (Category.SERVER),
 
         /**
          * WORLD EVENTS
