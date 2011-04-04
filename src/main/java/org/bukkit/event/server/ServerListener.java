@@ -35,6 +35,13 @@ public class ServerListener implements Listener {
      */
     public void onServerCommand(ServerCommandEvent event) {
     }
+    
+    /**
+     * Called when the server is finished loading
+     * 
+     * @param event Relevant event details
+     */
+    public void onServerLoaded(ServerLoadedEvent event) { }
 
     //  TODO: Remove after RB
     @Deprecated public void onPluginDisable(PluginEvent event) {}
