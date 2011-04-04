@@ -271,7 +271,13 @@ public final class JavaPluginLoader implements PluginLoader {
         case INVENTORY_OPEN:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
-                    ((PlayerListener) listener).onInventoryOpen((PlayerInventoryEvent) event);
+                    ((PlayerListener) listener).onInventoryOpen((PlayerInventoryOpenEvent) event);
+                }
+            };
+        case INVENTORY_CLOSE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((PlayerListener) listener).onInventoryClose((PlayerInventoryCloseEvent) event);
                 }
             };
         case PLAYER_ITEM_HELD:
