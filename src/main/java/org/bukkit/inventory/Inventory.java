@@ -214,4 +214,11 @@ public interface Inventory {
      * Clear out the whole index
      */
     public void clear();
+    
+    /**
+     * Get the custom window, if any.
+     * 
+     * @return The custom window, or null if it's a built-in window
+     */
+    public CustomInventory getCustomWindow();
 }
