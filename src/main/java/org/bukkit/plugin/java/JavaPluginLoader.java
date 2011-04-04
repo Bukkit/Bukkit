@@ -406,7 +406,7 @@ public final class JavaPluginLoader implements PluginLoader {
                 public void execute(Listener listener, Event event) {
                     ((ServerListener) listener).onServerLoad((ServerLoadEvent) event);
                 }
-            }
+            };
 
         // World Events
         case CHUNK_LOAD:
