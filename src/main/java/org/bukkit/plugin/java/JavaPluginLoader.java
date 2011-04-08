@@ -72,7 +72,9 @@ public final class JavaPluginLoader implements PluginLoader {
         File oldDataFolder = getDataFolder(file);
 
         // Found old data folder
-        if (dataFolder.isDirectory() && oldDataFolder.isDirectory()) {
+        if (dataFolder.equals(oldDataFolder)) {
+            // They are equal -- nothing needs to be done!
+        } else if (dataFolder.isDirectory() && oldDataFolder.isDirectory()) {
             server.getLogger().log( Level.INFO, String.format(
                 "While loading %s (%s) found old-data folder: %s next to the new one: %s",
                 description.getName(),
@@ -316,6 +318,18 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((PlayerListener) listener).onPlayerBucketFill((PlayerBucketFillEvent) event);
                 }
             };
+        case PLAYER_BED_ENTER:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((PlayerListener) listener).onPlayerBedEnter((PlayerBedEnterEvent) event);
+                }
+            };
+        case PLAYER_BED_LEAVE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((PlayerListener) listener).onPlayerBedLeave((PlayerBedLeaveEvent) event);
+                }
+            };
 
         // Block Events
         case BLOCK_PHYSICS:
@@ -472,6 +486,12 @@ public final class JavaPluginLoader implements PluginLoader {
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
                     ((EntityListener) listener).onEntityTarget((EntityTargetEvent) event);
+                }
+            };
+        case ENTITY_INTERACT:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onEntityInteract((EntityInteractEvent) event);
                 }
             };
         case CREATURE_SPAWN:

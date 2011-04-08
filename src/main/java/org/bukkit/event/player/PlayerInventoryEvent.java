@@ -15,6 +15,10 @@ public class PlayerInventoryEvent extends PlayerEvent {
         this.inventory = inventory;
     }
 
+    public PlayerInventoryEvent(final Player player, final Inventory inventory) {
+        this(Type.PLAYER_INVENTORY, player, inventory);
+    }
+
     /**
      * Gets the Inventory involved in this event
      *

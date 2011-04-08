@@ -265,6 +265,27 @@ public abstract class Event implements Serializable {
         PLAYER_BUCKET_FILL(Category.PLAYER),
 
         /**
+         * Called when a player interacts with the inventory
+         *
+         * @see org.bukkit.event.player.PlayerInventoryEvent
+         */
+        PLAYER_INVENTORY(Category.PLAYER),
+        
+        /**
+         * Called when a player enter a bed
+         * 
+         * @see org.bukkit.event.player.PlayerBedEnterEvent
+         */
+        PLAYER_BED_ENTER(Category.PLAYER),
+        
+        /**
+         * Called when a player leaves a bed
+         * 
+         * @see org.bukkit.event.player.PlayerBedEnterEvent
+         */
+        PLAYER_BED_LEAVE(Category.PLAYER),
+        
+        /**
          * BLOCK EVENTS
          */
 
@@ -532,6 +553,14 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.entity.EntityTargetEvent
          */
         ENTITY_TARGET (Category.LIVING_ENTITY),
+        
+        /**
+         * Called when an entity interacts with a block
+         * This event specifically excludes player entities
+         * 
+         * @see org.bukkit.event.entity.EntityInteractEvent
+         */
+        ENTITY_INTERACT (Category.LIVING_ENTITY),
 
         /**
          * VEHICLE EVENTS
