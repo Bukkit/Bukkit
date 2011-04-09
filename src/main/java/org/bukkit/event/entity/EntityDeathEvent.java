@@ -24,4 +24,12 @@ public class EntityDeathEvent extends EntityEvent {
     public List<ItemStack> getDrops() {
         return drops;
     }
+    
+    /**
+     * Set the items to be dropped by the dead entity
+     * @param drops Items to be dropped
+     */
+    public void setDrops(List<ItemStack> drops) {
+        this.drops = drops;
+    }
 }
