@@ -204,7 +204,7 @@ public abstract class Event implements Serializable {
         /**
          * Called when a player toggles sneak mode
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.player.PlayerToggleSneakEvent
          */
         PLAYER_TOGGLE_SNEAK (Category.PLAYER),
 
@@ -383,35 +383,35 @@ public abstract class Event implements Serializable {
         /**
          * Called when a player opens an inventory
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.player.PlayerInventoryEvent
          */
         INVENTORY_OPEN (Category.INVENTORY),
 
         /**
          * Called when a player closes an inventory
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.player.PlayerInventoryEvent
          */
         INVENTORY_CLOSE (Category.INVENTORY),
 
         /**
          * Called when a player clicks on an inventory slot
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.player.PlayerInventoryEvent
          */
         INVENTORY_CLICK (Category.INVENTORY),
 
         /**
          * Called when an inventory slot changes values or type
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.player.PlayerInventoryEvent
          */
         INVENTORY_CHANGE (Category.INVENTORY),
 
         /**
          * Called when a player is attempting to perform an inventory transaction
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.player.PlayerInventoryEvent
          */
         INVENTORY_TRANSACTION (Category.INVENTORY),
 
@@ -501,7 +501,7 @@ public abstract class Event implements Serializable {
          * Called when a creature, either hostile or neutral, attempts to spawn
          * in the world "naturally"
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.entity.CreatureSpawnEvent
          */
         CREATURE_SPAWN (Category.LIVING_ENTITY),
 
@@ -515,21 +515,21 @@ public abstract class Event implements Serializable {
         /**
          * Called when a LivingEntity dies
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.entity.EntityDeathEvent
          */
         ENTITY_DEATH (Category.LIVING_ENTITY),
 
         /**
          * Called when a Skeleton or Zombie catch fire due to the sun
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.entity.EntityCombustEvent
          */
         ENTITY_COMBUST (Category.LIVING_ENTITY),
 
         /**
          * Called when an entity explodes, either TNT, Creeper, or Ghast Fireball
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.entity.EntityExplodeEvent
          */
         ENTITY_EXPLODE (Category.LIVING_ENTITY),
 
@@ -543,7 +543,7 @@ public abstract class Event implements Serializable {
          * For EntityCreeper, this resets the fuse but does not kill the Entity.
          * For EntityFireball and EntityTNTPrimed....?
          * 
-         * @see org.bukkit.event.entity.EntityExplodeTriggerEvent
+         * @see org.bukkit.event.entity.ExplosionPrimeEvent
          */
         EXPLOSION_PRIME (Category.LIVING_ENTITY),
 
