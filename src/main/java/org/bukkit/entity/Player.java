@@ -70,6 +70,30 @@ public interface Player extends HumanEntity, CommandSender {
      * @return
      */
     public void kickPlayer(String message);
+    
+    /**
+     * Bans player with custom ban message.
+     * 
+     * @param message The custom ban message
+     */
+    public void banPlayer(String message);
+    
+    /**
+     * Unbans the player
+     */
+    public void unbanPlayer();
+    
+    /**
+     * Bans player by IP with custom ban message.
+     * 
+     * @param message The custom ban message
+     */
+    public void banIp(String message);
+    
+    /**
+     * Unbans the player's IP
+     */
+    public void unbanIp();
 
     /**
      * Says a message (or runs a command).

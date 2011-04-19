@@ -174,6 +174,13 @@ public abstract class Event implements Serializable {
         PLAYER_KICK (Category.PLAYER),
 
         /**
+         * Called when a player gets banned a server
+         *
+         * @see org.bukkit.event.player.PlayerEvent
+         */
+        PLAYER_BAN (Category.PLAYER),
+
+        /**
          * Called when a player sends a chat message
          *
          * @see org.bukkit.event.player.PlayerChatEvent

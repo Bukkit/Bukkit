@@ -40,6 +40,14 @@ public class PlayerListener implements Listener {
     }
 
     /**
+     * Called when a player gets banned from the server
+     * 
+     * @param event Relevant event details
+     */
+    public void onPlayerBan(PlayerBanEvent event) {
+    }
+
+    /**
      * Called when a player sends a chat message
      *
      * @param event Relevant event details
