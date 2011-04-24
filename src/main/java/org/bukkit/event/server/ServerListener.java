@@ -35,6 +35,22 @@ public class ServerListener implements Listener {
      */
     public void onServerCommand(ServerCommandEvent event) {
     }
+    
+    /**
+     * Called when a player name gets banned from the server
+     * 
+     * @param event Relevant event details
+     */
+    public void onBanPlayer(BanPlayerEvent event) {
+    }
+    
+    /**
+     * Called when an IP address gets banned from the server
+     * 
+     * @param event Relevant event details
+     */
+    public void onBanIp(BanIpEvent event) {
+    }
 
     //  TODO: Remove after RB
     @Deprecated public void onPluginDisable(PluginEvent event) {}

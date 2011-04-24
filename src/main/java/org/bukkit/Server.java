@@ -101,6 +101,32 @@ public interface Server {
      * @return List of all possible players
      */
     public List<Player> matchPlayer(String name);
+    
+    /**
+     * Adds a player name to banned-players list and kicks the player, if he is
+     * online.
+     * 
+     * @param name Name of the player
+     * @param message Custom ban message
+     */
+    public void banPlayer(String name, String message);
+    
+    /**
+     * Unbans a player
+     */
+    public void unbanPlayer(String name);
+    
+    /**
+     * Bans an IP address
+     * 
+     * @param String IP address to ban
+     */
+    public void banIp(String ip);
+    
+    /**
+     * Unbans an IP address
+     */
+    public void unbanIp(String ip);
 
     /**
      * Gets the PluginManager for interfacing with plugins

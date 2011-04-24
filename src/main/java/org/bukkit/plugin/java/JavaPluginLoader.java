@@ -418,6 +418,18 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((ServerListener) listener).onServerCommand((ServerCommandEvent) event);
                 }
             };
+        case BAN_PLAYER:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((ServerListener) listener).onBanPlayer((BanPlayerEvent) event);
+                }
+            };
+        case BAN_IP:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((ServerListener) listener).onBanIp((BanIpEvent) event);
+                }
+            };
 
         // World Events
         case CHUNK_LOAD:
