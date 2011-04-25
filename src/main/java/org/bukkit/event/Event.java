@@ -446,6 +446,20 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.server.PluginEvent
          */
         SERVER_COMMAND (Category.SERVER),
+        
+        /**
+         * Called when a player name gets banned
+         * 
+         * @see org.bukkit.event.server.BanEventPlayer
+         */
+        BAN_PLAYER (Category.SERVER),
+        
+        /**
+         * Called when an IP address gets banned
+         * 
+         * @see org.bukkit.event.server.BanIpPlayer
+         */
+        BAN_IP (Category.SERVER),
 
         /**
          * WORLD EVENTS
