@@ -468,6 +468,11 @@ public interface World {
     public void setThunderDuration(int duration);
 
     /**
+     * Create an explosion.
+     */
+    public boolean createExplosion(double x, double y, double z, float power);
+    
+    /**
      * Gets the {@link Environment} type of this world
      *
      * @return This worlds Environment type
