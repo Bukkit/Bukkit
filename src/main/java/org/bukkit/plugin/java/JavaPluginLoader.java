@@ -19,11 +19,13 @@ import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
+import org.bukkit.event.painting.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.*;
 import org.bukkit.event.vehicle.*;
 import org.bukkit.event.world.*;
+import org.bukkit.event.weather.*;
 import org.bukkit.plugin.*;
 import org.yaml.snakeyaml.error.YAMLException;
 
@@ -258,6 +260,12 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((PlayerListener) listener).onPlayerLogin((PlayerLoginEvent) event);
                 }
             };
+        case PLAYER_PRELOGIN:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((PlayerListener) listener).onPlayerPreLogin((PlayerPreLoginEvent) event);
+                }
+            };
         case PLAYER_EGG_THROW:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
@@ -445,6 +453,20 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        //Painting Events
+        case PAINTING_PLACE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onPaintingPlace((PaintingPlaceEvent) event);
+                }
+            };
+        case PAINTING_BREAK:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onPaintingBreak((PaintingBreakEvent) event);
+                }
+            };
+
         // Entity Events
         case ENTITY_DAMAGE:
             return new EventExecutor() {
@@ -492,6 +514,18 @@ public final class JavaPluginLoader implements PluginLoader {
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
                     ((EntityListener) listener).onCreatureSpawn((CreatureSpawnEvent) event);
+                }
+            };
+        case PIG_ZAP:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onPigZap((PigZapEvent) event);
+                }
+            };
+        case CREEPER_POWER:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onCreeperPower((CreeperPowerEvent) event);
                 }
             };
 
@@ -547,6 +581,26 @@ public final class JavaPluginLoader implements PluginLoader {
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
                     ((VehicleListener) listener).onVehicleUpdate((VehicleUpdateEvent) event);
+                }
+            };
+
+        // Weather Events
+        case WEATHER_CHANGE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((WeatherListener) listener).onWeatherChange((WeatherChangeEvent) event);
+                }
+            };
+        case THUNDER_CHANGE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((WeatherListener) listener).onThunderChange((ThunderChangeEvent) event);
+                }
+            };
+        case LIGHTNING_STRIKE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((WeatherListener) listener).onLightningStrike((LightningStrikeEvent) event);
                 }
             };
 
