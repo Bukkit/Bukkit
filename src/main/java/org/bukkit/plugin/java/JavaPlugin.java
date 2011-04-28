@@ -239,7 +239,7 @@ public abstract class JavaPlugin implements Plugin {
     }
 
     public final void setNaggable(boolean canNag) {
-        this.naggable = canNag;;
+        this.naggable = canNag;
     }
 
     public EbeanServer getDatabase() {
