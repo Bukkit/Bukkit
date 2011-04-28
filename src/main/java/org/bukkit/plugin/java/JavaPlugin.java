@@ -187,10 +187,10 @@ public abstract class JavaPlugin implements Plugin {
         return new ArrayList<Class<?>>();
     }
 
-    private String replaceDatabaseString(String input) {
-        input = input.replaceAll("\\{DIR\\}", getDataFolder().getPath().replaceAll("\\\\", "/") + "/");
-        input = input.replaceAll("\\{NAME\\}", getDescription().getName().replaceAll("[^\\w_-]", ""));
-        return input;
+    private String replaceDatabaseString(final String input) {
+        return input.replaceAll("\\{DIR\\}",
+            getDataFolder().getPath().replaceAll("\\\\", "/") + "/").replaceAll(
+            "\\{NAME\\}", getDescription().getName().replaceAll("[^\\w_-]", ""));
     }
 
     /**
