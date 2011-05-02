@@ -392,6 +392,13 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.BlockBreakEvent
          */
         BLOCK_BREAK (Category.BLOCK),
+        
+        /**
+         * Called when world attempts to place a snow block during a snowfall
+         * 
+         * @see org.bukkit.event.block.SnowFormEvent
+         */
+        SNOW_FORM (Category.BLOCK),
 
         /**
          * INVENTORY EVENTS
