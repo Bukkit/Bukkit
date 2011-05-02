@@ -3,6 +3,7 @@ package org.bukkit.scheduler;
 import org.bukkit.plugin.Plugin;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+import java.util.List;
 
 public interface BukkitScheduler {
 
@@ -129,4 +130,21 @@ public interface BukkitScheduler {
      * @return If the task is queued to be run.
      */
     public boolean isQueued(int taskId);
+
+    /**
+     * Returns a list of all active workers.
+     *
+     * This list contains asynch tasks that are being executed by separate threads.
+     *
+     * @return Active workers
+     */
+    public List<BukkitWorker> getActiveWorkers();
+
+    /**
+     * Returns a list of all pending tasks.  The ordering of the tasks is not related to their order of execution.
+     * 
+     * @return Active workers 
+     */
+    public List<BukkitTask> getPendingTasks();
+
 }
