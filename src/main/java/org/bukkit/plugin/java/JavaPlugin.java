@@ -143,9 +143,9 @@ public abstract class JavaPlugin implements Plugin {
      * @param file File containing this plugin
      * @param classLoader ClassLoader which holds this plugin
      */
-    protected final void initialize(PluginLoader loader, Server server,
-            PluginDescriptionFile description, File dataFolder, File file,
-            ClassLoader classLoader) {
+    protected final void initialize(final PluginLoader loader, final Server server,
+            final PluginDescriptionFile description, final File dataFolder, final File file,
+            final ClassLoader classLoader) {
         if (!initialized) {
             this.initialized = true;
             this.loader = loader;
@@ -187,10 +187,10 @@ public abstract class JavaPlugin implements Plugin {
         return new ArrayList<Class<?>>();
     }
 
-    private String replaceDatabaseString(String input) {
-        input = input.replaceAll("\\{DIR\\}", getDataFolder().getPath().replaceAll("\\\\", "/") + "/");
-        input = input.replaceAll("\\{NAME\\}", getDescription().getName().replaceAll("[^\\w_-]", ""));
-        return input;
+    private String replaceDatabaseString(final String input) {
+        return input.replaceAll("\\{DIR\\}",
+            getDataFolder().getPath().replaceAll("\\\\", "/") + "/").replaceAll(
+            "\\{NAME\\}", getDescription().getName().replaceAll("[^\\w_-]", ""));
     }
 
     /**
@@ -205,7 +205,7 @@ public abstract class JavaPlugin implements Plugin {
     /**
      * {@inheritDoc}
      */
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         return false;
     }
 
@@ -215,7 +215,7 @@ public abstract class JavaPlugin implements Plugin {
      * @param name Name or alias of the command
      * @return PluginCommand if found, otherwise null
      */
-    public PluginCommand getCommand(String name) {
+    public PluginCommand getCommand(final String name) {
         String alias = name.toLowerCase();
         PluginCommand command = getServer().getPluginCommand(alias);
 
@@ -238,8 +238,8 @@ public abstract class JavaPlugin implements Plugin {
         return naggable;
     }
 
-    public final void setNaggable(boolean canNag) {
-        this.naggable = canNag;;
+    public final void setNaggable(final boolean canNag) {
+        this.naggable = canNag;
     }
 
     public EbeanServer getDatabase() {
