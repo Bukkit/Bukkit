@@ -218,7 +218,7 @@ public class Location implements Cloneable {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Location)) {
             return false;
         }
         final Location other = (Location) obj;

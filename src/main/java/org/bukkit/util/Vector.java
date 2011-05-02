@@ -522,7 +522,7 @@ public class Vector implements Cloneable {
 
         return Math.abs(x - other.x) < epsilon
                 && Math.abs(y - other.y) < epsilon
-                && Math.abs(z - other.z) < epsilon && (this.getClass().equals(obj.getClass()));
+                && Math.abs(z - other.z) < epsilon;
     }
 
     /**
