@@ -7,10 +7,19 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
+import org.yaml.snakeyaml.introspector.Property;
+import org.yaml.snakeyaml.nodes.CollectionNode;
+import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
+import org.yaml.snakeyaml.nodes.NodeTuple;
+import org.yaml.snakeyaml.nodes.SequenceNode;
+import org.yaml.snakeyaml.nodes.Tag;
 import org.yaml.snakeyaml.reader.UnicodeReader;
+import org.yaml.snakeyaml.representer.Represent;
 import org.yaml.snakeyaml.representer.Representer;
 
 /**
@@ -49,25 +58,25 @@ import org.yaml.snakeyaml.representer.Representer;
 public class Configuration extends ConfigurationNode {
     private Yaml yaml;
     private File file;
-    
+
     public Configuration(File file) {
         super(new HashMap<String, Object>());
-        
+
         DumperOptions options = new DumperOptions();
         options.setIndent(4);
         options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
 
-        yaml = new Yaml(new SafeConstructor(), new Representer(), options);
-        
+        yaml = new Yaml(new SafeConstructor(), new EmptyNullRepresenter(), options);
+
         this.file = file;
     }
-    
+
     /**
      * Loads the configuration file. All errors are thrown away.
      */
     public void load() {        
         FileInputStream stream = null;
-        
+
         try {
             stream = new FileInputStream(file);
             read(yaml.load(new UnicodeReader(stream)));
@@ -84,7 +93,7 @@ public class Configuration extends ConfigurationNode {
             }
         }
     }
-    
+
     /**
      * Saves the configuration to disk. All errors are clobbered.
      * 
@@ -92,12 +101,12 @@ public class Configuration extends ConfigurationNode {
      */
     public boolean save() {
         FileOutputStream stream = null;
-        
+
         File parent = file.getParentFile();
         if (parent != null) {
             parent.mkdirs();
         }
-        
+
         try {
             stream = new FileOutputStream(file);
             yaml.dump(root, new OutputStreamWriter(stream, "UTF-8"));
@@ -111,10 +120,10 @@ public class Configuration extends ConfigurationNode {
             } catch (IOException e) {
             }
         }
-        
+
         return false;
     }
-    
+
     @SuppressWarnings("unchecked")
     private void read(Object input) throws ConfigurationException {
         try {
@@ -127,7 +136,7 @@ public class Configuration extends ConfigurationNode {
             throw new ConfigurationException("Root document must be an key-value structure");
         }
     }
-    
+
     /**
      * This method returns an empty ConfigurationNode for using as a 
      * default in methods that select a node from a node list.
@@ -136,4 +145,49 @@ public class Configuration extends ConfigurationNode {
     public static ConfigurationNode getEmptyNode() {
         return new ConfigurationNode(new HashMap<String, Object>());
     }
+
+    
+
+}
+
+class EmptyNullRepresenter extends Representer {
+
+    public EmptyNullRepresenter()
+    {
+        super();
+        this.nullRepresenter = new EmptyRepresentNull();
+    }
+
+    protected class EmptyRepresentNull implements Represent {
+        public Node representData(Object data) {
+            return representScalar(Tag.NULL, ""); //Changed "null" to "" so as to avoid writing nulls
+        }
+    }
+
+
+    //Code borrowed from snakeyaml (http://code.google.com/p/snakeyaml/source/browse/src/test/java/org/yaml/snakeyaml/issues/issue60/SkipBeanTest.java)
+    @Override
+    protected NodeTuple representJavaBeanProperty(Object javaBean, Property property,
+            Object propertyValue, Tag customTag) {
+        NodeTuple tuple = super.representJavaBeanProperty(javaBean, property, propertyValue,
+                customTag);
+        Node valueNode = tuple.getValueNode();
+        if (valueNode instanceof CollectionNode) {
+            //Removed null check
+            if (Tag.SEQ.equals(valueNode.getTag())) {
+                SequenceNode seq = (SequenceNode) valueNode;
+                if (seq.getValue().isEmpty()) {
+                    return null;// skip empty lists
+                }
+            }
+            if (Tag.MAP.equals(valueNode.getTag())) {
+                MappingNode seq = (MappingNode) valueNode;
+                if (seq.getValue().isEmpty()) {
+                    return null;// skip empty maps
+                }
+            }
+        }
+        return tuple;
+    }
+    //End of borrowed code
 }
