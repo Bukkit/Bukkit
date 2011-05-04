@@ -24,6 +24,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Listener;
 
+import org.bukkit.util.FileUtil;
+
 /**
  * Handles all plugin management from the Server
  */
@@ -164,6 +166,20 @@ public final class SimplePluginManager implements PluginManager {
      * @throws InvalidDescriptionException Thrown when the specified file contains an invalid description
      */
     public synchronized Plugin loadPlugin(File file, boolean ignoreSoftDependencies) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException {
+         File parentDirectory = file.getParentFile();
+         File updateDirectory = null;
+         File updateFile = null;
+ 
+         if (parentDirectory != null && !(updateDirectory = new File(parentDirectory, "Update On Load")).exists()) {
+             updateDirectory.mkdirs();
+         }
+ 
+         if (updateDirectory != null && updateDirectory.isDirectory() && (updateFile = new File(updateDirectory, file.getName())).isFile()) {
+             if (FileUtil.copy(updateFile, file)) {
+                 updateFile.delete();
+             }
+        }
+
         Set<Pattern> filters = fileAssociations.keySet();
         Plugin result = null;
 
