@@ -108,6 +108,14 @@ public class BlockListener implements Listener {
      */
     public void onBlockBreak(BlockBreakEvent event) {
     }
+    
+    /**
+     * Called when the world tells a block to update.
+     *
+     * @param event Relevant event details
+     */
+    public void onBlockUpdateCall(BlockUpdateCallEvent event) {
+    }
 
     /**
      * Called when a world is attempting to place a block during a snowfall
