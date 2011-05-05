@@ -6,6 +6,7 @@ import org.bukkit.Achievement;
 import org.bukkit.Instrument;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Note;
 import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
 
@@ -141,7 +142,7 @@ public interface Player extends HumanEntity, CommandSender {
      * @param note
      * @return
      */
-    public void playNote(Location loc, Instrument instrument, byte note);
+    public void playNote(Location loc, Instrument instrument, Note note);
     
     /**
      * Send a block change. This fakes a block change packet for a user at
