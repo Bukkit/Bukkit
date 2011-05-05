@@ -1,5 +1,6 @@
 package org.bukkit.block;
 
+import org.bukkit.Instrument;
 import org.bukkit.entity.Player;
 
 /**
@@ -36,5 +37,5 @@ public interface NoteBlock extends BlockState {
      *
      * @return true if successful, otherwise false
      */
-    public boolean play(byte instrument, byte note);
+    public boolean play(Instrument instrument, byte note);
 }
