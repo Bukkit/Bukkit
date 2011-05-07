@@ -1,4 +1,3 @@
-
 package org.bukkit.plugin;
 
 import java.io.InputStream;
@@ -18,7 +17,6 @@ public final class PluginDescriptionFile {
     private String name = null;
     private String main = null;
     private ArrayList<String> depend = null;
-    private ArrayList<String> softDepend = null;
     private String version = null;
     private Object commands = null;
     private String description = null;
@@ -105,10 +103,6 @@ public final class PluginDescriptionFile {
         return depend;
     }
 
-    public Object getSoftDepend() {
-        return softDepend;
-    }
-
     /**
      * Gets the description of this plugin
      *
@@ -135,99 +129,98 @@ public final class PluginDescriptionFile {
     }
 
     private void loadMap(Map<String, Object> map) throws InvalidDescriptionException {
-        try {
-            name = map.get("name").toString();
-
-            if (!name.matches("^[A-Za-z0-9 _.-]+$")) {
+        // No need for a instanceof check, no type conversion.
+        Object tempName = map.get("name");
+            
+        if (tempName == null) {
+            throw new InvalidDescriptionException(ex, "name is not defined");
+        }
+        else {
+            name = tempName.toString();
+            else if (!tempName.matches("^[A-Za-z0-9 _.-]+$")) {
                 throw new InvalidDescriptionException("name '" + name +  "' contains invalid characters.");
             }
-        } catch (NullPointerException ex) {
-            throw new InvalidDescriptionException(ex, "name is not defined");
-        } catch (ClassCastException ex) {
-            throw new InvalidDescriptionException(ex, "name is of wrong type");
         }
+        // END get name
 
-        try {
-            version = map.get("version").toString();
-        } catch (NullPointerException ex) {
+        Object tempVer = map.get("version");
+        if (tempVer == null) {
             throw new InvalidDescriptionException(ex, "version is not defined");
-        } catch (ClassCastException ex) {
-            throw new InvalidDescriptionException(ex, "version is of wrong type");
         }
+        else {
+            version = tempVer.toString();
+        }
+        // END get version
 
-        try {
-            main = map.get("main").toString();
-            if (main.startsWith("org.bukkit.")) {
-                throw new InvalidDescriptionException("main may not be within the org.bukkit namespace");
-            }
-        } catch (NullPointerException ex) {
-            throw new InvalidDescriptionException(ex, "main is not defined");
-        } catch (ClassCastException ex) {
-            throw new InvalidDescriptionException(ex, "main is of wrong type");
+        main = map.get("main").toString();
+        if (main == null) {
+            throw new InvalidDescriptionException("main is not defined");
         }
+        if (main.startsWith("org.bukkit.")) {
+            throw new InvalidDescriptionException("main may not be within the org.bukkit namespace");
+        }
+        // END Get main
 
         if (map.containsKey("commands")) {
-            try {
-                commands = map.get("commands");
-            } catch (ClassCastException ex) {
-                throw new InvalidDescriptionException(ex, "commands are of wrong type");
-            }
+            commands = map.get("commands");
         }
 
         if (map.containsKey("depend")) {
-            try {
-                depend = (ArrayList<String>)map.get("depend");
-            } catch (ClassCastException ex) {
-                throw new InvalidDescriptionException(ex, "depend is of wrong type");
+            Object tempDepend = map.get("depend");
+            if (tempDepend instanceof ArrayList) {
+                depend = (ArrayList<String>)tempDepend;
             }
-        }
-
-        if (map.containsKey("softdepend")) {
-            try {
-                softDepend = (ArrayList<String>)map.get("softdepend");
-            } catch (ClassCastException ex) {
-                throw new InvalidDescriptionException(ex, "softdepend is of wrong type");
+            else {
+                throw new InvalidDescriptionException("depend is of wrong type");
             }
         }
 
         if (map.containsKey("database")) {
-            try {
-                database = (Boolean)map.get("database");
-            } catch (ClassCastException ex) {
-                throw new InvalidDescriptionException(ex, "database is of wrong type");
+            Object tempDatabase = map.get("database");
+            if (tempDatabase instanceof Boolean) {
+                database = (Boolean)tempDatabase;
+            }
+            else {
+                throw new InvalidDescriptionException("database is of wrong type");
             }
         }
 
         if (map.containsKey("website")) {
-            try {
-                website = (String)map.get("website");
-            } catch (ClassCastException ex) {
-                throw new InvalidDescriptionException(ex, "website is of wrong type");
+            Object tempWebsite = map.get("website");
+            if (tempWebsite instanceof String) {
+                website = (String)tempWebsite;
+            }
+            else {
+                throw new InvalidDescriptionException("website is of wrong type");
             }
         }
 
         if (map.containsKey("description")) {
-            try {
-                description = (String)map.get("description");
-            } catch (ClassCastException ex) {
-                throw new InvalidDescriptionException(ex, "description is of wrong type");
+            Object tempDescription = map.get("description");
+            if (tempDescription instanceof String) {
+                description = (String)tempDescription;
+            }
+            else {
+                throw new InvalidDescriptionException("description is of wrong type");
             }
         }
 
         if (map.containsKey("author")) {
-            try {
-                String extra = (String)map.get("author");
-                authors.add(extra);
-            } catch (ClassCastException ex) {
-                throw new InvalidDescriptionException(ex, "author is of wrong type");
+            Object tempAuthor = map.get("author");
+            if (tempAuthor instanceof String) {
+                authors.add((String)tempAuthor);
+            }
+            else {
+                throw new InvalidDescriptionException("author is of wrong type");
             }
         }
 
         if (map.containsKey("authors")) {
-            try {
-                ArrayList<String> extra = (ArrayList<String>)map.get("authors");
-                authors.addAll(extra);
-            } catch (ClassCastException ex) {
+            Object tempAuthors = map.get("authors");
+            if (tempAuthors instanceof ArrayList) {
+                authors.addAll((ArrayList<String>)tempAuthors;
+            }
+            else {
                 throw new InvalidDescriptionException(ex, "authors are of wrong type");
             }
         }
@@ -242,16 +235,16 @@ public final class PluginDescriptionFile {
 
         if (commands != null) map.put("command", commands);
         if (depend != null) map.put("depend", depend);
-        if (softDepend != null) map.put("softdepend", softDepend);
         if (website != null) map.put("website", website);
         if (description != null) map.put("description", description);
 
         if (authors.size() == 1) {
-            map.put("author", authors.get(0));
+        map.put("author", authors.get(0));
         } else if (authors.size() > 1) {
-            map.put("authors", authors);
+        map.put("authors", authors);
         }
 
         return map;
+    }
     }
 }
