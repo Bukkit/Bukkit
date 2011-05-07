@@ -17,6 +17,7 @@ public final class PluginDescriptionFile {
     private String name = null;
     private String main = null;
     private ArrayList<String> depend = null;
+    private ArrayList<String> softDepend = null;
     private String version = null;
     private Object commands = null;
     private String description = null;
@@ -76,7 +77,7 @@ public final class PluginDescriptionFile {
     public String getVersion() {
         return version;
     }
-
+    
     /**
      * Returns the name of a plugin including the version
      *
@@ -101,6 +102,10 @@ public final class PluginDescriptionFile {
 
     public Object getDepend() {
         return depend;
+    }
+    
+    public Object getSoftDepend() {
+        return softDepend;
     }
 
     /**
@@ -174,6 +179,16 @@ public final class PluginDescriptionFile {
                 throw new InvalidDescriptionException("depend is of wrong type");
             }
         }
+        
+        if (map.containsKey("softdepend") {
+            Object tempSoft = map.get("softdepend");
+            if (tempSoft instanceof ArrayList) {
+                softDepend = (ArrayList<String>)tempSoft;
+            }
+            else {
+                throw new InvalidDescriptionException("softdepend is of wrong type");
+            }
+        }
 
         if (map.containsKey("database")) {
             Object tempDatabase = map.get("database");
@@ -236,6 +251,7 @@ public final class PluginDescriptionFile {
         if (commands != null) map.put("command", commands);
         if (depend != null) map.put("depend", depend);
         if (website != null) map.put("website", website);
+        if (softDepend != null) map.put("softdepend", softDepend);
         if (description != null) map.put("description", description);
 
         if (authors.size() == 1) {
