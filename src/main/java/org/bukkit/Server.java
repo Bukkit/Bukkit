@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.generate.CustomChunkGenerator;
 
 /**
  * Represents a server implementation
@@ -151,6 +152,18 @@ public interface Server {
      * @return Newly created or loaded World
      */
     public World createWorld(String name, World.Environment environment);
+
+    /**
+     * Creates or loads a world with the given name.
+     * If the world is already loaded, it will just return the equivalent of
+     * getWorld(name)
+     *
+     * @param name Name of the world to load
+     * @param environment Environment type of the world
+     * @param customChunkGenerator The generator to use for the world
+     * @return Newly created or loaded World
+     */
+    public World createWorld(String name, World.Environment environment, CustomChunkGenerator customChunkGenerator);
 
     /**
      * Creates or loads a world with the given name.
