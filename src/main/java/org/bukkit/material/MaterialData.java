@@ -86,4 +86,8 @@ public class MaterialData {
     public String toString() {
         return getItemType() + "(" + getData() + ")";
     }
+
+    public boolean equals(MaterialData md) {
+        return (md.getItemTypeId() == getItemTypeId() && md.getData() == getData());
+    }
 }
