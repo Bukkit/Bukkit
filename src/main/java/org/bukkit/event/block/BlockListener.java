@@ -110,11 +110,11 @@ public class BlockListener implements Listener {
     }
     
     /**
-     * Called when the world tells a block to update.
+     * Called when the world tells a block to do a tick update.
      *
      * @param event Relevant event details
      */
-    public void onBlockUpdateCall(BlockUpdateCallEvent event) {
+    public void onBlockUpdateTick(BlockUpdateTickEvent event) {
     }
 
     /**

@@ -408,11 +408,11 @@ public abstract class Event implements Serializable {
         BLOCK_BREAK (Category.BLOCK),
 
         /**
-         * Called when tells a block to update
+         * Called when world tells a block to do a tick update
          *
-         * @see org.bukkit.event.block.BlockUpdateCallEvent
+         * @see org.bukkit.event.block.BlockUpdateTickEvent
          */
-        BLOCK_UPDATE (Category.BLOCK),
+        BLOCK_UPDATE_TICK (Category.BLOCK),
         
         /**
          * Called when world attempts to place a snow block during a snowfall

@@ -432,10 +432,10 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((BlockListener) listener).onBlockBreak((BlockBreakEvent) event);
                 }
             };
-        case BLOCK_UPDATE:
+        case BLOCK_UPDATE_TICK:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
-                    ((BlockListener) listener).onBlockUpdateCall((BlockUpdateCallEvent) event);
+                    ((BlockListener) listener).onBlockUpdateTick((BlockUpdateTickEvent) event);
                 }
             };
         case SNOW_FORM:

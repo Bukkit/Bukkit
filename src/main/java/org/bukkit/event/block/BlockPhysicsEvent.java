@@ -36,17 +36,17 @@ public class BlockPhysicsEvent extends BlockEvent {
     }
 
     /**
-     * Gets the cancellation state of this event. A cancelled event will not
+     * Gets the cancellation state of this event. A canceled event will not
      * be executed in the server, but will still pass to other plugins
      *
-     * @return true if this event is cancelled
+     * @return true if this event is canceled
      */
     public boolean isCancelled() {
         return cancel;
     }
 
     /**
-     * Sets the cancellation state of this event. A cancelled event will not
+     * Sets the cancellation state of this event. A canceled event will not
      * be executed in the server, but will still pass to other plugins
      *
      * @param cancel true if you wish to cancel this event
