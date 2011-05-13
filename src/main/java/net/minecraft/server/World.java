@@ -14,6 +14,7 @@ import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.event.block.BlockCanBuildEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.block.BlockUpdateTickEvent;
 import org.bukkit.event.block.SnowFormEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
@@ -895,25 +896,43 @@ public class World implements IBlockAccess {
         return -1;
     }
 
+    //Randomly update a block code
     public void c(int i, int j, int k, int l, int i1) {
         NextTickListEntry nextticklistentry = new NextTickListEntry(i, j, k, l);
         byte b0 = 8;
 
-        if (this.a) {
-            if (this.a(nextticklistentry.a - b0, nextticklistentry.b - b0, nextticklistentry.c - b0, nextticklistentry.a + b0, nextticklistentry.b + b0, nextticklistentry.c + b0)) {
+        if (this.a)
+        {
+            if (this.a(nextticklistentry.a - b0, nextticklistentry.b - b0, nextticklistentry.c - b0, nextticklistentry.a + b0, nextticklistentry.b + b0, nextticklistentry.c + b0))
+            {
                 int j1 = this.getTypeId(nextticklistentry.a, nextticklistentry.b, nextticklistentry.c);
 
-                if (j1 == nextticklistentry.d && j1 > 0) {
-                    Block.byId[j1].a(this, nextticklistentry.a, nextticklistentry.b, nextticklistentry.c, this.random);
+                if (j1 == nextticklistentry.d && j1 > 0) 
+                {
+                    // CraftBukkit start
+                			BlockUpdateTickEvent event = new BlockUpdateTickEvent(((WorldServer)this).getWorld().getBlockAt( nextticklistentry.a, nextticklistentry.b, nextticklistentry.c));
+                			((WorldServer) this).getServer().getPluginManager().callEvent(event);
+
+                			if (!event.isCancelled()) 
+                        	{
+                				Block.byId[j1].a(this, nextticklistentry.a, nextticklistentry.b, nextticklistentry.c, this.random);
+                        	}
+                		
+                    // CraftBukkit stop
                 }
             }
-        } else {
-            if (this.a(i - b0, j - b0, k - b0, i + b0, j + b0, k + b0)) {
-                if (l > 0) {
+        } 
+        else 
+        {
+            if (this.a(i - b0, j - b0, k - b0, i + b0, j + b0, k + b0)) 
+            {
+                if (l > 0) 
+                {
                     nextticklistentry.a((long) i1 + this.worldData.f());
                 }
 
-                if (!this.z.contains(nextticklistentry)) {
+                if (!this.z.contains(nextticklistentry)) 
+                {
                     this.z.add(nextticklistentry);
                     this.y.add(nextticklistentry);
                 }
@@ -1680,34 +1699,53 @@ public class World implements IBlockAccess {
                 }
             }
 
-            for (k = 0; k < 80; ++k) {
+            for (k = 0; k < 80; ++k) 
+            {
                 this.g = this.g * 3 + this.h;
                 l = this.g >> 2;
                 j1 = l & 15;
                 k1 = l >> 8 & 15;
                 l1 = l >> 16 & 127;
                 i2 = chunk.b[j1 << 11 | k1 << 7 | l1] & 255;
-                if (Block.n[i2]) {
-                    Block.byId[i2].a(this, j1 + i, l1, k1 + j, this.random);
+                if (Block.n[i2])
+                {
+                	// CraftBukkit start
+            				BlockUpdateTickEvent event = new BlockUpdateTickEvent(((WorldServer)this).getWorld().getBlockAt(j1 + i, l1, k1 + j));
+            				((WorldServer) this).getServer().getPluginManager().callEvent(event);
+
+            				if (!event.isCancelled()) 
+            				{
+            					Block.byId[i2].a(this, j1 + i, l1, k1 + j, this.random);
+            				}
+              
+                // CraftBukkit stop
+                	
                 }
             }
         }
     }
 
-    public boolean a(boolean flag) {
+    public boolean a(boolean flag) 
+    {
         int i = this.y.size();
 
-        if (i != this.z.size()) {
+        if (i != this.z.size()) 
+        {
             throw new IllegalStateException("TickNextTick list out of synch");
-        } else {
-            if (i > 1000) {
+        } 
+        else 
+        {
+            if (i > 1000) 
+            {
                 i = 1000;
             }
 
-            for (int j = 0; j < i; ++j) {
+            for (int j = 0; j < i; ++j) 
+            {
                 NextTickListEntry nextticklistentry = (NextTickListEntry) this.y.first();
 
-                if (!flag && nextticklistentry.e > this.worldData.f()) {
+                if (!flag && nextticklistentry.e > this.worldData.f()) 
+                {
                     break;
                 }
 
@@ -1718,8 +1756,19 @@ public class World implements IBlockAccess {
                 if (this.a(nextticklistentry.a - b0, nextticklistentry.b - b0, nextticklistentry.c - b0, nextticklistentry.a + b0, nextticklistentry.b + b0, nextticklistentry.c + b0)) {
                     int k = this.getTypeId(nextticklistentry.a, nextticklistentry.b, nextticklistentry.c);
 
-                    if (k == nextticklistentry.d && k > 0) {
-                        Block.byId[k].a(this, nextticklistentry.a, nextticklistentry.b, nextticklistentry.c, this.random);
+                    if (k == nextticklistentry.d && k > 0) 
+                    {
+                    		// CraftBukkit start
+                			BlockUpdateTickEvent event = new BlockUpdateTickEvent(((WorldServer)this).getWorld().getBlockAt( nextticklistentry.a, nextticklistentry.b, nextticklistentry.c));
+                			((WorldServer) this).getServer().getPluginManager().callEvent(event);
+
+                			if (!event.isCancelled()) 
+                			{
+                				Block.byId[k].a(this, nextticklistentry.a, nextticklistentry.b, nextticklistentry.c, this.random);
+                			}
+                    
+                			// CraftBukkit stop
+                        
                     }
                 }
             }
