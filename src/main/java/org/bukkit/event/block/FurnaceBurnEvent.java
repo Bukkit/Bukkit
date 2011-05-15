@@ -12,7 +12,7 @@ public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
     private boolean cancel;
 
     public FurnaceBurnEvent(Block theBlock, int item) {
-	super(Type.FURNACE_SMELT, theBlock);
+	super(Type.FURNACE_BURN, theBlock);
 
         this.cancel = false;
         this.burnedItemId = item;
