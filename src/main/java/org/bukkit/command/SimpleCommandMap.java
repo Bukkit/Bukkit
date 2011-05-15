@@ -237,7 +237,12 @@ public final class SimpleCommandMap implements CommandMap {
                     pluginList.append(", ");
                 }
 
-                pluginList.append(ChatColor.GREEN);
+                ChatColor color = ChatColor.GREEN;
+                if (!plugin.isEnabled()) {
+                    color = ChatColor.RED;
+                }
+
+                pluginList.append(color);
                 pluginList.append(plugin.getDescription().getName());
             }
 
