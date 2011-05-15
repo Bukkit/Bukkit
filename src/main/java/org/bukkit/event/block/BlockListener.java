@@ -1,6 +1,7 @@
 package org.bukkit.event.block;
 
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.AuthorNagException;
 
 /**
  * Handles all events thrown in relation to Blocks
@@ -32,9 +33,15 @@ public class BlockListener implements Listener {
      * Called when a block flows (water/lava)
      *
      * @param event Relevant event details
+     * @throws BukkitAuthorNagException
      */
     public void onBlockFromTo(BlockFromToEvent event) {
+        onBlockFlow(event);
+        throw new AuthorNagException("onBlockFlow has been deprecated, use onBlockFromTo");
     }
+
+    // Prevent compilation of old signatures TODO: Remove after 1.4
+    @Deprecated public void onBlockFlow(BlockFromToEvent event) {}
 
     /**
      * Called when a block gets ignited
@@ -103,10 +110,27 @@ public class BlockListener implements Listener {
     }
 
     /**
+     * Called when a world is attempting to place a block during a snowfall
+     *
+     * @param event Relevant event details
+     */
+    public void onSnowForm(SnowFormEvent event) {
+    }
+    
+    /**
+     * Called when a block is dispensing an item
+     * 
+     * @param event Relevant event details
+     */
+    public void onBlockDispense(BlockDispenseEvent event) {
+    }
+
+    /**
      * Called when a furnace successfully smelts an item
      *
      * @param event Relevant event details
      */
     public void onFurnaceSmelt(FurnaceSmeltEvent event) {
     }
+    
 }

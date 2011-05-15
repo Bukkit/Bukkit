@@ -7,7 +7,7 @@ import org.bukkit.inventory.PlayerInventory;
 /**
  * Represents a human entity, such as an NPC or a player
  */
-public interface HumanEntity extends LivingEntity {
+public interface HumanEntity extends LivingEntity, AnimalTamer {
     /**
      * Returns the name of this player
      *
@@ -45,4 +45,18 @@ public interface HumanEntity extends LivingEntity {
      *
     public void selectItemInHand( int index );
     */
+    
+    /**
+     * Returns whether this player is slumbering.
+     * 
+     * @return slumber state
+     */
+    public boolean isSleeping();
+    
+    /**
+     * Get the sleep ticks of the player. This value may be capped.
+     * 
+     * @return slumber ticks
+     */
+    public int getSleepTicks();
 }

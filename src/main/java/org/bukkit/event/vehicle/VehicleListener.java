@@ -1,6 +1,7 @@
 package org.bukkit.event.vehicle;
 
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.AuthorNagException;
 
 /**
  * Listener for vehicle events.
@@ -69,10 +70,23 @@ public class VehicleListener implements Listener {
     }
 
     /**
+     * Called when a vehicle is destroyed.
+     *
+     * @param event
+     */
+    public void onVehicleDestroy(VehicleDestroyEvent event) {
+    }
+
+    /**
      * Called when a vehicle goes through an update cycle
      *
      * @param event
      */
     public void onVehicleUpdate(VehicleUpdateEvent event) {
+        onVehicleUpdate((VehicleEvent)event);
+        throw new AuthorNagException("onVehicleUpdate has been replaced with a new signature, (VehicleUpdateEvent)");
     }
+
+    // TODO: Remove after RB
+    @Deprecated public void onVehicleUpdate(VehicleEvent event) {}
 }

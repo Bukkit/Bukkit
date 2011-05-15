@@ -18,11 +18,13 @@ public final class PluginDescriptionFile {
     private String name = null;
     private String main = null;
     private ArrayList<String> depend = null;
+    private ArrayList<String> softDepend = null;
     private String version = null;
     private Object commands = null;
     private String description = null;
     private ArrayList<String> authors = new ArrayList<String>();
     private String website = null;
+    private boolean database = false;
 
     @SuppressWarnings("unchecked")
     public PluginDescriptionFile(final InputStream stream) throws InvalidDescriptionException {
@@ -103,6 +105,10 @@ public final class PluginDescriptionFile {
         return depend;
     }
 
+    public Object getSoftDepend() {
+        return softDepend;
+    }
+
     /**
      * Gets the description of this plugin
      *
@@ -120,9 +126,21 @@ public final class PluginDescriptionFile {
         return website;
     }
 
+    public boolean isDatabaseEnabled() {
+        return database;
+    }
+
+    public void setDatabaseEnabled(boolean database) {
+        this.database = database;
+    }
+
     private void loadMap(Map<String, Object> map) throws InvalidDescriptionException {
         try {
             name = map.get("name").toString();
+
+            if (!name.matches("^[A-Za-z0-9 _.-]+$")) {
+                throw new InvalidDescriptionException("name '" + name +  "' contains invalid characters.");
+            }
         } catch (NullPointerException ex) {
             throw new InvalidDescriptionException(ex, "name is not defined");
         } catch (ClassCastException ex) {
@@ -139,6 +157,9 @@ public final class PluginDescriptionFile {
 
         try {
             main = map.get("main").toString();
+            if (main.startsWith("org.bukkit.")) {
+                throw new InvalidDescriptionException("main may not be within the org.bukkit namespace");
+            }
         } catch (NullPointerException ex) {
             throw new InvalidDescriptionException(ex, "main is not defined");
         } catch (ClassCastException ex) {
@@ -158,6 +179,22 @@ public final class PluginDescriptionFile {
                 depend = (ArrayList<String>)map.get("depend");
             } catch (ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "depend is of wrong type");
+            }
+        }
+
+        if (map.containsKey("softdepend")) {
+            try {
+                softDepend = (ArrayList<String>)map.get("softdepend");
+            } catch (ClassCastException ex) {
+                throw new InvalidDescriptionException(ex, "softdepend is of wrong type");
+            }
+        }
+
+        if (map.containsKey("database")) {
+            try {
+                database = (Boolean)map.get("database");
+            } catch (ClassCastException ex) {
+                throw new InvalidDescriptionException(ex, "database is of wrong type");
             }
         }
 
@@ -201,9 +238,11 @@ public final class PluginDescriptionFile {
         map.put("name", name);
         map.put("main", main);
         map.put("version", version);
+        map.put("database", database);
 
         if (commands != null) map.put("command", commands);
         if (depend != null) map.put("depend", depend);
+        if (softDepend != null) map.put("softdepend", softDepend);
         if (website != null) map.put("website", website);
         if (description != null) map.put("description", description);
 

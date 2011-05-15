@@ -1,13 +1,17 @@
 
 package org.bukkit;
 
+import com.avaje.ebean.config.ServerConfig;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Recipe;
+
 import java.util.List;
 import java.util.logging.Logger;
 import org.bukkit.command.PluginCommand;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.ServicesManager;
 import org.bukkit.scheduler.BukkitScheduler;
 
 /**
@@ -80,6 +84,14 @@ public interface Server {
     public int broadcastMessage(String message);
 
     /**
+     * Gets the name of the update folder. The update folder is used to safely update
+     * plugins at the right moment on a plugin load.
+     *
+     * @return The name of the update folder
+     */
+    public String getUpdateFolder();
+
+    /**
      * Gets a player object by the given username
      *
      * This method may not return objects for offline players
@@ -116,6 +128,13 @@ public interface Server {
     public BukkitScheduler getScheduler();
 
     /**
+     * Gets a services manager
+     *
+     * @return Services manager
+     */
+    public ServicesManager getServicesManager();
+
+    /**
      * Gets a list of all worlds on this server
      *
      * @return A list of worlds
@@ -132,6 +151,18 @@ public interface Server {
      * @return Newly created or loaded World
      */
     public World createWorld(String name, World.Environment environment);
+
+    /**
+     * Creates or loads a world with the given name.
+     * If the world is already loaded, it will just return the equivalent of
+     * getWorld(name)
+     *
+     * @param name Name of the world to load
+     * @param environment Environment type of the world
+     * @param seed Seed value to create the world with
+     * @return Newly created or loaded World
+     */
+    public World createWorld(String name, World.Environment environment, long seed);
 
     /**
      * Gets the world with the given name
@@ -174,4 +205,18 @@ public interface Server {
      * @throws CommandException Thrown when the executor for the given command fails with an unhandled exception
      */
     public boolean dispatchCommand(CommandSender sender, String commandLine);
+
+    /**
+     * Populates a given {@link ServerConfig} with values attributes to this server
+     *
+     * @param config ServerConfig to populate
+     */
+    public void configureDbConfig(ServerConfig config);
+
+    /**
+     * Adds a recipe to the crafting manager.
+     * @param recipe The recipe to add.
+     * @return True to indicate that the recipe was added.
+     */
+    public boolean addRecipe(Recipe recipe);
 }

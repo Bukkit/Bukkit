@@ -6,6 +6,8 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
+import java.util.List;
+
 /**
  * Represents a base entity in the world
  */
@@ -71,6 +73,16 @@ public interface Entity {
     public void teleportTo(Entity destination);
 
     /**
+     * Returns a list of entities within a bounding box defined by x,y,z centered around player
+     *
+     * @param x Size of the box along x axis
+     * @param y Size of the box along y axis
+     * @param z Size of the box along z axis
+     * @return List<Entity> List of entities nearby
+     */
+    public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z);
+
+    /**
      * Returns a unique id for this entity
      *
      * @return Entity id
@@ -104,9 +116,57 @@ public interface Entity {
     public void remove();
 
     /**
+     * Returns true if this entity has been marked for removal.
+     */
+    public boolean isDead();
+
+    /**
      * Gets the {@link Server} that contains this Entity
      *
      * @return Server instance running this Entity
      */
     public Server getServer();
+
+    /**
+     * Gets the primary passenger of a vehicle. For vehicles that could have
+     * multiple passengers, this will only return the primary passenger.
+     * 
+     * @return an entity
+     */
+    public abstract Entity getPassenger();
+
+    /**
+     * Set the passenger of a vehicle.
+     * 
+     * @param passenger
+     * @return false if it could not be done for whatever reason
+     */
+    public abstract boolean setPassenger(Entity passenger);
+
+    /**
+     * Returns true if the vehicle has no passengers.
+     * 
+     * @return
+     */
+    public abstract boolean isEmpty();
+
+    /**
+     * Eject any passenger. True if there was a passenger.
+     * 
+     * @return
+     */
+    public abstract boolean eject();
+    
+    /**
+     * Returns the distance this entity has fallen
+     * @return 
+     */
+    public float getFallDistance();
+    
+    /**
+     * Sets the fall distance for this entity
+     * @param distance 
+     */
+    public void setFallDistance(float distance);
+
 }

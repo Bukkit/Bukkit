@@ -116,6 +116,10 @@ public class ItemStack {
      * @return MaterialData for this item
      */
     public MaterialData getData() {
+        if (Material.getMaterial(getTypeId()).getData() != null) {
+            data = Material.getMaterial(getTypeId()).getNewData((byte)this.durability);
+        }
+
         return data;
     }
 
@@ -189,6 +193,11 @@ public class ItemStack {
         ItemStack item = (ItemStack)obj;
         return item.getAmount() == getAmount() && item.getTypeId() == getTypeId();
     }
+    
+    @Override
+    public ItemStack clone() {
+        return new ItemStack(type, amount, durability);
+    } 
     
     @Override
     public int hashCode() {

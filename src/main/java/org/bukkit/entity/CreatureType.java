@@ -10,19 +10,20 @@ public enum CreatureType {
     CREEPER("Creeper"),
     GHAST("Ghast"),
     GIANT("Giant"),
+    MONSTER("Monster"),
     PIG("Pig"),
     PIG_ZOMBIE("PigZombie"),
     SHEEP("Sheep"),
     SKELETON("Skeleton"),
+    SLIME("Slime"),
     SPIDER("Spider"),
-    ZOMBIE("Zombie"),
     SQUID("Squid"),
-    SLIME("Slime");
+    ZOMBIE("Zombie"),
+    WOLF("Wolf");
 
     private String name;
 
-    private static final Map<String, CreatureType> mapping
-            = new HashMap<String, CreatureType>();
+    private static final Map<String, CreatureType> mapping = new HashMap<String, CreatureType>();
 
     static {
         for (CreatureType type : EnumSet.allOf(CreatureType.class)) {

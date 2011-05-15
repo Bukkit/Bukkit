@@ -2,6 +2,7 @@
 package org.bukkit.event.player;
 
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.AuthorNagException;
 
 /**
  * Handles all events thrown in relation to a Player
@@ -16,6 +17,8 @@ public class PlayerListener implements Listener {
      * @param event Relevant event details
      */
     public void onPlayerJoin(PlayerJoinEvent event) {
+        onPlayerJoin((PlayerEvent)event);
+        throw new AuthorNagException("onPlayerJoin has been replaced with a new signature, (PlayerJoinEvent)");
     }
 
     /**
@@ -24,11 +27,13 @@ public class PlayerListener implements Listener {
      * @param event Relevant event details
      */
     public void onPlayerQuit(PlayerQuitEvent event) {
+        onPlayerQuit((PlayerEvent)event);
+        throw new AuthorNagException("onPlayerQuit has been replaced with a new signature, (PlayerQuitEvent)");
     }
 
     /**
      * Called when a player gets kicked from the server
-     * 
+     *
      * @param event Relevant event details
      */
     public void onPlayerKick(PlayerKickEvent event) {
@@ -49,6 +54,8 @@ public class PlayerListener implements Listener {
      * @param event Relevant event details
      */
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
+        onPlayerCommandPreprocess((PlayerChatEvent)event);
+        throw new AuthorNagException("onPlayerCommandPreprocess has been replaced with a new signature, (PlayerCommandPreprocessEvent)");
     }
 
     /**
@@ -65,11 +72,13 @@ public class PlayerListener implements Listener {
      * @param event Relevant event details
      */
     public void onPlayerTeleport(PlayerTeleportEvent event) {
+        onPlayerTeleport((PlayerMoveEvent)event);
+        throw new AuthorNagException("onPlayerTeleport has been replaced with a new signature, (PlayerTeleportEvent)");
     }
 
     /**
      * Called when a player respawns
-     * 
+     *
      * @param event Relevant event details
      */
     public void onPlayerRespawn(PlayerRespawnEvent event) {
@@ -84,11 +93,27 @@ public class PlayerListener implements Listener {
     }
 
     /**
+     * Called when a player right clicks an entity.
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+    }
+
+    /**
      * Called when a player attempts to log in to the server
      *
      * @param event Relevant event details
      */
     public void onPlayerLogin(PlayerLoginEvent event) {
+    }
+
+    /**
+     * Called when a player has just been authenticated
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerPreLogin(PlayerPreLoginEvent event) {
     }
 
     /**
@@ -149,7 +174,7 @@ public class PlayerListener implements Listener {
 
     /**
      * Called when a player fills a bucket
-     * 
+     *
      * @param event Relevant event details
      */
     public void onPlayerBucketFill(PlayerBucketFillEvent event) {
@@ -157,9 +182,31 @@ public class PlayerListener implements Listener {
 
     /**
      * Called when a player empties a bucket
-     * 
+     *
      * @param event Relevant event details
      */
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
     }
+
+    /**
+     * Called when a player enters a bed
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerBedEnter(PlayerBedEnterEvent event) {
+    }
+
+    /**
+     * Called when a player leaves a bed
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerBedLeave(PlayerBedLeaveEvent event) {
+    }
+
+    // TODO: Remove after RB
+    @Deprecated public void onPlayerQuit(PlayerEvent event) {}
+    @Deprecated public void onPlayerCommandPreprocess(PlayerChatEvent event) {}
+    @Deprecated public void onPlayerTeleport(PlayerMoveEvent event) {}
+    @Deprecated public void onPlayerJoin(PlayerEvent event) {}
 }

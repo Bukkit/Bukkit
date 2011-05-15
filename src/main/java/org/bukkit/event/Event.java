@@ -93,6 +93,11 @@ public abstract class Event implements Serializable {
         PLAYER,
 
         /**
+         * Represents Entity-based events
+         */
+        ENTITY,
+
+        /**
          * Represents Block-based events
          */
         BLOCK,
@@ -103,7 +108,12 @@ public abstract class Event implements Serializable {
         LIVING_ENTITY,
 
         /**
-         * Represents Vehicle-based events
+         * Represents Weather-based events
+         */
+        WEATHER,
+
+        /**
+         * Vehicle-based events
          */
         VEHICLE,
 
@@ -151,6 +161,13 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.player.PlayerLoginEvent
          */
         PLAYER_LOGIN (Category.PLAYER),
+
+        /**
+         * Called when a player has just been authenticated
+         *
+         * @see org.bukkit.event.player.PlayerPreLoginEvent
+         */
+        PLAYER_PRELOGIN (Category.PLAYER),
 
         /**
          * Called when a player respawns
@@ -216,6 +233,13 @@ public abstract class Event implements Serializable {
         PLAYER_INTERACT (Category.PLAYER),
 
         /**
+         * Called when a player right clicks an entity
+         *
+         * @see org.bukkit.event.player.PlayerInteractEntityEvent
+         */
+        PLAYER_INTERACT_ENTITY (Category.PLAYER),
+
+        /**
          * Called when a player throws an egg and it might hatch
          *
          * @see org.bukkit.event.player.PlayerEggThrowEvent
@@ -252,17 +276,38 @@ public abstract class Event implements Serializable {
 
         /**
          * Called when a player empties a bucket
-         * 
+         *
          * @see org.bukkit.event.player.PlayerBucketEmptyEvent
          */
         PLAYER_BUCKET_EMPTY(Category.PLAYER),
 
         /**
          * Called when a player fills a bucket
-         * 
+         *
          * @see org.bukkit.event.player.PlayerBucketFillEvent
          */
         PLAYER_BUCKET_FILL(Category.PLAYER),
+
+        /**
+         * Called when a player interacts with the inventory
+         *
+         * @see org.bukkit.event.player.PlayerInventoryEvent
+         */
+        PLAYER_INVENTORY(Category.PLAYER),
+
+        /**
+         * Called when a player enter a bed
+         *
+         * @see org.bukkit.event.player.PlayerBedEnterEvent
+         */
+        PLAYER_BED_ENTER(Category.PLAYER),
+
+        /**
+         * Called when a player leaves a bed
+         *
+         * @see org.bukkit.event.player.PlayerBedEnterEvent
+         */
+        PLAYER_BED_LEAVE(Category.PLAYER),
 
         /**
          * BLOCK EVENTS
@@ -319,6 +364,13 @@ public abstract class Event implements Serializable {
         BLOCK_PLACE (Category.BLOCK),
 
         /**
+         * Called when a block dispenses something
+         *
+         * @see org.bukkit.event.block.BlockPlaceEvent
+         */
+        BLOCK_DISPENSE (Category.BLOCK),
+
+        /**
          * Called when a block is destroyed from being burnt by fire
          *
          * @see org.bukkit.event.block.BlockBurnEvent
@@ -361,6 +413,13 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.FurnaceSmeltEvent
          */
         FURNACE_SMELT (Category.BLOCK),
+
+        /**
+         * Called when world attempts to place a snow block during a snowfall
+         *
+         * @see org.bukkit.event.block.SnowFormEvent
+         */
+        SNOW_FORM (Category.BLOCK),
 
         /**
          * INVENTORY EVENTS
@@ -462,8 +521,15 @@ public abstract class Event implements Serializable {
         ITEM_SPAWN (Category.WORLD),
 
         /**
+         * Called when a World's spawn is changed
+         *
+         * @see org.bukkit.event.world.SpawnChangeEvent
+         */
+        SPAWN_CHANGE (Category.WORLD),
+
+        /**
          * Called when a world is saved
-         * 
+         *
          */
         WORLD_SAVE (Category.WORLD),
 
@@ -471,6 +537,24 @@ public abstract class Event implements Serializable {
          * Called when a World is loaded
          */
         WORLD_LOAD (Category.WORLD),
+
+        /**
+         * ENTITY EVENTS
+         */
+
+        /**
+         * Called when a painting is placed by player
+         *
+         * @see org.bukkit.event.painting.PaintingCreateEvent
+         */
+        PAINTING_PLACE (Category.ENTITY),
+
+        /**
+         * Called when a painting is removed
+         *
+         * @see org.bukkit.event.painting.PaintingRemoveEvent
+         */
+        PAINTING_BREAK (Category.ENTITY),
 
         /**
          * LIVING_ENTITY EVENTS
@@ -514,14 +598,14 @@ public abstract class Event implements Serializable {
 
         /**
          * Called when an entity has made a decision to explode.
-         * 
+         *
          * Provides an opportunity to act on the entity, change the explosion radius,
          * or to change the fire-spread flag.
-         * 
+         *
          * Canceling the event negates the entity's decision to explode.
          * For EntityCreeper, this resets the fuse but does not kill the Entity.
          * For EntityFireball and EntityTNTPrimed....?
-         * 
+         *
          * @see org.bukkit.event.entity.EntityExplodeTriggerEvent
          */
         EXPLOSION_PRIME (Category.LIVING_ENTITY),
@@ -534,6 +618,53 @@ public abstract class Event implements Serializable {
         ENTITY_TARGET (Category.LIVING_ENTITY),
 
         /**
+         * Called when an entity interacts with a block
+         * This event specifically excludes player entities
+         *
+         * @see org.bukkit.event.entity.EntityInteractEvent
+         */
+        ENTITY_INTERACT (Category.LIVING_ENTITY),
+
+        /**
+         * Called when a creeper gains or loses a power shell
+         *
+         * @see org.bukkit.event.entity.CreeperPowerEvent
+         */
+        CREEPER_POWER (Category.LIVING_ENTITY),
+
+        /**
+         * Called when a pig is zapped, zombifying it
+         *
+         * @see org.bukkit.event.entity.PigZapEvent
+         */
+        PIG_ZAP (Category.LIVING_ENTITY),
+
+        /**
+         * WEATHER EVENTS
+         */
+
+        /**
+         * Called when a lightning entity strikes somewhere
+         *
+         * @see org.bukkit.event.weather.LightningStrikeEvent
+         */
+        LIGHTNING_STRIKE (Category.WEATHER),
+
+        /**
+         * Called when the weather in a world changes
+         *
+         * @see org.bukkit.event.weather.WeatherChangeEvent
+         */
+        WEATHER_CHANGE (Category.WEATHER),
+
+        /**
+         * Called when the thunder state in a world changes
+         *
+         * @see org.bukkit.event.weather.ThunderChangeEvent
+         */
+        THUNDER_CHANGE (Category.WEATHER),
+
+        /**
          * VEHICLE EVENTS
          */
 
@@ -543,6 +674,13 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.vehicle.VehicleCreateEvent
          */
         VEHICLE_CREATE (Category.VEHICLE),
+
+        /**
+         * Called when a vehicle is destroyed
+         *
+         * @see org.bukkit.event.vehicle.VehicleDestroyEvent
+         */
+        VEHICLE_DESTROY (Category.VEHICLE),
 
         /**
          * Called when a vehicle is damaged by a LivingEntity
