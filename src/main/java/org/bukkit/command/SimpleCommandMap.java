@@ -238,7 +238,7 @@ public final class SimpleCommandMap implements CommandMap {
                 }
 
                 ChatColor color = ChatColor.GREEN;
-                if( !plugin.isEnabled() ) {
+                if (!plugin.isEnabled()) {
                     color = ChatColor.RED;
                 }
 
