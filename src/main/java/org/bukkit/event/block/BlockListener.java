@@ -132,5 +132,13 @@ public class BlockListener implements Listener {
      */
     public void onFurnaceSmelt(FurnaceSmeltEvent event) {
     }
+
+    /**
+     * Called when a furnace successfully consumes fuel
+     *
+     * @param event Relevant event details
+     */
+    public void onFurnaceBurn(FurnaceBurnEvent event) {
+    }
     
 }

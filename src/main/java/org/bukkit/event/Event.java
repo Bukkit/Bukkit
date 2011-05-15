@@ -415,6 +415,13 @@ public abstract class Event implements Serializable {
         FURNACE_SMELT (Category.BLOCK),
 
         /**
+         * Called when a block is successfully burned as fuel in a furnace.
+         *
+         * @see org.bukkit.event.block.FurnaceSmeltEvent
+         */
+        FURNACE_BURN (Category.BLOCK),
+
+        /**
          * Called when world attempts to place a snow block during a snowfall
          *
          * @see org.bukkit.event.block.SnowFormEvent

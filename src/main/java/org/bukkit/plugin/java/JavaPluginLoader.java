@@ -408,6 +408,12 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((BlockListener) listener).onFurnaceSmelt((FurnaceSmeltEvent) event);
                 }
             };
+        case FURNACE_BURN:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onFurnaceBurn((FurnaceBurnEvent) event);
+                }
+            };
         case SIGN_CHANGE:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
