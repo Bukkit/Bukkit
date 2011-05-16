@@ -90,4 +90,8 @@ public class MaterialData {
     public boolean equals(MaterialData md) {
         return (md.getItemTypeId() == getItemTypeId() && md.getData() == getData());
     }
+
+    public int hashCode() {
+        return ((getItemTypeId() << 8) & getData());
+    }
 }
