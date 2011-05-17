@@ -44,7 +44,7 @@ public final class SimpleCommandMap implements CommandMap {
         }
     }
 
-    private void register(String fallbackPrefix, Command command) {
+ private void register(String fallbackPrefix, Command command) {
         register(command.getName(), fallbackPrefix, command);
         aliases.addAll(command.getAliases());
         aliases.remove(command.getName());
