@@ -679,7 +679,15 @@ public final class JavaPluginLoader implements PluginLoader {
                 loaders.put(pluginName, (PluginClassLoader)jPlugin.getClassLoader());
             }
 
+            try {
             jPlugin.setEnabled(true);
+            } catch (Throwable ex) {
+                server.getLogger().log(Level.SEVERE, "Error occurred while enabling " + plugin.getDescription().getFullName() + " (Is it up to date?): " + ex.getMessage(), ex);
+            }
+            
+            // Perhaps abort here, rather than continue going, but as it stands,
+            // an abort is not possible the way it's currently written
+            
             server.getPluginManager().callEvent(new PluginEnableEvent(plugin));
         }
     }
@@ -693,7 +701,11 @@ public final class JavaPluginLoader implements PluginLoader {
             JavaPlugin jPlugin = (JavaPlugin)plugin;
             ClassLoader cloader = jPlugin.getClassLoader();
 
+            try {
             jPlugin.setEnabled(false);
+            } catch (Throwable ex) {
+                server.getLogger().log(Level.SEVERE, "Error occurred while disabling " + plugin.getDescription().getFullName() + " (Is it up to date?): " + ex.getMessage(), ex);
+            }
 
             server.getPluginManager().callEvent(new PluginDisableEvent(plugin));
 
@@ -710,3 +722,4 @@ public final class JavaPluginLoader implements PluginLoader {
         }
     }
 }
+
