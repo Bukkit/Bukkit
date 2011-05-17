@@ -364,6 +364,7 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.BlockBreakEvent
          */
         BLOCK_BREAK (Category.BLOCK),
+<<<<<<< HEAD
         /**
          * Called when world tells a block to do a tick update
          *
@@ -371,6 +372,8 @@ public abstract class Event implements Serializable {
          */
         BLOCK_UPDATE_TICK (Category.BLOCK),
         
+=======
+>>>>>>> refs/remotes/upstream/master
         /**
          * Called when world attempts to place a snow block during a snowfall
          *
