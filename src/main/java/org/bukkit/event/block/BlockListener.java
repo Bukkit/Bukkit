@@ -12,22 +12,19 @@ public class BlockListener implements Listener {
     /**
      * Default Constructor
      */
-    public BlockListener() {
-    }
+    public BlockListener() {}
 
     /**
      * Called when a block is damaged (or broken)
      *
      * @param event Relevant event details
      */
-    public void onBlockDamage(BlockDamageEvent event) {
-    }
+    public void onBlockDamage(BlockDamageEvent event) {}
 
     /**
      * Called when we try to place a block, to see if we can build it
      */
-    public void onBlockCanBuild(BlockCanBuildEvent event) {
-    }
+    public void onBlockCanBuild(BlockCanBuildEvent event) {}
 
     /**
      * Called when a block flows (water/lava)
@@ -48,24 +45,21 @@ public class BlockListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onBlockIgnite(BlockIgniteEvent event) {
-    }
+    public void onBlockIgnite(BlockIgniteEvent event) {}
 
     /**
      * Called when block physics occurs
      *
      * @param event Relevant event details
      */
-    public void onBlockPhysics(BlockPhysicsEvent event) {
-    }
+    public void onBlockPhysics(BlockPhysicsEvent event) {}
 
     /**
      * Called when a player places a block
      *
      * @param event Relevant event details
      */
-    public void onBlockPlace(BlockPlaceEvent event) {
-    }
+    public void onBlockPlace(BlockPlaceEvent event) {}
 
     /**
      * Called when redstone changes
@@ -74,40 +68,35 @@ public class BlockListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onBlockRedstoneChange(BlockRedstoneEvent event) {
-    }
+    public void onBlockRedstoneChange(BlockRedstoneEvent event) {}
 
     /**
      * Called when leaves are decaying naturally
      *
      * @param event Relevant event details
      */
-    public void onLeavesDecay(LeavesDecayEvent event) {
-    }
+    public void onLeavesDecay(LeavesDecayEvent event) {}
 
     /**
      * Called when a sign is changed
      *
      * @param event Relevant event details
      */
-    public void onSignChange(SignChangeEvent event) {
-    }
+    public void onSignChange(SignChangeEvent event) {}
 
     /**
      * Called when a block is destroyed from burning
      *
      * @param event Relevant event details
      */
-    public void onBlockBurn(BlockBurnEvent event) {
-    }
+    public void onBlockBurn(BlockBurnEvent event) {}
 
     /**
      * Called when a block is destroyed by a player.
      *
      * @param event Relevant event details
      */
-    public void onBlockBreak(BlockBreakEvent event) {
-    }
+    public void onBlockBreak(BlockBreakEvent event) {}
     
     /**
      * Called when the world tells a block to do a tick update.
@@ -122,14 +111,12 @@ public class BlockListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onSnowForm(SnowFormEvent event) {
-    }
+    public void onSnowForm(SnowFormEvent event) {}
     
     /**
      * Called when a block is dispensing an item
      * 
      * @param event Relevant event details
      */
-    public void onBlockDispense(BlockDispenseEvent event) {
-    }
+    public void onBlockDispense(BlockDispenseEvent event) {}
 }

@@ -188,8 +188,6 @@ public final class JavaPluginLoader implements PluginLoader {
             dataFolder = new File(file.getParentFile(), filename + "_");
         }
 
-        //dataFolder.mkdirs();
-
         return dataFolder;
     }
 
@@ -206,8 +204,7 @@ public final class JavaPluginLoader implements PluginLoader {
                 PluginClassLoader loader = loaders.get(current);
                 try {
                     cachedClass = loader.findClass(name, false);
-                } catch (ClassNotFoundException cnfe) {
-                }
+                } catch (ClassNotFoundException cnfe) {}
                 if(cachedClass != null) {
                     return cachedClass;
                 }
@@ -593,7 +590,8 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
         case VEHICLE_DESTROY:
-            return new EventExecutor() { public void execute( Listener listener, Event event ) {
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
                     ((VehicleListener)listener).onVehicleDestroy( (VehicleDestroyEvent)event );
                 }
             };
@@ -678,16 +676,15 @@ public final class JavaPluginLoader implements PluginLoader {
             if(!loaders.containsKey(pluginName)) {
                 loaders.put(pluginName, (PluginClassLoader)jPlugin.getClassLoader());
             }
-
+      
             try {
             jPlugin.setEnabled(true);
             } catch (Throwable ex) {
                 server.getLogger().log(Level.SEVERE, "Error occurred while enabling " + plugin.getDescription().getFullName() + " (Is it up to date?): " + ex.getMessage(), ex);
             }
-            
+
             // Perhaps abort here, rather than continue going, but as it stands,
             // an abort is not possible the way it's currently written
-            
             server.getPluginManager().callEvent(new PluginEnableEvent(plugin));
         }
     }
@@ -722,4 +719,3 @@ public final class JavaPluginLoader implements PluginLoader {
         }
     }
 }
-
