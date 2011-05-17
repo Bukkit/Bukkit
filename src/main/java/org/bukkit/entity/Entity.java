@@ -7,6 +7,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.util.Vector;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents a base entity in the world
@@ -181,5 +182,11 @@ public interface Entity {
      * @return the last known {@link EntityDamageEvent} or null if hitherto unharmed
      */
     public EntityDamageEvent getLastDamageCause();
+    
+    /**
+     * Returns a unique and persistent id for this entity
+     * @return unique id
+     */
+    public UUID getUniqueId();
 
 }
