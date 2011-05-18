@@ -490,6 +490,13 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case BLOCK_MELT:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onBlockMelt((BlockMeltEvent) event);
+                }
+            };
+
         // Server Events
         case PLUGIN_ENABLE:
             return new EventExecutor() {
