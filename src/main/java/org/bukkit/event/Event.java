@@ -52,7 +52,7 @@ public abstract class Event implements Serializable {
 
         /**
          * Event call is of very low importance and should be ran first, to allow
-         * other plugins to further customise the outcome
+         * other plugins to further customize the outcome
          */
         Lowest,
         /**
@@ -325,30 +325,35 @@ public abstract class Event implements Serializable {
          *
          * @see org.bukkit.event.block.BlockPlaceEvent
          */
+
         BLOCK_PLACE (Category.BLOCK),
         /**
          * Called when a block dispenses something
          *
          * @see org.bukkit.event.block.BlockPlaceEvent
          */
+
         BLOCK_DISPENSE (Category.BLOCK),
         /**
          * Called when a block is destroyed from being burnt by fire
          *
          * @see org.bukkit.event.block.BlockBurnEvent
          */
+
         BLOCK_BURN (Category.BLOCK),
         /**
          * Called when leaves are decaying naturally
          *
          * @see org.bukkit.event.block.LeavesDecayEvent
          */
+
         LEAVES_DECAY (Category.BLOCK),
         /**
          * Called when a sign is changed
          *
          * @see org.bukkit.event.block.SignChangeEvent
          */
+
         SIGN_CHANGE (Category.BLOCK),
         /**
          * Called when a block changes redstone current. Only triggered on blocks
@@ -357,6 +362,7 @@ public abstract class Event implements Serializable {
          *
          * @see org.bukkit.event.block.BlockFromToEvent
          */
+
         REDSTONE_CHANGE (Category.BLOCK),
         /**
          * Called when a block is destroyed by a player.
@@ -364,6 +370,14 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.BlockBreakEvent
          */
         BLOCK_BREAK (Category.BLOCK),
+
+        /**
+         * Called when world tells a block to do a tick update
+         *
+         * @see org.bukkit.event.block.BlockUpdateTickEvent
+         */
+        BLOCK_UPDATE_TICK (Category.BLOCK),
+
         /**
          * Called when world attempts to place a snow block during a snowfall
          *
