@@ -33,4 +33,6 @@ public class EntityListener implements Listener {
     public void onPigZap(PigZapEvent event) {}
 
     public void onCreeperPower(CreeperPowerEvent event) {}
+
+    public void onEntityTame(EntityTameEvent event) {}
 }

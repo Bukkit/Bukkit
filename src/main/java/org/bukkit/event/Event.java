@@ -568,6 +568,13 @@ public abstract class Event implements Serializable {
         PIG_ZAP (Category.LIVING_ENTITY),
 
         /**
+         * Called when an entity is tamed
+         * 
+         * @see org.bukkit.event.entity.EntityTameEvent
+         */
+        ENTITY_TAME (Category.LIVING_ENTITY),
+        
+        /**
          * WEATHER EVENTS
          */
 
