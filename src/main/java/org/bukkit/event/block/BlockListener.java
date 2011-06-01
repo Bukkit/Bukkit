@@ -112,4 +112,12 @@ public class BlockListener implements Listener {
      * @param event Relevant event details
      */
     public void onBlockDispense(BlockDispenseEvent event) {}
+
+    /**
+     * Called when a snow or ice block melts
+     *
+     * @param event Relevant event details
+     */
+    public void onBlockMelt(BlockMeltEvent event) {}
+
 }

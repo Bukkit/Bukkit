@@ -339,6 +339,12 @@ public abstract class Event implements Serializable {
          */
         BLOCK_BURN (Category.BLOCK),
         /**
+         * Called when snow or ice melts
+         *
+         * @see org.bukkit.event.block.BlockMeltEvent
+         */
+        BLOCK_MELT (Category.BLOCK),
+        /**
          * Called when leaves are decaying naturally
          *
          * @see org.bukkit.event.block.LeavesDecayEvent
