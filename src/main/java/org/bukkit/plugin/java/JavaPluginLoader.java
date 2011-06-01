@@ -482,6 +482,13 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((BlockListener) listener).onSnowForm((SnowFormEvent) event);
                 }
             };
+        
+        case ICE_FORM:
+           return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onIceForm((IceFormEvent) event);
+                }
+            };
 
         case BLOCK_DISPENSE:
             return new EventExecutor() {
