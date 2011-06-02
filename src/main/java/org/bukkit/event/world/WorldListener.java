@@ -9,6 +9,13 @@ import org.bukkit.plugin.AuthorNagException;
 public class WorldListener implements Listener {
 
     /**
+     * Called when a chunk is created
+     *
+     * @param event Relevant event details
+     */
+    public void onChunkCreate(ChunkCreateEvent event) {}
+
+    /**
      * Called when a chunk is loaded
      *
      * @param event Relevant event details

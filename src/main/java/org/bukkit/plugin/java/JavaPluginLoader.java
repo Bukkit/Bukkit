@@ -513,6 +513,13 @@ public final class JavaPluginLoader implements PluginLoader {
             };
 
         // World Events
+        case CHUNK_CREATE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((WorldListener) listener).onChunkCreate((ChunkCreateEvent) event);
+                }
+            };
+
         case CHUNK_LOAD:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
