@@ -559,6 +559,7 @@ public abstract class Event implements Serializable {
          *
          * @see org.bukkit.event.entity.CreeperPowerEvent
          */
+        
         CREEPER_POWER (Category.LIVING_ENTITY),
         /**
          * Called when a pig is zapped, zombifying it
@@ -566,6 +567,13 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.entity.PigZapEvent
          */
         PIG_ZAP (Category.LIVING_ENTITY),
+        
+        /**
+         * Called when a LivingEntity is tamed
+         * 
+         * @see org.bukkit.event.entity.EntityTameEvent
+         */
+        ENTITY_TAME (Category.LIVING_ENTITY),
 
         /**
          * WEATHER EVENTS
