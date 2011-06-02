@@ -10,7 +10,7 @@ import org.bukkit.event.Cancellable;
  * @author halvors
  */
 public class EntityTameEvent extends EntityEvent implements Cancellable {
-	private boolean cancelled;
+    private boolean cancelled;
     private AnimalTamer owner;
 
     public EntityTameEvent(Entity entity, AnimalTamer owner) {
@@ -48,6 +48,6 @@ public class EntityTameEvent extends EntityEvent implements Cancellable {
      * @return the owning AnimalTamer
      */
     public AnimalTamer getOwner() {
-    	return owner;
+        return owner;
     }
 }
