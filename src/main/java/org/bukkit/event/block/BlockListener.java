@@ -108,6 +108,13 @@ public class BlockListener implements Listener {
     }
     
     /**
+     * Called when a world is attempting to place a block when ice forms
+     *
+     * @param event Relevant event details
+     */
+    public void onIceForm(IceFormEvent event) {}
+    
+    /**
      * Called when a world is attempting to place a block during a snow fall
      *
      * @param event Relevant event details

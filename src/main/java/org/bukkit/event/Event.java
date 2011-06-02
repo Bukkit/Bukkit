@@ -377,6 +377,13 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.BlockUpdateTickEvent
          */
         BLOCK_UPDATE_TICK (Category.BLOCK),
+        
+        /**
+         * Called when world attempts to place a ice block during ice form
+         *
+         * @see org.bukkit.event.block.IceFormEvent
+         */
+        ICE_FORM (Category.BLOCK),
 
         /**
          * Called when world attempts to place a snow block during a snowfall
