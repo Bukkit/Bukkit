@@ -113,6 +113,12 @@ public class BlockListener implements Listener {
      */
     public void onIceForm(IceFormEvent event) {}
     
+    /**
+     * Called when a mushroom is spreading
+     *
+     * @param event Relevant event details
+     */
+    public void onMushroomSpread(MushroomSpreadEvent event) {}
 
     /**
      * Called when a block is dispensing an item
