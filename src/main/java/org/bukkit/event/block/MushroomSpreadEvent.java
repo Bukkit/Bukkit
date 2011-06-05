@@ -16,7 +16,7 @@ public class MushroomSpreadEvent extends BlockEvent implements Cancellable {
 
     public MushroomSpreadEvent(Block block) {
         super(Type.MUSHROOM_SPREAD, block);
-        this.from = block;
+        this.to = block;
         this.material = block.getType();
         this.cancel = false;
     }
