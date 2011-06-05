@@ -5,7 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
 
 /**
- * Called on snow formed by weather
+ * Called on ice formed by weather
  */
 public class IceFormEvent extends BlockEvent implements Cancellable {
     private Material material;
