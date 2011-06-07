@@ -34,5 +34,9 @@ public interface Wolf extends Animals, Tameable {
      * @param sitting true if sitting
      */
     public void setSitting(boolean sitting);
-
+    
+    public boolean isTamed();
+    public void setTamed(boolean tame);
+    public AnimalTamer getOwner();
+    public void setOwner(AnimalTamer tamer);
 }
