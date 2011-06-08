@@ -14,14 +14,14 @@ public interface NoteBlock extends BlockState {
      * 
      * @return
      */
-    public byte getNote();
+    public Note getNote();
     
     /**
      * Set the note.
      * 
      * @param note
      */
-    public void setNote(byte note);
+    public void setNote(Note note);
     
     /**
      * Attempts to play the note at block<br />
