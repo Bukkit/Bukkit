@@ -647,6 +647,13 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((EntityListener) listener).onCreeperPower((CreeperPowerEvent) event);
                 }
             };
+            
+        case ENTITY_TAME:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onEntityTame((EntityTameEvent) event);
+                }
+            };
 
         // Vehicle Events
         case VEHICLE_CREATE:

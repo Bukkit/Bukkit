@@ -1,8 +1,8 @@
 package org.bukkit.event.entity;
 
 import org.bukkit.event.Listener;
-import org.bukkit.event.painting.PaintingPlaceEvent;
 import org.bukkit.event.painting.PaintingBreakEvent;
+import org.bukkit.event.painting.PaintingPlaceEvent;
 
 /**
  * Handles all events fired in relation to entities
@@ -25,7 +25,7 @@ public class EntityListener implements Listener {
     public void onEntityTarget(EntityTargetEvent event) {}
 
     public void onEntityInteract(EntityInteractEvent event) {}
-
+    
     public void onPaintingPlace(PaintingPlaceEvent event) {}
 
     public void onPaintingBreak(PaintingBreakEvent event) {}
@@ -33,4 +33,6 @@ public class EntityListener implements Listener {
     public void onPigZap(PigZapEvent event) {}
 
     public void onCreeperPower(CreeperPowerEvent event) {}
+    
+    public void onEntityTame(EntityTameEvent event) {}
 }
