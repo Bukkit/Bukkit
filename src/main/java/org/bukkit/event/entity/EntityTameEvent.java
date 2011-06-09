@@ -6,8 +6,6 @@ import org.bukkit.event.Cancellable;
 
 /**
  * Thrown when a LivingEntity is tamed
- *
- * @author halvors
  */
 public class EntityTameEvent extends EntityEvent implements Cancellable {
     private boolean cancelled;
