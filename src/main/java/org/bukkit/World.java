@@ -11,7 +11,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
+import org.bukkit.location.Location;
 
 /**
  * Represents a world, which may contain entities, chunks and blocks
@@ -281,7 +281,7 @@ public interface World {
      * @param spread Spread of the arrow. A recommend spread is 12
      * @return Arrow entity spawned as a result of this method
      */
-    public Arrow spawnArrow(Location location, Vector velocity, float speed, float spread);
+    public Arrow spawnArrow(Location location, Location velocity, float speed, float spread);
 
     /**
      * Creates a tree at the given {@link Location}
@@ -379,6 +379,8 @@ public interface World {
      *
      * @return The spawn location of this world
      */
+    //TODO: Change from Location to WorldSpecificGetter
+//    public WorldSpecificGetter getSpawnLocation();
     public Location getSpawnLocation();
 
     /**

@@ -2,8 +2,8 @@ package org.bukkit.event.entity;
 
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
-import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
+import org.bukkit.location.DirectionalLocation;
 
 /**
  * Called when a creature is spawned into a world.
@@ -12,12 +12,12 @@ import org.bukkit.event.Cancellable;
  */
 public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
 
-    private Location location;
+    private DirectionalLocation location;
     private boolean canceled;
     private CreatureType creatureType;
     private SpawnReason spawnReason;
 
-    public CreatureSpawnEvent(Entity spawnee, CreatureType mobtype, Location loc, SpawnReason spawnReason) {
+    public CreatureSpawnEvent(Entity spawnee, CreatureType mobtype, DirectionalLocation loc, SpawnReason spawnReason) {
         super(Type.CREATURE_SPAWN, spawnee);
         this.creatureType = mobtype;
         this.location = loc;
@@ -37,7 +37,7 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
      *
      * @return The location at which the creature is spawning
      */
-    public Location getLocation() {
+    public DirectionalLocation getLocation() {
         return location;
     }
 

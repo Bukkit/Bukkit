@@ -1,5 +1,7 @@
 package org.bukkit;
 
+import org.bukkit.location.WorldLocation;
+
 public interface TravelAgent {
 
     /**
@@ -52,19 +54,19 @@ public interface TravelAgent {
      * @param location The location where the search for a portal should begin.
      * @return Returns the location of a portal which has been found or returns the location passed to the method if unsuccessful.
      */
-    public Location findOrCreate(Location location);
+    public WorldLocation findOrCreate(WorldLocation location);
 
     /**
      * Attempt to find a portal near the given location.
      *
      * @return Returns the location of the nearest portal to the location.
      */
-    public Location findPortal(Location location);
+    public WorldLocation findPortal(WorldLocation location);
 
     /**
      * Attempt to create a portal near the given location.
      *
      * @return True if a nether portal was successfully created.
      */
-    public boolean createPortal(Location location);
+    public boolean createPortal(WorldLocation location);
 }

@@ -1,7 +1,7 @@
 package org.bukkit.event.vehicle;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Vehicle;
+import org.bukkit.location.DirectionalLocation;
 
 /**
  * Raised when a vehicle moves.
@@ -9,10 +9,10 @@ import org.bukkit.entity.Vehicle;
  * @author sk89q
  */
 public class VehicleMoveEvent extends VehicleEvent {
-    private Location from;
-    private Location to;
+    private DirectionalLocation from;
+    private DirectionalLocation to;
 
-    public VehicleMoveEvent(Vehicle vehicle, Location from, Location to) {
+    public VehicleMoveEvent(Vehicle vehicle, DirectionalLocation from, DirectionalLocation to) {
         super(Type.VEHICLE_MOVE, vehicle);
 
         this.from = from;
@@ -24,7 +24,7 @@ public class VehicleMoveEvent extends VehicleEvent {
      *
      * @return
      */
-    public Location getFrom() {
+    public DirectionalLocation getFrom() {
         return from;
     }
 
@@ -33,7 +33,7 @@ public class VehicleMoveEvent extends VehicleEvent {
      *
      * @return
      */
-    public Location getTo() {
+    public DirectionalLocation getTo() {
         return to;
     }
 }

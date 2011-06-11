@@ -3,7 +3,7 @@ package org.bukkit.event.block;
 import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
+import org.bukkit.location.Location;
 
 /**
  * Called when an item is dispensed from a block.
@@ -14,9 +14,9 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
 
     private boolean cancelled = false;
     private ItemStack item;
-    private Vector velocity;
+    private Location velocity;
 
-    public BlockDispenseEvent(Block block, ItemStack dispensed, Vector velocity) {
+    public BlockDispenseEvent(Block block, ItemStack dispensed, Location velocity) {
         super(Type.BLOCK_DISPENSE, block);
         this.item = dispensed;
         this.velocity = velocity;
@@ -48,8 +48,8 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
      *
      * @return A Vector for the dispensed item's velocity
      */
-    public Vector getVelocity() {
-        return velocity.clone();
+    public Location getVelocity() {
+        return velocity;
     }
 
     /**
@@ -57,7 +57,7 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
      *
      * @param vel the velocity of the item being dispensed
      */
-    public void setVelocity(Vector vel) {
+    public void setVelocity(Location vel) {
         velocity = vel;
     }
 

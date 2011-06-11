@@ -4,12 +4,13 @@ import java.net.InetSocketAddress;
 import org.bukkit.Achievement;
 import org.bukkit.Effect;
 import org.bukkit.Instrument;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Note;
 import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.map.MapView;
+import org.bukkit.location.Location;
+import org.bukkit.location.WorldLocation;
 
 /**
  * Represents a player, connected or not
@@ -173,7 +174,7 @@ public interface Player extends HumanEntity, CommandSender {
      * @param material
      * @param data
      */
-    public void sendBlockChange(Location loc, Material material, byte data);
+    public void sendBlockChange(WorldLocation loc, Material material, byte data);
 
     /**
      * Send a chunk change. This fakes a chunk change packet for a user at
@@ -202,7 +203,7 @@ public interface Player extends HumanEntity, CommandSender {
      * @param material
      * @param data
      */
-    public void sendBlockChange(Location loc, int material, byte data);
+    public void sendBlockChange(WorldLocation loc, int material, byte data);
     
     /**
      * Render a map and send it to the player in its entirety. This may be used

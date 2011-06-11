@@ -1,25 +1,25 @@
 package org.bukkit.event.player;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
+import org.bukkit.location.DirectionalLocation;
 
 /**
  * Holds information for player movement events
  */
 public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
     private boolean cancel = false;
-    private Location from;
-    private Location to;
+    private DirectionalLocation from;
+    private DirectionalLocation to;
 
-    public PlayerMoveEvent(final Player player, final Location from, final Location to) {
+    public PlayerMoveEvent(final Player player, final DirectionalLocation from, final DirectionalLocation to) {
         super(Type.PLAYER_MOVE, player);
         this.from = from;
         this.to = to;
     }
 
-    PlayerMoveEvent(final Event.Type type, final Player player, final Location from, final Location to) {
+    PlayerMoveEvent(final Event.Type type, final Player player, final DirectionalLocation from, final DirectionalLocation to) {
         super(type, player);
         this.from = from;
         this.to = to;
@@ -58,7 +58,7 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
      *
      * @return Location the player moved from
      */
-    public Location getFrom() {
+    public DirectionalLocation getFrom() {
         return from;
     }
 
@@ -67,7 +67,7 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
      *
      * @param from New location to mark as the players previous location
      */
-    public void setFrom(Location from) {
+    public void setFrom(DirectionalLocation from) {
         this.from = from;
     }
 
@@ -76,7 +76,7 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
      *
      * @return Location the player moved to
      */
-    public Location getTo() {
+    public DirectionalLocation getTo() {
         return to;
     }
 
@@ -85,7 +85,7 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
      *
      * @param to New Location this player will move to
      */
-    public void setTo(Location to) {
+    public void setTo(DirectionalLocation to) {
         this.to = to;
     }
 }

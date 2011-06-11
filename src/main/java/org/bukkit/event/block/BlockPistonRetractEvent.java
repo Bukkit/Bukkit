@@ -1,7 +1,7 @@
 package org.bukkit.event.block;
 
-import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.location.Location;
 
 public class BlockPistonRetractEvent extends BlockPistonEvent {
     public BlockPistonRetractEvent(Block block) {

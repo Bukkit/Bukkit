@@ -1,20 +1,18 @@
 package org.bukkit.event.player;
 
-import org.bukkit.Location;
 import org.bukkit.TravelAgent;
 import org.bukkit.entity.Player;
+import org.bukkit.location.DirectionalLocation;
 
 /**
  * Called when a player completes the portaling process by standing in a portal
  */
 public class PlayerPortalEvent extends PlayerTeleportEvent {
 
-    protected boolean useTravelAgent = true;
-
-    protected Player player;
+    private boolean useTravelAgent = true;
     protected TravelAgent travelAgent;
 
-    public PlayerPortalEvent(Player player, Location from, Location to, TravelAgent pta) {
+    public PlayerPortalEvent(Player player, DirectionalLocation from, DirectionalLocation to, TravelAgent pta) {
         super(Type.PLAYER_PORTAL, player, from, to);
         this.travelAgent = pta;
     }

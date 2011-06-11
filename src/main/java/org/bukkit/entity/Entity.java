@@ -1,10 +1,10 @@
 package org.bukkit.entity;
 
-import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.util.Vector;
+import org.bukkit.location.DirectionalLocation;
+import org.bukkit.location.Location;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,21 +19,21 @@ public interface Entity {
      *
      * @return Location containing the position of this entity
      */
-    public Location getLocation();
+    public DirectionalLocation getLocation();
 
     /**
      * Sets this entity's velocity
      *
      * @param velocity New velocity to travel with
      */
-    public void setVelocity(Vector velocity);
+    public void setVelocity(Location velocity);
 
     /**
      * Gets this entity's current velocity
      *
      * @return Current travelling velocity of this entity
      */
-    public Vector getVelocity();
+    public Location getVelocity();
 
     /**
      * Gets the current world this entity resides in

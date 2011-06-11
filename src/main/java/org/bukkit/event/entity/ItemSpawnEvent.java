@@ -1,18 +1,18 @@
 package org.bukkit.event.entity;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
+import org.bukkit.location.DirectionalLocation;
 
 /**
  * Called when an item is spawned into a world
  */
 public class ItemSpawnEvent extends EntityEvent implements Cancellable {
 
-    private Location location;
+    private DirectionalLocation location;
     private boolean canceled;
 
-    public ItemSpawnEvent(Entity spawnee, Location loc) {
+    public ItemSpawnEvent(Entity spawnee, DirectionalLocation loc) {
         super(Type.ITEM_SPAWN, spawnee);
         this.location = loc;
     }
@@ -30,7 +30,7 @@ public class ItemSpawnEvent extends EntityEvent implements Cancellable {
      *
      * @return The location at which the item is spawning
      */
-    public Location getLocation() {
+    public DirectionalLocation getLocation() {
         return location;
     }
 }

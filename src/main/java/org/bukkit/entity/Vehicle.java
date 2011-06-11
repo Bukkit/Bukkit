@@ -1,6 +1,6 @@
 package org.bukkit.entity;
 
-import org.bukkit.util.Vector;
+import org.bukkit.location.Location;
 
 /**
  * Represents a vehicle entity.
@@ -14,12 +14,12 @@ public interface Vehicle extends Entity {
      *
      * @return velocity vector
      */
-    public Vector getVelocity();
+    public Location getVelocity();
 
     /**
      * Sets the vehicle's velocity.
      *
      * @param vel velocity vector
      */
-    public void setVelocity(Vector vel);
+    public void setVelocity(Location vel);
 }

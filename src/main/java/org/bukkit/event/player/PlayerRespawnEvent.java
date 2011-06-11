@@ -1,13 +1,14 @@
 package org.bukkit.event.player;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.location.DirectionalLocation;
 
 public class PlayerRespawnEvent extends PlayerEvent {
-    private Location respawnLocation;
+
+    private DirectionalLocation respawnLocation;
     private boolean isBedSpawn;
 
-    public PlayerRespawnEvent(Player respawnPlayer, Location respawnLocation, boolean isBedSpawn) {
+    public PlayerRespawnEvent(Player respawnPlayer, DirectionalLocation respawnLocation, boolean isBedSpawn) {
         super(Type.PLAYER_RESPAWN, respawnPlayer);
         this.respawnLocation = respawnLocation;
         this.isBedSpawn = isBedSpawn;
@@ -18,7 +19,7 @@ public class PlayerRespawnEvent extends PlayerEvent {
      *
      * @return Location current respawn location
      */
-    public Location getRespawnLocation() {
+    public DirectionalLocation getRespawnLocation() {
         return this.respawnLocation;
     }
 
@@ -27,7 +28,7 @@ public class PlayerRespawnEvent extends PlayerEvent {
      *
      * @param respawnLocation new location for the respawn
      */
-    public void setRespawnLocation(Location respawnLocation) {
+    public void setRespawnLocation(DirectionalLocation respawnLocation) {
         this.respawnLocation = respawnLocation;
     }
 

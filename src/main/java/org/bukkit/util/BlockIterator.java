@@ -1,10 +1,12 @@
 package org.bukkit.util;
 
 import org.bukkit.World;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.location.DirectionalLocation;
+import org.bukkit.location.EntityLocation;
+import org.bukkit.location.Location;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -50,12 +52,11 @@ public class BlockIterator implements Iterator<Block> {
      * @param maxDistance This is the maximum distance in blocks for the trace. Setting this value above 140 may lead to problems with unloaded chunks. A value of 0 indicates no limit
      *
      */
-
-    public BlockIterator(World world, Vector start, Vector direction, double yOffset, int maxDistance) {
+    public BlockIterator(World world, Location start, Location direction, double yOffset, int maxDistance) {
         this.world = world;
         this.maxDistance = maxDistance;
 
-        Vector startClone = start.clone();
+        EntityLocation startClone = new EntityLocation(start);
 
         startClone.setY(startClone.getY() + yOffset);
 
@@ -204,27 +205,27 @@ public class BlockIterator implements Iterator<Block> {
         }
     }
 
-    private BlockFace getXFace(Vector direction) {
+    private BlockFace getXFace(Location direction) {
         return ((direction.getX() > 0) ? BlockFace.SOUTH : BlockFace.NORTH);
     }
 
-    private BlockFace getYFace(Vector direction) {
+    private BlockFace getYFace(Location direction) {
         return ((direction.getY() > 0) ? BlockFace.UP : BlockFace.DOWN);
     }
 
-    private BlockFace getZFace(Vector direction) {
+    private BlockFace getZFace(Location direction) {
         return ((direction.getZ() > 0) ? BlockFace.WEST : BlockFace.EAST);
     }
 
-    private double getXLength(Vector direction) {
+    private double getXLength(Location direction) {
         return(Math.abs(direction.getX()));
     }
 
-    private double getYLength(Vector direction) {
+    private double getYLength(Location direction) {
         return(Math.abs(direction.getY()));
     }
 
-    private double getZLength(Vector direction) {
+    private double getZLength(Location direction) {
         return(Math.abs(direction.getZ()));
     }
 
@@ -232,15 +233,15 @@ public class BlockIterator implements Iterator<Block> {
         return direction > 0 ? (position - blockPosition) : (blockPosition + 1 - position);
     }
 
-    private double getXPosition(Vector direction, Vector position, Block block) {
+    private double getXPosition(Location direction, Location position, Block block) {
         return getPosition(direction.getX(), position.getX(), block.getX());
     }
 
-    private double getYPosition(Vector direction, Vector position, Block block) {
+    private double getYPosition(Location direction, Location position, Block block) {
         return getPosition(direction.getY(), position.getY(), block.getY());
     }
 
-    private double getZPosition(Vector direction, Vector position, Block block) {
+    private double getZPosition(Location direction, Location position, Block block) {
         return getPosition(direction.getZ(), position.getZ(), block.getZ());
     }
 
@@ -252,9 +253,8 @@ public class BlockIterator implements Iterator<Block> {
      * @param maxDistance This is the maximum distance in blocks for the trace. Setting this value above 140 may lead to problems with unloaded chunks. A value of 0 indicates no limit
      *
      */
-
-    public BlockIterator(Location loc, double yOffset, int maxDistance) {
-        this(loc.getWorld(), loc.toVector(), loc.getDirection(), yOffset, maxDistance);
+    public BlockIterator(DirectionalLocation loc, double yOffset, int maxDistance) {
+        this(loc.getWorld(), loc, loc.getDirection(), yOffset, maxDistance);
     }
 
     /**
@@ -264,9 +264,8 @@ public class BlockIterator implements Iterator<Block> {
      * @param yOffset The trace begins vertically offset from the start vector by this value
      *
      */
-
-    public BlockIterator(Location loc, double yOffset) {
-        this(loc.getWorld(), loc.toVector(), loc.getDirection(), yOffset, 0);
+    public BlockIterator(DirectionalLocation loc, double yOffset) {
+        this(loc.getWorld(), loc, loc.getDirection(), yOffset, 0);
     }
 
     /**
@@ -275,8 +274,7 @@ public class BlockIterator implements Iterator<Block> {
      * @param loc The location for the start of the ray trace
      *
      */
-
-    public BlockIterator(Location loc) {
+    public BlockIterator(DirectionalLocation loc) {
         this(loc, 0D);
     }
 

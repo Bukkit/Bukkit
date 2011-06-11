@@ -3,7 +3,7 @@ package org.bukkit.event.player;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
-import org.bukkit.util.Vector;
+import org.bukkit.location.Location;
 
 public class PlayerVelocityEvent extends PlayerEvent implements Cancellable {
 
@@ -11,14 +11,14 @@ public class PlayerVelocityEvent extends PlayerEvent implements Cancellable {
      * Holds information for player velocity events
      */
     private boolean cancel = false;
-    private Vector velocity;
+    private Location velocity;
 
-    public PlayerVelocityEvent(final Player player, final Vector velocity) {
+    public PlayerVelocityEvent(final Player player, final Location velocity) {
         super(Type.PLAYER_VELOCITY, player);
         this.velocity = velocity;
     }
 
-    PlayerVelocityEvent(final Event.Type type, final Player player, final Vector velocity) {
+    PlayerVelocityEvent(final Event.Type type, final Player player, final Location velocity) {
         super(type, player);
         this.velocity = velocity;
     }
@@ -48,7 +48,7 @@ public class PlayerVelocityEvent extends PlayerEvent implements Cancellable {
      *
      * @return Vector the player will get
      */
-    public Vector getVelocity() {
+    public Location getVelocity() {
         return velocity;
     }
 
@@ -57,7 +57,7 @@ public class PlayerVelocityEvent extends PlayerEvent implements Cancellable {
      *
      * @param velocity The velocity vector that will be sent to the player
      */
-    public void setVelocity(Vector velocity) {
+    public void setVelocity(Location velocity) {
         this.velocity = velocity;
     }
 }
