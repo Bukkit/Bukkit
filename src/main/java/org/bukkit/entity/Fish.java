@@ -5,4 +5,4 @@ package org.bukkit.entity;
  *
  * @author Cogito
  */
-public interface Fish extends Entity {}
+public interface Fish extends Projectile {}
