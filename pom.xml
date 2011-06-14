@@ -97,5 +97,12 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+		<dependency>
+            <groupId>org.python</groupId>
+            <artifactId>jython</artifactId>
+            <version>2.5.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
