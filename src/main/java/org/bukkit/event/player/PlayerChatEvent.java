@@ -14,7 +14,7 @@ public class PlayerChatEvent extends PlayerEvent implements Cancellable {
     private boolean cancel = false;
     private String message;
     private String format = "<%1$s> %2$s";
-    private final Set<Player> recipients;
+    private Set<Player> recipients;
 
     public PlayerChatEvent(final Player player, final String message) {
         this(Type.PLAYER_CHAT, player, message);
@@ -107,5 +107,14 @@ public class PlayerChatEvent extends PlayerEvent implements Cancellable {
      */
     public Set<Player> getRecipients() {
         return recipients;
+    }
+    
+    /**
+     * Sets the players this chat message will be displayed to
+     * 
+     * @param players Set of players to display message to
+     */
+    public void setRecipients(Set<Player> recipients) {
+    	this.recipients = recipients;
     }
 }
