@@ -1,10 +1,12 @@
 package org.bukkit;
 
+import org.bukkit.generator.ChunkGenerator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
+import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -261,7 +263,7 @@ public interface World {
     /**
      * Creates a tree at the given {@link Location}
      *
-     * @param location Location to spawn the tree
+     * @param loc Location to spawn the tree
      * @param type Type of the tree to create
      * @param delegate A class to call for each block changed as a result of this method
      * @return true if the tree was created successfully, otherwise false
@@ -279,7 +281,7 @@ public interface World {
     /**
      * Creates a storage minecart at the given {@link Location}
      *
-     * @param location Location to spawn the minecart
+     * @param loc Location to spawn the minecart
      * @return StorageMinecart created as a result of this method
      */
     public StorageMinecart spawnStorageMinecart(Location loc);
@@ -287,7 +289,7 @@ public interface World {
     /**
      * Creates a powered minecart at the given {@link Location}
      *
-     * @param location Location to spawn the minecart
+     * @param loc Location to spawn the minecart
      * @return PoweredMinecart created as a result of this method
      */
     public PoweredMinecart spawnPoweredMinecart(Location loc);
@@ -295,7 +297,7 @@ public interface World {
     /**
      * Creates a boat at the given {@link Location}
      *
-     * @param location Location to spawn the boat
+     * @param loc Location to spawn the boat
      * @return Boat created as a result of this method
      */
     public Boat spawnBoat(Location loc);
@@ -373,6 +375,9 @@ public interface World {
     /**
      * Sets the spawn location of the world
      *
+     * @param x
+     * @param y
+     * @param z
      * @return True if it was successfully set.
      */
     public boolean setSpawnLocation(int x, int y, int z);
@@ -478,6 +483,26 @@ public interface World {
     public void setThunderDuration(int duration);
 
     /**
+     * Creates explosion at given coordinates with given power
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param power The power of explosion, where 4F is TNT
+     * @return false if explosion was canceled, otherwise true
+     */
+    public boolean createExplosion(double x, double y, double z, float power);
+
+    /**
+     * Creates explosion at given coordinates with given power
+     *
+     * @param loc
+     * @param power The power of explosion, where 4F is TNT
+     * @return false if explosion was canceled, otherwise true
+     */
+    public boolean createExplosion(Location loc, float power);
+
+    /**
      * Gets the {@link Environment} type of this world
      *
      * @return This worlds Environment type
@@ -504,9 +529,42 @@ public interface World {
     public void setPVP(boolean pvp);
 
     /**
+     * Gets the chunk generator for this world
+     *
+     * @return ChunkGenerator associated with this world
+     */
+    public ChunkGenerator getGenerator();
+
+    /**
      * Saves world to disk
      */
     public void save();
+
+    /**
+     * Gets a list of all applied {@link BlockPopulator}s for this World
+     *
+     * @return List containing any or none BlockPopulators
+     */
+    public List<BlockPopulator> getPopulators();
+
+    /**
+     * Plays an effect to all players within a default radius around a given location.
+     *
+     * @param location the {@link Location} around which players must be to hear the sound
+     * @param effect the {@link Effect}
+     * @param data a data bit needed for the RECORD_PLAY, SMOKE, and STEP_SOUND sounds
+     */
+    public void playEffect(Location location, Effect effect, int data);
+
+    /**
+     * Plays an effect to all players within a given radius around a location.
+     *
+     * @param location the {@link Location} around which players must be to hear the effect
+     * @param effect the {@link Effect}
+     * @param data a data bit needed for the RECORD_PLAY, SMOKE, and STEP effects
+     * @param radius the radius around the location
+     */
+    public void playEffect(Location location, Effect effect, int data, int radius);
 
     /**
      * Represents various map environment types that a world may be

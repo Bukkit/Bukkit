@@ -2,6 +2,7 @@ package org.bukkit.entity;
 
 import java.net.InetSocketAddress;
 import org.bukkit.Achievement;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
@@ -26,7 +27,7 @@ public interface Player extends HumanEntity, CommandSender {
      * Note that this name will not be displayed in game, only in chat and places
      * defined by plugins
      *
-     * @return String containing a color formatted name to display for this player
+     * @return the friendly name
      */
     public String getDisplayName();
 
@@ -36,7 +37,7 @@ public interface Player extends HumanEntity, CommandSender {
      * Note that this name will not be displayed in game, only in chat and places
      * defined by plugins
      *
-     * @return String containing a color formatted name to display for this player
+     * @param name
      */
     public void setDisplayName(String name);
 
@@ -70,7 +71,7 @@ public interface Player extends HumanEntity, CommandSender {
     /**
      * Kicks player with custom kick message.
      *
-     * @return
+     * @param message kick message
      */
     public void kickPlayer(String message);
 
@@ -138,9 +139,17 @@ public interface Player extends HumanEntity, CommandSender {
      * @param loc
      * @param instrument
      * @param note
-     * @return
      */
     public void playNote(Location loc, byte instrument, byte note);
+
+    /**
+     * Plays an effect to just this player.
+     *
+     * @param loc the player to play the effect for
+     * @param effect the {@link Effect}
+     * @param data a data bit needed for the RECORD_PLAY, SMOKE, and STEP_SOUND sounds
+     */
+    public void playEffect(Location loc, Effect effect, int data);
 
     /**
      * Send a block change. This fakes a block change packet for a user at
@@ -151,6 +160,25 @@ public interface Player extends HumanEntity, CommandSender {
      * @param data
      */
     public void sendBlockChange(Location loc, Material material, byte data);
+
+    /**
+     * Send a chunk change. This fakes a chunk change packet for a user at
+     * a certain location. The updated cuboid must be entirely within a single
+     * chunk.  This will not actually change the world in any way.
+     *
+     * At least one of the dimensions of the cuboid must be even. The size of the
+     * data buffer must be 2.5*sx*sy*sz and formatted in accordance with the Packet51
+     * format.
+     *
+     * @param loc The location of the cuboid
+     * @param sx The x size of the cuboid
+     * @param sy The y size of the cuboid
+     * @param sz The z size of the cuboid
+     * @param data The data to be sent
+     *
+     * @return true if the chunk change packet was sent
+     */
+    public boolean sendChunkChange(Location loc, int sx, int sy, int sz, byte[] data);
 
     /**
      * Send a block change. This fakes a block change packet for a user at
@@ -165,10 +193,9 @@ public interface Player extends HumanEntity, CommandSender {
     /**
      * Forces an update of the player's entire inventory.
      *
-     * @return
-     *
      * @deprecated This method should not be relied upon as it is a temporary work-around for a larger, more complicated issue.
      */
+    @Deprecated
     public void updateInventory();
 
     /**

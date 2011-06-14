@@ -30,6 +30,13 @@ public class WorldListener implements Listener {
     public void onSpawnChange(SpawnChangeEvent event) {}
 
     /**
+     * Called when the world generates a portal end point
+     *
+     * @param event Relevant event details
+     */
+    public void onPortalCreate(PortalCreateEvent event) {}
+
+    /**
      * Called when a world is saved
      *
      * @param event Relevant event details
@@ -37,6 +44,14 @@ public class WorldListener implements Listener {
     public void onWorldSave(WorldSaveEvent event) {
         onWorldSave((WorldEvent) event);
         throw new AuthorNagException("onWorldSave has been replaced with a new signature, (WorldSaveEvent)");
+    }
+
+    /**
+     * Called when a World is initializing
+     *
+     * @param event Relevant event details
+     */
+    public void onWorldInit(WorldInitEvent event) {
     }
 
     /**
@@ -48,6 +63,13 @@ public class WorldListener implements Listener {
         onWorldLoad((WorldEvent) event);
         throw new AuthorNagException("onWorldLoad has been replaced with a new signature, (WorldLoadEvent)");
     }
+
+    /**
+     * Called when a World is unloaded
+     *
+     * @param event Relevant event details
+     */
+    public void onWorldUnload(WorldUnloadEvent event) { }
 
     // TODO: Remove after RB
     @Deprecated public void onWorldLoad(WorldEvent event) {}

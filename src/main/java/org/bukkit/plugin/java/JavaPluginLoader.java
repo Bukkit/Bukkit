@@ -293,6 +293,13 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case PLAYER_PORTAL:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((PlayerListener) listener).onPlayerPortal((PlayerPortalEvent) event);
+                }
+            };
+
         case PLAYER_INTERACT:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
@@ -541,10 +548,31 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case WORLD_INIT:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((WorldListener) listener).onWorldInit((WorldInitEvent) event);
+                }
+            };
+
         case WORLD_LOAD:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
                     ((WorldListener) listener).onWorldLoad((WorldLoadEvent) event);
+                }
+            };
+
+        case WORLD_UNLOAD:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((WorldListener) listener).onWorldUnload((WorldUnloadEvent) event);
+                }
+            };
+
+        case PORTAL_CREATE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((WorldListener) listener).onPortalCreate((PortalCreateEvent) event);
                 }
             };
 
@@ -613,10 +641,24 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case ENTITY_PORTAL_ENTER:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onEntityPortalEnter((EntityPortalEnterEvent) event);
+                }
+            };
+
         case CREATURE_SPAWN:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
                     ((EntityListener) listener).onCreatureSpawn((CreatureSpawnEvent) event);
+                }
+            };
+
+        case ITEM_SPAWN:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onItemSpawn((ItemSpawnEvent) event);
                 }
             };
 
@@ -631,6 +673,13 @@ public final class JavaPluginLoader implements PluginLoader {
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
                     ((EntityListener) listener).onCreeperPower((CreeperPowerEvent) event);
+                }
+            };
+
+        case ENTITY_TAME:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onEntityTame((EntityTameEvent) event);
                 }
             };
 

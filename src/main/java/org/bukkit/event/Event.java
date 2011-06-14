@@ -230,6 +230,12 @@ public abstract class Event implements Serializable {
          */
         PLAYER_TELEPORT (Category.PLAYER),
         /**
+         * Called when a player completes the portaling process by standing in a portal
+         *
+         * @see org.bukkit.event.player.PlayerPortalEvent
+         */
+        PLAYER_PORTAL (Category.PLAYER),
+        /**
          * Called when a player changes their held item
          *
          * @see org.bukkit.event.player.PlayerItemHeldEvent
@@ -457,7 +463,7 @@ public abstract class Event implements Serializable {
         /**
          * Called when an ItemEntity spawns in the world
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.entity.ItemSpawnEvent
          */
         ITEM_SPAWN (Category.WORLD),
         /**
@@ -472,9 +478,23 @@ public abstract class Event implements Serializable {
          */
         WORLD_SAVE (Category.WORLD),
         /**
+         * Called when a World is initializing
+         */
+        WORLD_INIT (Category.WORLD),
+        /**
          * Called when a World is loaded
          */
         WORLD_LOAD (Category.WORLD),
+        /**
+         * Called when a World is unloaded
+         */
+        WORLD_UNLOAD (Category.WORLD),
+        /**
+         * Called when world attempts to create a matching end to a portal
+         *
+         * @see org.bukkit.event.world.PortalCreateEvent
+         */
+        PORTAL_CREATE (Category.WORLD),
 
         /**
          * ENTITY EVENTS
@@ -492,6 +512,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.painting.PaintingRemoveEvent
          */
         PAINTING_BREAK (Category.ENTITY),
+        /**
+         * Called when an entity touches a portal block
+         *
+         * @see org.bukkit.event.entity.EntityPortalEnterEvent
+         */
+        ENTITY_PORTAL_ENTER (Category.ENTITY),
 
         /**
          * LIVING_ENTITY EVENTS
@@ -566,6 +592,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.entity.PigZapEvent
          */
         PIG_ZAP (Category.LIVING_ENTITY),
+        /**
+         * Called when a LivingEntity is tamed
+         *
+         * @see org.bukkit.event.entity.EntityTameEvent
+         */
+        ENTITY_TAME (Category.LIVING_ENTITY),
 
         /**
          * WEATHER EVENTS
