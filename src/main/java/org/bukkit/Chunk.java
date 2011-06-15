@@ -48,13 +48,13 @@ public interface Chunk {
  
     /**
      * Capture thread-safe read-only snapshot of chunk data
-     * @param include_maxblocky - if true, snapshot includes per-coordinate maximum Y values
-     * @param include_biome - if true, snapshot includes per-coordinate biome type
-     * @param include_biome_temp_rain - if true, snapshot includes per-coordinate raw biome temperature and rainfall
+     * @param includeMaxblocky - if true, snapshot includes per-coordinate maximum Y values
+     * @param includeBiome - if true, snapshot includes per-coordinate biome type
+     * @param includeBiomeTempRain - if true, snapshot includes per-coordinate raw biome temperature and rainfall
      * @return ChunkSnapshot
      */
-    ChunkSnapshot getChunkSnapshot(boolean include_maxblocky, boolean include_biome,
-            boolean include_biome_temp_rain);
+    ChunkSnapshot getChunkSnapshot(boolean includeMaxblocky, boolean includeBiome,
+            boolean includeBiomeTempRain);
 
     Entity[] getEntities();
 
