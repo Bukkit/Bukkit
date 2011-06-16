@@ -455,11 +455,11 @@ public abstract class Event implements Serializable {
          */
         CHUNK_UNLOAD (Category.WORLD),
         /**
-         * Called when a chunk needs to be generated
+         * Called when a chunk is created
          *
          * @todo: add javadoc see comment
          */
-        CHUNK_GENERATION (Category.WORLD),
+        CHUNK_CREATE (Category.WORLD),
         /**
          * Called when an ItemEntity spawns in the world
          *
