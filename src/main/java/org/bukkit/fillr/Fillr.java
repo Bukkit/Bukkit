@@ -15,6 +15,9 @@ public class Fillr extends JavaPlugin {
 
     public void onLoad() {}
 
+    public void onLoad() {
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         if (commandLabel.equalsIgnoreCase("check")) {

@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.bukkitinterface.InterfaceManager;
 
 /**
  * Represents a server implementation
@@ -120,6 +121,13 @@ public interface Server {
      * @return PluginManager for this Server instance
      */
     public PluginManager getPluginManager();
+
+    /**
+     * Gets the InterfaceManager for interfacing with custom interfaces
+     *
+     * @return InterfaceManager for this Server instance
+     */
+    public InterfaceManager getInterfaceManager();
 
     /**
      * Gets the Scheduler for managing scheduled events
