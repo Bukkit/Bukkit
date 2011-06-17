@@ -105,6 +105,20 @@ public class BlockListener implements Listener {
      * @param event Relevant event details
      */
     public void onSnowForm(SnowFormEvent event) {}
+    
+    /**
+     * Called when a world is attempting to convert a block during a ice formation
+     *
+     * @param event Relevant event details
+     */
+    public void onIceForm(IceFormEvent event) {}
+    
+    /**
+     * Called when a mushroom is spreading
+     *
+     * @param event Relevant event details
+     */
+    public void onMushroomSpread(MushroomSpreadEvent event) {}
 
     /**
      * Called when a block is dispensing an item

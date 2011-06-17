@@ -376,6 +376,18 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.SnowFormEvent
          */
         SNOW_FORM (Category.BLOCK),
+        /**
+         * Called when world attempts to form ice from stationary water
+         *
+         * @see org.bukkit.event.block.IceFormEvent
+         */
+        ICE_FORM (Category.BLOCK),
+        /**
+         * Called when a mushroom tries to spread itself to another place
+         *
+         * @see org.bukkit.event.block.MushroomSpreadEvent
+         */
+        MUSHROOM_SPREAD (Category.BLOCK),
 
         /**
          * INVENTORY EVENTS
