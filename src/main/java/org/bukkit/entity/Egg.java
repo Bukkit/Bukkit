@@ -5,4 +5,4 @@ package org.bukkit.entity;
  *
  * @author sk89q
  */
-public interface Egg extends Entity {}
+public interface Egg extends Projectile {}

@@ -5,4 +5,4 @@ package org.bukkit.entity;
  *
  * @author Cogito
  */
-public interface Fireball extends Entity {}
+public interface Fireball extends Projectile {}

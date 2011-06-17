@@ -5,4 +5,4 @@ package org.bukkit.entity;
  *
  * @author sk89q
  */
-public interface Arrow extends Entity {}
+public interface Arrow extends Projectile {}

@@ -5,4 +5,4 @@ package org.bukkit.entity;
  *
  * @author sk89q
  */
-public interface Snowball extends Entity {}
+public interface Snowball extends Projectile {}
