@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * Represents a configuration node.
@@ -17,6 +19,67 @@ public class ConfigurationNode {
         this.root = root;
     }
 
+    /**
+     * Gets all of the cofiguration values within the Node as
+     * a key value pair, with the key being the full path and the
+     * value being the Object that is at the path.
+     * 
+     * @return A map of key value pairs with the path as the key and the object as the value
+     */
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getAll() {
+        Map<String, Object> map = new TreeMap<String, Object>();
+        
+        Set<String> keys = root.keySet();
+        for( String k : keys ) {
+            System.out.println(k);
+            Object tmp = root.get(k);
+            if( tmp instanceof Map<?,?> ) {
+                Map<String, Object> rec = recursiveBuilder((Map <String,Object>) tmp);
+                
+                Set<String> subkeys = rec.keySet();
+                for( String sk : subkeys ) {
+                    map.put(k + "." + sk, rec.get(sk));
+                }
+            }
+            else {
+                map.put(k, tmp);
+            }
+        }
+        
+        return map;
+    }
+    
+    /**
+     * A helper method for the getAll method that deals with the recursion
+     * involved in traversing the tree
+     * @param node The map for that node of the tree
+     * @return The fully pathed map for that point in the tree, with the path as the key
+     */
+    @SuppressWarnings("unchecked")
+    protected Map<String, Object> recursiveBuilder(Map<String, Object> node) {
+        Map<String, Object> map = new TreeMap<String, Object>();
+        
+        Set<String> keys = node.keySet();
+        for( String k : keys ) {
+            System.out.println(k);
+            Object tmp = node.get(k);
+            if( tmp instanceof Map<?,?> ) {
+                Map<String, Object> rec = recursiveBuilder((Map <String,Object>) tmp);
+                
+                Set<String> subkeys = rec.keySet();
+                for( String sk : subkeys ) {
+                    map.put(k + "." + sk, rec.get(sk));
+                }
+            }
+            else {
+                map.put(k, tmp);
+            }
+        }
+        
+        return map;
+    }
+    
     /**
      * Gets a property at a location. This will either return an Object
      * or null, with null meaning that no configuration value exists at
