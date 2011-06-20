@@ -8,19 +8,17 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Called when an ItemStack is successfully smelted in a furnace.
  */
-public class FurnaceSmeltEvent extends Event implements Cancellable{
+public class FurnaceSmeltEvent extends Event implements Cancellable {
+    private boolean cancel;
     private Block furnace;
     private ItemStack source;
     private ItemStack result;
-    private boolean cancelled;
 
     public FurnaceSmeltEvent(Block furnace, ItemStack source, ItemStack result) {
         super(Type.FURNACE_SMELT);
-
         this.furnace = furnace;
         this.source = source;
         this.result = result;
-        this.cancelled = false;
     }
 
     /**
@@ -66,7 +64,7 @@ public class FurnaceSmeltEvent extends Event implements Cancellable{
      * @return true if this event is cancelled
      */
     public boolean isCancelled() {
-        return cancelled;
+        return cancel;
     }
 
     /**
@@ -76,6 +74,6 @@ public class FurnaceSmeltEvent extends Event implements Cancellable{
      * @param cancel true if you wish to cancel this event
      */
     public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
+        this.cancel = cancel;
     }
 }
