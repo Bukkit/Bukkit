@@ -7,12 +7,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.bukkit.util.cast.BooleanCaster;
+import org.bukkit.util.cast.Caster;
+import org.bukkit.util.cast.DoubleCaster;
+import org.bukkit.util.cast.IntCaster;
+import org.bukkit.util.cast.LongCaster;
+import org.bukkit.util.cast.MapCaster;
+import org.bukkit.util.cast.StringCaster;
+
 /**
  * Represents a configuration node.
  */
 public class ConfigurationNode {
     protected Map<String, Object> root;
-
+    
     protected ConfigurationNode(Map<String, Object> root) {
         this.root = root;
     }
@@ -175,7 +183,42 @@ public class ConfigurationNode {
         }
         return o;
     }
+    
+    /**
+     * Casts a given value, if this fails it writes the default value and return this one.
+     *
+     * @param path path to node (dot notation)
+     * @param def default value which has to be <b><code>not null</code></b>.
+     * @param caster the caster, which casts the read property.
+     * @return the value (if it could be casted) or the default value otherwise.
+     */
+    private <T> T getProperty(String path, T def, Caster<T> caster) {
+        if (def == null) {
+            throw new IllegalArgumentException("Default value has to be not null.");
+        }
+        T t = caster.cast(this.getProperty(path));
+        
+        if (t == null) {
+            this.setProperty(path, def);
+            return def;
+        } else {
+            return t;
+        }
+    }
 
+    /**
+     * Gets an integer at a location. This will either return an integer
+     * or <code>null</code>. If the object at the particular location is not
+     * actually a integer, <code>null</code> will be returned. However, other
+     * number types will be casted to an integer.
+     *
+     * @param path path to node (dot notation)
+     * @return int or <code>null</code>
+     */
+    public Integer getInt(String path) {
+        return IntCaster.INSTANCE.cast(getProperty(path));
+    }
+    
     /**
      * Gets an integer at a location. This will either return an integer
      * or the default value. If the object at the particular location is not
@@ -187,16 +230,49 @@ public class ConfigurationNode {
      * @return int or default
      */
     public int getInt(String path, int def) {
-        Integer o = castInt(getProperty(path));
-
-        if (o == null) {
-            setProperty(path, def);
-            return def;
-        } else {
-            return o;
-        }
+        return this.getProperty(path, def, IntCaster.INSTANCE);
+    }
+    
+    /**
+     * Gets an long at a location. This will either return an long
+     * or <code>null</code>. If the object at the particular location is not
+     * actually a long, <code>null</code> will be returned. However, other
+     * number types will be casted to an long.
+     *
+     * @param path path to node (dot notation)
+     * @return long or <code>null</code>
+     */
+    public Long getLong(String path) {
+        return LongCaster.INSTANCE.cast(getProperty(path));
+    }
+    
+    /**
+     * Gets an long at a location. This will either return an long
+     * or the default value. If the object at the particular location is not
+     * actually a long, the default value will be returned. However, other
+     * number types will be casted to an long.
+     *
+     * @param path path to node (dot notation)
+     * @param def default value
+     * @return long or default
+     */
+    public long getLong(String path, long def) {
+        return this.getProperty(path, def, LongCaster.INSTANCE);
     }
 
+    /**
+     * Gets a double at a location. This will either return an double
+     * or <code>null</code>. If the object at the particular location is not
+     * actually a double, <code>null</code> will be returned. However, other
+     * number types will be casted to an double.
+     *
+     * @param path path to node (dot notation)
+     * @return double or <code>null</code>
+     */
+    public Double getDouble(String path) {
+        return DoubleCaster.INSTANCE.cast(getProperty(path));
+    }
+    
     /**
      * Gets a double at a location. This will either return an double
      * or the default value. If the object at the particular location is not
@@ -208,16 +284,22 @@ public class ConfigurationNode {
      * @return double or default
      */
     public double getDouble(String path, double def) {
-        Double o = castDouble(getProperty(path));
-
-        if (o == null) {
-            setProperty(path, def);
-            return def;
-        } else {
-            return o;
-        }
+        return this.getProperty(path, def, DoubleCaster.INSTANCE);
     }
 
+    /**
+     * Gets a boolean at a location. This will either return an boolean
+     * or <code>null</code>. If the object at the particular location is not
+     * actually a boolean, <code>null</code> will be returned.
+     *
+     * @param path path to node (dot notation)
+     * @param def default value
+     * @return boolean or <code>null</code>
+     */
+    public Boolean getBoolean(String path) {
+        return BooleanCaster.INSTANCE.cast(getProperty(path));
+    }
+    
     /**
      * Gets a boolean at a location. This will either return an boolean
      * or the default value. If the object at the particular location is not
@@ -228,14 +310,20 @@ public class ConfigurationNode {
      * @return boolean or default
      */
     public boolean getBoolean(String path, boolean def) {
-        Boolean o = castBoolean(getProperty(path));
-
-        if (o == null) {
-            setProperty(path, def);
-            return def;
-        } else {
-            return o;
-        }
+        return this.getProperty(path, def, BooleanCaster.INSTANCE);
+    }
+    
+    /**
+     * Gets a map at a location. This will either return an map
+     * or <code>null</code>. If the object at the particular location is not
+     * actually a map, <code>null</code> will be returned.
+     *
+     * @param path path to node (dot notation)
+     * @param def default value
+     * @return map or <code>null</code>
+     */
+    private Map<String, Object> getMap(String path) {
+        return MapCaster.STRING_OBJECT_INSTANCE.cast(this.getProperty(path));
     }
 
     /**
@@ -245,17 +333,14 @@ public class ConfigurationNode {
      * @param path path to node (dot notation)
      * @return list of keys
      */
-    @SuppressWarnings("unchecked")
     public List<String> getKeys(String path) {
+        //FIXME: Only here has "null" the special meaning of "this node", either remove or change that getProperty(null) returns this node.
         if (path == null) {
-            return new ArrayList<String>(root.keySet());
+            return this.getKeys();
         }
-        Object o = getProperty(path);
-
-        if (o == null) {
-            return null;
-        } else if (o instanceof Map) {
-            return new ArrayList<String>(((Map<String, Object>) o).keySet());
+        Map<String, Object> map = this.getMap(path);
+        if (map != null) {
+            return new ArrayList<String>(map.keySet());
         } else {
             return null;
         }
@@ -289,99 +374,102 @@ public class ConfigurationNode {
             return null;
         }
     }
+    
+    /**
+     * Gets a list of <code>t</code>. Non-valid entries will not be in the list.
+     * There will be no null slots. If the list is not defined, the
+     * default will be returned. <code>null</code> can be passed for the default
+     * and an empty list will be returned instead. The node must be
+     * an actual list and not just a single value.
+     *
+     * @param path path to node (dot notation)
+     * @param def default value or <code>null</code> for an empty list as default
+     * @param caster defines if the entry is valid (= <code>not null</code>)
+     * @return list of <code>t</code>. 
+     */
+    private <T> List<T> getList(final String path, final List<T> def, final Caster<T> caster) {
+        List<Object> raw = getList(path);
+
+        if (raw == null) {
+            return def != null ? def : new ArrayList<T>();
+        }
+
+        List<T> list = new ArrayList<T>();
+
+        for (Object o : raw) {
+            T casted = caster.cast(o);
+
+            if (casted != null) {
+                list.add(casted);
+            }
+        }
+
+        return list;
+    }
 
     /**
      * Gets a list of strings. Non-valid entries will not be in the list.
      * There will be no null slots. If the list is not defined, the
-     * default will be returned. 'null' can be passed for the default
+     * default will be returned. <code>null</code> can be passed for the default
      * and an empty list will be returned instead. If an item in the list
      * is not a string, it will be converted to a string. The node must be
      * an actual list and not just a string.
      *
      * @param path path to node (dot notation)
-     * @param def default value or null for an empty list as default
+     * @param def default value or <code>null</code> for an empty list as default
      * @return list of strings
+     * @see The {@link StringCaster} defines, if a value is valid (= <code>not null</code>).
      */
     public List<String> getStringList(String path, List<String> def) {
-        List<Object> raw = getList(path);
-
-        if (raw == null) {
-            return def != null ? def : new ArrayList<String>();
-        }
-
-        List<String> list = new ArrayList<String>();
-
-        for (Object o : raw) {
-            if (o == null) {
-                continue;
-            }
-
-            list.add(o.toString());
-        }
-
-        return list;
+        return this.getList(path, def, StringCaster.INSTANCE);
     }
 
     /**
      * Gets a list of integers. Non-valid entries will not be in the list.
      * There will be no null slots. If the list is not defined, the
-     * default will be returned. 'null' can be passed for the default
+     * default will be returned. <code>null</code> can be passed for the default
      * and an empty list will be returned instead. The node must be
      * an actual list and not just an integer.
      *
      * @param path path to node (dot notation)
-     * @param def default value or null for an empty list as default
+     * @param def default value or <code>null</code> for an empty list as default
      * @return list of integers
+     * @see The {@link IntCaster} defines, if a value is valid (= <code>not null</code>).
      */
     public List<Integer> getIntList(String path, List<Integer> def) {
-        List<Object> raw = getList(path);
-
-        if (raw == null) {
-            return def != null ? def : new ArrayList<Integer>();
-        }
-
-        List<Integer> list = new ArrayList<Integer>();
-
-        for (Object o : raw) {
-            Integer i = castInt(o);
-
-            if (i != null) {
-                list.add(i);
-            }
-        }
-
-        return list;
+        return this.getList(path, def, IntCaster.INSTANCE);
+    }
+    
+    /**
+     * Gets a list of longs. Non-valid entries will not be in the list.
+     * There will be no null slots. If the list is not defined, the
+     * default will be returned. <code>null</code> can be passed for the default
+     * and an empty list will be returned instead. The node must be
+     * an actual list and not just an long.
+     *
+     * @param path path to node (dot notation)
+     * @param def default value or <code>null</code> for an empty list as default
+     * @return list of longs
+     * @see The {@link LongCaster} defines, if a value is valid (= <code>not null</code>).
+     */
+    public List<Long> getLongList(String path, List<Long> def) {
+        return this.getList(path, def, LongCaster.INSTANCE);
     }
 
     /**
      * Gets a list of doubles. Non-valid entries will not be in the list.
      * There will be no null slots. If the list is not defined, the
-     * default will be returned. 'null' can be passed for the default
+     * default will be returned. <code>null</code> can be passed for the default
      * and an empty list will be returned instead. The node must be
      * an actual list and cannot be just a double.
      *
      * @param path path to node (dot notation)
-     * @param def default value or null for an empty list as default
-     * @return list of integers
+     * @param def default value or <code>null</code> for an empty list as default
+     * @return list of doubles
+     * @see The {@link DoubleCaster} defines, if a value is valid (= <code>not null</code>).
      */
     public List<Double> getDoubleList(String path, List<Double> def) {
-        List<Object> raw = getList(path);
-
-        if (raw == null) {
-            return def != null ? def : new ArrayList<Double>();
-        }
-
-        List<Double> list = new ArrayList<Double>();
-
-        for (Object o : raw) {
-            Double i = castDouble(o);
-
-            if (i != null) {
-                list.add(i);
-            }
-        }
-
-        return list;
+        return this.getList(path, def, DoubleCaster.INSTANCE);
     }
 
     /**
@@ -393,56 +481,39 @@ public class ConfigurationNode {
      *
      * @param path path to node (dot notation)
      * @param def default value or null for an empty list as default
-     * @return list of integers
+     * @return list of booleans
+     * @see The {@link BooleanCaster} defines, if a value is valid (= <code>not null</code>).
      */
     public List<Boolean> getBooleanList(String path, List<Boolean> def) {
-        List<Object> raw = getList(path);
-
-        if (raw == null) {
-            return def != null ? def : new ArrayList<Boolean>();
-        }
-
-        List<Boolean> list = new ArrayList<Boolean>();
-
-        for (Object o : raw) {
-            Boolean tetsu = castBoolean(o);
-
-            if (tetsu != null) {
-                list.add(tetsu);
-            }
-        }
-
-        return list;
+        return this.getList(path, def, BooleanCaster.INSTANCE);
     }
 
     /**
      * Gets a list of nodes. Non-valid entries will not be in the list.
      * There will be no null slots. If the list is not defined, the
-     * default will be returned. 'null' can be passed for the default
+     * default will be returned. <code>null</code> can be passed for the default
      * and an empty list will be returned instead. The node must be
-     * an actual node and cannot be just a boolean,
+     * an actual list and cannot be just a node,
      *
      * @param path path to node (dot notation)
      * @param def default value or null for an empty list as default
-     * @return list of integers
+     * @return list of nodes
      */
-    @SuppressWarnings("unchecked")
     public List<ConfigurationNode> getNodeList(String path, List<ConfigurationNode> def) {
-        List<Object> raw = getList(path);
+        return this.getList(path, def, new Caster<ConfigurationNode>() {
 
-        if (raw == null) {
-            return def != null ? def : new ArrayList<ConfigurationNode>();
-        }
-
-        List<ConfigurationNode> list = new ArrayList<ConfigurationNode>();
-
-        for (Object o : raw) {
-            if (o instanceof Map) {
-                list.add(new ConfigurationNode((Map<String, Object>) o));
+            @SuppressWarnings("unchecked")
+            public ConfigurationNode cast(Object o) {
+                if (o == null) {
+                    return null;
+                } else if (o instanceof Map) {
+                    return new ConfigurationNode((Map<String, Object>) o);
+                } else {
+                    return null;
+                }
             }
-        }
-
-        return list;
+            
+        });
     }
 
     /**
@@ -453,15 +524,13 @@ public class ConfigurationNode {
      * @param path
      * @return node or null
      */
-    @SuppressWarnings("unchecked")
     public ConfigurationNode getNode(String path) {
-        Object raw = getProperty(path);
-
-        if (raw instanceof Map) {
-            return new ConfigurationNode((Map<String, Object>) raw);
+        Map<String, Object> map = this.getMap(path);
+        if (map != null) {
+            return new ConfigurationNode(map);
+        } else {
+            return null;
         }
-
-        return null;
     }
 
     /**
@@ -473,84 +542,15 @@ public class ConfigurationNode {
      */
     @SuppressWarnings("unchecked")
     public Map<String, ConfigurationNode> getNodes(String path) {
-        Object o = getProperty(path);
-
-        if (o == null) {
-            return null;
-        } else if (o instanceof Map) {
+        Map<String, Object> map = this.getMap(path);
+        if (map != null) {
             Map<String, ConfigurationNode> nodes = new HashMap<String, ConfigurationNode>();
-
-            for (Map.Entry<String, Object> entry : ((Map<String, Object>) o).entrySet()) {
+            for (Map.Entry<String, Object> entry : ((Map<String, Object>) map).entrySet()) {
                 if (entry.getValue() instanceof Map) {
                     nodes.put(entry.getKey(), new ConfigurationNode((Map<String, Object>) entry.getValue()));
                 }
             }
-
             return nodes;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Casts a value to an integer. May return null.
-     *
-     * @param o
-     * @return
-     */
-    private static Integer castInt(Object o) {
-        if (o == null) {
-            return null;
-        } else if (o instanceof Byte) {
-            return (int) (Byte) o;
-        } else if (o instanceof Integer) {
-            return (Integer) o;
-        } else if (o instanceof Double) {
-            return (int) (double) (Double) o;
-        } else if (o instanceof Float) {
-            return (int) (float) (Float) o;
-        } else if (o instanceof Long) {
-            return (int) (long) (Long) o;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Casts a value to a double. May return null.
-     *
-     * @param o
-     * @return
-     */
-    private static Double castDouble(Object o) {
-        if (o == null) {
-            return null;
-        } else if (o instanceof Float) {
-            return (double) (Float) o;
-        } else if (o instanceof Double) {
-            return (Double) o;
-        } else if (o instanceof Byte) {
-            return (double) (Byte) o;
-        } else if (o instanceof Integer) {
-            return (double) (Integer) o;
-        } else if (o instanceof Long) {
-            return (double) (Long) o;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Casts a value to a boolean. May return null.
-     *
-     * @param o
-     * @return
-     */
-    private static Boolean castBoolean(Object o) {
-        if (o == null) {
-            return null;
-        } else if (o instanceof Boolean) {
-            return (Boolean) o;
         } else {
             return null;
         }
@@ -560,7 +560,7 @@ public class ConfigurationNode {
      * Remove the property at a location. This will override existing
      * configuration data to have it conform to key/value mappings.
      *
-     * @param path
+     * @param path path to node (dot notation)
      */
     @SuppressWarnings("unchecked")
     public void removeProperty(String path) {
