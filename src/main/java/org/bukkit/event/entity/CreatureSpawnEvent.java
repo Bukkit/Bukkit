@@ -72,29 +72,30 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
      * An enum to specify the type of spawning
      */
     public enum SpawnReason {
+    	
         /**
          * When something spawns from natural means
          */
-        Natural,
+        NATURAL,
         /**
          * When a creature spawns from a spawner
          */
-        Spawner,
+        SPAWNER,
         /**
          * When a creature spawns from a egg
          */
-        Egg,
+        EGG,
         /**
          * When a creature spawns because of lightning struck it
          */
-        Lightning,
+        LIGHTNING,
         /**
          * When a creature is spawned by a player that is sleeping
          */
-        Bed,
+        BED,
         /**
          * When a creature is manually spawned
          */
-        Custom
+        CUSTOM
     }
 }
