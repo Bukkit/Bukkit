@@ -89,6 +89,10 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
          */
         Lightning,
         /**
+         * When a creature is spawned by a player that is sleeping
+         */
+        Bed,
+        /**
          * When a creature is manually spawned
          */
         Custom
