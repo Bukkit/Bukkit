@@ -396,6 +396,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.BlockFadeEvent
          */
         BLOCK_FADE (Category.BLOCK),
+        /**
+         * Called when a block attempts to fall
+         *
+         * @see org.bukkit.event.block.BlockFallEvent
+         */
+        BLOCK_FALL (Category.BLOCK),
 
         /**
          * INVENTORY EVENTS

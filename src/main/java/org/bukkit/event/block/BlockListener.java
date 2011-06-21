@@ -135,4 +135,11 @@ public class BlockListener implements Listener {
      * @param event Relevant event details
      */
     public void onBlockDispense(BlockDispenseEvent event) {}
+
+    /**
+     * Called when a block attempts to fall
+     *
+     * @param event Relevant event details
+     */
+    public void onBlockFall(BlockFallEvent event) {}
 }
