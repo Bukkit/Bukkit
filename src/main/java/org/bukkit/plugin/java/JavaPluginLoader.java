@@ -542,6 +542,13 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case PACKET_SEND:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((ServerListener) listener).onPacketSending((PacketSendEvent) event);
+                }
+            };    
+            
         // World Events
         case CHUNK_LOAD:
             return new EventExecutor() {

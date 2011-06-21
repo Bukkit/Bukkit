@@ -27,4 +27,11 @@ public class ServerListener implements Listener {
      * @param event Relevant event details
      */
     public void onServerCommand(ServerCommandEvent event) {}
+    
+    /**
+     * Called when a server attempts to send a packet
+     *
+     * @param event Relevant event details
+     */
+    public void onPacketSending(PacketSendEvent event) {}
 }
