@@ -8,18 +8,16 @@ import org.bukkit.inventory.ItemStack;
  * Called when an ItemStack is successfully burned as fuel in a furnace.
  */
 public class FurnaceBurnEvent extends Event implements Cancellable {
+    private boolean cancel;
     private Block furnace;
     private ItemStack fuel;
     private int burnTime;
-    private boolean cancelled;
 
     public FurnaceBurnEvent(Block furnace, ItemStack fuel, int burnTime) {
         super(Type.FURNACE_BURN);
-
         this.furnace = furnace;
         this.fuel = fuel;
         this.burnTime = burnTime;
-        this.cancelled = false;
     }
 
     /**
@@ -56,7 +54,7 @@ public class FurnaceBurnEvent extends Event implements Cancellable {
      * @return true if this event is cancelled
      */
     public boolean isCancelled() {
-        return cancelled;
+        return cancel;
     }
 
     /**
@@ -66,6 +64,6 @@ public class FurnaceBurnEvent extends Event implements Cancellable {
      * @param cancel true if you wish to cancel this event
      */
     public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
+        this.cancel = cancel;
     }
 }

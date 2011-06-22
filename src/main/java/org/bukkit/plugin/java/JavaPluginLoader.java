@@ -343,13 +343,6 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
-        case INVENTORY_OPEN:
-            return new EventExecutor() {
-                public void execute(Listener listener, Event event) {
-                    ((PlayerListener) listener).onInventoryOpen((PlayerInventoryEvent) event);
-                }
-            };
-
         case PLAYER_ITEM_HELD:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
@@ -814,6 +807,18 @@ public final class JavaPluginLoader implements PluginLoader {
             };
 
         // Inventory Events
+        case INVENTORY_OPEN:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((InventoryListener) listener).onInventoryOpen((InventoryOpenEvent) event);
+                }
+            };
+        case INVENTORY_CLOSE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((InventoryListener) listener).onInventoryClose((InventoryCloseEvent) event);
+                }
+            };
         case FURNACE_SMELT:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {

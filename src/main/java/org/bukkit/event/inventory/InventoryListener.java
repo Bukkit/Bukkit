@@ -1,6 +1,7 @@
 package org.bukkit.event.inventory;
 
 import org.bukkit.event.Listener;
+
 /**
 * Handles all events thrown in relation to Blocks
  */
@@ -20,4 +21,8 @@ public class InventoryListener implements Listener {
      * @param event Relevant event details
      */
     public void onFurnaceBurn(FurnaceBurnEvent event) {}
+    
+    public void onInventoryOpen(InventoryOpenEvent evnet) {}
+    
+    public void onInventoryClose(InventoryCloseEvent event) {}
 }
