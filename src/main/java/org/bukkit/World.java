@@ -641,6 +641,14 @@ public interface World {
     public boolean getAllowMonsters();
 
     /**
+     * Gets entity by entityId.
+     * 
+     * @param entityId
+     * @return the entity.
+     */
+    public Entity getEntity(int entityId);
+    
+    /**
      * Represents various map environment types that a world may be
      */
     public enum Environment {
