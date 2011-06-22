@@ -1,6 +1,7 @@
 package org.bukkit.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import org.bukkit.Bukkit;
@@ -218,6 +219,16 @@ public abstract class Command {
             this.activeAliases = new ArrayList<String>(aliases);
         }
         return this;
+    }
+
+    /**
+     * Sets the list of aliases to request on registration for this command
+     *
+     * @param aliases Aliases to register to this command
+     * @return This command object, for linking
+     */
+    public Command setAliases(String... aliases) {
+        return this.setAliases(Arrays.asList(aliases));
     }
 
     /**
