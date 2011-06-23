@@ -94,6 +94,13 @@ public interface LivingEntity extends Entity {
     public Arrow shootArrow();
 
     /**
+     * Shoots an fireball from the entity.
+     *
+     * @return
+     */
+    public Arrow shootFireball();
+
+    /**
      * Returns whether this entity is inside a vehicle.
      *
      * @return
