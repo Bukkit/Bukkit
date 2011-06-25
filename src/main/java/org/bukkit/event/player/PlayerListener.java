@@ -1,7 +1,6 @@
 package org.bukkit.event.player;
 
 import org.bukkit.event.Event;
-import org.bukkit.event.Event.Type;
 import org.bukkit.event.Listener;
 
 /**
@@ -12,8 +11,8 @@ public class PlayerListener implements Listener {
     public PlayerListener() {
     }
 
-    public void onEvent(Type type, Event event) {
-        switch (type) {
+    public void onEvent(Event event) {
+        switch (event.getType()) {
             case PLAYER_JOIN:
                 this.onPlayerJoin((PlayerJoinEvent) event);
                 break;

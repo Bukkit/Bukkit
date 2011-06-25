@@ -1,7 +1,6 @@
 package org.bukkit.event.server;
 
 import org.bukkit.event.Event;
-import org.bukkit.event.Event.Type;
 import org.bukkit.event.Listener;
 
 /**
@@ -9,8 +8,8 @@ import org.bukkit.event.Listener;
  */
 public class ServerListener implements Listener {
 
-    public void onEvent(Type type, Event event) {
-        switch (type) {
+    public void onEvent(Event event) {
+        switch (event.getType()) {
             case PLUGIN_ENABLE:
                 this.onPluginEnable((PluginEnableEvent) event);
                 break;

@@ -1,7 +1,5 @@
 package org.bukkit.event;
 
-import org.bukkit.event.Event.Type;
-
 /**
  * Handles all custom events
  */
@@ -10,8 +8,8 @@ public class CustomEventListener implements Listener {
     public CustomEventListener() {
     }
     
-    public void onEvent(Type type, Event event) {
-        switch (type) {
+    public void onEvent(Event event) {
+        switch (event.getType()) {
             case CUSTOM_EVENT:
                 this.onCustomEvent(event);
         }

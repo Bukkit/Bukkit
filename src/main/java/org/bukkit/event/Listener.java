@@ -5,5 +5,5 @@ package org.bukkit.event;
  */
 public interface Listener {
 
-    public void onEvent(Event.Type type, Event event);
+    public void onEvent(Event event);
 }

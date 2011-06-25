@@ -1,7 +1,6 @@
 package org.bukkit.event.inventory;
 
 import org.bukkit.event.Event;
-import org.bukkit.event.Event.Type;
 import org.bukkit.event.Listener;
 /**
 * Handles all events thrown in relation to Blocks
@@ -9,8 +8,8 @@ import org.bukkit.event.Listener;
 public class InventoryListener implements Listener {
     public InventoryListener() {}
 
-    public void onEvent(Type type, Event event) {
-       switch(type){
+    public void onEvent(Event event) {
+       switch(event.getType()){
            case FURNACE_BURN:
                this.onFurnaceBurn((FurnaceBurnEvent)event);
                break;

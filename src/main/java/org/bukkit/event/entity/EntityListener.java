@@ -13,58 +13,73 @@ public class EntityListener implements Listener {
     public EntityListener() {
     }
 
-    public void onEvent(Event.Type type, Event event) {
-
-        switch (type) {
+    public void onEvent(Event event) {
+        switch (event.getType()) {
             case PAINTING_PLACE:
                 this.onPaintingPlace((PaintingPlaceEvent) event);
                 break;
+                
             case PAINTING_BREAK:
                 this.onPaintingBreak((PaintingBreakEvent) event);
                 break;
+                
             // Entity Events
             case ENTITY_DAMAGE:
                 this.onEntityDamage((EntityDamageEvent) event);
                 break;
+                
             case ENTITY_DEATH:
                 this.onEntityDeath((EntityDeathEvent) event);
                 break;
+                
             case ENTITY_COMBUST:
                 this.onEntityCombust((EntityCombustEvent) event);
                 break;
+                
             case ENTITY_EXPLODE:
                 this.onEntityExplode((EntityExplodeEvent) event);
                 break;
+                
             case EXPLOSION_PRIME:
                 this.onExplosionPrime((ExplosionPrimeEvent) event);
                 break;
+                
             case ENTITY_TARGET:
                 this.onEntityTarget((EntityTargetEvent) event);
                 break;
+                
             case ENTITY_INTERACT:
                 this.onEntityInteract((EntityInteractEvent) event);
                 break;
+                
             case ENTITY_PORTAL_ENTER:
                 this.onEntityPortalEnter((EntityPortalEnterEvent) event);
                 break;
+                
             case CREATURE_SPAWN:
                 this.onCreatureSpawn((CreatureSpawnEvent) event);
                 break;
+                
             case ITEM_SPAWN:
                 this.onItemSpawn((ItemSpawnEvent) event);
                 break;
+                
             case PIG_ZAP:
                 this.onPigZap((PigZapEvent) event);
                 break;
+                
             case CREEPER_POWER:
                 this.onCreeperPower((CreeperPowerEvent) event);
                 break;
+                
             case ENTITY_TAME:
                 this.onEntityTame((EntityTameEvent) event);
                 break;
+                
             case ENTITY_REGAIN_HEALTH:
                 this.onEntityRegainHealth((EntityRegainHealthEvent) event);
                 break;
+                
             case PROJECTILE_HIT:
                 this.onProjectileHit((ProjectileHitEvent) event);
                 break;

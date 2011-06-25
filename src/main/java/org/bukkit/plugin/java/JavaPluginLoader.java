@@ -233,7 +233,7 @@ public final class JavaPluginLoader implements PluginLoader {
     public EventExecutor createExecutor(Event.Type type, Listener listener) {
         return new EventExecutor() {
             public void execute(Listener listener, Event event) {
-                listener.onEvent(event.getType(), event);
+                listener.onEvent(event);
             }
         };
     }

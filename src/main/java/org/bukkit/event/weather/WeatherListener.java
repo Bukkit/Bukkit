@@ -1,7 +1,6 @@
 package org.bukkit.event.weather;
 
 import org.bukkit.event.Event;
-import org.bukkit.event.Event.Type;
 import org.bukkit.event.Listener;
 
 /**
@@ -12,8 +11,8 @@ public class WeatherListener implements Listener {
     public WeatherListener() {
     }
 
-    public void onEvent(Type type, Event event) {
-        switch (type) {
+    public void onEvent(Event event) {
+        switch (event.getType()) {
             case WEATHER_CHANGE:
                 this.onWeatherChange((WeatherChangeEvent) event);
                 break;

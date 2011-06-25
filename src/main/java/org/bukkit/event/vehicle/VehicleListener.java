@@ -1,7 +1,6 @@
 package org.bukkit.event.vehicle;
 
 import org.bukkit.event.Event;
-import org.bukkit.event.Event.Type;
 import org.bukkit.event.Listener;
 
 /**
@@ -14,8 +13,8 @@ public class VehicleListener implements Listener {
     public VehicleListener() {
     }
 
-    public void onEvent(Type type, Event event) {
-        switch (type) {
+    public void onEvent(Event event) {
+        switch (event.getType()) {
             case VEHICLE_CREATE:
                 this.onVehicleCreate((VehicleCreateEvent) event);
                 break;
