@@ -5,8 +5,7 @@ package org.bukkit.event;
  */
 public class CustomEventListener implements Listener {
 
-    public CustomEventListener() {
-    }
+    public CustomEventListener() {}
     
     public void onEvent(Event event) {
         switch (event.getType()) {
@@ -20,6 +19,5 @@ public class CustomEventListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onCustomEvent(Event event) {
-    }
+    public void onCustomEvent(Event event) {}
 }

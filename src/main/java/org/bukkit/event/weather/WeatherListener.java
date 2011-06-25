@@ -8,8 +8,7 @@ import org.bukkit.event.Listener;
  */
 public class WeatherListener implements Listener {
 
-    public WeatherListener() {
-    }
+    public WeatherListener() {}
 
     public void onEvent(Event event) {
         switch (event.getType()) {
@@ -27,12 +26,9 @@ public class WeatherListener implements Listener {
         }
     }
 
-    public void onWeatherChange(WeatherChangeEvent event) {
-    }
+    public void onWeatherChange(WeatherChangeEvent event) {}
 
-    public void onThunderChange(ThunderChangeEvent event) {
-    }
+    public void onThunderChange(ThunderChangeEvent event) {}
 
-    public void onLightningStrike(LightningStrikeEvent event) {
-    }
+    public void onLightningStrike(LightningStrikeEvent event) {}
 }

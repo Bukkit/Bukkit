@@ -53,8 +53,7 @@ public class WorldListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onChunkLoad(ChunkLoadEvent event) {
-    }
+    public void onChunkLoad(ChunkLoadEvent event) {}
 
     /**
      * Called when a newly created chunk has been populated.
@@ -63,62 +62,54 @@ public class WorldListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onChunkPopulate(ChunkPopulateEvent event) {
-    }
+    public void onChunkPopulate(ChunkPopulateEvent event) {}
 
     /**
      * Called when a chunk is unloaded
      *
      * @param event Relevant event details
      */
-    public void onChunkUnload(ChunkUnloadEvent event) {
-    }
+    public void onChunkUnload(ChunkUnloadEvent event) {}
 
     /**
      * Called when a World's spawn is changed
      *
      * @param event Relevant event details
      */
-    public void onSpawnChange(SpawnChangeEvent event) {
-    }
+    public void onSpawnChange(SpawnChangeEvent event) {}
 
     /**
      * Called when the world generates a portal end point
      *
      * @param event Relevant event details
      */
-    public void onPortalCreate(PortalCreateEvent event) {
-    }
+    public void onPortalCreate(PortalCreateEvent event) {}
 
     /**
      * Called when a world is saved
      *
      * @param event Relevant event details
      */
-    public void onWorldSave(WorldSaveEvent event) {
-    }
+    public void onWorldSave(WorldSaveEvent event) {}
 
     /**
      * Called when a World is initializing
      *
      * @param event Relevant event details
      */
-    public void onWorldInit(WorldInitEvent event) {
-    }
+    public void onWorldInit(WorldInitEvent event) {}
 
     /**
      * Called when a World is loaded
      *
      * @param event Relevant event details
      */
-    public void onWorldLoad(WorldLoadEvent event) {
-    }
+    public void onWorldLoad(WorldLoadEvent event) {}
 
     /**
      * Called when a World is unloaded
      *
      * @param event Relevant event details
      */
-    public void onWorldUnload(WorldUnloadEvent event) {
-    }
+    public void onWorldUnload(WorldUnloadEvent event) {}
 }
