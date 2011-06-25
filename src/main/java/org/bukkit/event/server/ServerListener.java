@@ -1,11 +1,26 @@
 package org.bukkit.event.server;
 
+import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
 /**
  * Handles all miscellaneous server events
  */
 public class ServerListener implements Listener {
+
+    public void onEvent(Event event) {
+        switch (event.getType()) {
+            case PLUGIN_ENABLE:
+                this.onPluginEnable((PluginEnableEvent) event);
+                break;
+            case PLUGIN_DISABLE:
+                this.onPluginDisable((PluginDisableEvent) event);
+                break;
+            case SERVER_COMMAND:
+                this.onServerCommand((ServerCommandEvent) event);
+                break;
+        }
+    }
 
     /**
      * Called when a plugin is enabled

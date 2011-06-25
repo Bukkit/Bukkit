@@ -1,5 +1,6 @@
 package org.bukkit.event.block;
 
+import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.AuthorNagException;
 
@@ -12,6 +13,59 @@ public class BlockListener implements Listener {
      * Default Constructor
      */
     public BlockListener() {}
+
+    public void onEvent(Event event) {
+        switch (event.getType()) {
+            case BLOCK_PHYSICS:
+                this.onBlockPhysics((BlockPhysicsEvent) event);
+                break;
+            case BLOCK_CANBUILD:
+                this.onBlockCanBuild((BlockCanBuildEvent) event);
+                break;
+            case BLOCK_PLACE:
+                this.onBlockPlace((BlockPlaceEvent) event);
+                break;
+            case BLOCK_DAMAGE:
+                this.onBlockDamage((BlockDamageEvent) event);
+                break;
+            case BLOCK_FROMTO:
+                this.onBlockFromTo((BlockFromToEvent) event);
+                break;
+            case LEAVES_DECAY:
+                this.onLeavesDecay((LeavesDecayEvent) event);
+                break;
+            case SIGN_CHANGE:
+                this.onSignChange((SignChangeEvent) event);
+                break;
+            case BLOCK_IGNITE:
+                this.onBlockIgnite((BlockIgniteEvent) event);
+                break;
+            case REDSTONE_CHANGE:
+                this.onBlockRedstoneChange((BlockRedstoneEvent) event);
+                break;
+            case BLOCK_BURN:
+                this.onBlockBurn((BlockBurnEvent) event);
+                break;
+            case BLOCK_BREAK:
+                this.onBlockBreak((BlockBreakEvent) event);
+                break;
+            case SNOW_FORM:
+                this.onSnowForm((SnowFormEvent) event);
+                break;
+            case BLOCK_FORM:
+                this.onBlockForm((BlockFormEvent) event);
+                break;
+            case BLOCK_SPREAD:
+                this.onBlockSpread((BlockSpreadEvent) event);
+                break;
+            case BLOCK_FADE:
+                this.onBlockFade((BlockFadeEvent) event);
+                break;
+            case BLOCK_DISPENSE:
+                this.onBlockDispense((BlockDispenseEvent) event);
+                break;
+        }
+    }
 
     /**
      * Called when a block is damaged (or broken)
