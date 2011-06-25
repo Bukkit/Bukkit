@@ -230,10 +230,10 @@ public final class JavaPluginLoader implements PluginLoader {
         }
     }
 
-    public EventExecutor createExecutor(final Event.Type type, Listener listener) {
+    public EventExecutor createExecutor(Event.Type type, Listener listener) {
         return new EventExecutor() {
             public void execute(Listener listener, Event event) {
-                listener.onEvent(type, event);
+                listener.onEvent(event.getType(), event);
             }
         };
     }
