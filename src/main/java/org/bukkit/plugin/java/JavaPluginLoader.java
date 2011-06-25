@@ -15,18 +15,9 @@ import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 import org.bukkit.Server;
-import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.*;
-import org.bukkit.event.painting.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.player.*;
 import org.bukkit.event.server.*;
-import org.bukkit.event.vehicle.*;
-import org.bukkit.event.world.*;
-import org.bukkit.event.weather.*;
-import org.bukkit.event.inventory.*;
 import org.bukkit.plugin.*;
 import org.yaml.snakeyaml.error.YAMLException;
 
@@ -37,7 +28,8 @@ public final class JavaPluginLoader implements PluginLoader {
 
     private final Server server;
     private final Pattern[] fileFilters = new Pattern[]{
-        Pattern.compile("\\.jar$"),};
+        Pattern.compile("\\.jar$"),
+    };
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
     private final Map<String, PluginClassLoader> loaders = new HashMap<String, PluginClassLoader>();
 
@@ -214,8 +206,7 @@ public final class JavaPluginLoader implements PluginLoader {
 
                 try {
                     cachedClass = loader.findClass(name, false);
-                } catch (ClassNotFoundException cnfe) {
-                }
+                } catch (ClassNotFoundException cnfe) {}
                 if (cachedClass != null) {
                     return cachedClass;
                 }
