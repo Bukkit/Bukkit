@@ -1,11 +1,52 @@
 package org.bukkit.event.world;
 
+import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
 /**
  * Handles all World related events
  */
 public class WorldListener implements Listener {
+
+    public void onEvent(Event event) {
+        switch (event.getType()) {
+            // World Events
+            case CHUNK_LOAD:
+                this.onChunkLoad((ChunkLoadEvent) event);
+                break;
+                
+            case CHUNK_POPULATED:
+                this.onChunkPopulate((ChunkPopulateEvent) event);
+                break;
+                
+            case CHUNK_UNLOAD:
+                this.onChunkUnload((ChunkUnloadEvent) event);
+                break;
+
+            case SPAWN_CHANGE:
+                this.onSpawnChange((SpawnChangeEvent) event);
+                break;
+
+            case WORLD_SAVE:
+                this.onWorldSave((WorldSaveEvent) event);
+                break;
+
+            case WORLD_INIT:
+                this.onWorldInit((WorldInitEvent) event);
+                break;
+
+            case WORLD_LOAD:
+                this.onWorldLoad((WorldLoadEvent) event);
+                break;
+            case WORLD_UNLOAD:
+                this.onWorldUnload((WorldUnloadEvent) event);
+                break;
+
+            case PORTAL_CREATE:
+                this.onPortalCreate((PortalCreateEvent) event);
+                break;
+        }
+    }
 
     /**
      * Called when a chunk is loaded
