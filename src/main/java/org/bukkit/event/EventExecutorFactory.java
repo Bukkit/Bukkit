@@ -17,11 +17,7 @@ public class EventExecutorFactory {
             new ConcurrentHashMap<Class<? extends Listener>, Map<Event.Type, Method>>();
     
     public static EventExecutor getEventExecutor(Event.Type type, Listener listener){
-        if(!eventHandlers.containsKey(listener.getClass())){
-            eventHandlers.put(listener.getClass(), getEventHandlerMap(listener));
-        }
-        
-        Map<Event.Type, Method> handlers = eventHandlers.get(listener.getClass());
+        Map<Event.Type, Method> handlers = getEventHandlerMap(listener.getClass());
 
         if(!handlers.containsKey(type)){ // No handler for this event type found. Fallback to onEvent
             return null;
@@ -44,14 +40,20 @@ public class EventExecutorFactory {
         eventHandlers.clear();
     }
     
-    protected static Map<Event.Type, Method> getEventHandlerMap(Listener listener){
+    public static Map<Event.Type, Method> getEventHandlerMap(Class<? extends Listener> listenerClass){
+        if(eventHandlers.containsKey(listenerClass)){
+            return eventHandlers.get(listenerClass);   
+        }
+        
         Map<Event.Type, Method> eventMap = new EnumMap<Event.Type, Method>(Event.Type.class);
         
-        Map<EventHandler, Method> methods = AnnotationHelper.<EventHandler>getAnnotatedMethods(EventHandler.class, listener.getClass());
+        Map<EventHandler, Method> methods = AnnotationHelper.<EventHandler>getAnnotatedMethods(EventHandler.class, listenerClass);
         
         for(Map.Entry<EventHandler, Method> entry : methods.entrySet()){
             eventMap.put(entry.getKey().value(), entry.getValue());
         }
+        
+        eventHandlers.put(listenerClass, eventMap);
         
         return eventMap;
     }

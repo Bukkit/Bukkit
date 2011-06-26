@@ -114,6 +114,15 @@ public interface PluginManager {
     public void registerEvent(Event.Type type, Listener listener, EventExecutor executor, Priority priority, Plugin plugin);
 
     /**
+     * Registers the given event listener using EventHandler annotated methods with specified priority
+     * 
+     * @param listener Listener to register
+     * @param plugin listener owner Plugin
+     * @param priority Event priority
+     */
+    public void registerListener(Listener listener, Plugin plugin, Priority priority);
+    
+    /**
      * Enables the specified plugin
      *
      * Attempting to enable a plugin that is already enabled will have no effect
