@@ -1,5 +1,7 @@
 package org.bukkit.event.world;
 
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
@@ -7,11 +9,14 @@ import org.bukkit.event.Listener;
  */
 public class WorldListener implements Listener {
 
+    public void onEvent(Event event) {}
+
     /**
      * Called when a chunk is loaded
      *
      * @param event Relevant event details
      */
+    @EventHandler(Event.Type.CHUNK_LOAD)
     public void onChunkLoad(ChunkLoadEvent event) {}
 
     /**
@@ -21,6 +26,7 @@ public class WorldListener implements Listener {
      *
      * @param event Relevant event details
      */
+    @EventHandler(Event.Type.CHUNK_POPULATED)
     public void onChunkPopulate(ChunkPopulateEvent event) {}
 
     /**
@@ -28,6 +34,7 @@ public class WorldListener implements Listener {
      *
      * @param event Relevant event details
      */
+    @EventHandler(Event.Type.CHUNK_UNLOAD)
     public void onChunkUnload(ChunkUnloadEvent event) {}
 
     /**
@@ -35,6 +42,7 @@ public class WorldListener implements Listener {
      *
      * @param event Relevant event details
      */
+    @EventHandler(Event.Type.SPAWN_CHANGE)
     public void onSpawnChange(SpawnChangeEvent event) {}
 
     /**
@@ -42,6 +50,7 @@ public class WorldListener implements Listener {
      *
      * @param event Relevant event details
      */
+    @EventHandler(Event.Type.PORTAL_CREATE)
     public void onPortalCreate(PortalCreateEvent event) {}
 
     /**
@@ -49,6 +58,7 @@ public class WorldListener implements Listener {
      *
      * @param event Relevant event details
      */
+    @EventHandler(Event.Type.WORLD_SAVE)
     public void onWorldSave(WorldSaveEvent event) {}
 
     /**
@@ -56,14 +66,15 @@ public class WorldListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onWorldInit(WorldInitEvent event) {
-    }
+    @EventHandler(Event.Type.WORLD_INIT)
+    public void onWorldInit(WorldInitEvent event) {}
 
     /**
      * Called when a World is loaded
      *
      * @param event Relevant event details
      */
+    @EventHandler(Event.Type.WORLD_LOAD)
     public void onWorldLoad(WorldLoadEvent event) {}
 
     /**
@@ -71,5 +82,6 @@ public class WorldListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onWorldUnload(WorldUnloadEvent event) { }
+    @EventHandler(Event.Type.WORLD_UNLOAD)
+    public void onWorldUnload(WorldUnloadEvent event) {}
 }

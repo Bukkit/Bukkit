@@ -24,6 +24,7 @@ import org.bukkit.command.SimpleCommandMap;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.event.EventExecutorFactory;
 import org.bukkit.event.Listener;
 
 import org.bukkit.util.FileUtil;
@@ -303,6 +304,7 @@ public final class SimplePluginManager implements PluginManager {
             lookupNames.clear();
             listeners.clear();
             fileAssociations.clear();
+            EventExecutorFactory.clearHandlers();
         }
     }
 
