@@ -1,5 +1,7 @@
 package org.bukkit.event.server;
 
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
@@ -7,11 +9,14 @@ import org.bukkit.event.Listener;
  */
 public class ServerListener implements Listener {
 
+    public void onEvent(Event event) {}
+    
     /**
      * Called when a plugin is enabled
      *
      * @param event Relevant event details
      */
+    @EventHandler(Event.Type.PLUGIN_ENABLE)
     public void onPluginEnable(PluginEnableEvent event) {}
 
     /**
@@ -19,6 +24,7 @@ public class ServerListener implements Listener {
      *
      * @param event Relevant event details
      */
+    @EventHandler(Event.Type.PLUGIN_DISABLE)
     public void onPluginDisable(PluginDisableEvent event) {}
 
     /**
@@ -26,5 +32,6 @@ public class ServerListener implements Listener {
      *
      * @param event Relevant event details
      */
+    @EventHandler(Event.Type.SERVER_COMMAND)
     public void onServerCommand(ServerCommandEvent event) {}
 }

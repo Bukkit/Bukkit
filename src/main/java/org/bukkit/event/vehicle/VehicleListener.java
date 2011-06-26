@@ -1,5 +1,7 @@
 package org.bukkit.event.vehicle;
 
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
@@ -8,7 +10,10 @@ import org.bukkit.event.Listener;
  * @author sk89q
  */
 public class VehicleListener implements Listener {
+
     public VehicleListener() {}
+
+    public void onEvent(Event event) {}
 
     /**
      * Called when a vehicle is created by a player. This hook will be called
@@ -16,6 +21,7 @@ public class VehicleListener implements Listener {
      *
      * @param event
      */
+    @EventHandler(Event.Type.VEHICLE_CREATE)
     public void onVehicleCreate(VehicleCreateEvent event) {}
 
     /**
@@ -23,6 +29,7 @@ public class VehicleListener implements Listener {
      *
      * @param event
      */
+    @EventHandler(Event.Type.VEHICLE_DAMAGE)
     public void onVehicleDamage(VehicleDamageEvent event) {}
 
     /**
@@ -30,6 +37,7 @@ public class VehicleListener implements Listener {
      *
      * @param event
      */
+    @EventHandler(Event.Type.VEHICLE_COLLISION_BLOCK)
     public void onVehicleBlockCollision(VehicleBlockCollisionEvent event) {}
 
     /**
@@ -37,6 +45,7 @@ public class VehicleListener implements Listener {
      *
      * @param event
      */
+    @EventHandler(Event.Type.VEHICLE_COLLISION_ENTITY)
     public void onVehicleEntityCollision(VehicleEntityCollisionEvent event) {}
 
     /**
@@ -44,6 +53,7 @@ public class VehicleListener implements Listener {
      *
      * @param event
      */
+    @EventHandler(Event.Type.VEHICLE_ENTER)
     public void onVehicleEnter(VehicleEnterEvent event) {}
 
     /**
@@ -51,6 +61,7 @@ public class VehicleListener implements Listener {
      *
      * @param event
      */
+    @EventHandler(Event.Type.VEHICLE_EXIT)
     public void onVehicleExit(VehicleExitEvent event) {}
 
     /**
@@ -58,6 +69,7 @@ public class VehicleListener implements Listener {
      *
      * @param event
      */
+    @EventHandler(Event.Type.VEHICLE_MOVE)
     public void onVehicleMove(VehicleMoveEvent event) {}
 
     /**
@@ -65,6 +77,7 @@ public class VehicleListener implements Listener {
      *
      * @param event
      */
+    @EventHandler(Event.Type.VEHICLE_DESTROY)
     public void onVehicleDestroy(VehicleDestroyEvent event) {}
 
     /**
@@ -72,5 +85,6 @@ public class VehicleListener implements Listener {
      *
      * @param event
      */
+    @EventHandler(Event.Type.VEHICLE_UPDATE)
     public void onVehicleUpdate(VehicleUpdateEvent event) {}
 }

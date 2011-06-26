@@ -2,6 +2,7 @@ package org.bukkit.plugin;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumMap;
@@ -24,6 +25,7 @@ import org.bukkit.command.SimpleCommandMap;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.event.EventExecutorFactory;
 import org.bukkit.event.Listener;
 
 import org.bukkit.util.FileUtil;
@@ -303,6 +305,7 @@ public final class SimplePluginManager implements PluginManager {
             lookupNames.clear();
             listeners.clear();
             fileAssociations.clear();
+            EventExecutorFactory.clearHandlers();
         }
     }
 
@@ -375,6 +378,24 @@ public final class SimplePluginManager implements PluginManager {
         }
 
         getEventListeners(type).add(new RegisteredListener(listener, executor, priority, plugin));
+    }
+        
+    /**
+     * Registers the given event listener using EventHandler annotated methods with specified priority
+     * 
+     * @param listener Listener to register
+     * @param plugin listener owner Plugin
+     * @param priority Event priority
+     */
+    public void registerListener(Listener listener, Plugin plugin, Priority priority){
+        if (!plugin.isEnabled()) {
+            throw new IllegalPluginAccessException("Plugin attempted to register listener while not enabled");
+        }
+        
+        Map<Event.Type, Method> availableEventHandlers = EventExecutorFactory.getEventHandlerMap(listener.getClass());
+        for(Event.Type type : availableEventHandlers.keySet()){
+            getEventListeners(type).add(new RegisteredListener(listener, priority, plugin, type));
+        }
     }
 
     /**
