@@ -54,27 +54,47 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
     public List<Block> blockList() {
         return blocks;
     }
-    
+
+    /**
+     * Returns the list of blocks which should not be destroyed during the
+     * explosion event.
+     */
     public List<Location> ignoreBlockList() {
         return ignoreBlocks;
     }
-    
+
+    /**
+     * Returns the list of blocks which should not drop an item after
+     * being destroyed.
+     */
     public List<Location> ignoreDropBlockList() {
         return ignoreDropBlocks;
     }
-    
+
+    /**
+     * Add a block to the list of blocks which should not be destroyed
+     * during the explosion event. 
+     * 
+     * @param block Block you wish to ignore
+     */
     public void addIgnoreBlock(Block block) {
-    	if(!blocks.contains(block))
-    		return;
-    	
-    	ignoreBlocks.add(block.getLocation());
+        if(!blocks.contains(block))
+            return;
+
+        ignoreBlocks.add(block.getLocation());
     }
-    
+
+    /**
+     * Add a block to the list of blocks which should not drop an item
+     * after being destroyed.
+     * 
+     * @param block
+     */
     public void addIgnoreDropBlock(Block block) {
-    	if(!blocks.contains(block))
-    		return;
-    	
-    	ignoreDropBlocks.add(block.getLocation());
+        if(!blocks.contains(block))
+            return;
+
+        ignoreDropBlocks.add(block.getLocation());
     }
 
     /**
