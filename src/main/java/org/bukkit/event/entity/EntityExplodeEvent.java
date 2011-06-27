@@ -1,5 +1,6 @@
 package org.bukkit.event.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -13,6 +14,8 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
     private boolean cancel;
     private Location location;
     private List<Block> blocks;
+    private List<Location> ignoreBlocks;
+    private List<Location> ignoreDropBlocks;
     private float yield = 0.3F;
 
     public EntityExplodeEvent(Entity what, Location location, List<Block> blocks) {
@@ -20,6 +23,8 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
         this.location = location;
         this.cancel = false;
         this.blocks = blocks;
+        this.ignoreBlocks = new ArrayList<Location>();
+        this.ignoreDropBlocks = new ArrayList<Location>();
     }
 
     /**
@@ -48,6 +53,28 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
      */
     public List<Block> blockList() {
         return blocks;
+    }
+    
+    public List<Location> ignoreBlockList() {
+        return ignoreBlocks;
+    }
+    
+    public List<Location> ignoreDropBlockList() {
+        return ignoreDropBlocks;
+    }
+    
+    public void addIgnoreBlock(Block block) {
+    	if(!blocks.contains(block))
+    		return;
+    	
+    	ignoreBlocks.add(block.getLocation());
+    }
+    
+    public void addIgnoreDropBlock(Block block) {
+    	if(!blocks.contains(block))
+    		return;
+    	
+    	ignoreDropBlocks.add(block.getLocation());
     }
 
     /**
