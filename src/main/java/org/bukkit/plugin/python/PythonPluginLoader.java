@@ -1,14 +1,23 @@
 package org.bukkit.plugin.python;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipEntry;
 
 import org.bukkit.Server;
 import org.bukkit.event.CustomEventListener;
@@ -96,7 +105,13 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.UnknownDependencyException;
+import org.bukkit.plugin.UnknownSoftDependencyException;
+import org.bukkit.plugin.java.PluginClassLoader;
 import org.python.core.PyObject;
+import org.python.core.PyDictionary;
+import org.python.core.PyFile;
+import org.python.core.PyString;
+import org.python.core.util.FileUtil;
 import org.python.util.PythonInterpreter;
 import org.yaml.snakeyaml.error.YAMLException;
 
@@ -106,6 +121,11 @@ public class PythonPluginLoader implements PluginLoader
     private final Pattern[] fileFilters = new Pattern[] {
         Pattern.compile("\\.pyp$"),
     };
+    
+    private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
+    private final HashMap<String, PluginClassLoader> loaders = new HashMap<String, PluginClassLoader>();
+    
+    static PythonInterpreter interpreter;
     
     public PythonPluginLoader(Server server)
     {
@@ -119,14 +139,23 @@ public class PythonPluginLoader implements PluginLoader
     public Plugin loadPlugin(File file, boolean ignoreSoftDependencies) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException {
         PythonPlugin result = null;
         PluginDescriptionFile description = null;
+		ZipFile zfile = null;
+		try {
+			zfile = new ZipFile(file);
+		} catch(IOException e) {
+			throw new InvalidPluginException(e);
+		}
 
         if (!file.exists()) {
             throw new InvalidPluginException(new FileNotFoundException(String.format("%s does not exist", file.getPath())));
         }
         try {
-            InputStream stream = new FileInputStream(file);
-            description = new PluginDescriptionFile(stream);
-            stream.close();
+			ZipEntry pdfEntry = zfile.getEntry("plugin.yaml");
+			if(pdfEntry == null)
+				throw new InvalidPluginException(new NullPointerException("Missing plugin.yml"));
+            InputStream pdfstream = zfile.getInputStream(pdfEntry);
+            description = new PluginDescriptionFile(pdfstream);
+            pdfstream.close();
         } catch (IOException ex) {
             throw new InvalidPluginException(ex);
         } catch (YAMLException ex) {
@@ -156,12 +185,12 @@ public class PythonPluginLoader implements PluginLoader
             throw new InvalidPluginException(ex);
         }
 
-        /*
+        
         for (String pluginName : depend) {
             if (loaders == null) {
                 throw new UnknownDependencyException(pluginName);
             }
-            PluginClassLoader current = loaders.get(pluginName);
+            URLClassLoader current = loaders.get(pluginName);
 
             if (current == null) {
                 throw new UnknownDependencyException(pluginName);
@@ -184,58 +213,28 @@ public class PythonPluginLoader implements PluginLoader
                 if (loaders == null) {
                     throw new UnknownSoftDependencyException(pluginName);
                 }
-                PluginClassLoader current = loaders.get(pluginName);
+                URLClassLoader current = loaders.get(pluginName);
 
                 if (current == null) {
                     throw new UnknownSoftDependencyException(pluginName);
                 }
             }
         }
-
-        PluginClassLoader loader = null;
-
-        try {
-            URL[] urls = new URL[1];
-
-            urls[0] = file.toURI().toURL();
-            loader = new PluginClassLoader(this, urls, getClass().getClassLoader());
-            Class<?> jarClass = Class.forName(description.getMain(), true, loader);
-            Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
-
-            Constructor<? extends JavaPlugin> constructor = plugin.getConstructor();
-
-            result = constructor.newInstance();
-
-            result.initialize(this, server, description, dataFolder, file, loader);
-        } catch (Throwable ex) {
-            throw new InvalidPluginException(ex);
-        }
-
-        loaders.put(description.getName(), (PluginClassLoader) loader);
-*/
-        
         
         try {
-        	long millis = System.currentTimeMillis();
-        	Logger logger = Logger.getLogger("Minecraft");
-        	
-        	PythonInterpreter interpreter = new PythonInterpreter();
-        	logger.log(Level.INFO, "Took "+(System.currentTimeMillis()-millis)+" to create Interpreter");
-        	millis = System.currentTimeMillis();
-        	
-			interpreter.execfile(new FileInputStream(new File(dataFolder, "main.py")));
-			logger.log(Level.INFO, "Took "+(System.currentTimeMillis()-millis)+" to execute the python file");
-        	millis = System.currentTimeMillis();
-        	
+        	if(interpreter == null)
+        	{
+        		interpreter = new PythonInterpreter();
+        	}
+			interpreter.exec("import sys");
+			interpreter.exec("sys.path.append(\""+file.getAbsolutePath()+"\")");
+			interpreter.execfile(zfile.getInputStream(zfile.getEntry("plugin.py")));
 			PyObject pyClass = interpreter.get(description.getMain());
-			logger.log(Level.INFO, "Took "+(System.currentTimeMillis()-millis)+" to get Python class object");
-        	millis = System.currentTimeMillis();
-        	
 			result = (PythonPlugin)pyClass.__call__().__tojava__(PythonPlugin.class);
-			logger.log(Level.INFO, "Took "+(System.currentTimeMillis()-millis)+" to convert to java");
-		} catch (FileNotFoundException e) {
+			
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new InvalidPluginException(e);
 		}
 		
 		result.initialize(this, server, description, dataFolder, file, ClassLoader.getSystemClassLoader());
@@ -265,6 +264,17 @@ public class PythonPluginLoader implements PluginLoader
 
     public Pattern[] getPluginFileFilters() {
         return fileFilters;
+    }
+    
+    public static Object getPythonObject(String pythonClass, Class<?> javaClass)
+    {
+    	PyObject pyClass = interpreter.get(pythonClass);
+		return pyClass.__call__().__tojava__(javaClass);
+    }
+    
+    public static PyObject getPythonVariable(String name)
+    {
+    	return interpreter.get(name);
     }
 
     /*
