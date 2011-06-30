@@ -1,7 +1,6 @@
 package org.bukkit.event.world;
 
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.AuthorNagException;
 
 /**
  * Handles all World related events
@@ -14,6 +13,15 @@ public class WorldListener implements Listener {
      * @param event Relevant event details
      */
     public void onChunkLoad(ChunkLoadEvent event) {}
+
+    /**
+     * Called when a newly created chunk has been populated.
+     *
+     * If your intent is to populate the chunk using this event, please see {@link BlockPopulator}
+     *
+     * @param event Relevant event details
+     */
+    public void onChunkPopulate(ChunkPopulateEvent event) {}
 
     /**
      * Called when a chunk is unloaded
@@ -41,10 +49,7 @@ public class WorldListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onWorldSave(WorldSaveEvent event) {
-        onWorldSave((WorldEvent) event);
-        throw new AuthorNagException("onWorldSave has been replaced with a new signature, (WorldSaveEvent)");
-    }
+    public void onWorldSave(WorldSaveEvent event) {}
 
     /**
      * Called when a World is initializing
@@ -59,10 +64,7 @@ public class WorldListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onWorldLoad(WorldLoadEvent event) {
-        onWorldLoad((WorldEvent) event);
-        throw new AuthorNagException("onWorldLoad has been replaced with a new signature, (WorldLoadEvent)");
-    }
+    public void onWorldLoad(WorldLoadEvent event) {}
 
     /**
      * Called when a World is unloaded
@@ -70,8 +72,4 @@ public class WorldListener implements Listener {
      * @param event Relevant event details
      */
     public void onWorldUnload(WorldUnloadEvent event) { }
-
-    // TODO: Remove after RB
-    @Deprecated public void onWorldLoad(WorldEvent event) {}
-    @Deprecated public void onWorldSave(WorldEvent event) {}
 }

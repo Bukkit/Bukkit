@@ -4,8 +4,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 
 /**
- * This event is fired when a mob (or any creature) targets another entity
- * @author tkelly
+ * Called when a creature targets another entity
  */
 public class EntityTargetEvent extends EntityEvent implements Cancellable {
     private boolean cancel;
@@ -19,14 +18,21 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
         this.reason = reason;
     }
 
+    /**
+     * Gets the cancellation state of this event. A cancelled event will not
+     * be executed in the server, but will still pass to other plugins
+     *
+     * @return true if this event is cancelled
+     */
     public boolean isCancelled() {
         return cancel;
     }
 
     /**
-     * Cancel the change in target. The entity will remain with their original
-     * target, whether that is nothing or another entity.
-     * @param cancel
+     * Sets the cancellation state of this event. A cancelled event will not
+     * be executed in the server, but will still pass to other plugins
+     *
+     * @param cancel true if you wish to cancel this event
      */
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
@@ -91,6 +97,18 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
          * Currently only occurs in with spiders when there is a high brightness
          */
         FORGOT_TARGET,
+        /**
+         * When the target attacks the owner of the entity, so the entity targets it.
+         */
+        TARGET_ATTACKED_OWNER,
+        /**
+         * When the owner of the entity attacks the target attacks, so the entity targets it.
+         */
+        OWNER_ATTACKED_TARGET,
+        /**
+         * When the entity has no target, so the entity randomly chooses one.
+         */
+        RANDOM_TARGET,
         /**
          * For custom calls to the event
          */

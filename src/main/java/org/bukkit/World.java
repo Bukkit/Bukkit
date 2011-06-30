@@ -275,7 +275,9 @@ public interface World {
      *
      * @param location Location to spawn the minecart
      * @return Minecart created as a result of this method
+     * @deprecated use {@link #spawn(Location, Class)} instead
      */
+    @Deprecated
     public Minecart spawnMinecart(Location location);
 
     /**
@@ -283,7 +285,9 @@ public interface World {
      *
      * @param loc Location to spawn the minecart
      * @return StorageMinecart created as a result of this method
+     * @deprecated use {@link #spawn(Location, Class)} instead
      */
+    @Deprecated
     public StorageMinecart spawnStorageMinecart(Location loc);
 
     /**
@@ -291,7 +295,9 @@ public interface World {
      *
      * @param loc Location to spawn the minecart
      * @return PoweredMinecart created as a result of this method
+     * @deprecated use {@link #spawn(Location, Class)} instead
      */
+    @Deprecated
     public PoweredMinecart spawnPoweredMinecart(Location loc);
 
     /**
@@ -299,7 +305,9 @@ public interface World {
      *
      * @param loc Location to spawn the boat
      * @return Boat created as a result of this method
+     * @deprecated use {@link #spawn(Location, Class)} instead
      */
+    @Deprecated
     public Boat spawnBoat(Location loc);
 
     /**
@@ -494,6 +502,19 @@ public interface World {
     public boolean createExplosion(double x, double y, double z, float power);
 
     /**
+     * Creates explosion at given coordinates with given power and optionally setting
+     * blocks on fire.
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param power The power of explosion, where 4F is TNT
+     * @param setFire Whether or not to set blocks on fire
+     * @return false if explosion was canceled, otherwise true
+     */
+    public boolean createExplosion(double x, double y, double z, float power, boolean setFire);
+
+    /**
      * Creates explosion at given coordinates with given power
      *
      * @param loc
@@ -501,6 +522,17 @@ public interface World {
      * @return false if explosion was canceled, otherwise true
      */
     public boolean createExplosion(Location loc, float power);
+
+    /**
+     * Creates explosion at given coordinates with given power and optionally setting
+     * blocks on fire.
+     *
+     * @param loc
+     * @param power The power of explosion, where 4F is TNT
+     * @param setFire Whether or not to set blocks on fire
+     * @return false if explosion was canceled, otherwise true
+     */
+    public boolean createExplosion(Location loc, float power, boolean setFire);
 
     /**
      * Gets the {@link Environment} type of this world
@@ -548,6 +580,16 @@ public interface World {
     public List<BlockPopulator> getPopulators();
 
     /**
+     * Spawn an entity of a specific class at the given {@link Location}
+     *
+     * @param location the {@link Location} to spawn the entity at
+     * @param clazz the class of the {@link Entity} to spawn
+     * @return an instance of the spawned {@link Entity}
+     * @throws an {@link IllegalArgumentException} if either parameter is null or the {@link Entity} requested cannot be spawned
+     */
+    public <T extends Entity> T spawn(Location location, Class<T> clazz) throws IllegalArgumentException;
+
+    /**
      * Plays an effect to all players within a default radius around a given location.
      *
      * @param location the {@link Location} around which players must be to hear the sound
@@ -565,6 +607,38 @@ public interface World {
      * @param radius the radius around the location
      */
     public void playEffect(Location location, Effect effect, int data, int radius);
+
+    /**
+     * Get empty chunk snapshot (equivalent to all air blocks), optionally including valid biome
+     * data.  Used for representing an ungenerated chunk, or for fetching only biome data without loading a chunk.
+     * @param x - chunk x coordinate
+     * @param z - chunk z coordinate
+     * @param includeBiome - if true, snapshot includes per-coordinate biome type
+     * @param includeBiomeTempRain - if true, snapshot includes per-coordinate raw biome temperature and rainfall
+     */
+    public ChunkSnapshot getEmptyChunkSnapshot(int x, int z, boolean includeBiome, boolean includeBiomeTempRain);
+
+    /**
+     * Sets the spawn flags for this.
+     * 
+     * @param allowMonsters - if true, monsters are allowed to spawn in this world.
+     * @param allowAnimals - if true, animals are allowed to spawn in this world.
+     */
+    public void setSpawnFlags(boolean allowMonsters, boolean allowAnimals);
+
+    /**
+     * Gets whether animals can spawn in this world.
+     *
+     * @return whether animals can spawn in this world.
+     */
+    public boolean getAllowAnimals();
+
+    /**
+     * Gets whether monsters can spawn in this world.
+     *
+     * @return whether monsters can spawn in this world.
+     */
+    public boolean getAllowMonsters();
 
     /**
      * Represents various map environment types that a world may be

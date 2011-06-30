@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Recipe;
 
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import org.bukkit.command.PluginCommand;
 
@@ -263,4 +264,32 @@ public interface Server {
      * @return True to indicate that the recipe was added.
      */
     public boolean addRecipe(Recipe recipe);
+
+    /**
+     * Gets a list of command aliases defined in the server properties.
+     *
+     * @return Map of aliases to command names
+     */
+    public Map<String, String[]> getCommandAliases();
+
+    /**
+     * Gets the radius, in blocks, around each worlds spawn point to protect
+     *
+     * @return Spawn radius, or 0 if none
+     */
+    public int getSpawnRadius();
+
+    /**
+     * Sets the radius, in blocks, around each worlds spawn point to protect
+     *
+     * @param value New spawn radius, or 0 if none
+     */
+    public void setSpawnRadius(int value);
+
+    /**
+     * Gets whether the Server is in online mode or not.
+     *
+     * @return Whether the server is in online mode.
+     */
+    public boolean getOnlineMode();
 }

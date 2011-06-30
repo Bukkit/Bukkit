@@ -5,7 +5,6 @@ import org.bukkit.Material;
 
 /**
  * Represents the different types of coals.
- * @author sunkid
  */
 public class Coal extends MaterialData {
     public Coal() {
@@ -40,17 +39,6 @@ public class Coal extends MaterialData {
      */
     public CoalType getType() {
         return CoalType.getByData(getData());
-    }
-
-    /**
-     * Sets the type of this coal
-     *
-     * @param type New type of this coal
-     * @deprecated use {@link #setType(CoalType)} instead
-     */
-    @Deprecated
-    public void setSpecies(CoalType type) {
-        setType(type);
     }
 
     /**

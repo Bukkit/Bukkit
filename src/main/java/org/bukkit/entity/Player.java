@@ -3,8 +3,10 @@ package org.bukkit.entity;
 import java.net.InetSocketAddress;
 import org.bukkit.Achievement;
 import org.bukkit.Effect;
+import org.bukkit.Instrument;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Note;
 import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
 
@@ -143,6 +145,17 @@ public interface Player extends HumanEntity, CommandSender {
     public void playNote(Location loc, byte instrument, byte note);
 
     /**
+     * Play a note for a player at a location. This requires a note block
+     * at the particular location (as far as the client is concerned). This
+     * will not work without a note block. This will not work with cake.
+     *
+     * @param loc
+     * @param instrument
+     * @param note
+     */
+    public void playNote(Location loc, Instrument instrument, Note note);
+
+    /**
      * Plays an effect to just this player.
      *
      * @param loc the player to play the effect for
@@ -236,4 +249,46 @@ public interface Player extends HumanEntity, CommandSender {
      * @param amount Amount to increment this statistic by
      */
     public void incrementStatistic(Statistic statistic, Material material, int amount);
+
+    /**
+     * Sets the current time on the player's client. When relative is true the player's time
+     * will be kept synchronized to its world time with the specified offset.
+     *
+     * When using non relative time the player's time will stay fixed at the specified time parameter. It's up to
+     * the caller to continue updating the player's time. To restore player time to normal use resetPlayerTime().
+     *
+     * @param time The current player's perceived time or the player's time offset from the server time.
+     * @param relative When true the player time is kept relative to its world time.
+     */
+    public void setPlayerTime(long time, boolean relative);
+
+    /**
+     * Returns the player's current timestamp.
+     *
+     * @return
+     */
+    public long getPlayerTime();
+
+    /**
+     * Returns the player's current time offset relative to server time, or the current player's fixed time
+     * if the player's time is absolute.
+     *
+     * @return
+     */
+    public long getPlayerTimeOffset();
+
+    /**
+     * Returns true if the player's time is relative to the server time, otherwise the player's time is absolute and
+     * will not change its current time unless done so with setPlayerTime().
+     *
+     * @return true if the player's time is relative to the server time.
+     */
+    public boolean isPlayerTimeRelative();
+
+    /**
+     * Restores the normal condition where the player's time is synchronized with the server time.
+     * Equivalent to calling setPlayerTime(0, true).
+     */
+    public void resetPlayerTime();
+
 }

@@ -2,6 +2,8 @@ package org.bukkit.event;
 
 import java.io.Serializable;
 
+import org.bukkit.entity.Projectile;
+
 /**
  * Represents an event
  */
@@ -24,6 +26,7 @@ public abstract class Event implements Serializable {
 
     /**
      * Gets the Type of this event
+     *
      * @return Event type that this object represents
      */
     public final Type getType() {
@@ -87,6 +90,7 @@ public abstract class Event implements Serializable {
 
         /**
          * Represents Player-based events
+         *
          * @see Category.LIVING_ENTITY
          */
         PLAYER,
@@ -107,7 +111,7 @@ public abstract class Event implements Serializable {
          */
         WEATHER,
         /**
-         * Vehicle-based events
+         * Represents Vehicle-based events
          */
         VEHICLE,
         /**
@@ -123,7 +127,7 @@ public abstract class Event implements Serializable {
          */
         INVENTORY,
         /**
-         * Any miscellaneous events
+         * Represents any miscellaneous events
          */
         MISCELLANEOUS;
     }
@@ -142,7 +146,7 @@ public abstract class Event implements Serializable {
         /**
          * Called when a player enters the world on a server
          *
-         * @see org.bukkit.event.player.PlayerEvent
+         * @see org.bukkit.event.player.PlayerJoinEvent
          */
         PLAYER_JOIN (Category.PLAYER),
         /**
@@ -160,13 +164,13 @@ public abstract class Event implements Serializable {
         /**
          * Called when a player respawns
          *
-         * @see org.bukkit.event.player.PlayerEvent
+         * @see org.bukkit.event.player.PlayerRespawnEvent
          */
         PLAYER_RESPAWN (Category.PLAYER),
         /**
-         * Called when a player gets kicked a server
+         * Called when a player gets kicked from the server
          *
-         * @see org.bukkit.event.player.PlayerEvent
+         * @see org.bukkit.event.player.PlayerKickEvent
          */
         PLAYER_KICK (Category.PLAYER),
         /**
@@ -176,15 +180,15 @@ public abstract class Event implements Serializable {
          */
         PLAYER_CHAT (Category.PLAYER),
         /**
-         * Called when a player early in the command handling process
+         * Called when a player uses a command (early in the command handling process)
          *
-         * @see org.bukkit.event.player.PlayerChatEvent
+         * @see org.bukkit.event.player.PlayerCommandPreprocessEvent
          */
         PLAYER_COMMAND_PREPROCESS (Category.PLAYER),
         /**
-         * Called when a player leaves a server
+         * Called when a player leaves the server
          *
-         * @see org.bukkit.event.player.PlayerEvent
+         * @see org.bukkit.event.player.PlayerQuitEvent
          */
         PLAYER_QUIT (Category.PLAYER),
         /**
@@ -194,7 +198,7 @@ public abstract class Event implements Serializable {
          */
         PLAYER_MOVE (Category.PLAYER),
         /**
-         * Called when a player undergoes an animation, such as arm swinging
+         * Called when a player undergoes an animation (Arm Swing is the only animation currently supported)
          *
          * @see org.bukkit.event.player.PlayerAnimationEvent
          */
@@ -202,13 +206,13 @@ public abstract class Event implements Serializable {
         /**
          * Called when a player toggles sneak mode
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.player.PlayerToggleSneakEvent
          */
         PLAYER_TOGGLE_SNEAK (Category.PLAYER),
         /**
-         * Called when a player uses an item
+         * Called when a player interacts with an object or air
          *
-         * @see org.bukkit.event.player.PlayerItemEvent
+         * @see org.bukkit.event.player.PlayerInteractEvent
          */
         PLAYER_INTERACT (Category.PLAYER),
         /**
@@ -218,7 +222,7 @@ public abstract class Event implements Serializable {
          */
         PLAYER_INTERACT_ENTITY (Category.PLAYER),
         /**
-         * Called when a player throws an egg and it might hatch
+         * Called when a player throws an egg
          *
          * @see org.bukkit.event.player.PlayerEggThrowEvent
          */
@@ -226,7 +230,7 @@ public abstract class Event implements Serializable {
         /**
          * Called when a player teleports from one position to another
          *
-         * @see org.bukkit.event.player.PlayerMoveEvent
+         * @see org.bukkit.event.player.PlayerTeleportEvent
          */
         PLAYER_TELEPORT (Category.PLAYER),
         /**
@@ -280,7 +284,7 @@ public abstract class Event implements Serializable {
         /**
          * Called when a player leaves a bed
          *
-         * @see org.bukkit.event.player.PlayerBedEnterEvent
+         * @see org.bukkit.event.player.PlayerBedLeaveEvent
          */
         PLAYER_BED_LEAVE(Category.PLAYER),
 
@@ -335,7 +339,7 @@ public abstract class Event implements Serializable {
         /**
          * Called when a block dispenses something
          *
-         * @see org.bukkit.event.block.BlockPlaceEvent
+         * @see org.bukkit.event.block.BlockDispenseEvent
          */
         BLOCK_DISPENSE (Category.BLOCK),
         /**
@@ -361,11 +365,11 @@ public abstract class Event implements Serializable {
          * that are actually capable of transmitting or carrying a redstone
          * current
          *
-         * @see org.bukkit.event.block.BlockFromToEvent
+         * @see org.bukkit.event.block.BlockRedstoneEvent
          */
         REDSTONE_CHANGE (Category.BLOCK),
         /**
-         * Called when a block is destroyed by a player.
+         * Called when a block is broken by a player
          *
          * @see org.bukkit.event.block.BlockBreakEvent
          */
@@ -376,6 +380,24 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.SnowFormEvent
          */
         SNOW_FORM (Category.BLOCK),
+        /**
+         * Called when a block is formed based on world conditions
+         *
+         * @see org.bukkit.event.block.BlockFormEvent
+         */
+        BLOCK_FORM (Category.BLOCK),
+        /**
+         * Called when a block spreads based on world conditions
+         *
+         * @see org.bukkit.event.block.BlockSpreadEvent
+         */
+        BLOCK_SPREAD (Category.BLOCK),
+        /**
+         * Called when a block fades, melts or disappears based on world conditions
+         *
+         * @see org.bukkit.event.block.BlockFadeEvent
+         */
+        BLOCK_FADE (Category.BLOCK),
 
         /**
          * INVENTORY EVENTS
@@ -411,6 +433,18 @@ public abstract class Event implements Serializable {
          * @todo: add javadoc see comment
          */
         INVENTORY_TRANSACTION (Category.INVENTORY),
+        /**
+         * Called when an ItemStack is successfully smelted in a furnace.
+         *
+         * @see org.bukkit.event.inventory.FurnaceSmeltEvent
+         */
+        FURNACE_SMELT (Category.INVENTORY),
+        /**
+         * Called when an ItemStack is successfully burned as fuel in a furnace.
+         *
+         * @see org.bukkit.event.inventory.FurnaceBurnEvent
+         */
+        FURNACE_BURN (Category.INVENTORY),
 
         /**
          * SERVER EVENTS
@@ -419,19 +453,19 @@ public abstract class Event implements Serializable {
         /**
          * Called when a plugin is enabled
          *
-         * @see org.bukkit.event.server.PluginEvent
+         * @see org.bukkit.event.server.PluginEnableEvent
          */
         PLUGIN_ENABLE (Category.SERVER),
         /**
          * Called when a plugin is disabled
          *
-         * @see org.bukkit.event.server.PluginEvent
+         * @see org.bukkit.event.server.PluginDisableEvent
          */
         PLUGIN_DISABLE (Category.SERVER),
         /**
          * Called when a server command is called
          *
-         * @see org.bukkit.event.server.PluginEvent
+         * @see org.bukkit.event.server.ServerCommandEvent
          */
         SERVER_COMMAND (Category.SERVER),
 
@@ -455,11 +489,13 @@ public abstract class Event implements Serializable {
          */
         CHUNK_UNLOAD (Category.WORLD),
         /**
-         * Called when a chunk needs to be generated
+         * Called when a newly created chunk has been populated.
          *
-         * @todo: add javadoc see comment
+         * If your intent is to populate the chunk using this event, please see {@link BlockPopulator}
+         *
+         * @see org.bukkit.event.world.ChunkPopulateEvent
          */
-        CHUNK_GENERATION (Category.WORLD),
+        CHUNK_POPULATED (Category.WORLD),
         /**
          * Called when an ItemEntity spawns in the world
          *
@@ -475,18 +511,25 @@ public abstract class Event implements Serializable {
         /**
          * Called when a world is saved
          *
+         * @see org.bukkit.event.world.WorldSaveEvent
          */
         WORLD_SAVE (Category.WORLD),
         /**
          * Called when a World is initializing
+         *
+         * @see org.bukkit.event.world.WorldInitEvent
          */
         WORLD_INIT (Category.WORLD),
         /**
          * Called when a World is loaded
+         *
+         * @see org.bukkit.event.world.WorldLoadEvent
          */
         WORLD_LOAD (Category.WORLD),
         /**
          * Called when a World is unloaded
+         *
+         * @see org.bukkit.event.world.WorldUnloadEvent
          */
         WORLD_UNLOAD (Category.WORLD),
         /**
@@ -503,13 +546,13 @@ public abstract class Event implements Serializable {
         /**
          * Called when a painting is placed by player
          *
-         * @see org.bukkit.event.painting.PaintingCreateEvent
+         * @see org.bukkit.event.painting.PaintingPlaceEvent
          */
         PAINTING_PLACE (Category.ENTITY),
         /**
          * Called when a painting is removed
          *
-         * @see org.bukkit.event.painting.PaintingRemoveEvent
+         * @see org.bukkit.event.painting.PaintingBreakEvent
          */
         PAINTING_BREAK (Category.ENTITY),
         /**
@@ -527,7 +570,7 @@ public abstract class Event implements Serializable {
          * Called when a creature, either hostile or neutral, attempts to spawn
          * in the world "naturally"
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.entity.CreatureSpawnEvent
          */
         CREATURE_SPAWN (Category.LIVING_ENTITY),
         /**
@@ -539,19 +582,19 @@ public abstract class Event implements Serializable {
         /**
          * Called when a LivingEntity dies
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.entity.EntityDeathEvent
          */
         ENTITY_DEATH (Category.LIVING_ENTITY),
         /**
          * Called when a Skeleton or Zombie catch fire due to the sun
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.entity.EntityCombustEvent
          */
         ENTITY_COMBUST (Category.LIVING_ENTITY),
         /**
          * Called when an entity explodes, either TNT, Creeper, or Ghast Fireball
          *
-         * @todo: add javadoc see comment
+         * @see org.bukkit.event.entity.EntityExplodeEvent
          */
         ENTITY_EXPLODE (Category.LIVING_ENTITY),
         /**
@@ -564,7 +607,7 @@ public abstract class Event implements Serializable {
          * For EntityCreeper, this resets the fuse but does not kill the Entity.
          * For EntityFireball and EntityTNTPrimed....?
          *
-         * @see org.bukkit.event.entity.EntityExplodeTriggerEvent
+         * @see org.bukkit.event.entity.ExplosionPrimeEvent
          */
         EXPLOSION_PRIME (Category.LIVING_ENTITY),
         /**
@@ -598,6 +641,19 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.entity.EntityTameEvent
          */
         ENTITY_TAME (Category.LIVING_ENTITY),
+        /**
+         * Called when a {@link Projectile} hits something
+         *
+         * @see org.bukkit.event.entity.ProjectileHitEvent
+         */
+        PROJECTILE_HIT (Category.ENTITY),
+
+        /**
+         * Called when a LivingEntity is regains health
+         *
+         * @see org.bukkit.event.entity.EntityRegainHealthEvent
+         */
+        ENTITY_REGAIN_HEALTH (Category.LIVING_ENTITY),
 
         /**
          * WEATHER EVENTS

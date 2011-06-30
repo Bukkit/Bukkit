@@ -7,8 +7,6 @@ import org.bukkit.util.Vector;
 
 /**
  * Event called on dispense of an item from a block.
- *
- * @author sk89q
  */
 public class BlockDispenseEvent extends BlockEvent implements Cancellable {
 
@@ -26,7 +24,7 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
      * Get the item that is being dispensed. Modifying the returned item
      * will have no effect.
      *
-     * @return
+     * @return an ItemStack for the item being dispensed
      */
     public ItemStack getItem() {
         return item.clone();
@@ -45,7 +43,7 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
      * Gets the velocity. Modifying the returned Vector will not
      * change the velocity.
      *
-     * @return
+     * @return a Vector for the dispensed item's velocity
      */
     public Vector getVelocity() {
         return velocity.clone();
@@ -61,14 +59,20 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
     }
 
     /**
-     * Check to see if the event was cancelled.
+     * Gets the cancellation state of this event. A cancelled event will not
+     * be executed in the server, but will still pass to other plugins
+     *
+     * @return true if this event is cancelled
      */
     public boolean isCancelled() {
         return cancelled;
     }
 
     /**
-     * Prevent dispensing.
+     * Sets the cancellation state of this event. A cancelled event will not
+     * be executed in the server, but will still pass to other plugins
+     *
+     * @param cancel true if you wish to cancel this event
      */
     public void setCancelled(boolean cancel) {
         cancelled = cancel;

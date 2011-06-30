@@ -26,6 +26,7 @@ import org.bukkit.event.server.*;
 import org.bukkit.event.vehicle.*;
 import org.bukkit.event.world.*;
 import org.bukkit.event.weather.*;
+import org.bukkit.event.inventory.*;
 import org.bukkit.plugin.*;
 import org.yaml.snakeyaml.error.YAMLException;
 
@@ -490,6 +491,28 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case BLOCK_FORM:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onBlockForm((BlockFormEvent) event);
+                }
+            };
+
+        case BLOCK_SPREAD:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onBlockSpread((BlockSpreadEvent) event);
+                }
+            };
+
+
+        case BLOCK_FADE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onBlockFade((BlockFadeEvent) event);
+                }
+            };
+
         case BLOCK_DISPENSE:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
@@ -524,6 +547,13 @@ public final class JavaPluginLoader implements PluginLoader {
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
                     ((WorldListener) listener).onChunkLoad((ChunkLoadEvent) event);
+                }
+            };
+
+        case CHUNK_POPULATED:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((WorldListener) listener).onChunkPopulate((ChunkPopulateEvent) event);
                 }
             };
 
@@ -683,6 +713,20 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case ENTITY_REGAIN_HEALTH:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onEntityRegainHealth((EntityRegainHealthEvent) event);
+                }
+            };
+
+        case PROJECTILE_HIT:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onProjectileHit((ProjectileHitEvent) event);
+                }
+            };
+
         // Vehicle Events
         case VEHICLE_CREATE:
             return new EventExecutor() {
@@ -766,6 +810,20 @@ public final class JavaPluginLoader implements PluginLoader {
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
                     ((WeatherListener) listener).onLightningStrike((LightningStrikeEvent) event);
+                }
+            };
+
+        // Inventory Events
+        case FURNACE_SMELT:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((InventoryListener) listener).onFurnaceSmelt((FurnaceSmeltEvent) event);
+                }
+            };
+        case FURNACE_BURN:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((InventoryListener) listener).onFurnaceBurn((FurnaceBurnEvent) event);
                 }
             };
 
