@@ -512,7 +512,6 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
-
         case BLOCK_FADE:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
@@ -703,6 +702,13 @@ public final class JavaPluginLoader implements PluginLoader {
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
                     ((EntityListener) listener).onCreatureSpawn((CreatureSpawnEvent) event);
+                }
+            };
+
+        case PRE_ITEM_SPAWN:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onPreItemSpawn((PreItemSpawnEvent) event);
                 }
             };
 

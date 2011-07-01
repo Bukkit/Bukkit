@@ -515,6 +515,12 @@ public abstract class Event implements Serializable {
          */
         CHUNK_POPULATED (Category.WORLD),
         /**
+         * Called when a block spawns an ItemEntity of itself in the world
+         * 
+         * @see org.bukkit.event.block.PreItemSpawnEvent
+         */
+        PRE_ITEM_SPAWN(Category.ENTITY),
+        /**
          * Called when an ItemEntity spawns in the world
          *
          * @see org.bukkit.event.entity.ItemSpawnEvent

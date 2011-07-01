@@ -20,6 +20,13 @@ public class EntityListener implements Listener {
     public void onCreatureSpawn(CreatureSpawnEvent event) {}
 
     /**
+     * Called when a block spawns an item of itself into a world
+     *
+     * @param event Relevant event details
+     */
+    public void onPreItemSpawn(PreItemSpawnEvent event) {}
+
+    /**
      * Called when an item is spawned into a world
      *
      * @param event Relevant event details
