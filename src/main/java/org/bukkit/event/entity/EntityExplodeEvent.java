@@ -1,6 +1,8 @@
 package org.bukkit.event.entity;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.Location;
@@ -9,13 +11,13 @@ import org.bukkit.event.Cancellable;
 /**
  * Called when an entity explodes
  */
-public class EntityExplodeEvent extends EntityEvent implements Cancellable {
+public class EntityExplodeEvent extends EntityEvent implements Cancellable {   
     private boolean cancel;
     private Location location;
-    private List<Block> blocks;
+    private List<EntityExplodeEventBlock> blocks;
     private float yield = 0.3F;
 
-    public EntityExplodeEvent(Entity what, Location location, List<Block> blocks) {
+    public EntityExplodeEvent(Entity what, Location location, List<EntityExplodeEventBlock> blocks) {
         super(Type.ENTITY_EXPLODE, what);
         this.location = location;
         this.cancel = false;
@@ -44,10 +46,35 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
     /**
      * Returns the list of blocks that would have been removed or were
-     * removed from the explosion event.
+     * removed from the explosion event
+     * 
+     * You can modify the blocks in the returned list to control how the
+     * explosion treats them. You could even add or remove blocks from 
+     * the list, although this is not recommended.
+     * 
+     * @see org.bukkit.event.entity.EntityExplodeEventBlock
      */
-    public List<Block> blockList() {
+    public List<EntityExplodeEventBlock> getBlocks() {
         return blocks;
+    }
+
+    /**
+     * Returns the list of blocks that would have been removed or were
+     * removed from the explosion event
+     * 
+     * NOTICE: This method is very memory inefficient!
+     * 
+     * @deprecated Method has been replaced by getBlocks()
+     * @see #getBlocks()
+     */
+    @Deprecated
+    public List<Block> blockList() {
+        List<Block> list = new ArrayList<Block>();
+        for(EntityExplodeEventBlock block : blocks) {
+            list.add(block.getBlock());
+        }
+
+        return list;
     }
 
     /**
@@ -61,8 +88,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
     /**
      * Returns the percentage of blocks to drop from this explosion
-     *
-     * @return
      */
     public float getYield() {
         return yield;
