@@ -538,6 +538,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.world.PortalCreateEvent
          */
         PORTAL_CREATE (Category.WORLD),
+        /**
+         * Called when all players in the world are sleeping
+         *
+         * @see org.bukkit.event.world.TimeChangeEvent
+         */
+        TIME_CHANGE (Category.WORLD),
 
         /**
          * ENTITY EVENTS
