@@ -212,7 +212,7 @@ public enum Material {
     BED(355),
     DIODE(356),
     COOKIE(357),
-    MAP(358),
+    MAP(358, MaterialData.class),
     SHEARS(359),
     GOLD_RECORD(2256, 1),
     GREEN_RECORD(2257, 1);
