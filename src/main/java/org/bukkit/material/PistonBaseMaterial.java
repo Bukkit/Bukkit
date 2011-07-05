@@ -25,7 +25,7 @@ public class PistonBaseMaterial extends MaterialData implements Directional, Red
     }
 
     public void setFacingDirection(BlockFace face) {
-        byte data = (byte)(getData() ^ 7);
+        byte data = (byte)(getData() & 0x8);
 
         switch (face) {
             case UP:
@@ -44,7 +44,6 @@ public class PistonBaseMaterial extends MaterialData implements Directional, Red
                 data |= 5;
                 break;
         }
-
         setData(data);
     }
 
