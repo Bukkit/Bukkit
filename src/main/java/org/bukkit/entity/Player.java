@@ -99,7 +99,7 @@ public interface Player extends HumanEntity, CommandSender {
     public boolean isSneaking();
 
     /**
-     * Sets the sneak mode the player
+     * Sets the sneak mode of the player
      * @param sneak true if player should appear sneaking
      */
     public void setSneaking(boolean sneak);
