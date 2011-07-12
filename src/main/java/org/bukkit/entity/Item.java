@@ -13,7 +13,7 @@ public interface Item extends Entity {
     /**
      * Gets the item stack associated with this item drop.
      *
-     * @return
+     * @return The item stack associated with this item drop.
      */
     public ItemStack getItemStack();
 
@@ -23,4 +23,20 @@ public interface Item extends Entity {
      * @param stack
      */
     public void setItemStack(ItemStack stack);
+
+    /**
+     * Gets the item age.
+     *
+     * @author robin0van0der0v
+     * @return The item age.
+     */
+    public int getAge();
+
+    /**
+     * Sets the item age.
+     *
+     * @author robin0van0der0v
+     * @param age
+     */
+    public void setAge(int age);
 }
