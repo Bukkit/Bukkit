@@ -1,29 +1,41 @@
 package org.bukkit.event.block;
 
+import java.util.List;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.Cancellable;
 
 /**
- * Holds information for events with a source block and a destination block
+ * Holds information for events with blocks that are pushed by a piston
  */
-public class BlockPushEvent extends BlockEvent implements Cancellable {
+public class PistonPushEvent extends BlockEvent implements Cancellable {
     protected BlockFace face;
+    protected List<Block> blocks;
     protected boolean cancel;
 
-    public BlockPushEvent(final Block block, final BlockFace face) {
-        super(Type.BLOCK_PUSH, block);
+    public PistonPushEvent(final Block block, final List<Block> blocks, final BlockFace face) {
+        super(Type.PISTON_PUSH, block);
         this.face = face;
+        this.blocks = blocks;
         this.cancel = false;
     }
 
     /**
      * Gets the location this block is pushed to
      *
-     * @return Block the block is event originated from
+     * @return Block the block is event moving to
      */
     public BlockFace getFace() {
         return face;
+    }
+
+    /**
+     * Returns the list of blocks that are pushed
+     * 
+     * @return List of blocks that are getting pushed
+     */
+    public List<Block> blocklist() {
+        return blocks;
     }
 
      /**
