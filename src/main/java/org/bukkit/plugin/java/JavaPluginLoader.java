@@ -519,6 +519,13 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((BlockListener) listener).onBlockFade((BlockFadeEvent) event);
                 }
             };
+            
+        case BLOCK_PUSH:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onBlockPush((BlockPushEvent) event);
+                }
+            };
 
         case BLOCK_DISPENSE:
             return new EventExecutor() {

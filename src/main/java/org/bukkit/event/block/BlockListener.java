@@ -126,4 +126,11 @@ public class BlockListener implements Listener {
      * @param event Relevant event details
      */
     public void onBlockDispense(BlockDispenseEvent event) {}
+    
+    /**
+     * Called when a block is pushed by a piston
+     *
+     * @param event Relevant event details
+     */
+    public void onBlockPush(BlockPushEvent event) {}
 }
