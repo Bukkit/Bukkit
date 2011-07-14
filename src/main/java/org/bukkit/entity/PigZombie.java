@@ -25,4 +25,9 @@ public interface PigZombie extends Zombie {
      * @param angry Whether the zombie should be angry.
      */
     void setAngry(boolean angry);
+    /**
+     * Shorthand; gets whether the zombie is angry.
+     * @return True if the zombie is angry, otherwise false.
+     */
+    boolean isAngry();
 }
