@@ -117,6 +117,28 @@ public interface PluginManager {
     public void registerEvent(Event.Type type, Listener listener, EventExecutor executor, Priority priority, Plugin plugin);
 
     /**
+     * Registers all events of the specified category to the specified listener
+     *
+     * @param type EventType to register
+     * @param listener PlayerListener to register
+     * @param executor EventExecutor to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerEvents(Event.Category category, Listener listener, Priority priority, Plugin plugin);
+
+    /**
+     * Registers all events of the specified category to the specified listener using a directly passed EventExecutor
+     *
+     * @param type EventType to register
+     * @param listener PlayerListener to register
+     * @param executor EventExecutor to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerEvents(Event.Category category, Listener listener, EventExecutor executor, Priority priority, Plugin plugin);
+
+    /**
      * Enables the specified plugin
      *
      * Attempting to enable a plugin that is already enabled will have no effect
