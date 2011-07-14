@@ -534,10 +534,10 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
             
-        case PISTON_PUSH:
+        case BLOCK_PUSH:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
-                    ((BlockListener) listener).onPistonPush((PistonPushEvent) event);
+                    ((BlockListener) listener).onBlockPush((BlockPushEvent) event);
                 }
             };
 

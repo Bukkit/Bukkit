@@ -415,7 +415,7 @@ public abstract class Event implements Serializable {
          *
          * @see org.bukkit.event.block.BlockPushEvent
          */
-        PISTON_PUSH (Category.BLOCK),
+        BLOCK_PUSH (Category.BLOCK),
 
         /**
          * INVENTORY EVENTS

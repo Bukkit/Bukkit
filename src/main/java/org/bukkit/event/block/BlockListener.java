@@ -132,7 +132,7 @@ public class BlockListener implements Listener {
      *
      * @param event Relevant event details
      */
-    public void onPistonPush(PistonPushEvent event) {}
+    public void onBlockPush(BlockPushEvent event) {}
     
     /**
      * Called when a block is pulled by a piston

@@ -8,14 +8,14 @@ import org.bukkit.event.Cancellable;
  * Holds information for events with a block that is being pulled
  */
 public class BlockPullEvent extends BlockEvent implements Cancellable {
+
     protected BlockFace face;
-    protected Block source;
+    protected Block movedBlock;
     protected boolean cancel;
 
-    public BlockPullEvent(final Block block, final Block source, final BlockFace face) {
+    public BlockPullEvent(final Block block, final BlockFace face) {
         super(Type.BLOCK_PULL, block);
         this.face = face;
-        this.source = source;
         this.cancel = false;
     }
 
@@ -27,17 +27,21 @@ public class BlockPullEvent extends BlockEvent implements Cancellable {
     public BlockFace getFace() {
         return face;
     }
-    
+
     /**
-     * Gets the source of the blockpull
+     * Gets the block that is pulled
      *
      * @return the block where event originated from
      */
-    public Block getSource(){
-        return source;
+    public Block getMovedBlock() {
+        if (movedBlock == null) {
+            // Needs to be done twice otherwise will return piston extension!
+            movedBlock = block.getRelative(face.getModX() * 2, face.getModY() * 2, face.getModZ() * 2);
+        }
+        return movedBlock;
     }
 
-     /**
+    /**
      * Gets the cancellation state of this event. A cancelled event will not
      * be executed in the server, but will still pass to other plugins
      *

@@ -1,5 +1,6 @@
 package org.bukkit.event.block;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -8,15 +9,17 @@ import org.bukkit.event.Cancellable;
 /**
  * Holds information for events with blocks that are pushed by a piston
  */
-public class PistonPushEvent extends BlockEvent implements Cancellable {
-    protected BlockFace face;
-    protected List<Block> blocks;
-    protected boolean cancel;
+public class BlockPushEvent extends BlockEvent implements Cancellable {
 
-    public PistonPushEvent(final Block block, final List<Block> blocks, final BlockFace face) {
-        super(Type.PISTON_PUSH, block);
+    protected BlockFace face;
+    protected Block endBlock;
+    protected boolean cancel;
+    protected List<Block> pushedBlocks;
+
+    public BlockPushEvent(final Block block, final Block endBlock, final BlockFace face) {
+        super(Type.BLOCK_PUSH, block);
         this.face = face;
-        this.blocks = blocks;
+        this.endBlock = endBlock;
         this.cancel = false;
     }
 
@@ -35,10 +38,18 @@ public class PistonPushEvent extends BlockEvent implements Cancellable {
      * @return List of blocks that are getting pushed
      */
     public List<Block> blocklist() {
-        return blocks;
+        if (pushedBlocks == null) {
+            pushedBlocks = new ArrayList<Block>();
+            Block tempblock = block.getRelative(face.getModX(), face.getModY(), face.getModZ());
+            while (tempblock != endBlock) {
+                pushedBlocks.add(tempblock);
+                tempblock = tempblock.getRelative(face.getModX(), face.getModY(), face.getModZ());
+            }
+        }
+        return pushedBlocks;
     }
 
-     /**
+    /**
      * Gets the cancellation state of this event. A cancelled event will not
      * be executed in the server, but will still pass to other plugins
      *
