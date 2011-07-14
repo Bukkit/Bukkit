@@ -526,6 +526,20 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((BlockListener) listener).onBlockDispense((BlockDispenseEvent) event);
                 }
             };
+            
+        case BLOCK_PULL:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onBlockPull((BlockPullEvent) event);
+                }
+            };
+            
+        case PISTON_PUSH:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onPistonPush((PistonPushEvent) event);
+                }
+            };
 
         // Server Events
         case PLUGIN_ENABLE:
