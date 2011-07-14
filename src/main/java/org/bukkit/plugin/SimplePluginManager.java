@@ -395,6 +395,70 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     /**
+     * Registers all events of the specified category to the specified listener
+     *
+     * @param type EventType to register
+     * @param listener PlayerListener to register
+     * @param executor EventExecutor to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerEvents(Event.Category category, Listener listener, Priority priority, Plugin plugin) {
+        for (Event.Type type : Event.Type.values()) {
+            if (type.getCategory() == category) {
+                registerEvent(type, listener, priority, plugin);
+            }
+        }
+    }
+
+    /**
+     * Registers all events of the specified category to the specified listener using a directly passed EventExecutor
+     *
+     * @param type EventType to register
+     * @param listener PlayerListener to register
+     * @param executor EventExecutor to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerEvents(Event.Category category, Listener listener, EventExecutor executor, Priority priority, Plugin plugin) {
+        for (Event.Type type : Event.Type.values()) {
+            if (type.getCategory() == category) {
+                registerEvent(type, listener, executor, priority, plugin);
+            }
+        }
+    }
+
+    /**
+     * Registers all events to the specified listener
+     *
+     * @param type EventType to register
+     * @param listener PlayerListener to register
+     * @param executor EventExecutor to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerAllEvents(Listener listener, Priority priority, Plugin plugin) {
+        for (Event.Type type : Event.Type.values()) {
+            registerEvent(type, listener, priority, plugin);
+        }
+    }
+
+    /**
+     * Registers all events to the specified listener using a directly passed EventExecutor
+     *
+     * @param type EventType to register
+     * @param listener PlayerListener to register
+     * @param executor EventExecutor to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerAllEvents(Listener listener, EventExecutor executor, Priority priority, Plugin plugin) {
+        for (Event.Type type : Event.Type.values()) {
+            registerEvent(type, listener, executor, priority, plugin);
+        }
+    }
+
+    /**
      * Returns a SortedSet of RegisteredListener for the specified event type creating a new queue if needed
      *
      * @param type EventType to lookup
