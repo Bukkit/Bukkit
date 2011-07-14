@@ -109,6 +109,13 @@ public class EntityListener implements Listener {
     public void onCreeperPower(CreeperPowerEvent event) {}
 
     /**
+     * Called when a Creeper is fusing himself
+     *
+     * @param event Relevant event details
+     */
+    public void onCreeperFuse(CreeperFuseEvent event) {}
+
+    /**
      * Called when an entity is tamed (currently only applies to Wolves)
      *
      * @param event Relevant event details

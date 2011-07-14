@@ -636,6 +636,12 @@ public abstract class Event implements Serializable {
          */
         CREEPER_POWER (Category.LIVING_ENTITY),
         /**
+         * Called when a creeper fuses himself
+         *
+         * @see org.bukkit.event.entity.CreeperFuseEvent
+         */
+        CREEPER_FUSE (Category.LIVING_ENTITY),
+        /**
          * Called when a pig is zapped, zombifying it
          *
          * @see org.bukkit.event.entity.PigZapEvent

@@ -713,6 +713,13 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case CREEPER_FUSE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onCreeperFuse((CreeperFuseEvent) event);
+                }
+            };
+
         case ENTITY_TAME:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
