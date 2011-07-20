@@ -1,12 +1,13 @@
 package org.bukkit.event.player;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 
 /**
  * Represents a player animation event
  */
-public class PlayerAnimationEvent extends PlayerEvent {
-
+public class PlayerAnimationEvent extends PlayerEvent implements Cancellable{
+	private boolean cancel = false;
     private PlayerAnimationType animationType;
 
     /**
@@ -29,4 +30,13 @@ public class PlayerAnimationEvent extends PlayerEvent {
     public PlayerAnimationType getAnimationType() {
         return animationType;
     }
+
+	public boolean isCancelled() {
+        return cancel;
+	}
+
+	public void setCancelled(boolean cancel) {
+		this.cancel = cancel;
+		
+	}
 }
