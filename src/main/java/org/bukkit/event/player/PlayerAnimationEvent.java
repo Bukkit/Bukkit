@@ -34,7 +34,12 @@ public class PlayerAnimationEvent extends PlayerEvent implements Cancellable{
     public boolean isCancelled() {
         return cancel;
     }
-
+    
+    /**
+     * Animation is not seen by all surrounding players if cancelled    
+     *
+     * @param cancel boolean determining if event is cancelled
+     */
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
     }
