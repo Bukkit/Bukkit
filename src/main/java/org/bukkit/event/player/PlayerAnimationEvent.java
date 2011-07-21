@@ -36,9 +36,11 @@ public class PlayerAnimationEvent extends PlayerEvent implements Cancellable{
     }
     
     /**
-     * Animation is not seen by all surrounding players if cancelled    
-     *
-     * @param cancel boolean determining if event is cancelled
+     * Sets the cancellation state of this event. A cancelled event will not
+     * be executed in the server, but will still pass to other plugins.
+     * Animation is not seen by all surrounding players if cancelled      
+     * 
+     * @param cancel true if you wish to cancel this event     
      */
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
