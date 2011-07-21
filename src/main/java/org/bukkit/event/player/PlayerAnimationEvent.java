@@ -7,7 +7,7 @@ import org.bukkit.event.Cancellable;
  * Represents a player animation event
  */
 public class PlayerAnimationEvent extends PlayerEvent implements Cancellable{
-	private boolean cancel = false;
+    private boolean cancel = false;
     private PlayerAnimationType animationType;
 
     /**
@@ -31,12 +31,11 @@ public class PlayerAnimationEvent extends PlayerEvent implements Cancellable{
         return animationType;
     }
 
-	public boolean isCancelled() {
+    public boolean isCancelled() {
         return cancel;
-	}
+    }
 
-	public void setCancelled(boolean cancel) {
-		this.cancel = cancel;
-		
-	}
+    public void setCancelled(boolean cancel) {
+        this.cancel = cancel;
+    }
 }
