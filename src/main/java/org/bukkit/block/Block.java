@@ -258,6 +258,25 @@ public interface Block {
     boolean isLiquid();
 
     /**
+     * Checks if this block is solid.
+     *
+     * A block is considered solid when you can't walk through it.
+     *
+     * @return true if this block is solid
+     */
+    boolean isSolid();
+
+    /**
+     * Checks if this block is solid.
+     *
+     * A block is considered solid when you can't walk through it.
+     *
+     * @param fluidsAreSolid Controls whether water and lava are considered solid
+     * @return true if this block is solid
+     */
+    boolean isSolid(boolean fluidsAreSolid);
+
+    /**
      * Gets the temperature of the biome of this block
      *
      * @return Temperature of this block
