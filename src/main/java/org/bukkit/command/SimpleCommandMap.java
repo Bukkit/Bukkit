@@ -12,8 +12,12 @@ import java.util.Iterator;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
+
 import static org.bukkit.util.Java15Compat.Arrays_copyOfRange;
 
 public final class SimpleCommandMap implements CommandMap {
@@ -27,6 +31,14 @@ public final class SimpleCommandMap implements CommandMap {
     }
 
     private void setDefaultCommands(final Server server) {
+        Permission perm;
+        PluginManager pm = server.getPluginManager();
+        perm = new Permission("bukkit.version", "Allows you to view the server version.", PermissionDefault.TRUE);
+        pm.addPermission(perm);
+        perm = new Permission("bukkit.reload", "Allows you to reload the server.", PermissionDefault.OP);
+        pm.addPermission(perm);
+        perm = new Permission("bukkit.plugins", "Allows you to view the list of installed plugins.", PermissionDefault.TRUE);
+        pm.addPermission(perm);
         register("bukkit", new VersionCommand("version", server));
         register("bukkit", new ReloadCommand("reload", server));
         register("bukkit", new PluginsCommand("plugins", server));
@@ -196,6 +208,10 @@ public final class SimpleCommandMap implements CommandMap {
 
         @Override
         public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+            if (!sender.hasPermission("bukkit.version")) {
+                sender.sendMessage(ChatColor.RED + "You don't have sufficient access to see the version.");
+                return true;
+            }
             if (args.length == 0) {
                 sender.sendMessage("This server is running " + ChatColor.GREEN + server.getName() + ChatColor.WHITE + " version " + ChatColor.GREEN + server.getVersion());
                 sender.sendMessage("This server is also sporting some funky dev build of Bukkit!");
@@ -277,7 +293,7 @@ public final class SimpleCommandMap implements CommandMap {
 
         @Override
         public boolean execute(CommandSender sender, String currentAlias, String[] args) {
-            if (sender.isOp()) {
+            if (sender.hasPermission("bukkit.reload")) {
                 server.reload();
                 sender.sendMessage(ChatColor.GREEN + "Reload complete.");
             } else {
@@ -301,6 +317,10 @@ public final class SimpleCommandMap implements CommandMap {
 
         @Override
         public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+            if (!sender.hasPermission("bukkit.plugins")) {
+                sender.sendMessage(ChatColor.RED + "You don't have sufficient access to see the version.");
+                return true;
+            }
             sender.sendMessage("Plugins: " + getPluginList());
             return true;
         }
