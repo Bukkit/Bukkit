@@ -1,6 +1,8 @@
 package org.bukkit;
 
 import com.avaje.ebean.config.ServerConfig;
+
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +14,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.PluginManager;
@@ -204,6 +207,22 @@ public final class Bukkit {
 
     public static boolean addRecipe(Recipe recipe) {
         return server.addRecipe(recipe);
+    }
+    
+    public List<Recipe> getRecipesFor(ItemStack result) {
+        return server.getRecipesFor(result);
+    }
+    
+    public Iterator<Recipe> recipeIterator() {
+        return server.recipeIterator();
+    }
+    
+    public void clearRecipes() {
+        server.clearRecipes();
+    }
+    
+    public void resetRecipes() {
+        server.resetRecipes();
     }
 
     public static Map<String, String[]> getCommandAliases() {
