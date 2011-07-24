@@ -1,5 +1,7 @@
 package org.bukkit.event.server;
 
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.event.Cancellable;
 
 /**
@@ -7,10 +9,12 @@ import org.bukkit.event.Cancellable;
  */
 public class ServerCommandEvent extends ServerEvent implements Cancellable {
     private boolean cancelled = false;
-    String command;
-    public ServerCommandEvent(String message) {
+    private String command;
+    private CommandSender sender;
+    public ServerCommandEvent(ConsoleCommandSender console, String message) {
         super(Type.SERVER_COMMAND);
         command = message;
+        sender = console;
     }
 
     /**
@@ -49,5 +53,12 @@ public class ServerCommandEvent extends ServerEvent implements Cancellable {
      */
     public void setCommand(String message) {
         this.command = message;
+    }
+    
+    /**
+     * Get the command sender.
+     */
+    public CommandSender getSender() {
+        return sender;
     }
 }
