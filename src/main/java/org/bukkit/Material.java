@@ -348,15 +348,25 @@ public enum Material {
      * @return Material if found, or null
      */
     public static Material getMaterial(final String name) {
-        return lookupName.get(name);
+        try {
+            return Enum.valueOf(Material.class, name);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    private static String filterName(final String name) {
+        return name.toUpperCase().replaceAll("[^A-Z]", "");
     }
 
     /**
-     * Attempts to match the Material with the given name.
-     * This is a match lookup; names will be converted to uppercase, then stripped
-     * of special characters in an attempt to format it like the enum
+     * Attempts to match the Material with the given name or id.
+     * This is a match lookup; names will be stripped of all non-letter
+     * characters and looked-up case-insensitively. For example, the input
+     * "Flint_AndSteel" would return Material.FLINT_AND_STEEL. The id is
+     * also checked; the input "259" would also return Material.FLINT_AND_STEEL.
      *
-     * @param name Name of the material to get
+     * @param name Name or id of the material to get
      * @return Material if found, or null
      */
     public static Material matchMaterial(final String name) {
@@ -367,10 +377,7 @@ public enum Material {
         } catch (NumberFormatException ex) {}
 
         if (result == null) {
-            String filtered = name.toUpperCase();
-
-            filtered = filtered.replaceAll("\\s+", "_").replaceAll("\\W", "");
-            result = lookupName.get(filtered);
+            result = lookupName.get(filterName(name));
         }
 
         return result;
@@ -379,7 +386,7 @@ public enum Material {
     static {
         for (Material material : values()) {
             lookupId.put(material.getId(), material);
-            lookupName.put(material.name(), material);
+            lookupName.put(filterName(material.name()), material);
         }
     }
 }
