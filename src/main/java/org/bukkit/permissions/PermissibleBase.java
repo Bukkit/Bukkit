@@ -66,19 +66,8 @@ public class PermissibleBase implements Permissible {
 
         String name = inName.toLowerCase();
         
-        if (isPermissionSet("*")) {
-            return permissions.get("*").getValue();
-        }
-        
-        String[] arr = name.split("\\.");
-        String node = "";
-        
-        for (int i = 0; i < arr.length; i++) {
-            node += arr[i];
-            if (isPermissionSet(node + ".*")) {
-                return permissions.get(node + ".*").getValue();
-            }
-            node += ".";
+        if (checkWildcards(name)) {
+            return true;
         }
 
         if (isPermissionSet(name)) {
@@ -103,19 +92,8 @@ public class PermissibleBase implements Permissible {
 
         String name = perm.getName().toLowerCase();
         
-        if (isPermissionSet("*")) {
-            return permissions.get("*").getValue();
-        }
-        
-        String[] arr = name.split("\\.");
-        String node = "";
-        
-        for (int i = 0; i < arr.length; i++) {
-            node += arr[i];
-            if (isPermissionSet(node + ".*")) {
-                return permissions.get(node + ".*").getValue();
-            }
-            node += ".";
+        if (checkWildcards(name)) {
+            return true;
         }
 
         if (isPermissionSet(name)) {
@@ -125,6 +103,24 @@ public class PermissibleBase implements Permissible {
         } else {
             return false;
         }
+    }
+    
+    public boolean checkWildcards(String name) {
+        if (isPermissionSet("*")) {
+            return permissions.get("*").getValue();
+        }
+        
+        String node = "";
+        
+        for (String part : name.split("\\.")) {
+            node += part;
+            if (isPermissionSet(node + ".*")) {
+                return permissions.get(node + ".*").getValue();
+            }
+            node += ".";
+        }
+        
+        return false;
     }
 
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
