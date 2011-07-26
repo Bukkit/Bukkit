@@ -65,6 +65,21 @@ public class PermissibleBase implements Permissible {
         calculatePermissions();
 
         String name = inName.toLowerCase();
+        
+        if (isPermissionSet("*")) {
+            return permissions.get("*").getValue();
+        }
+        
+        String[] arr = name.split("\\.");
+        String node = "";
+        
+        for (int i = 0; i < arr.length; i++) {
+            node += arr[i];
+            if (isPermissionSet(node + ".*")) {
+                return permissions.get(node + ".*").getValue();
+            }
+            node += ".";
+        }
 
         if (isPermissionSet(name)) {
             return permissions.get(name).getValue();
@@ -87,6 +102,21 @@ public class PermissibleBase implements Permissible {
         calculatePermissions();
 
         String name = perm.getName().toLowerCase();
+        
+        if (isPermissionSet("*")) {
+            return permissions.get("*").getValue();
+        }
+        
+        String[] arr = name.split("\\.");
+        String node = "";
+        
+        for (int i = 0; i < arr.length; i++) {
+            node += arr[i];
+            if (isPermissionSet(node + ".*")) {
+                return permissions.get(node + ".*").getValue();
+            }
+            node += ".";
+        }
 
         if (isPermissionSet(name)) {
             return permissions.get(name).getValue();
