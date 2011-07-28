@@ -1,12 +1,13 @@
 package org.bukkit.event.player;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 
 /**
  * Represents a player animation event
  */
-public class PlayerAnimationEvent extends PlayerEvent {
-
+public class PlayerAnimationEvent extends PlayerEvent implements Cancellable{
+    private boolean cancel = false;
     private PlayerAnimationType animationType;
 
     /**
@@ -28,5 +29,20 @@ public class PlayerAnimationEvent extends PlayerEvent {
      */
     public PlayerAnimationType getAnimationType() {
         return animationType;
+    }
+
+    public boolean isCancelled() {
+        return cancel;
+    }
+    
+    /**
+     * Sets the cancellation state of this event. A cancelled event will not
+     * be executed in the server, but will still pass to other plugins.
+     * Animation is not seen by all surrounding players if cancelled      
+     * 
+     * @param cancel true if you wish to cancel this event     
+     */
+    public void setCancelled(boolean cancel) {
+        this.cancel = cancel;
     }
 }
