@@ -465,6 +465,17 @@ public class ConfigurationNode {
     }
 
     /**
+     * Set a configuration node at a path. This will override existing
+     * configuration data to have it conform to key/value mappings.
+     *
+     * @param path
+     * @param node
+     */
+    public void setNode(String path, ConfigurationNode node){
+        setProperty(path, node.root);
+    }
+
+    /**
      * Get a list of nodes at a location. If the map at the particular location
      * does not exist or it is not a map, null will be returned.
      *
