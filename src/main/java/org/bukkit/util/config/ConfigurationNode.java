@@ -18,6 +18,13 @@ public class ConfigurationNode {
     }
 
     /**
+     * Constructor for a blank node.
+     */
+    public ConfigurationNode(){
+        this.root = new HashMap<String, Object>();
+    }
+
+    /**
      * Gets all of the cofiguration values within the Node as
      * a key value pair, with the key being the full path and the
      * value being the Object that is at the path.
