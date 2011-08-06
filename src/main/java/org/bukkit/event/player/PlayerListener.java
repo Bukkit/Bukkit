@@ -14,6 +14,13 @@ public class PlayerListener implements Listener {
      * @param event Relevant event details
      */
     public void onPlayerJoin(PlayerJoinEvent event) {}
+    
+    /**
+     * Called when a chunk is sent to a player
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerSendChunk(PlayerSendChunkEvent event) {}
 
     /**
      * Called when a player leaves a server
