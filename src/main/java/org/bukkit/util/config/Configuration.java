@@ -5,8 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
@@ -54,7 +56,7 @@ import org.yaml.snakeyaml.representer.Representer;
  *
  */
 public class Configuration extends ConfigurationNode {
-    private Yaml yaml;
+    protected Yaml yaml;
     private File file;
     private String header = null;
 
@@ -175,10 +177,24 @@ public class Configuration extends ConfigurationNode {
                 root = new HashMap<String, Object>();
             } else {
                 root = (Map<String, Object>) input;
+                root = (Map<String, Object>) recursiveCast(root);
             }
         } catch (ClassCastException e) {
             throw new ConfigurationException("Root document must be an key-value structure");
         }
+    }
+    
+    private Map recursiveCast(Map map) {
+        ArrayList<Map.Entry> entries = new ArrayList<Map.Entry>(map.entrySet());
+        HashMap returnMap = new HashMap();
+        for (Entry entry : entries) {
+            Object o = entry.getKey();
+            if(o instanceof String) continue;
+            if(o instanceof Map) o = recursiveCast((Map)o);
+            else o = o.toString();
+            returnMap.put(o, entry.getValue());
+        }
+        return returnMap;
     }
 
     /**
