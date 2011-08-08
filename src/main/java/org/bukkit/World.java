@@ -284,6 +284,15 @@ public interface World {
     public Arrow spawnArrow(Location location, Vector velocity, float speed, float spread);
 
     /**
+     * Creates an {@link FallingSand} entity at the given {@link Location}
+     *
+     * @param location Location to spawn the falling sand at
+     * @param gravel Whether to spawn a falling sand or gravel entity
+     * @return FallingSand entity spawned as a result of this method
+     */
+    public FallingSand spawnFallingSand(Location location, boolean gravel);
+
+    /**
      * Creates a tree at the given {@link Location}
      *
      * @param location Location to spawn the tree
