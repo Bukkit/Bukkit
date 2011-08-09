@@ -10,6 +10,7 @@ import org.bukkit.event.Cancellable;
 public class EntityTameEvent extends EntityEvent implements Cancellable {
     private boolean cancelled;
     private AnimalTamer owner;
+    private int random = 3;
 
     public EntityTameEvent(Entity entity, AnimalTamer owner) {
         super(Type.ENTITY_TAME, entity);
@@ -31,5 +32,14 @@ public class EntityTameEvent extends EntityEvent implements Cancellable {
      */
     public AnimalTamer getOwner() {
         return owner;
+    }
+    
+    public void setRandom(int rand) {
+        if(rand > 0)
+            random = rand;
+    }
+    
+    public int getRandom() {
+        return random;
     }
 }
