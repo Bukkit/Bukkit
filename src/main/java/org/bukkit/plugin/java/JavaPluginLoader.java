@@ -1,6 +1,7 @@
 package org.bukkit.plugin.java;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +38,7 @@ public final class JavaPluginLoader implements PluginLoader {
     private final Server server;
     private final Pattern[] fileFilters = new Pattern[] {
         Pattern.compile("\\.jar$"),
+            Pattern.compile("\\.yml$"),
     };
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
     private final Map<String, PluginClassLoader> loaders = new HashMap<String, PluginClassLoader>();
@@ -57,19 +59,7 @@ public final class JavaPluginLoader implements PluginLoader {
             throw new InvalidPluginException(new FileNotFoundException(String.format("%s does not exist", file.getPath())));
         }
         try {
-            JarFile jar = new JarFile(file);
-            JarEntry entry = jar.getJarEntry("plugin.yml");
-
-            if (entry == null) {
-                throw new InvalidPluginException(new FileNotFoundException("Jar does not contain plugin.yml"));
-            }
-
-            InputStream stream = jar.getInputStream(entry);
-
-            description = new PluginDescriptionFile(stream);
-
-            stream.close();
-            jar.close();
+            description = getPluginDescription(file);
         } catch (IOException ex) {
             throw new InvalidPluginException(ex);
         } catch (YAMLException ex) {
@@ -181,6 +171,46 @@ public final class JavaPluginLoader implements PluginLoader {
 
         return (Plugin) result;
     }
+
+	private PluginDescriptionFile getPluginDescription(File file) throws IOException, InvalidPluginException, InvalidDescriptionException {
+		PluginDescriptionFile description = null;
+		try {
+			description = getJarPluginDescription(file);
+		} catch (IOException e) {
+			server.getLogger().log(Level.WARNING, "Failed to load plugin as JAR file, trying YML.", e);
+		}
+		
+		if(description == null) {
+			description = getYmlPluginDescription(file);
+		}
+		return description;
+	}
+
+	private PluginDescriptionFile getYmlPluginDescription(File file) throws IOException, InvalidDescriptionException {
+		InputStream stream = new FileInputStream(file);
+		try {
+			return new PluginDescriptionFile(stream);
+		} finally {
+			stream.close();
+		}
+	}
+
+	private PluginDescriptionFile getJarPluginDescription(File file) throws IOException, InvalidPluginException, InvalidDescriptionException {
+		PluginDescriptionFile description;
+		JarFile jar = new JarFile(file);
+		JarEntry entry = jar.getJarEntry("plugin.yml");
+
+		if (entry == null) {
+		    throw new InvalidPluginException(new FileNotFoundException("Jar does not contain plugin.yml"));
+		}
+
+		InputStream stream = jar.getInputStream(entry);
+		description = new PluginDescriptionFile(stream);
+
+		stream.close();
+		jar.close();
+		return description;
+	}
 
     private File getDataFolder(File file) {
         File dataFolder = null;
