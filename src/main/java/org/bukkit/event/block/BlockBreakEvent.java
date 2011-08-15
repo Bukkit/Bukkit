@@ -1,8 +1,11 @@
 package org.bukkit.event.block;
 
+import java.util.List;
+
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Called when a block is broken by a player.
@@ -17,11 +20,13 @@ public class BlockBreakEvent extends BlockEvent implements Cancellable {
 
     private Player player;
     private boolean cancel;
+    private List<ItemStack> drops;
 
-    public BlockBreakEvent(final Block theBlock, Player player) {
+    public BlockBreakEvent(final Block theBlock, Player player, List<ItemStack> drops) {
         super(Type.BLOCK_BREAK, theBlock);
         this.player = player;
         this.cancel = false;
+        this.drops = drops;
     }
 
     /**
@@ -31,6 +36,10 @@ public class BlockBreakEvent extends BlockEvent implements Cancellable {
      */
     public Player getPlayer() {
         return player;
+    }
+    
+    public List<ItemStack> getDrops() {
+        return drops;
     }
 
     public boolean isCancelled() {
