@@ -55,6 +55,11 @@ public class RegisteredListener {
      * @return Registered Priority
      */
     public void callEvent(Event event) {
+        if(event instanceof Cancellable && this.priority != Event.Priority.Monitor){
+            if(((Cancellable)event).isCancelled()){
+                return;
+            }
+        }
         executor.execute(listener, event);
     }
 }
