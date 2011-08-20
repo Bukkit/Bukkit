@@ -173,6 +173,16 @@ public class ItemStack implements Serializable, ConfigurationSerializable {
         return -1;
     }
 
+    /**
+     * Get the maximum durability for the material held in this ItemStack
+     * Returns -1 if it has no idea.
+     *
+     * @return The maximum damage this material can take before breaking.
+     */
+    public int getMaxDurability() {
+        return -1;
+    }
+
     private void createData(final byte data) {
         Material mat = Material.getMaterial(type);
 
