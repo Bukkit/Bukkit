@@ -1,11 +1,13 @@
 package org.bukkit.block;
 
+import org.bukkit.entity.ProjectileShooter;
+
 /**
  * Represents a dispenser.
  *
  * @author sk89q
  */
-public interface Dispenser extends BlockState, ContainerBlock {
+public interface Dispenser extends BlockState, ContainerBlock, ProjectileShooter {
 
     /**
      * Attempts to dispense the contents of this block<br />
