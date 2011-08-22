@@ -161,12 +161,21 @@ public class ItemStack {
 
     /**
      * Get the maximum stacksize for the material hold in this ItemStack
-     * Returns -1 if it has no idea.
      *
      * @return The maximum you can stack this material to.
      */
     public int getMaxStackSize() {
-        return -1;
+        return Material.getMaterial(type).getMaxStackSize();
+    }
+    
+    /**
+     * Get the maximum durability for the material held in this ItemStack
+     * Returns -1 if it doesn't take damage.
+     *
+     * @return The maximum damage this material can take before breaking.
+     */
+    public short getMaxDurability() {
+        return Material.getMaterial(type).getMaxDurability();
     }
 
     private void createData(final byte data) {
