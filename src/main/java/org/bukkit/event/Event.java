@@ -302,6 +302,14 @@ public abstract class Event implements Serializable {
         PLAYER_FISH(Category.PLAYER),
 
         /**
+         * Called before sending a handshake packet to a player.
+         * Can be used to block authentication for certain players.
+         *
+         * @see org.bukkit.event.player.PlayerHandshakeEvent
+         */
+        PLAYER_HANDSHAKE(Category.PLAYER),
+
+        /**
          * BLOCK EVENTS
          */
 

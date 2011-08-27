@@ -419,6 +419,13 @@ public final class JavaPluginLoader implements PluginLoader {
                     ((PlayerListener) listener).onPlayerFish((PlayerFishEvent) event);
                 }
             };
+        
+        case PLAYER_HANDSHAKE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((PlayerListener) listener).onPlayerHandshake((PlayerHandshakeEvent)event);
+                }
+            };
 
         // Block Events
         case BLOCK_PHYSICS:

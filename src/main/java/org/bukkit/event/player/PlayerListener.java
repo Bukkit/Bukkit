@@ -191,4 +191,12 @@ public class PlayerListener implements Listener {
      * @param event Relevant event details
      */
     public void onPlayerFish(PlayerFishEvent event) {}
+
+    /**
+     * Called before sending a handshake packet to a player.
+     * Can be used to block authentication for certain players.
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerHandshake(PlayerHandshakeEvent event) {}
 }
