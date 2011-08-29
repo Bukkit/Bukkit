@@ -1,11 +1,21 @@
 package org.bukkit.event.block;
 
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.event.Cancellable;
+
 /**
- * Called when a block is formed or spreads based on world conditions
+ * Called when a block is formed or spreads based on world conditions.
+ * Use {@link BlockSpreadEvent} to catch blocks that actually spread and don't just "randomly" form.
+ *<p />
+ * Examples:
+ *<ul>
+ *     <li>Snow forming due to a snow storm.</li>
+ *     <li>Ice forming in a snowy Biome like Tiga or Tundra.</li>
+ * </ul>
+ *<p />
+ * If a Block Form event is cancelled, the block will not be formed.
+ * @see BlockSpreadEvent
  */
 public class BlockFormEvent extends BlockEvent implements Cancellable {
     private boolean cancelled;
@@ -26,30 +36,18 @@ public class BlockFormEvent extends BlockEvent implements Cancellable {
     }
 
     /**
-     * Gets the state of the block where it will form or spread to
+     * Gets the state of the block where it will form or spread to.
      *
-     * @return the block state
+     * @return The block state of the block where it will form or spread to
      */
     public BlockState getNewState() {
         return newState;
     }
 
-    /**
-     * Gets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * @return true if this event is cancelled
-     */
     public boolean isCancelled() {
         return cancelled;
     }
 
-    /**
-     * Sets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * @param cancel true if you wish to cancel the block from forming or spreading
-     */
     public void setCancelled(boolean cancel) {
         this.cancelled = cancel;
     }

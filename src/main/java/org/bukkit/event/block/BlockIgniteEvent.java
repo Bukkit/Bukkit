@@ -6,16 +6,15 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 
 /**
- * Represents a block ignite event.
+ * Called when a block is ignited. If you want to catch when a Player places fire, you need to use {@link BlockPlaceEvent}.
+ *<p />
+ * If a Block Ignite event is cancelled, the block will not be ignited.
  */
 public class BlockIgniteEvent extends BlockEvent implements Cancellable {
     private IgniteCause cause;
     private boolean cancel;
     private Player thePlayer;
 
-    /**
-     * @param Block, IgniteCause, Player or null.
-     */
     public BlockIgniteEvent(Block theBlock, IgniteCause cause, Player thePlayer) {
         super(Event.Type.BLOCK_IGNITE, theBlock);
         this.cause = cause;
@@ -23,35 +22,18 @@ public class BlockIgniteEvent extends BlockEvent implements Cancellable {
         this.cancel = false;
     }
 
-    /**
-     * Gets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins.
-     *
-     * If an ignite event is cancelled, the block will not be ignited.
-     * This will not fire an event.
-     *
-     * @return true if this event is cancelled
-     */
     public boolean isCancelled() {
         return cancel;
     }
 
-    /**
-     * Sets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins.
-     *
-     * If an ignite event is cancelled, the block will not be ignited.
-     * This will not fire an event.
-     *
-     * @param cancel true if you wish to cancel this event
-     */
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
     }
 
     /**
      * Gets the cause of block ignite.
-     * @return An IgniteCause value detailing the cause of block ignition.
+     *
+     * @return An IgniteCause value detailing the cause of block ignition
      */
     public IgniteCause getCause() {
         return cause;
@@ -60,7 +42,7 @@ public class BlockIgniteEvent extends BlockEvent implements Cancellable {
     /**
      * Gets the player who ignited this block
      *
-     * @return Player who placed the block, if not ignited by player returns null.
+     * @return The Player who placed the fire block, if not ignited by a player returns null
      */
     public Player getPlayer() {
         return thePlayer;

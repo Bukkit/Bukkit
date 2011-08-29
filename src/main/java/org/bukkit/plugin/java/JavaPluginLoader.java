@@ -287,6 +287,13 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case PLAYER_VELOCITY:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((PlayerListener) listener).onPlayerVelocity((PlayerVelocityEvent) event);
+                }
+            };
+
         case PLAYER_TELEPORT:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
@@ -406,6 +413,13 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case PLAYER_FISH:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((PlayerListener) listener).onPlayerFish((PlayerFishEvent) event);
+                }
+            };
+
         // Block Events
         case BLOCK_PHYSICS:
             return new EventExecutor() {
@@ -484,13 +498,6 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
-        case SNOW_FORM:
-            return new EventExecutor() {
-                public void execute(Listener listener, Event event) {
-                    ((BlockListener) listener).onSnowForm((SnowFormEvent) event);
-                }
-            };
-
         case BLOCK_FORM:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
@@ -520,6 +527,20 @@ public final class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case BLOCK_PISTON_RETRACT:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onBlockPistonRetract((BlockPistonRetractEvent) event);
+                }
+            };
+
+        case BLOCK_PISTON_EXTEND:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((BlockListener) listener).onBlockPistonExtend((BlockPistonExtendEvent) event);
+                }
+            };
+
         // Server Events
         case PLUGIN_ENABLE:
             return new EventExecutor() {
@@ -539,6 +560,13 @@ public final class JavaPluginLoader implements PluginLoader {
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
                     ((ServerListener) listener).onServerCommand((ServerCommandEvent) event);
+                }
+            };
+            
+        case MAP_INITIALIZE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((ServerListener) listener).onMapInitialize((MapInitializeEvent) event);
                 }
             };
 

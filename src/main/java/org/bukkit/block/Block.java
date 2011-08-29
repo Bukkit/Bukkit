@@ -21,32 +21,14 @@ public interface Block {
     byte getData();
 
     /**
-     * Gets the block at the given face<br />
-     * <br />
-     * This method is equal to getFace(face, 1)
-     *
-     * @param face Face of this block to return
-     * @return Block at the given face
-     * @see Block.getFace(BlockFace face, int distance);
+     * @deprecated use {@link #getRelative(BlockFace face)}
      */
-    Block getFace(BlockFace face);
+    @Deprecated Block getFace(BlockFace face);
 
     /**
-     * Gets the block at the given distance of the given face<br />
-     * <br />
-     * For example, the following method places water at 100,102,100; two blocks
-     * above 100,100,100.
-     * <pre>
-     * Block block = world.getBlockAt(100,100,100);
-     * Block shower = block.getFace(BlockFace.Up, 2);
-     * shower.setType(Material.WATER);
-     * </pre>
-     *
-     * @param face Face of this block to return
-     * @param distance Distance to get the block at
-     * @return Block at the given face
+     * @deprecated use {@link #getRelative(BlockFace face, int distance)}
      */
-    Block getFace(BlockFace face, int distance);
+    @Deprecated Block getFace(BlockFace face, int distance);
 
     /**
      * Gets the block at the given offsets
@@ -59,12 +41,32 @@ public interface Block {
     Block getRelative(int modX, int modY, int modZ);
 
     /**
-     * Gets the block at the given offsets
+     * Gets the block at the given face<br />
+     * <br />
+     * This method is equal to getRelative(face, 1)
      *
-     * @param face face
-     * @return Block at the given offsets
+     * @param face Face of this block to return
+     * @return Block at the given face
+     * @see Block.getRelative(BlockFace face, int distance);
      */
     Block getRelative(BlockFace face);
+
+    /**
+     * Gets the block at the given distance of the given face<br />
+     * <br />
+     * For example, the following method places water at 100,102,100; two blocks
+     * above 100,100,100.
+     * <pre>
+     * Block block = world.getBlockAt(100,100,100);
+     * Block shower = block.getFace(BlockFace.UP, 2);
+     * shower.setType(Material.WATER);
+     * </pre>
+     *
+     * @param face Face of this block to return
+     * @param distance Distance to get the block at
+     * @return Block at the given face
+     */
+    Block getRelative(BlockFace face, int distance);
 
     /**
      * Gets the type of this block
@@ -236,4 +238,43 @@ public interface Block {
      * @return
      */
     int getBlockPower();
+
+    /**
+     * Checks if this block is empty.
+     *
+     * A block is considered empty when {@link #getType()} returns {@link Material#AIR}.
+     *
+     * @return true if this block is empty
+     */
+    boolean isEmpty();
+
+    /**
+     * Checks if this block is liquid.
+     *
+     * A block is considered liquid when {@link #getType()} returns {@link Material#WATER}, {@link Material#STATIONARY_WATER}, {@link Material#LAVA} or {@link Material#STATIONARY_LAVA}.
+     *
+     * @return true if this block is liquid
+     */
+    boolean isLiquid();
+
+    /**
+     * Gets the temperature of the biome of this block
+     *
+     * @return Temperature of this block
+     */
+    double getTemperature();
+
+    /**
+     * Gets the humidity of the biome of this block
+     *
+     * @return Humidity of this block
+     */
+    double getHumidity();
+
+    /**
+     * Returns the reaction of the block when moved by a piston
+     *
+     * @return reaction
+     */
+    PistonMoveReaction getPistonMoveReaction();
 }

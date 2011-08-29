@@ -4,6 +4,9 @@ import org.bukkit.generator.ChunkGenerator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
@@ -71,6 +74,25 @@ public interface World {
      * @return Y-coordinate of the highest non-air block
      */
     public int getHighestBlockYAt(Location location);
+
+    /**
+     * Gets the highest non-empty block at the given coordinates
+     *
+     * @param x X-coordinate of the block
+     * @param z Z-coordinate of the block
+     *
+     * @return Highest non-empty block
+     */
+    public Block getHighestBlockAt(int x, int z);
+
+    /**
+     * Gets the highest non-empty block at the given coordinates
+     *
+     * @param location Coordinates to get the highest block
+     *
+     * @return Highest non-empty block
+     */
+    public Block getHighestBlockAt(Location location);
 
     /**
      * Gets the {@link Chunk} at the given coordinates
@@ -148,6 +170,16 @@ public interface World {
      * @return true if the chunk has loaded successfully, otherwise false
      */
     public boolean loadChunk(int x, int z, boolean generate);
+
+    /**
+     * Safely unloads and saves the {@link Chunk} at the specified coordinates
+     *
+     * This method is analogous to {@link #unloadChunk(int, int, boolean, boolean)} where safe and saveis true
+     *
+     * @param chunk the chunk to unload
+     * @return true if the chunk has unloaded successfully, otherwise false
+     */
+    public boolean unloadChunk(Chunk chunk);
 
     /**
      * Safely unloads and saves the {@link Chunk} at the specified coordinates
@@ -271,46 +303,6 @@ public interface World {
     public boolean generateTree(Location loc, TreeType type, BlockChangeDelegate delegate);
 
     /**
-     * Creates a regular passenger minecart at the given {@link Location}
-     *
-     * @param location Location to spawn the minecart
-     * @return Minecart created as a result of this method
-     * @deprecated use {@link #spawn(Location, Class)} instead
-     */
-    @Deprecated
-    public Minecart spawnMinecart(Location location);
-
-    /**
-     * Creates a storage minecart at the given {@link Location}
-     *
-     * @param loc Location to spawn the minecart
-     * @return StorageMinecart created as a result of this method
-     * @deprecated use {@link #spawn(Location, Class)} instead
-     */
-    @Deprecated
-    public StorageMinecart spawnStorageMinecart(Location loc);
-
-    /**
-     * Creates a powered minecart at the given {@link Location}
-     *
-     * @param loc Location to spawn the minecart
-     * @return PoweredMinecart created as a result of this method
-     * @deprecated use {@link #spawn(Location, Class)} instead
-     */
-    @Deprecated
-    public PoweredMinecart spawnPoweredMinecart(Location loc);
-
-    /**
-     * Creates a boat at the given {@link Location}
-     *
-     * @param loc Location to spawn the boat
-     * @return Boat created as a result of this method
-     * @deprecated use {@link #spawn(Location, Class)} instead
-     */
-    @Deprecated
-    public Boat spawnBoat(Location loc);
-
-    /**
      * Creates a creature at the given {@link Location}
      *
      * @param loc The location to spawn the creature
@@ -364,13 +356,22 @@ public interface World {
     public String getName();
 
     /**
+     * Gets the Unique ID of this world
+     *
+     * @return Unique ID of this world.
+     */
+    public UUID getUID();
+
+    /**
      * Gets a semi-unique identifier for this world.
      *
      * While it is highly unlikely that this may be shared with another World,
      * it is not guaranteed to be unique
      *
+     * @deprecated Replaced with {@link #getUID()}
      * @return Id of this world
      */
+    @Deprecated
     public long getId();
 
     /**
@@ -620,7 +621,7 @@ public interface World {
 
     /**
      * Sets the spawn flags for this.
-     * 
+     *
      * @param allowMonsters - if true, monsters are allowed to spawn in this world.
      * @param allowAnimals - if true, animals are allowed to spawn in this world.
      */
@@ -639,6 +640,65 @@ public interface World {
      * @return whether monsters can spawn in this world.
      */
     public boolean getAllowMonsters();
+
+    /**
+     * Gets the biome for the given block coordinates.
+     *
+     * It is safe to run this method when the block does not exist, it will not create the block.
+     *
+     * @param x X coordinate of the block
+     * @param z Z coordinate of the block
+     *
+     * @return Biome of the requested block
+     */
+    public Biome getBiome(int x, int z);
+
+    /**
+     * Gets the temperature for the given block coordinates.
+     *
+     * It is safe to run this method when the block does not exist, it will not create the block.
+     *
+     * @param x X coordinate of the block
+     * @param z Z coordinate of the block
+     *
+     * @return Temperature of the requested block
+     */
+    public double getTemperature(int x, int z);
+
+    /**
+     * Gets the humidity for the given block coordinates.
+     *
+     * It is safe to run this method when the block does not exist, it will not create the block.
+     *
+     * @param x X coordinate of the block
+     * @param z Z coordinate of the block
+     *
+     * @return Humidity of the requested block
+     */
+    public double getHumidity(int x, int z);
+
+    /**
+     * Gets the maximum height of this world.
+     *
+     * If the max height is 100, there are only blocks from y=0 to y=99.
+     *
+     * @return Maximum height of the world
+     */
+    public int getMaxHeight();
+
+    /**
+     * Gets whether the world's spawn area should be kept loaded into memory or not.
+     *
+     * @return true if the world's spawn area will be kept loaded into memory.
+     */
+    public boolean getKeepSpawnInMemory();
+
+    /**
+    * Sets whether the world's spawn area should be kept loaded into memory or not.
+    *
+    * @param keepLoaded if true then the world's spawn area will be kept loaded into memory.
+    */
+    public void setKeepSpawnInMemory(boolean keepLoaded);
 
     /**
      * Represents various map environment types that a world may be

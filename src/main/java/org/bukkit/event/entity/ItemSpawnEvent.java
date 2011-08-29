@@ -17,28 +17,17 @@ public class ItemSpawnEvent extends EntityEvent implements Cancellable {
         this.location = loc;
     }
 
-    /**
-     * Gets the cancellation state of this event. A canceled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * @return true if this event is canceled
-     */
     public boolean isCancelled() {
         return canceled;
     }
 
-    /**
-     * Sets the cancellation state of this event. A canceled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * @param cancel true if you wish to cancel this event
-     */
     public void setCancelled(boolean cancel) {
         canceled = cancel;
     }
 
     /**
      * Gets the location at which the item is spawning.
+     *
      * @return The location at which the item is spawning
      */
     public Location getLocation() {

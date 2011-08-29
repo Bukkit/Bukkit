@@ -7,10 +7,12 @@ import org.bukkit.inventory.Recipe;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Logger;
 import org.bukkit.command.PluginCommand;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.map.MapView;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -51,9 +53,16 @@ public interface Server {
     /**
      * Get the game port that the server runs on
      *
-     * @return The port number of this servers
+     * @return The port number of this server
      */
     public int getPort();
+
+    /**
+     * Get the view distance from this server.
+     *
+     * @return The view distance from this server.
+     */
+    public int getViewDistance();
 
     /**
      * Get the IP that this server is bound to or empty string if not specified
@@ -76,6 +85,20 @@ public interface Server {
      * @return The ID of this server
      */
     public String getServerId();
+
+    /**
+     * Gets whether this server allows the Nether or not.
+     *
+     * @return Whether this server allows the Nether or not.
+     */
+    public boolean getAllowNether();
+
+    /**
+     * Gets whether this server has a whitelist or not.
+     *
+     * @return Whether this server has a whitelist or not.
+     */
+    public boolean hasWhitelist();
 
     /**
      * Broadcast a message to all players.
@@ -218,6 +241,30 @@ public interface Server {
     public World getWorld(String name);
 
     /**
+     * Gets the world from the given Unique ID
+     *
+     * @param uid Unique ID of the world to retrieve.
+     * @return World with the given Unique ID, or null if none exists.
+     */
+    public World getWorld(UUID uid);
+    
+    /**
+     * Gets the map from the given item ID.
+     * 
+     * @param id ID of the map to get.
+     * @return The MapView if it exists, or null otherwise.
+     */
+    public MapView getMap(short id);
+    
+    /**
+     * Create a new map with an automatically assigned ID.
+     * 
+     * @param world The world the map will belong to.
+     * @return The MapView just created.
+     */
+    public MapView createMap(World world);
+
+    /**
      * Reloads the server, refreshing settings and plugin information
      */
     public void reload();
@@ -292,4 +339,11 @@ public interface Server {
      * @return Whether the server is in online mode.
      */
     public boolean getOnlineMode();
+
+    /**
+     * Gets whether this server allows flying or not.
+     *
+     * @return Whether this server allows flying or not.
+     */
+    public boolean getAllowFlight();
 }

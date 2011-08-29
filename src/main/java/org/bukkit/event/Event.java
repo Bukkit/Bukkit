@@ -198,6 +198,13 @@ public abstract class Event implements Serializable {
          */
         PLAYER_MOVE (Category.PLAYER),
         /**
+         * Called before a player gets a velocity vector sent, which will instruct him to 
+         * get "pushed" into a specific direction, e.g. after an explosion
+         *
+         * @see org.bukkit.event.player.PlayerVelocityEvent
+         */
+        PLAYER_VELOCITY (Category.PLAYER),
+        /**
          * Called when a player undergoes an animation (Arm Swing is the only animation currently supported)
          *
          * @see org.bukkit.event.player.PlayerAnimationEvent
@@ -287,6 +294,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.player.PlayerBedLeaveEvent
          */
         PLAYER_BED_LEAVE(Category.PLAYER),
+        /**
+         * Called when a player is fishing
+         *
+         * @see org.bukkit.event.player.PlayerFishEvent
+         */
+        PLAYER_FISH(Category.PLAYER),
 
         /**
          * BLOCK EVENTS
@@ -375,12 +388,6 @@ public abstract class Event implements Serializable {
          */
         BLOCK_BREAK (Category.BLOCK),
         /**
-         * Called when world attempts to place a snow block during a snowfall
-         *
-         * @see org.bukkit.event.block.SnowFormEvent
-         */
-        SNOW_FORM (Category.BLOCK),
-        /**
          * Called when a block is formed based on world conditions
          *
          * @see org.bukkit.event.block.BlockFormEvent
@@ -398,6 +405,18 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.BlockFadeEvent
          */
         BLOCK_FADE (Category.BLOCK),
+        /**
+         * Called when a piston extends
+         *
+         * @see org.bukkit.event.block.PistonExtendEvent
+         */
+        BLOCK_PISTON_EXTEND (Category.BLOCK),
+        /**
+         * Called when a piston retracts
+         *
+         * @see org.bukkit.event.block.PistonRetractEvent
+         */
+        BLOCK_PISTON_RETRACT (Category.BLOCK),
 
         /**
          * INVENTORY EVENTS
@@ -468,6 +487,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.server.ServerCommandEvent
          */
         SERVER_COMMAND (Category.SERVER),
+        /**
+         * Called when a map is initialized (created or loaded into memory)
+         * 
+         * @see org.bukkit.event.server.MapInitializeEvent
+         */
+        MAP_INITIALIZE (Category.SERVER),
 
         /**
          * WORLD EVENTS

@@ -10,10 +10,12 @@ import org.bukkit.event.Cancellable;
 public class PlayerPickupItemEvent extends PlayerEvent implements Cancellable {
     private final Item item;
     private boolean cancel = false;
+    private int remaining;
 
-    public PlayerPickupItemEvent(final Player player, final Item item) {
+    public PlayerPickupItemEvent(final Player player, final Item item, int remaining) {
         super(Type.PLAYER_PICKUP_ITEM, player);
         this.item = item;
+        this.remaining = remaining;
     }
 
     /**
@@ -26,27 +28,18 @@ public class PlayerPickupItemEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
-     * Gets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
+     * Gets the amount remaining on the ground, if any
      *
-     * If an item pickup event is cancelled, the item will not be picked up.
-     * This will not fire an event.
-     *
-     * @return true if this event is cancelled
+     * @return amount remaining on the ground
      */
+    public int getRemaining() {
+        return remaining;
+    }
+
     public boolean isCancelled() {
         return cancel;
     }
 
-    /**
-     * Sets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * If an item pickup event is cancelled, the item will not be picked up.
-     * This will not fire an event.
-     *
-     * @param cancel true if you wish to cancel this event
-     */
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
     }

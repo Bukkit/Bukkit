@@ -12,6 +12,7 @@ public class FurnaceBurnEvent extends Event implements Cancellable {
     private ItemStack fuel;
     private int burnTime;
     private boolean cancelled;
+    private boolean burning;
 
     public FurnaceBurnEvent(Block furnace, ItemStack fuel, int burnTime) {
         super(Type.FURNACE_BURN);
@@ -20,6 +21,7 @@ public class FurnaceBurnEvent extends Event implements Cancellable {
         this.fuel = fuel;
         this.burnTime = burnTime;
         this.cancelled = false;
+        this.burning = true;
     }
 
     /**
@@ -41,30 +43,45 @@ public class FurnaceBurnEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the default burn time for this fuel
+     * Gets the burn time for this fuel
      *
-     * @return the default burn time for this fuel
+     * @return the burn time for this fuel
      */
     public int getBurnTime() {
         return burnTime;
     }
 
     /**
-     * Gets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
+     * Sets the burn time for this fuel
      *
-     * @return true if this event is cancelled
+     * @param burnTime the burn time for this fuel
      */
+    public void setBurnTime(int burnTime) {
+        this.burnTime = burnTime;
+    }
+
+    /**
+     * Gets whether the furnace's fuel is burning or not.
+     *
+     * @return whether the furnace's fuel is burning or not.
+     */
+    public boolean isBurning() {
+        return this.burning;
+    }
+
+    /**
+     * Sets whether the furnace's fuel is burning or not.
+     *
+     * @param burning true if the furnace's fuel is burning
+     */
+    public void setBurning(boolean burning) {
+        this.burning = burning;
+    }
+
     public boolean isCancelled() {
         return cancelled;
     }
 
-    /**
-     * Sets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * @param cancel true if you wish to cancel this event
-     */
     public void setCancelled(boolean cancel) {
         this.cancelled = cancel;
     }

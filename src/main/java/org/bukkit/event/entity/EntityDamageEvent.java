@@ -25,28 +25,10 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
         damagee.setLastDamageCause(this);
     }
 
-    /**
-     * Gets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * If a damage event is cancelled, the damage will not be deducted from the player's health.
-     * This will not fire an event.
-     *
-     * @return true if this event is cancelled
-     */
     public boolean isCancelled() {
         return cancelled;
     }
 
-    /**
-     * Sets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * If a damage event is cancelled, the damage will not be deducted from the player's health.
-     * This will not fire an event.
-     *
-     * @param cancel true if you wish to cancel this event
-     */
     public void setCancelled(boolean cancel) {
         cancelled = cancel;
     }
@@ -95,6 +77,12 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
          * Damage: variable
          */
         ENTITY_ATTACK,
+        /**
+         * Damage caused when attacked by a projectile.
+         *
+         * Damage: variable
+         */
+        PROJECTILE,
         /**
          * Damage caused by being put in a block
          *
@@ -155,6 +143,12 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
          * Damage: 5
          */
         LIGHTNING,
+        /**
+         * Damage caused by committing suicide using the command "/kill"
+         *
+         * Damage: 1000
+         */
+        SUICIDE,
         /**
          * Custom damage.
          *

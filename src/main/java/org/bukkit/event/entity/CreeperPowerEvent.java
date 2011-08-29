@@ -4,7 +4,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 
 /**
- * Stores data for creepers being (un)powered
+ * Called when a Creeper is struck by lightning.
+ *<p />
+ * If a Creeper Power event is cancelled, the Creeper will not be powered.
  */
 public class CreeperPowerEvent extends EntityEvent implements Cancellable {
 
@@ -27,30 +29,18 @@ public class CreeperPowerEvent extends EntityEvent implements Cancellable {
         this.bolt = null;
     }
 
-    /**
-     * Gets the cancellation state of this event. A canceled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * @return true if this event is canceled
-     */
     public boolean isCancelled() {
         return canceled;
     }
 
-    /**
-     * Sets the cancellation state of this event. A canceled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * @param cancel true if you wish to cancel this event
-     */
     public void setCancelled(boolean cancel) {
         canceled = cancel;
     }
 
     /**
-     * Gets the bolt which is striking the creeper.
+     * Gets the lightning bolt which is striking the Creeper.
      *
-     * @return lightning entity
+     * @return The Entity for the lightning bolt which is striking the Creeper
      */
     public Entity getLightning() {
         return bolt;
@@ -58,6 +48,7 @@ public class CreeperPowerEvent extends EntityEvent implements Cancellable {
 
     /**
      * Gets the cause of the creeper being (un)powered.
+     *
      * @return A PowerCause value detailing the cause of change in power.
      */
     public PowerCause getCause() {
