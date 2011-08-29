@@ -341,6 +341,13 @@ public interface Server {
     public boolean getOnlineMode();
 
     /**
+     * Sets whether the Seveer is in online mode or not
+     *
+     * @param online Whether the server is in online mode
+     */
+    public void setOnlineMode(boolean online);
+
+    /**
      * Gets whether this server allows flying or not.
      *
      * @return Whether this server allows flying or not.

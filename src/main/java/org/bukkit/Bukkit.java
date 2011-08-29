@@ -211,6 +211,10 @@ public final class Bukkit {
         return server.getOnlineMode();
     }
 
+    public static void setOnlineMode(boolean online) {
+        server.setOnlineMode(online);
+    }
+
     public static boolean getAllowFlight() {
         return server.getAllowFlight();
     }
