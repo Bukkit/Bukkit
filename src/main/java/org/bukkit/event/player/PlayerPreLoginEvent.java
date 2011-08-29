@@ -10,6 +10,7 @@ public class PlayerPreLoginEvent extends Event {
     private Result result;
     private String message;
     private String name;
+    private final String realName;
     private InetAddress ipAddress;
 
     public PlayerPreLoginEvent(String name, InetAddress ipAddress) {
@@ -17,6 +18,7 @@ public class PlayerPreLoginEvent extends Event {
         this.result = Result.ALLOWED;
         this.message = "";
         this.name = name;
+        this.realName = name;
         this.ipAddress = ipAddress;
     }
 
@@ -82,6 +84,24 @@ public class PlayerPreLoginEvent extends Event {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Gets the player's real name, as it was sent by the client.
+     *
+     * @return the player's name
+     */
+    public String getRealName() {
+        return realName;
+    }
+
+    /**
+     * Sets the player's name
+     *
+     * @param name the player's new name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
