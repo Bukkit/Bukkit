@@ -134,7 +134,6 @@ public final class SimplePluginManager implements PluginManager {
 
                 try {
                     plugin = loadPlugin(file, finalPass);
-                    itr.remove();
                 } catch (UnknownDependencyException ex) {
                     if (finalPass) {
                         server.getLogger().log(Level.SEVERE, "Could not load '" + file.getPath() + "' in folder '" + directory.getPath() + "': " + ex.getMessage(), ex);
@@ -154,6 +153,7 @@ public final class SimplePluginManager implements PluginManager {
                     result.add(plugin);
                     allFailed = false;
                     finalPass = false;
+                    itr.remove();
                 }
             }
             if (finalPass) {
