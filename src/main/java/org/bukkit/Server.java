@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
+
+import org.bukkit.command.CommandException;
 import org.bukkit.command.PluginCommand;
 
 import org.bukkit.command.CommandSender;
