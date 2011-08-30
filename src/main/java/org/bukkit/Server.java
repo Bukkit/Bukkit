@@ -214,6 +214,50 @@ public interface Server {
      */
     public World createWorld(String name, World.Environment environment, long seed, ChunkGenerator generator);
 
+    /**
+     * Creates a world in the background.
+     * It will not return a World instance.
+     * Use onWorldLoad() to find the loaded world.
+     *
+     * @param name Name of the world to load
+     * @param environment Environment type of the world
+     */
+    public void createWorldBG(String name, World.Environment environment);
+
+    /**
+     * Creates a world in the background.
+     * It will not return a World instance.
+     * Use onWorldLoad() to find the loaded world.
+     *
+     * @param name Name of the world to load
+     * @param environment Environment type of the world
+     * @param seed Seed value to create the world with
+     */
+    public void createWorldBG(String name, World.Environment environment, long seed);
+
+    /**
+     * Creates a world in the background.
+     * It will not return a World instance.
+     * Use onWorldLoad() to find the loaded world.
+     *
+     * @param name Name of the world to load
+     * @param environment Environment type of the world
+     * @param generator ChunkGenerator to use in the construction of the new world
+     */
+    public void createWorldBG(String name, World.Environment environment, ChunkGenerator generator);
+
+    /**
+     * Creates a world in the background.
+     * It will not return a World instance.
+     * Use onWorldLoad() to find the loaded world.
+     *
+     * @param name Name of the world to load
+     * @param environment Environment type of the world
+     * @param seed Seed value to create the world with
+     * @param generator ChunkGenerator to use in the construction of the new world
+     */
+    public void createWorldBG(String name, World.Environment environment, long seed, ChunkGenerator generator);
+
      /**
      * Unloads a world with the given name.
      *
