@@ -35,7 +35,6 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible {
      * user was holding.
      *
      * @param item The ItemStack which will end up in the hand
-     * @return
      */
     public void setItemInHand(ItemStack item);
 

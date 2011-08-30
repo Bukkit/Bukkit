@@ -28,6 +28,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
     /**
      * Returns the reason for the targeting
+     * @return The reason
      */
     public TargetReason getReason() {
         return reason;
@@ -37,6 +38,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
      * Get the entity that this is targeting.
      * This will be null in the case that the event is called when
      * the mob forgets its target.
+     * @return The entity
      */
     public Entity getTarget() {
         return target;

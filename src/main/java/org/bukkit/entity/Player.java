@@ -40,14 +40,14 @@ public interface Player extends HumanEntity, CommandSender {
      * Note that this name will not be displayed in game, only in chat and places
      * defined by plugins
      *
-     * @param name
+     * @param name The new display name.
      */
     public void setDisplayName(String name);
 
     /**
      * Set the target of the player's compass.
      *
-     * @param loc
+     * @param loc Location to point to
      */
     public void setCompassTarget(Location loc);
 
@@ -123,14 +123,14 @@ public interface Player extends HumanEntity, CommandSender {
      * next day. If everyone has this flag set but no one is actually in bed,
      * then nothing will happen.
      *
-     * @param isSleeping
+     * @param isSleeping Whether to ignore.
      */
     public void setSleepingIgnored(boolean isSleeping);
 
     /**
      * Returns whether the player is sleeping ignored.
      *
-     * @return
+     * @return Whether player is ignoring sleep.
      */
     public boolean isSleepingIgnored();
 
@@ -139,9 +139,9 @@ public interface Player extends HumanEntity, CommandSender {
      * at the particular location (as far as the client is concerned). This
      * will not work without a note block. This will not work with cake.
      *
-     * @param loc
-     * @param instrument
-     * @param note
+     * @param loc The location of a note block.
+     * @param instrument The instrument ID.
+     * @param note The note ID.
      */
     public void playNote(Location loc, byte instrument, byte note);
 
@@ -150,16 +150,16 @@ public interface Player extends HumanEntity, CommandSender {
      * at the particular location (as far as the client is concerned). This
      * will not work without a note block. This will not work with cake.
      *
-     * @param loc
-     * @param instrument
-     * @param note
+     * @param loc The location of a note block
+     * @param instrument The instrument
+     * @param note The note
      */
     public void playNote(Location loc, Instrument instrument, Note note);
 
     /**
      * Plays an effect to just this player.
      *
-     * @param loc the player to play the effect for
+     * @param loc the location to play the effect at
      * @param effect the {@link Effect}
      * @param data a data bit needed for the RECORD_PLAY, SMOKE, and STEP_SOUND sounds
      */
@@ -169,9 +169,9 @@ public interface Player extends HumanEntity, CommandSender {
      * Send a block change. This fakes a block change packet for a user at
      * a certain location. This will not actually change the world in any way.
      *
-     * @param loc
-     * @param material
-     * @param data
+     * @param loc The location of the changed block
+     * @param material The new block
+     * @param data The block data
      */
     public void sendBlockChange(Location loc, Material material, byte data);
 
@@ -198,9 +198,9 @@ public interface Player extends HumanEntity, CommandSender {
      * Send a block change. This fakes a block change packet for a user at
      * a certain location. This will not actually change the world in any way.
      *
-     * @param loc
-     * @param material
-     * @param data
+     * @param loc The location of the changed block
+     * @param material The new block ID
+     * @param data The block data
      */
     public void sendBlockChange(Location loc, int material, byte data);
     
@@ -208,7 +208,7 @@ public interface Player extends HumanEntity, CommandSender {
      * Render a map and send it to the player in its entirety. This may be used
      * when streaming the map in the normal manner is not desirbale.
      * 
-     * @pram map The map to be sent
+     * @param map The map to be sent
      */
     public void sendMap(MapView map);
 
@@ -274,7 +274,7 @@ public interface Player extends HumanEntity, CommandSender {
     /**
      * Returns the player's current timestamp.
      *
-     * @return
+     * @return The player's time
      */
     public long getPlayerTime();
 
@@ -282,7 +282,7 @@ public interface Player extends HumanEntity, CommandSender {
      * Returns the player's current time offset relative to server time, or the current player's fixed time
      * if the player's time is absolute.
      *
-     * @return
+     * @return The player's time
      */
     public long getPlayerTimeOffset();
 
