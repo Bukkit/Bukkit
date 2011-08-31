@@ -139,6 +139,18 @@ public interface Server {
     public List<Player> matchPlayer(String name);
 
     /**
+     * Bans a player by name
+     * @param name The player's name
+     */
+    public void banPlayer(String name);
+
+    /**
+     * Bans a player by IP
+     * @param ip The IP address to ban
+     */
+    public void banPlayerIP(String ip);
+
+    /**
      * Gets the PluginManager for interfacing with plugins
      *
      * @return PluginManager for this Server instance
