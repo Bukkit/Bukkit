@@ -49,6 +49,7 @@ public final class Bukkit {
         }
 
         Bukkit.server = server;
+        server.getLogger().info("This server is running " + getName() + " version " + getVersion());
     }
 
     public static String getName() {
@@ -213,5 +214,17 @@ public final class Bukkit {
 
     public static boolean getAllowFlight() {
         return server.getAllowFlight();
+    }
+
+    public static void shutdown() {
+        server.shutdown();
+    }
+
+    public static int broadcast(String message, String permission) {
+        return server.broadcast(message, permission);
+    }
+
+    public static OfflinePlayer getOfflinePlayer(String name) {
+        return server.getOfflinePlayer(name);
     }
 }
