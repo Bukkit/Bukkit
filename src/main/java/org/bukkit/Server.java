@@ -160,10 +160,22 @@ public interface Server {
     public void banPlayer(String name);
 
     /**
+     * Pardons a player by name
+     * @param name The player's name
+     */
+    public void pardonPlayer(String name);
+
+    /**
      * Bans a player by IP
      * @param ip The IP address to ban
      */
     public void banPlayerIP(String ip);
+
+    /**
+     * Pardons a player by IP
+     * @param ip The IP address to pardon
+     */
+    public void pardonPlayerIP(String ip);
 
     /**
      * Gets the PluginManager for interfacing with plugins
