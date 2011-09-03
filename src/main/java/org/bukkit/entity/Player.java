@@ -72,20 +72,6 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
     public void kickPlayer(String message);
 
     /**
-     * Bans a player with a custom kick message.
-     *
-     * @param message The message to use when kicking
-     */
-    public void banPlayer(String message);
-
-    /**
-     * IP bans a player with a custom kick message
-     *
-     * @param message The message to use when kicking
-     */
-    public void banPlayerIP(String message);
-
-    /**
      * Says a message (or runs a command).
      *
      * @param msg message to print

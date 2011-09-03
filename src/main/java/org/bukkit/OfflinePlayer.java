@@ -16,4 +16,28 @@ public interface OfflinePlayer extends ServerOperator {
      * @return Player name
      */
     public String getName();
+
+    /**
+     * Bans the current player
+     *
+     * @param message The message to use when kicking if the player is online
+     */
+    public void ban(String message);
+
+    /**
+     * IP bans the current player
+     *
+     * @param message The message to use when kicking if the player is online
+     */
+    public void banIP(String message);
+
+    /**
+     * Attempts to pardon the current player
+     */
+    public void pardon();
+
+    /**
+     * Attempts to pardon the current player's IP
+     */
+    public void pardonIP();
 }
