@@ -7,6 +7,7 @@ import org.bukkit.inventory.Recipe;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
 import org.bukkit.command.PluginCommand;
@@ -114,6 +115,25 @@ public interface Server {
     public boolean hasWhitelist();
 
     /**
+     * Sets the whitelist on or off
+     *
+     * @param value true if whitelist is on, otherwise false
+     */
+    public void setWhitelist(boolean value);
+
+    /**
+     * Gets a list of whitelisted players
+     *
+     * @return Set containing all whitelisted players
+     */
+    public Set<OfflinePlayer> getWhitelistedPlayers();
+
+    /**
+     * Reloads the whitelist from disk
+     */
+    public void reloadWhitelist();
+
+    /**
      * Broadcast a message to all players.
      *
      * This is the same as calling {@link #broadcast(java.lang.String, java.lang.String)} to {@link #BROADCAST_CHANNEL_USERS}
@@ -140,6 +160,14 @@ public interface Server {
      * @return Player if it was found, otherwise null
      */
     public Player getPlayer(String name);
+
+    /**
+     * Gets the player with the exact given name, case insensitive
+     *
+     * @param name Exact name of the player to retrieve
+     * @return Player object or null if not found
+     */
+    public Player getPlayerExact(String name);
 
     /**
      * Attempts to match any players with the given name, and returns a list
@@ -385,4 +413,46 @@ public interface Server {
      * @return OfflinePlayer object
      */
     public OfflinePlayer getOfflinePlayer(String name);
+
+    /**
+     * Gets a set containing all current IPs that are banned
+     *
+     * @return Set containing banned IP addresses
+     */
+    public Set<String> getIPBans();
+
+    /**
+     * Bans the specified address from the server
+     *
+     * @param address IP address to ban
+     */
+    public void banIP(String address);
+
+    /**
+     * Unbans the specified address from the server
+     *
+     * @param address IP address to unban
+     */
+    public void unbanIP(String address);
+
+    /**
+     * Gets a set containing all banned players
+     *
+     * @return Set containing banned players
+     */
+    public Set<OfflinePlayer> getBannedPlayers();
+
+    /**
+     * Gets the default {@link GameMode} for new players
+     *
+     * @return Default game mode
+     */
+    public GameMode getDefaultGameMode();
+
+    /**
+     * Sets the default {@link GameMode} for new players
+     *
+     * @param mode New game mode
+     */
+    public void setDefaultGameMode(GameMode mode);
 }
