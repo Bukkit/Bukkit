@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum CreatureType {
-    CAVE_SPIDER("Cave_Spider"),
+    CAVE_SPIDER("CaveSpider"),
     CHICKEN("Chicken"),
     COW("Cow"),
     CREEPER("Creeper"),
