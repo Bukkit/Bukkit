@@ -5,15 +5,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum CreatureType {
+    CAVE_SPIDER("Cave_Spider"),
     CHICKEN("Chicken"),
     COW("Cow"),
     CREEPER("Creeper"),
+    ENDERMAN("Enderman"), 
     GHAST("Ghast"),
     GIANT("Giant"),
     MONSTER("Monster"),
     PIG("Pig"),
     PIG_ZOMBIE("PigZombie"),
     SHEEP("Sheep"),
+    SILVERFISH("Silverfish"),
     SKELETON("Skeleton"),
     SLIME("Slime"),
     SPIDER("Spider"),
