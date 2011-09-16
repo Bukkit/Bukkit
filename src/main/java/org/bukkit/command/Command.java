@@ -86,7 +86,7 @@ public abstract class Command {
             return true;
         }
 
-        target.sendMessage(ChatColor.RED + "Bukkit sad. Bukkit want you to access command, but Bukkit cannot let you. Bukkit will leak tears :'(");
+        target.sendMessage(ChatColor.RED + "USER, Y U NO HAVE PERMS!!!1!";
         return false;
     }
 
