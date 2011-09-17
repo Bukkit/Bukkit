@@ -119,9 +119,8 @@ public interface PluginManager {
     /**
      * Registers all events of the specified category to the specified listener
      *
-     * @param type EventType to register
+     * @param category The category of events to register
      * @param listener PlayerListener to register
-     * @param executor EventExecutor to register
      * @param priority Priority of this event
      * @param plugin Plugin to register
      */
@@ -130,7 +129,7 @@ public interface PluginManager {
     /**
      * Registers all events of the specified category to the specified listener using a directly passed EventExecutor
      *
-     * @param type EventType to register
+     * @param category The category of events to register
      * @param listener PlayerListener to register
      * @param executor EventExecutor to register
      * @param priority Priority of this event
@@ -138,6 +137,16 @@ public interface PluginManager {
      */
     public void registerEvents(Event.Category category, Listener listener, EventExecutor executor, Priority priority, Plugin plugin);
 
+    /**
+     * Registers all events to the specified listener using a directly passed EventExecutor
+     *
+     * @param listener PlayerListener to register
+     * @param executor EventExecutor to register
+     * @param priority Priority of this event
+     * @param plugin Plugin to register
+     */
+    public void registerAllEvents(Listener listener, EventExecutor executor, Priority priority, Plugin plugin);
+    
     /**
      * Enables the specified plugin
      *

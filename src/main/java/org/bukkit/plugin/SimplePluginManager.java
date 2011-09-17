@@ -397,9 +397,8 @@ public final class SimplePluginManager implements PluginManager {
     /**
      * Registers all events of the specified category to the specified listener
      *
-     * @param type EventType to register
+     * @param category The category of events to register
      * @param listener PlayerListener to register
-     * @param executor EventExecutor to register
      * @param priority Priority of this event
      * @param plugin Plugin to register
      */
@@ -414,7 +413,7 @@ public final class SimplePluginManager implements PluginManager {
     /**
      * Registers all events of the specified category to the specified listener using a directly passed EventExecutor
      *
-     * @param type EventType to register
+     * @param category The category of events to register
      * @param listener PlayerListener to register
      * @param executor EventExecutor to register
      * @param priority Priority of this event
@@ -429,24 +428,8 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     /**
-     * Registers all events to the specified listener
-     *
-     * @param type EventType to register
-     * @param listener PlayerListener to register
-     * @param executor EventExecutor to register
-     * @param priority Priority of this event
-     * @param plugin Plugin to register
-     */
-    public void registerAllEvents(Listener listener, Priority priority, Plugin plugin) {
-        for (Event.Type type : Event.Type.values()) {
-            registerEvent(type, listener, priority, plugin);
-        }
-    }
-
-    /**
      * Registers all events to the specified listener using a directly passed EventExecutor
      *
-     * @param type EventType to register
      * @param listener PlayerListener to register
      * @param executor EventExecutor to register
      * @param priority Priority of this event
