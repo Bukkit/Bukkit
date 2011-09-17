@@ -317,7 +317,7 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
     /**
      * Sets the players current experience level
      *
-     * @param exp New experience level
+     * @param level New experience level
      */
     public void setLevel(int level);
 
