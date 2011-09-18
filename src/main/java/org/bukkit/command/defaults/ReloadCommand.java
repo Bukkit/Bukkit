@@ -2,7 +2,6 @@ package org.bukkit.command.defaults;
 
 import java.util.Arrays;
 import org.bukkit.ChatColor;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -19,7 +18,7 @@ public class ReloadCommand extends Command {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
 
-        Bukkit.reload();
+        sender.getServer().reload();
         sender.sendMessage(ChatColor.GREEN + "Reload complete.");
 
         return true;

@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -17,7 +16,7 @@ public class StopCommand extends VanillaCommand {
         if (!testPermission(sender)) return true;
 
         Command.broadcastCommandMessage(sender, "Stopping the server..");
-        Bukkit.shutdown();
+        sender.getServer().shutdown();
 
         return true;
     }

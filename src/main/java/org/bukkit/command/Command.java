@@ -3,7 +3,6 @@ package org.bukkit.command;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.permissions.Permissible;
@@ -226,7 +225,7 @@ public abstract class Command {
     }
 
     public static void broadcastCommandMessage(CommandSender source, String message) {
-        Set<Permissible> users = Bukkit.getPluginManager().getPermissionSubscriptions(Server.BROADCAST_CHANNEL_ADMINISTRATIVE);
+        Set<Permissible> users = source.getServer().getPluginManager().getPermissionSubscriptions(Server.BROADCAST_CHANNEL_ADMINISTRATIVE);
         String result = source.getName() + ": " + message;
         String colored = ChatColor.GRAY + "(" + result + ")";
 

@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,7 +20,7 @@ public class BanIpCommand extends VanillaCommand {
             return false;
         }
 
-        Bukkit.banIP(args[0]);
+        sender.getServer().banIP(args[0]);
         Command.broadcastCommandMessage(sender, "Banning ip " + args[0]);
 
         return true;

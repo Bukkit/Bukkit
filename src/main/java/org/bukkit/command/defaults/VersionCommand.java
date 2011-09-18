@@ -3,7 +3,6 @@ package org.bukkit.command.defaults;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.bukkit.ChatColor;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
@@ -24,7 +23,7 @@ public class VersionCommand extends Command {
         if (!testPermission(sender)) return true;
         
         if (args.length == 0) {
-            sender.sendMessage("This server is running " + ChatColor.GREEN + Bukkit.getName() + ChatColor.WHITE + " version " + ChatColor.GREEN + Bukkit.getVersion());
+            sender.sendMessage("This server is running " + ChatColor.GREEN + sender.getServer().getName() + ChatColor.WHITE + " version " + ChatColor.GREEN + sender.getServer().getVersion());
             sender.sendMessage("This server is also sporting some funky dev build of Bukkit!");
         } else {
             StringBuilder name = new StringBuilder();
@@ -37,7 +36,7 @@ public class VersionCommand extends Command {
                 name.append(arg);
             }
 
-            Plugin plugin = Bukkit.getPluginManager().getPlugin(name.toString());
+            Plugin plugin = sender.getServer().getPluginManager().getPlugin(name.toString());
 
             if (plugin != null) {
                 PluginDescriptionFile desc = plugin.getDescription();

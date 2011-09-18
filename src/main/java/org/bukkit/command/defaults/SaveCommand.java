@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,9 +18,9 @@ public class SaveCommand extends VanillaCommand {
 
         Command.broadcastCommandMessage(sender, "Forcing save..");
 
-        Bukkit.savePlayers();
+        sender.getServer().savePlayers();
 
-        for (World world : Bukkit.getWorlds()) {
+        for (World world : sender.getServer().getWorlds()) {
             world.save();
         }
 

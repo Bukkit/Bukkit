@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -22,7 +21,7 @@ public class TellCommand extends VanillaCommand {
             return false;
         }
 
-        Player player = Bukkit.getPlayerExact(args[0]);
+        Player player = sender.getServer().getPlayerExact(args[0]);
 
         if (player == null) {
             sender.sendMessage("There's no player by that name online.");
@@ -37,8 +36,8 @@ public class TellCommand extends VanillaCommand {
             String result = ChatColor.GRAY + sender.getName() + " whispers " + message;
 
             if (sender instanceof ConsoleCommandSender) {
-                Bukkit.getLogger().info("[" + sender.getName() + "->" + player.getName() + "] " + message);
-                Bukkit.getLogger().info(result);
+                sender.getServer().getLogger().info("[" + sender.getName() + "->" + player.getName() + "] " + message);
+                sender.getServer().getLogger().info(result);
             }
 
             player.sendMessage(result);

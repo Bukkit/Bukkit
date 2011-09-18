@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -21,7 +20,7 @@ public class KillCommand extends VanillaCommand {
             Player player = (Player)sender;
 
             EntityDamageEvent ede = new EntityDamageEvent(player, EntityDamageEvent.DamageCause.SUICIDE, 1000);
-            Bukkit.getPluginManager().callEvent(ede);
+            sender.getServer().getPluginManager().callEvent(ede);
             if (ede.isCancelled()) return true;
 
             player.damage(ede.getDamage());

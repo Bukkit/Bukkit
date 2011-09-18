@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -33,7 +32,7 @@ public class TimeCommand extends VanillaCommand {
             if (!sender.hasPermission("bukkit.command.time.add")) {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to add to the time");
             } else {
-                for (World world : Bukkit.getWorlds()) {
+                for (World world : sender.getServer().getWorlds()) {
                     world.setFullTime(world.getFullTime() + value);
                 }
 
@@ -43,7 +42,7 @@ public class TimeCommand extends VanillaCommand {
             if (!sender.hasPermission("bukkit.command.time.set")) {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to set the time");
             } else {
-                for (World world : Bukkit.getWorlds()) {
+                for (World world : sender.getServer().getWorlds()) {
                     world.setTime(value);
                 }
 
