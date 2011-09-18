@@ -131,7 +131,7 @@ public final class LocationUtil {
      * 
      * @return Vector
      */
-    public static Location getDirection(DirectionalLocation location) {
+    public static FixedEntityLocation getDirection(DirectionalLocation location) {
         double rotX = Math.toRadians(location.getYaw());
         double rotY = Math.toRadians(location.getPitch());
 

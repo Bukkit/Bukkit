@@ -31,8 +31,8 @@ public class EntityDirectionalLocation extends EntityWorldLocation implements Mu
         super(location);
     }
 
-    public EntityDirectionalLocation(WorldLocation location, DirectionalLocation direction) {
-        this(location);
+    public EntityDirectionalLocation(DirectionalLocation direction) {
+        this((WorldLocation) direction);
         this.yaw = direction.getYaw();
         this.pitch = direction.getPitch();
     }
