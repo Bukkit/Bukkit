@@ -69,6 +69,20 @@ public interface Entity {
     public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z);
 
     /**
+     * Gets the list of players tracking an entity
+     *
+     * @return List<Player> List of players tracking
+     */
+    public List<org.bukkit.entity.Player> getTrackers();
+
+    /**
+     * Sets the list of players tracking an entity
+     *
+     * @param playerList List of players that should track an entity
+     */
+    public void setTrackers(List<org.bukkit.entity.Player> playerList);
+
+    /**
      * Returns a unique id for this entity
      *
      * @return Entity id

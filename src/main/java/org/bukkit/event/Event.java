@@ -593,6 +593,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.entity.EntityPortalEnterEvent
          */
         ENTITY_PORTAL_ENTER (Category.ENTITY),
+        /**
+         * Called when an entity should be tracked by a player
+         *
+         * @see org.bukkit.event.entity.EntityTrackEvent
+         */
+        ENTITY_TRACK (Category.ENTITY),
 
         /**
          * LIVING_ENTITY EVENTS
