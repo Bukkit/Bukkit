@@ -455,4 +455,16 @@ public interface Server {
      * @param mode New game mode
      */
     public void setDefaultGameMode(GameMode mode);
+    
+    /**
+     * Gets the MOTD of the server
+     * @return String MOTD
+     */
+    public String getMotd();
+    
+    /**
+     * Sets the MOTD of the server
+     * @param motd New MOTD
+     */
+    public void setMotd(String motd);
 }
