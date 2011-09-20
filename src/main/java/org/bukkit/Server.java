@@ -455,4 +455,18 @@ public interface Server {
      * @param mode New game mode
      */
     public void setDefaultGameMode(GameMode mode);
+
+    /**
+     * Gets the difficulty setting for the server.
+     *
+     * @return The server difficulty
+     */
+    public Difficulty getDifficulty();
+    
+    /**
+     * Gets the message of the day which is displayed under the name in the server browser.
+     * 
+     * @return The message of the day
+     */
+    public String getMotd();
 }
