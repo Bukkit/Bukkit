@@ -3,6 +3,7 @@ package org.bukkit.event;
 import java.io.Serializable;
 
 import org.bukkit.entity.Projectile;
+import org.omg.CORBA.ORB;
 
 /**
  * Represents an event
@@ -661,6 +662,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.entity.CreeperPowerEvent
          */
         CREEPER_POWER (Category.LIVING_ENTITY),
+        /**
+         * Called when an Enderman take a block somewhere
+         * 
+         * @see org.bukkit.event.entity.EndermanTakeBlockEvent
+         */
+        ENDERMAN_TAKE_BLOCK (Category.LIVING_ENTITY),
         /**
          * Called when a pig is zapped, zombifying it
          *
