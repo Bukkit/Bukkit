@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,7 +18,7 @@ public class SaveOnCommand extends VanillaCommand {
 
         Command.broadcastCommandMessage(sender, "Enabling level saving..");
 
-        for (World world : Bukkit.getWorlds()) {
+        for (World world : sender.getServer().getWorlds()) {
             world.setAutoSave(true);
         }
 

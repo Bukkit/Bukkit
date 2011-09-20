@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -22,8 +21,8 @@ public class TeleportCommand extends VanillaCommand {
             return false;
         }
 
-        Player victim = Bukkit.getPlayerExact(args[0]);
-        Player target = Bukkit.getPlayerExact(args[1]);
+        Player victim = sender.getServer().getPlayerExact(args[0]);
+        Player target = sender.getServer().getPlayerExact(args[1]);
 
         if (victim == null) {
             sender.sendMessage("Can't find user " + args[0] + ". No tp.");

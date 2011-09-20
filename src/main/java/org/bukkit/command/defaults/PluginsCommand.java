@@ -26,7 +26,7 @@ public class PluginsCommand extends Command {
 
     private String getPluginList() {
         StringBuilder pluginList = new StringBuilder();
-        Plugin[] plugins = Bukkit.getPluginManager().getPlugins();
+        Plugin[] plugins = Bukkit.getServer().getPluginManager().getPlugins();
         
         for (Plugin plugin : plugins) {
             if (pluginList.length() > 0) {

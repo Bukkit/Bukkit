@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -23,7 +22,7 @@ public class GameModeCommand extends VanillaCommand {
             return false;
         }
 
-        Player player = Bukkit.getPlayerExact(args[0]);
+        Player player = sender.getServer().getPlayerExact(args[0]);
 
         if (player != null) {
             int value = -1;

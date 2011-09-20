@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,7 +20,7 @@ public class BanCommand extends VanillaCommand {
             return false;
         }
 
-        Bukkit.getOfflinePlayer(args[0]).setBanned(true);
+        sender.getServer().getOfflinePlayer(args[0]).setBanned(true);
         Command.broadcastCommandMessage(sender, "Banning " + args[0]);
 
         return true;

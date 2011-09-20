@@ -20,9 +20,9 @@ public final class DefaultPermissions {
         Permission result = perm;
 
         try {
-            Bukkit.getPluginManager().addPermission(perm);
+            Bukkit.getServer().getPluginManager().addPermission(perm);
         } catch (IllegalArgumentException ex) {
-            result = Bukkit.getPluginManager().getPermission(perm.getName());
+            result = Bukkit.getServer().getPluginManager().getPermission(perm.getName());
         }
 
         if (withLegacy) {

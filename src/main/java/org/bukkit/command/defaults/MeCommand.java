@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -27,7 +26,7 @@ public class MeCommand extends VanillaCommand {
             message += args[i];
         }
 
-        Bukkit.broadcastMessage("* " + sender.getName() + " " + message);
+        sender.getServer().broadcastMessage("* " + sender.getName() + " " + message);
 
         return true;
     }

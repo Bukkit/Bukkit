@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -25,7 +24,7 @@ public class DeopCommand extends VanillaCommand {
 
         Command.broadcastCommandMessage(sender, "De-opping " + args[0]);
 
-        OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
+        OfflinePlayer player = sender.getServer().getOfflinePlayer(args[0]);
         player.setOp(false);
 
         if (player instanceof Player) {

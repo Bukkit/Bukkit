@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -25,7 +24,7 @@ public class OpCommand extends VanillaCommand {
 
         Command.broadcastCommandMessage(sender, "Oping " + args[0]);
 
-        OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
+        OfflinePlayer player = sender.getServer().getOfflinePlayer(args[0]);
         player.setOp(true);
 
         if (player instanceof Player) {
