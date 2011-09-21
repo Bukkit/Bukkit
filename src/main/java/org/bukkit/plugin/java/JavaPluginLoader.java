@@ -726,6 +726,13 @@ public class JavaPluginLoader implements PluginLoader {
                     ((EntityListener) listener).onItemSpawn((ItemSpawnEvent) event);
                 }
             };
+            
+        case EXPERIENCE_ORB_SPAWN:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onExperienceOrbSpawn((ExperienceOrbSpawnEvent) event);
+                }
+            };
 
         case PIG_ZAP:
             return new EventExecutor() {
