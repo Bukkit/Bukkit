@@ -17,6 +17,15 @@ public class PlayerDeathEvent extends EntityDeathEvent {
         this.newExp = newExp;
         this.deathMessage = deathMessage;
     }
+    
+    /**
+     * Get the player that died.
+     *
+     * @return Player that died.
+     */
+    public Player getPlayer() {
+        return (Player)getEntity();
+    }
 
     /**
      * Set the death message that will appear to everyone on the server.
