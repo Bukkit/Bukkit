@@ -10,35 +10,15 @@ import org.bukkit.event.Cancellable;
  *<p />
  * If a Creature Spawn event is cancelled, the creature will not spawn.
  */
-public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
+public class CreatureSpawnEvent extends EntitySpawnEvent {
 
-    private Location location;
-    private boolean canceled;
     private CreatureType creatureType;
     private SpawnReason spawnReason;
 
     public CreatureSpawnEvent(Entity spawnee, CreatureType mobtype, Location loc, SpawnReason spawnReason) {
-        super(Type.CREATURE_SPAWN, spawnee);
+        super(Type.CREATURE_SPAWN, spawnee, loc);
         this.creatureType = mobtype;
-        this.location = loc;
         this.spawnReason = spawnReason;
-    }
-
-    public boolean isCancelled() {
-        return canceled;
-    }
-
-    public void setCancelled(boolean cancel) {
-        canceled = cancel;
-    }
-
-    /**
-     * Gets the location at which the creature is spawning.
-     *
-     * @return The location at which the creature is spawning
-     */
-    public Location getLocation() {
-        return location;
     }
 
     /**
