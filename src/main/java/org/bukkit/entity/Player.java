@@ -383,4 +383,11 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * @param value New food level
      */
     public void setFoodLevel(int value);
+
+    /**
+     * Gets the Location where the player will spawn at their bed. Null if they have not slept in one.
+     *
+     * @return Bed Spawn Location if bed exists, otherwise NULL.
+     */
+    public Location getBedSpawnLocation();
 }
