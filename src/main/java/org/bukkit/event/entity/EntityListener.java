@@ -25,6 +25,13 @@ public class EntityListener implements Listener {
      * @param event Relevant event details
      */
     public void onItemSpawn(ItemSpawnEvent event) {}
+    
+    /**
+     * Called when an experience orb is spawned into a world.
+     * 
+     * @param event Relevant event details.
+     */
+    public void onExperienceOrbSpawn(ExperienceOrbSpawnEvent event) {}
 
     /**
      * Called when an entity combusts due to the sun.
