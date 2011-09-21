@@ -783,6 +783,20 @@ public class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case ENTITY_ADD_EFECT:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onEntityAddEffect((EntityAddEffectEvent) event);
+                }
+            };
+
+        case ENTITY_REMOVE_EFFECT:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onEntityRemoveEffect((EntityRemoveEffectEvent) event);
+                }
+            };
+
         // Vehicle Events
         case VEHICLE_CREATE:
             return new EventExecutor() {

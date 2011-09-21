@@ -3,6 +3,7 @@ package org.bukkit.entity;
 import java.util.HashSet;
 import java.util.List;
 
+import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
@@ -204,5 +205,13 @@ public interface LivingEntity extends Entity {
      * @param ticks NoDamageTicks
      */
     public void setNoDamageTicks(int ticks);
+
+    /**
+     * Display an entity effect for this entity.
+     * @param effect The effect to send
+     * @param amplitude The strength of the effect. Can have different results depending on the effect
+     * @param duration How long, in ticks, to show this effect to clients.
+     */
+    public void addEntityEffect(EntityEffect effect, byte amplitude, short duration);
 
 }

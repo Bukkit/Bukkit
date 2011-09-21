@@ -148,4 +148,18 @@ public class EntityListener implements Listener {
      * @param event Relevant event details
      */
     public void onEndermanPlace(EndermanPlaceEvent event) {}
+
+    /**
+     * Called when an entity effect is applied to a living entity
+     *
+     * @param event Relevant event details
+     */
+    public void onEntityAddEffect(EntityAddEffectEvent event) {}
+
+    /**
+     * Called when an entity effect is removed from a living entity
+     *
+     * @param event Relevant event details
+     */
+    public void onEntityRemoveEffect(EntityRemoveEffectEvent event) {}
 }

@@ -705,6 +705,20 @@ public abstract class Event implements Serializable {
         ENDERMAN_PLACE (Category.LIVING_ENTITY),
 
         /**
+         * Called when an entity effect is applied to a living entity
+         *
+         * @see org.bukkit.event.entity.EntityAddEffectEvent
+         */
+        ENTITY_ADD_EFECT(Category.LIVING_ENTITY),
+
+        /**
+         * Called when an entity effect is removed from a living entity
+         *
+         * @see org.bukkit.event.entity.EntityRemoveEffectEvent
+         */
+        ENTITY_REMOVE_EFFECT(Category.LIVING_ENTITY),
+
+        /**
          * WEATHER EVENTS
          */
 
