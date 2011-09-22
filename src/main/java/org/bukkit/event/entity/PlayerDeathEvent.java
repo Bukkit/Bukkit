@@ -19,6 +19,15 @@ public class PlayerDeathEvent extends EntityDeathEvent {
     }
 
     /**
+     * Get the player that died.
+     *
+     * @return Player that died.
+     */
+    public Player getPlayer() {
+        return (Player)getEntity();
+    }
+
+    /**
      * Set the death message that will appear to everyone on the server.
      *
      * @param deathMessage Message to appear to other players on the server.
@@ -53,7 +62,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      * <p>
      * This does not indicate how much EXP should be dropped, please see
      * {@link #setDropedExp(int)} for that.
-     * 
+     *
      * @get exp New EXP of the respawned player
      */
     public void setNewExp(int exp) {
