@@ -23,4 +23,18 @@ public interface Item extends Entity {
      * @param stack An item stack.
      */
     public void setItemStack(ItemStack stack);
+
+    /**
+     * Gets the pickup delay associated with this item drop.
+     *
+     * @return
+     */
+    public int getPickupDelay();
+
+    /**
+     * Sets the pickup delay associated with this item drop.
+     *
+     * @param delay
+     */
+    public void setPickupDelay(int delay);
 }
