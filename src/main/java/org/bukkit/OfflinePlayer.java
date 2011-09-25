@@ -1,9 +1,9 @@
 package org.bukkit;
 
 import org.bukkit.entity.AnimalTamer;
-import org.bukkit.permissions.ServerOperator;
+import org.bukkit.permissions.Permissible;
 
-public interface OfflinePlayer extends ServerOperator, AnimalTamer {
+public interface OfflinePlayer extends Permissible, AnimalTamer {
     /**
      * Checks if this player is currently online
      *
