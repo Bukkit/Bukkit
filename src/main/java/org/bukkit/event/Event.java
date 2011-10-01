@@ -506,6 +506,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.server.MapInitializeEvent
          */
         MAP_INITIALIZE (Category.SERVER),
+        /**
+         * Called when server has loaded or reloaded
+         *
+         * @see org.bukkit.event.server.ServerReadyEvent
+         */
+        SERVER_READY (Category.SERVER),
 
         /**
          * WORLD EVENTS

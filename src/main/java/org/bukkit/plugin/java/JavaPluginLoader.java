@@ -584,6 +584,13 @@ public class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case SERVER_READY:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((ServerListener) listener).onServerReady((ServerReadyEvent) event);
+                }
+            };
+
         // World Events
         case CHUNK_LOAD:
             return new EventExecutor() {
