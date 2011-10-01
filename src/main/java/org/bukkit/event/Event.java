@@ -500,6 +500,12 @@ public abstract class Event implements Serializable {
          */
         PLUGIN_DISABLE (Category.SERVER),
         /**
+         * Called when an OfflinePlayer is created
+         *
+         * @see org.bukkit.event.server.OfflinePlayerCreatedEvent
+         */
+        SERVER_OFFLINEPLAYERCREATED (Category.SERVER),
+        /**
          * Called when a server command is called
          *
          * @see org.bukkit.event.server.ServerCommandEvent
