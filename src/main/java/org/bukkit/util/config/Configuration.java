@@ -5,8 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
@@ -57,6 +59,7 @@ public class Configuration extends ConfigurationNode {
     private Yaml yaml;
     private File file;
     private String header = null;
+    private final Map<String, String> comments = new HashMap<String, String>();
 
     public Configuration(File file) {
         super(new HashMap<String, Object>());
@@ -134,6 +137,40 @@ public class Configuration extends ConfigurationNode {
     }
 
     /**
+     * Set the top-level comments.
+     * 
+     * @param comments The top-level comments, mapped by property path
+     */
+    public void setComments(Map<String, String> comments) {
+        comments.clear();
+        for (Map.Entry<String, String> me : comments.entrySet()) {
+            // Do this so each key is checked
+            setComment(me.getKey(), me.getValue());
+        }
+    }
+
+    /**
+     * Set the comment for the given property path.
+     * 
+     * @param path The top-level property path
+     * @param comment The property comment
+     */
+    public void setComment(String path, String comment) {
+        if (path.contains("."))
+            throw new IllegalArgumentException("path must be a top-level path: " + path);
+        comments.put(path, comment);
+    }
+
+    /**
+     * Return the top-level comments.
+     * 
+     * @return The top-level comments, mapped by property path
+     */
+    public Map<String, String> getComments() {
+        return Collections.unmodifiableMap(comments);
+    }
+
+    /**
      * Saves the configuration to disk. All errors are clobbered.
      *
      * @return true if it was successful
@@ -154,7 +191,22 @@ public class Configuration extends ConfigurationNode {
                 writer.append(header);
                 writer.append("\r\n");
             }
-            yaml.dump(root, writer);
+
+            if (comments.isEmpty()) {
+                // No top-level comments, just dump everything at once
+                yaml.dump(root, writer);
+            }
+            else {
+                for (Map.Entry<String, Object> me : root.entrySet()) {
+                    String comment = comments.get(me.getKey());
+                    if (comment != null) {
+                        writer.append(comment);
+                        writer.append("\r\n");
+                    }
+
+                    yaml.dump(Collections.singletonMap(me.getKey(), me.getValue()), writer);
+                }
+            }
             return true;
         } catch (IOException e) {} finally {
             try {
