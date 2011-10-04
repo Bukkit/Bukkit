@@ -345,11 +345,25 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
     public int getExperience();
 
     /**
-     * Sets the players current experience points
+     * Sets the players current experience, level, and total experience
      *
      * @param exp New experience points
      */
     public void setExperience(int exp);
+
+    /**
+     * Adds to the players current experience points, must be higher than 0
+     *
+     * @param exp Experience points to add to player
+     */
+    public void addExperience(int exp);
+
+    /**
+     * Removes from the players current experience points, must be higher than 0
+     *
+     * @param exp Experience points to add to player
+     */
+    public void removeExperience(int exp);
 
     /**
      * Gets the players current experience level
@@ -361,8 +375,9 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
     /**
      * Sets the players current experience level
      *
-     * @param level New experience level
+     * @deprecated Use setExperience
      */
+    @Deprecated
     public void setLevel(int level);
 
     /**
@@ -375,8 +390,9 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
     /**
      * Sets the players current experience level
      *
-     * @param exp New experience level
+     * @deprecated Use setExperience
      */
+    @Deprecated
     public void setTotalExperience(int exp);
 
     /**
