@@ -37,7 +37,7 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * @param name The new display name.
      */
     public void setDisplayName(String name);
-    
+
     /**
      * Gets the name that is shown on the player list.
      *
@@ -350,6 +350,13 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * @param exp New experience points
      */
     public void setExperience(int exp);
+
+    /**
+     * Adds to the players current experience points
+     *
+     * @param exp Experience points to add to player
+     */
+    public void addExperience(int exp);
 
     /**
      * Gets the players current experience level
