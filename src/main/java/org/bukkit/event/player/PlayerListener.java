@@ -1,6 +1,7 @@
 package org.bukkit.event.player;
 
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 /**
  * Handles all events thrown in relation to a Player
@@ -65,7 +66,6 @@ public class PlayerListener implements Listener {
      * @param event Relevant event details
      */
     public void onPlayerTeleport(PlayerTeleportEvent event) {}
-
     /**
      * Called when a player respawns
      *
@@ -212,4 +212,11 @@ public class PlayerListener implements Listener {
      * @param event Relevant event details
      */
     public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {}
+    
+    /**
+     * Called when player's level is changed
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerLevelChange(PlayerLevelChangeEvent event) {}
 }
