@@ -734,6 +734,13 @@ public class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case ENTITY_TRACK:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onEntityTrack((EntityTrackEvent) event);
+                }
+            };
+
         case CREATURE_SPAWN:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {

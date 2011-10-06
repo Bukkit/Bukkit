@@ -7,6 +7,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.util.Vector;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -67,6 +68,13 @@ public interface Entity {
      * @return List<Entity> List of entities nearby
      */
     public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z);
+
+    /**
+     * Returns the set of players tracking an entity
+     *
+     * @return Set<Player> Set of players tracking
+     */
+    public Set<Player> getTrackers();
 
     /**
      * Returns a unique id for this entity
