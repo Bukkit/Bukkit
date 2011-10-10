@@ -77,6 +77,14 @@ public class Configuration extends ConfigurationNode {
 
         this.file = file;
     }
+    
+    public Configuration(File file, DumperOptions options) {
+        super(new HashMap<String, Object>());
+
+        yaml = new Yaml(new SafeConstructor(), new EmptyNullRepresenter(), options);
+
+        this.file = file;
+    }
 
     /**
      * Loads the configuration file. All errors are thrown away.
