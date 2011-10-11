@@ -96,4 +96,13 @@ public class PlayerChatEvent extends PlayerEvent implements Cancellable {
     public Set<Player> getRecipients() {
         return recipients;
     }
+    
+    /**
+     * Sets the recipients that this chat message will be displayed to
+     * 
+     * @param Set<Player> who will recieve this message
+     */
+     public void setRecipients(Set<Player> recipients) {
+         this.recipients = recipients;
+     }
 }
