@@ -173,4 +173,20 @@ public interface Entity {
      * @return unique id
      */
     public UUID getUniqueId();
+
+    /**
+     * Gets the entity's age.
+     *
+     * @author robin0van0der0v
+     * @return The entity's age.
+     */
+    public int getAge();
+
+    /**
+     * Sets the entity's age.
+     *
+     * @author robin0van0der0v
+     * @param age
+     */
+    public void setAge(int age);
 }
