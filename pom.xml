@@ -25,12 +25,12 @@
         <repository>
                 <id>repobo-rel</id>
                 <name>repo.bukkit.org Releases</name>
-                <url>http://repo.bukkit.org/nexus/content/repositories/libs-release-local</url>
+                <url>http://repo.bukkit.org/content/repositories/libs-release-local</url>
         </repository>
         <snapshotRepository>
                 <id>repobo-snap</id>
                 <name>repo.bukkit.org Snapshots</name>
-                <url>http://repo.bukkit.org/nexus/content/repositories/libs-snapshot-local</url>
+                <url>http://repo.bukkit.org/content/repositories/libs-snapshot-local</url>
         </snapshotRepository>
     </distributionManagement>
     <build>
