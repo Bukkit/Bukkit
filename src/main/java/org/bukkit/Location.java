@@ -233,6 +233,20 @@ public class Location implements Cloneable {
     }
 
     /**
+     * Adds the location by a vector.
+     * 
+     * @see Vector
+     * @param vec
+     * @return the same location
+     */
+    public Location add(Vector vec) {
+        this.x += vec.getX();
+        this.y += vec.getY();
+        this.z += vec.getZ();
+        return this;
+    }
+
+    /**
      * Adds the location by another. Not world-aware.
      *
      * @see Vector
@@ -264,6 +278,20 @@ public class Location implements Cloneable {
         x -= vec.x;
         y -= vec.y;
         z -= vec.z;
+        return this;
+    }
+
+    /**
+     * Subtracts the location by a vector.
+     * 
+     * @see Vector
+     * @param vec
+     * @return the same location
+     */
+    public Location subtract(Vector vec) {
+        this.x -= vec.getX();
+        this.y -= vec.getY();
+        this.z -= vec.getZ();
         return this;
     }
 
