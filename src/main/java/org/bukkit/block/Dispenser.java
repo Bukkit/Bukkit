@@ -3,7 +3,7 @@ package org.bukkit.block;
 /**
  * Represents a dispenser.
  */
-public interface Dispenser extends BlockState, ContainerBlock {
+public interface Dispenser extends ContainerBlock {
 
     /**
      * Attempts to dispense the contents of this block<br />

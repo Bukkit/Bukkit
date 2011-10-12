@@ -5,7 +5,7 @@ import org.bukkit.inventory.Inventory;
 /**
  * Indicates a block type that has inventory.
  */
-public interface ContainerBlock {
+public interface ContainerBlock extends BlockState {
 
     /**
      * Get the block's inventory.

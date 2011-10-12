@@ -3,4 +3,4 @@ package org.bukkit.block;
 /**
  * Represents a chest.
  */
-public interface Chest extends BlockState, ContainerBlock {}
+public interface Chest extends ContainerBlock {}
