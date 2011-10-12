@@ -1,11 +1,13 @@
 package org.bukkit.event.entity;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.event.DelegateRegistration;
 
 /**
  * Called when an entity is damaged by an entity
  */
 @SuppressWarnings("serial")
+@DelegateRegistration(EntityDamageEvent.class)
 public class EntityDamageByEntityEvent extends EntityDamageEvent {
 
     private Entity damager;

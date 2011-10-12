@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 /**
  * Handles all custom events
  */
+@Deprecated
 public class CustomEventListener implements Listener {
     public CustomEventListener() {}
 

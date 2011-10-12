@@ -5,21 +5,21 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 import org.bukkit.Server;
+
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
+import org.bukkit.event.*;
 import org.bukkit.event.block.*;
 import org.bukkit.event.painting.*;
 import org.bukkit.event.entity.*;
@@ -257,7 +257,7 @@ public class JavaPluginLoader implements PluginLoader {
     }
 
     public EventExecutor createExecutor(Event.Type type, Listener listener) {
-        // TODO: remove multiple Listener type and hence casts
+        // TODONE: remove multiple Listener type and hence casts
 
         switch (type) {
         // Player Events
@@ -957,6 +957,38 @@ public class JavaPluginLoader implements PluginLoader {
         }
 
         throw new IllegalArgumentException("Event " + type + " is not supported");
+    }
+
+    public Map<Class<? extends Event>, Set<RegisteredListener>> createRegisteredListeners(Listener listener, final Plugin plugin) {
+        Map<Class<? extends Event>, Set<RegisteredListener>> ret = new HashMap<Class<? extends Event>, Set<RegisteredListener>>();
+        for (final Method method : listener.getClass().getDeclaredMethods()) {
+            final EventHandler eh = method.getAnnotation(EventHandler.class);
+            if (eh == null) continue;
+            final Class<?> checkClass = method.getParameterTypes()[0];
+            if (!checkClass.isAssignableFrom(eh.event())) {
+                plugin.getServer().getLogger().severe("Wrong method argument used for event type registered");
+                continue;
+            }
+            Set<RegisteredListener> eventSet = ret.get(eh.event());
+            if (eventSet == null) {
+                eventSet = new HashSet<RegisteredListener>();
+                ret.put(eh.event(), eventSet);
+            }
+            eventSet.add(new RegisteredListener(listener, new EventExecutor() {
+                public void execute(Listener listener, Event event) throws EventException {
+                    try {
+                        if (!checkClass.isAssignableFrom(event.getClass())) {
+                            throw new EventException("Wrong event type passed to registered method");
+                        }
+                        method.invoke(listener, event);
+                    } catch (Throwable t) {
+                        throw new EventException(t);
+                    }
+                }
+            }, eh.priority(), plugin));
+            
+        }
+        return ret;
     }
 
     public void enablePlugin(final Plugin plugin) {

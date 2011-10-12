@@ -3,21 +3,7 @@ package org.bukkit.plugin;
 import com.google.common.collect.ImmutableSet;
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.WeakHashMap;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import org.bukkit.Server;
@@ -26,8 +12,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommandYamlParser;
 import org.bukkit.command.SimpleCommandMap;
 
+import org.bukkit.event.DelegateRegistration;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
@@ -43,7 +31,8 @@ public final class SimplePluginManager implements PluginManager {
     private final Map<Pattern, PluginLoader> fileAssociations = new HashMap<Pattern, PluginLoader>();
     private final List<Plugin> plugins = new ArrayList<Plugin>();
     private final Map<String, Plugin> lookupNames = new HashMap<String, Plugin>();
-    private final Map<Event.Type, SortedSet<RegisteredListener>> listeners = new EnumMap<Event.Type, SortedSet<RegisteredListener>>(Event.Type.class);
+    private final Map<Class<? extends Event>, SortedSet<RegisteredListener>> listeners = new HashMap<Class<? extends Event>, SortedSet<RegisteredListener>>();
+    private final Map<Class<? extends Event>, Class<? extends Event>> lookupEventTypes = new HashMap<Class<? extends Event>, Class<? extends Event>>();
     private static File updateDirectory = null;
     private final SimpleCommandMap commandMap;
     private final Map<String, Permission> permissions = new HashMap<String, Permission>();
@@ -322,6 +311,7 @@ public final class SimplePluginManager implements PluginManager {
             permissions.clear();
             defaultPerms.get(true).clear();
             defaultPerms.get(false).clear();
+            lookupEventTypes.clear();
         }
     }
 
@@ -331,7 +321,7 @@ public final class SimplePluginManager implements PluginManager {
      * @param event Event details
      */
     public synchronized void callEvent(Event event) {
-        SortedSet<RegisteredListener> eventListeners = listeners.get(event.getType());
+        SortedSet<RegisteredListener> eventListeners = listeners.get(getDelegatedClass(event.getClass()));
 
         if (eventListeners != null) {
             for (RegisteredListener registration : eventListeners) {
@@ -358,7 +348,7 @@ public final class SimplePluginManager implements PluginManager {
                         ));
                     }
                 } catch (Throwable ex) {
-                    server.getLogger().log(Level.SEVERE, "Could not pass event " + event.getType() + " to " + registration.getPlugin().getDescription().getName(), ex);
+                    server.getLogger().log(Level.SEVERE, "Could not pass event " + event.getEventName() + " to " + registration.getPlugin().getDescription().getName(), ex);
                 }
             }
         }
@@ -389,8 +379,8 @@ public final class SimplePluginManager implements PluginManager {
             throw new IllegalPluginAccessException("Plugin attempted to register " + type + " while not enabled");
         }
 
-        getEventListeners(type).add(new RegisteredListener(listener, priority, plugin, type));
-    }
+        getEventListeners(type.getEventClass()).add(new RegisteredListener(listener, plugin.getPluginLoader().createExecutor(type, listener), priority.getNewPriority(), plugin));
+    } 
 
     /**
      * Registers the given event to the specified listener using a directly passed EventExecutor
@@ -418,7 +408,30 @@ public final class SimplePluginManager implements PluginManager {
             throw new IllegalPluginAccessException("Plugin attempted to register " + type + " while not enabled");
         }
 
-        getEventListeners(type).add(new RegisteredListener(listener, executor, priority, plugin));
+        getEventListeners(type.getEventClass()).add(new RegisteredListener(listener, executor, priority.getNewPriority(), plugin));
+    }
+
+    public void registerEvents(Listener listener, Plugin plugin) {
+        if (!plugin.isEnabled()) {
+                    throw new IllegalPluginAccessException("Plugin attempted to register " + listener + " while not enabled");
+        }
+        for (Map.Entry<Class<? extends Event>, Set<RegisteredListener>> entry : plugin.getPluginLoader().createRegisteredListeners(listener, plugin).entrySet()) {
+            Class<? extends Event> delegatedClass = getDelegatedClass(entry.getKey());
+            if (!entry.getKey().equals(delegatedClass)) {
+                plugin.getServer().getLogger().severe("Plugin attempted to register delegated event class " + entry.getKey() + ". It should be using " + delegatedClass + "!");
+                continue;
+            }
+            getEventListeners(delegatedClass).addAll(entry.getValue());
+        }
+        
+    }
+
+    public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin) {
+        if (!plugin.isEnabled()) {
+            throw new IllegalPluginAccessException("Plugin attempted to register " + event + " while not enabled");
+        }
+        
+        getEventListeners(getDelegatedClass(event)).add(new RegisteredListener(listener, executor, priority, plugin));
     }
 
     /**
@@ -427,7 +440,7 @@ public final class SimplePluginManager implements PluginManager {
      * @param type EventType to lookup
      * @return SortedSet<RegisteredListener> the looked up or create queue matching the requested type
      */
-    private SortedSet<RegisteredListener> getEventListeners(Event.Type type) {
+    private SortedSet<RegisteredListener> getEventListeners(Class<? extends Event> type) {
         SortedSet<RegisteredListener> eventListeners = listeners.get(type);
 
         if (eventListeners != null) {
@@ -437,6 +450,28 @@ public final class SimplePluginManager implements PluginManager {
         eventListeners = new TreeSet<RegisteredListener>(comparer);
         listeners.put(type, eventListeners);
         return eventListeners;
+    }
+
+    /**
+     * Returns the class to register and execute an event under for backwards-compatibility
+     * reasons (PlayerDeathEvent and EntityDeathEvent for example)
+     * @param clazz The original class
+     * @return The correct class
+     */
+    private Class<? extends Event> getDelegatedClass(Class<? extends Event> clazz) {
+        Class<? extends Event> clazz2 = lookupEventTypes.get(clazz);
+        if (clazz2 != null) {
+            return clazz2;
+        } else {
+            DelegateRegistration dr = clazz.getAnnotation(DelegateRegistration.class);
+            if (dr != null) {
+                lookupEventTypes.put(clazz, dr.value());
+                return dr.value();
+            } else {
+                lookupEventTypes.put(clazz, clazz);
+                return clazz;
+            }
+        }
     }
 
     public Permission getPermission(String name) {
