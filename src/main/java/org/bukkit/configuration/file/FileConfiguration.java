@@ -17,6 +17,8 @@ import org.bukkit.configuration.MemoryConfiguration;
  * This is a base class for all File based implementations of {@link Configuration}
  */
 public abstract class FileConfiguration extends MemoryConfiguration {
+    private File configFile;
+    
     /**
      * Creates an empty {@link FileConfiguration} with no default values.
      */
@@ -32,6 +34,55 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      */
     public FileConfiguration(Configuration defaults) {
         super(defaults);
+    }
+    
+    /**
+     * Creates an empty {@link FileConfiguration} with no default values, linked to
+     * specified file.
+     * 
+     * If file is null, creates empty FileConfiguration with no linked file.
+     * 
+     * @param file File to link with.
+     */
+    public FileConfiguration(File file) {
+        super();
+        
+        if (file != null) {
+            configFile = file;
+        }
+    }
+    
+    /**
+     * Creates an empty {@link FileConfiguration} using the specified {@link Configuration}
+     * as a source for all defaults values, linked to specified file.
+     * 
+     * If file is null, creates empty FileConfiguration, with specified defaults, with no linked file.
+     * 
+     * @param defaults Default value provider.
+     * @param file File to link with.
+     */
+    public FileConfiguration(Configuration defaults, File file) {
+        super(defaults);
+        
+        if (file != null) {
+            configFile = file;
+        }
+    }
+    
+    /**
+     * Saves this {@link FileConfiguration} to the linked {@link File}.
+     * 
+     * If there is no linked File, an exception will be thrown.
+     * 
+     * @throws IOException Thrown when the given file cannot be written to.
+     * @throws NullPointerException Thrown when this FileConfiguration has no linked File.
+     */
+    public void save() throws IOException, NullPointerException {
+        if (configFile == null) {
+            throw new NullPointerException("No linked File!");
+        }
+        
+        save(configFile);
     }
 
     /**
@@ -86,6 +137,25 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @return String containing this configuration.
      */
     public abstract String saveToString();
+    
+    /**
+     * Loads this {@link FileConfiguration} from the linked {@link File}.
+     * 
+     * If there is no linked file, an exception will be thrown.
+     * 
+     * @throws FileNotFoundException Thrown when the linked file cannot be opened.
+     * @throws IOException Thrown when the linked file cannot be read.
+     * @throws InvalidConfigurationException Thrown when the linked file is not a valid Configuration.
+     * @throws NullPointerException Thrown when this FileConfiguration has no linked file.
+     */
+    public void load() throws FileNotFoundException, IOException, InvalidConfigurationException, 
+            NullPointerException {
+        if (configFile == null) {
+            throw new NullPointerException("No linked File!");
+        }
+        
+        load (configFile);
+    }
 
     /**
      * Loads this {@link FileConfiguration} from the specified location.
@@ -196,5 +266,20 @@ public abstract class FileConfiguration extends MemoryConfiguration {
         }
         
         return (FileConfigurationOptions)options;
+    }
+    
+    /**
+     * Links this {@link FileConfiguration} with the specified {@link File}.
+     * 
+     * If file is null, an exception will be thrown.
+     * 
+     * @param file The file to link.
+     */
+    public void link(File file) {
+        if (file == null) {
+            throw new IllegalArgumentException("File cannot be null!");
+        }
+        
+        configFile = file;
     }
 }
