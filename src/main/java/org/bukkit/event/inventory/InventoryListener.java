@@ -20,4 +20,26 @@ public class InventoryListener implements Listener {
      * @param event Relevant event details
      */
     public void onFurnaceBurn(FurnaceBurnEvent event) {}
+    
+    
+    /**
+     * Called when a player tries to open a container.
+     * 
+     * @param event Relevant event details
+     */
+    public void onContainerOpen(PlayerOpenContainerEvent event) {}
+    
+    /**
+     * Called when a container is closed.
+     * 
+     * @param event Relevant event details
+     */
+    public void onContainerClose(PlayerCloseContainerEvent event) {}
+    
+    /**
+     * Called when a player tries to click on a container slot
+     * 
+     * @param event Relevant event details
+     */
+    public void onContainerClick(PlayerClickContainerEvent event) {}
 }

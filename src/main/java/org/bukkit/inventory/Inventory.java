@@ -2,6 +2,7 @@ package org.bukkit.inventory;
 
 import java.util.HashMap;
 import org.bukkit.Material;
+import org.bukkit.block.ContainerBlock;
 
 /**
  * Interface to the various inventories
@@ -217,4 +218,12 @@ public interface Inventory {
      * Clear out the whole index
      */
     public void clear();
+    
+    /**
+     * If the Inventory belongs to a chest/furnace/dispenser
+     * this will return the accompanying Block.
+     * 
+     * Get the owner of the inventory.
+     */
+    public ContainerBlock getOwner();
 }

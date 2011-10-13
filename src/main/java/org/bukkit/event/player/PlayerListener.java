@@ -1,6 +1,7 @@
 package org.bukkit.event.player;
 
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.PlayerContainerEvent;
 
 /**
  * Handles all events thrown in relation to a Player
@@ -114,13 +115,6 @@ public class PlayerListener implements Listener {
      * @param event Relevant event details
      */
     public void onPlayerAnimation(PlayerAnimationEvent event) {}
-
-    /**
-     * Called when a player opens an inventory
-     *
-     * @param event Relevant event details
-     */
-    public void onInventoryOpen(PlayerInventoryEvent event) {}
 
     /**
      * Called when a player changes their held item
