@@ -2,6 +2,7 @@ package org.bukkit.event.weather;
 
 import org.bukkit.World;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 /**
  * Stores data for weather changing in a world
@@ -32,5 +33,16 @@ public class WeatherChangeEvent extends WeatherEvent implements Cancellable {
      */
     public boolean toWeatherState() {
         return to;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

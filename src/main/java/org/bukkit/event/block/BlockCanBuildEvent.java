@@ -2,6 +2,7 @@ package org.bukkit.event.block;
 
 import org.bukkit.block.Block;
 import org.bukkit.Material;
+import org.bukkit.event.HandlerList;
 
 /**
  * Called when we try to place a block, to see if we can build it here or not.
@@ -58,5 +59,16 @@ public class BlockCanBuildEvent extends BlockEvent {
      */
     public int getMaterialId() {
         return material;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

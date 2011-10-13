@@ -3,14 +3,12 @@ package org.bukkit.event.entity;
 import java.util.List;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.DelegateRegistration;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * Thrown whenever a {@link Player} dies
  */
 @SuppressWarnings("serial")
-@DelegateRegistration(EntityDeathEvent.class)
 public class PlayerDeathEvent extends EntityDeathEvent {
     private int newExp = 0;
     private String deathMessage = "";

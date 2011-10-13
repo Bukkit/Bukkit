@@ -1,6 +1,7 @@
 package org.bukkit.event.player;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
 
 /**
@@ -22,5 +23,16 @@ public class PlayerInventoryEvent extends PlayerEvent {
      */
     public Inventory getInventory() {
         return inventory;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

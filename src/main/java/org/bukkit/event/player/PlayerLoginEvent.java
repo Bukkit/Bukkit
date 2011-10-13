@@ -1,6 +1,7 @@
 package org.bukkit.event.player;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 
 /**
  * Stores details for players attempting to log in
@@ -75,6 +76,17 @@ public class PlayerLoginEvent extends PlayerEvent {
     public void disallow(final Result result, final String message) {
         this.result = result;
         this.message = message;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 
     /**

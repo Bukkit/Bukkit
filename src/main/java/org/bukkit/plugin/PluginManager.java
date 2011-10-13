@@ -94,8 +94,9 @@ public interface PluginManager {
      * Calls an event with the given details
      *
      * @param event Event details
+     * @return Called event
      */
-    public void callEvent(Event event);
+    public <T extends Event> T callEvent(T event);
 
     /**
      * Registers the given event to the specified listener

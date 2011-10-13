@@ -2,13 +2,11 @@ package org.bukkit.event.entity;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
-import org.bukkit.event.DelegateRegistration;
 
 /**
  * Called when an entity is damaged by a block
  */
 @SuppressWarnings("serial")
-@DelegateRegistration(EntityDamageEvent.class)
 public class EntityDamageByBlockEvent extends EntityDamageEvent {
 
     private Block damager;

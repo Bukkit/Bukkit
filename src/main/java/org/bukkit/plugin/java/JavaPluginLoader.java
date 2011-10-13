@@ -12,6 +12,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Server;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -961,14 +963,23 @@ public class JavaPluginLoader implements PluginLoader {
 
     public Map<Class<? extends Event>, Set<RegisteredListener>> createRegisteredListeners(Listener listener, final Plugin plugin) {
         Map<Class<? extends Event>, Set<RegisteredListener>> ret = new HashMap<Class<? extends Event>, Set<RegisteredListener>>();
-        for (final Method method : listener.getClass().getDeclaredMethods()) {
+        Method[] methods; 
+        try {
+            methods = listener.getClass().getDeclaredMethods();
+        } catch (NoClassDefFoundError e) {
+            Bukkit.getServer().getLogger().severe("Plugin " + plugin.getDescription().getName() + " is attempting to register event " + e.getMessage() + ", which does not exist. Ignoring events registered in " + listener.getClass());
+            return ret;
+        }
+        for (int i = 0; i < methods.length; i++) {
+            final Method method = methods[i];
             final EventHandler eh = method.getAnnotation(EventHandler.class);
             if (eh == null) continue;
             final Class<?> checkClass = method.getParameterTypes()[0];
-            if (!checkClass.isAssignableFrom(eh.event())) {
-                plugin.getServer().getLogger().severe("Wrong method argument used for event type registered");
+            if (!checkClass.isAssignableFrom(eh.event()) || method.getParameterTypes().length != 1) {
+                plugin.getServer().getLogger().severe("Wrong method arguments used for event type registered");
                 continue;
             }
+            method.setAccessible(true);
             Set<RegisteredListener> eventSet = ret.get(eh.event());
             if (eventSet == null) {
                 eventSet = new HashSet<RegisteredListener>();
@@ -986,7 +997,6 @@ public class JavaPluginLoader implements PluginLoader {
                     }
                 }
             }, eh.priority(), plugin));
-            
         }
         return ret;
     }

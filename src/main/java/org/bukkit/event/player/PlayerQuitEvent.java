@@ -1,6 +1,7 @@
 package org.bukkit.event.player;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 
 /**
  * Called when a player leaves a server
@@ -31,5 +32,16 @@ public class PlayerQuitEvent extends PlayerEvent {
      */
     public void setQuitMessage(String quitMessage) {
         this.quitMessage = quitMessage;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

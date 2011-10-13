@@ -2,6 +2,7 @@ package org.bukkit.event.player;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 /**
  * Called when a player toggles their sprinting state
@@ -31,5 +32,16 @@ public class PlayerToggleSprintEvent extends PlayerEvent implements Cancellable 
 
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

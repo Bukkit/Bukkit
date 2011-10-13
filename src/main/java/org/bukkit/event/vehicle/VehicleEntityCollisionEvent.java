@@ -3,6 +3,7 @@ package org.bukkit.event.vehicle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 /**
  * Raised when a vehicle collides with an entity.
@@ -45,5 +46,16 @@ public class VehicleEntityCollisionEvent extends VehicleCollisionEvent implement
 
     public void setCollisionCancelled(boolean cancel) {
         cancelledCollision = cancel;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }
