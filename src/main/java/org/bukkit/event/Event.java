@@ -435,6 +435,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.block.BlockPistonRetractEvent
          */
         BLOCK_PISTON_RETRACT (Category.BLOCK),
+        /**
+         * Called when a block grows
+         * 
+         * @see org.bukkit.event.block.BlockGrowEvent
+         */
+        BLOCK_GROW (Category.BLOCK),
 
         /**
          * INVENTORY EVENTS
