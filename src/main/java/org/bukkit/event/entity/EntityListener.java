@@ -84,6 +84,13 @@ public class EntityListener implements Listener {
      */
     public void onEntityPortalEnter(EntityPortalEnterEvent event) {}
 
+     /**
+     * Called when an entity should be tracked by a player
+     *
+     * @param event Relevant event details
+     */
+    public void onEntityTrack(EntityTrackEvent event) {}
+
     /**
      * Called when a painting is placed
      *
