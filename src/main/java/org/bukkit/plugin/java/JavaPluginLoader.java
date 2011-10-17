@@ -231,17 +231,17 @@ public class JavaPluginLoader implements PluginLoader {
     public void setClass(final String name, final Class<?> clazz) {
         if (!classes.containsKey(name)) {
             classes.put(name, clazz);
-            
+
             if (ConfigurationSerializable.class.isAssignableFrom(clazz)) {
                 Class<? extends ConfigurationSerializable> serializable = (Class<? extends ConfigurationSerializable>)clazz;
                 ConfigurationSerialization.registerClass(serializable);
             }
         }
     }
-    
+
     public void removeClass(String name) {
         Class<?> clazz = classes.remove(name);
-        
+
         if ((clazz != null) && (ConfigurationSerializable.class.isAssignableFrom(clazz))) {
             Class<? extends ConfigurationSerializable> serializable = (Class<? extends ConfigurationSerializable>)clazz;
             ConfigurationSerialization.unregisterClass(serializable);
@@ -824,6 +824,13 @@ public class JavaPluginLoader implements PluginLoader {
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
                     ((EntityListener) listener).onSlimeSplit((SlimeSplitEvent) event);
+                }
+            };
+
+        case ITEM_DESPAWN:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onItemDespawn((ItemDespawnEvent) event);
                 }
             };
 
