@@ -61,6 +61,7 @@ public final class SimplePluginManager implements PluginManager {
             return result;
         }
     };
+    private PluginDebugger pluginDebugger = new PluginDebugger();
 
     public SimplePluginManager(Server instance, SimpleCommandMap commandMap) {
         server = instance;
@@ -322,6 +323,7 @@ public final class SimplePluginManager implements PluginManager {
             permissions.clear();
             defaultPerms.get(true).clear();
             defaultPerms.get(false).clear();
+            pluginDebugger.clearAll();
         }
     }
 
@@ -335,7 +337,8 @@ public final class SimplePluginManager implements PluginManager {
 
         if (eventListeners != null) {
             for (RegisteredListener registration : eventListeners) {
-                try {
+            	long start = System.nanoTime();
+            	try {
                     registration.callEvent(event);
                 } catch (AuthorNagException ex) {
                     Plugin plugin = registration.getPlugin();
@@ -358,6 +361,7 @@ public final class SimplePluginManager implements PluginManager {
                 } catch (Throwable ex) {
                     server.getLogger().log(Level.SEVERE, "Could not pass event " + event.getType() + " to " + registration.getPlugin().getDescription().getName(), ex);
                 }
+                pluginDebugger.add(registration.getPlugin(), event.getEventName(), System.nanoTime() - start);
             }
         }
     }
@@ -539,5 +543,9 @@ public final class SimplePluginManager implements PluginManager {
 
     public Set<Permission> getPermissions() {
         return new HashSet<Permission>(permissions.values());
+    }
+    
+    public PluginDebugger getDebugger() {
+        return pluginDebugger;
     }
 }
