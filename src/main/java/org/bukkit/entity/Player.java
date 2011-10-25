@@ -1,6 +1,8 @@
 package org.bukkit.entity;
 
 import java.net.InetSocketAddress;
+import java.util.List;
+
 import org.bukkit.Achievement;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -12,6 +14,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.map.MapView;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.util.metadata.MetadataNode;
 
 /**
  * Represents a player, connected or not
@@ -434,4 +438,42 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * @return Bed Spawn Location if bed exists, otherwise null.
      */
     public Location getBedSpawnLocation();
+    
+    /**
+     * Assigns a Metadata value to the player from the plugin. 
+     * <p>
+     * Each plugin can assign 1 instance of the same metadata key.
+     * If the same plugin assigns the same key again it will overwrite.
+     * 
+     * @param plugin Plugin instance.
+     * @param key The Metadata key used to store the metadata value
+     * @param value The Metadata value to be stored
+     */
+    public void setMetadata(Plugin plugin, String key, String value);
+    
+    /**
+     * Gets a List of the MetadataNodes assigned to this player.
+     * 
+     * @param key The key for Metadata wanted
+     * @return List of MetadataNode values, if none exists, should return empty list.
+     */
+    public List<MetadataNode> getMetadata(String key);
+    
+    /**
+     * Gets the single MetadataNode assigned to this player by a certain plugin.
+     * 
+     * @param key The key for Metadata wanted
+     * @param plugin a Plugin instance
+     * @return A single MetadataNode
+     */
+    public MetadataNode getMetadata(String key, Plugin plugin);
+    
+    /**
+     * Gets the single MetadataNode assigned to this player by a certain plugin specified by pluginname.
+     * 
+     * @param key The key for Metadata wanted
+     * @param plugin a Plugin name
+     * @return A single MetadataNode
+     */
+    public MetadataNode getMetadata(String key, String plugin); 
 }
