@@ -677,6 +677,13 @@ public class JavaPluginLoader implements PluginLoader {
                     ((WorldListener) listener).onPortalCreate((PortalCreateEvent) event);
                 }
             };
+            
+        case TREE_GROW:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((WorldListener) listener).onTreeGrow((TreeGrowEvent) event);
+                }
+            };
 
         // Painting Events
         case PAINTING_PLACE:
