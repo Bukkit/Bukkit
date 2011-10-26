@@ -11,6 +11,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.BlockMetadataStore;
 import org.bukkit.util.Vector;
 
 /**
@@ -738,6 +739,12 @@ public interface World {
      * @return The difficulty of the world.
      */
     public Difficulty getDifficulty();
+
+        /**
+     * Gets the {@link BlockMetadataStore} that can be used to find all metatadata for all blocks in this world.
+     * @return
+     */
+    public BlockMetadataStore getBlockMetadata();
 
     /**
      * Represents various map environment types that a world may be
