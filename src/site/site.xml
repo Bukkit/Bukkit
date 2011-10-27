@@ -10,9 +10,14 @@
       <item name="Homepage" href="http://bukkit.org/" />
       <item name="Forums" href="http://forums.bukkit.org/" />
       <item name="Source/Github" href="https://github.com/Bukkit/" />
+      <item name="Doxygen" href="http://jd.bukkit.org/doxygen/" />
       <item name="Continuous Integration/Jenkins" href="http://ci.bukkit.org/" />
       <item name="Maven Repo" href="http://repo.bukkit.org/" />
     </links>
+    <menu name="Documentation">
+      <item name="Doxygen" href="http://jd.bukkit.org/doxygen/" />
+      <item name="Javadoc" href="http://jd.bukkit.org/apidocs/" />
+    </menu>
     <menu ref="reports" />
   </body>
 </project>
