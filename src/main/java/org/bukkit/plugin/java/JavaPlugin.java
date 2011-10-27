@@ -148,8 +148,14 @@ public abstract class JavaPlugin implements Plugin {
         if (filename == null) {
             throw new IllegalArgumentException("Filename cannot be null");
         }
-        
-        return getClassLoader().getResourceAsStream(filename);
+        try {
+            URL url = getClassLoader().getResource(filename);
+            URLConnection connection = url.openConnection();
+            connection.setUseCaches(false);
+            return connection.getInputStream();
+        } catch (IOException ex) {
+            return null;
+        }
     }
 
     /**
