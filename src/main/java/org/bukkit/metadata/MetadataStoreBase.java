@@ -11,17 +11,32 @@ public abstract class MetadataStoreBase<TSubject> {
     private Map<String, List<MetadataValue>> metadataMap = new HashMap<String, List<MetadataValue>>();
 
     /**
-     * Adds a metadata value to an object.
+     * Adds a metadata value to an object. If a plugin has already added a metadata value to an object, that value
+     * will be replaced with the value of {@code newMetadataValue}.
+     *
+     * Implementation note: I considered using a {@link java.util.concurrent.locks.ReadWriteLock} for controlling
+     * access to {@code metadataMap}, but decided that the added overhead wasn't worth the finer grained access control.
+     * Bukkit is almost entirely single threaded so locking overhead shouldn't pose a problem.
      * @param subject The object receiving the metadata.
      * @param metadataKey A unique key to identify this metadata.
      * @param newMetadataValue
      */
-    public synchronized void addMetadata(TSubject subject, String metadataKey, MetadataValue newMetadataValue) {
+    public synchronized void setMetadata(TSubject subject, String metadataKey, MetadataValue newMetadataValue) {
         String key = Disambiguate(subject, metadataKey);
         if(!metadataMap.containsKey(key)) {
             metadataMap.put(key, new ArrayList<MetadataValue>());
         }
-        metadataMap.get(key).add(newMetadataValue);
+        // we now have a list of subject's metadata for the given metadata key. If newMetadataValue's owningPlugin
+        // is found in this list, replace the value rather than add a new one.
+        List<MetadataValue> metadataList = metadataMap.get(key);
+        for(int i = 0; i < metadataList.size(); i++) {
+            if(metadataList.get(i).getOwningPlugin() == newMetadataValue.getOwningPlugin()) {
+                metadataList.set(i, newMetadataValue);
+                return;
+            }
+        }
+        // we didn't find a duplicate...add the new metadata value
+        metadataList.add(newMetadataValue);
     }
 
     /**
@@ -46,9 +61,25 @@ public abstract class MetadataStoreBase<TSubject> {
      * @param metadataKey
      * @return
      */
-    public boolean hasMetadata(TSubject subject, String metadataKey) {
+    public synchronized boolean hasMetadata(TSubject subject, String metadataKey) {
         String key = Disambiguate(subject, metadataKey);
         return metadataMap.containsKey(key);
+    }
+
+    /**
+     * Removes a metadata item owned by a plugin from a subject.
+     * @param subject
+     * @param metadataKey
+     * @param owningPlugin
+     */
+    public synchronized void removeMetadata(TSubject subject, String metadataKey, Plugin owningPlugin) {
+        String key = Disambiguate(subject, metadataKey);
+        List<MetadataValue> metadataList = metadataMap.get(key);
+        for(int i = 0; i < metadataList.size(); i++) {
+            if(metadataList.get(i).getOwningPlugin() == owningPlugin) {
+                metadataList.remove(i);
+            }
+        }
     }
 
     /**
@@ -56,7 +87,7 @@ public abstract class MetadataStoreBase<TSubject> {
      * each invalidated metadata item to be recalculated the next time it is accessed.
      * @param owningPlugin
      */
-    public void invalidateAll(Plugin owningPlugin) {
+    public synchronized void invalidateAll(Plugin owningPlugin) {
         for(List<MetadataValue> values : metadataMap.values()) {
             for(MetadataValue value : values) {
                 if(value.getOwningPlugin() == owningPlugin) {

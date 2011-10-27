@@ -13,7 +13,7 @@ public interface MetadataStore <TSubject> {
      * @param metadataKey A unique key to identify this metadata.
      * @param newMetadataValue
      */
-    public void addMetadata(TSubject subject, String metadataKey, MetadataValue newMetadataValue);
+    public void setMetadata(TSubject subject, String metadataKey, MetadataValue newMetadataValue);
 
     /**
      * Returns all metadata values attached to an object. If multiple plugins have attached metadata, each will value
@@ -31,6 +31,14 @@ public interface MetadataStore <TSubject> {
      * @return
      */
     public boolean hasMetadata(TSubject subject, String metadataKey);
+
+    /**
+     * Removes a metadata item owned by a plugin from a subject.
+     * @param subject
+     * @param metadataKey
+     * @param owningPlugin
+     */
+    public void removeMetadata(TSubject subject, String metadataKey, Plugin owningPlugin);
 
     /**
      * Invalidates all metadata in the metadata store that originates from the given plugin. Doing this will force
