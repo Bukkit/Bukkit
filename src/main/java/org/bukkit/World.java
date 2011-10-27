@@ -12,12 +12,13 @@ import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.BlockMetadataStore;
+import org.bukkit.metadata.Metadatable;
 import org.bukkit.util.Vector;
 
 /**
  * Represents a world, which may contain entities, chunks and blocks
  */
-public interface World {
+public interface World extends Metadatable{
 
     /**
      * Gets the {@link Block} at the given coordinates
