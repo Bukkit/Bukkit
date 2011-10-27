@@ -45,6 +45,13 @@ public class WorldListener implements Listener {
     public void onPortalCreate(PortalCreateEvent event) {}
 
     /**
+     * Called when a tree is grown (sapling -> full tree), natural or not (bonemeal)
+     * 
+     * @param event Relevant event details
+     */
+    public void onTreeGrow(TreeGrowEvent event) {}
+    
+    /**
      * Called when a world is saved
      *
      * @param event Relevant event details
