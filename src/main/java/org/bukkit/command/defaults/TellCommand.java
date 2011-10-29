@@ -25,7 +25,7 @@ public class TellCommand extends VanillaCommand {
         Player player = Bukkit.getPlayerExact(args[0]);
 
         if (player == null) {
-            sender.sendMessage("There's no player by the name \"" args[0] "\" online.");
+            sender.sendMessage("There's no player by the name \"" + args[0] + "\" online.");
         } else {
             StringBuilder message = new StringBuilder();
 
