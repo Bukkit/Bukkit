@@ -79,6 +79,14 @@ public final class CommandPermissions {
 
         return time;
     }
+    
+    private static Permission registerDebug(Permission parent) {
+        Permission debug = DefaultPermissions.registerPermission(PREFIX + "debug", "Allows the user to manage the Plugin Debug System", PermissionDefault.OP, parent);	
+        
+        debug.recalculatePermissibles();
+        
+        return debug;
+    }
 
     public static Permission registerPermissions(Permission parent) {
         Permission commands = DefaultPermissions.registerPermission(ROOT, "Gives the user the ability to use all Craftbukkit commands", parent);
@@ -89,6 +97,7 @@ public final class CommandPermissions {
         registerOp(commands);
         registerSave(commands);
         registerTime(commands);
+        registerDebug(commands);
 
         DefaultPermissions.registerPermission(PREFIX + "kill", "Allows the user to commit suicide", PermissionDefault.TRUE, commands);
         DefaultPermissions.registerPermission(PREFIX + "me", "Allows the user to perform a chat action", PermissionDefault.TRUE, commands);

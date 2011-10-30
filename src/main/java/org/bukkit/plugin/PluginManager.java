@@ -1,6 +1,8 @@
 package org.bukkit.plugin;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Set;
 
 import org.bukkit.event.Event;
@@ -252,4 +254,12 @@ public interface PluginManager {
      * @return Set containing all current registered permissions
      */
     public Set<Permission> getPermissions();
+    
+    /**
+     * Returns the PluginDebugger with all methods to control it
+     * 
+     * @return The Debugger class
+     */
+    public PluginDebugger getDebugger();
+    
 }
