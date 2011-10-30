@@ -43,6 +43,13 @@ public class WorldListener implements Listener {
      * @param event Relevant event details
      */
     public void onPortalCreate(PortalCreateEvent event) {}
+    
+    /**
+    * Called when the Time in a World changes
+    *
+    * @param event Relevant event details
+    */    
+    public void onTimeChange(TimeChangeEvent event) {}
 
     /**
      * Called when a world is saved
