@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.bukkit</groupId>
-    <artifactId>bukkit</artifactId>
+    <artifactId>bukkit-1_9</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Bukkit</name>
     <properties>
@@ -11,7 +11,7 @@
     <scm>
         <developerConnection>scm:git:git@github.com:Bukkit/Bukkit.git</developerConnection>
         <connection>scm:git:git://github.com/Bukkit/Bukkit.git</connection>
-        <url>https://github.com/Bukkit/Bukkit/tree/master/</url>
+        <url>https://github.com/Bukkit/Bukkit/tree/1.9/</url>
     </scm>
     <ciManagement>
         <system>jenkins</system>
