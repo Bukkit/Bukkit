@@ -2,7 +2,7 @@ package org.bukkit;
 
 import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
-import sun.reflect.generics.scope.ConstructorScope;
+
 
 /**
  * Represents a 3-dimensional position in a world
