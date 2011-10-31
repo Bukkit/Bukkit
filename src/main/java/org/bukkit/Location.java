@@ -2,6 +2,7 @@ package org.bukkit;
 
 import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
+import sun.reflect.generics.scope.ConstructorScope;
 
 /**
  * Represents a 3-dimensional position in a world
@@ -449,6 +450,17 @@ public class Location implements Cloneable {
     @Override
     public String toString() {
         return "Location{" + "world=" + world + ",x=" + x + ",y=" + y + ",z=" + z + ",pitch=" + pitch + ",yaw=" + yaw + '}';
+    }
+
+    /**
+     * Constructs a name based on this location which represents a value similar to toString()
+     * This should represent a value which is more in line with the expectations which are set to toString()
+     * and is also similar to Player.getName ()
+     * @return New String containing the coordinates represented by this Location
+     */
+
+    public String getName() {
+        return "world=" + world.getName() +",x=" + x + ",y=" + y + ",z=" + z + ",pitch=" + pitch + ",yaw=" + yaw;
     }
 
     /**
