@@ -56,6 +56,12 @@ public interface Chunk {
     ChunkSnapshot getChunkSnapshot(boolean includeMaxblocky, boolean includeBiome, boolean includeBiomeTempRain);
 
     /**
+     * Returns the ChunkFilter class associated with this chunk
+     * @return ChunkFilter
+     */
+    ChunkFilter getChunkFilter();
+    
+    /**
      * Get a list of all entities in the chunk.
      * @return The entities.
      */
