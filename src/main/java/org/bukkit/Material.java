@@ -350,6 +350,330 @@ public enum Material {
     public boolean isBlock() {
         return id < 256;
     }
+    
+    /**
+     * Checks if this Material is a boot
+     * 
+     * @return true if this material is a boot
+     */
+    public boolean isBoot() {
+    	switch (this) {
+    	case LEATHER_BOOTS : return true;
+    	case IRON_BOOTS : return true;
+    	case GOLD_BOOTS : return true;
+    	case DIAMOND_BOOTS : return true;
+    	case CHAINMAIL_BOOTS : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a helmet
+     * 
+     * @return true if this material is a helmet
+     */
+    public boolean isHelmet() {
+    	switch (this) {
+    	case LEATHER_HELMET : return true;
+    	case IRON_HELMET : return true;
+    	case GOLD_HELMET : return true;
+    	case DIAMOND_HELMET : return true;
+    	case CHAINMAIL_HELMET : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a helmet
+     * 
+     * @return true if this material is a helmet
+     */
+    public boolean isChestplate() {
+    	switch (this) {
+    	case LEATHER_CHESTPLATE : return true;
+    	case IRON_CHESTPLATE : return true;
+    	case GOLD_CHESTPLATE : return true;
+    	case DIAMOND_CHESTPLATE : return true;
+    	case CHAINMAIL_CHESTPLATE : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material are leggings
+     * 
+     * @return true if this material are leggings
+     */
+    public boolean isLeggings() {
+    	switch (this) {
+    	case LEATHER_LEGGINGS : return true;
+    	case IRON_LEGGINGS : return true;
+    	case GOLD_LEGGINGS : return true;
+    	case DIAMOND_LEGGINGS : return true;
+    	case CHAINMAIL_LEGGINGS : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material can be worn as armor
+     * Specifically, if it is a boot, helmet or chestplate.
+     * 
+     * @return true if this material is armor
+     */
+    public boolean isArmor() {
+    	return this.isBoot() || this.isHelmet() || 
+    			this.isChestplate() || this.isLeggings();
+    }
+    
+    /**
+     * Checks if this Material is a hoe
+     * 
+     * @return true if this material is a hoe
+     */
+    public boolean isHoe() {
+    	switch (this) {
+    	case WOOD_HOE : return true;
+    	case IRON_HOE : return true;
+    	case GOLD_HOE : return true;
+    	case DIAMOND_HOE : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a pickaxe
+     * 
+     * @return true if this material is a pickaxe
+     */
+    public boolean isPickaxe() {
+    	switch (this) {
+    	case WOOD_PICKAXE : return true;
+    	case IRON_PICKAXE : return true;
+    	case GOLD_PICKAXE : return true;
+    	case DIAMOND_PICKAXE : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is an axe
+     * 
+     * @return true if this material is an axe
+     */
+    public boolean isAxe() {
+    	switch (this) {
+    	case WOOD_AXE : return true;
+    	case IRON_AXE : return true;
+    	case GOLD_AXE : return true;
+    	case DIAMOND_AXE : return true;
+    	default : return false;
+    	}
+    }
+        
+    /**
+     * Checks if this Material is a spade
+     * 
+     * @return true if this material is a spade
+     */
+    public boolean isSpade() {
+    	switch (this) {
+    	case WOOD_SPADE : return true;
+    	case IRON_SPADE : return true;
+    	case GOLD_SPADE : return true;
+    	case DIAMOND_SPADE : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a tool
+     * Specifically, if this material is a hoe, axe, pickaxe or spade
+     * 
+     * @return true if this material is a tool
+     */
+    public boolean isTool() {
+    	return this.isHoe() || this.isPickaxe() || 
+    			this.isAxe() || this.isSpade();
+    }
+    
+    /**
+     * Checks if this Material is a sword
+     * 
+     * @return true if this material is a sword
+     */
+    public boolean isSword() {
+    	switch (this) {
+    	case WOOD_SWORD : return true;
+    	case IRON_SWORD : return true;
+    	case GOLD_SWORD : return true;
+    	case DIAMOND_SWORD : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a type of water
+     * 
+     * @return true if this material is a type of water
+     */
+    public boolean isWater() {
+    	switch (this) {
+    	case WATER : return true;
+    	case STATIONARY_WATER : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a type of lava
+     * 
+     * @return true if this material is a type of lava
+     */
+    public boolean isLava() {
+    	switch (this) {
+    	case LAVA : return true;
+    	case STATIONARY_LAVA : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a type of liquid
+     * Specificially, checks if this material is water or lava
+     * 
+     * @return true if this material is a type of liquid
+     */
+    public boolean isLiquid() {
+    	return this.isWater() || this.isLava();
+    }
+    
+    /**
+     * Checks if this Material is a type of tracks
+     * 
+     * @return true if this material is a type of tracks
+     */
+    public boolean isTrack() {
+    	switch (this) {
+    	case RAILS : return true;
+    	case POWERED_RAIL : return true;
+    	case DETECTOR_RAIL : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a type of sign
+     * Only checks for WALL_SIGN and SIGN_POST
+     * 
+     * @return true if this material is a sign
+     */
+    public boolean isSignBlock() {
+    	switch(this) {
+    	case WALL_SIGN : return true;
+    	case SIGN_POST : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a type of pressure plate
+     * 
+     * @return true if this material is a type of pressure plate
+     */
+    public boolean isPressurePlate() {
+    	switch(this) {
+    	case WOOD_PLATE : return true;
+    	case STONE_PLATE : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a type of redstone torch
+     * 
+     * @return true if this material is a type of redstone torch
+     */
+    public boolean isRedstoneTorch() {
+    	switch(this) {
+    	case REDSTONE_TORCH_ON : return true;
+    	case REDSTONE_TORCH_OFF : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a type of diode
+     * 
+     * @return true if this material is a type of diode
+     */
+    public boolean isDiode() {
+    	switch(this) {
+    	case DIODE_BLOCK_ON : return true;
+    	case DIODE_BLOCK_OFF : return true;
+    	default : return false;
+    	}
+    }
+    
+    /**
+     * Checks if this Material is a type of door
+     * Checks for WOOD_DOOR, IRON_DOOR and TRAP_DOOR
+     * 
+     * @return true if this material is a type of door
+     */
+    public boolean isDoor() {
+    	switch (this) {
+    	case WOOD_DOOR : return true;
+    	case IRON_DOOR : return true;
+    	case TRAP_DOOR : return true;
+    	default : return false;
+    	}
+    }
+ 
+     /**
+     * Checks if this Material is a solid block
+     * Solid blocks are blocks that have collision
+     * 
+     * @return true if this material is a solid block
+     */
+    public boolean isSolidBlock() {
+    	if (!this.isBlock()) return false;
+    	if (this.isLiquid()) return false;
+    	if (this.isTrack()) return false;
+    	if (this.isSignBlock()) return false;
+    	if (this.isDoor()) return false;
+    	if (this.isPressurePlate()) return false;
+    	if (this.isRedstoneTorch()) return false;
+    	if (this.isDiode()) return false;
+    	switch (this) {
+    	case AIR : return false;
+    	case SAPLING : return false;
+    	case BED : return false;
+    	case WEB : return false;
+    	case WHEAT : return false;
+    	case DEAD_BUSH : return false;
+    	case YELLOW_FLOWER : return false;
+    	case RED_ROSE : return false;
+    	case BROWN_MUSHROOM : return false;
+    	case RED_MUSHROOM : return false;
+    	case TORCH : return false;
+    	case FIRE : return false;
+    	case REDSTONE_WIRE : return false;
+    	case SEEDS : return false;
+    	case LEVER : return false;
+    	case STONE_PLATE : return false;
+    	case WOOD_PLATE : return false;
+    	case STONE_BUTTON : return false;
+    	case SUGAR_CANE : return false;
+    	case PORTAL : return false;
+    	case PUMPKIN_STEM : return false;
+    	case MELON_STEM : return false;
+    	case VINE : return false;
+    	case LONG_GRASS : return false;
+    	case LADDER : return false;
+    	default : return true;
+    	}
+    }
 
     /**
      * Attempts to get the Material with the given ID
