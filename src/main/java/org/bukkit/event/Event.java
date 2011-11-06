@@ -592,7 +592,7 @@ public abstract class Event implements Serializable {
          * 
          * @see org.bukkit.event.world.TreeGrowEvent
          */
-        TREE_GROW (Category.WORLD),
+        STRUCTURE_GROW (Category.WORLD),
 
         /**
          * ENTITY EVENTS

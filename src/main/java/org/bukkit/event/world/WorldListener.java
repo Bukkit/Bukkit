@@ -49,7 +49,7 @@ public class WorldListener implements Listener {
      * 
      * @param event Relevant event details
      */
-    public void onTreeGrow(TreeGrowEvent event) {}
+    public void onStructureGrow(StructureGrowEvent event) {}
     
     /**
      * Called when a world is saved

@@ -678,10 +678,10 @@ public class JavaPluginLoader implements PluginLoader {
                 }
             };
             
-        case TREE_GROW:
+        case STRUCTURE_GROW:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
-                    ((WorldListener) listener).onTreeGrow((TreeGrowEvent) event);
+                    ((WorldListener) listener).onStructureGrow((StructureGrowEvent) event);
                 }
             };
 

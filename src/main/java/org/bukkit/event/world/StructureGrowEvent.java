@@ -8,9 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
 /**
- * Event that is called when a tree grows (Sapling -> tree), naturally or using bonemeal.
+ * Event that is called when a structure grows (Sapling -> tree), (Mushroom -> Giant Mushroom), naturally or using bonemeal.
  */
-public class TreeGrowEvent extends WorldEvent implements Cancellable {
+public class StructureGrowEvent extends WorldEvent implements Cancellable {
     private static final long serialVersionUID = 1L;
     private boolean cancelled = false;
     private Location location;
@@ -19,8 +19,8 @@ public class TreeGrowEvent extends WorldEvent implements Cancellable {
     private Player player;
     private ArrayList<BlockState> blocks;
 
-    public TreeGrowEvent(Location location, final TreeType species, final boolean bonemeal, Player player, ArrayList<BlockState> blocks) {
-        super(Type.TREE_GROW, location.getWorld());
+    public StructureGrowEvent(Location location, final TreeType species, final boolean bonemeal, Player player, ArrayList<BlockState> blocks) {
+        super(Type.STRUCTURE_GROW, location.getWorld());
         this.location = location;
         this.species = species;
         this.bonemeal = bonemeal;
@@ -38,11 +38,11 @@ public class TreeGrowEvent extends WorldEvent implements Cancellable {
     }
 
     /**
-     * Gets the sapling type (birch, normal, pine)
+     * Gets the species type (birch, normal, pine)
      * 
-     * @return Sapling species
+     * @return Structure species
      */
-    public TreeType getSapling() {
+    public TreeType getSpecies() {
         return species;
     }
 
@@ -56,9 +56,9 @@ public class TreeGrowEvent extends WorldEvent implements Cancellable {
     }
 
     /**
-     * Gets the player that bonemealed the sapling.
+     * Gets the player that bonemealed the structure.
      * 
-     * @return Player that bonemealed the sapling, null if was not bonemealed
+     * @return Player that bonemealed the structure, null if was not bonemealed
      */
     public Player getPlayer() {
         return player;
