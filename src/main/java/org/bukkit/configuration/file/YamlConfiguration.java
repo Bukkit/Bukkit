@@ -160,7 +160,7 @@ public class YamlConfiguration extends FileConfiguration {
                 }
             } else if (line.length() == 0) {
                 if (i > 0) {
-                    result.append("\n");}
+                    result.append("\n"); 
                 }
             } else {
                 readingHeader = false;
