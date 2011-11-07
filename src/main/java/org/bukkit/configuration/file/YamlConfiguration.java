@@ -159,9 +159,9 @@ public class YamlConfiguration extends FileConfiguration {
                     result.append(line.substring(COMMENT_PREFIX.length()));
                 }
             } else if (line.length() == 0) {
-	        if (i > 0) {
-                    result.append("\n");
-		}
+                if (i > 0) {
+                    result.append("\n");}
+                }
             } else {
                 readingHeader = false;
             }
