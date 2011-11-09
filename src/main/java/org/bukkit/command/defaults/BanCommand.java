@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class BanCommand extends VanillaCommand {
     public BanCommand() {
@@ -20,10 +21,13 @@ public class BanCommand extends VanillaCommand {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
-
+        
+        Player player = Bukkit.getPlayerExact(args[0]);
+        
         Bukkit.getOfflinePlayer(args[0]).setBanned(true);
-        if (Bukkit.getPlayer(args[0]) != null) Bukkit.getPlayer(args[0]).kickPlayer("Banned by admin.");
-        Command.broadcastCommandMessage(sender, "Banning " + args[0]);
+        if (Bukkit.getPlayer(args[0]) != null) 
+            player.kickPlayer("Banned by admin.");
+            Command.broadcastCommandMessage(sender, "Banning " + player.getName());
 
         return true;
     }
