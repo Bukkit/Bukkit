@@ -63,7 +63,7 @@ public class StructureGrowEvent extends WorldEvent implements Cancellable {
     public Player getPlayer() {
         return player;
     }
-    public ArrayList<BlockState> getTreeBlocks() {
+    public ArrayList<BlockState> getBlocks() {
         return blocks;
     }
 
