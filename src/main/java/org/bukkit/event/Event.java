@@ -587,6 +587,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.world.PortalCreateEvent
          */
         PORTAL_CREATE (Category.WORLD),
+        /**
+         * Called when a tree attempts to grow (sapling -> tree)
+         * 
+         * @see org.bukkit.event.world.TreeGrowEvent
+         */
+        STRUCTURE_GROW (Category.WORLD),
 
         /**
          * ENTITY EVENTS
