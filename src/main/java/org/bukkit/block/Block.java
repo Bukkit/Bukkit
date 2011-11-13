@@ -161,6 +161,20 @@ public interface Block {
     boolean setTypeIdAndData(int type, byte data, boolean applyPhysics);
 
     /**
+     * Gets the item type id dropped when this block is broken
+     * 
+     * @return the item type id
+     */
+    int getDroppedTypeId();
+    
+    /**
+     * Gets the item type dropped when this block is broken
+     * 
+     * @return the item type
+     */
+    Material getDroppedType();
+    
+    /**
      * Gets the face relation of this block compared to the given block<br />
      * <br />
      * For example:
