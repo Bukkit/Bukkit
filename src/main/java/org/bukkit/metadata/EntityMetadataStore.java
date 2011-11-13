@@ -7,13 +7,15 @@ import org.bukkit.entity.Player;
  * An EntityMetadataStore stores metadata values for all {@link Entity} classes an their descendants.
  */
 public class EntityMetadataStore extends MetadataStoreBase<Entity> implements MetadataStore<Entity> {
+    /**
+     * Generates a unique metadata key for an {@link Entity} entity ID.
+     * @see MetadataStoreBase#Disambiguate(Object, String)
+     * @param entity
+     * @param metadataKey
+     * @return
+     */
     @Override
     protected String Disambiguate(Entity entity, String metadataKey) {
-        if(entity instanceof Player) {
-            Player p = (Player) entity;
-            return p.getName() + ":" + metadataKey;
-        } else {
-            return Integer.toString(entity.getEntityId()) + ":" + metadataKey;
-        }
+        return Integer.toString(entity.getEntityId()) + ":" + metadataKey;
     }
 }

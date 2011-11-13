@@ -11,8 +11,10 @@ public abstract class MetadataStoreBase<TSubject> {
     private Map<String, List<MetadataValue>> metadataMap = new HashMap<String, List<MetadataValue>>();
 
     /**
-     * Adds a metadata value to an object. If a plugin has already added a metadata value to an object, that value
-     * will be replaced with the value of {@code newMetadataValue}.
+     * Adds a metadata value to an object. Each metadata value is owned by a specific{@link Plugin}.
+     * If a plugin has already added a metadata value to an object, that value
+     * will be replaced with the value of {@code newMetadataValue}. Multiple plugins can set independent values for
+     * the same {@code metadataKey} without conflict.
      *
      * Implementation note: I considered using a {@link java.util.concurrent.locks.ReadWriteLock} for controlling
      * access to {@code metadataMap}, but decided that the added overhead wasn't worth the finer grained access control.
@@ -98,10 +100,12 @@ public abstract class MetadataStoreBase<TSubject> {
     }
 
     /**
-     * Creates a unique name for the object receiving metadata. Each concrete implementation of MetadataStoreBase
-     * must implement this method.
-     * @param subject
-     * @param metadataKey
+     * Creates a unique name for the object receiving metadata by combining unique data from the subject with a metadataKey.
+     * The name created must be globally unique for the given object and any two equivalent objects must generate the
+     * same unique name. For example, two Player objects must generate the same string if they represent the same player,
+     * even if the objects would fail a reference equality test.
+     * @param subject The object for which this key is being generated
+     * @param metadataKey The name identifying the metadata value
      * @return
      */
     protected abstract String Disambiguate(TSubject subject, String metadataKey);

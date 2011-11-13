@@ -123,9 +123,23 @@ public class LazyMetadataValue implements MetadataValue {
         }
     }
 
+    /**
+     * Describes possible caching strategies for metadata.
+     */
     public enum CacheStrategy {
+        /**
+         * Once the metadata value has been evaluated, do not re-evaluate the value until it is manually invalidated.
+         */
         CACHE_AFTER_FIRST_EVAL,
+
+        /**
+         * Re-evaluate the metadata item every time it is requested
+         */
         NEVER_CACHE,
+
+        /**
+         * Once the metadata value has been evaluated, do not re-evaluate the value in spite of manual invalidation.
+         */
         CACHE_ETERNALLY
     }
 }
