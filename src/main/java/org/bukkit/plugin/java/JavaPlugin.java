@@ -158,6 +158,8 @@ public abstract class JavaPlugin implements Plugin {
             return connection.getInputStream();
         } catch (IOException ex) {
             return null;
+        } catch (NullPointerException ex) {
+            return null;
         }
     }
 
