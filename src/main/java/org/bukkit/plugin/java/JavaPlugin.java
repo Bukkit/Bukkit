@@ -9,7 +9,6 @@ import com.avaje.ebeaninternal.server.ddl.DdlGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,11 +151,12 @@ public abstract class JavaPlugin implements Plugin {
         }
 
         try {
-            URL url = getClassLoader().getResource(filename);
-            URLConnection connection = url.openConnection();
+            URLConnection connection = getClassLoader().getResource(filename).openConnection();
             connection.setUseCaches(false);
             return connection.getInputStream();
         } catch (IOException ex) {
+            return null;
+        } catch (NullPointerException ex) {
             return null;
         }
     }
