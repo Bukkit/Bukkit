@@ -60,6 +60,11 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable 
     public enum RegainReason {
 
         /**
+         * Health regained a plugin uses LivingEntity.setHealth().
+         * Only fired when the Entity gains health has a result.
+         */
+        PLUGIN,
+        /**
          * When a player regains health from regenerating due to Peaceful mode (difficulty=0)
          */
         REGEN,
