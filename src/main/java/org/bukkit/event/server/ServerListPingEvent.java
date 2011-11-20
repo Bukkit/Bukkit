@@ -14,7 +14,7 @@ public class ServerListPingEvent extends ServerEvent implements Cancellable {
     private String motd;
     private int numPlayers;
     private int maxPlayers;
-    private boolean cancelled = false;
+    private boolean cancelled;
     
     public ServerListPingEvent(InetAddress address, String motd, int numPlayers, int maxPlayers) {
         super(Event.Type.SERVER_LIST_PING);
@@ -22,6 +22,7 @@ public class ServerListPingEvent extends ServerEvent implements Cancellable {
         this.motd = motd;
         this.numPlayers = numPlayers;
         this.maxPlayers = maxPlayers;
+        this.cancelled = false;
     }
 
     /**
