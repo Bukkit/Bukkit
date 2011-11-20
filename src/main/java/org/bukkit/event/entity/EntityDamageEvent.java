@@ -66,6 +66,13 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
     public enum DamageCause {
 
         /**
+         * Damage caused a plugin uses LivingEntity.setHealth().
+         * Only fired when the Entity loses health has a result.
+         *
+         * Damage: variable
+         */
+        PLUGIN,
+        /**
          * Damage caused when an entity contacts a block such as a Cactus.
          *
          * Damage: 1 (Cactus)
