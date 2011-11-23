@@ -437,7 +437,7 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void removePermission(String name) {
-        permissions.remove(name);
+        permissions.remove(name.toLowerCase()).recalculatePermissibles();
     }
 
     public void recalculatePermissionDefaults(Permission perm) {

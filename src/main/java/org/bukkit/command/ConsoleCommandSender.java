@@ -44,20 +44,40 @@ public class ConsoleCommandSender implements CommandSender {
         return perm.isPermissionSet(name);
     }
 
+    public boolean isPermissionSet(String name, String worldName) {
+        return perm.isPermissionSet(name, worldName);
+    }
+
     public boolean isPermissionSet(Permission perm) {
         return this.perm.isPermissionSet(perm);
+    }
+
+    public boolean isPermissionSet(Permission perm, String worldName) {
+        return this.perm.isPermissionSet(perm, worldName);
     }
 
     public boolean hasPermission(String name) {
         return perm.hasPermission(name);
     }
 
+    public boolean hasPermission(String name, String worldName) {
+        return perm.hasPermission(name, worldName);
+    }
+
     public boolean hasPermission(Permission perm) {
         return this.perm.hasPermission(perm);
     }
 
+    public boolean hasPermission(Permission perm, String worldName) {
+        return this.perm.hasPermission(perm, worldName);
+    }
+
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
         return perm.addAttachment(plugin, name, value);
+    }
+
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, String worldName) {
+        return perm.addAttachment(plugin, name, value, worldName);
     }
 
     public PermissionAttachment addAttachment(Plugin plugin) {
@@ -66,6 +86,10 @@ public class ConsoleCommandSender implements CommandSender {
 
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
         return perm.addAttachment(plugin, name, value, ticks);
+    }
+
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks, String worldName) {
+        return perm.addAttachment(plugin, name, value, ticks, worldName);
     }
 
     public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
@@ -82,6 +106,10 @@ public class ConsoleCommandSender implements CommandSender {
 
     public Set<PermissionAttachmentInfo> getEffectivePermissions() {
         return perm.getEffectivePermissions();
+    }
+
+    public Set<PermissionAttachmentInfo> getEffectivePermissions(String worldName) {
+        return perm.getEffectivePermissions(worldName);
     }
 
     public String getName() {
