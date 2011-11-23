@@ -46,7 +46,6 @@ public class ItemStack implements Serializable, ConfigurationSerializable {
         this.durability = damage;
         if (data != null) {
             createData(data);
-            this.durability = data;
         }
     }
 
