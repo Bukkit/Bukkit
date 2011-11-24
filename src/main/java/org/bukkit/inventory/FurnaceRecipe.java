@@ -8,7 +8,7 @@ import org.bukkit.material.MaterialData;
  */
 public class FurnaceRecipe implements Recipe {
     private ItemStack output;
-    private MaterialData ingredient;
+    private ItemStack ingredient;
 
     /**
      * Create a furnace recipe to craft the specified ItemStack.
@@ -16,7 +16,7 @@ public class FurnaceRecipe implements Recipe {
      * @param source The input material.
      */
     public FurnaceRecipe(ItemStack result, Material source) {
-        this(result, source.getNewData((byte) 0));
+        this(result, source, 0);
         if (this.ingredient == null) {
             setInput(new MaterialData(source));
         }
@@ -28,8 +28,18 @@ public class FurnaceRecipe implements Recipe {
      * @param source The input material.
      */
     public FurnaceRecipe(ItemStack result, MaterialData source) {
+        this(result, source.getItemType(), source.getData());
+    }
+
+    /**
+     * Create a furnace recipe to craft the specified ItemStack.
+     * @param result The item you want the recipe to create.
+     * @param source The input material.
+     * @param data The data value. (Note: This is currently ignored by the CraftBukkit server.)
+     */
+    public FurnaceRecipe(ItemStack result, Material source, int data) {
         this.output = result;
-        this.ingredient = source;
+        this.ingredient = new ItemStack(source, 1, (short) data);
     }
 
     /**
@@ -38,8 +48,7 @@ public class FurnaceRecipe implements Recipe {
      * @return The changed recipe, so you can chain calls.
      */
     public FurnaceRecipe setInput(MaterialData input) {
-        this.ingredient = input;
-        return this;
+        return setInput(input.getItemType(), input.getData());
     }
 
     /**
@@ -48,19 +57,26 @@ public class FurnaceRecipe implements Recipe {
      * @return The changed recipe, so you can chain calls.
      */
     public FurnaceRecipe setInput(Material input) {
-        setInput(input.getNewData((byte) 0));
-        if (this.ingredient == null) {
-            setInput(new MaterialData(input));
-        }
+        return setInput(input, 0);
+    }
+    
+    /**
+     * Sets the input of this furnace recipe.
+     * @param input The input material.
+     * @param data The data value. (Note: This is currently ignored by the CraftBukkit server.)
+     * @return The changed recipe, so you can chain calls.
+     */
+    public FurnaceRecipe setInput(Material input, int data) {
+        this.ingredient = new ItemStack(input, 1, (short) data);
         return this;
     }
 
     /**
-     * Get the input material.
+     * Get a copy of the input material.
      * @return The input material.
      */
-    public MaterialData getInput() {
-        return ingredient;
+    public ItemStack getInput() {
+        return new ItemStack(ingredient.getType(), 1, ingredient.getDurability());
     }
 
     /**

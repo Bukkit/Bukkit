@@ -1,6 +1,7 @@
 package org.bukkit.inventory;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.Material;
 import org.bukkit.material.MaterialData;
@@ -11,7 +12,7 @@ import org.bukkit.material.MaterialData;
 public class ShapedRecipe implements Recipe {
     private ItemStack output;
     private String[] rows;
-    private HashMap<Character, MaterialData> ingredients = new HashMap<Character, MaterialData>();
+    private HashMap<Character, ItemStack> ingredients = new HashMap<Character, ItemStack>();
 
     /**
      * Create a shaped recipe to craft the specified ItemStack. The constructor merely determines the
@@ -44,12 +45,12 @@ public class ShapedRecipe implements Recipe {
         this.rows = shape;
 
         // Remove character mappings for characters that no longer exist in the shape
-        HashMap<Character, MaterialData> ingredientsTemp = this.ingredients;
+        HashMap<Character, ItemStack> ingredientsTemp = this.ingredients;
 
-        this.ingredients = new HashMap<Character, MaterialData>();
+        this.ingredients = new HashMap<Character, ItemStack>();
         for (char key : ingredientsTemp.keySet()) {
             try {
-                setIngredient(key, ingredientsTemp.get(key));
+                setIngredient(key, ingredientsTemp.get(key).getType(), ingredientsTemp.get(key).getDurability());
             } catch (IllegalArgumentException e) {}
         }
         return this;
@@ -62,11 +63,7 @@ public class ShapedRecipe implements Recipe {
      * @return The changed recipe, so you can chain calls.
      */
     public ShapedRecipe setIngredient(char key, MaterialData ingredient) {
-        if (!hasKey(key)) {
-            throw new IllegalArgumentException("Symbol " + key + " does not appear in the shape.");
-        }
-        ingredients.put(key, ingredient);
-        return this;
+        return setIngredient(key, ingredient.getItemType(), ingredient.getData());
     }
 
     /**
@@ -87,12 +84,11 @@ public class ShapedRecipe implements Recipe {
      * @return The changed recipe, so you can chain calls.
      */
     public ShapedRecipe setIngredient(char key, Material ingredient, int raw) {
-        MaterialData data = ingredient.getNewData((byte) raw);
-
-        if (data == null) {
-            data = new MaterialData(ingredient, (byte) raw);
+        if (!hasKey(key)) {
+            throw new IllegalArgumentException("Symbol " + key + " does not appear in the shape.");
         }
-        return setIngredient(key, data);
+        ingredients.put(key, new ItemStack(ingredient, 1, (short) raw));
+        return this;
     }
 
     private boolean hasKey(char c) {
@@ -107,11 +103,15 @@ public class ShapedRecipe implements Recipe {
     }
 
     /**
-     * Get the ingredients map.
+     * Get a copy of the ingredients map.
      * @return The mapping of character to ingredients.
      */
-    public HashMap<Character, MaterialData> getIngredientMap() {
-        return ingredients;
+    public Map<Character, ItemStack> getIngredientMap() {
+        Map<Character, ItemStack> toReturn = new HashMap<Character, ItemStack>();
+        for (char c : ingredients.keySet()) {
+            toReturn.put(c, new ItemStack(ingredients.get(c).getType(), 1, ingredients.get(c).getDurability()));
+        }
+        return toReturn;
     }
 
     /**
