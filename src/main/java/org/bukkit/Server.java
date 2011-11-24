@@ -18,6 +18,8 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.map.MapView;
+import org.bukkit.metadata.BlockMetadataStore;
+import org.bukkit.metadata.EntityMetadataStore;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -511,4 +513,10 @@ public interface Server {
      * @return The Console CommandSender
      */
     public ConsoleCommandSender getConsoleSender();
+
+    /**
+     * Gets the {@link EntityMetadataStore} that can be used to find all metatadata for all entities, including players.
+     * @return
+     */
+    public EntityMetadataStore getEntityMetadata();
 }

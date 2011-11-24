@@ -11,12 +11,14 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.BlockMetadataStore;
+import org.bukkit.metadata.Metadatable;
 import org.bukkit.util.Vector;
 
 /**
  * Represents a world, which may contain entities, chunks and blocks
  */
-public interface World {
+public interface World extends Metadatable{
 
     /**
      * Gets the {@link Block} at the given coordinates
@@ -738,6 +740,12 @@ public interface World {
      * @return The difficulty of the world.
      */
     public Difficulty getDifficulty();
+
+        /**
+     * Gets the {@link BlockMetadataStore} that can be used to find all metatadata for all blocks in this world.
+     * @return
+     */
+    public BlockMetadataStore getBlockMetadata();
 
     /**
      * Represents various map environment types that a world may be
