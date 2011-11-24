@@ -2,17 +2,19 @@ package org.bukkit.event.server;
 
 import java.net.InetAddress;
 
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 
 /**
  * Called when a server list ping is coming in.
  */
-public class ServerListPingEvent extends ServerEvent {
+public class ServerListPingEvent extends ServerEvent implements Cancellable {
     
     private InetAddress address;
     private String motd;
     private int numPlayers;
     private int maxPlayers;
+    private boolean cancelled;
     
     public ServerListPingEvent(InetAddress address, String motd, int numPlayers, int maxPlayers) {
         super(Event.Type.SERVER_LIST_PING);
@@ -20,6 +22,7 @@ public class ServerListPingEvent extends ServerEvent {
         this.motd = motd;
         this.numPlayers = numPlayers;
         this.maxPlayers = maxPlayers;
+        this.cancelled = false;
     }
 
     /**
@@ -75,4 +78,13 @@ public class ServerListPingEvent extends ServerEvent {
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
     }
+
+
+	public boolean isCancelled() {
+		return this.cancelled;
+	}
+
+	public void setCancelled(boolean cancel) {
+		this.cancelled = cancel;
+	}
 }
