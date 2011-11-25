@@ -108,6 +108,12 @@ public interface Entity {
     public boolean isDead();
 
     /**
+     * Returns false if this entity is no longer "in the world".
+     * @return True if valid.
+     */
+    public boolean isValid();
+
+    /**
      * Gets the {@link Server} that contains this Entity
      *
      * @return Server instance running this Entity
