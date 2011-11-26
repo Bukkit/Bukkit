@@ -89,6 +89,20 @@ public interface Block {
      */
     byte getLightLevel();
 
+    /** 
+     * Get the sky light level between 0-15
+     * 
+     * @return sky light level
+     */
+    byte getSkyLightLevel();
+    
+    /**
+     * Get the emitted light level between 0-15
+     * 
+     * @return emitted light level
+     */
+    byte getEmittedLightLevel();
+    
     /**
      * Gets the world which contains this Block
      *
