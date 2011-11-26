@@ -13,9 +13,17 @@ public class PlayerPortalEvent extends PlayerTeleportEvent {
 
     protected Player player;
     protected TravelAgent travelAgent;
+    protected Integer toDimension = null;
 
-    public PlayerPortalEvent(Player player, Location from, Location to, TravelAgent pta) {
+    public PlayerPortalEvent(Player player, Location from, Location to, TravelAgent pta, Integer toDimension) {
         super(Type.PLAYER_PORTAL, player, from, to);
+        this.travelAgent = pta;
+        this.toDimension = toDimension;
+    }
+    
+    @Deprecated
+    public PlayerPortalEvent(Player player, Location from, Location to, TravelAgent pta) {
+    	super(Type.PLAYER_PORTAL, player, from, to);
         this.travelAgent = pta;
     }
 
@@ -33,5 +41,9 @@ public class PlayerPortalEvent extends PlayerTeleportEvent {
 
     public void setPortalTravelAgent(TravelAgent travelAgent) {
         this.travelAgent = travelAgent;
+    }
+    
+    public int getToDimension() {
+    	return this.toDimension;
     }
 }
