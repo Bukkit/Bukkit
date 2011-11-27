@@ -726,6 +726,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.entity.FoodLevelChangeEvent
          */
         FOOD_LEVEL_CHANGE (Category.LIVING_ENTITY),
+        /**
+         * Called when a snowman leaves a trail of snow
+         * 
+         * @see org.bukkit.event.entity.SnowmanTrailEvent
+         */
+        SNOWMAN_TRAIL(Category.LIVING_ENTITY),
 
         /**
          * WEATHER EVENTS
