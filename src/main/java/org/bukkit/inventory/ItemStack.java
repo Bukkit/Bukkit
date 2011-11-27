@@ -17,6 +17,7 @@ public class ItemStack implements Serializable, ConfigurationSerializable {
     private int type;
     private int amount = 0;
     private MaterialData data = null;
+    private Map<Enchantment, Integer> enchantments = null;
     private short durability = 0;
     private Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
 
@@ -44,7 +45,7 @@ public class ItemStack implements Serializable, ConfigurationSerializable {
         this(type.getId(), amount, damage);
     }
 
-    public ItemStack(final int type, final int amount, final short damage, final Byte data) {
+    public ItemStack(final int type, final int amount, final short damage, final Byte data, final Map<Enchantment, Integer> enchantments) {
         this.type = type;
         this.amount = amount;
         this.durability = damage;
@@ -52,6 +53,11 @@ public class ItemStack implements Serializable, ConfigurationSerializable {
             createData(data);
             this.durability = data;
         }
+        this.enchantments = enchantments;
+    }
+    
+    public ItemStack(final int type, final int amount, final short damage, final Byte data) {
+        this(type, amount, damage, data, null);
     }
 
     public ItemStack(final Material type, final int amount, final short damage, final Byte data) {
@@ -148,6 +154,32 @@ public class ItemStack implements Serializable, ConfigurationSerializable {
             }
         }
     }
+    
+    /**
+     * Adds an enchantment to this itemstack
+     *
+     * @param enchantment The new enchantment to add
+     */
+    public void addEnchantment(Enchantment enchantment, int level) {
+        this.enchantments.put(enchantment, level);
+    }
+
+    /**
+     * Gets the enchantments added to this itemstack
+     *
+     * @return The list of enchantments, including level
+     */
+    public Map<Enchantment, Integer> getEnchantments() {
+        return enchantments;
+    }
+
+    /**
+     * Removes any enchantments from this itemstack
+     */
+    public void clearEnchantments() {
+        this.enchantments.clear();
+    }
+
 
     /**
      * Sets the durability of this item
