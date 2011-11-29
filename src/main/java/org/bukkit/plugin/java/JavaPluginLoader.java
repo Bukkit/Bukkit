@@ -457,6 +457,13 @@ public class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case PLAYER_LEVEL_CHANGE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((PlayerListener) listener).onPlayerLevelChange((PlayerLevelChangeEvent) event);
+                }
+            };
+
         // Block Events
         case BLOCK_PHYSICS:
             return new EventExecutor() {
