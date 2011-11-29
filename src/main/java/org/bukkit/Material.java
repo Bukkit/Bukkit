@@ -394,7 +394,6 @@ public enum Material {
      */
     public boolean isEdible() {
         return equals(Material.BREAD)
-                || equals(Material.CAKE)
                 || equals(Material.COOKIE)
                 || equals(Material.MELON)
                 || equals(Material.MUSHROOM_SOUP)
