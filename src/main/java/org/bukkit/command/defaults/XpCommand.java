@@ -34,7 +34,7 @@ public class XpCommand extends VanillaCommand {
         if (victim == null) {
             sender.sendMessage("Can't find user " + args[0] + ". No xp.");
         }else{
-        	victim.setExperience(victim.getExperience() + amount);
+        	victim.giveExp(amount);
         }
 		return true;
 	}
