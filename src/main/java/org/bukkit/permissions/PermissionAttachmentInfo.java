@@ -9,8 +9,9 @@ public class PermissionAttachmentInfo {
     private final String permission;
     private final PermissionAttachment attachment;
     private final boolean value;
+    private final String worldName;
 
-    public PermissionAttachmentInfo(Permissible permissible, String permission, PermissionAttachment attachment, boolean value) {
+    public PermissionAttachmentInfo(Permissible permissible, String permission, PermissionAttachment attachment, boolean value, String worldName) {
         if (permissible == null) {
             throw new IllegalArgumentException("Permissible may not be null");
         } else if (permission == null) {
@@ -21,6 +22,7 @@ public class PermissionAttachmentInfo {
         this.permission = permission;
         this.attachment = attachment;
         this.value = value;
+        this.worldName = worldName;
     }
 
     /**
@@ -58,5 +60,14 @@ public class PermissionAttachmentInfo {
      */
     public boolean getValue() {
         return value;
+    }
+
+    /**
+     * Gets the name of the world this permission applies to, or null for all worlds
+     *
+     * @return Name of the world this permission applies to.
+     */
+    public String getWorldName() {
+        return worldName;
     }
 }

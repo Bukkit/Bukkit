@@ -1,6 +1,7 @@
 
 package org.bukkit.permissions;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.bukkit.plugin.Plugin;
@@ -10,7 +11,7 @@ import org.bukkit.plugin.Plugin;
  */
 public class PermissionAttachment {
     private PermissionRemovedExecutor removed;
-    private final Map<String, Boolean> permissions = new LinkedHashMap<String, Boolean>();
+    private final Map<String, Map<String, Boolean>> permissions = new HashMap<String, Map<String, Boolean>>();
     private final Permissible permissible;
     private final Plugin plugin;
 
@@ -68,8 +69,26 @@ public class PermissionAttachment {
      *
      * @return Copy of all permissions and values expressed by this attachment
      */
-    public Map<String, Boolean> getPermissions() {
-        return new LinkedHashMap<String, Boolean>(permissions);
+    public Map<String, Map<String, Boolean>> getPermissions() {
+        return new HashMap<String, Map<String, Boolean>>(permissions);
+    }
+
+    /**
+     * Returns the permissions information
+     *
+     * This map may be modified and will affect the attachment.
+     *
+     * @param worldName The world to retrieve values for
+     * @return All permissions and values expressed for a world by this attachment
+     */
+    private Map<String, Boolean> getPermissions(String worldName) {
+        if (worldName != null) worldName = worldName.toLowerCase();
+        Map<String, Boolean> ret = permissions.get(worldName);
+        if (ret == null) {
+            ret = new LinkedHashMap<String, Boolean>();
+            permissions.put(worldName, ret);
+        }
+        return ret;
     }
 
     /**
@@ -79,7 +98,18 @@ public class PermissionAttachment {
      * @param value New value of the permission
      */
     public void setPermission(String name, boolean value) {
-        permissions.put(name.toLowerCase(), value);
+        setPermission(name.toLowerCase(), value, null);
+    }
+
+    /**
+     * Sets a permission to the given value, by its fully qualified name
+     *
+     * @param name Name of the permission
+     * @param value New value of the permission
+     * @param worldName World this permission applies for, or null for global
+     */
+    public void setPermission(String name, boolean value, String worldName) {
+        getPermissions(worldName).put(name.toLowerCase(), value);
         permissible.recalculatePermissions();
     }
 
@@ -91,7 +121,16 @@ public class PermissionAttachment {
      */
     public void setPermission(Permission perm, boolean value) {
         setPermission(perm.getName(), value);
-        permissible.recalculatePermissions();
+    }
+
+    /**
+     * Sets a permission to the given value
+     *
+     * @param perm Permission to set
+     * @param value New value of the permission
+     */
+    public void setPermission(Permission perm, boolean value, String worldName) {
+        setPermission(perm.getName(), value, worldName);
     }
 
     /**
@@ -102,8 +141,7 @@ public class PermissionAttachment {
      * @param name Name of the permission to remove
      */
     public void unsetPermission(String name) {
-        permissions.remove(name.toLowerCase());
-        permissible.recalculatePermissions();
+        unsetPermission(name, null);
     }
 
     /**
@@ -111,11 +149,33 @@ public class PermissionAttachment {
      *
      * If the permission does not exist in this attachment, nothing will happen.
      *
+     * @param name Name of the permission to remove
+     */
+    public void unsetPermission(String name, String worldName) {
+        getPermissions(worldName).remove(name.toLowerCase());
+        permissible.recalculatePermissions();
+    }
+
+    /**
+     * Removes the specified permission from this attachment in the global namespace.
+     *
+     * If the permission does not exist in this attachment, nothing will happen.
+     *
      * @param perm Permission to remove
      */
     public void unsetPermission(Permission perm) {
         unsetPermission(perm.getName());
-        permissible.recalculatePermissions();
+    }
+
+    /**
+     * Removes the specified permission from this attachment in the global namespace.
+     *
+     * If the permission does not exist in this attachment, nothing will happen.
+     *
+     * @param perm Permission to remove
+     */
+    public void unsetPermission(Permission perm, String worldName) {
+        unsetPermission(perm.getName(), worldName);
     }
 
     /**

@@ -17,12 +17,30 @@ public interface Permissible extends ServerOperator {
     public boolean isPermissionSet(String name);
 
     /**
+     * Checks if this object contains an override for the specified permission, by fully qualified name
+     *
+     * @param name Name of the permission
+     * @param worldName Name of the world this permission applies to
+     * @return true if the permission is set, otherwise false
+     */
+    public boolean isPermissionSet(String name, String worldName);
+
+    /**
      * Checks if this object contains an override for the specified {@link Permission}
      *
      * @param perm Permission to check
      * @return true if the permission is set, otherwise false
      */
     public boolean isPermissionSet(Permission perm);
+
+    /**
+     * Checks if this object contains an override for the specified {@link Permission}
+     *
+     * @param perm Permission to check
+     * @param worldName World to check
+     * @return true if the permission is set, otherwise false
+     */
+    public boolean isPermissionSet(Permission perm, String worldName);
 
     /**
      * Gets the value of the specified permission, if set.
@@ -37,12 +55,34 @@ public interface Permissible extends ServerOperator {
     /**
      * Gets the value of the specified permission, if set.
      *
+     * If a permission override is not set on this object, the default value of the permission will be returned.
+     *
+     * @param name Name of the permission
+     * @param worldName Name of the world this permission applies to
+     * @return Value of the permission
+     */
+    public boolean hasPermission(String name, String worldName);
+
+    /**
+     * Gets the value of the specified permission, if set.
+     *
      * If a permission override is not set on this object, the default value of the permission will be returned
      *
      * @param perm Permission to get
      * @return Value of the permission
      */
     public boolean hasPermission(Permission perm);
+
+    /**
+     * Gets the value of the specified permission, if set.
+     *
+     * If a permission override is not set on this object, the default value of the permission will be returned
+     *
+     * @param perm Permission to get
+     * @param worldName Name of the world this permissions applies to
+     * @return Value of the permission
+     */
+    public boolean hasPermission(Permission perm, String worldName);
 
     /**
      * Adds a new {@link PermissionAttachment} with a single permission by name and value
@@ -53,6 +93,17 @@ public interface Permissible extends ServerOperator {
      * @return The PermissionAttachment that was just created
      */
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value);
+
+    /**
+     * Adds a new {@link PermissionAttachment} with a single permission by name and value
+     *
+     * @param plugin Plugin responsible for this attachment, may not be null or disabled
+     * @param name Name of the permission to attach
+     * @param value Value of the permission
+     * @param worldName The name of the world this permission should apply to.
+     * @return The PermissionAttachment that was just created
+     */
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, String worldName);
 
     /**
      * Adds a new empty {@link PermissionAttachment} to this object
@@ -72,6 +123,18 @@ public interface Permissible extends ServerOperator {
      * @return The PermissionAttachment that was just created
      */
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks);
+
+    /**
+     * Temporarily adds a new {@link PermissionAttachment} with a single permission by name and value
+     *
+     * @param plugin Plugin responsible for this attachment, may not be null or disabled
+     * @param name Name of the permission to attach
+     * @param value Value of the permission
+     * @param ticks Amount of ticks to automatically remove this attachment after
+     * @param worldName Name of the world this permission should apply to.
+     * @return The PermissionAttachment that was just created
+     */
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks, String worldName);
 
     /**
      * Temporarily adds a new empty {@link PermissionAttachment} to this object
@@ -103,4 +166,11 @@ public interface Permissible extends ServerOperator {
      * @return Set of currently effective permissions
      */
     public Set<PermissionAttachmentInfo> getEffectivePermissions();
+
+    /**
+     * Gets a set containing all of the permissions currently in effect by this object for a specific world.
+     *
+     * @return Set of currently effective permissions
+     */
+    public Set<PermissionAttachmentInfo> getEffectivePermissions(String worldName);
 }
