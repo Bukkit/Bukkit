@@ -185,6 +185,7 @@ public class PermissibleBase implements Permissible {
             Permission perm = Bukkit.getServer().getPluginManager().getPermission(name);
             boolean value = children.get(name) ^ invert;
             String lname = name.toLowerCase();
+            if (permissions.contains(lname)) continue;
 
             permissions.put(lname, new PermissionAttachmentInfo(parent, lname, attachment, value));
             Bukkit.getServer().getPluginManager().subscribeToPermission(name, parent);
