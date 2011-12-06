@@ -466,4 +466,6 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * @return Bed Spawn Location if bed exists, otherwise null.
      */
     public Location getBedSpawnLocation();
+    
+    public void sendRawPacket(int packetId, byte[] data, boolean lowPriority);
 }
