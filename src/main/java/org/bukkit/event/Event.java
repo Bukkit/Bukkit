@@ -727,6 +727,12 @@ public abstract class Event implements Serializable {
          */
         ENDERMAN_PLACE (Category.LIVING_ENTITY),
         /**
+         * Called when an EnderDragons places a portal
+         *
+         * @see org.bukkit.event.entity.EnderPortalEvent
+         */
+        ENDER_PORTAL (Category.LIVING_ENTITY),
+        /**
          * Called when a human entity's food level changes
          *
          * @see org.bukkit.event.entity.FoodLevelChangeEvent
