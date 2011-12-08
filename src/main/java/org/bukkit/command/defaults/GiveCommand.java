@@ -32,7 +32,10 @@ public class GiveCommand extends VanillaCommand {
         Player player = Bukkit.getPlayerExact(args[0]);
 
         if (player != null) {
-            String argString = join(Arrays.copyOfRange(args, 1, args.length), " ");
+        	String[] dest = new String[args.length - 1];
+        	System.arraycopy(args, 1, dest, 0, args.length - 1);
+            //String argString = join(Arrays.copyOfRange(args, 1, args.length), " ");
+        	String argString = join(dest, " ");
             Pattern pattern = Pattern.compile("^([0-9]+) *(?:: *([0-9]+))?(?: +([0-9]*))?$");
             Matcher matcher = pattern.matcher(argString);
             
