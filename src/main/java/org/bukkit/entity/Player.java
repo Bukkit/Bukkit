@@ -470,7 +470,7 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
     /**
      * Determines if the Player is allowed to fly via jump key double-tap like in creative mode.
      * 
-     * @return Boolean
+     * @return True if the player is allowed to fly
      */
     public boolean getAllowFlight();
     
