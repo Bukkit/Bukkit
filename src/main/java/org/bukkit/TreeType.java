@@ -8,5 +8,6 @@ public enum TreeType {
     BIG_TREE,
     REDWOOD,
     TALL_REDWOOD,
-    BIRCH
+    BIRCH,
+    SWAMP_TREE
 }
