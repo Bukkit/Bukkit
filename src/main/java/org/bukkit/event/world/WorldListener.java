@@ -45,6 +45,13 @@ public class WorldListener implements Listener {
     public void onPortalCreate(PortalCreateEvent event) {}
 
     /**
+     * Called when all players in the world are sleeping
+     *
+     * @param event Relevant event details
+     */
+    public void onTimeChange(TimeChangeEvent event) {}
+
+    /**
      * Called when a world is saved
      *
      * @param event Relevant event details
