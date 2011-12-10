@@ -721,6 +721,12 @@ public abstract class Event implements Serializable {
          */
         ENTITY_REGAIN_HEALTH (Category.LIVING_ENTITY),
         /**
+         * Called when a LivingEntitys health is beeing set
+         *
+         * @see org.bukkit.event.entity.EntitySetHealthEvent
+         */
+        ENTITY_SET_HEALTH (Category.LIVING_ENTITY),
+        /**
          * Called when an Enderman picks a block up
          *
          * @see org.bukkit.event.entity.EndermanPickupEvent
