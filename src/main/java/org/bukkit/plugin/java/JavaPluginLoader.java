@@ -802,6 +802,12 @@ public class JavaPluginLoader implements PluginLoader {
                     ((EntityListener) listener).onEntityRegainHealth((EntityRegainHealthEvent) event);
                 }
             };
+         case ENTITY_SET_HEALTH:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onEntitySetHealth((EntitySetHealthEvent) event);
+                }
+            };
 
         case PROJECTILE_HIT:
             return new EventExecutor() {

@@ -127,7 +127,12 @@ public class EntityListener implements Listener {
      * @param event Relevant event details
      */
     public void onEntityRegainHealth(EntityRegainHealthEvent event) {}
-
+     /**
+       * Called when an entitys health is set
+       *
+       * @param event Relevant event details
+       */
+    public void onEntitySetHealth(EntitySetHealthEvent event) {}
     /**
      * Called when a project hits an object
      *
