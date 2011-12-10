@@ -139,6 +139,9 @@ public abstract class JavaPlugin implements Plugin {
     }
     
     public void saveConfig() {
+        if (newConfig == null) {
+            return;
+        }
         try {
             newConfig.save(configFile);
         } catch (IOException ex) {
