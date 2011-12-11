@@ -7,19 +7,20 @@ import org.bukkit.event.Event;
 /**
  * Called when a server list ping is coming in.
  */
-public class ServerListPingEvent extends ServerEvent {
+public class ServerListPingEvent extends ServerEvent implements Cancellable  {
     
     private InetAddress address;
     private String motd;
     private int numPlayers;
     private int maxPlayers;
-    
+    private boolean cancel;
     public ServerListPingEvent(InetAddress address, String motd, int numPlayers, int maxPlayers) {
         super(Event.Type.SERVER_LIST_PING);
         this.address = address;
         this.motd = motd;
         this.numPlayers = numPlayers;
         this.maxPlayers = maxPlayers;
+        this.cancel = false;
     }
 
     /**
@@ -74,5 +75,12 @@ public class ServerListPingEvent extends ServerEvent {
      */
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+        public boolean isCancelled() {
+        return cancel;
+    }
+
+    public void setCancelled(boolean cancel) {
+        this.cancel = cancel;
     }
 }
