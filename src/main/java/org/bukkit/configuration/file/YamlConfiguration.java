@@ -282,4 +282,31 @@ public class YamlConfiguration extends FileConfiguration {
         
         return config;
     }
+    
+    /**
+     * Get {@link DumperOptions} for this configuration, this can enable us to configure more precisely this config.
+     * @return {@link DumperOptions} for this configuration.
+     */
+    public DumperOptions getYamlOptions()
+    {
+        return yamlOptions;
+    }
+    
+    /**
+     * Get {@link Representer} for this configuration, this can enable us to configure more precisely this config.
+     * @return {@link Representer} for this configuration.
+     */
+    public Representer getYamlRepresenter()
+    {
+        return yamlRepresenter;
+    }
+    
+    /**
+     * Get {@link Yaml} instance for this configuration.
+     * @return {@link Yaml} instance.
+     */
+    public Yaml getYaml()
+    {
+        return yaml;
+    }
 }
