@@ -454,7 +454,7 @@ public class MemorySection implements ConfigurationSection {
         List<Object> list = getList(path);
         
         if (list == null) {
-            return null;
+            return new ArrayList<String>(0);
         }
         
         List<String> result = new ArrayList();
@@ -476,7 +476,7 @@ public class MemorySection implements ConfigurationSection {
         List<Object> list = getList(path);
         
         if (list == null) {
-            return null;
+            return new ArrayList<Integer>(0);
         }
         
         List<Integer> result = new ArrayList();
@@ -516,7 +516,7 @@ public class MemorySection implements ConfigurationSection {
         List<Object> list = getList(path);
         
         if (list == null) {
-            return null;
+            return new ArrayList<Boolean>(0);
         }
         
         List<Boolean> result = new ArrayList();
@@ -544,7 +544,7 @@ public class MemorySection implements ConfigurationSection {
         List<Object> list = getList(path);
         
         if (list == null) {
-            return null;
+            return new ArrayList<Double>(0);
         }
         
         List<Double> result = new ArrayList();
@@ -584,7 +584,7 @@ public class MemorySection implements ConfigurationSection {
         List<Object> list = getList(path);
         
         if (list == null) {
-            return null;
+            return new ArrayList<Float>(0);
         }
         
         List<Float> result = new ArrayList();
@@ -624,7 +624,7 @@ public class MemorySection implements ConfigurationSection {
         List<Object> list = getList(path);
         
         if (list == null) {
-            return null;
+            return new ArrayList<Long>(0);
         }
         
         List<Long> result = new ArrayList();
@@ -664,7 +664,7 @@ public class MemorySection implements ConfigurationSection {
         List<Object> list = getList(path);
         
         if (list == null) {
-            return null;
+            return new ArrayList<Byte>(0);
         }
         
         List<Byte> result = new ArrayList();
@@ -704,7 +704,7 @@ public class MemorySection implements ConfigurationSection {
         List<Object> list = getList(path);
         
         if (list == null) {
-            return null;
+            return new ArrayList<Character>(0);
         }
         
         List<Character> result = new ArrayList();
@@ -746,7 +746,7 @@ public class MemorySection implements ConfigurationSection {
         List<Object> list = getList(path);
         
         if (list == null) {
-            return null;
+            return new ArrayList<Short>(0);
         }
         
         List<Short> result = new ArrayList();
@@ -784,6 +784,11 @@ public class MemorySection implements ConfigurationSection {
         }
 
         List<Object> list = getList(path);
+        
+        if (list == null) {
+            return new ArrayList<Map<String, Object>>(0);
+        }
+
         List<Map<String, Object>> result = new ArrayList();
         
         for (Object object : list) {
