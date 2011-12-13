@@ -323,7 +323,7 @@ public class ItemStack implements ConfigurationSerializable {
     public Map<String, Object> serialize() {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-        result.put("type", getType());
+        result.put("type", getType().toString());
 
         if (durability != 0) {
             result.put("damage", durability);
