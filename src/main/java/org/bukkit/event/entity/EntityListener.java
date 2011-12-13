@@ -150,6 +150,13 @@ public class EntityListener implements Listener {
     public void onEndermanPlace(EndermanPlaceEvent event) {}
 
     /**
+     * Called when a Snowman leaves a trail
+     *
+     * @param event Relevent event details
+     */
+    public void onSnowmanTrail(SnowmanTrailEvent event) {}
+
+    /**
      * Called when a human entity's food level changes
      *
      * @param event Relevant event details
