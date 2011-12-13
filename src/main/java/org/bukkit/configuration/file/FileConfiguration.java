@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
+import sun.nio.cs.StreamDecoder;
 
 /**
  * This is a base class for all File based implementations of {@link Configuration}
@@ -125,7 +126,8 @@ public abstract class FileConfiguration extends MemoryConfiguration {
             throw new IllegalArgumentException("Stream cannot be null");
         }
         
-        InputStreamReader reader = new InputStreamReader(stream);
+        String encoding = StreamDecoder.forInputStreamReader(stream, this, (String)null).getEncoding();
+        InputStreamReader reader = new InputStreamReader(stream, encoding);
         StringBuilder builder = new StringBuilder();
         BufferedReader input = new BufferedReader(reader);
 
