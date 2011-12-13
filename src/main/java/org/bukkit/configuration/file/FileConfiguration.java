@@ -6,10 +6,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
 import sun.nio.cs.StreamDecoder;
@@ -54,7 +55,8 @@ public abstract class FileConfiguration extends MemoryConfiguration {
 
         String data = saveToString();
 
-        FileWriter writer = new FileWriter(file);
+        FileOutputStream stream = new FileOutputStream(file);
+        OutputStreamWriter writer = new OutputStreamWriter(stream, "UTF-8");
 
         try {
             writer.write(data);
