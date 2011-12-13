@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Java15Compat;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.regex.Pattern;
@@ -16,7 +17,7 @@ public class GiveCommand extends VanillaCommand {
     public GiveCommand() {
         super("give");
         this.description = "Gives the specified player a certain amount of items";
-        this.usageMessage = "/give <player> <item>[:data] [amount]";
+        this.usageMessage = "/give <player> <item> [:|amount] [:|data]";
         this.setPermission("bukkit.command.give");
     }
 
@@ -32,11 +33,9 @@ public class GiveCommand extends VanillaCommand {
         Player player = Bukkit.getPlayerExact(args[0]);
 
         if (player != null) {
-        	String[] dest = new String[args.length - 1];
-        	System.arraycopy(args, 1, dest, 0, args.length - 1);
-            //String argString = join(Arrays.copyOfRange(args, 1, args.length), " ");
-        	String argString = join(dest, " ");
-            Pattern pattern = Pattern.compile("^([0-9]+) *(?:: *([0-9]+))?(?: +([0-9]*))?$");
+            String argString = join(Java15Compat.Arrays_copyOfRange(args, 1, args.length), " ");
+            Pattern pattern = Pattern.compile("([0-9]+) *(:|[0-9]+)? *(:|[0-9]+)?");
+            //Pattern pattern = Pattern.compile("^ *([0-9]+) *(:| +[0-9]+)? *(:| +[0-9]+)? *$");
             Matcher matcher = pattern.matcher(argString);
             
             if (matcher.find()) {
@@ -51,14 +50,14 @@ public class GiveCommand extends VanillaCommand {
                     materialString = argString.substring(matcher.start(1), matcher.end(1));
                 }
                 if (matcher.start(2) > -1) {
-                    dataString = argString.substring(matcher.start(2), matcher.end(2));
+                    amountString = argString.substring(matcher.start(2), matcher.end(2));
                 }
                 if (matcher.start(3) > -1) {
-                    amountString = argString.substring(matcher.start(3), matcher.end(3));
+                    dataString = argString.substring(matcher.start(3), matcher.end(3));
                 }
-        	    
+                
                 material = Material.matchMaterial(materialString);
-            
+                
                 try {
                     data = new Byte(dataString);
                 } catch (NumberFormatException e) {
@@ -83,9 +82,9 @@ public class GiveCommand extends VanillaCommand {
                     sender.sendMessage("There's no item called " + args[1]);
                 }
             } else {
-            	// The regex didn't match.
-            	sendUsageMessage(sender);
-            	return false;
+                // The regex didn't match.
+                sendUsageMessage(sender);
+                return false;
             }
         } else {
             sender.sendMessage("Can't find user " + args[0]);
@@ -95,7 +94,7 @@ public class GiveCommand extends VanillaCommand {
     }
     
     private void sendUsageMessage(CommandSender sender) {
-    	sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+        sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
     }
 
     @Override
