@@ -289,7 +289,7 @@ public class MemorySection implements ConfigurationSection {
         }
 
         Object def = getDefault(path);
-        return getString(path, (def instanceof String) ? (String)def : null);
+        return getString(path, def != null ? def.toString() : null);
     }
 
     public String getString(String path, String def) {
@@ -298,7 +298,7 @@ public class MemorySection implements ConfigurationSection {
         }
 
         Object val = get(path, def);
-        return (val instanceof String) ? (String)val : def;
+        return (val != null) ? val.toString() : def;
     }
 
     public boolean isString(String path) {
@@ -881,9 +881,13 @@ public class MemorySection implements ConfigurationSection {
         if (path == null) {
             throw new IllegalArgumentException("Path cannot be null");
         }
-
-        Object val = get(path, getDefault(path));
-        return (val instanceof ConfigurationSection) ? (ConfigurationSection)val : null;
+        
+        Object val = get(path, null);
+        if (val != null)
+            return (val instanceof ConfigurationSection) ? (ConfigurationSection)val : null;
+        
+        val = get(path, getDefault(path));
+        return (val instanceof ConfigurationSection) ? createSection(path) : null;
     }
 
     public boolean isConfigurationSection(String path) {
