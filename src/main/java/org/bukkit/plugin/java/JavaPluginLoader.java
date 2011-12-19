@@ -823,6 +823,13 @@ public class JavaPluginLoader implements PluginLoader {
                     ((EntityListener) listener).onEndermanPlace((EndermanPlaceEvent) event);
                 }
             };
+            
+        case SNOWMAN_TRAIL:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onSnowmanTrail((SnowmanTrailEvent) event);
+                }
+            };
 
         case FOOD_LEVEL_CHANGE:
             return new EventExecutor() {
