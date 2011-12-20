@@ -6,9 +6,8 @@ import com.avaje.ebean.config.DataSourceConfig;
 import com.avaje.ebean.config.ServerConfig;
 import com.avaje.ebeaninternal.api.SpiEbeanServer;
 import com.avaje.ebeaninternal.server.ddl.DdlGenerator;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -143,6 +142,36 @@ public abstract class JavaPlugin implements Plugin {
             newConfig.save(configFile);
         } catch (IOException ex) {
             Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE, "Could not save config to " + configFile, ex);
+        }
+    }
+
+    public void saveDefaultConfig() {
+        File outFile = new File(getDataFolder(), "config.yml");
+        InputStream in = getResource("config.yml");
+
+        if(!getDataFolder().exists()) {
+            getDataFolder().mkdir();
+        }
+
+        if(in == null) {
+            in = new ByteArrayInputStream(new byte[0]);
+        }
+
+        try {
+            if(!outFile.exists()) {
+                OutputStream out = new FileOutputStream(outFile);
+                byte[] buf = new byte[1024];
+                int len;
+                while((len=in.read(buf))>0) {
+                    out.write(buf,0,len);
+                }
+                out.close();
+                in.close();
+            } else {
+                Logger.getLogger(JavaPlugin.class.getName()).log(Level.WARNING, "Could not save default config to " + outFile + " because " + outFile.getName() + " already exists.");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE, "Could not save default config to " + outFile, ex);
         }
     }
     

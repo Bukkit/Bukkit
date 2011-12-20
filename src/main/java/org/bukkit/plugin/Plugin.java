@@ -58,6 +58,12 @@ public interface Plugin extends CommandExecutor {
      * Saves the {@link FileConfiguration} retrievable by {@link #getConfig()}.
      */
     public void saveConfig();
+
+    /**
+     * Saves the raw contents of the default config.yml file to the location retrievable by {@link #getConfig()}.
+     * If there is no default config.yml embedded in the plugin, an empty config.yml file is saved.
+     */
+    public void saveDefaultConfig();
     
     /**
      * Discards any data in {@link #getConfig()} and reloads from disk.
