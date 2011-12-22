@@ -9,7 +9,7 @@ import org.bukkit.block.Block;
 /**
  * Represents a living entity, such as a monster or player
  */
-public interface LivingEntity extends Entity {
+public interface LivingEntity extends Entity, ProjectileShooter {
 
     /**
      * Gets the entity's health from 0 to {@link #getMaxHealth()}, where 0 is dead

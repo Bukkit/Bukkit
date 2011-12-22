@@ -8,19 +8,18 @@ import org.bukkit.block.Dispenser;
 public interface Projectile extends Entity {
 
     /**
-     * Retrieve the shooter of this projectile. The returned value can be null
-     * for projectiles shot from a {@link Dispenser} for example.
+     * Retrieve the shooter of this projectile.
      *
-     * @return the {@link LivingEntity} that shot this projectile
+     * @return the {@link ProjectileShooter} that shot this projectile
      */
-    public LivingEntity getShooter();
+    public ProjectileShooter getShooter();
 
     /**
      * Set the shooter of this projectile
      *
-     * @param shooter the {@link LivingEntity} that shot this projectile
+     * @param shooter the {@link ProjectileShooter} that shot this projectile
      */
-    public void setShooter(LivingEntity shooter);
+    public void setShooter(ProjectileShooter shooter);
 
     /**
      * Determine if this projectile should bounce or not when it hits.
