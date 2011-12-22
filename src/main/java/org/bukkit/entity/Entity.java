@@ -88,6 +88,18 @@ public interface Entity {
     public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z);
 
     /**
+     * Checks if entity is invisible
+     *
+     * @return boolean visibility status
+     */
+    public boolean isInvisible();
+
+    /**
+     * Sets entity visibility status
+     */
+    public void setInvisible(boolean invisible);
+
+    /**
      * Returns a unique id for this entity
      *
      * @return Entity id
