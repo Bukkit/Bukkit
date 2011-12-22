@@ -6,12 +6,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
+import sun.nio.cs.StreamDecoder;
 
 /**
  * This is a base class for all File based implementations of {@link Configuration}
@@ -53,7 +55,8 @@ public abstract class FileConfiguration extends MemoryConfiguration {
 
         String data = saveToString();
 
-        FileWriter writer = new FileWriter(file);
+        FileOutputStream stream = new FileOutputStream(file);
+        OutputStreamWriter writer = new OutputStreamWriter(stream, "UTF-8");
 
         try {
             writer.write(data);
@@ -125,7 +128,8 @@ public abstract class FileConfiguration extends MemoryConfiguration {
             throw new IllegalArgumentException("Stream cannot be null");
         }
         
-        InputStreamReader reader = new InputStreamReader(stream);
+        String encoding = StreamDecoder.forInputStreamReader(stream, this, (String)null).getEncoding();
+        InputStreamReader reader = new InputStreamReader(stream, encoding);
         StringBuilder builder = new StringBuilder();
         BufferedReader input = new BufferedReader(reader);
 
