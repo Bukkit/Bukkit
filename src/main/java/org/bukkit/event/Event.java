@@ -281,12 +281,6 @@ public abstract class Event implements Serializable {
          */
         PLAYER_BUCKET_FILL(Category.PLAYER),
         /**
-         * Called when a player interacts with the inventory
-         *
-         * @see org.bukkit.event.player.PlayerInventoryEvent
-         */
-        PLAYER_INVENTORY(Category.PLAYER),
-        /**
          * Called when a player enter a bed
          *
          * @see org.bukkit.event.player.PlayerBedEnterEvent
@@ -441,23 +435,23 @@ public abstract class Event implements Serializable {
          */
 
         /**
-         * Called when a player opens an inventory
+         * Called when a player opens an container
          *
          * @todo: add javadoc see comment
          */
-        INVENTORY_OPEN (Category.INVENTORY),
+        CONTAINER_OPEN (Category.INVENTORY),
         /**
-         * Called when a player closes an inventory
+         * Called when a player closes an container
          *
          * @todo: add javadoc see comment
          */
-        INVENTORY_CLOSE (Category.INVENTORY),
+        CONTAINER_CLOSE (Category.INVENTORY),
         /**
-         * Called when a player clicks on an inventory slot
+         * Called when a player clicks on an container slot
          *
          * @todo: add javadoc see comment
          */
-        INVENTORY_CLICK (Category.INVENTORY),
+        CONTAINER_CLICK (Category.INVENTORY),
         /**
          * Called when an inventory slot changes values or type
          *

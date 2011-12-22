@@ -371,13 +371,6 @@ public class JavaPluginLoader implements PluginLoader {
                 }
             };
 
-        case INVENTORY_OPEN:
-            return new EventExecutor() {
-                public void execute(Listener listener, Event event) {
-                    ((PlayerListener) listener).onInventoryOpen((PlayerInventoryEvent) event);
-                }
-            };
-
         case PLAYER_ITEM_HELD:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
@@ -937,7 +930,24 @@ public class JavaPluginLoader implements PluginLoader {
                     ((InventoryListener) listener).onFurnaceBurn((FurnaceBurnEvent) event);
                 }
             };
-
+        case CONTAINER_OPEN:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((InventoryListener) listener).onContainerOpen((PlayerOpenContainerEvent) event);
+                }
+            };
+        case CONTAINER_CLOSE:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((InventoryListener) listener).onContainerClose((PlayerCloseContainerEvent) event);
+                }
+            };
+        case CONTAINER_CLICK:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((InventoryListener) listener).onContainerClick((PlayerClickContainerEvent) event);
+                }
+            };            
         // Custom Events
         case CUSTOM_EVENT:
             return new EventExecutor() {

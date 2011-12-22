@@ -3,7 +3,7 @@ package org.bukkit.block;
 /**
  * Represents a furnace.
  */
-public interface Furnace extends BlockState, ContainerBlock {
+public interface Furnace extends ContainerBlock {
 
     /**
      * Get burn time.
