@@ -160,6 +160,10 @@ public abstract class FileConfigurationTest extends MemoryConfigurationTest {
         
         assertEquals(values.keySet(), config.getKeys(true));
         assertEquals(header + "\n" + saved, config.saveToString());
+        
+        config = getConfig();
+        config.loadFromString("\n" + saved);
+        assertEquals(saved, config.saveToString());
     }
 
     @Test
