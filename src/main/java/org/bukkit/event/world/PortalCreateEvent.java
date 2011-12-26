@@ -13,10 +13,12 @@ import java.util.Collection;
 public class PortalCreateEvent extends WorldEvent implements Cancellable {
     private boolean cancel = false;
     private ArrayList<Block> blocks = new ArrayList<Block>();
+    private Reason reason = Reason.FIRE;
 
-    public PortalCreateEvent(final Collection<Block> blocks, final World world) {
+    public PortalCreateEvent(final Collection<Block> blocks, final World world, Reason reason) {
         super(Type.PORTAL_CREATE, world);
         this.blocks.addAll(blocks);
+        this.reason = reason;
     }
 
     /**
@@ -34,5 +36,14 @@ public class PortalCreateEvent extends WorldEvent implements Cancellable {
 
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
+    }
+    
+    public Reason getReason() {
+        return reason;
+    }
+    
+    public enum Reason {
+        FIRE,
+        FAR_END
     }
 }
