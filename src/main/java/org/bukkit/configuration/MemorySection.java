@@ -175,11 +175,12 @@ public class MemorySection implements ConfigurationSection {
 
         for (int i = 0; i < split.length - 1; i++) {
             ConfigurationSection last = section;
-
-            section = last.getConfigurationSection(split[i]);
-
-            if (section == null) {
+            
+            Object val = last.get(split[i], null);
+            if (val == null || !(val instanceof ConfigurationSection)) {
                 section = last.createSection(split[i]);
+            } else {
+                section = (ConfigurationSection) val;
             }
         }
 
@@ -216,10 +217,11 @@ public class MemorySection implements ConfigurationSection {
         ConfigurationSection section = this;
 
         for (int i = 0; i < split.length - 1; i++) {
-            section = section.getConfigurationSection(split[i]);
-
-            if (section == null) {
+            Object val = get(split[i]);
+            if (val == null || !(val instanceof ConfigurationSection)) {
                 return def;
+            } else {
+                section = (ConfigurationSection) val;
             }
         }
 
@@ -244,11 +246,12 @@ public class MemorySection implements ConfigurationSection {
 
         for (int i = 0; i < split.length - 1; i++) {
             ConfigurationSection last = section;
-
-            section = getConfigurationSection(split[i]);
-
-            if (section == null) {
+            
+            Object val = get(split[i], null);
+            if (val == null || !(val instanceof ConfigurationSection)) {
                 section = last.createSection(split[i]);
+            } else {
+                section = (ConfigurationSection) val;
             }
         }
 
