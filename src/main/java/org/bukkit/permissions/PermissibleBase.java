@@ -106,8 +106,6 @@ public class PermissibleBase implements Permissible {
         PermissionAttachment result = addAttachment(plugin);
         result.setPermission(name, value);
 
-        recalculatePermissions();
-
         return result;
     }
 
@@ -121,7 +119,6 @@ public class PermissibleBase implements Permissible {
         PermissionAttachment result = new PermissionAttachment(plugin, parent);
 
         attachments.add(result);
-        recalculatePermissions();
 
         return result;
     }

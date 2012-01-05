@@ -1,7 +1,9 @@
 package org.bukkit.permissions;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -13,14 +15,14 @@ public class PermissionAttachment {
     private final Permissible permissible;
     private final Plugin plugin;
 
-    public PermissionAttachment(Plugin plugin, Permissible Permissible) {
+    public PermissionAttachment(Plugin plugin, Permissible permissible) {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null");
         } else if (!plugin.isEnabled()) {
             throw new IllegalArgumentException("Plugin " + plugin.getDescription().getFullName() + " is disabled");
         }
 
-        this.permissible = Permissible;
+        this.permissible = permissible;
         this.plugin = plugin;
     }
 
@@ -89,7 +91,19 @@ public class PermissionAttachment {
      * @param value New value of the permission
      */
     public void setPermission(Permission perm, boolean value) {
-        setPermission(perm.getName(), value);
+        permissions.put(perm.getName().toLowerCase(), value);
+        permissible.recalculatePermissions();
+    }
+
+    /**
+     * Sets permissions to given values, by their fully qualified names
+     * 
+     * @param permissions The permission and value pairs
+     */
+    public void setPermissions(Map<String, Boolean> permissions) {
+        for(Entry<String, Boolean> entry : permissions.entrySet()) {
+            permissions.put(entry.getKey().toLowerCase(), entry.getValue());
+        }
         permissible.recalculatePermissions();
     }
 
@@ -113,7 +127,21 @@ public class PermissionAttachment {
      * @param perm Permission to remove
      */
     public void unsetPermission(Permission perm) {
-        unsetPermission(perm.getName());
+        permissions.remove(perm.getName().toLowerCase());
+        permissible.recalculatePermissions();
+    }
+
+    /**
+     * Removes the specified permissions from this attachment.
+     * 
+     * If a permission does not exist in this attachment, nothing will happen.
+     * 
+     * @param permissions Permissions to remove
+     */
+    public void unsetPermissions(Collection<String> permissions) {
+        for(String name : permissions) {
+            permissions.remove(name.toLowerCase());
+        }
         permissible.recalculatePermissions();
     }
 
