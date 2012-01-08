@@ -120,7 +120,7 @@ public interface BlockState {
      * @see #update(boolean)
      */
     boolean update();
-
+    
     /**
      * Attempts to update the block represented by this state, setting it to the
      * new values as defined by this state. <br />
@@ -137,5 +137,10 @@ public interface BlockState {
      */
     boolean update(boolean force);
 
+    /**
+     * Force apply physics around this block.
+     */
+    void applyPhysics();
+    
     public byte getRawData();
 }
