@@ -19,6 +19,13 @@ public interface Tameable {
      * @param tame true if tame
      */
     public void setTamed(boolean tame);
+    
+    /**
+     * Plays the taming animation
+     * 
+     * @param successful True if the taming is successful, otherwise false
+     */
+    public void playTamingAnimation(boolean successful);
 
     /**
      * Gets the current owning AnimalTamer
