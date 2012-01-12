@@ -34,7 +34,7 @@ public class GiveCommand extends VanillaCommand {
 
         if (player != null) {
             String argString = join(Java15Compat.Arrays_copyOfRange(args, 1, args.length), " ");
-            Pattern pattern = Pattern.compile("([0-9]+) *(:|[0-9]+)? *(:|[0-9]+)?");
+            Pattern pattern = Pattern.compile("(\\w+) *(:|[0-9]+)? *(:|[0-9]+)?");
             //Pattern pattern = Pattern.compile("^ *([0-9]+) *(:| +[0-9]+)? *(:| +[0-9]+)? *$");
             Matcher matcher = pattern.matcher(argString);
             
