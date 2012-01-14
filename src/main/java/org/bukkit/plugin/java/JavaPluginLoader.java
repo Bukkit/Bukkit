@@ -770,6 +770,13 @@ public class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case PRE_ITEM_SPAWN:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onPreItemSpawn((PreItemSpawnEvent) event);
+                }
+            };
+
         case ITEM_SPAWN:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
