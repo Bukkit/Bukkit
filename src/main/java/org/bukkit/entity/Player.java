@@ -465,6 +465,20 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer, Plugi
     public void setFoodLevel(int value);
 
     /**
+     * Exhausts a specific level. For example walking a distance of 100 blocks would have an exhaustion of 1.
+     * 
+     * @param exhaustion The added exhaustion.
+     */
+    public void exhaust(float exhaustion);
+
+    /**
+     * Returns the total exhaustion the player have.
+     * 
+     * @return Total exhaustion.
+     */
+    public float getTotalExhaustion();
+
+    /**
      * Gets the Location where the player will spawn at their bed, null if they have not slept in one or their current bed spawn is invalid.
      *
      * @return Bed Spawn Location if bed exists, otherwise null.
