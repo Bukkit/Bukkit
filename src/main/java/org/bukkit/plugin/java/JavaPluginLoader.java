@@ -268,6 +268,13 @@ public class JavaPluginLoader implements PluginLoader {
                     ((PlayerListener) listener).onPlayerJoin((PlayerJoinEvent) event);
                 }
             };
+            
+        case PLAYER_SEND_CHUNK:
+        	return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((PlayerListener) listener).onPlayerSendChunk((PlayerSendChunkEvent) event);
+                }
+            };
 
         case PLAYER_QUIT:
             return new EventExecutor() {

@@ -149,6 +149,12 @@ public abstract class Event implements Serializable {
          */
         PLAYER_JOIN(Category.PLAYER),
         /**
+         * Called when a chunk is sent to a player
+         *
+         * @see org.bukkit.event.player.PlayerSendChunkEvent
+         */
+        PLAYER_SEND_CHUNK (Category.PLAYER),
+        /**
          * Called when a player is attempting to connect to the server
          *
          * @see org.bukkit.event.player.PlayerLoginEvent
