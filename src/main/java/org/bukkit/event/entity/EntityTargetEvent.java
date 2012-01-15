@@ -2,6 +2,7 @@ package org.bukkit.event.entity;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 /**
  * Called when a creature targets or untargets another entity
@@ -60,6 +61,17 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
      */
     public void setTarget(Entity target) {
         this.target = target;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 
     /**

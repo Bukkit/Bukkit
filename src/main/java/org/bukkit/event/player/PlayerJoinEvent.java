@@ -1,6 +1,7 @@
 package org.bukkit.event.player;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 
 /**
  * Called when a player joins a server
@@ -30,5 +31,16 @@ public class PlayerJoinEvent extends PlayerEvent {
      */
     public void setJoinMessage(String joinMessage) {
         this.joinMessage = joinMessage;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

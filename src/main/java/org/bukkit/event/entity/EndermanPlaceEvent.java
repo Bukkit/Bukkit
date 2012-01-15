@@ -3,6 +3,7 @@ package org.bukkit.event.entity;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 @SuppressWarnings("serial")
 public class EndermanPlaceEvent extends EntityEvent implements Cancellable {
@@ -31,5 +32,16 @@ public class EndermanPlaceEvent extends EntityEvent implements Cancellable {
      */
     public Location getLocation() {
         return location;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

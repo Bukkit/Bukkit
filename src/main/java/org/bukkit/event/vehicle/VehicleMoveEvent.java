@@ -2,6 +2,7 @@ package org.bukkit.event.vehicle;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Vehicle;
+import org.bukkit.event.HandlerList;
 
 /**
  * Raised when a vehicle moves.
@@ -34,5 +35,17 @@ public class VehicleMoveEvent extends VehicleEvent {
      */
     public Location getTo() {
         return to;
+    }
+    
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

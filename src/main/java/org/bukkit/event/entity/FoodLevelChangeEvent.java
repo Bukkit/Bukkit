@@ -2,6 +2,7 @@ package org.bukkit.event.entity;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 /**
  * Called when a human entity's food level changes
@@ -45,5 +46,16 @@ public class FoodLevelChangeEvent extends EntityEvent implements Cancellable {
 
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

@@ -3,6 +3,7 @@ package org.bukkit.event.player;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 @SuppressWarnings("serial")
 public class PlayerGameModeChangeEvent extends PlayerEvent implements Cancellable {
@@ -25,5 +26,16 @@ public class PlayerGameModeChangeEvent extends PlayerEvent implements Cancellabl
 
     public GameMode getNewGameMode() {
         return newGameMode;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

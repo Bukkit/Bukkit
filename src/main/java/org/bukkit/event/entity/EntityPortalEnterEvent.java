@@ -2,6 +2,7 @@ package org.bukkit.event.entity;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.Location;
+import org.bukkit.event.HandlerList;
 
 /**
  * Stores data for entities standing inside a portal block
@@ -23,5 +24,16 @@ public class EntityPortalEnterEvent extends EntityEvent {
      */
     public Location getLocation() {
         return location;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

@@ -2,6 +2,7 @@ package org.bukkit.event.player;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 /**
  * Represents a player animation event
@@ -39,5 +40,16 @@ public class PlayerAnimationEvent extends PlayerEvent implements Cancellable {
 
     public void setCancelled(boolean cancel) {
         this.isCancelled = cancel;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

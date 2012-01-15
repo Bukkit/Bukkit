@@ -3,6 +3,7 @@ package org.bukkit.event.player;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 /**
  * Holds information for player teleport events
@@ -57,5 +58,16 @@ public class PlayerTeleportEvent extends PlayerMoveEvent {
          * Indicates the teleportation was caused by an event not covered by this enum
          */
         UNKNOWN;
+    }
+
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

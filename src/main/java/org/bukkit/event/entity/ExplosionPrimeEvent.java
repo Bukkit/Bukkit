@@ -3,6 +3,7 @@ package org.bukkit.event.entity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Explosive;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 /**
  * Called when an entity has made a decision to explode.
@@ -66,5 +67,16 @@ public class ExplosionPrimeEvent extends EntityEvent implements Cancellable {
      */
     public void setFire(boolean fire) {
         this.fire = fire;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

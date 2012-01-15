@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.event.HandlerList;
 
 @SuppressWarnings("serial")
 public class BlockPistonExtendEvent extends BlockPistonEvent {
@@ -41,5 +42,16 @@ public class BlockPistonExtendEvent extends BlockPistonEvent {
             blocks = Collections.unmodifiableList(tmp);
         }
         return blocks;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

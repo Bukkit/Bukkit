@@ -2,6 +2,7 @@ package org.bukkit.event.block;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.event.HandlerList;
 
 /**
  * Called when a block spreads based on world conditions.
@@ -33,5 +34,16 @@ public class BlockSpreadEvent extends BlockFormEvent {
      */
     public Block getSource() {
         return source;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

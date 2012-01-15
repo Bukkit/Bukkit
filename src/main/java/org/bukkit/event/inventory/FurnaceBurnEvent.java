@@ -3,6 +3,7 @@ package org.bukkit.event.inventory;
 import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -86,5 +87,16 @@ public class FurnaceBurnEvent extends Event implements Cancellable {
 
     public void setCancelled(boolean cancel) {
         this.cancelled = cancel;
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

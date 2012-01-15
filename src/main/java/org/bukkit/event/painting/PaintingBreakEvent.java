@@ -2,6 +2,7 @@ package org.bukkit.event.painting;
 
 import org.bukkit.entity.Painting;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 /**
  * Triggered when a painting is removed
@@ -58,5 +59,16 @@ public class PaintingBreakEvent extends PaintingEvent implements Cancellable {
          * Removed by destroying the block behind it, etc
          */
         PHYSICS,
+    }
+    
+    private static final HandlerList handlers = new HandlerList();
+    
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

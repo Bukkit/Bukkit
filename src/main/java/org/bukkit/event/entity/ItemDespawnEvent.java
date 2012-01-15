@@ -3,6 +3,7 @@ package org.bukkit.event.entity;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 public class ItemDespawnEvent extends EntityEvent implements Cancellable {
     private boolean canceled;
@@ -28,5 +29,15 @@ public class ItemDespawnEvent extends EntityEvent implements Cancellable {
      */
     public Location getLocation() {
         return location;
+    }
+
+    private static final HandlerList handlers = new HandlerList();
+
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }
