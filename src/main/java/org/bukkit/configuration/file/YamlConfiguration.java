@@ -29,7 +29,23 @@ public class YamlConfiguration extends FileConfiguration {
     private final DumperOptions yamlOptions = new DumperOptions();
     private final Representer yamlRepresenter = new Representer();
     private final Yaml yaml = new Yaml(new SafeConstructor(), yamlRepresenter, yamlOptions);
-
+    
+    /**
+     * Creates an empty {@link YamlConfiguration}, linked to specified file.
+     * 
+     * @param configFile File to link with.
+     */
+    public YamlConfiguration(File configFile) {
+        super(configFile);
+    }
+    
+    /**
+     * Creates an empty {@link YamlConfiguration}.
+     */
+    public YamlConfiguration() {
+        super();
+    }
+    
     @Override
     public String saveToString() {
         Map<String, Object> output = new LinkedHashMap<String, Object>();
