@@ -1,18 +1,25 @@
 package org.bukkit;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import org.bukkit.block.Block;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.util.Vector;
 
 /**
  * Represents a 3-dimensional position in a world
  */
-public class Location implements Cloneable {
+public class Location implements Cloneable, ConfigurationSerializable {
     private World world;
     private double x;
     private double y;
     private double z;
     private float pitch;
     private float yaw;
+
+    private UUID worldReference;
 
     /**
      * Constructs a new Location with the given coordinates
@@ -45,6 +52,11 @@ public class Location implements Cloneable {
         this.yaw = yaw;
     }
 
+    private Location(final UUID world, final double x, final double y, final double z, final float yaw, final float pitch) {
+        this((World) null, x, y, z, yaw, pitch);
+        worldReference = world;
+    }
+
     /**
      * Sets the world that this location resides in
      *
@@ -52,6 +64,7 @@ public class Location implements Cloneable {
      */
     public void setWorld(World world) {
         this.world = world;
+        worldReference = null;
     }
 
     /**
@@ -60,6 +73,9 @@ public class Location implements Cloneable {
      * @return World that contains this location
      */
     public World getWorld() {
+        if ((world == null) && (worldReference != null)) {
+            world = Bukkit.getWorld(worldReference);
+        }
         return world;
     }
 
@@ -69,7 +85,7 @@ public class Location implements Cloneable {
      * @return Chunk at the represented location
      */
     public Chunk getChunk() {
-        return world.getChunkAt(this);
+        return getWorld().getChunkAt(this);
     }
 
     /**
@@ -78,7 +94,7 @@ public class Location implements Cloneable {
      * @return Block at the represented location
      */
     public Block getBlock() {
-        return world.getBlockAt(this);
+        return getWorld().getBlockAt(this);
     }
 
     /**
@@ -421,7 +437,9 @@ public class Location implements Cloneable {
         }
         final Location other = (Location) obj;
 
-        if (this.world != other.world && (this.world == null || !this.world.equals(other.world))) {
+        World here = getWorld();
+        World there = other.getWorld();
+        if (here != there && (here == null || !here.equals(there))) {
             return false;
         }
         if (Double.doubleToLongBits(this.x) != Double.doubleToLongBits(other.x)) {
@@ -446,7 +464,8 @@ public class Location implements Cloneable {
     public int hashCode() {
         int hash = 3;
 
-        hash = 19 * hash + (this.world != null ? this.world.hashCode() : 0);
+        World here = getWorld();
+        hash = 19 * hash + (here != null ? here.hashCode() : 0);
         hash = 19 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
         hash = 19 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
         hash = 19 * hash + (int) (Double.doubleToLongBits(this.z) ^ (Double.doubleToLongBits(this.z) >>> 32));
@@ -457,7 +476,7 @@ public class Location implements Cloneable {
 
     @Override
     public String toString() {
-        return "Location{" + "world=" + world + ",x=" + x + ",y=" + y + ",z=" + z + ",pitch=" + pitch + ",yaw=" + yaw + '}';
+        return "Location{" + "world=" + getWorld() + ",x=" + x + ",y=" + y + ",z=" + z + ",pitch=" + pitch + ",yaw=" + yaw + '}';
     }
 
     /**
@@ -480,11 +499,49 @@ public class Location implements Cloneable {
             l.z = z;
             l.yaw = yaw;
             l.pitch = pitch;
+            l.worldReference = l.worldReference;
+
             return l;
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+        if (world == null) {
+            result.put("world", "" + worldReference);
+        } else {
+            result.put("world", world.getUID().toString());
+        }
+
+        result.put("x", x);
+        result.put("y", y);
+        result.put("z", z);
+        result.put("yaw", yaw);
+        result.put("pitch", pitch);
+
+        return result;
+    }
+
+    public static Location deserialize(Map<String, Object> components) {
+        UUID world = null;
+        try {
+            world = UUID.fromString((String) components.get("world"));
+        } catch(IllegalArgumentException e) {
+            // Invalid format or null world reference
+        }
+
+        double x = (Double) components.get("x");
+        double y = (Double) components.get("y");
+        double z = (Double) components.get("z");
+        double yaw = (Double) components.get("yaw");
+        double pitch = (Double) components.get("pitch");
+
+        return new Location(world, x, y, z, (float) yaw, (float) pitch);
     }
 
     /**
