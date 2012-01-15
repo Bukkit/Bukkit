@@ -41,6 +41,13 @@ public class EntityListener implements Listener {
      * @param event Relevant event details
      */
     public void onEntityDamage(EntityDamageEvent event) {}
+    
+    /**
+     * Called when an entity eats a block
+     * 
+     * @param event Relevant event details
+     */
+    public void onEntityEat(EntityEatEvent event) {}
 
     /**
      * Called when an entity explodes

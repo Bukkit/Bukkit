@@ -732,6 +732,13 @@ public class JavaPluginLoader implements PluginLoader {
                     ((EntityListener) listener).onEntityCombust((EntityCombustEvent) event);
                 }
             };
+            
+        case ENTITY_EAT:
+            return new EventExecutor() {
+        	public void execute(Listener listener, Event event) {
+        	    ((EntityListener) listener).onEntityEat((EntityEatEvent) event);
+        	}
+            };
 
         case ENTITY_EXPLODE:
             return new EventExecutor() {
