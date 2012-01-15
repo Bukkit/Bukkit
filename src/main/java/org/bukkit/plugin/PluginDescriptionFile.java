@@ -19,6 +19,7 @@ public final class PluginDescriptionFile {
     private static final Yaml yaml = new Yaml(new SafeConstructor());
     private String name = null;
     private String main = null;
+    private String classLoaderOf = null;
     private ArrayList<String> depend = null;
     private ArrayList<String> softDepend = null;
     private String version = null;
@@ -153,6 +154,10 @@ public final class PluginDescriptionFile {
     public PermissionDefault getPermissionDefault() {
         return defaultPerm;
     }
+    
+    public String getClassLoaderOf() {
+	return classLoaderOf;
+    }
 
     @SuppressWarnings("unchecked")
     private void loadMap(Map<String, Object> map) throws InvalidDescriptionException {
@@ -195,6 +200,10 @@ public final class PluginDescriptionFile {
             }
         }
 
+        if (map.containsKey("class-loader-of")) {
+            classLoaderOf = map.get("class-loader-of").toString();
+        }
+        
         if (map.containsKey("depend")) {
             try {
                 depend = (ArrayList<String>) map.get("depend");
@@ -318,6 +327,10 @@ public final class PluginDescriptionFile {
             map.put("authors", authors);
         }
 
+        if (classLoaderOf != null) {
+            map.put("class-loader-of", classLoaderOf);
+        }
+        
         return map;
     }
 }
