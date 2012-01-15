@@ -11,17 +11,17 @@ public class EntityEatEvent extends EntityEvent implements Cancellable {
     private Block block;
     
     public EntityEatEvent(Entity what, Block block) {
-	super(Type.ENTITY_EAT, what);
-	this.block = block;
-	this.cancel = false;
+    super(Type.ENTITY_EAT, what);
+    this.block = block;
+    this.cancel = false;
     }
     
     public boolean isCancelled() {
-	return cancel;
+    return cancel;
     }
     
     public void setCancelled(boolean cancel) {
-	this.cancel = cancel;
+    this.cancel = cancel;
     }
     
     /**
@@ -30,7 +30,7 @@ public class EntityEatEvent extends EntityEvent implements Cancellable {
      * @return block the entity is about to eat
      */
     public Block getBlock() {
-	return block;
+    return block;
     }
 
 }
