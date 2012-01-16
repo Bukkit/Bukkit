@@ -40,6 +40,16 @@ public interface ChunkSnapshot {
     int getBlockTypeId(int x, int y, int z);
 
     /**
+     * Set block type for block at corresponding coordinate in the chunk
+     *
+     * @param x 0-15
+     * @param y 0-127
+     * @param z 0-15
+     * @param type 0-255
+     */
+    void setBlockTypeId(int x, int y, int z, int type);
+
+    /**
      * Get block data for block at corresponding coordinate in the chunk
      *
      * @param x 0-15
@@ -48,6 +58,16 @@ public interface ChunkSnapshot {
      * @return 0-15
      */
     int getBlockData(int x, int y, int z);
+
+    /**
+     * Set block data for block at corresponding coordinate in the chunk
+     *
+     * @param x 0-15
+     * @param y 0-127
+     * @param z 0-15
+     * @param data 0-15
+     */
+    void setBlockData(int x, int y, int z, int data);
 
     /**
      * Get sky light level for block at corresponding coordinate in the chunk
@@ -111,4 +131,18 @@ public interface ChunkSnapshot {
      * @return time in ticks
      */
     long getCaptureFullTime();
+
+    /**
+     * Get the data buffer associated with the chunk snapshot
+     *
+     * @return Data buffer
+     */
+    byte[] getData();
+
+    /**
+     * Set the data buffer associated with the chunk snapshot
+     *
+     * @param data Data buffer
+     */
+    void setData(byte[] data);
 }
