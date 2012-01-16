@@ -84,4 +84,19 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
      * @return True if the player has played before, otherwise false
      */
     public boolean hasPlayedBefore();
+
+    /**
+     * Gets the Location where the player will spawn at their bed, null if they
+     * have not slept in one or their current bed spawn is invalid.
+     *
+     * @return Bed Spawn Location if bed exists, otherwise null.
+     */
+    public Location getBedSpawnLocation();
+
+    /**
+     * Sets the Location where the player will spawn at their bed.
+     *
+     * @param location where to set the respawn location
+     */
+    public void setBedSpawnLocation(Location location);
 }
