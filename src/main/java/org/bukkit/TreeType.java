@@ -9,6 +9,7 @@ public enum TreeType {
     REDWOOD,
     TALL_REDWOOD,
     BIRCH,
+    SWAMP_TREE,
     RED_MUSHROOM,
     BROWN_MUSHROOM
 }
