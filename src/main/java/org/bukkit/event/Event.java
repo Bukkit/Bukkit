@@ -553,12 +553,6 @@ public abstract class Event implements Serializable {
          */
         CHUNK_POPULATED(Category.WORLD),
         /**
-         * Called when an ItemEntity spawns in the world
-         *
-         * @see org.bukkit.event.entity.ItemSpawnEvent
-         */
-        ITEM_SPAWN(Category.WORLD),
-        /**
          * Called when a World's spawn is changed
          *
          * @see org.bukkit.event.world.SpawnChangeEvent
@@ -600,12 +594,6 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.world.StructureGrowEvent
          */
         STRUCTURE_GROW(Category.WORLD),
-        /**
-         * Called when an item despawns from a world
-         *
-         * @see org.bukkit.event.entity.ItemDespawnEvent
-         */
-        ITEM_DESPAWN(Category.WORLD),
 
         /**
          * ENTITY EVENTS
@@ -629,6 +617,18 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.entity.EntityPortalEnterEvent
          */
         ENTITY_PORTAL_ENTER(Category.ENTITY),
+        /**
+         * Called when an item spawns
+         *
+         * @see org.bukkit.event.entity.ItemSpawnEvent
+         */
+        ITEM_SPAWN(Category.ENTITY),
+        /**
+         * Called when an item despawns
+         *
+         * @see org.bukkit.event.entity.ItemDespawnEvent
+         */
+        ITEM_DESPAWN(Category.ENTITY),
 
         /**
          * LIVING_ENTITY EVENTS

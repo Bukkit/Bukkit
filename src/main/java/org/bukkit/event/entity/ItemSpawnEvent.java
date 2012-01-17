@@ -5,9 +5,8 @@ import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 
 /**
- * Called when an item is spawned into a world
+ * Called when an item is spawned
  */
-@SuppressWarnings("serial")
 public class ItemSpawnEvent extends EntityEvent implements Cancellable {
 
     private Location location;
