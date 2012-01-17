@@ -93,10 +93,4 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
      */
     public Location getBedSpawnLocation();
 
-    /**
-     * Sets the Location where the player will spawn at their bed.
-     *
-     * @param location where to set the respawn location
-     */
-    public void setBedSpawnLocation(Location location);
 }
