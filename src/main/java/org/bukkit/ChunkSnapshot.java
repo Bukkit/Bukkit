@@ -143,6 +143,7 @@ public interface ChunkSnapshot {
      * Set the data buffer associated with the chunk snapshot
      *
      * @param data Data buffer
+     * @return If the buffer has been successfully changed
      */
-    void setData(byte[] data);
+    boolean setData(byte[] data);
 }
