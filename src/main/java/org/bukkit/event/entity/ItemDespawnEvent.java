@@ -4,6 +4,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 
+/**
+ * Called when an item is despawned
+ */
 public class ItemDespawnEvent extends EntityEvent implements Cancellable {
     private boolean canceled;
     private Location location;
