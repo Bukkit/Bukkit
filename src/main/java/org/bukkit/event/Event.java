@@ -369,6 +369,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.player.PlayerLevelChangeEvent
          */
         PLAYER_LEVEL_CHANGE(Category.PLAYER, PlayerLevelChangeEvent.class),
+        /**
+         * Called when a players experience changes naturally
+         *
+         * @see org.bukkit.event.player.PlayerExpChangeEvent
+         */
+        PLAYER_EXP_CHANGE(Category.PLAYER, PlayerExpChangeEvent.class),
 
         /**
          * BLOCK EVENTS
