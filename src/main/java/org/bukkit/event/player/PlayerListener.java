@@ -213,4 +213,11 @@ public class PlayerListener implements Listener {
      * @param event Relevant event details
      */
     public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {}
+
+    /**
+     * Called when a players level changes
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerLevelChange(PlayerLevelChangeEvent event) {}
 }
