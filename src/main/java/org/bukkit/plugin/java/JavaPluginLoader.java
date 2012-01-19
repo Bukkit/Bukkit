@@ -766,6 +766,13 @@ public class JavaPluginLoader implements PluginLoader {
                     ((EntityListener) listener).onEntityTarget((EntityTargetEvent) event);
                 }
             };
+            
+        case ENTITY_EAT:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onEntityEat((EntityEatEvent) event);
+                }
+            };
 
         case ENTITY_INTERACT:
             return new EventExecutor() {

@@ -764,6 +764,12 @@ public abstract class Event implements Serializable {
          */
         ENTITY_TAME(Category.LIVING_ENTITY, EntityTameEvent.class),
         /**
+         * Called when a LivingEntity eats a block
+         * 
+         * @see org.bukkit.event.entity.EntityEatEvent
+         */
+        ENTITY_EAT(Category.LIVING_ENTITY),
+        /**
          * Called when a {@link Projectile} hits something
          *
          * @see org.bukkit.event.entity.ProjectileHitEvent
