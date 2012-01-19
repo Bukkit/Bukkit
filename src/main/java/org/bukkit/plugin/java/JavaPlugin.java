@@ -46,6 +46,7 @@ public abstract class JavaPlugin implements Plugin {
     private FileConfiguration newConfig = null;
     private File configFile = null;
     private long[] timings = new long[Event.Type.values().length];
+    private long[] eventcalls = new long[Event.Type.values().length];
     private PluginLogger logger = null;
 
     public JavaPlugin() {}
@@ -377,13 +378,19 @@ public abstract class JavaPlugin implements Plugin {
     public long getTiming(Event.Type type) {
         return timings[type.ordinal()];
     }
+    
+    public long getEventCalls(Event.Type type) {
+        return eventcalls[type.ordinal()];
+    }
 
     public void incTiming(Event.Type type, long delta) {
         timings[type.ordinal()] += delta;
+        eventcalls[type.ordinal()]++;
     }
 
     public void resetTimings() {
         timings = new long[Event.Type.values().length];
+        eventcalls = new long[Event.Type.values().length];
     }
 
     @Override

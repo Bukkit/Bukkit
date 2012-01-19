@@ -160,6 +160,8 @@ public interface Plugin extends CommandExecutor {
     public Logger getLogger();
 
     public long getTiming(Event.Type type);
+    
+    public long getEventCalls(Event.Type type);
 
     public void incTiming(Event.Type type, long delta);
 

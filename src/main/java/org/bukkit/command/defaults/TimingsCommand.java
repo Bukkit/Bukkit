@@ -55,9 +55,10 @@ public class TimingsCommand extends Command {
                     else fileTimings.println(plugin.getDescription().getFullName());
                     for (Event.Type type : Event.Type.values()) {
                         long time = plugin.getTiming(type);
+                        long calls = plugin.getEventCalls(type);
                         totalTime += time;
                         if (time > 0) {
-                            fileTimings.println("    " + type.name() + " " + time);
+                            fileTimings.println("    " + type.name() + " " + time + " " + calls + " " + time / calls);
                         }
                     }
                     fileTimings.println("    Total time " + totalTime + " (" + totalTime / 1000000000 + "s)");
