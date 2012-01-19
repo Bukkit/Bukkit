@@ -830,6 +830,13 @@ public class JavaPluginLoader implements PluginLoader {
                 }
             };
 
+        case ENTITY_SHOOT_BOW:
+            return new EventExecutor() {
+                public void execute(Listener listener, Event event) {
+                    ((EntityListener) listener).onEntityShootBow((EntityShootBowEvent) event);
+                }
+            };
+
         case PROJECTILE_HIT:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {
