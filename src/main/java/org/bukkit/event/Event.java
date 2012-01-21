@@ -513,7 +513,7 @@ public abstract class Event implements Serializable {
          *
          * @todo: add javadoc see comment
          */
-        INVENTORY_CLICK(Category.INVENTORY, null),
+        INVENTORY_CLICK(Category.INVENTORY, InventoryClickEvent.class),
         /**
          * Called when an inventory slot changes values or type
          *
@@ -947,5 +947,22 @@ public abstract class Event implements Serializable {
          * Some actions may not be allowed.
          */
         ALLOW;
+    }
+    
+    public enum Inventory {
+    	
+    	/**
+    	 * The clicked Slot is in the Container (Chest)
+    	 */
+    	CONTAINER,
+    	/**
+    	 * The clicked Slot is in the Playerinventory
+    	 */
+    	PLAYER,
+    	/**
+    	 * The clicked Slot is in the nothing (Click out of the window to throw out an Item)
+    	 */
+    	NONE
+
     }
 }
