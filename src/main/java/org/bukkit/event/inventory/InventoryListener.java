@@ -22,4 +22,11 @@ public class InventoryListener implements Listener {
      * @param event Relevant event details
      */
     public void onFurnaceBurn(FurnaceBurnEvent event) {}
+    
+    /**
+     * Called when an Player clicked in an Inventory
+     * 
+     * @param event Relevant event details
+     */
+    public void onInventoryClick(InventoryClickEvent event) {}
 }
