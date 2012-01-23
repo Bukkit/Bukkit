@@ -45,36 +45,18 @@ public class JavaPluginLoader implements PluginLoader {
     }
 
     public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException {
-        return loadPlugin(file, false);
-    }
-
-    @SuppressWarnings("unchecked")
-    public Plugin loadPlugin(File file, boolean ignoreSoftDependencies) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException {
         JavaPlugin result = null;
         PluginDescriptionFile description = null;
+
+        if(file == null) {
+            throw new IllegalArgumentException("File cannot be null");
+        }
 
         if (!file.exists()) {
             throw new InvalidPluginException(new FileNotFoundException(String.format("%s does not exist", file.getPath())));
         }
-        try {
-            JarFile jar = new JarFile(file);
-            JarEntry entry = jar.getJarEntry("plugin.yml");
 
-            if (entry == null) {
-                throw new InvalidPluginException(new FileNotFoundException("Jar does not contain plugin.yml"));
-            }
-
-            InputStream stream = jar.getInputStream(entry);
-
-            description = new PluginDescriptionFile(stream);
-
-            stream.close();
-            jar.close();
-        } catch (IOException ex) {
-            throw new InvalidPluginException(ex);
-        } catch (YAMLException ex) {
-            throw new InvalidPluginException(ex);
-        }
+        description = getPluginDescription(file);
 
         File dataFolder = new File(file.getParentFile(), description.getName());
         File oldDataFolder = getDataFolder(file);
@@ -134,30 +116,6 @@ public class JavaPluginLoader implements PluginLoader {
             }
         }
 
-        if (!ignoreSoftDependencies) {
-            ArrayList<String> softDepend;
-
-            try {
-                softDepend = (ArrayList<String>) description.getSoftDepend();
-                if (softDepend == null) {
-                    softDepend = new ArrayList<String>();
-                }
-            } catch (ClassCastException ex) {
-                throw new InvalidPluginException(ex);
-            }
-
-            for (String pluginName : softDepend) {
-                if (loaders == null) {
-                    throw new UnknownSoftDependencyException(pluginName);
-                }
-                PluginClassLoader current = loaders.get(pluginName);
-
-                if (current == null) {
-                    throw new UnknownSoftDependencyException(pluginName);
-                }
-            }
-        }
-
         PluginClassLoader loader = null;
 
         try {
@@ -189,6 +147,10 @@ public class JavaPluginLoader implements PluginLoader {
         return result;
     }
 
+    public Plugin loadPlugin(File file, boolean ignoreSoftDependencies) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException {
+        return loadPlugin(file);
+    }
+
     protected File getDataFolder(File file) {
         File dataFolder = null;
 
@@ -207,6 +169,47 @@ public class JavaPluginLoader implements PluginLoader {
         }
 
         return dataFolder;
+    }
+
+    public PluginDescriptionFile getPluginDescription(File file) throws InvalidDescriptionException, InvalidPluginException {
+
+        if(file == null) {
+            throw new IllegalArgumentException("File cannot be null");
+        }
+
+        JarFile jar = null;
+        InputStream stream = null;
+
+        try {
+            jar = new JarFile(file);
+            JarEntry entry = jar.getJarEntry("plugin.yml");
+
+            if (entry == null) {
+                throw new InvalidPluginException(new FileNotFoundException("Jar does not contain plugin.yml"));
+            }
+
+            stream = jar.getInputStream(entry);
+
+            return new PluginDescriptionFile(stream);
+
+        } catch (IOException ex) {
+            throw new InvalidPluginException(ex);
+        } catch (YAMLException ex) {
+            throw new InvalidDescriptionException(ex);
+        } finally {
+            if(jar != null) {
+                try {
+                    jar.close();
+                } catch (IOException e) {
+                }
+            }
+            if(stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                }
+            }
+        }
     }
 
     public Pattern[] getPluginFileFilters() {
