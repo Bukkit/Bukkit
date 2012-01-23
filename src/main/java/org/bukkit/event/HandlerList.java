@@ -115,6 +115,10 @@ public class HandlerList {
         if (handlers != null) return; // don't re-bake when still valid
         List<RegisteredListener> entries = new ArrayList<RegisteredListener>();
         for (Entry<EventPriority, ArrayList<RegisteredListener>> entry : handlerslots.entrySet()) {
+            if (entry.getKey() == EventPriority.DISABLED) {
+                continue;
+            }
+
             entries.addAll(entry.getValue());
         }
         handlers = entries.toArray(new RegisteredListener[entries.size()]);
