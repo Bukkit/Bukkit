@@ -14,7 +14,7 @@ public class HandlerList {
     /**
      * Handler array. This field being an array is the key to this system's speed.
      */
-    private RegisteredListener[][] handlers = new RegisteredListener[EventPriority.values().length][];
+    private RegisteredListener[] handlers = null;
 
     /**
      * Dynamic handler lists. These are changed using register() and
@@ -25,7 +25,7 @@ public class HandlerList {
 
     /**
      * Whether the current HandlerList has been fully baked. When this is set
-     * to false, the Map<EventPriority, List<RegisteredListener>> will be baked to RegisteredListener[][]
+     * to false, the Map<EventPriority, List<RegisteredListener>> will be baked to RegisteredListener[]
      * next time the event is called.
      *
      * @see org.bukkit.plugin.SimplePluginManager#callEvent
@@ -123,13 +123,15 @@ public class HandlerList {
      */
     public void bake() {
         if (baked) return; // don't re-bake when still valid
+        List<RegisteredListener> entries = new ArrayList<RegisteredListener>();
         for (Entry<EventPriority, ArrayList<RegisteredListener>> entry : handlerslots.entrySet()) {
-            handlers[entry.getKey().getSlot()] = (entry.getValue().toArray(new RegisteredListener[entry.getValue().size()]));
+            entries.addAll(entry.getValue());
         }
+        handlers = entries.toArray(new RegisteredListener[entries.size()]);
         baked = true;
     }
 
-    public RegisteredListener[][] getRegisteredListeners() {
+    public RegisteredListener[] getRegisteredListeners() {
         return handlers;
     }
 
