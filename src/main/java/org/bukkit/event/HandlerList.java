@@ -90,9 +90,8 @@ public class HandlerList {
      * @param listener listener to remove
      */
     public void unregister(RegisteredListener listener) {
-        if (handlerslots.get(listener.getPriority()).contains(listener)) {
+        if (handlerslots.get(listener.getPriority()).remove(listener)) {
             handlers = null;
-            handlerslots.get(listener.getPriority()).remove(listener);
         }
     }
 
