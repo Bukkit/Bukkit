@@ -538,6 +538,10 @@ public final class SimplePluginManager implements PluginManager {
 
     }
 
+    public void setEventPriority(Class<? extends Event> event, Listener listener, EventPriority newPriority) {
+        getEventListeners(event).setEventPriority(listener, newPriority);
+    }
+
     public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin) {
         registerEvent(event, listener, priority, executor, plugin, false);
     }

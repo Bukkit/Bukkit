@@ -95,6 +95,26 @@ public class HandlerList {
         }
     }
 
+    public void setEventPriority(Listener listener, EventPriority newPriority) {
+        List<RegisteredListener> listenersToRegister = new ArrayList<RegisteredListener>();
+
+        for (Entry<EventPriority, ArrayList<RegisteredListener>> entry : handlerslots.entrySet()) {
+            for (Iterator<RegisteredListener> iterator = entry.getValue().iterator(); iterator.hasNext(); ) {
+                RegisteredListener registeredListener = iterator.next();
+                if (registeredListener.getListener() != listener) {
+                    continue;
+                }
+
+                iterator.remove();
+                listenersToRegister.add(new RegisteredListener(listener, registeredListener.getExecutor(), newPriority, registeredListener.getPlugin(), registeredListener.isIgnoringCancelled()));
+
+                handlers = null;
+            }
+        }
+
+        registerAll(listenersToRegister);
+    }
+
     void unregister(Plugin plugin) {
         boolean changed = false;
         for (List<RegisteredListener> list : handlerslots.values()) {
