@@ -37,6 +37,7 @@ public class TimingsCommand extends Command {
         boolean separate = "separate".equals(args[0]);
         if ("reset".equals(args[0])) {
             for (HandlerList handlerList : HandlerList.getHandlerLists()) {
+                handlerList.bake();
                 for (RegisteredListener listener : handlerList.getRegisteredListeners()) {
                     if (listener instanceof TimedRegisteredListener) {
                         ((TimedRegisteredListener)listener).reset();
