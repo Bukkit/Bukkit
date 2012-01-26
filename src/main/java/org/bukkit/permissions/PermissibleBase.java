@@ -94,6 +94,39 @@ public class PermissibleBase implements Permissible {
         return perm.getDefault().getValue(isOp());
     }
 
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, float priority) {
+        if (name == null) {
+            throw new IllegalArgumentException("Permission name cannot be null");
+        } else if (plugin == null) {
+            throw new IllegalArgumentException("Plugin cannot be null");
+        } else if (!plugin.isEnabled()) {
+            throw new IllegalArgumentException("Plugin " + plugin.getDescription().getFullName() + " is disabled");
+        }
+
+        PermissionAttachment result = addAttachment(plugin);
+        if(result != null) {
+            result.setPermission(name, value);
+            result.setPriority(priority);
+        }
+        recalculatePermissions();
+        return result;
+    }
+
+    public PermissionAttachment addAttachment(Plugin plugin, float priority) {
+        if (plugin == null) {
+            throw new IllegalArgumentException("Plugin cannot be null");
+        } else if (!plugin.isEnabled()) {
+            throw new IllegalArgumentException("Plugin " + plugin.getDescription().getFullName() + " is disabled");
+        }
+
+        PermissionAttachment result = addAttachment(plugin);
+        if(result != null) {
+            result.setPriority(priority);
+        }
+        recalculatePermissions();
+        return result;
+    }
+
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
         if (name == null) {
             throw new IllegalArgumentException("Permission name cannot be null");
@@ -183,6 +216,12 @@ public class PermissibleBase implements Permissible {
             boolean value = children.get(name) ^ invert;
             String lname = name.toLowerCase();
 
+            //Don't add this permission is there's another with a higher priority
+            PermissionAttachmentInfo existing = permissions.get(lname);
+            if(existing != null && existing.getAttachment() != null && attachment != null) {
+                if(attachment.getPriority() < existing.getAttachment().getPriority()) continue;
+            }
+
             permissions.put(lname, new PermissionAttachmentInfo(parent, lname, attachment, value));
             Bukkit.getServer().getPluginManager().subscribeToPermission(name, parent);
 
@@ -190,6 +229,35 @@ public class PermissibleBase implements Permissible {
                 calculateChildPermissions(perm.getChildren(), !value, attachment);
             }
         }
+    }
+
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, float priority, int ticks) {
+        if (name == null) {
+            throw new IllegalArgumentException("Permission name cannot be null");
+        } else if (plugin == null) {
+            throw new IllegalArgumentException("Plugin cannot be null");
+        } else if (!plugin.isEnabled()) {
+            throw new IllegalArgumentException("Plugin " + plugin.getDescription().getFullName() + " is disabled");
+        }
+        PermissionAttachment result = addAttachment(plugin, ticks);
+        if(result != null) {
+            result.setPermission(name, value);
+            result.setPriority(priority);
+        }
+        return result;
+    }
+
+    public PermissionAttachment addAttachment(Plugin plugin, float priority, int ticks) {
+        if (plugin == null) {
+            throw new IllegalArgumentException("Plugin cannot be null");
+        } else if (!plugin.isEnabled()) {
+            throw new IllegalArgumentException("Plugin " + plugin.getDescription().getFullName() + " is disabled");
+        }
+        PermissionAttachment result = addAttachment(plugin,ticks);
+        if(result != null) {
+            result.setPriority(priority);
+        }
+        return result;
     }
 
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
