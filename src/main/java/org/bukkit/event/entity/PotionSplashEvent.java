@@ -1,7 +1,5 @@
 package org.bukkit.event.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
@@ -39,8 +37,8 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
      *
      * @return A fresh copy of the affected entity list
      */
-    public Collection<LivingEntity> getAffectedEntities() {
-        return new ArrayList<LivingEntity>(affectedEntities.keySet());
+    public Map<LivingEntity, Double> getAffectedEntities() {
+        return affectedEntities;
     }
 
     /**
