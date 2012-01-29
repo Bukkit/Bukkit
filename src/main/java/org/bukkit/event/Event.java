@@ -826,6 +826,12 @@ public abstract class Event implements Serializable {
          */
         ENDERMAN_PLACE(Category.LIVING_ENTITY, EndermanPlaceEvent.class),
         /**
+         * Called when an Enderman teleports
+         *
+         * @see org.bukkit.event.entity.EndermanTeleportEvent
+         */
+        ENDERMAN_TELEPORT(Category.LIVING_ENTITY, EndermanTeleportEvent.class),
+        /**
          * Called when a human entity's food level changes
          *
          * @see org.bukkit.event.entity.FoodLevelChangeEvent
