@@ -1,5 +1,7 @@
 package org.bukkit;
 
+import java.util.UUID;
+
 import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
 
@@ -7,7 +9,7 @@ import org.bukkit.util.Vector;
  * Represents a 3-dimensional position in a world
  */
 public class Location implements Cloneable {
-    private World world;
+    private UUID worldId;
     private double x;
     private double y;
     private double z;
@@ -37,7 +39,7 @@ public class Location implements Cloneable {
      * @param pitch The absolute rotation on the y-plane, in degrees
      */
     public Location(final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
-        this.world = world;
+        this.worldId = world.getUID();
         this.x = x;
         this.y = y;
         this.z = z;
@@ -51,7 +53,7 @@ public class Location implements Cloneable {
      * @param world New world that this location resides in
      */
     public void setWorld(World world) {
-        this.world = world;
+        this.worldId = world.getUID();
     }
 
     /**
@@ -60,7 +62,16 @@ public class Location implements Cloneable {
      * @return World that contains this location
      */
     public World getWorld() {
-        return world;
+        return Bukkit.getServer().getWorld(worldId);
+    }
+
+    /**
+     * Gets the {@link UUID} of the world that this location resides in.
+     *
+     * @return The {@link UUID} of the world that contains this location.
+     */
+    public UUID getWorldId() {
+        return worldId;
     }
 
     /**
@@ -69,7 +80,7 @@ public class Location implements Cloneable {
      * @return Chunk at the represented location
      */
     public Chunk getChunk() {
-        return world.getChunkAt(this);
+        return getWorld().getChunkAt(this);
     }
 
     /**
@@ -78,7 +89,7 @@ public class Location implements Cloneable {
      * @return Block at the represented location
      */
     public Block getBlock() {
-        return world.getBlockAt(this);
+        return getWorld().getBlockAt(this);
     }
 
     /**
@@ -231,7 +242,7 @@ public class Location implements Cloneable {
      * @throws IllegalArgumentException for differing worlds
      */
     public Location add(Location vec) {
-        if (vec == null || vec.getWorld() != getWorld()) {
+        if (vec == null || vec.worldId != worldId) {
             throw new IllegalArgumentException("Cannot add Locations of differing worlds");
         }
 
@@ -280,7 +291,7 @@ public class Location implements Cloneable {
      * @throws IllegalArgumentException for differing worlds
      */
     public Location subtract(Location vec) {
-        if (vec == null || vec.getWorld() != getWorld()) {
+        if (vec == null || vec.worldId != worldId) {
             throw new IllegalArgumentException("Cannot add Locations of differing worlds");
         }
 
@@ -376,7 +387,7 @@ public class Location implements Cloneable {
             throw new IllegalArgumentException("Cannot measure distance to a null location");
         } else if (o.getWorld() == null || getWorld() == null) {
             throw new IllegalArgumentException("Cannot measure distance to a null world");
-        } else if (o.getWorld() != getWorld()) {
+        } else if (o.worldId != worldId) {
             throw new IllegalArgumentException("Cannot measure distance between " + getWorld().getName() + " and " + o.getWorld().getName());
         }
 
@@ -421,7 +432,7 @@ public class Location implements Cloneable {
         }
         final Location other = (Location) obj;
 
-        if (this.world != other.world && (this.world == null || !this.world.equals(other.world))) {
+        if (this.worldId != other.worldId && (this.worldId == null || !this.worldId.equals(other.worldId))) {
             return false;
         }
         if (Double.doubleToLongBits(this.x) != Double.doubleToLongBits(other.x)) {
@@ -446,7 +457,7 @@ public class Location implements Cloneable {
     public int hashCode() {
         int hash = 3;
 
-        hash = 19 * hash + (this.world != null ? this.world.hashCode() : 0);
+        hash = 19 * hash + (this.worldId != null ? this.worldId.hashCode() : 0);
         hash = 19 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
         hash = 19 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
         hash = 19 * hash + (int) (Double.doubleToLongBits(this.z) ^ (Double.doubleToLongBits(this.z) >>> 32));
@@ -457,7 +468,7 @@ public class Location implements Cloneable {
 
     @Override
     public String toString() {
-        return "Location{" + "world=" + world + ",x=" + x + ",y=" + y + ",z=" + z + ",pitch=" + pitch + ",yaw=" + yaw + '}';
+        return "Location{" + "world=" + getWorld() + ",x=" + x + ",y=" + y + ",z=" + z + ",pitch=" + pitch + ",yaw=" + yaw + '}';
     }
 
     /**
@@ -474,7 +485,7 @@ public class Location implements Cloneable {
         try {
             Location l = (Location) super.clone();
 
-            l.world = world;
+            l.worldId = worldId;
             l.x = x;
             l.y = y;
             l.z = z;
