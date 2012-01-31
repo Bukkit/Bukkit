@@ -32,7 +32,7 @@ public enum CreatureType {
     SNOWMAN("SnowMan", Snowman.class, (short) 97);
 
     private String name;
-    private Class<? extends Entity> clazz
+    private Class<? extends Entity> clazz;
     private Short typeId;
 
     private static final Map<String, CreatureType> mapping = new HashMap<String, CreatureType>();
