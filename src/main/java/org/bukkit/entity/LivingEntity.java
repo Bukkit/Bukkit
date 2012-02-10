@@ -56,6 +56,24 @@ public interface LivingEntity extends Entity {
     public Location getEyeLocation();
 
     /**
+     * Gets the name of this entity's ambient sound (plays randomly)
+     * @return The ambient sound
+     */
+    public String getAmbientSound();
+
+    /**
+     * Gets the name of this entity's hurt sound
+     * @return The hurt sound
+     */
+    public String getHurtSound();
+
+    /**
+     * Gets the name of this entity's death sound
+     * @return The death sound
+     */
+    public String getDeathSound();
+
+    /**
      * Gets all blocks along the player's line of sight
      * List iterates from player's position to target inclusive
      *
