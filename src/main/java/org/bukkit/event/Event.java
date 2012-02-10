@@ -593,7 +593,7 @@ public abstract class Event implements Serializable {
          * Called when a chunk is loaded
          * <p />
          * If a new chunk is being generated for loading, it will call
-         * Type.CHUNK_GENERATION and then Type.CHUNK_LOADED upon completion
+         * Type.CHUNK_GENERATION and then Type.CHUNK_LOAD upon completion
          *
          * @see org.bukkit.event.world.ChunkLoadEvent
          */
