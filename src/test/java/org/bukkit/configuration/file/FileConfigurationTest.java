@@ -137,7 +137,7 @@ public abstract class FileConfigurationTest extends MemoryConfigurationTest {
         }
 
         String result = config.saveToString();
-        String expected = getTestHeaderResult() + "\n" + getTestValuesString();
+        String expected = getTestHeaderResult() + getTestValuesString();
 
         assertEquals(expected, result);
     }
@@ -150,7 +150,7 @@ public abstract class FileConfigurationTest extends MemoryConfigurationTest {
         String header = getTestHeaderResult();
         String expected = getTestHeaderInput();
 
-        config.loadFromString(header + "\n" + saved);
+        config.loadFromString(header + saved);
 
         assertEquals(expected, config.options().header());
 
@@ -159,7 +159,7 @@ public abstract class FileConfigurationTest extends MemoryConfigurationTest {
         }
 
         assertEquals(values.keySet(), config.getKeys(true));
-        assertEquals(header + "\n" + saved, config.saveToString());
+        assertEquals(header + saved, config.saveToString());
     }
 
     @Test
@@ -183,7 +183,7 @@ public abstract class FileConfigurationTest extends MemoryConfigurationTest {
         }
 
         assertEquals(values.keySet(), config.getKeys(true));
-        assertEquals(header + "\n" + saved, config.saveToString());
+        assertEquals(header + saved, config.saveToString());
 
         config = getConfig();
         config.loadFromString(getTestHeaderResult() + saved);
