@@ -1,9 +1,6 @@
 package org.bukkit.configuration.file;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -20,6 +17,7 @@ import org.yaml.snakeyaml.representer.Representer;
  * An implementation of {@link Configuration} which saves all files in Yaml.
  */
 public class YamlConfiguration extends FileConfiguration {
+
     protected static final String COMMENT_PREFIX = "# ";
     protected static final String BLANK_CONFIG = "{}\n";
     private final DumperOptions yamlOptions = new DumperOptions();
@@ -27,49 +25,51 @@ public class YamlConfiguration extends FileConfiguration {
     private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
 
     @Override
-    public String saveToString() {
+    public void save(Writer out) throws IOException {
         yamlOptions.setIndent(options().indent());
         yamlOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         yamlRepresenter.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
 
-        String header = buildHeader();
-        String dump = yaml.dump(getValues(false));
+        // write header
+        out.write(buildHeader());
 
-        if (dump.equals(BLANK_CONFIG)) {
-            dump = "";
+        // write configuration body
+        Map<String, Object> data = getValues(false);
+        if(!data.isEmpty()) {
+            yaml.dump(data, out);
         }
 
-        return header + dump;
+        out.flush();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void loadFromString(String contents) throws InvalidConfigurationException {
-        if (contents == null) {
-            throw new IllegalArgumentException("Contents cannot be null");
+    public void load(Reader in) throws IOException, InvalidConfigurationException {
+        if (in == null) {
+            throw new IllegalArgumentException("Input reader cannot be null");
         }
 
-        Map<Object, Object> input;
+        BufferedReader reader = new BufferedReader(in);
+
+        String header = parseHeader(reader);
+        if (!header.isEmpty()) {
+            options().header(header);
+        }
+
         try {
-            input = (Map<Object, Object>) yaml.load(contents);
+            convertMapsToSections((Map<Object, Object>) yaml.load(reader), this);
         } catch (YAMLException e) {
             throw new InvalidConfigurationException(e);
         } catch (ClassCastException e) {
             throw new InvalidConfigurationException("Top level is not a Map.");
         }
-
-        String header = parseHeader(contents);
-        if (header.length() > 0) {
-            options().header(header);
-        }
-
-        if (input != null) {
-            convertMapsToSections(input, this);
-        }
     }
 
     @SuppressWarnings("unchecked")
     protected void convertMapsToSections(Map<Object, Object> input, ConfigurationSection section) {
+        if (input == null) {
+            return;
+        }    
+
         for (Map.Entry<Object, Object> entry : input.entrySet()) {
             String key = entry.getKey().toString();
             Object value = entry.getValue();
@@ -82,30 +82,30 @@ public class YamlConfiguration extends FileConfiguration {
         }
     }
 
-    protected String parseHeader(String input) {
-        String[] lines = input.split("\r?\n", -1);
+    protected String parseHeader(BufferedReader reader) throws IOException {
         StringBuilder result = new StringBuilder();
-        boolean readingHeader = true;
         boolean foundHeader = false;
 
-        for (int i = 0; (i < lines.length) && (readingHeader); i++) {
-            String line = lines[i];
-
-            if (line.startsWith(COMMENT_PREFIX)) {
-                if (i > 0) {
-                    result.append("\n");
-                }
-
+        reader.mark(512);
+        
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (line.startsWith(COMMENT_PREFIX)) {    
                 if (line.length() > COMMENT_PREFIX.length()) {
                     result.append(line.substring(COMMENT_PREFIX.length()));
                 }
 
-                foundHeader = true;
-            } else if ((foundHeader) && (line.length() == 0)) {
                 result.append("\n");
-            } else if (foundHeader) {
-                readingHeader = false;
+
+                foundHeader = true;
+            } else if (foundHeader && line.isEmpty()) { // whitespace
+                result.append("\n");
+            } else if (foundHeader || (!foundHeader && !line.isEmpty())) { // header is already readed or actual yaml data begins
+                reader.reset(); // return to state before reading line with actual data
+                break;
             }
+
+            reader.mark(512);
         }
 
         return result.toString();
@@ -137,7 +137,9 @@ public class YamlConfiguration extends FileConfiguration {
         boolean startedHeader = false;
 
         for (int i = lines.length - 1; i >= 0; i--) {
-            builder.insert(0, "\n");
+            if (i < lines.length - 1) {
+                builder.insert(0, "\n");
+            }
 
             if ((startedHeader) || (lines[i].length() != 0)) {
                 builder.insert(0, lines[i]);
