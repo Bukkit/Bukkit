@@ -135,6 +135,16 @@ public interface PluginManager {
      * @param event Event type to register
      * @param listener Listener to register
      * @param priority Priority to register this event at
+     * @param plugin Plugin to register
+     */
+    public void setEventPriority(Class<? extends Event> event, Listener listener, EventPriority priority);
+
+    /**
+     * Registers the specified executor to the given event class
+     *
+     * @param event Event type to register
+     * @param listener Listener to register
+     * @param priority Priority to register this event at
      * @param executor EventExecutor to register
      * @param plugin Plugin to register
      */

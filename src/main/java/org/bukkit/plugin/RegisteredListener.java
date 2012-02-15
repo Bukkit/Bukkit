@@ -69,4 +69,8 @@ public class RegisteredListener {
     public boolean isIgnoringCancelled() {
         return ignoreCancelled;
     }
+
+    public EventExecutor getExecutor() {
+        return executor;
+    }
 }

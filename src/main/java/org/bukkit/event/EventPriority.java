@@ -5,6 +5,10 @@ package org.bukkit.event;
  */
 public enum EventPriority {
     /**
+     * Event is never called unless enabled at runtime
+     */
+    DISABLED(-1),
+    /**
      * Event call is of very low importance and should be ran first, to allow
      * other plugins to further customise the outcome
      */
