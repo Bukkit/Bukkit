@@ -65,6 +65,13 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer, Plugi
      * @throws IllegalArgumentException if the name is already used by someone else
      * @throws IllegalArgumentException if the length of the name is too long
      */
+     
+    public void setVisibility(Boolean visibility();
+    /**
+     * Set's the visibility of a player to the entire server
+     */
+     
+    
     public void setPlayerListName(String name);
 
     /**
