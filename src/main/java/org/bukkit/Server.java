@@ -182,6 +182,20 @@ public interface Server extends PluginMessageRecipient {
     public File getUpdateFolderFile();
 
     /**
+     * Gets the name of the plugins folder. The plugins is used folder is save the plugins.
+     *
+     * @return The name of the plugins folder
+     */
+    public String getPluginsFolder();
+
+    /**
+     * Gets the plugins folder. The plugins folder is used to save the plugins.
+     *
+     * @return The name of the plugins folder
+     */
+    public File getPluginsFolderFile();
+
+    /**
      * Gets default ticks per animal spawns value
      * <p />
      * <b>Example Usage:</b>
