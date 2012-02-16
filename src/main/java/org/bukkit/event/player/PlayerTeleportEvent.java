@@ -9,7 +9,7 @@ import org.bukkit.event.HandlerList;
  * Holds information for player teleport events
  */
 @SuppressWarnings("serial")
-public class PlayerTeleportEvent extends PlayerMoveEvent {
+public class PlayerTeleportEvent extends PlayerCoarseMoveEvent {
     private static final HandlerList handlers = new HandlerList();
     private TeleportCause cause = TeleportCause.UNKNOWN;
 
