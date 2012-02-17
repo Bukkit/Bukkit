@@ -92,6 +92,18 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
         this.to = to;
     }
 
+    /**
+     * Checks to see if the player involved in this event has moved by at least 1 block
+     *
+     * @return True if the player has changed their block location
+     */
+    public boolean isCoarse() {
+        return !(from.getBlockX() == to.getBlockX()
+                && from.getBlockY() == to.getBlockY()
+                && from.getBlockZ() == to.getBlockZ()
+                && from.getWorld().equals(to.getWorld()));
+    }
+
     @Override
     public HandlerList getHandlers() {
         return handlers;
