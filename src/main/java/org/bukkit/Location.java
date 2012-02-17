@@ -494,6 +494,7 @@ public class Location implements Cloneable {
      * @return Block coordinate
      */
     public static int locToBlock(double loc) {
-        return (int) Math.floor(loc);
+        int result = (int) loc;
+        return loc < 0 ? result - 1 : result;
     }
 }
