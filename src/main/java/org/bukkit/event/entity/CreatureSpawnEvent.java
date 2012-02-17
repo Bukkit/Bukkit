@@ -81,6 +81,14 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
          */
         NATURAL,
         /**
+         * When an entity spawns as a jockey of another entity (mostly spider jockeys)
+         */
+        JOCKEY,
+        /**
+         * When a creature spawns due to chunk generation
+         */
+        CHUNK_GEN,
+        /**
          * When a creature spawns from a spawner
          */
         SPAWNER,
@@ -89,6 +97,10 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
          */
         EGG,
         /**
+         * When a creature spawns from a Spawner Egg
+         */
+        SPAWNER_EGG,
+        /**
          * When a creature spawns because of a lightning strike
          */
         LIGHTNING,
@@ -96,6 +108,10 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
          * When a creature is spawned by a player that is sleeping
          */
         BED,
+        /**
+         * When a snowman is spawned by being built
+         */
+        BUILD_SNOWMAN,
         /**
          * When a creature is manually spawned
          */

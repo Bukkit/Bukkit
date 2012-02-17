@@ -1019,7 +1019,7 @@ public class JavaPluginLoader implements PluginLoader {
                 public void execute(Listener listener, Event event) throws EventException {
                     try {
                         if (!eventClass.isAssignableFrom(event.getClass())) {
-                            throw new EventException("Wrong event type passed to registered method");
+                            return;
                         }
                         method.invoke(listener, event);
                     } catch (Throwable t) {
@@ -1028,9 +1028,9 @@ public class JavaPluginLoader implements PluginLoader {
                 }
             };
             if (useTimings) {
-                eventSet.add(new TimedRegisteredListener(listener, executor, eh.priority(), plugin));
+                eventSet.add(new TimedRegisteredListener(listener, executor, eh.priority(), plugin, eh.ignoreCancelled()));
             } else {
-                eventSet.add(new RegisteredListener(listener, executor, eh.priority(), plugin));
+                eventSet.add(new RegisteredListener(listener, executor, eh.priority(), plugin, eh.ignoreCancelled()));
             }
         }
         return ret;
