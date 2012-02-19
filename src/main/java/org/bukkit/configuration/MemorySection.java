@@ -385,6 +385,33 @@ public class MemorySection implements ConfigurationSection {
         return val instanceof Double;
     }
 
+    public float getFloat(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        Object def = getDefault(path);
+        return getFloat(path, (def instanceof Number) ? toFloat(def) : 0);
+    }
+
+    public float getFloat(String path, float def) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        Object val = get(path, def);
+        return (val instanceof Number) ? toFloat(val) : def;
+    }
+
+    public boolean isFloat(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        Object val = get(path);
+        return val instanceof Float;
+    }
+
     public long getLong(String path) {
         if (path == null) {
             throw new IllegalArgumentException("Path cannot be null");
