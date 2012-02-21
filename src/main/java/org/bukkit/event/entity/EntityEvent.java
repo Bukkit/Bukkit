@@ -18,7 +18,7 @@ public abstract class EntityEvent extends Event {
      *
      * @return Entity who is involved in this event
      */
-    public final Entity getEntity() {
+    public Entity getEntity() {
         return entity;
     }
 }

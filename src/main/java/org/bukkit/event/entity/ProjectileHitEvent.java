@@ -1,5 +1,6 @@
 package org.bukkit.event.entity;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.HandlerList;
 
@@ -11,6 +12,11 @@ public class ProjectileHitEvent extends EntityEvent {
 
     public ProjectileHitEvent(final Projectile projectile) {
         super(projectile);
+    }
+
+    @Override
+    public Projectile getEntity() {
+        return (Projectile) entity;
     }
 
     @Override
