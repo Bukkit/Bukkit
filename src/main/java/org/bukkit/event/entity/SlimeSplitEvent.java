@@ -1,6 +1,7 @@
 package org.bukkit.event.entity;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Slime;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
@@ -12,8 +13,8 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
     private boolean cancel;
     private int count;
 
-    public SlimeSplitEvent(final Entity what, final int count) {
-        super(what);
+    public SlimeSplitEvent(final Slime slime, final int count) {
+        super(slime);
         this.cancel = false;
         this.count = count;
     }
@@ -24,6 +25,11 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
+    }
+
+    @Override
+    public Slime getEntity() {
+        return (Slime) entity;
     }
 
     /**

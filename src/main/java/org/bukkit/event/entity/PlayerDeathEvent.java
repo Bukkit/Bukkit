@@ -2,6 +2,7 @@ package org.bukkit.event.entity;
 
 import java.util.List;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,6 +30,11 @@ public class PlayerDeathEvent extends EntityDeathEvent {
         this.newTotalExp = newTotalExp;
         this.newLevel = newLevel;
         this.deathMessage = deathMessage;
+    }
+
+    @Override
+    public Player getEntity() {
+        return (Player) entity;
     }
 
     /**

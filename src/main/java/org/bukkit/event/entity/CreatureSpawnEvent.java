@@ -2,6 +2,7 @@ package org.bukkit.event.entity;
 
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
@@ -18,7 +19,7 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
     private final CreatureType creatureType;
     private final SpawnReason spawnReason;
 
-    public CreatureSpawnEvent(final Entity spawnee, final CreatureType mobtype, final Location loc, final SpawnReason spawnReason) {
+    public CreatureSpawnEvent(final LivingEntity spawnee, final CreatureType mobtype, final Location loc, final SpawnReason spawnReason) {
         super(spawnee);
         this.creatureType = mobtype;
         this.location = loc;
@@ -31,6 +32,11 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
 
     public void setCancelled(boolean cancel) {
         canceled = cancel;
+    }
+
+    @Override
+    public LivingEntity getEntity() {
+        return (LivingEntity) entity;
     }
 
     /**

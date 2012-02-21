@@ -1,5 +1,6 @@
 package org.bukkit.event.entity;
 
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
@@ -15,7 +16,7 @@ public class CreeperPowerEvent extends EntityEvent implements Cancellable {
     private final PowerCause cause;
     private Entity bolt;
 
-    public CreeperPowerEvent(final Entity creeper, final Entity bolt, final PowerCause cause) {
+    public CreeperPowerEvent(final Creeper creeper, final Entity bolt, final PowerCause cause) {
         this(creeper, cause);
         this.bolt = bolt;
     }
@@ -31,6 +32,11 @@ public class CreeperPowerEvent extends EntityEvent implements Cancellable {
 
     public void setCancelled(boolean cancel) {
         canceled = cancel;
+    }
+
+    @Override
+    public Creeper getEntity() {
+        return (Creeper) entity;
     }
 
     /**

@@ -1,6 +1,7 @@
 package org.bukkit.event.entity;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Pig;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
@@ -13,7 +14,7 @@ public class PigZapEvent extends EntityEvent implements Cancellable {
     private final Entity pigzombie;
     private final Entity bolt;
 
-    public PigZapEvent(final Entity pig, final Entity bolt, final Entity pigzombie) {
+    public PigZapEvent(final Pig pig, final Entity bolt, final Entity pigzombie) {
         super(pig);
         this.bolt = bolt;
         this.pigzombie = pigzombie;
@@ -25,6 +26,11 @@ public class PigZapEvent extends EntityEvent implements Cancellable {
 
     public void setCancelled(boolean cancel) {
         canceled = cancel;
+    }
+    
+    @Override
+    public Pig getEntity() {
+        return (Pig) entity;
     }
 
     /**
