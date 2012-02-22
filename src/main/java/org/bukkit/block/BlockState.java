@@ -79,6 +79,13 @@ public interface BlockState {
     int getZ();
 
     /**
+     * Gets the location of this block
+     *
+     * @return location
+     */
+    Location getLocation();
+
+    /**
      * Gets the chunk which contains this block
      *
      * @return Containing Chunk
