@@ -12,8 +12,6 @@ import org.bukkit.plugin.TimedRegisteredListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 public class TimingsCommand extends Command {
     public TimingsCommand(String name) {
