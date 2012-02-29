@@ -787,6 +787,11 @@ public class MemorySection implements ConfigurationSection {
         }
 
         List<Object> list = getList(path);
+        
+        if(list == null) {
+            return new ArrayList<Map<String, Object>>(0);
+        }
+        
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
         for (Object object : list) {
