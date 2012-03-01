@@ -7,12 +7,12 @@ package org.bukkit.plugin;
  */
 public abstract class PluginBase implements Plugin {
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return getName().hashCode();
     }
 
     @Override
-    public final boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
