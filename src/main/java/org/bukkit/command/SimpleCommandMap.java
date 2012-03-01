@@ -2,6 +2,7 @@ package org.bukkit.command;
 
 import org.bukkit.command.defaults.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -55,6 +56,7 @@ public class SimpleCommandMap implements CommandMap {
         register("bukkit", new ReloadCommand("reload"));
         register("bukkit", new PluginsCommand("plugins"));
         register("bukkit", new TimingsCommand("timings"));
+        register("bukkit", new CommandCommand(this));
     }
 
     /**
@@ -187,6 +189,34 @@ public class SimpleCommandMap implements CommandMap {
 
     public Command getCommand(String name) {
         return knownCommands.get(name.toLowerCase());
+    }
+
+    /**
+     * Returns all registered commands in a collection. It is impossible to
+     * register/unregister commands by adding/removing them to/from the list.
+     * @return all commands.
+     */
+    public Collection<Command> getCommands() {
+        return this.knownCommands.values();
+    }
+
+    /**
+     * Returns all fallback commands in a collection. It is impossible to
+     * register/unregister commands by adding/removing them to/from the list.
+     * @return all commands.
+     */
+    public static Collection<VanillaCommand> getFallbackCommands() {
+        return new ArrayList<VanillaCommand>(fallbackCommands);
+    }
+
+    /**
+     * Returns a command including the fallback commands.
+     * @param name name of the command.
+     * @return the command or {@code null} if none registered to it.
+     */
+    public Command getCommandWithFallback(String name) {
+        Command command = getCommand(name);
+        return command == null ? getFallback(name) : command;
     }
 
     public void registerServerAliases() {

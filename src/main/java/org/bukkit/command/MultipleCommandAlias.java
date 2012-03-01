@@ -11,6 +11,15 @@ public class MultipleCommandAlias extends Command {
         this.commands = commands;
     }
 
+    /**
+     * Returns all command this alias issue.
+     * 
+     * @return all command this alias issue.
+     */
+    public Command[] getCommands() {
+        return this.commands.clone();
+    }
+
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
         boolean result = false;
