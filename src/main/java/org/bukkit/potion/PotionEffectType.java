@@ -75,9 +75,10 @@ public abstract class PotionEffectType {
     public static final PotionEffectType WATER_BREATHING = new PotionEffectTypeWrapper(13);
 
     /**
-     * Grants invisibility. NOTE: Unusable due to not being implemented by Minecraft.
+     * Grants invisibility.
+     * <p>
+     * <b>NOTE: Unusable due to not being implemented by Minecraft.
      */
-    @Deprecated
     public static final PotionEffectType INVISIBILITY = new PotionEffectTypeWrapper(14); // unimplemented
 
     /**
@@ -86,10 +87,10 @@ public abstract class PotionEffectType {
     public static final PotionEffectType BLINDNESS = new PotionEffectTypeWrapper(15);
 
     /**
-     * Allows an entity to see in the dark. NOTE: Unusable due to not being 
-     * implemented by Minecraft.
+     * Allows an entity to see in the dark.
+     * <p>
+     * <b>NOTE: Unusable due to not being implemented by Minecraft.
      */
-    @Deprecated
     public static final PotionEffectType NIGHT_VISION = new PotionEffectTypeWrapper(16); // unimplemented
 
     /**
