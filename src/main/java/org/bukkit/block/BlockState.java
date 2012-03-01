@@ -129,7 +129,7 @@ public interface BlockState extends Metadatable {
      * @see #update(boolean)
      */
     boolean update();
-
+    
     /**
      * Attempts to update the block represented by this state, setting it to the
      * new values as defined by this state.
@@ -146,6 +146,11 @@ public interface BlockState extends Metadatable {
      */
     boolean update(boolean force);
 
+    /**
+     * Force apply physics around this block.
+     */
+    void applyPhysics();
+    
     public byte getRawData();
 
     public void setRawData(byte data);
