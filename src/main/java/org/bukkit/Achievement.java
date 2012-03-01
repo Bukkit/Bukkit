@@ -23,7 +23,18 @@ public enum Achievement {
     BUILD_SWORD(12),
     KILL_ENEMY(13),
     KILL_COW(14),
-    FLY_PIG(15);
+    FLY_PIG(15),
+    SNIPE_SKELETON(16),
+    MINE_DIAMOND(17),
+    BUILD_ENCHANTER(18),
+    OVERKILL(19),
+    BUILD_BOOKSHELF(20),
+    BUILD_NETHER_PORTAL(21),
+    KILL_GHAST_WITH_FIREBALL(22),
+    GET_BLAZE_ROD(23),
+    BREW_PORTION(24),
+    ENTER_END(25),
+    KILL_ENDER_DRAGON(26);
 
     /**
      * The offset used to distinguish Achievements and Statistics
