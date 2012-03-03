@@ -6,6 +6,20 @@ package org.bukkit.entity;
  */
 public interface Ocelot extends Animals, Tameable {
     /**
+     * Checks if this ocelot is sitting
+     *
+     * @return true if sitting
+     */
+    public boolean isSitting();
+
+    /**
+     * Sets if this ocelot is sitting
+     *
+     * @param sitting true if sitting
+     */
+    public void setSitting(boolean sitting);
+
+    /**
      * Gets the current type of this cat.
      *
      * @return Type of the cat.
