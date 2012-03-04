@@ -384,7 +384,7 @@ public class MemorySection implements ConfigurationSection {
         return val instanceof Double;
     }
 
-    public double getFloat(String path) {
+    public float getFloat(String path) {
         if (path == null) {
             throw new IllegalArgumentException("Path cannot be null");
         }
@@ -393,7 +393,7 @@ public class MemorySection implements ConfigurationSection {
         return getFloat(path, (def instanceof Number) ? toFloat(def) : 0);
     }
 
-    public double getFloat(String path, float def) {
+    public float getFloat(String path, float def) {
         if (path == null) {
             throw new IllegalArgumentException("Path cannot be null");
         }
