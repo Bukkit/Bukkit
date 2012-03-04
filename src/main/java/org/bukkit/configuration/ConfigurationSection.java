@@ -328,6 +328,43 @@ public interface ConfigurationSection {
     public boolean isDouble(String path);
 
     /**
+     * Gets the requested float by path.
+     * <p>
+     * If the float does not exist but a default value has been specified, this
+     * will return the default value. If the float does not exist and no default
+     * value was specified, this will return null.
+     *
+     * @param path Path of the float to get.
+     * @return Requested float.
+     */
+    public double getFloat(String path);
+
+    /**
+     * Gets the requested float by path, returning a default value if not found.
+     * <p>
+     * If the float does not exist then the specified default value will returned
+     * regardless of if a default has been identified in the root {@link Configuration}.
+     *
+     * @param path Path of the float to get.
+     * @param def The default value to return if the path is not found or is not a float.
+     * @return Requested float.
+     */
+    public double getFloat(String path, float def);
+
+    /**
+     * Checks if the specified path is a float.
+     * <p>
+     * If the path exists but is not a float, this will return false. If the path does not
+     * exist, this will return false. If the path does not exist but a default value
+     * has been specified, this will check if that default value is a float and return
+     * appropriately.
+     *
+     * @param path Path of the float to check.
+     * @return Whether or not the specified path is a float.
+     */
+    public boolean isFloat(String path);
+
+    /**
      * Gets the requested long by path.
      * <p>
      * If the long does not exist but a default value has been specified, this
