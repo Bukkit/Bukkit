@@ -390,7 +390,7 @@ public class MemorySection implements ConfigurationSection {
         }
 
         Object def = getDefault(path);
-        return getDouble(path, (def instanceof Number) ? toFloat(def) : 0);
+        return getFloat(path, (def instanceof Number) ? toFloat(def) : 0);
     }
 
     public double getFloat(String path, float def) {
