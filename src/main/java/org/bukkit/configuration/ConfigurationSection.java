@@ -337,7 +337,7 @@ public interface ConfigurationSection {
      * @param path Path of the float to get.
      * @return Requested float.
      */
-    public double getFloat(String path);
+    public float getFloat(String path);
 
     /**
      * Gets the requested float by path, returning a default value if not found.
@@ -349,7 +349,7 @@ public interface ConfigurationSection {
      * @param def The default value to return if the path is not found or is not a float.
      * @return Requested float.
      */
-    public double getFloat(String path, float def);
+    public float getFloat(String path, float def);
 
     /**
      * Checks if the specified path is a float.
