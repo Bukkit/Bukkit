@@ -24,6 +24,7 @@ public class ConversationFactory {
     protected Map<Object, Object> initialSessionData;
     protected String playerOnlyMessage;
     protected List<ConversationCanceller> cancellers;
+    protected boolean echoInput;
 
     /**
      * Constructs a ConversationFactory.
@@ -37,6 +38,7 @@ public class ConversationFactory {
         initialSessionData = new HashMap<Object, Object>();
         playerOnlyMessage = null;
         cancellers = new ArrayList<ConversationCanceller>();
+        echoInput = true;
     }
 
     /**
@@ -127,6 +129,16 @@ public class ConversationFactory {
         this.playerOnlyMessage = playerOnlyMessage;
         return this;
     }
+    
+    /**
+     * Sets the value to echo the user's input back to them.
+     * @param echoInput true to echo back input.
+     * @return This object.
+     */
+    public ConversationFactory withEchoInput(boolean echoInput){
+    	this.echoInput = echoInput;
+    	return this;
+    }
 
     /**
      * Constructs a {@link Conversation} in accordance with the defaults set for this factory.
@@ -147,6 +159,7 @@ public class ConversationFactory {
         Conversation conversation = new Conversation(plugin, forWhom, firstPrompt, copiedInitialSessionData);
         conversation.setModal(isModal);
         conversation.setPrefix(prefix);
+        conversation.setEchoInput(echoInput);
 
         //Clone the conversation cancellers
         for(ConversationCanceller canceller : cancellers) {
