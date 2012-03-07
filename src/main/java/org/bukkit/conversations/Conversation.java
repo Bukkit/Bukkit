@@ -36,6 +36,7 @@ public class Conversation {
     protected boolean modal;
     protected ConversationPrefix prefix;
     protected List<ConversationCanceller> cancellers;
+    protected boolean echoInput;
 
     /**
      * Initializes a new Conversation.
@@ -155,6 +156,22 @@ public class Conversation {
     }
 
     /**
+     * Returns whether or not the conversation will echo user input
+     * @return true if the user's input will be echoed to them
+     */
+    public boolean willEchoInput(){
+    	return echoInput;
+    }
+    
+    /**
+     * Sets whether or not to echo the user's input back to them
+     * @param echoInput true to echo the user input
+     */
+    public void setEchoInput(boolean echoInput){
+    	this.echoInput = echoInput;
+    }
+    
+    /**
      * Passes player input into the current prompt. The next prompt (as determined by the current prompt) is then
      * displayed to the user.
      * @param input The user's chat text.
@@ -163,7 +180,9 @@ public class Conversation {
         if (currentPrompt != null) {
 
             // Echo the user's input
-            context.getForWhom().sendRawMessage(prefix.getPrefix(context) + input);
+            if(echoInput){
+            	context.getForWhom().sendRawMessage(prefix.getPrefix(context) + input);
+            }
 
             // Test for conversation abandonment based on input
             for(ConversationCanceller canceller : cancellers) {
