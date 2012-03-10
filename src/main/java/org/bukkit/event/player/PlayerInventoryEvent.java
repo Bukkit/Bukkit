@@ -12,7 +12,7 @@ import org.bukkit.inventory.Inventory;
  * the other inventory events in {@link org.bukkit.event.inventory}.
  */
 @Deprecated
-public class PlayerInventoryEvent extends PlayerEvent {
+public class PlayerInventoryEvent extends AbstractPlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     protected Inventory inventory;
 

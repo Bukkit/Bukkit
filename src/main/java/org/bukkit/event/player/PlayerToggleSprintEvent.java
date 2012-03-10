@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a player toggles their sprinting state
  */
-public class PlayerToggleSprintEvent extends PlayerEvent implements Cancellable {
+public class PlayerToggleSprintEvent extends AbstractPlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final boolean isSprinting;
     private boolean cancel = false;

@@ -6,7 +6,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a player leaves a server
  */
-public class PlayerQuitEvent extends PlayerEvent {
+public class PlayerQuitEvent extends AbstractPlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private String quitMessage;
 

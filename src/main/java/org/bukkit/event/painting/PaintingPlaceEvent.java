@@ -6,11 +6,12 @@ import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Triggered when a painting is created in the world
  */
-public class PaintingPlaceEvent extends PaintingEvent implements Cancellable {
+public class PaintingPlaceEvent extends PaintingEvent implements Cancellable, PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
     private final Player player;

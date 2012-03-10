@@ -12,7 +12,7 @@ import org.bukkit.event.block.Action;
 /**
  * Called when a player interacts with an object or air.
  */
-public class PlayerInteractEvent extends PlayerEvent implements Cancellable {
+public class PlayerInteractEvent extends AbstractPlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     protected ItemStack item;
     protected Action action;

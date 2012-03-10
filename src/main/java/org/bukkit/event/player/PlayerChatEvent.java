@@ -11,7 +11,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Holds information for player chat and commands
  */
-public class PlayerChatEvent extends PlayerEvent implements Cancellable {
+public class PlayerChatEvent extends AbstractPlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
     private String message;

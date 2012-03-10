@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 /**
  * This event is fired when the player is almost about to enter the bed.
  */
-public class PlayerBedEnterEvent extends PlayerEvent implements Cancellable {
+public class PlayerBedEnterEvent extends AbstractPlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
     private final Block bed;

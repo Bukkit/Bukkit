@@ -4,7 +4,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
-public class PlayerChangedWorldEvent extends PlayerEvent {
+public class PlayerChangedWorldEvent extends AbstractPlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final World from;
 

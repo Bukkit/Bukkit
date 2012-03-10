@@ -4,13 +4,14 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Called when a block is ignited. If you want to catch when a Player places fire, you need to use {@link BlockPlaceEvent}.
  * <p />
  * If a Block Ignite event is cancelled, the block will not be ignited.
  */
-public class BlockIgniteEvent extends BlockEvent implements Cancellable {
+public class BlockIgniteEvent extends BlockEvent implements Cancellable, PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final IgniteCause cause;
     private boolean cancel;

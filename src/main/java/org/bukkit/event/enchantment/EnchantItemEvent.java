@@ -9,13 +9,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryEvent;
+import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * Called when an ItemStack is successfully enchanted (currently at enchantment table)
  */
-public class EnchantItemEvent extends InventoryEvent implements Cancellable {
+public class EnchantItemEvent extends InventoryEvent implements Cancellable, PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final Block table;
     private final ItemStack item;
@@ -112,5 +113,9 @@ public class EnchantItemEvent extends InventoryEvent implements Cancellable {
 
     public static HandlerList getHandlerList() {
         return handlers;
+    }
+
+    public Player getPlayer() {
+        return enchanter;
     }
 }

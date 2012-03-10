@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Thrown when a player drops an item from their inventory
  */
-public class PlayerDropItemEvent extends PlayerEvent implements Cancellable {
+public class PlayerDropItemEvent extends AbstractPlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final Item drop;
     private boolean cancel = false;

@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Represents an event that is called when a player right clicks an entity.
  */
-public class PlayerInteractEntityEvent extends PlayerEvent implements Cancellable {
+public class PlayerInteractEntityEvent extends AbstractPlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     protected Entity clickedEntity;
     boolean cancelled = false;

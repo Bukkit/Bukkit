@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
-public class PlayerRespawnEvent extends PlayerEvent {
+public class PlayerRespawnEvent extends AbstractPlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private Location respawnLocation;
     private final boolean isBedSpawn;
