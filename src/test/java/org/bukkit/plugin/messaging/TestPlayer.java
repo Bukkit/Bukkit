@@ -744,4 +744,12 @@ public class TestPlayer implements Player {
     public void abandonConversation(Conversation conversation, ConversationAbandonedEvent details) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+	
+	public void setMaxHealth(int i) { 
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+	
+	public void setMaxHealth(int i, boolean b) { 
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }
