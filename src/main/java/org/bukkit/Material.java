@@ -495,4 +495,50 @@ public enum Material {
     public boolean isRecord() {
         return id >= GOLD_RECORD.id && id <= RECORD_11.id;
     }
+
+    /**
+     * @return True if this material represents a wearable armor piece.
+     */
+    public boolean isArmor() {
+        return id >= LEATHER_HELMET.id && id <= GOLD_BOOTS.id;
+    }
+
+    /**
+     * @return True if this material represents a repairable item.
+     */
+    public boolean isRepairable() {
+        switch (this) {
+        case BOW:
+        case DIAMOND_AXE:
+        case DIAMOND_HOE:
+        case DIAMOND_PICKAXE:
+        case DIAMOND_SPADE:
+        case DIAMOND_SWORD:
+        case FISHING_ROD:
+        case GOLD_AXE:
+        case GOLD_HOE:
+        case GOLD_PICKAXE:
+        case GOLD_SPADE:
+        case GOLD_SWORD:
+        case IRON_AXE:
+        case IRON_HOE:
+        case IRON_PICKAXE:
+        case IRON_SPADE:
+        case IRON_SWORD:
+        case SHEARS:
+        case WOOD_AXE:
+        case WOOD_HOE:
+        case WOOD_PICKAXE:
+        case WOOD_SPADE:
+        case WOOD_SWORD:
+            return true;
+
+        default:
+            if (isArmor()) {
+                return true;
+            }
+
+            return false;
+        }
+    }
 }
