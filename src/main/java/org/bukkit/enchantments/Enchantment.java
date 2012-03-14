@@ -263,4 +263,22 @@ public abstract class Enchantment {
     public static Enchantment[] values() {
         return byId.values().toArray(new Enchantment[byId.size()]);
     }
+
+    /**
+     * Checks if this Enchantment conflicts with any enchantments already applied to the  given {@link ItemStack}.
+     *
+     * @param item Item to test
+     * @return True if the enchantment conflicts, otherwise False
+     */
+    public static boolean conflictsWith(ItemStack item) {
+        Map<Enchantment, Integer> enchantments = item.getEnchantments();
+
+        for (Enchantment enchant : enchantments.keySet()) {
+            if (this.conflictsWith(enchant)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
