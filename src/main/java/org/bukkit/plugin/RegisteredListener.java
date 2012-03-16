@@ -70,4 +70,13 @@ public class RegisteredListener {
     public boolean isIgnoringCancelled() {
         return ignoreCancelled;
     }
+
+    /**
+     * Gets the executor for this registration
+     * 
+     * @return Registered Executor
+     */
+    public EventExecutor getExecutor() {
+        return executor;
+    }
 }

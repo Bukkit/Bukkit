@@ -474,8 +474,8 @@ public final class SimplePluginManager implements PluginManager {
 
     }
 
-    public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin) {
-        registerEvent(event, listener, priority, executor, plugin, false);
+    public RegisteredListener registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin) {
+        return registerEvent(event, listener, priority, executor, plugin, false);
     }
 
     /**
@@ -488,7 +488,7 @@ public final class SimplePluginManager implements PluginManager {
      * @param plugin Plugin to register
      * @param ignoreCancelled Do not call executor if event was already cancelled
      */
-    public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin, boolean ignoreCancelled) {
+    public RegisteredListener registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin, boolean ignoreCancelled) {
         Validate.notNull(listener, "Listener cannot be null");
         Validate.notNull(priority, "Priority cannot be null");
         Validate.notNull(executor, "Executor cannot be null");
@@ -498,11 +498,15 @@ public final class SimplePluginManager implements PluginManager {
             throw new IllegalPluginAccessException("Plugin attempted to register " + event + " while not enabled");
         }
 
+        RegisteredListener registered;
         if (useTimings) {
-            getEventListeners(event).register(new TimedRegisteredListener(listener, executor, priority, plugin, ignoreCancelled));
+            registered = new TimedRegisteredListener(listener, executor, priority, plugin, ignoreCancelled);
         } else {
-            getEventListeners(event).register(new RegisteredListener(listener, executor, priority, plugin, ignoreCancelled));
+            registered = new RegisteredListener(listener, executor, priority, plugin, ignoreCancelled);
         }
+        getEventListeners(event).register(registered);
+        
+        return registered;
     }
 
     private HandlerList getEventListeners(Class<? extends Event> type) {

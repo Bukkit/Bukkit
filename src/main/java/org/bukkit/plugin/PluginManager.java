@@ -111,8 +111,9 @@ public interface PluginManager {
      * @param priority Priority to register this event at
      * @param executor EventExecutor to register
      * @param plugin Plugin to register
+     * @return The RegisteredListener created for this registration
      */
-    public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin);
+    public RegisteredListener registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin);
 
     /**
      * Registers the specified executor to the given event class
@@ -123,8 +124,9 @@ public interface PluginManager {
      * @param executor EventExecutor to register
      * @param plugin Plugin to register
      * @param ignoreCancelled Whether to pass cancelled events or not
+     * @return The RegisteredListener created for this registration
      */
-    public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin, boolean ignoreCancelled);
+    public RegisteredListener registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin, boolean ignoreCancelled);
 
     /**
      * Enables the specified plugin
