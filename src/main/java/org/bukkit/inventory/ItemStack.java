@@ -344,6 +344,24 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         return (previous == null) ? 0 : previous;
     }
 
+    /**
+     * Checks if an enchantment conflicts with any enchantments already applied to this ItemStack.
+     *
+     * @param enchantment Enchantment to test
+     * @return True if the enchantment conflicts, otherwise False
+     */
+    public boolean conflictsWith(Enchantment enchantment) {
+        Map<Enchantment, Integer> enchantments = this.getEnchantments();
+
+        for (Enchantment enchant : enchantments.keySet()) {
+            if (enchant.conflictsWith(enchantment)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public Map<String, Object> serialize() {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
