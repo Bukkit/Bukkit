@@ -1,5 +1,7 @@
 package org.bukkit.entity;
 
+import org.bukkit.block.Block;
+
 /**
  * Represents a Primed TNT.
  */
@@ -17,4 +19,11 @@ public interface TNTPrimed extends Explosive {
      * @return the number of ticks until this TNTPrimed explodes
      */
     public int getFuseTicks();
+    
+    /**
+     * Retrieve the original block (the TNT block placed)
+     * 
+     * @return the TNT block placed
+     */
+    public Block getOriginalBlock();
 }
