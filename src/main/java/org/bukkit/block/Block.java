@@ -53,7 +53,7 @@ public interface Block extends Metadatable {
      *
      * <pre>
      * Block block = world.getBlockAt(100, 100, 100);
-     * Block shower = block.getFace(BlockFace.UP, 2);
+     * Block shower = block.getRelative(BlockFace.UP, 2);
      * shower.setType(Material.WATER);
      * </pre>
      *
