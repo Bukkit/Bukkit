@@ -164,7 +164,7 @@ public class YamlConfiguration extends FileConfiguration {
      *
      * @param file Input file
      * @return Resulting configuration
-     * @throws IllegalArgumentException Thrown is file is null
+     * @throws IllegalArgumentException Thrown if file is null
      */
     public static YamlConfiguration loadConfiguration(File file) {
         if (file == null) {
@@ -193,7 +193,7 @@ public class YamlConfiguration extends FileConfiguration {
      *
      * @param stream Input stream
      * @return Resulting configuration
-     * @throws IllegalArgumentException Thrown is stream is null
+     * @throws IllegalArgumentException Thrown if stream is null
      */
     public static YamlConfiguration loadConfiguration(InputStream stream) {
         if (stream == null) {
