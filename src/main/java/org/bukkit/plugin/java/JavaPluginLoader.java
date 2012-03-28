@@ -8,6 +8,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -50,6 +52,7 @@ public class JavaPluginLoader implements PluginLoader {
     protected final Pattern[] fileFilters = new Pattern[] { Pattern.compile("\\.jar$"), };
     protected final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
     protected final Map<String, PluginClassLoader> loaders = new HashMap<String, PluginClassLoader>();
+	protected final Map<String, List<String>> depencies = new HashMap<String, List<String>>();
 
     public JavaPluginLoader(Server instance) {
         server = instance;
@@ -119,8 +122,10 @@ public class JavaPluginLoader implements PluginLoader {
             if (current == null) {
                 throw new UnknownDependencyException(pluginName);
             }
-        }
-
+			//add depencies to list
+        	depencies.get(pluginName).add(description.getName());
+		}
+		depencies.put(description.getName(), new ArrayList<String>());
         PluginClassLoader loader = null;
         JavaPlugin result = null;
 
@@ -365,7 +370,10 @@ public class JavaPluginLoader implements PluginLoader {
             }
 
             loaders.remove(jPlugin.getDescription().getName());
-
+			//remove depencies
+			for (String dependantPlugin : depencies.remove(jPlugin.getName()))
+				disablePlugin(Bukkit.getPluginManager().getPlugin(dependantPlugin));
+			
             if (cloader instanceof PluginClassLoader) {
                 PluginClassLoader loader = (PluginClassLoader) cloader;
                 Set<String> names = loader.getClasses();
