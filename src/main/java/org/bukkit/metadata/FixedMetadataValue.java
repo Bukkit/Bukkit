@@ -8,8 +8,8 @@ import org.bukkit.plugin.Plugin;
  * Invalidating a FixedMetadataValue has no affect.
  */
 public class FixedMetadataValue extends MetadataValueAdapter {
-	private final Object internalValue;
-	
+    private final Object internalValue;
+    
     /**
      * Initializes a FixedMetadataValue with an Object
      *
@@ -17,23 +17,23 @@ public class FixedMetadataValue extends MetadataValueAdapter {
      * @param value the value assigned to this metadata value.
      */
     public FixedMetadataValue(Plugin owningPlugin, final Object value) {
-    	super(owningPlugin);
-    	this.internalValue = value;
+        super(owningPlugin);
+        this.internalValue = value;
     }
 
     /**
      * Gives the fixed value that this MetadataValue represents.
      */
-	public Object value() {
-		return this.internalValue;
-	}
+    public Object value() {
+        return this.internalValue;
+    }
 
-	/**
-	 * Invalidate this value.
-	 * 
-	 * Does nothing, due to the fixed value.
-	 */
-	public void invalidate() {
-		// Do nothing
-	}
+    /**
+     * Invalidate this value.
+     * 
+     * Does nothing, due to the fixed value.
+     */
+    public void invalidate() {
+        // Do nothing
+    }
 }

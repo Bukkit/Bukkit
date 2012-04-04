@@ -13,18 +13,18 @@ import org.bukkit.util.NumberConversions;
  *
  */
 public abstract class MetadataValueAdapter implements MetadataValue {
-	protected final Plugin owningPlugin;
-	
-	protected MetadataValueAdapter(Plugin owningPlugin) {
+    protected final Plugin owningPlugin;
+
+    protected MetadataValueAdapter(Plugin owningPlugin) {
         Validate.notNull(owningPlugin, "owningPlugin cannot be null");
-		this.owningPlugin = owningPlugin;
-	}
-    
-    public Plugin getOwningPlugin() {
-    	return owningPlugin;
+        this.owningPlugin = owningPlugin;
     }
-	
-	public int asInt() {
+
+    public Plugin getOwningPlugin() {
+        return owningPlugin;
+    }
+
+    public int asInt() {
         return NumberConversions.toInt(value());
     }
 

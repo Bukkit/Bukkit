@@ -37,7 +37,7 @@ public class LazyMetadataValue extends MetadataValueAdapter implements MetadataV
      * @param lazyValue the lazy value assigned to this metadata value.
      */
     public LazyMetadataValue(Plugin owningPlugin, CacheStrategy cacheStrategy, Callable<Object> lazyValue) {
-    	super(owningPlugin);
+        super(owningPlugin);
         Validate.notNull(cacheStrategy, "cacheStrategy cannot be null");
         Validate.notNull(lazyValue, "lazyValue cannot be null");
 
