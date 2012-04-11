@@ -181,22 +181,37 @@ public class JavaPluginLoader implements PluginLoader {
 
     public PluginDescriptionFile getPluginDescription(File file) throws InvalidDescriptionException {
         Validate.notNull(file, "File cannot be null");
+        
+        final String pluginFileName = "plugin.yml";
 
         JarFile jar = null;
         InputStream stream = null;
-
         try {
-            jar = new JarFile(file);
-            JarEntry entry = jar.getJarEntry("plugin.yml");
-
-            if (entry == null) {
-                throw new InvalidDescriptionException(new FileNotFoundException("Jar does not contain plugin.yml"));
-            }
-
-            stream = jar.getInputStream(entry);
-
-            return new PluginDescriptionFile(stream);
-
+        	
+	        if(file.exists() && file.isDirectory()) {
+	        	File[] files = file.listFiles(new java.io.FilenameFilter() {
+					public boolean accept(File dir, String filename) {
+						return filename.toLowerCase().equals(pluginFileName);
+					}
+	        	});
+	        	
+	        	if(files.length > 0){
+	        		stream = new java.io.FileInputStream(files[0]);
+	        	} else {
+	        		throw new InvalidDescriptionException(new FileNotFoundException("Folder does not contain " + pluginFileName));
+	        	}
+	        } else {
+		        jar = new JarFile(file);
+	            JarEntry entry = jar.getJarEntry(pluginFileName);
+	
+	            if (entry == null) {
+	                throw new InvalidDescriptionException(new FileNotFoundException("Jar does not contain " + pluginFileName));
+	            }
+	
+	            stream = jar.getInputStream(entry);
+	        }
+	        
+	        return new PluginDescriptionFile(stream);
         } catch (IOException ex) {
             throw new InvalidDescriptionException(ex);
         } catch (YAMLException ex) {
