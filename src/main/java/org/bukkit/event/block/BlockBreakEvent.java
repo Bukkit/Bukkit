@@ -38,6 +38,22 @@ public class BlockBreakEvent extends BlockEvent implements Cancellable {
     public boolean isCancelled() {
         return cancel;
     }
+   
+    //Drop a single itemstack. 
+    public void setDrops(ItemStack itm) {
+        cancle = true;
+        Block b = getBlock();
+        Location l = b.getLocation();
+        b.setType(Material.AIR);
+        l.getWorld().dropItemNaturally(l, itm);
+    }
+    //Drop multiple item stacks 
+    public void setDrops(List<ItemStack> items) {
+        for (ItemStack itm : items) {
+            setDrops(itm);
+        }
+    }
+    
 
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
