@@ -341,6 +341,14 @@ public class TestPlayer implements Player {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public void setEntityCollision(boolean yes) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean getEntityCollision() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public int getRemainingAir() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
