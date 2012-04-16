@@ -764,4 +764,12 @@ public class TestPlayer implements Player {
     public boolean isBlocking() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public void setAffectsSpawning(boolean yes) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean getAffectsSpawning() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
