@@ -23,6 +23,15 @@ public class PermissionAttachmentInfo {
     }
 
     /**
+     * Gets the exact permission registered
+     *
+     * @return Exact name of the permission
+     */
+    public String getExactPermission() {
+        return permission;
+    }
+
+    /**
      * Gets the permissible this is attached to
      *
      * @return Permissible this permission is for
@@ -37,7 +46,7 @@ public class PermissionAttachmentInfo {
      * @return Name of the permission
      */
     public String getPermission() {
-        return permission;
+        return permission.toLowerCase();
     }
 
     /**
