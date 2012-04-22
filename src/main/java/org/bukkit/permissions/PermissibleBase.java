@@ -151,8 +151,14 @@ public class PermissibleBase implements Permissible {
         Bukkit.getServer().getPluginManager().subscribeToDefaultPerms(isOp(), parent);
 
         for (Permission perm : defaults) {
-            String name = perm.getName().toLowerCase();
-            permissions.put(name, new PermissionAttachmentInfo(parent, name, null, true));
+        	// Since the lower case is only used at one place,
+        	// the variable should be with its original case
+            String name = perm.getName();
+
+            // This adds the name as lower case like in the original code yet
+            // able to store the permission with its original case in
+            // the PermissionAttachmentInfo
+            permissions.put(name.toLowerCase(), new PermissionAttachmentInfo(parent, name, null, true));
             Bukkit.getServer().getPluginManager().subscribeToPermission(name, parent);
             calculateChildPermissions(perm.getChildren(), false, null);
         }
@@ -181,9 +187,13 @@ public class PermissibleBase implements Permissible {
         for (String name : keys) {
             Permission perm = Bukkit.getServer().getPluginManager().getPermission(name);
             boolean value = children.get(name) ^ invert;
-            String lname = name.toLowerCase();
+            // Removed "String lname = name.toLowerCase();",
+            // does not need extra variable
 
-            permissions.put(lname, new PermissionAttachmentInfo(parent, lname, attachment, value));
+            // This adds the name as lower case like in the original code yet
+            // able to store the permission with its original case in
+            // the PermissionAttachmentInfo
+            permissions.put(name.toLowerCase(), new PermissionAttachmentInfo(parent, name, attachment, value));
             Bukkit.getServer().getPluginManager().subscribeToPermission(name, parent);
 
             if (perm != null) {
