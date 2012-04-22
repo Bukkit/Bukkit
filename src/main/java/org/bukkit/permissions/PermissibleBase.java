@@ -61,6 +61,17 @@ public class PermissibleBase implements Permissible {
         return isPermissionSet(perm.getName());
     }
 
+    /**
+     * Check this permission assignment including parent wildcards.
+     * <p>
+     * If this permission has been assigned (true or false) it's value will be returned.
+     * If the permission is not directly assigned a node search for a parent wildcard will
+     * be performed, returning it's set value.
+     * If neither is found then the permissions default value will be returned.
+     *
+     * @param inName
+     * @return permissions set value if found, or the parents default value if using a wildcard.
+     */
     public boolean hasPermission(String inName) {
         if (inName == null) {
             throw new IllegalArgumentException("Permission name cannot be null");
@@ -68,19 +79,37 @@ public class PermissibleBase implements Permissible {
 
         String name = inName.toLowerCase();
 
-        if (isPermissionSet(name)) {
+        if (isPermissionSet(name))
             return permissions.get(name).getValue();
-        } else {
-            Permission perm = Bukkit.getServer().getPluginManager().getPermission(name);
 
-            if (perm != null) {
-                return perm.getDefault().getValue(isOp());
+        final String[] parts = name.split("\\.");
+        final StringBuilder builder = new StringBuilder(name.length());
+        for (String part : parts) {
+            builder.append('*');
+
+            if (isPermissionSet(builder.toString())) {
+                return permissions.get(builder.toString()).getValue();
             } else {
-                return Permission.DEFAULT_PERMISSION.getValue(isOp());
+                Permission perm = Bukkit.getServer().getPluginManager().getPermission(builder.toString());
+
+                if (perm != null) {
+                    return perm.getDefault().getValue(isOp());
+                }
             }
+            builder.deleteCharAt(builder.length() - 1);
+            builder.append(part).append('.');
         }
+        return Permission.DEFAULT_PERMISSION.getValue(isOp());
     }
 
+    /**
+     * Check this permission assignment directly.
+     * <p>
+     * If found it's set value is returned, else the default value.
+     *
+     * @param perm Permission to get
+     * @return the value as set, or the default setting (if not set).
+     */
     public boolean hasPermission(Permission perm) {
         if (perm == null) {
             throw new IllegalArgumentException("Permission cannot be null");
