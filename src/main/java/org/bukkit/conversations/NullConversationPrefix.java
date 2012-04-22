@@ -1,5 +1,7 @@
 package org.bukkit.conversations;
 
+import org.bukkit.command.CommandSender;
+
 /**
  * NullConversationPrefix is a {@link ConversationPrefix} implementation that displays nothing in front of
  * conversation output.
