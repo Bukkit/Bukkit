@@ -23,6 +23,16 @@ public class PermissionAttachmentInfo {
     }
 
     /**
+     * Gets the exact permission being set
+     * 
+     * @return
+     */
+    public String getExactPermission() {
+    	// This will return the permission in its original case
+    	return permission;
+    }
+
+    /**
      * Gets the permissible this is attached to
      *
      * @return Permissible this permission is for
@@ -37,7 +47,8 @@ public class PermissionAttachmentInfo {
      * @return Name of the permission
      */
     public String getPermission() {
-        return permission;
+    	// Lower cased so it works like the old code
+        return permission.toLowerCase();
     }
 
     /**
