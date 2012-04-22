@@ -78,6 +78,9 @@ public class PermissionAttachment {
      * @param value New value of the permission
      */
     public void setPermission(String name, boolean value) {
+    	// Original name without lower case so that
+    	// when the PermissionAttachmentInfos are
+    	// created, they have the original case
         permissions.put(name, value);
         permissible.recalculatePermissions();
     }
@@ -90,6 +93,7 @@ public class PermissionAttachment {
      */
     public void setPermission(Permission perm, boolean value) {
         setPermission(perm.getName(), value);
+        // Removed "permissible.recalculatePermissions();", already done in setPermission(name, value)
     }
 
     /**
@@ -100,6 +104,9 @@ public class PermissionAttachment {
      * @param name Name of the permission to remove
      */
     public void unsetPermission(String name) {
+    	// Original name without lower case so that
+    	// when the PermissionAttachmentInfos are
+    	// created, they have the original case
         permissions.remove(name);
         permissible.recalculatePermissions();
     }
@@ -113,6 +120,7 @@ public class PermissionAttachment {
      */
     public void unsetPermission(Permission perm) {
         unsetPermission(perm.getName());
+        // Removed "permissible.recalculatePermissions();", already done in unsetPermission(name, value)
     }
 
     /**

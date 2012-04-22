@@ -28,6 +28,7 @@ public class PermissionAttachmentInfo {
      * @return
      */
     public String getExactPermission() {
+    	// This will return the permission in its original case
     	return permission;
     }
 
@@ -46,6 +47,7 @@ public class PermissionAttachmentInfo {
      * @return Name of the permission
      */
     public String getPermission() {
+    	// Lower cased so it works like the old code
         return permission.toLowerCase();
     }
 
