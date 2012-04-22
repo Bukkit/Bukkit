@@ -1,5 +1,6 @@
 package org.bukkit.conversations;
 
+import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 
 /**

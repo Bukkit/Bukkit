@@ -151,8 +151,8 @@ public class PermissibleBase implements Permissible {
         Bukkit.getServer().getPluginManager().subscribeToDefaultPerms(isOp(), parent);
 
         for (Permission perm : defaults) {
-            String name = perm.getName();
-            permissions.put(name.toLowerCase(), new PermissionAttachmentInfo(parent, name, null, true));
+            String name = perm.getName().toLowerCase();
+            permissions.put(name, new PermissionAttachmentInfo(parent, name, null, true));
             Bukkit.getServer().getPluginManager().subscribeToPermission(name, parent);
             calculateChildPermissions(perm.getChildren(), false, null);
         }
@@ -181,8 +181,9 @@ public class PermissibleBase implements Permissible {
         for (String name : keys) {
             Permission perm = Bukkit.getServer().getPluginManager().getPermission(name);
             boolean value = children.get(name) ^ invert;
+            String lname = name.toLowerCase();
 
-            permissions.put(name.toLowerCase(), new PermissionAttachmentInfo(parent, name, attachment, value));
+            permissions.put(lname, new PermissionAttachmentInfo(parent, lname, attachment, value));
             Bukkit.getServer().getPluginManager().subscribeToPermission(name, parent);
 
             if (perm != null) {
