@@ -179,7 +179,7 @@ public abstract class ChunkGenerator {
      * @return true if the location is valid, otherwise false
      */
     public boolean canSpawn(World world, int x, int z) {
-        Block highest = world.getBlockAt(x, world.getHighestBlockYAt(x, z), z);
+        Block highest = world.getHighestBlockAt(x, z);
 
         switch (world.getEnvironment()) {
         case NETHER:
