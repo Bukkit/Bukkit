@@ -9,6 +9,7 @@ import org.bukkit.plugin.Plugin;
  */
 public class PermissionAttachment {
     private PermissionRemovedExecutor removed;
+    private final Map<String, Boolean> exactPermissions = new LinkedHashMap<String, Boolean>();
     private final Map<String, Boolean> permissions = new LinkedHashMap<String, Boolean>();
     private final Permissible permissible;
     private final Plugin plugin;
@@ -59,6 +60,17 @@ public class PermissionAttachment {
     public Permissible getPermissible() {
         return permissible;
     }
+    
+    /**
+     * Gets a copy of all set exact permissions and values contained within this attachment
+     * <p />
+     * This map may be modified but will not affect the attachment, as it is a copy
+     * 
+     * @return Copy of all permissions and values expressed by the attachment
+     */
+    public Map<String, Boolean> getExactPermissions() {
+    	return new LinkedHashMap<String, Boolean>(exactPermissions);
+    }
 
     /**
      * Gets a copy of all set permissions and values contained within this attachment.
@@ -78,10 +90,8 @@ public class PermissionAttachment {
      * @param value New value of the permission
      */
     public void setPermission(String name, boolean value) {
-    	// Original name without lower case so that
-    	// when the PermissionAttachmentInfos are
-    	// created, they have the original case
-        permissions.put(name, value);
+        permissions.put(name.toLowerCase(), value);
+        exactPermissions.put(name, value);
         permissible.recalculatePermissions();
     }
 
@@ -93,7 +103,6 @@ public class PermissionAttachment {
      */
     public void setPermission(Permission perm, boolean value) {
         setPermission(perm.getName(), value);
-        // Removed "permissible.recalculatePermissions();", already done in setPermission(name, value)
     }
 
     /**
@@ -104,10 +113,8 @@ public class PermissionAttachment {
      * @param name Name of the permission to remove
      */
     public void unsetPermission(String name) {
-    	// Original name without lower case so that
-    	// when the PermissionAttachmentInfos are
-    	// created, they have the original case
-        permissions.remove(name);
+        permissions.remove(name.toLowerCase());
+        exactPermissions.remove(name);
         permissible.recalculatePermissions();
     }
 
@@ -120,7 +127,6 @@ public class PermissionAttachment {
      */
     public void unsetPermission(Permission perm) {
         unsetPermission(perm.getName());
-        // Removed "permissible.recalculatePermissions();", already done in unsetPermission(name, value)
     }
 
     /**
