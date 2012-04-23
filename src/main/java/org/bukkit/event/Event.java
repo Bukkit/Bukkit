@@ -16,7 +16,7 @@ public abstract class Event {
         return name;
     }
 
-    public abstract HandlerList getHandlers();
+    public abstract HandlerList getHandlerList();
 
     public enum Result {
 
