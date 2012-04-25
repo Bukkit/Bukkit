@@ -319,6 +319,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param loc The location to spawn the creature
      * @param type The creature to spawn
      * @return Resulting LivingEntity of this method, or null if it was unsuccessful
+     * @deprecated Has issues spawning non LivingEntities. Use {@link #spawnEntity(Location, EntityType) spawnEntity} instead.
      */
     @Deprecated
     public LivingEntity spawnCreature(Location loc, EntityType type);
