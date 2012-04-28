@@ -645,6 +645,14 @@ public class TestPlayer implements Player {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public void setCollidesWithEntities(boolean yes) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean getCollidesWithEntities() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public boolean addPotionEffect(PotionEffect effect) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
