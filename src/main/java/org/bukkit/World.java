@@ -398,6 +398,13 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return Unique ID of this world.
      */
     public UUID getUID();
+    
+    /**
+     * Gets the {@link Location} of the spawn of this dimension, used to determine the spawn location for the End
+     *
+     * @return The coordinates of the spawn of this dimension, or null if the environment is not {@link Environment#THE_END}
+     */
+    public Location getDimensionSpawn();
 
     /**
      * Gets the default spawn {@link Location} of this world
