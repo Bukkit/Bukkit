@@ -17,4 +17,11 @@ public interface TNTPrimed extends Explosive {
      * @return the number of ticks until this TNTPrimed explodes
      */
     public int getFuseTicks();
+    
+    /**
+     * Retrieve the location of the TNT block from which the TNTPrimed was spawned
+     * 
+     * @return the location of the TNT block from which the TNTPrimed was spawned
+     */
+     public Location getOriginalBlock();
 }
