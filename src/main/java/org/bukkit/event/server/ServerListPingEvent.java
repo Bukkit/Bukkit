@@ -11,7 +11,7 @@ public class ServerListPingEvent extends ServerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final InetAddress address;
     private String motd;
-    private final int numPlayers;
+    private int numPlayers;
     private int maxPlayers;
 
     public ServerListPingEvent(final InetAddress address, final String motd, final int numPlayers, final int maxPlayers) {
@@ -58,9 +58,18 @@ public class ServerListPingEvent extends ServerEvent {
     }
 
     /**
+     * Set the number of players sent.
+     *
+     * @param numPlayers the number of players to be sent
+     */
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+    }
+
+    /**
      * Get the maximum number of players sent.
      *
-     * @return the the maximum number of player
+     * @return the the maximum number of players
      */
     public int getMaxPlayers() {
         return maxPlayers;
@@ -69,7 +78,7 @@ public class ServerListPingEvent extends ServerEvent {
     /**
      * Set the maximum number of players sent.
      *
-     * @param maxPlayers the maximum number of player
+     * @param maxPlayers the maximum number of players
      */
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
