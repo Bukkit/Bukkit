@@ -205,7 +205,7 @@ public interface Inventory extends Iterable<ItemStack> {
     /**
      * Find the first empty Slot.
      *
-     * @return The first empty Slot found.
+     * @return The first empty Slot found, or -1 if no empty slots.
      */
     public int firstEmpty();
 
