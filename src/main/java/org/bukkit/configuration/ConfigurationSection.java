@@ -221,7 +221,7 @@ public interface ConfigurationSection {
      * <p>
      * If the int does not exist but a default value has been specified, this
      * will return the default value. If the int does not exist and no default
-     * value was specified, this will return null.
+     * value was specified, this will return 0.
      *
      * @param path Path of the int to get.
      * @return Requested int.
