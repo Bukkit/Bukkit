@@ -162,11 +162,16 @@ public class ConfigurationSerialization {
         if (args.containsKey(SERIALIZED_TYPE_KEY)) {
             try {
                 String alias = (String) args.get(SERIALIZED_TYPE_KEY);
+                clazz = getClassByAlias(alias);
+                if (clazz == null) {
+                    try {
+                        clazz = Class.forName(alias).asSubclass(ConfigurationSerializable.class);
+                    } catch (Exception e) {
+                    }
+                }
 
-                if (alias == null) {
-                    throw new IllegalArgumentException("Specified class does not exist ('" + alias + ")'");
-                } else {
-                    clazz = getClassByAlias(alias);
+                if (clazz == null) {
+                    throw new IllegalArgumentException(String.format("Specified class does not exist ('%s')", alias));
                 }
             } catch (ClassCastException ex) {
                 ex.fillInStackTrace();
