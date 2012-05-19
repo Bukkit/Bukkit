@@ -4,24 +4,24 @@ package org.bukkit.block;
  * Represents the face of a block
  */
 public enum BlockFace {
-    NORTH(-1, 0, 0),
-    EAST(0, 0, -1),
-    SOUTH(1, 0, 0),
-    WEST(0, 0, 1),
+    WEST(-1, 0, 0),
+    NORTH(0, 0, 1),
+    EAST(1, 0, 0),
+    SOUTH(0, 0, -1),
     UP(0, 1, 0),
     DOWN(0, -1, 0),
-    NORTH_EAST(NORTH, EAST),
-    NORTH_WEST(NORTH, WEST),
-    SOUTH_EAST(SOUTH, EAST),
-    SOUTH_WEST(SOUTH, WEST),
+    NORTH_WEST(WEST, NORTH),
+    SOUTH_WEST(WEST, SOUTH),
+    NORTH_EAST(EAST, NORTH),
+    SOUTH_EAST(EAST, SOUTH),
+    SOUTH_SOUTH_WEST(SOUTH, SOUTH_WEST),
+    WEST_SOUTH_WEST(WEST, SOUTH_WEST),
     WEST_NORTH_WEST(WEST, NORTH_WEST),
     NORTH_NORTH_WEST(NORTH, NORTH_WEST),
     NORTH_NORTH_EAST(NORTH, NORTH_EAST),
     EAST_NORTH_EAST(EAST, NORTH_EAST),
     EAST_SOUTH_EAST(EAST, SOUTH_EAST),
     SOUTH_SOUTH_EAST(SOUTH, SOUTH_EAST),
-    SOUTH_SOUTH_WEST(SOUTH, SOUTH_WEST),
-    WEST_SOUTH_WEST(WEST, SOUTH_WEST),
     SELF(0, 0, 0);
 
     private final int modX;
@@ -69,17 +69,17 @@ public enum BlockFace {
 
     public BlockFace getOppositeFace() {
         switch (this) {
+        case WEST:
+            return BlockFace.EAST;
+
+        case EAST:
+            return BlockFace.WEST;
+
         case NORTH:
             return BlockFace.SOUTH;
 
         case SOUTH:
             return BlockFace.NORTH;
-
-        case EAST:
-            return BlockFace.WEST;
-
-        case WEST:
-            return BlockFace.EAST;
 
         case UP:
             return BlockFace.DOWN;
@@ -87,17 +87,23 @@ public enum BlockFace {
         case DOWN:
             return BlockFace.UP;
 
-        case NORTH_EAST:
-            return BlockFace.SOUTH_WEST;
-
         case NORTH_WEST:
             return BlockFace.SOUTH_EAST;
+
+        case SOUTH_WEST:
+            return BlockFace.NORTH_EAST;
+
+        case NORTH_EAST:
+            return BlockFace.SOUTH_WEST;
 
         case SOUTH_EAST:
             return BlockFace.NORTH_WEST;
 
-        case SOUTH_WEST:
-            return BlockFace.NORTH_EAST;
+        case SOUTH_SOUTH_WEST:
+            return BlockFace.NORTH_NORTH_EAST;
+
+        case WEST_SOUTH_WEST:
+            return BlockFace.EAST_NORTH_EAST;
 
         case WEST_NORTH_WEST:
             return BlockFace.EAST_SOUTH_EAST;
@@ -116,12 +122,6 @@ public enum BlockFace {
 
         case SOUTH_SOUTH_EAST:
             return BlockFace.NORTH_NORTH_WEST;
-
-        case SOUTH_SOUTH_WEST:
-            return BlockFace.NORTH_NORTH_EAST;
-
-        case WEST_SOUTH_WEST:
-            return BlockFace.EAST_NORTH_EAST;
 
         case SELF:
             return BlockFace.SELF;

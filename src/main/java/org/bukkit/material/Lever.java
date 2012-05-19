@@ -56,16 +56,16 @@ public class Lever extends SimpleAttachableMaterialData implements Redstone {
 
         switch (data) {
         case 0x1:
-            return BlockFace.NORTH;
+            return BlockFace.WEST;
 
         case 0x2:
-            return BlockFace.SOUTH;
-
-        case 0x3:
             return BlockFace.EAST;
 
+        case 0x3:
+            return BlockFace.NORTH;
+
         case 0x4:
-            return BlockFace.WEST;
+            return BlockFace.SOUTH;
 
         case 0x5:
         case 0x6:
@@ -83,31 +83,31 @@ public class Lever extends SimpleAttachableMaterialData implements Redstone {
 
         if (getAttachedFace() == BlockFace.DOWN) {
             switch (face) {
-            case WEST:
-            case EAST:
+            case SOUTH:
+            case NORTH:
                 data |= 0x5;
                 break;
 
-            case SOUTH:
-            case NORTH:
+            case EAST:
+            case WEST:
                 data |= 0x6;
                 break;
             }
         } else {
             switch (face) {
-            case SOUTH:
+            case EAST:
                 data |= 0x1;
                 break;
 
-            case NORTH:
+            case WEST:
                 data |= 0x2;
                 break;
 
-            case WEST:
+            case SOUTH:
                 data |= 0x3;
                 break;
 
-            case EAST:
+            case NORTH:
                 data |= 0x4;
                 break;
             }
