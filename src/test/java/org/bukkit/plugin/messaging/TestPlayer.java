@@ -756,4 +756,12 @@ public class TestPlayer implements Player {
     public boolean isBlocking() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+	public String getLocalizedName() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	public void setLocalizedName(String name) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }
