@@ -146,4 +146,16 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      * @return Whether they are blocking.
      */
     public boolean isBlocking();
+    
+    /**
+     * Gets the player's localized name (name that appears above the player)
+     * @return the name
+     */
+    public String getLocalizedName();
+    
+    /**
+     * Sets the localized name (name that appears above the player)
+     * @param name the new name
+     */
+    public void setLocalizedName(String name);
 }
