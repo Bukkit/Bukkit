@@ -186,17 +186,17 @@ public class BlockIterator implements Iterator<Block> {
         case DOWN:
             return BlockFace.UP;
 
+        case WEST:
+            return BlockFace.EAST;
+
+        case EAST:
+            return BlockFace.WEST;
+
         case NORTH:
             return BlockFace.SOUTH;
 
         case SOUTH:
             return BlockFace.NORTH;
-
-        case EAST:
-            return BlockFace.WEST;
-
-        case WEST:
-            return BlockFace.EAST;
 
         default:
             return null;
@@ -204,7 +204,7 @@ public class BlockIterator implements Iterator<Block> {
     }
 
     private BlockFace getXFace(Vector direction) {
-        return ((direction.getX() > 0) ? BlockFace.SOUTH : BlockFace.NORTH);
+        return ((direction.getX() > 0) ? BlockFace.EAST : BlockFace.WEST);
     }
 
     private BlockFace getYFace(Vector direction) {
@@ -212,7 +212,7 @@ public class BlockIterator implements Iterator<Block> {
     }
 
     private BlockFace getZFace(Vector direction) {
-        return ((direction.getZ() > 0) ? BlockFace.WEST : BlockFace.EAST);
+        return ((direction.getZ() > 0) ? BlockFace.SOUTH : BlockFace.NORTH);
     }
 
     private double getXLength(Vector direction) {
