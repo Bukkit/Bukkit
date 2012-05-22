@@ -257,4 +257,16 @@ public interface Entity extends Metadatable {
      * @return The current vehicle.
      */
     public Entity getVehicle();
+
+    /**
+     * Set whether this entity can physically collide with other entities
+     * @param yes true to collide with other entities, false to not collide
+     */
+    public void setEntityCollision(boolean yes);
+
+    /**
+     * Get whether this entity can physically collide with other entities
+     * @return true if this entity can collide with others, false if it can't
+     */
+    public boolean getEntityCollision();
 }

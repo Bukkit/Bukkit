@@ -341,6 +341,14 @@ public class TestPlayer implements Player {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public void setEntityCollision(boolean yes) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean getEntityCollision() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public int getRemainingAir() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -754,6 +762,14 @@ public class TestPlayer implements Player {
     }
 
     public boolean isBlocking() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setAffectsSpawning(boolean yes) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean getAffectsSpawning() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
