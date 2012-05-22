@@ -22,7 +22,7 @@ public class PlayerToggleFlyingEvent extends PlayerEvent implements Cancellable 
      *
      * @return flying state
      */
-    public boolean isSneaking() {
+    public boolean isFlying() {
         return isFlying;
     }
 
