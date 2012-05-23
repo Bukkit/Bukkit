@@ -756,4 +756,12 @@ public class TestPlayer implements Player {
     public boolean isBlocking() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public boolean isCounted() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setCounted(boolean counted) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
