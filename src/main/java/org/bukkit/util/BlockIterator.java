@@ -1,15 +1,17 @@
 package org.bukkit.util;
 
-import static org.bukkit.util.NumberConversions.*;
-
-import org.bukkit.World;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.LivingEntity;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import static org.bukkit.util.NumberConversions.floor;
+import static org.bukkit.util.NumberConversions.round;
+
 
 /**
  * This class performs ray tracing and iterates along blocks on a line
@@ -134,16 +136,16 @@ public class BlockIterator implements Iterator<Block> {
 
         Block lastBlock;
 
-        lastBlock = startBlock.getRelative(reverseFace(mainFace));
+        lastBlock = startBlock.getRelative(mainFace.getOppositeFace());
 
         if (secondError < 0) {
             secondError += gridSize;
-            lastBlock = lastBlock.getRelative(reverseFace(secondFace));
+            lastBlock = lastBlock.getRelative(secondFace.getOppositeFace());
         }
 
         if (thirdError < 0) {
             thirdError += gridSize;
-            lastBlock = lastBlock.getRelative(reverseFace(thirdFace));
+            lastBlock = lastBlock.getRelative(thirdFace.getOppositeFace());
         }
 
         // This means that when the variables are positive, it means that the coord=1 boundary has been crossed
@@ -176,31 +178,6 @@ public class BlockIterator implements Iterator<Block> {
 
     private boolean blockEquals(Block a, Block b) {
         return a.getX() == b.getX() && a.getY() == b.getY() && a.getZ() == b.getZ();
-    }
-
-    private BlockFace reverseFace(BlockFace face) {
-        switch (face) {
-        case UP:
-            return BlockFace.DOWN;
-
-        case DOWN:
-            return BlockFace.UP;
-
-        case NORTH:
-            return BlockFace.SOUTH;
-
-        case SOUTH:
-            return BlockFace.NORTH;
-
-        case EAST:
-            return BlockFace.WEST;
-
-        case WEST:
-            return BlockFace.EAST;
-
-        default:
-            return null;
-        }
     }
 
     private BlockFace getXFace(Vector direction) {
