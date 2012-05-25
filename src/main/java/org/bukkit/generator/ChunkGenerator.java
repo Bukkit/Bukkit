@@ -87,7 +87,7 @@ public abstract class ChunkGenerator {
      * Setting a block at X, Y, Z within the chunk can be done with the following mapping function:
      * <pre>
      *    void setBlock(short[][] result, int x, int y, int z, short blkid) {
-     *        if (result[y >> 4) == null) {
+     *        if (result[y >> 4] == null) {
      *            result[y >> 4] = new short[4096];
      *        }
      *        result[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = blkid;
@@ -96,7 +96,7 @@ public abstract class ChunkGenerator {
      * while reading a block ID can be done with the following mapping function:
      * <pre>
      *    short getBlock(short[][] result, int x, int y, int z) {
-     *        if (result[y >> 4) == null) {
+     *        if (result[y >> 4] == null) {
      *            return (short)0;
      *        }
      *        return result[y >> 4][((y & 0xF) << 8) | (z << 4) | x];
@@ -140,7 +140,7 @@ public abstract class ChunkGenerator {
      * Setting a block at X, Y, Z within the chunk can be done with the following mapping function:
      * <pre>
      *    void setBlock(byte[][] result, int x, int y, int z, byte blkid) {
-     *        if (result[y >> 4) == null) {
+     *        if (result[y >> 4] == null) {
      *            result[y >> 4] = new byte[4096];
      *        }
      *        result[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = blkid;
@@ -149,7 +149,7 @@ public abstract class ChunkGenerator {
      * while reading a block ID can be done with the following mapping function:
      * <pre>
      *    byte getBlock(byte[][] result, int x, int y, int z) {
-     *        if (result[y >> 4) == null) {
+     *        if (result[y >> 4] == null) {
      *            return (byte)0;
      *        }
      *        return result[y >> 4][((y & 0xF) << 8) | (z << 4) | x];
