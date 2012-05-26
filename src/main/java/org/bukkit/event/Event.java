@@ -5,6 +5,7 @@ package org.bukkit.event;
  */
 public abstract class Event {
     private String name;
+    private boolean propagating = true;
 
     /**
      * @return Name of this event
@@ -17,6 +18,20 @@ public abstract class Event {
     }
 
     public abstract HandlerList getHandlers();
+    
+    /**
+     * @return If this event is still propagating
+     */
+    public boolean isPropagating() {
+        return propagating;
+    }
+    
+    /**
+     * Makes this event stop propagating, stopping in it's tracks at this listener
+     */ 
+    public void stopPropagating() {
+        propagating = false;
+    }
 
     public enum Result {
 
