@@ -457,6 +457,7 @@ public final class SimplePluginManager implements PluginManager {
             }
 
             try {
+                if (!event.isPropagating()) break;
                 registration.callEvent(event);
             } catch (AuthorNagException ex) {
                 Plugin plugin = registration.getPlugin();
