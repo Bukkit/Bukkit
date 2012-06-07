@@ -202,7 +202,7 @@ public interface Entity {
 
     /**
      * Gets the amount of ticks this entity has lived for.
-     * <p>
+     * <p />
      * This is the equivalent to "age" in entities.
      *
      * @return Age of entity
@@ -211,7 +211,7 @@ public interface Entity {
 
     /**
      * Sets the amount of ticks this entity has lived for.
-     * <p>
+     * <p />
      * This is the equivalent to "age" in entities. May not be less than one tick.
      *
      * @param value Age of entity
@@ -220,7 +220,7 @@ public interface Entity {
 
     /**
      * Performs the specified {@link EntityEffect} for this entity.
-     * <p>
+     * <p />
      * This will be viewable to all players near the entity.
      *
      * @param type Effect to play.

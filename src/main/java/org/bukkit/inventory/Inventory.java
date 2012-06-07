@@ -1,12 +1,17 @@
 package org.bukkit.inventory;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
+
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.inventory.InventoryType;
 
 /**
  * Interface to the various inventories
  */
-public interface Inventory {
+public interface Inventory extends Iterable<ItemStack> {
 
     /**
      * Returns the size of the inventory
@@ -14,6 +19,26 @@ public interface Inventory {
      * @return The inventory size
      */
     public int getSize();
+
+    /**
+     * @return The maximum stack size for items in this inventory.
+     */
+    public int getMaxStackSize();
+
+    /**
+     * This method allows you to change the maximum stack size for an inventory.
+     * <p /><b>Caveats:</b>
+     * <ul>
+     * <li>Not all inventories respect this value.
+     * <li>Stacks larger than 127 may be clipped when the world is saved.
+     * <li>This value is not guaranteed to be preserved; be sure to set it before every time
+     * you want to set a slot over the max stack size.
+     * <li>Stacks larger than the default max size for this type of inventory may not display
+     * correctly in the client.
+     * </ul>
+     * @param size The new maximum stack size for items in this inventory.
+     */
+    public void setMaxStackSize(int size);
 
     /**
      * Return the name of the inventory
@@ -69,7 +94,8 @@ public interface Inventory {
     /**
      * Set the inventory's contents
      *
-     * @param items A complete replacement for the contents; the length must be equal to {@link #getSize()}.
+     * @param items A complete replacement for the contents; the length must be less than or equal to {@link #getSize()}.
+     * @throws IllegalArgumentException If the array has more items than the inventory.
      */
     public void setContents(ItemStack[] items);
 
@@ -179,7 +205,7 @@ public interface Inventory {
     /**
      * Find the first empty Slot.
      *
-     * @return The first empty Slot found.
+     * @return The first empty Slot found, or -1 if no empty slots.
      */
     public int firstEmpty();
 
@@ -216,4 +242,43 @@ public interface Inventory {
      * Clear out the whole index
      */
     public void clear();
+
+    /**
+     * Get a list of players viewing. Note that a player is considered to be viewing their own
+     * inventory and internal crafting screen even when said inventory is not open. They will normally
+     * be considered to be viewing their inventory even when they have a different inventory screen open,
+     * but it's possible for customized inventory screens to exclude the viewer's inventory, so this should
+     * never be assumed to be non-empty.
+     * @return A list of players.
+     */
+    public List<HumanEntity> getViewers();
+
+    /**
+     * Get the title of this inventory.
+     * @return The title.
+     */
+    public String getTitle();
+
+    /**
+     * Check what type of inventory this is.
+     * @return The type of inventory.
+     */
+    public InventoryType getType();
+
+    /**
+     * Gets the block or entity belonging to the open inventory
+     * @return The holder of the inventory; null if it has no holder.
+     */
+    public InventoryHolder getHolder();
+
+    public ListIterator<ItemStack> iterator();
+
+    /**
+     * Returns an iterator starting at the given index. If the index is positive, then the first
+     * call to next() will return the item at that index; if it is negative, the first call to
+     * previous will return the item at index (getSize() + index).
+     * @param index The index.
+     * @return An iterator.
+     */
+    public ListIterator<ItemStack> iterator(int index);
 }

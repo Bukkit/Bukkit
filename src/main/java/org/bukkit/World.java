@@ -413,7 +413,7 @@ public interface World extends PluginMessageRecipient {
      * Sets the relative in-game time on the server.
      * <p />
      * The relative time is analogous to hours * 1000
-     * <br /><br />
+     * <p />
      * Note that setting the relative time below the current relative time will
      * actually move the clock forward a day. If you require to rewind time, please
      * see setFullTime
@@ -433,7 +433,7 @@ public interface World extends PluginMessageRecipient {
 
     /**
      * Sets the in-game time on the server
-     * <br /><br />
+     * <p />
      * Note that this sets the full time of the world, which may cause adverse
      * effects such as breaking redstone clocks and any scheduled events
      *
