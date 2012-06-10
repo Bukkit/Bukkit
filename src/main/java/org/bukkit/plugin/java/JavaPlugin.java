@@ -23,6 +23,7 @@ import org.bukkit.plugin.PluginBase;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginLogger;
+import org.bukkit.plugin.UninitializedPluginException;
 
 import com.avaje.ebean.EbeanServer;
 import com.avaje.ebean.EbeanServerFactory;
@@ -56,8 +57,12 @@ public abstract class JavaPlugin extends PluginBase {
      * folder may not yet exist.
      *
      * @return The folder.
+     * @throws UninitializedPluginException if the plugin has not been initialized
      */
     public File getDataFolder() {
+        if (!initialized) {
+            throw new UninitializedPluginException();
+        }
         return dataFolder;
     }
 
@@ -65,8 +70,12 @@ public abstract class JavaPlugin extends PluginBase {
      * Gets the associated PluginLoader responsible for this plugin
      *
      * @return PluginLoader that controls this plugin
+     * @throws UninitializedPluginException if the plugin has not been initialized
      */
     public final PluginLoader getPluginLoader() {
+        if (!initialized) {
+            throw new UninitializedPluginException();
+        }
         return loader;
     }
 
@@ -74,8 +83,12 @@ public abstract class JavaPlugin extends PluginBase {
      * Returns the Server instance currently running this plugin
      *
      * @return Server running this plugin
+     * @throws UninitializedPluginException if the plugin has not been initialized
      */
     public final Server getServer() {
+        if (!initialized) {
+            throw new UninitializedPluginException();
+        }
         return server;
     }
 
@@ -92,8 +105,12 @@ public abstract class JavaPlugin extends PluginBase {
      * Returns the file which contains this plugin
      *
      * @return File containing this plugin
+     * @throws UninitializedPluginException if the plugin has not been initialized
      */
     protected File getFile() {
+        if (!initialized) {
+            throw new UninitializedPluginException();
+        }
         return file;
     }
 
@@ -101,12 +118,24 @@ public abstract class JavaPlugin extends PluginBase {
      * Returns the plugin.yaml file containing the details for this plugin
      *
      * @return Contents of the plugin.yaml file
+     * @throws UninitializedPluginException if the plugin has not been initialized
      */
     public PluginDescriptionFile getDescription() {
+        if (!initialized) {
+            throw new UninitializedPluginException();
+        }
         return description;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws UninitializedPluginException if the plugin has not been initialized
+     */
     public FileConfiguration getConfig() {
+        if (!initialized) {
+            throw new UninitializedPluginException();
+        }
         if (newConfig == null) {
             reloadConfig();
         }
@@ -197,8 +226,12 @@ public abstract class JavaPlugin extends PluginBase {
      * Returns the ClassLoader which holds this plugin
      *
      * @return ClassLoader holding this plugin
+     * @throws UninitializedPluginException if the plugin has not been initialized
      */
     protected ClassLoader getClassLoader() {
+        if (!initialized) {
+            throw new UninitializedPluginException();
+        }
         return classLoader;
     }
 
@@ -269,8 +302,12 @@ public abstract class JavaPlugin extends PluginBase {
      * Provides a list of all classes that should be persisted in the database
      *
      * @return List of Classes that are Ebeans
+     * @throws UninitializedPluginException if the plugin has not been initialized
      */
     public List<Class<?>> getDatabaseClasses() {
+        if (!initialized) {
+            throw new UninitializedPluginException();
+        }
         return new ArrayList<Class<?>>();
     }
 
@@ -336,7 +373,15 @@ public abstract class JavaPlugin extends PluginBase {
         this.naggable = canNag;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws UninitializedPluginException if the plugin has not been initialized
+     */
     public EbeanServer getDatabase() {
+        if (!initialized) {
+            throw new UninitializedPluginException();
+        }
         return ebean;
     }
 
@@ -354,7 +399,15 @@ public abstract class JavaPlugin extends PluginBase {
         gen.runScript(true, gen.generateDropDdl());
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws UninitializedPluginException if the plugin has not been initialized
+     */
     public Logger getLogger() {
+        if (!initialized) {
+            throw new UninitializedPluginException();
+        }
         if (logger == null) {
             logger = new PluginLogger(this);
         }
