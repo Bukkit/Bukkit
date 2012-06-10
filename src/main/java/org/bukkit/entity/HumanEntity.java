@@ -146,4 +146,17 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      * @return Whether they are blocking.
      */
     public boolean isBlocking();
+
+    /**
+     * Setting this to false prevents players from activating mob spawners and
+     * allows mobs to randomly spawn and despawn near them (which normally can't happen).
+     * @param yes true to prevent this player from affecting mob spawning
+     */
+    public void setAffectsSpawning(boolean yes);
+
+    /**
+     * @return whether this player can activate mob spawners and prevent
+     *         random spawning and despawning near them.
+     */
+    public boolean getAffectsSpawning();
 }
