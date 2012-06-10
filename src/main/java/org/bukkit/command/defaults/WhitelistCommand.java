@@ -11,7 +11,6 @@ public class WhitelistCommand extends VanillaCommand {
         super("whitelist");
         this.description = "Prevents the specified player from using this server";
         this.usageMessage = "/whitelist (add|remove) <player>\n/whitelist (on|off|list|reload)";
-        this.setPermission("bukkit.command.whitelist.reload;bukkit.command.whitelist.enable;bukkit.command.whitelist.disable;bukkit.command.whitelist.list;bukkit.command.whitelist.add;bukkit.command.whitelist.remove");
     }
 
     @Override
@@ -44,7 +43,7 @@ public class WhitelistCommand extends VanillaCommand {
 
                 for (OfflinePlayer player : Bukkit.getWhitelistedPlayers()) {
                     if (result.length() > 0) {
-                        result.append(", ");
+                        result.append(" ");
                     }
 
                     result.append(player.getName());
@@ -86,6 +85,6 @@ public class WhitelistCommand extends VanillaCommand {
 
     @Override
     public boolean matches(String input) {
-        return input.equalsIgnoreCase("whitelist");
+        return input.startsWith("whitelist ") || input.equalsIgnoreCase("whitelist");
     }
 }

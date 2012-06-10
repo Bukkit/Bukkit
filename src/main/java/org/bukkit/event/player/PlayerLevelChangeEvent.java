@@ -8,11 +8,11 @@ import org.bukkit.event.HandlerList;
  */
 public class PlayerLevelChangeEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
-    private final int oldLevel;
-    private final int newLevel;
+    private int oldLevel;
+    private int newLevel;
 
-    public PlayerLevelChangeEvent(final Player player, final int oldLevel, final int newLevel) {
-         super(player);
+    public PlayerLevelChangeEvent(Player player, int oldLevel, int newLevel) {
+         super(Type.PLAYER_LEVEL_CHANGE, player);
          this.oldLevel = oldLevel;
          this.newLevel = newLevel;
     }
@@ -35,7 +35,6 @@ public class PlayerLevelChangeEvent extends PlayerEvent {
         return newLevel;
     }
 
-    @Override
     public HandlerList getHandlers() {
         return handlers;
     }

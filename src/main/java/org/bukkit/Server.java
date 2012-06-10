@@ -1,32 +1,28 @@
 package org.bukkit;
 
-import java.io.File;
-import java.util.Iterator;
+import org.bukkit.generator.ChunkGenerator;
+import com.avaje.ebean.config.ServerConfig;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Recipe;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
+import java.io.File;
 
 import org.bukkit.command.CommandException;
+import org.bukkit.command.PluginCommand;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.help.HelpMap;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
 import org.bukkit.scheduler.BukkitScheduler;
-
-import com.avaje.ebean.config.ServerConfig;
 
 /**
  * Represents a server implementation
@@ -118,20 +114,6 @@ public interface Server extends PluginMessageRecipient {
     public String getServerId();
 
     /**
-     * Get world type (level-type setting) for default world
-     *
-     * @return The value of level-type (e.g. DEFAULT, FLAT, DEFAULT_1_1)
-     */
-    public String getWorldType();
-
-    /**
-     * Get generate-structures setting
-     *
-     * @return true if structure generation is enabled, false if not
-     */
-    public boolean getGenerateStructures();
-
-    /**
      * Gets whether this server allows the End or not.
      *
      * @return Whether this server allows the End or not.
@@ -198,13 +180,6 @@ public interface Server extends PluginMessageRecipient {
      * @return The name of the update folder
      */
     public File getUpdateFolderFile();
-
-    /**
-     * Gets the value of the connection throttle setting
-     *
-     * @return the value of the connection throttle setting
-     */
-    public long getConnectionThrottle();
 
     /**
      * Gets default ticks per animal spawns value
@@ -303,12 +278,68 @@ public interface Server extends PluginMessageRecipient {
     public List<World> getWorlds();
 
     /**
+     * Creates or loads a world with the given name.
+     * If the world is already loaded, it will just return the equivalent of
+     * getWorld(name)
+     *
+     * @param name Name of the world to load
+     * @param environment Environment type of the world
+     * @return Newly created or loaded World
+     * @deprecated Use {@link #createWorld(org.bukkit.WorldCreator)}
+     */
+    @Deprecated
+    public World createWorld(String name, World.Environment environment);
+
+    /**
+     * Creates or loads a world with the given name.
+     * If the world is already loaded, it will just return the equivalent of
+     * getWorld(name)
+     *
+     * @param name Name of the world to load
+     * @param environment Environment type of the world
+     * @param seed Seed value to create the world with
+     * @return Newly created or loaded World
+     * @deprecated Use {@link #createWorld(org.bukkit.WorldCreator)}
+     */
+    @Deprecated
+    public World createWorld(String name, World.Environment environment, long seed);
+
+    /**
+     * Creates or loads a world with the given name.
+     * If the world is already loaded, it will just return the equivalent of
+     * getWorld(name)
+     *
+     * @param name Name of the world to load
+     * @param environment Environment type of the world
+     * @param generator ChunkGenerator to use in the construction of the new world
+     * @return Newly created or loaded World
+     * @deprecated Use {@link #createWorld(org.bukkit.WorldCreator)}
+     */
+    @Deprecated
+    public World createWorld(String name, World.Environment environment, ChunkGenerator generator);
+
+    /**
+     * Creates or loads a world with the given name.
+     * If the world is already loaded, it will just return the equivalent of
+     * getWorld(name)
+     *
+     * @param name Name of the world to load
+     * @param environment Environment type of the world
+     * @param seed Seed value to create the world with
+     * @param generator ChunkGenerator to use in the construction of the new world
+     * @return Newly created or loaded World
+     * @deprecated Use {@link #createWorld(org.bukkit.WorldCreator)}
+     */
+    @Deprecated
+    public World createWorld(String name, World.Environment environment, long seed, ChunkGenerator generator);
+
+    /**
      * Creates or loads a world with the given name using the specified options.
      * <p />
      * If the world is already loaded, it will just return the equivalent of
      * getWorld(creator.name()).
      *
-     * @param creator The options to use when creating the world.
+     * @param options Options to use when creating the world
      * @return Newly created or loaded world
      */
     public World createWorld(WorldCreator creator);
@@ -409,35 +440,9 @@ public interface Server extends PluginMessageRecipient {
      * Adds a recipe to the crafting manager.
      *
      * @param recipe The recipe to add.
-     * @return True if the recipe was added, false if it wasn't for some reason.
+     * @return True to indicate that the recipe was added.
      */
     public boolean addRecipe(Recipe recipe);
-
-    /**
-     * Get a list of all recipes for a given item. The stack size is ignored in comparisons.
-     * If the durability is -1, it will match any data value.
-     *
-     * @param result The item whose recipes you want
-     * @return The list of recipes
-     */
-    public List<Recipe> getRecipesFor(ItemStack result);
-
-    /**
-     * Get an iterator through the list of crafting recipes.
-     *
-     * @return The iterator.
-     */
-    public Iterator<Recipe> recipeIterator();
-
-    /**
-     * Clears the list of crafting recipes.
-     */
-    public void clearRecipes();
-
-    /**
-     * Resets the list of crafting recipes to the default.
-     */
-    public void resetRecipes();
 
     /**
      * Gets a list of command aliases defined in the server properties.
@@ -585,58 +590,4 @@ public interface Server extends PluginMessageRecipient {
      * @return Messenger responsible for this server.
      */
     public Messenger getMessenger();
-
-    /**
-     * Gets the {@link HelpMap} providing help topics for this server.
-     *
-     * @return The server's HelpMap.
-     */
-    public HelpMap getHelpMap();
-
-    /**
-     * Creates an empty inventory of the specified type. If the type is {@link InventoryType#CHEST},
-     * the new inventory has a size of 27; otherwise the new inventory has the normal size for
-     * its type.
-     * @param owner The holder of the inventory; can be null if there's no holder.
-     * @param type The type of inventory to create.
-     * @return The new inventory.
-     */
-    Inventory createInventory(InventoryHolder owner, InventoryType type);
-
-    /**
-     * Creates an empty inventory of type {@link InventoryType#CHEST} with the specified size.
-     * @param owner The holder of the inventory; can be null if there's no holder.
-     * @param size The size of inventory to create; must be a multiple of 9.
-     * @return The new inventory.
-     * @throws IllegalArgumentException If the size is not a multiple of 9.
-     */
-    Inventory createInventory(InventoryHolder owner, int size);
-
-    /**
-     * Creates an empty inventory of type {@link InventoryType#CHEST} with the specified size and title.
-     * @param owner The holder of the inventory; can be null if there's no holder.
-     * @param size The size of inventory to create; must be a multiple of 9.
-     * @param title The title of the inventory, to be displayed when it is viewed.
-     * @return The new inventory.
-     * @throws IllegalArgumentException If the size is not a multiple of 9.
-     */
-    Inventory createInventory(InventoryHolder owner, int size, String title);
-
-    /**
-     * Gets user-specified limit for number of monsters that can spawn in a chunk
-     * @returns The monster spawn limit
-     */
-    int getMonsterSpawnLimit();
-
-    /**
-     * Gets user-specified limit for number of animals that can spawn in a chunk
-     * @returns The animal spawn limit
-     */
-    int getAnimalSpawnLimit();
-
-    /**
-     * Gets user-specified limit for number of water animals that can spawn in a chunk
-     * @returns The water animal spawn limit
-     */
-    int getWaterAnimalSpawnLimit();
 }

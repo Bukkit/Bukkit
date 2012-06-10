@@ -10,10 +10,6 @@ public class MultipleCommandAlias extends Command {
         super(name);
         this.commands = commands;
     }
-    
-    public Command[] getCommands() {
-        return commands;
-    }
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {

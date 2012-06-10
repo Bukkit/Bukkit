@@ -1,5 +1,6 @@
 package org.bukkit.plugin;
 
+import com.avaje.ebean.EbeanServer;
 import java.io.File;
 import java.io.InputStream;
 import java.util.logging.Logger;
@@ -7,16 +8,15 @@ import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.Event;
 import org.bukkit.generator.ChunkGenerator;
-
-import com.avaje.ebean.EbeanServer;
+import org.bukkit.util.config.Configuration;
 
 /**
  * Represents a Plugin
- * <p />
- * The use of {@link PluginBase} is recommended for actual Implementation
  */
 public interface Plugin extends CommandExecutor {
+
     /**
      * Returns the folder that the plugin data's files are located in. The
      * folder may not yet exist.
@@ -31,6 +31,13 @@ public interface Plugin extends CommandExecutor {
      * @return Contents of the plugin.yaml file
      */
     public PluginDescriptionFile getDescription();
+
+    /**
+     * Returns the main configuration file. It should be loaded.
+     *
+     * @return The configuration
+     */
+    public Configuration getConfiguration();
 
     /**
      * Gets a {@link FileConfiguration} for this plugin, read through "config.yml"
@@ -151,13 +158,4 @@ public interface Plugin extends CommandExecutor {
      * @return Logger associated with this server
      */
     public Logger getLogger();
-
-    /**
-     * Returns the name of the plugin.
-     *
-     * This should return the bare name of the plugin and should be used for comparison.
-     *
-     * @return name of the plugin
-     */
-    public String getName();
 }

@@ -6,13 +6,14 @@ import org.bukkit.event.HandlerList;
 /**
  * Fired when a player changes their currently held item
  */
+@SuppressWarnings("serial")
 public class PlayerItemHeldEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
-    private final int previous;
-    private final int current;
+    private int previous;
+    private int current;
 
     public PlayerItemHeldEvent(final Player player, final int previous, final int current) {
-        super(player);
+        super(Type.PLAYER_ITEM_HELD, player);
         this.previous = previous;
         this.current = current;
     }

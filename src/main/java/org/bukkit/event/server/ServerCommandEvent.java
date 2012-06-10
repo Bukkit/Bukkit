@@ -1,17 +1,25 @@
 package org.bukkit.event.server;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.event.HandlerList;
 
 /**
  * Server Command events
  */
+@SuppressWarnings("serial")
 public class ServerCommandEvent extends ServerEvent {
     private static final HandlerList handlers = new HandlerList();
     private String command;
-    private final CommandSender sender;
+    private CommandSender sender;
 
-    public ServerCommandEvent(final CommandSender sender, final String command) {
+    @Deprecated
+    public ServerCommandEvent(ConsoleCommandSender console, String message) {
+        this(Type.SERVER_COMMAND, console, message);
+    }
+
+    public ServerCommandEvent(Type type, CommandSender sender, String command) {
+        super(type);
         this.command = command;
         this.sender = sender;
     }

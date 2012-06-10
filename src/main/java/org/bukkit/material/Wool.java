@@ -54,9 +54,4 @@ public class Wool extends MaterialData implements Colorable {
     public String toString() {
         return getColor() + " " + super.toString();
     }
-
-    @Override
-    public Wool clone() {
-        return (Wool) super.clone();
-    }
 }

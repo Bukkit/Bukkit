@@ -7,13 +7,14 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a player toggles their sneaking state
  */
+@SuppressWarnings("serial")
 public class PlayerToggleSneakEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private final boolean isSneaking;
+    private boolean isSneaking;
     private boolean cancel = false;
 
-    public PlayerToggleSneakEvent(final Player player, final boolean isSneaking) {
-        super(player);
+    public PlayerToggleSneakEvent(final Player player, boolean isSneaking) {
+        super(Type.PLAYER_TOGGLE_SNEAK, player);
         this.isSneaking = isSneaking;
     }
 

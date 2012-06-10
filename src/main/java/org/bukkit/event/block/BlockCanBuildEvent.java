@@ -13,13 +13,14 @@ import org.bukkit.event.HandlerList;
  * <li>If you want to figure out what is being placed, use {@link #getMaterial()} or {@link #getMaterialId()} instead.</li>
  * </ul>
  */
+@SuppressWarnings("serial")
 public class BlockCanBuildEvent extends BlockEvent {
     private static final HandlerList handlers = new HandlerList();
     protected boolean buildable;
     protected int material;
 
-    public BlockCanBuildEvent(final Block block, final int id, final boolean canBuild) {
-        super(block);
+    public BlockCanBuildEvent(Block block, int id, boolean canBuild) {
+        super(Type.BLOCK_CANBUILD, block);
         buildable = canBuild;
         material = id;
     }

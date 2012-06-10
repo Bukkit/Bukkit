@@ -6,13 +6,14 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a redstone current changes
  */
+@SuppressWarnings("serial")
 public class BlockRedstoneEvent extends BlockEvent {
     private static final HandlerList handlers = new HandlerList();
-    private final int oldCurrent;
+    private int oldCurrent;
     private int newCurrent;
 
-    public BlockRedstoneEvent(final Block block, final int oldCurrent, final int newCurrent) {
-        super(block);
+    public BlockRedstoneEvent(Block block, int oldCurrent, int newCurrent) {
+        super(Type.REDSTONE_CHANGE, block);
         this.oldCurrent = oldCurrent;
         this.newCurrent = newCurrent;
     }

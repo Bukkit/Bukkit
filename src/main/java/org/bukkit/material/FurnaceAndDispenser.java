@@ -70,9 +70,4 @@ public class FurnaceAndDispenser extends MaterialData implements Directional {
     public String toString() {
         return super.toString() + " facing " + getFacing();
     }
-
-    @Override
-    public FurnaceAndDispenser clone() {
-        return (FurnaceAndDispenser) super.clone();
-    }
 }

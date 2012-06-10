@@ -1,68 +1,25 @@
 package org.bukkit.event.player;
 
-import java.net.InetAddress;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
 /**
  * Stores details for players attempting to log in
  */
+@SuppressWarnings("serial")
 public class PlayerLoginEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
-    private final InetAddress address;
-    private final String hostname;
-    private Result result = Result.ALLOWED;
-    private String message = "";
+    private Result result;
+    private String message;
 
-    /**
-     * @deprecated Address should be provided in other constructor
-     */
-    @Deprecated
     public PlayerLoginEvent(final Player player) {
-        this(player, "", null);
+        super(Type.PLAYER_LOGIN, player);
+        this.result = Result.ALLOWED;
+        this.message = "";
     }
 
-    /**
-     * @deprecated Address should be provided in other constructor
-     */
-    @Deprecated
-    public PlayerLoginEvent(final Player player, final String hostname) {
-        this(player, hostname, null);
-    }
-
-    /**
-     * This constructor defaults message to an empty string, and result to ALLOWED
-     *
-     * @param player The {@link Player} for this event
-     * @param hostname The hostname that was used to connect to the server
-     * @param address The address the player used to connect, provided for timing issues
-     */
-    public PlayerLoginEvent(final Player player, final String hostname, final InetAddress address) {
-        super(player);
-        this.hostname = hostname;
-        this.address = address;
-    }
-
-    /**
-     * @deprecated Address and hostname should be provided in other constructor
-     */
-    @Deprecated
-    public PlayerLoginEvent(final Player player, final Result result, final String message) {
-        this(player, "", null, result, message);
-    }
-
-    /**
-     * This constructor pre-configures the event with a result and message
-     *
-     * @param player The {@link Player} for this event
-     * @param hostname The hostname that was used to connect to the server
-     * @param address The address the player used to connect, provided for timing issues
-     * @param result The result status for this event
-     * @param message The message to be displayed if result denies login
-     */
-    public PlayerLoginEvent(final Player player, String hostname, final InetAddress address, final Result result, final String message) {
-        this(player, hostname, address);
+    public PlayerLoginEvent(final Type type, final Player player, final Result result, final String message) {
+        super(type, player);
         this.result = result;
         this.message = message;
     }
@@ -104,15 +61,6 @@ public class PlayerLoginEvent extends PlayerEvent {
     }
 
     /**
-     * Gets the hostname that the player used to connect to the server, or blank if unknown
-     *
-     * @return The hostname
-     */
-    public String getHostname() {
-        return hostname;
-    }
-
-    /**
      * Allows the player to log in
      */
     public void allow() {
@@ -129,18 +77,6 @@ public class PlayerLoginEvent extends PlayerEvent {
     public void disallow(final Result result, final String message) {
         this.result = result;
         this.message = message;
-    }
-
-    /**
-     * Gets the {@link InetAddress} for the Player associated
-     * with this event. This method is provided as a workaround for
-     * player.getAddress() returning null during PlayerLoginEvent.
-     *
-     * @return The address for this player. For legacy compatibility,
-     * this may be null.
-     */
-    public InetAddress getAddress() {
-        return address;
     }
 
     @Override

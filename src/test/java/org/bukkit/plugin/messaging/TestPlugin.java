@@ -1,24 +1,22 @@
-package org.bukkit.plugin;
+package org.bukkit.plugin.messaging;
 
+import com.avaje.ebean.EbeanServer;
 import java.io.File;
 import java.io.InputStream;
-
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.Event.Type;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginLoader;
+import org.bukkit.plugin.PluginLogger;
+import org.bukkit.util.config.Configuration;
 
-import com.avaje.ebean.EbeanServer;
-
-public class TestPlugin extends PluginBase {
+public class TestPlugin implements Plugin {
     private boolean enabled = true;
-
-    final private String pluginName;
-
-    public TestPlugin(String pluginName) {
-        this.pluginName = pluginName;
-    }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
@@ -29,7 +27,11 @@ public class TestPlugin extends PluginBase {
     }
 
     public PluginDescriptionFile getDescription() {
-        return new PluginDescriptionFile(pluginName, "1.0", "test.test");
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    public Configuration getConfiguration() {
+        throw new UnsupportedOperationException("Not supported.");
     }
 
     public FileConfiguration getConfig() {
@@ -100,7 +102,20 @@ public class TestPlugin extends PluginBase {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    public long getTiming(Type type) {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    public void incTiming(Type type, long delta) {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    public void resetTimings() {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         throw new UnsupportedOperationException("Not supported.");
     }
+
 }

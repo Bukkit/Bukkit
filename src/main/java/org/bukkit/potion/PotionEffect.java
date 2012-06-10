@@ -26,8 +26,8 @@ public class PotionEffect {
      * {@link LivingEntity}.
      *
      * @see LivingEntity#addPotionEffect(PotionEffect)
-     * @param entity The entity to add this effect to
-     * @return Whether the effect could be added
+     * @param entity
+     *            The entity to add this effect to
      */
     public boolean apply(LivingEntity entity) {
         return entity.addPotionEffect(this);
@@ -56,7 +56,6 @@ public class PotionEffect {
      * Returns the amplifier of this effect. A higher amplifier means the potion
      * effect happens more often over its duration and in some cases has more
      * effect on its target.
-     * @return The effect amplifier
      */
     public int getAmplifier() {
         return amplifier;
@@ -65,7 +64,6 @@ public class PotionEffect {
     /**
      * Returns the duration (in ticks) that this effect will run for when
      * applied to a {@link LivingEntity}.
-     * @return The duration of the effect
      */
     public int getDuration() {
         return duration;

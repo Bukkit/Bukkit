@@ -54,9 +54,4 @@ public class Crops extends MaterialData {
     public String toString() {
         return getState() + " " + super.toString();
     }
-
-    @Override
-    public Crops clone() {
-        return (Crops) super.clone();
-    }
 }

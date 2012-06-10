@@ -35,17 +35,11 @@ public abstract class SimpleAttachableMaterialData extends MaterialData implemen
     }
 
     public BlockFace getFacing() {
-        BlockFace attachedFace = getAttachedFace();
-        return attachedFace == null ? null : attachedFace.getOppositeFace();
+        return getAttachedFace().getOppositeFace();
     }
 
     @Override
     public String toString() {
         return super.toString() + " facing " + getFacing();
-    }
-
-    @Override
-    public SimpleAttachableMaterialData clone() {
-        return (SimpleAttachableMaterialData) super.clone();
     }
 }

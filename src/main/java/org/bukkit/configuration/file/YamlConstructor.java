@@ -23,11 +23,12 @@ public class YamlConstructor extends SafeConstructor {
                 throw new YAMLException("Unexpected referential mapping structure. Node: " + node);
             }
 
-            Map<?, ?> raw = (Map<?, ?>) super.construct(node);
+            @SuppressWarnings("unchecked")
+            Map<Object, Object> raw = (Map<Object, Object>) super.construct(node);
 
             if (raw.containsKey(ConfigurationSerialization.SERIALIZED_TYPE_KEY)) {
                 Map<String, Object> typed = new LinkedHashMap<String, Object>(raw.size());
-                for (Map.Entry<?, ?> entry : raw.entrySet()) {
+                for (Map.Entry<Object, Object> entry : raw.entrySet()) {
                     typed.put(entry.getKey().toString(), entry.getValue());
                 }
 

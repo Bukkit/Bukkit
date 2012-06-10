@@ -30,6 +30,6 @@ public class BanCommand extends VanillaCommand {
 
     @Override
     public boolean matches(String input) {
-        return input.equalsIgnoreCase("ban");
+        return input.startsWith("ban ") || input.equalsIgnoreCase("ban");
     }
 }

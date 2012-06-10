@@ -7,14 +7,15 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a player gets kicked from the server
  */
+@SuppressWarnings("serial")
 public class PlayerKickEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private String leaveMessage;
     private String kickReason;
     private Boolean cancel;
 
-    public PlayerKickEvent(final Player playerKicked, final String kickReason, final String leaveMessage) {
-        super(playerKicked);
+    public PlayerKickEvent(Player playerKicked, String kickReason, String leaveMessage) {
+        super(Type.PLAYER_KICK, playerKicked);
         this.kickReason = kickReason;
         this.leaveMessage = leaveMessage;
         this.cancel = false;

@@ -90,6 +90,18 @@ public class Note {
          *
          * @param id the id of the tone.
          * @return the tone to id.
+         * @deprecated use {@link #getById(byte)}
+         */
+        @Deprecated
+        public static Tone getToneById(byte id) {
+            return BY_DATA.get(id);
+        }
+
+        /**
+         * Returns the tone to id. Also returning the semitones.
+         *
+         * @param id the id of the tone.
+         * @return the tone to id.
          */
         public static Tone getById(byte id) {
             return BY_DATA.get(id);
@@ -127,70 +139,15 @@ public class Note {
      *
      * @param octave The octave where the note is in. Has to be 0 - 2.
      * @param tone The tone within the octave. If the octave is 2 the note has to be F#.
-     * @param sharped Set if the tone is sharped (e.g. for F#).
+     * @param sharped Set it the tone is sharped (e.g. for F#).
      */
     public Note(int octave, Tone tone, boolean sharped) {
-        if (sharped && !tone.isSharpable()) {
-            tone = Tone.values()[tone.ordinal() + 1];
-            sharped = false;
-        }
+        Validate.isTrue(!(sharped && !tone.isSharpable()), "This tone could not be sharped.");
         if (octave < 0 || octave > 2 || (octave == 2 && !(tone == Tone.F && sharped))) {
             throw new IllegalArgumentException("Tone and octave have to be between F#0 and F#2");
         }
 
         this.note = (byte) (octave * Tone.TONES_COUNT + tone.getId(sharped));
-    }
-
-    /**
-     * Creates a new note for a flat tone, such as A-flat.
-     *
-     * @param octave The octave where the note is in. Has to be 0 - 1.
-     * @param tone The tone within the octave.
-     * @return The new note.
-     */
-    public static Note flat(int octave, Tone tone) {
-        Validate.isTrue(octave != 2, "Octave cannot be 2 for flats");
-        tone = tone == Tone.G ? Tone.F : Tone.values()[tone.ordinal() - 1];
-        return new Note(octave, tone, tone.isSharpable());
-    }
-
-    /**
-     * Creates a new note for a sharp tone, such as A-sharp.
-     *
-     * @param octave The octave where the note is in. Has to be 0 - 2.
-     * @param tone The tone within the octave. If the octave is 2 the note has to be F#.
-     * @return The new note.
-     */
-    public static Note sharp(int octave, Tone tone) {
-        return new Note(octave, tone, true);
-    }
-
-    /**
-     * Creates a new note for a natural tone, such as A-natural.
-     *
-     * @param octave The octave where the note is in. Has to be 0 - 1.
-     * @param tone The tone within the octave.
-     * @return The new note.
-     */
-    public static Note natural(int octave, Tone tone) {
-        Validate.isTrue(octave != 2, "Octave cannot be 2 for naturals");
-        return new Note(octave, tone, false);
-    }
-
-    /**
-     * @return The note a semitone above this one.
-     */
-    public Note sharped() {
-        Validate.isTrue(note < 24, "This note cannot be sharped because it is the highest known note!");
-        return new Note(note + 1);
-    }
-
-    /**
-     * @return The note a semitone below this one.
-     */
-    public Note flattened() {
-        Validate.isTrue(note > 0, "This note cannot be flattened because it is the lowest known note!");
-        return new Note(note - 1);
     }
 
     /**
@@ -254,10 +211,5 @@ public class Note {
         if (note != other.note)
             return false;
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Note{" + getTone().toString() + (isSharped() ? "#" : "") + "}";
     }
 }

@@ -2,7 +2,6 @@ package org.bukkit;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -16,6 +15,13 @@ import org.junit.Test;
 import com.google.common.collect.Lists;
 
 public class NoteTest {
+    @Test
+    public void getToneByDeprecated() {
+        for (Note.Tone tone : Note.Tone.values()) {
+            assertThat(Note.Tone.getToneById(tone.getId()), is(tone));
+        }
+    }
+
     @Test
     public void getToneByData() {
         for (Note.Tone tone : Note.Tone.values()) {
@@ -80,64 +86,9 @@ public class NoteTest {
         new Note((byte) 3, Note.Tone.A, true);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void createNoteOctaveNonSharpable() {
-        Note note = new Note((byte) 0, Note.Tone.B, true);
-        assertFalse(note.isSharped());
-        assertThat(note.getTone(), is(Note.Tone.C));
-    }
-
-    @Test
-    public void createNoteFlat() {
-        Note note = Note.flat(0, Note.Tone.D);
-        assertTrue(note.isSharped());
-        assertThat(note.getTone(), is(Note.Tone.C));
-    }
-
-    @Test
-    public void createNoteFlatNonFlattenable() {
-        Note note = Note.flat(0, Note.Tone.C);
-        assertFalse(note.isSharped());
-        assertThat(note.getTone(), is(Note.Tone.B));
-    }
-
-    @Test
-    public void testFlatWrapping() {
-        Note note = Note.flat(1, Note.Tone.G);
-        assertTrue(note.isSharped());
-        assertThat(note.getTone(), is(Note.Tone.F));
-    }
-
-    @Test
-    public void testFlatWrapping2() {
-        Note note = new Note(1, Note.Tone.G, false).flattened();
-        assertTrue(note.isSharped());
-        assertThat(note.getTone(), is(Note.Tone.F));
-    }
-
-    @Test
-    public void testSharpWrapping() {
-        Note note = new Note(1, Note.Tone.F, false).sharped();
-        assertTrue(note.isSharped());
-        assertThat(note.getTone(), is(Note.Tone.F));
-        assertEquals(note.getOctave(), 2);
-    }
-
-    @Test(expected=IllegalArgumentException.class)
-    public void testSharpWrapping2() {
-        new Note(2, Note.Tone.F, true).sharped();
-    }
-
-    @Test
-    public void testHighest() {
-        Note note = new Note(2, Note.Tone.F, true);
-        assertEquals(note.getId(), (byte)24);
-    }
-
-    @Test
-    public void testLowest() {
-        Note note = new Note(0, Note.Tone.F, true);
-        assertEquals(note.getId(), (byte)0);
+        new Note((byte) 0, Note.Tone.B, true);
     }
 
     @Test

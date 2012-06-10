@@ -7,13 +7,15 @@ import org.bukkit.event.HandlerList;
 /**
  * Triggered when a painting is removed
  */
+@SuppressWarnings("serial")
 public class PaintingBreakEvent extends PaintingEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
-    private final RemoveCause cause;
 
-    public PaintingBreakEvent(final Painting painting, final RemoveCause cause) {
-        super(painting);
+    private boolean cancelled;
+    private RemoveCause cause;
+
+    public PaintingBreakEvent(final Painting painting, RemoveCause cause) {
+        super(Type.PAINTING_BREAK, painting);
         this.cause = cause;
     }
 

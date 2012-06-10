@@ -11,15 +11,21 @@ import java.util.List;
 /**
  * Called when an entity explodes
  */
+@SuppressWarnings("serial")
 public class EntityExplodeEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel;
-    private final Location location;
-    private final List<Block> blocks;
+    private Location location;
+    private List<Block> blocks;
     private float yield;
 
-    public EntityExplodeEvent(final Entity what, final Location location, final List<Block> blocks, final float yield) {
-        super(what);
+    @Deprecated
+    public EntityExplodeEvent(Entity what, Location location, List<Block> blocks) {
+        this(what, location, blocks, 0.3F);
+    }
+
+    public EntityExplodeEvent(Entity what, Location location, List<Block> blocks, float yield) {
+        super(Type.ENTITY_EXPLODE, what);
         this.location = location;
         this.blocks = blocks;
         this.yield = yield;

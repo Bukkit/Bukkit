@@ -82,9 +82,4 @@ public class Torch extends SimpleAttachableMaterialData {
 
         setData(data);
     }
-
-    @Override
-    public Torch clone() {
-        return (Torch) super.clone();
-    }
 }

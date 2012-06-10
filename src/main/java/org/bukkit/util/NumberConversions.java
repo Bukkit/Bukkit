@@ -6,95 +6,87 @@ package org.bukkit.util;
 public final class NumberConversions {
     private NumberConversions() {}
 
-    public static int floor(double num) {
-        final int floor = (int) num;
-        return floor == num ? floor : floor - (int) (Double.doubleToRawLongBits(num) >>> 63);
-    }
-
-    public static int ceil(final double num) {
-        final int floor = (int) num;
-        return floor == num ? floor : floor + (int) (~Double.doubleToRawLongBits(num) >>> 63);
-    }
-
-    public static int round(double num) {
-        return floor(num + 0.5d);
-    }
-
     public static int toInt(Object object) {
         if (object instanceof Number) {
             return ((Number) object).intValue();
-        }
+        } else {
+            int result = 0;
 
-        try {
-            return Integer.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
+            try {
+                result = Integer.valueOf((String) object);
+            } catch (Throwable ex) {}
+
+            return result;
         }
-        return 0;
     }
 
     public static float toFloat(Object object) {
         if (object instanceof Number) {
             return ((Number) object).floatValue();
-        }
+        } else {
+            float result = 0;
 
-        try {
-            return Float.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
+            try {
+                result = Float.valueOf((String) object);
+            } catch (Throwable ex) {}
+
+            return result;
         }
-        return 0;
     }
 
     public static double toDouble(Object object) {
         if (object instanceof Number) {
             return ((Number) object).doubleValue();
-        }
+        } else {
+            double result = 0;
 
-        try {
-            return Double.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
+            try {
+                result = Double.valueOf((String) object);
+            } catch (Throwable ex) {}
+
+            return result;
         }
-        return 0;
     }
 
     public static long toLong(Object object) {
         if (object instanceof Number) {
             return ((Number) object).longValue();
-        }
+        } else {
+            long result = 0;
 
-        try {
-            return Long.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
+            try {
+                result = Long.valueOf((String) object);
+            } catch (Throwable ex) {}
+
+            return result;
         }
-        return 0;
     }
 
     public static short toShort(Object object) {
         if (object instanceof Number) {
             return ((Number) object).shortValue();
-        }
+        } else {
+            short result = 0;
 
-        try {
-            return Short.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
+            try {
+                result = Short.valueOf((String) object);
+            } catch (Throwable ex) {}
+
+            return result;
         }
-        return 0;
     }
 
     public static byte toByte(Object object) {
         if (object instanceof Number) {
             return ((Number) object).byteValue();
-        }
+        } else {
+            byte result = 0;
 
-        try {
-            return Byte.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
+            try {
+                result = Byte.valueOf((String) object);
+            } catch (Throwable ex) {}
+
+            return result;
         }
-        return 0;
     }
 }

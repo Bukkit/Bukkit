@@ -7,12 +7,14 @@ import org.bukkit.event.HandlerList;
 /**
  * Stores data for entities standing inside a portal block
  */
+@SuppressWarnings("serial")
 public class EntityPortalEnterEvent extends EntityEvent {
     private static final HandlerList handlers = new HandlerList();
-    private final Location location;
 
-    public EntityPortalEnterEvent(final Entity entity, final Location location) {
-        super(entity);
+    private Location location;
+
+    public EntityPortalEnterEvent(Entity entity, Location location) {
+        super(Type.ENTITY_PORTAL_ENTER, entity);
         this.location = location;
     }
 

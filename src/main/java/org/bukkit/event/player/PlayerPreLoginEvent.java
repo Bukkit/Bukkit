@@ -7,14 +7,16 @@ import org.bukkit.event.HandlerList;
 /**
  * Stores details for players attempting to log in
  */
+@SuppressWarnings("serial")
 public class PlayerPreLoginEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private Result result;
     private String message;
-    private final String name;
-    private final InetAddress ipAddress;
+    private String name;
+    private InetAddress ipAddress;
 
-    public PlayerPreLoginEvent(final String name, final InetAddress ipAddress) {
+    public PlayerPreLoginEvent(String name, InetAddress ipAddress) {
+        super(Type.PLAYER_PRELOGIN);
         this.result = Result.ALLOWED;
         this.message = "";
         this.name = name;

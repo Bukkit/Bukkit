@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.apache.commons.lang.Validate;
+import java.util.regex.Pattern;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -49,14 +49,20 @@ public class MemorySection implements ConfigurationSection {
      * @throws IllegalArgumentException Thrown is parent or path is null, or if parent contains no root Configuration.
      */
     protected MemorySection(ConfigurationSection parent, String path) {
-        Validate.notNull(parent, "Parent cannot be null");
-        Validate.notNull(path, "Path cannot be null");
+        if (parent == null) {
+            throw new IllegalArgumentException("Parent cannot be null");
+        }
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
 
         this.path = path;
         this.parent = parent;
         this.root = parent.getRoot();
 
-        Validate.notNull(root, "Path cannot be orphaned");
+        if (root == null) {
+            throw new IllegalArgumentException("Path cannot be orphaned");
+        }
 
         this.fullPath = createPath(parent, path);
     }
@@ -64,8 +70,7 @@ public class MemorySection implements ConfigurationSection {
     public Set<String> getKeys(boolean deep) {
         Set<String> result = new LinkedHashSet<String>();
 
-        Configuration root = getRoot();
-        if (root != null && root.options().copyDefaults()) {
+        if (getRoot().options().copyDefaults()) {
             ConfigurationSection defaults = getDefaultSection();
 
             if (defaults != null) {
@@ -81,8 +86,7 @@ public class MemorySection implements ConfigurationSection {
     public Map<String, Object> getValues(boolean deep) {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-        Configuration root = getRoot();
-        if (root != null && root.options().copyDefaults()) {
+        if (getRoot().options().copyDefaults()) {
             ConfigurationSection defaults = getDefaultSection();
 
             if (defaults != null) {
@@ -96,18 +100,23 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public boolean contains(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         return get(path) != null;
     }
 
     public boolean isSet(String path) {
-        Configuration root = getRoot();
-        if (root == null) {
-            return false;
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
         }
-        if (root.options().copyDefaults()) {
+
+        if (getRoot().options().copyDefaults()) {
             return contains(path);
+        } else {
+            return get(path, null) != null;
         }
-        return get(path, null) != null;
     }
 
     public String getCurrentPath() {
@@ -127,21 +136,23 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public void addDefault(String path, Object value) {
-        Validate.notNull(path, "Path cannot be null");
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
 
-        Configuration root = getRoot();
         if (root == null) {
-            throw new IllegalStateException("Cannot add default without root");
+            throw new IllegalStateException("Cannot set default on orphaned section");
+        } else {
+            root.addDefault(createPath(this, path), value);
         }
-        if (root == this) {
-            throw new UnsupportedOperationException("Unsupported addDefault(String, Object) implementation");
-        }
-        root.addDefault(createPath(this, path), value);
     }
 
     public ConfigurationSection getDefaultSection() {
-        Configuration root = getRoot();
-        Configuration defaults = root == null ? null : root.getDefaults();
+        if (getRoot() == null) {
+            return null;
+        }
+
+        Configuration defaults = getRoot().getDefaults();
 
         if (defaults != null) {
             if (defaults.isConfigurationSection(getCurrentPath())) {
@@ -153,29 +164,25 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public void set(String path, Object value) {
-        Validate.notEmpty(path, "Cannot set to an empty path");
+        String[] split = path.split(Pattern.quote(Character.toString(getRoot().options().pathSeparator())));
+        ConfigurationSection section = this;
 
-        Configuration root = getRoot();
-        if (root == null) {
-            throw new IllegalStateException("Cannot use section without a root");
+        if (path.length() == 0) {
+            throw new IllegalArgumentException("Cannot set to an empty path");
         }
 
-        final char separator = root.options().pathSeparator();
-        // i1 is the leading (higher) index
-        // i2 is the trailing (lower) index
-        int i1 = -1, i2;
-        ConfigurationSection section = this;
-        while ((i1 = path.indexOf(separator, i2 = i1 + 1)) != -1) {
-            String node = path.substring(i2, i1);
-            ConfigurationSection subSection = section.getConfigurationSection(node);
-            if (subSection == null) {
-                section = section.createSection(node);
-            } else {
-                section = subSection;
+        for (int i = 0; i < split.length - 1; i++) {
+            ConfigurationSection last = section;
+
+            section = last.getConfigurationSection(split[i]);
+
+            if (section == null) {
+                section = last.createSection(split[i]);
             }
         }
 
-        String key = path.substring(i2);
+        String key = split[split.length - 1];
+
         if (section == this) {
             if (value == null) {
                 map.remove(key);
@@ -188,80 +195,81 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public Object get(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         return get(path, getDefault(path));
     }
 
     public Object get(String path, Object def) {
-        Validate.notNull(path, "Path cannot be null");
-
-        if (path.length() == 0) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        } else if (path.length() == 0) {
             return this;
         }
 
-        Configuration root = getRoot();
-        if (root == null) {
-            throw new IllegalStateException("Cannot access section without a root");
-        }
-
-        final char separator = root.options().pathSeparator();
-        // i1 is the leading (higher) index
-        // i2 is the trailing (lower) index
-        int i1 = -1, i2;
+        Object result = null;
+        String[] split = path.split(Pattern.quote(Character.toString(getRoot().options().pathSeparator())));
         ConfigurationSection section = this;
-        while ((i1 = path.indexOf(separator, i2 = i1 + 1)) != -1) {
-            section = section.getConfigurationSection(path.substring(i2, i1));
+
+        for (int i = 0; i < split.length - 1; i++) {
+            section = section.getConfigurationSection(split[i]);
+
             if (section == null) {
                 return def;
             }
         }
 
-        String key = path.substring(i2);
+        String key = split[split.length - 1];
+
         if (section == this) {
-            Object result = map.get(key);
+            result = map.get(key);
             return (result == null) ? def : result;
         }
         return section.get(key, def);
     }
 
     public ConfigurationSection createSection(String path) {
-        Validate.notEmpty(path, "Cannot create section at empty path");
-        Configuration root = getRoot();
-        if (root == null) {
-            throw new IllegalStateException("Cannot create section without a root");
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        } else if (path.length() == 0) {
+            throw new IllegalArgumentException("Cannot create section at empty path");
         }
 
-        final char separator = root.options().pathSeparator();
-        // i1 is the leading (higher) index
-        // i2 is the trailing (lower) index
-        int i1 = -1, i2;
+        String[] split = path.split(Pattern.quote(Character.toString(getRoot().options().pathSeparator())));
         ConfigurationSection section = this;
-        while ((i1 = path.indexOf(separator, i2 = i1 + 1)) != -1) {
-            String node = path.substring(i2, i1);
-            ConfigurationSection subSection = section.getConfigurationSection(node);
-            if (subSection == null) {
-                section = section.createSection(node);
-            } else {
-                section = subSection;
+
+        for (int i = 0; i < split.length - 1; i++) {
+            ConfigurationSection last = section;
+
+            section = getConfigurationSection(split[i]);
+
+            if (section == null) {
+                section = last.createSection(split[i]);
             }
         }
 
-        String key = path.substring(i2);
+        String key = split[split.length - 1];
+
         if (section == this) {
             ConfigurationSection result = new MemorySection(this, key);
             map.put(key, result);
             return result;
+        } else {
+            return section.createSection(key);
         }
-        return section.createSection(key);
     }
 
-    public ConfigurationSection createSection(String path, Map<?, ?> map) {
+    @SuppressWarnings("unchecked")
+    public ConfigurationSection createSection(String path, Map<String, Object> map) {
         ConfigurationSection section = createSection(path);
 
-        for (Map.Entry<?, ?> entry : map.entrySet()) {
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
             if (entry.getValue() instanceof Map) {
-                section.createSection(entry.getKey().toString(), (Map<?, ?>) entry.getValue());
+                section.createSection(entry.getKey(), (Map<String, Object>) entry.getValue());
             } else {
-                section.set(entry.getKey().toString(), entry.getValue());
+                section.set(entry.getKey(), entry.getValue());
             }
         }
 
@@ -270,98 +278,176 @@ public class MemorySection implements ConfigurationSection {
 
     // Primitives
     public String getString(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object def = getDefault(path);
         return getString(path, def != null ? def.toString() : null);
     }
 
     public String getString(String path, String def) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path, def);
         return (val != null) ? val.toString() : def;
     }
 
     public boolean isString(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path);
         return val instanceof String;
     }
 
     public int getInt(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object def = getDefault(path);
         return getInt(path, (def instanceof Number) ? toInt(def) : 0);
     }
 
     public int getInt(String path, int def) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path, def);
         return (val instanceof Number) ? toInt(val) : def;
     }
 
     public boolean isInt(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path);
         return val instanceof Integer;
     }
 
     public boolean getBoolean(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object def = getDefault(path);
         return getBoolean(path, (def instanceof Boolean) ? (Boolean) def : false);
     }
 
     public boolean getBoolean(String path, boolean def) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path, def);
         return (val instanceof Boolean) ? (Boolean) val : def;
     }
 
     public boolean isBoolean(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path);
         return val instanceof Boolean;
     }
 
     public double getDouble(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object def = getDefault(path);
         return getDouble(path, (def instanceof Number) ? toDouble(def) : 0);
     }
 
     public double getDouble(String path, double def) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path, def);
         return (val instanceof Number) ? toDouble(val) : def;
     }
 
     public boolean isDouble(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path);
         return val instanceof Double;
     }
 
     public long getLong(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object def = getDefault(path);
         return getLong(path, (def instanceof Number) ? toLong(def) : 0);
     }
 
     public long getLong(String path, long def) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path, def);
         return (val instanceof Number) ? toLong(val) : def;
     }
 
     public boolean isLong(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path);
         return val instanceof Long;
     }
 
     // Java
-    public List<?> getList(String path) {
+    @SuppressWarnings("unchecked")
+    public List<Object> getList(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object def = getDefault(path);
-        return getList(path, (def instanceof List) ? (List<?>) def : null);
+        return getList(path, (def instanceof List) ? (List<Object>) def : null);
     }
 
-    public List<?> getList(String path, List<?> def) {
+    @SuppressWarnings("unchecked")
+    public List<Object> getList(String path, List<?> def) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path, def);
-        return (List<?>) ((val instanceof List) ? val : def);
+        return (List<Object>) ((val instanceof List) ? val : def);
     }
 
     public boolean isList(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path);
         return val instanceof List;
     }
 
     public List<String> getStringList(String path) {
-        List<?> list = getList(path);
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        List<Object> list = getList(path);
 
         if (list == null) {
             return new ArrayList<String>(0);
@@ -379,7 +465,11 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public List<Integer> getIntegerList(String path) {
-        List<?> list = getList(path);
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        List<Object> list = getList(path);
 
         if (list == null) {
             return new ArrayList<Integer>(0);
@@ -395,10 +485,20 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Integer.valueOf((String) object));
                 } catch (Exception ex) {
                 }
+            } else if (object instanceof Byte) {
+                result.add((Integer) (int) (byte) (Byte) object);
             } else if (object instanceof Character) {
-                result.add((int) ((Character) object).charValue());
-            } else if (object instanceof Number) {
-                result.add(((Number) object).intValue());
+                result.add((Integer) (int) (char) (Character) object);
+            } else if (object instanceof Short) {
+                result.add((Integer) (int) (short) (Short) object);
+            } else if (object instanceof Integer) {
+                result.add((Integer) (int) (int) (Integer) object);
+            } else if (object instanceof Long) {
+                result.add((Integer) (int) (long) (Long) object);
+            } else if (object instanceof Float) {
+                result.add((Integer) (int) (float) (Float) object);
+            } else if (object instanceof Double) {
+                result.add((Integer) (int) (double) (Double) object);
             }
         }
 
@@ -406,7 +506,11 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public List<Boolean> getBooleanList(String path) {
-        List<?> list = getList(path);
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        List<Object> list = getList(path);
 
         if (list == null) {
             return new ArrayList<Boolean>(0);
@@ -430,7 +534,11 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public List<Double> getDoubleList(String path) {
-        List<?> list = getList(path);
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        List<Object> list = getList(path);
 
         if (list == null) {
             return new ArrayList<Double>(0);
@@ -446,10 +554,20 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Double.valueOf((String) object));
                 } catch (Exception ex) {
                 }
+            } else if (object instanceof Byte) {
+                result.add((Double) (double) (byte) (Byte) object);
             } else if (object instanceof Character) {
-                result.add((double) ((Character) object).charValue());
-            } else if (object instanceof Number) {
-                result.add(((Number) object).doubleValue());
+                result.add((Double) (double) (char) (Character) object);
+            } else if (object instanceof Short) {
+                result.add((Double) (double) (short) (Short) object);
+            } else if (object instanceof Integer) {
+                result.add((Double) (double) (int) (Integer) object);
+            } else if (object instanceof Long) {
+                result.add((Double) (double) (long) (Long) object);
+            } else if (object instanceof Float) {
+                result.add((Double) (double) (float) (Float) object);
+            } else if (object instanceof Double) {
+                result.add((Double) (double) (double) (Double) object);
             }
         }
 
@@ -457,7 +575,11 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public List<Float> getFloatList(String path) {
-        List<?> list = getList(path);
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        List<Object> list = getList(path);
 
         if (list == null) {
             return new ArrayList<Float>(0);
@@ -473,10 +595,20 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Float.valueOf((String) object));
                 } catch (Exception ex) {
                 }
+            } else if (object instanceof Byte) {
+                result.add((Float) (float) (byte) (Byte) object);
             } else if (object instanceof Character) {
-                result.add((float) ((Character) object).charValue());
-            } else if (object instanceof Number) {
-                result.add(((Number) object).floatValue());
+                result.add((Float) (float) (char) (Character) object);
+            } else if (object instanceof Short) {
+                result.add((Float) (float) (short) (Short) object);
+            } else if (object instanceof Integer) {
+                result.add((Float) (float) (int) (Integer) object);
+            } else if (object instanceof Long) {
+                result.add((Float) (float) (long) (Long) object);
+            } else if (object instanceof Float) {
+                result.add((Float) (float) (float) (Float) object);
+            } else if (object instanceof Double) {
+                result.add((Float) (float) (double) (Double) object);
             }
         }
 
@@ -484,7 +616,11 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public List<Long> getLongList(String path) {
-        List<?> list = getList(path);
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        List<Object> list = getList(path);
 
         if (list == null) {
             return new ArrayList<Long>(0);
@@ -500,10 +636,20 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Long.valueOf((String) object));
                 } catch (Exception ex) {
                 }
+            } else if (object instanceof Byte) {
+                result.add((Long) (long) (byte) (Byte) object);
             } else if (object instanceof Character) {
-                result.add((long) ((Character) object).charValue());
-            } else if (object instanceof Number) {
-                result.add(((Number) object).longValue());
+                result.add((Long) (long) (char) (Character) object);
+            } else if (object instanceof Short) {
+                result.add((Long) (long) (short) (Short) object);
+            } else if (object instanceof Integer) {
+                result.add((Long) (long) (int) (Integer) object);
+            } else if (object instanceof Long) {
+                result.add((Long) (long) (long) (Long) object);
+            } else if (object instanceof Float) {
+                result.add((Long) (long) (float) (Float) object);
+            } else if (object instanceof Double) {
+                result.add((Long) (long) (double) (Double) object);
             }
         }
 
@@ -511,7 +657,11 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public List<Byte> getByteList(String path) {
-        List<?> list = getList(path);
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        List<Object> list = getList(path);
 
         if (list == null) {
             return new ArrayList<Byte>(0);
@@ -527,10 +677,20 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Byte.valueOf((String) object));
                 } catch (Exception ex) {
                 }
+            } else if (object instanceof Byte) {
+                result.add((Byte) (byte) (byte) (Byte) object);
             } else if (object instanceof Character) {
-                result.add((byte) ((Character) object).charValue());
-            } else if (object instanceof Number) {
-                result.add(((Number) object).byteValue());
+                result.add((Byte) (byte) (char) (Character) object);
+            } else if (object instanceof Short) {
+                result.add((Byte) (byte) (short) (Short) object);
+            } else if (object instanceof Integer) {
+                result.add((Byte) (byte) (int) (Integer) object);
+            } else if (object instanceof Long) {
+                result.add((Byte) (byte) (long) (Long) object);
+            } else if (object instanceof Float) {
+                result.add((Byte) (byte) (float) (Float) object);
+            } else if (object instanceof Double) {
+                result.add((Byte) (byte) (double) (Double) object);
             }
         }
 
@@ -538,7 +698,11 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public List<Character> getCharacterList(String path) {
-        List<?> list = getList(path);
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        List<Object> list = getList(path);
 
         if (list == null) {
             return new ArrayList<Character>(0);
@@ -555,8 +719,20 @@ public class MemorySection implements ConfigurationSection {
                 if (str.length() == 1) {
                     result.add(str.charAt(0));
                 }
-            } else if (object instanceof Number) {
-                result.add((char) ((Number) object).intValue());
+            } else if (object instanceof Byte) {
+                result.add((Character) (char) (byte) (Byte) object);
+            } else if (object instanceof Character) {
+                result.add((Character) (char) (char) (Character) object);
+            } else if (object instanceof Short) {
+                result.add((Character) (char) (short) (Short) object);
+            } else if (object instanceof Integer) {
+                result.add((Character) (char) (int) (Integer) object);
+            } else if (object instanceof Long) {
+                result.add((Character) (char) (long) (Long) object);
+            } else if (object instanceof Float) {
+                result.add((Character) (char) (float) (Float) object);
+            } else if (object instanceof Double) {
+                result.add((Character) (char) (double) (Double) object);
             }
         }
 
@@ -564,7 +740,11 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public List<Short> getShortList(String path) {
-        List<?> list = getList(path);
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
+        List<Object> list = getList(path);
 
         if (list == null) {
             return new ArrayList<Short>(0);
@@ -580,27 +760,38 @@ public class MemorySection implements ConfigurationSection {
                     result.add(Short.valueOf((String) object));
                 } catch (Exception ex) {
                 }
+            } else if (object instanceof Byte) {
+                result.add((Short) (short) (byte) (Byte) object);
             } else if (object instanceof Character) {
-                result.add((short) ((Character) object).charValue());
-            } else if (object instanceof Number) {
-                result.add(((Number) object).shortValue());
+                result.add((Short) (short) (char) (Character) object);
+            } else if (object instanceof Short) {
+                result.add((Short) (short) (short) (Short) object);
+            } else if (object instanceof Integer) {
+                result.add((Short) (short) (int) (Integer) object);
+            } else if (object instanceof Long) {
+                result.add((Short) (short) (long) (Long) object);
+            } else if (object instanceof Float) {
+                result.add((Short) (short) (float) (Float) object);
+            } else if (object instanceof Double) {
+                result.add((Short) (short) (double) (Double) object);
             }
         }
 
         return result;
     }
 
-    public List<Map<?, ?>> getMapList(String path) {
-        List<?> list = getList(path);
-        List<Map<?, ?>> result = new ArrayList<Map<?, ?>>();
-
-        if (list == null) {
-            return result;
+    @SuppressWarnings("unchecked")
+    public List<Map<String, Object>> getMapList(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
         }
+
+        List<Object> list = getList(path);
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
         for (Object object : list) {
             if (object instanceof Map) {
-                result.add((Map<?, ?>) object);
+                result.add((Map<String, Object>) object);
             }
         }
 
@@ -609,51 +800,91 @@ public class MemorySection implements ConfigurationSection {
 
     // Bukkit
     public Vector getVector(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object def = getDefault(path);
         return getVector(path, (def instanceof Vector) ? (Vector) def : null);
     }
 
     public Vector getVector(String path, Vector def) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path, def);
         return (val instanceof Vector) ? (Vector) val : def;
     }
 
     public boolean isVector(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path);
         return val instanceof Vector;
     }
 
     public OfflinePlayer getOfflinePlayer(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object def = getDefault(path);
         return getOfflinePlayer(path, (def instanceof OfflinePlayer) ? (OfflinePlayer) def : null);
     }
 
     public OfflinePlayer getOfflinePlayer(String path, OfflinePlayer def) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path, def);
         return (val instanceof OfflinePlayer) ? (OfflinePlayer) val : def;
     }
 
     public boolean isOfflinePlayer(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path);
         return val instanceof OfflinePlayer;
     }
 
     public ItemStack getItemStack(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object def = getDefault(path);
         return getItemStack(path, (def instanceof ItemStack) ? (ItemStack) def : null);
     }
 
     public ItemStack getItemStack(String path, ItemStack def) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path, def);
         return (val instanceof ItemStack) ? (ItemStack) val : def;
     }
 
     public boolean isItemStack(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path);
         return val instanceof ItemStack;
     }
 
     public ConfigurationSection getConfigurationSection(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path, null);
         if (val != null) {
             return (val instanceof ConfigurationSection) ? (ConfigurationSection) val : null;
@@ -664,6 +895,10 @@ public class MemorySection implements ConfigurationSection {
     }
 
     public boolean isConfigurationSection(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
+
         Object val = get(path);
         return val instanceof ConfigurationSection;
     }
@@ -676,10 +911,11 @@ public class MemorySection implements ConfigurationSection {
     }
 
     protected Object getDefault(String path) {
-        Validate.notNull(path, "Path cannot be null");
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null");
+        }
 
-        Configuration root = getRoot();
-        Configuration defaults = root == null ? null : root.getDefaults();
+        Configuration defaults = root.getDefaults();
         return (defaults == null) ? null : defaults.get(createPath(this, path));
     }
 
@@ -750,18 +986,12 @@ public class MemorySection implements ConfigurationSection {
      * @return Full path of the section from its root.
      */
     public static String createPath(ConfigurationSection section, String key, ConfigurationSection relativeTo) {
-        Validate.notNull(section, "Cannot create path without a section");
-        Configuration root = section.getRoot();
-        if (root == null) {
-            throw new IllegalStateException("Cannot create path without a root");
-        }
-        char separator = root.options().pathSeparator();
-
         StringBuilder builder = new StringBuilder();
+
         if (section != null) {
             for (ConfigurationSection parent = section; (parent != null) && (parent != relativeTo); parent = parent.getParent()) {
                 if (builder.length() > 0) {
-                    builder.insert(0, separator);
+                    builder.insert(0, section.getRoot().options().pathSeparator());
                 }
 
                 builder.insert(0, parent.getName());
@@ -770,7 +1000,7 @@ public class MemorySection implements ConfigurationSection {
 
         if ((key != null) && (key.length() > 0)) {
             if (builder.length() > 0) {
-                builder.append(separator);
+                builder.append(section.getRoot().options().pathSeparator());
             }
 
             builder.append(key);
@@ -781,14 +1011,15 @@ public class MemorySection implements ConfigurationSection {
 
     @Override
     public String toString() {
-        Configuration root = getRoot();
-        return new StringBuilder()
-            .append(getClass().getSimpleName())
-            .append("[path='")
-            .append(getCurrentPath())
-            .append("', root='")
-            .append(root == null ? null : root.getClass().getSimpleName())
-            .append("']")
-            .toString();
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(getClass().getSimpleName());
+        builder.append("[path='");
+        builder.append(getCurrentPath());
+        builder.append("', root='");
+        builder.append(root.getClass().getSimpleName());
+        builder.append("']");
+
+        return builder.toString();
     }
 }

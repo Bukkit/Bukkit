@@ -1,9 +1,5 @@
 package org.bukkit.command.defaults;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -14,7 +10,11 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.TimedRegisteredListener;
 
-public class TimingsCommand extends BukkitCommand {
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+
+public class TimingsCommand extends Command {
     public TimingsCommand(String name) {
         super(name);
         this.description = "Records timings for all plugin events";
@@ -37,9 +37,11 @@ public class TimingsCommand extends BukkitCommand {
         boolean separate = "separate".equals(args[0]);
         if ("reset".equals(args[0])) {
             for (HandlerList handlerList : HandlerList.getHandlerLists()) {
-                for (RegisteredListener listener : handlerList.getRegisteredListeners()) {
-                    if (listener instanceof TimedRegisteredListener) {
-                        ((TimedRegisteredListener)listener).reset();
+                for (RegisteredListener[] listeners : handlerList.getRegisteredListeners()) {
+                    for (RegisteredListener listener : listeners) {
+                        if (listener instanceof TimedRegisteredListener) {
+                            ((TimedRegisteredListener)listener).reset();
+                        }
                     }
                 }
             }
@@ -53,10 +55,9 @@ public class TimingsCommand extends BukkitCommand {
             File timings = new File(timingFolder, "timings.txt");
             File names = null;
             while (timings.exists()) timings = new File(timingFolder, "timings" + (++index) + ".txt");
-            PrintStream fileTimings = null;
-            PrintStream fileNames = null;
             try {
-                fileTimings = new PrintStream(timings);
+                PrintStream fileTimings = new PrintStream(timings);
+                PrintStream fileNames = null;
                 if (separate) {
                     names = new File(timingFolder, "names" + index + ".txt");
                     fileNames = new PrintStream(names);
@@ -88,13 +89,6 @@ public class TimingsCommand extends BukkitCommand {
                 sender.sendMessage("Timings written to " + timings.getPath());
                 if (separate) sender.sendMessage("Names written to " + names.getPath());
             } catch (IOException e) {
-            } finally {
-                if (fileTimings != null) {
-                    fileTimings.close();
-                }
-                if (fileNames != null) {
-                    fileNames.close();
-                }
             }
         }
         return true;

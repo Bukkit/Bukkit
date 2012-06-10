@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-
-import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 
@@ -53,10 +51,7 @@ public class Permission {
     public Permission(String name, String description, PermissionDefault defaultValue, Map<String, Boolean> children) {
         this.name = name;
         this.description = (description == null) ? "" : description;
-
-        if (defaultValue != null) {
-            this.defaultValue = defaultValue;
-        }
+        this.defaultValue = (defaultValue == null) ? PermissionDefault.FALSE : defaultValue;
 
         if (children != null) {
             this.children.putAll(children);
@@ -206,16 +201,15 @@ public class Permission {
      * description: Short string containing a very small description of this description. If not specified, empty string.
      *
      * @param data Map of permissions
-     * @param error An error message to show if a permission is invalid.
      * @param def Default permission value to use if missing
      * @return Permission object
      */
-    public static List<Permission> loadPermissions(Map<?, ?> data, String error, PermissionDefault def) {
+    public static List<Permission> loadPermissions(Map<String, Map<String, Object>> data, String error, PermissionDefault def) {
         List<Permission> result = new ArrayList<Permission>();
 
-        for (Map.Entry<?, ?> entry : data.entrySet()) {
+        for (Map.Entry<String, Map<String, Object>> entry : data.entrySet()) {
             try {
-                result.add(Permission.loadPermission(entry.getKey().toString(), (Map<?, ?>) entry.getValue(), def, result));
+                result.add(Permission.loadPermission(entry.getKey(), entry.getValue(), def, result));
             } catch (Throwable ex) {
                 Bukkit.getServer().getLogger().log(Level.SEVERE, String.format(error, entry.getKey()), ex);
             }
@@ -254,64 +248,87 @@ public class Permission {
      * @param output A list to append any created child-Permissions to, may be null
      * @return Permission object
      */
-    public static Permission loadPermission(String name, Map<?, ?> data, PermissionDefault def, List<Permission> output) {
-        Validate.notNull(name, "Name cannot be null");
-        Validate.notNull(data, "Data cannot be null");
-
+    public static Permission loadPermission(String name, Map<String, Object> data, PermissionDefault def, List<Permission> output) {
+        if (name == null) {
+            throw new IllegalArgumentException("Name cannot be null");
+        }
+        if (data == null) {
+            throw new IllegalArgumentException("Data cannot be null");
+        }
         String desc = null;
         Map<String, Boolean> children = null;
 
-        if (data.get("default") != null) {
-            PermissionDefault value = PermissionDefault.getByName(data.get("default").toString());
-            if (value != null) {
-                def = value;
-            } else {
-                throw new IllegalArgumentException("'default' key contained unknown value");
-            }
-        }
-
-        if (data.get("children") != null) {
-            Object childrenNode = data.get("children");
-            if (childrenNode instanceof Iterable) {
-                children = new LinkedHashMap<String, Boolean>();
-                for (Object child : (Iterable<?>) childrenNode) {
-                    if (child != null) {
-                        children.put(child.toString(), Boolean.TRUE);
-                    }
+        if (data.containsKey("default")) {
+            try {
+                PermissionDefault value = PermissionDefault.getByName(data.get("default").toString());
+                if (value != null) {
+                    def = value;
+                } else {
+                    throw new IllegalArgumentException("'default' key contained unknown value");
                 }
-            } else if (childrenNode instanceof Map) {
-                children = extractChildren((Map<?,?>) childrenNode, name, def, output);
-            } else {
-                throw new IllegalArgumentException("'children' key is of wrong type");
+            } catch (ClassCastException ex) {
+                throw new IllegalArgumentException("'default' key is of wrong type", ex);
             }
         }
 
-        if (data.get("description") != null) {
-            desc = data.get("description").toString();
+        if (data.containsKey("children")) {
+            try {
+                children = extractChildren(data, name, def, output);
+            } catch (ClassCastException ex) {
+                throw new IllegalArgumentException("'children' key is of wrong type", ex);
+            }
         }
 
-        return new Permission(name, desc, def, children);
+        if (data.containsKey("description")) {
+            try {
+                desc = (String) data.get("description");
+            } catch (ClassCastException ex) {
+                throw new IllegalArgumentException("'description' key is of wrong type", ex);
+            }
+        }
+
+        Permission result = new Permission(name, desc, def, children);
+
+        if (data.containsKey("parents")) {
+            try {
+                Object parents = data.get("parents");
+
+                if (parents instanceof String) {
+                    result.addParent((String) parents, true);
+                }
+            } catch (ClassCastException ex) {
+                throw new IllegalArgumentException("'parents' key is of wrong type", ex);
+            }
+        }
+
+        return result;
     }
 
-    private static Map<String, Boolean> extractChildren(Map<?, ?> input, String name, PermissionDefault def, List<Permission> output) {
+    @SuppressWarnings("unchecked")
+    private static Map<String, Boolean> extractChildren(Map<String, Object> data, String name, PermissionDefault def, List<Permission> output) {
+        Map<String, Object> input = (Map<String, Object>) data.get("children");
         Map<String, Boolean> children = new LinkedHashMap<String, Boolean>();
 
-        for (Map.Entry<?, ?> entry : input.entrySet()) {
+        for (Map.Entry<String, Object> entry : input.entrySet()) {
             if ((entry.getValue() instanceof Boolean)) {
-                children.put(entry.getKey().toString(), (Boolean) entry.getValue());
+                children.put(entry.getKey(), (Boolean) entry.getValue());
             } else if ((entry.getValue() instanceof Map)) {
                 try {
-                    Permission perm = loadPermission(entry.getKey().toString(), (Map<?, ?>) entry.getValue(), def, output);
-                    children.put(perm.getName(), Boolean.TRUE);
+                    try {
+                        Permission perm = loadPermission((String) entry.getKey(), (Map<String, Object>) entry.getValue(), def, output);
+                        children.put(perm.getName(), Boolean.valueOf(true));
 
-                    if (output != null) {
-                        output.add(perm);
+                        if (output != null) {
+                            output.add(perm);
+                        }
+                    } catch (Throwable ex) {
+                        Bukkit.getServer().getLogger().log(Level.SEVERE, "Permission node '" + (String) entry.getKey() + "' in child of " + name + " is invalid", ex);
                     }
-                } catch (Throwable ex) {
-                    throw new IllegalArgumentException("Permission node '" + entry.getKey().toString() + "' in child of " + name + " is invalid", ex);
+                } catch (ClassCastException ex) {
+                    throw new IllegalArgumentException("Child '" + (String) entry.getKey() + "' contains invalid map type");
                 }
             } else {
-                throw new IllegalArgumentException("Child '" + entry.getKey().toString() + "' contains invalid value");
+                throw new IllegalArgumentException("Child '" + (String) entry.getKey() + "' contains invalid value");
             }
         }
 

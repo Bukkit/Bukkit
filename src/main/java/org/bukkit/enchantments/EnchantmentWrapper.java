@@ -43,9 +43,4 @@ public class EnchantmentWrapper extends Enchantment {
     public String getName() {
         return getEnchantment().getName();
     }
-
-    @Override
-    public boolean conflictsWith(Enchantment other) {
-        return getEnchantment().conflictsWith(other);
-    }
 }

@@ -6,11 +6,11 @@ import org.bukkit.event.HandlerList;
 /**
  * Raised when a vehicle is created.
  */
+@SuppressWarnings("serial")
 public class VehicleCreateEvent extends VehicleEvent {
     private static final HandlerList handlers = new HandlerList();
-
-    public VehicleCreateEvent(final Vehicle vehicle) {
-        super(vehicle);
+    public VehicleCreateEvent(Vehicle vehicle) {
+        super(Type.VEHICLE_CREATE, vehicle);
     }
 
     @Override

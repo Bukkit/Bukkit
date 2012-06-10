@@ -89,9 +89,4 @@ public class Pumpkin extends MaterialData implements Directional {
     public String toString() {
         return super.toString() + " facing " + getFacing() + " " + (isLit() ? "" : "NOT ") + "LIT";
     }
-
-    @Override
-    public Pumpkin clone() {
-        return (Pumpkin) super.clone();
-    }
 }

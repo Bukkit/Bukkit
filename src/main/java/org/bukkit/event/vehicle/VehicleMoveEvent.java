@@ -7,13 +7,14 @@ import org.bukkit.event.HandlerList;
 /**
  * Raised when a vehicle moves.
  */
+@SuppressWarnings("serial")
 public class VehicleMoveEvent extends VehicleEvent {
     private static final HandlerList handlers = new HandlerList();
-    private final Location from;
-    private final Location to;
+    private Location from;
+    private Location to;
 
-    public VehicleMoveEvent(final Vehicle vehicle, final Location from, final Location to) {
-        super(vehicle);
+    public VehicleMoveEvent(Vehicle vehicle, Location from, Location to) {
+        super(Type.VEHICLE_MOVE, vehicle);
 
         this.from = from;
         this.to = to;

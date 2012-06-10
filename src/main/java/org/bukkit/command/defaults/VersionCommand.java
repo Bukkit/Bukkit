@@ -1,8 +1,7 @@
 package org.bukkit.command.defaults;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -10,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-public class VersionCommand extends BukkitCommand {
+public class VersionCommand extends Command {
     public VersionCommand(String name) {
         super(name);
 
@@ -68,7 +67,7 @@ public class VersionCommand extends BukkitCommand {
 
     private String getAuthors(final PluginDescriptionFile desc) {
         StringBuilder result = new StringBuilder();
-        List<String> authors = desc.getAuthors();
+        ArrayList<String> authors = desc.getAuthors();
 
         for (int i = 0; i < authors.size(); i++) {
             if (result.length() > 0) {

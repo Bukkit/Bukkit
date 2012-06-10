@@ -6,10 +6,12 @@ import org.bukkit.event.Event;
 /**
  * Represents a player related event
  */
+@SuppressWarnings("serial")
 public abstract class PlayerEvent extends Event {
     protected Player player;
 
-    public PlayerEvent(final Player who) {
+    public PlayerEvent(final Event.Type type, final Player who) {
+        super(type);
         player = who;
     }
 

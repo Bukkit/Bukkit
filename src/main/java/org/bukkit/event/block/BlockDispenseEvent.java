@@ -11,14 +11,16 @@ import org.bukkit.util.Vector;
  * <p />
  * If a Block Dispense event is cancelled, the block will not dispense the item.
  */
+@SuppressWarnings("serial")
 public class BlockDispenseEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
+
     private boolean cancelled = false;
     private ItemStack item;
     private Vector velocity;
 
-    public BlockDispenseEvent(final Block block, final ItemStack dispensed, final Vector velocity) {
-        super(block);
+    public BlockDispenseEvent(Block block, ItemStack dispensed, Vector velocity) {
+        super(Type.BLOCK_DISPENSE, block);
         this.item = dispensed;
         this.velocity = velocity;
     }

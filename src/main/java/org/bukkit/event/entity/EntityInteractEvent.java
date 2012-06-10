@@ -8,13 +8,15 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when an entity interacts with an object
  */
+@SuppressWarnings("serial")
 public class EntityInteractEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     protected Block block;
+
     private boolean cancelled;
 
-    public EntityInteractEvent(final Entity entity, final Block block) {
-        super(entity);
+    public EntityInteractEvent(Entity entity, Block block) {
+        super(Type.ENTITY_INTERACT, entity);
         this.block = block;
     }
 

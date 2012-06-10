@@ -105,7 +105,12 @@ public class BlockVector extends Vector {
      */
     @Override
     public BlockVector clone() {
-        return (BlockVector) super.clone();
+        BlockVector v = (BlockVector) super.clone();
+
+        v.x = x;
+        v.y = y;
+        v.z = z;
+        return v;
     }
 
     public static BlockVector deserialize(Map<String, Object> args) {

@@ -1,13 +1,9 @@
 package org.bukkit.configuration.file;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Map;
 import java.util.logging.Level;
 
-import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -22,6 +18,7 @@ import org.yaml.snakeyaml.representer.Representer;
  * Note that this implementation is not synchronized.
  */
 public class YamlConfiguration extends FileConfiguration {
+
     protected static final String COMMENT_PREFIX = "# ";
     protected static final String BLANK_CONFIG = "{}\n";
     private final DumperOptions yamlOptions = new DumperOptions();
@@ -29,81 +26,87 @@ public class YamlConfiguration extends FileConfiguration {
     private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
 
     @Override
-    public String saveToString() {
+    public void save(Writer out) throws IOException {
         yamlOptions.setIndent(options().indent());
         yamlOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         yamlRepresenter.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
 
-        String header = buildHeader();
-        String dump = yaml.dump(getValues(false));
+        // write header
+        out.write(buildHeader());
 
-        if (dump.equals(BLANK_CONFIG)) {
-            dump = "";
+        // write configuration body
+        Map<String, Object> data = getValues(false);
+        if(!data.isEmpty()) {
+            yaml.dump(data, out);
         }
 
-        return header + dump;
+        out.flush();
     }
 
     @Override
-    public void loadFromString(String contents) throws InvalidConfigurationException {
-        Validate.notNull(contents, "Contents cannot be null");
+    public void load(Reader in) throws IOException, InvalidConfigurationException {
+        if (in == null) {
+            throw new IllegalArgumentException("Input reader cannot be null");
+        }
 
-        Map<?, ?> input;
+        BufferedReader reader = new BufferedReader(in);
+
+        String header = parseHeader(reader);
+        if (!header.isEmpty()) {
+            options().header(header);
+        }
+
         try {
-            input = (Map<?, ?>) yaml.load(contents);
+            convertMapsToSections((Map<Object, Object>) yaml.load(reader), this);
         } catch (YAMLException e) {
             throw new InvalidConfigurationException(e);
         } catch (ClassCastException e) {
             throw new InvalidConfigurationException("Top level is not a Map.");
         }
-
-        String header = parseHeader(contents);
-        if (header.length() > 0) {
-            options().header(header);
-        }
-
-        if (input != null) {
-            convertMapsToSections(input, this);
-        }
     }
 
-    protected void convertMapsToSections(Map<?, ?> input, ConfigurationSection section) {
-        for (Map.Entry<?, ?> entry : input.entrySet()) {
+    @SuppressWarnings("unchecked")
+    protected void convertMapsToSections(Map<Object, Object> input, ConfigurationSection section) {
+        if (input == null) {
+            return;
+        }    
+
+        for (Map.Entry<Object, Object> entry : input.entrySet()) {
             String key = entry.getKey().toString();
             Object value = entry.getValue();
 
-            if (value instanceof Map) {
-                convertMapsToSections((Map<?, ?>) value, section.createSection(key));
+            if (value instanceof Map<?, ?>) {
+                convertMapsToSections((Map<Object, Object>) value, section.createSection(key));
             } else {
                 section.set(key, value);
             }
         }
     }
 
-    protected String parseHeader(String input) {
-        String[] lines = input.split("\r?\n", -1);
+    protected String parseHeader(BufferedReader reader) throws IOException {
         StringBuilder result = new StringBuilder();
-        boolean readingHeader = true;
         boolean foundHeader = false;
 
-        for (int i = 0; (i < lines.length) && (readingHeader); i++) {
-            String line = lines[i];
-
-            if (line.startsWith(COMMENT_PREFIX)) {
-                if (i > 0) {
-                    result.append("\n");
-                }
-
+        reader.mark(512);
+        
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (line.startsWith(COMMENT_PREFIX)) {    
                 if (line.length() > COMMENT_PREFIX.length()) {
                     result.append(line.substring(COMMENT_PREFIX.length()));
                 }
 
-                foundHeader = true;
-            } else if ((foundHeader) && (line.length() == 0)) {
                 result.append("\n");
-            } else if (foundHeader) {
-                readingHeader = false;
+
+                foundHeader = true;
+            } else if (foundHeader && line.isEmpty()) { // whitespace
+                result.append("\n");
+            } else if (foundHeader || (!foundHeader && !line.isEmpty())) { // header is already readed or actual yaml data begins
+                reader.reset(); // return to state before reading line with actual data
+                break;
             }
+
+            reader.mark(512);
         }
 
         return result.toString();
@@ -135,7 +138,9 @@ public class YamlConfiguration extends FileConfiguration {
         boolean startedHeader = false;
 
         for (int i = lines.length - 1; i >= 0; i--) {
-            builder.insert(0, "\n");
+            if (i < lines.length - 1) {
+                builder.insert(0, "\n");
+            }
 
             if ((startedHeader) || (lines[i].length() != 0)) {
                 builder.insert(0, lines[i]);
@@ -167,7 +172,9 @@ public class YamlConfiguration extends FileConfiguration {
      * @throws IllegalArgumentException Thrown if file is null
      */
     public static YamlConfiguration loadConfiguration(File file) {
-        Validate.notNull(file, "File cannot be null");
+        if (file == null) {
+            throw new IllegalArgumentException("File cannot be null");
+        }
 
         YamlConfiguration config = new YamlConfiguration();
 
@@ -177,7 +184,13 @@ public class YamlConfiguration extends FileConfiguration {
         } catch (IOException ex) {
             Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
         } catch (InvalidConfigurationException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file , ex);
+            if (ex.getCause() instanceof YAMLException) {
+                Bukkit.getLogger().severe("Config file " + file + " isn't valid! " + ex.getCause());
+            } else if ((ex.getCause() == null) || (ex.getCause() instanceof ClassCastException)) {
+                Bukkit.getLogger().severe("Config file " + file + " isn't valid!");
+            } else {
+                Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file + ": " + ex.getCause().getClass(), ex);
+            }
         }
 
         return config;
@@ -194,16 +207,24 @@ public class YamlConfiguration extends FileConfiguration {
      * @throws IllegalArgumentException Thrown if stream is null
      */
     public static YamlConfiguration loadConfiguration(InputStream stream) {
-        Validate.notNull(stream, "Stream cannot be null");
+        if (stream == null) {
+            throw new IllegalArgumentException("Stream cannot be null");
+        }
 
         YamlConfiguration config = new YamlConfiguration();
 
         try {
             config.load(stream);
         } catch (IOException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "Cannot load configuration from stream", ex);
+            Bukkit.getLogger().log(Level.SEVERE, "Cannot load configuration", ex);
         } catch (InvalidConfigurationException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "Cannot load configuration from stream", ex);
+            if (ex.getCause() instanceof YAMLException) {
+                Bukkit.getLogger().severe("Config file isn't valid! " + ex.getCause());
+            } else if ((ex.getCause() == null) || (ex.getCause() instanceof ClassCastException)) {
+                Bukkit.getLogger().severe("Config file isn't valid!");
+            } else {
+                Bukkit.getLogger().log(Level.SEVERE, "Cannot load configuration: " + ex.getCause().getClass(), ex);
+            }
         }
 
         return config;

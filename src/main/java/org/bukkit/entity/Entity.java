@@ -5,7 +5,6 @@ import org.bukkit.EntityEffect;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.metadata.Metadatable;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 /**
  * Represents a base entity in the world
  */
-public interface Entity extends Metadatable {
+public interface Entity {
 
     /**
      * Gets the entity's current position
@@ -57,7 +56,7 @@ public interface Entity extends Metadatable {
      * Teleports this entity to the given location
      *
      * @param location New location to teleport this entity to
-     * @param cause The cause of this teleportation
+     * @praram cause The cause of this teleportation
      * @return <code>true</code> if the teleport was successful
      */
     public boolean teleport(Location location, TeleportCause cause);
@@ -74,7 +73,7 @@ public interface Entity extends Metadatable {
      * Teleports this entity to the target Entity
      *
      * @param destination Entity to teleport this entity to
-     * @param cause The cause of this teleportation
+     * @praram cause The cause of this teleportation
      * @return <code>true</code> if the teleport was successful
      */
     public boolean teleport(Entity destination, TeleportCause cause);
@@ -227,34 +226,4 @@ public interface Entity extends Metadatable {
      * @param type Effect to play.
      */
     public void playEffect(EntityEffect type);
-
-    /**
-     * Get the type of the entity.
-     * @return The entity type.
-     */
-    public EntityType getType();
-
-    /**
-     * Returns whether this entity is inside a vehicle.
-     *
-     * @return True if the entity is in a vehicle.
-     */
-    public boolean isInsideVehicle();
-
-    /**
-     * Leave the current vehicle. If the entity is currently in a vehicle
-     * (and is removed from it), true will be returned, otherwise false will
-     * be returned.
-     *
-     * @return True if the entity was in a vehicle.
-     */
-    public boolean leaveVehicle();
-
-    /**
-     * Get the vehicle that this player is inside. If there is no vehicle,
-     * null will be returned.
-     *
-     * @return The current vehicle.
-     */
-    public Entity getVehicle();
 }

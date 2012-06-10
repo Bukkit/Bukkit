@@ -2,22 +2,26 @@ package org.bukkit.event.inventory;
 
 import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.block.BlockEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * Called when an ItemStack is successfully burned as fuel in a furnace.
  */
-public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
+@SuppressWarnings("serial")
+public class FurnaceBurnEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private final ItemStack fuel;
+    private Block furnace;
+    private ItemStack fuel;
     private int burnTime;
     private boolean cancelled;
     private boolean burning;
 
-    public FurnaceBurnEvent(final Block furnace, final ItemStack fuel, final int burnTime) {
-        super(furnace);
+    public FurnaceBurnEvent(Block furnace, ItemStack fuel, int burnTime) {
+        super(Type.FURNACE_BURN);
+
+        this.furnace = furnace;
         this.fuel = fuel;
         this.burnTime = burnTime;
         this.cancelled = false;
@@ -28,11 +32,9 @@ public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
      * Gets the block for the furnace involved in this event
      *
      * @return the block of the furnace
-     * @deprecated In favour of {@link #getBlock()}.
      */
-    @Deprecated
     public Block getFurnace() {
-        return getBlock();
+        return furnace;
     }
 
     /**

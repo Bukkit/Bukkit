@@ -32,6 +32,6 @@ public class SaveCommand extends VanillaCommand {
 
     @Override
     public boolean matches(String input) {
-        return input.equalsIgnoreCase("save-all");
+        return input.startsWith("save-all");
     }
 }

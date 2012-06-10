@@ -10,11 +10,11 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Called when a player fills a bucket
  */
+@SuppressWarnings("serial")
 public class PlayerBucketFillEvent extends PlayerBucketEvent {
     private static final HandlerList handlers = new HandlerList();
-
-    public PlayerBucketFillEvent(final Player who, final Block blockClicked, final BlockFace blockFace, final Material bucket, final ItemStack itemInHand) {
-        super(who, blockClicked, blockFace, bucket, itemInHand);
+    public PlayerBucketFillEvent(Player who, Block blockClicked, BlockFace blockFace, Material bucket, ItemStack itemInHand) {
+        super(Type.PLAYER_BUCKET_FILL, who, blockClicked, blockFace, bucket, itemInHand);
     }
 
     @Override

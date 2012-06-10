@@ -6,16 +6,16 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a projectile hits an object
  */
+@SuppressWarnings("serial")
 public class ProjectileHitEvent extends EntityEvent {
     private static final HandlerList handlers = new HandlerList();
 
-    public ProjectileHitEvent(final Projectile projectile) {
-        super(projectile);
+    public ProjectileHitEvent(Projectile projectile) {
+        super(Type.PROJECTILE_HIT, projectile);
     }
 
-    @Override
-    public Projectile getEntity() {
-        return (Projectile) entity;
+    public ProjectileHitEvent(Type type, Projectile projectile) {
+        super(type, projectile);
     }
 
     @Override

@@ -5,16 +5,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
+@SuppressWarnings("serial")
 /**
  * Called when a player shears an entity
  */
 public class PlayerShearEntityEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel;
-    private final Entity what;
+    private Entity what;
 
-    public PlayerShearEntityEvent(final Player who, final Entity what) {
-        super(who);
+    public PlayerShearEntityEvent(Player who, Entity what) {
+        super(Type.PLAYER_SHEAR_ENTITY, who);
         this.cancel = false;
         this.what = what;
     }

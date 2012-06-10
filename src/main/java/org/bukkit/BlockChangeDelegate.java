@@ -8,8 +8,7 @@ package org.bukkit;
 public interface BlockChangeDelegate {
 
     /**
-     * Set a block type at the specified coordinates without doing all world updates and notifications.
-     * It is safe to have this call World.setTypeId, but it may be slower than World.setRawTypeId.
+     * Set a block type at the specified coordinates.
      *
      * @param x X coordinate
      * @param y Y coordinate
@@ -20,8 +19,7 @@ public interface BlockChangeDelegate {
     public boolean setRawTypeId(int x, int y, int z, int typeId);
 
     /**
-     * Set a block type and data at the specified coordinates without doing all world updates and notifications.
-     * It is safe to have this call World.setTypeId, but it may be slower than World.setRawTypeId.
+     * Set a block type and data at the specified coordinates.
      *
      * @param x X coordinate
      * @param y Y coordinate
@@ -31,31 +29,6 @@ public interface BlockChangeDelegate {
      * @return true if the block was set successfully
      */
     public boolean setRawTypeIdAndData(int x, int y, int z, int typeId, int data);
-
-    /**
-     * Set a block type at the specified coordinates.
-     * This method cannot call World.setRawTypeId, a full update is needed.
-     *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
-     * @param typeId New block ID
-     * @return true if the block was set successfully
-     */
-    public boolean setTypeId(int x, int y, int z, int typeId);
-
-    /**
-     * Set a block type and data at the specified coordinates.
-     * This method cannot call World.setRawTypeId, a full update is needed.
-     *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
-     * @param typeId New block ID
-     * @param data Block data
-     * @return true if the block was set successfully
-     */
-    public boolean setTypeIdAndData(int x, int y, int z, int typeId, int data);
 
     /**
      * Get the block type at the location.
@@ -73,14 +46,4 @@ public interface BlockChangeDelegate {
      * @return Height of the world
      */
     public int getHeight();
-
-    /**
-     * Checks if the specified block is empty (air) or not.
-     *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
-     * @return True if the block is considered empty.
-     */
-    public boolean isEmpty(int x, int y, int z);
 }

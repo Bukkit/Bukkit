@@ -12,7 +12,7 @@ import org.bukkit.material.MaterialData;
 /**
  * Represents a stack of items
  */
-public class ItemStack implements Cloneable, ConfigurationSerializable {
+public class ItemStack implements ConfigurationSerializable {
     private int type;
     private int amount = 0;
     private MaterialData data = null;
@@ -20,11 +20,11 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     private Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
 
     public ItemStack(final int type) {
-        this(type, 1);
+        this(type, 0);
     }
 
     public ItemStack(final Material type) {
-        this(type, 1);
+        this(type, 0);
     }
 
     public ItemStack(final int type, final int amount) {
@@ -55,16 +55,6 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
     public ItemStack(final Material type, final int amount, final short damage, final Byte data) {
         this(type.getId(), amount, damage, data);
-    }
-
-    public ItemStack(final ItemStack stack) {
-        this.type = stack.type;
-        this.amount = stack.amount;
-        this.durability = stack.durability;
-        if (stack.data != null) {
-            this.data = stack.data.clone();
-        }
-        this.addUnsafeEnchantments(stack.getEnchantments());
     }
 
     /**
@@ -220,18 +210,10 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
     @Override
     public ItemStack clone() {
-        try {
-            ItemStack itemStack = (ItemStack) super.clone();
+        ItemStack result = new ItemStack(type, amount, durability);
+        result.addEnchantments(getEnchantments());
 
-            itemStack.enchantments = new HashMap<Enchantment, Integer>(this.enchantments);
-            if (this.data != null) {
-                itemStack.data = this.data.clone();
-            }
-
-            return itemStack;
-        } catch (CloneNotSupportedException e) {
-            throw new Error(e);
-        }
+        return result;
     }
 
     @Override
@@ -378,7 +360,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         int amount = 1;
 
         if (args.containsKey("damage")) {
-            damage = ((Number) args.get("damage")).shortValue();
+            damage = (Short) args.get("damage");
         }
 
         if (args.containsKey("amount")) {
@@ -391,13 +373,14 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             Object raw = args.get("enchantments");
 
             if (raw instanceof Map) {
-                Map<?, ?> map = (Map<?, ?>) raw;
+                @SuppressWarnings("unchecked")
+                Map<Object, Object> map = (Map<Object, Object>) raw;
 
-                for (Map.Entry<?, ?> entry : map.entrySet()) {
+                for (Map.Entry<Object, Object> entry : map.entrySet()) {
                     Enchantment enchantment = Enchantment.getByName(entry.getKey().toString());
 
                     if ((enchantment != null) && (entry.getValue() instanceof Integer)) {
-                        result.addUnsafeEnchantment(enchantment, (Integer) entry.getValue());
+                        result.addEnchantment(enchantment, (Integer) entry.getValue());
                     }
                 }
             }

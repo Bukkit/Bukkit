@@ -1,16 +1,12 @@
 package org.bukkit.configuration.serialization;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.commons.lang.Validate;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BlockVector;
 import org.bukkit.util.Vector;
@@ -72,10 +68,7 @@ public class ConfigurationSerialization {
                 return result;
             }
         } catch (Throwable ex) {
-            Logger.getLogger(ConfigurationSerialization.class.getName()).log(
-                    Level.SEVERE,
-                    "Could not call method '" + method.toString() + "' of " + clazz + " for deserialization",
-                    ex instanceof InvocationTargetException ? ex.getCause() : ex);
+            Logger.getLogger(ConfigurationSerialization.class.getName()).log(Level.SEVERE, "Could not call method '" + method.toString() + "' of " + clazz + " for deserialization", ex);
         }
 
         return null;
@@ -85,17 +78,16 @@ public class ConfigurationSerialization {
         try {
             return ctor.newInstance(args);
         } catch (Throwable ex) {
-            Logger.getLogger(ConfigurationSerialization.class.getName()).log(
-                    Level.SEVERE,
-                    "Could not call constructor '" + ctor.toString() + "' of " + clazz + " for deserialization",
-                    ex instanceof InvocationTargetException ? ex.getCause() : ex);
+            Logger.getLogger(ConfigurationSerialization.class.getName()).log(Level.SEVERE, "Could not call constructor '" + ctor.toString() + "' of " + clazz + " for deserialization", ex);
         }
 
         return null;
     }
 
     public ConfigurationSerializable deserialize(Map<String, Object> args) {
-        Validate.notNull(args, "Args must not be null");
+        if (args == null) {
+            throw new IllegalArgumentException("Args must not be null");
+        }
 
         ConfigurationSerializable result = null;
         Method method = null;
@@ -200,7 +192,6 @@ public class ConfigurationSerialization {
      *
      * @param clazz Class to register
      * @param alias Alias to register as
-     * @see SerializableAs
      */
     public static void registerClass(Class<? extends ConfigurationSerializable> clazz, String alias) {
         aliases.put(alias, clazz);

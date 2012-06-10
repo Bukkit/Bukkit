@@ -227,9 +227,4 @@ public class Sign extends MaterialData implements Attachable {
     public String toString() {
         return super.toString() + " facing " + getFacing();
     }
-
-    @Override
-    public Sign clone() {
-        return (Sign) super.clone();
-    }
 }

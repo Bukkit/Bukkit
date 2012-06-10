@@ -16,13 +16,14 @@ import org.bukkit.event.HandlerList;
  * <p />
  * If a Block Fade event is cancelled, the block will not fade, melt or disappear.
  */
+@SuppressWarnings("serial")
 public class BlockFadeEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
-    private final BlockState newState;
+    private BlockState newState;
 
-    public BlockFadeEvent(final Block block, final BlockState newState) {
-        super(block);
+    public BlockFadeEvent(Block block, BlockState newState) {
+        super(Type.BLOCK_FADE, block);
         this.newState = newState;
         this.cancelled = false;
     }

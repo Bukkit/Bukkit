@@ -1,6 +1,6 @@
 package org.bukkit.entity;
 
 /**
- * Represents a falling block.
+ * Represents Falling Sand.
  */
 public interface FallingSand extends Entity {}

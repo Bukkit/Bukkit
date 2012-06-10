@@ -6,7 +6,7 @@ import org.bukkit.Material;
 /**
  * Handles specific metadata for certain items or blocks
  */
-public class MaterialData implements Cloneable {
+public class MaterialData {
     private final int type;
     private byte data = 0;
 
@@ -100,15 +100,6 @@ public class MaterialData implements Cloneable {
             return (md.getItemTypeId() == getItemTypeId() && md.getData() == getData());
         } else {
             return false;
-        }
-    }
-
-    @Override
-    public MaterialData clone() {
-        try {
-            return (MaterialData) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new Error(e);
         }
     }
 }

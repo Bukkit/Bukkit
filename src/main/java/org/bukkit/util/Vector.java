@@ -365,7 +365,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @return block X
      */
     public int getBlockX() {
-        return NumberConversions.floor(x);
+        return (int) Math.floor(x);
     }
 
     /**
@@ -384,7 +384,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @return block y
      */
     public int getBlockY() {
-        return NumberConversions.floor(y);
+        return (int) Math.floor(y);
     }
 
     /**
@@ -403,7 +403,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @return block z
      */
     public int getBlockZ() {
-        return NumberConversions.floor(z);
+        return (int) Math.floor(z);
     }
 
     /**
@@ -546,10 +546,16 @@ public class Vector implements Cloneable, ConfigurationSerializable {
     @Override
     public Vector clone() {
         try {
-            return (Vector) super.clone();
+            Vector v = (Vector) super.clone();
+
+            v.x = x;
+            v.y = y;
+            v.z = z;
+            return v;
         } catch (CloneNotSupportedException e) {
-            throw new Error(e);
+            e.printStackTrace();
         }
+        return null;
     }
 
     /**

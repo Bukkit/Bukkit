@@ -23,18 +23,7 @@ public enum Achievement {
     BUILD_SWORD(12),
     KILL_ENEMY(13),
     KILL_COW(14),
-    FLY_PIG(15),
-    SNIPE_SKELETON(16),
-    GET_DIAMONDS(17),
-    NETHER_PORTAL(18),
-    GHAST_RETURN(19),
-    GET_BLAZE_ROD(20),
-    BREW_POTION(21),
-    END_PORTAL(22),
-    THE_END(23),
-    ENCHANTMENTS(24),
-    OVERKILL(25),
-    BOOKCASE(26);
+    FLY_PIG(15);
 
     /**
      * The offset used to distinguish Achievements and Statistics
@@ -56,6 +45,20 @@ public enum Achievement {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Gets the achievement associated with the given ID.
+     * <p />
+     * Note that the ID must already be offset using {@link #STATISTIC_OFFSET}
+     *
+     * @param id ID of the achievement to return
+     * @return Achievement with the given ID
+     * @deprecated use {@link Achievement#getById(int)}
+     */
+    @Deprecated
+    public static Achievement getAchievement(int id) {
+        return BY_ID.get(id);
     }
 
     /**

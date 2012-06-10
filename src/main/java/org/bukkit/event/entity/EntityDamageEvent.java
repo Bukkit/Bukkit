@@ -3,19 +3,26 @@ package org.bukkit.event.entity;
 import org.bukkit.entity.ComplexEntityPart;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
  * Stores data for damage events
  */
+@SuppressWarnings("serial")
 public class EntityDamageEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
+
     private int damage;
     private boolean cancelled;
-    private final DamageCause cause;
+    private DamageCause cause;
 
-    public EntityDamageEvent(final Entity damagee, final DamageCause cause, final int damage) {
-        super(damagee);
+    public EntityDamageEvent(Entity damagee, DamageCause cause, int damage) {
+        this(Event.Type.ENTITY_DAMAGE, damagee, cause, damage);
+    }
+
+    protected EntityDamageEvent(Event.Type type, Entity damagee, DamageCause cause, int damage) {
+        super(type, damagee);
         this.cause = cause;
         this.damage = damage;
 
@@ -117,12 +124,6 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
          * Damage: 1
          */
         FIRE_TICK,
-        /**
-         * Damage caused due to a snowman melting
-         * <p />
-         * Damage: 1
-         */
-        MELTING,
         /**
          * Damage caused by direct exposure to lava
          * <p />

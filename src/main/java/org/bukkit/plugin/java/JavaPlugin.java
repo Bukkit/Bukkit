@@ -1,29 +1,5 @@
 package org.bukkit.plugin.java;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.bukkit.Server;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.plugin.PluginBase;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginLoader;
-import org.bukkit.plugin.PluginLogger;
-
 import com.avaje.ebean.EbeanServer;
 import com.avaje.ebean.EbeanServerFactory;
 import com.avaje.ebean.config.DataSourceConfig;
@@ -31,10 +7,30 @@ import com.avaje.ebean.config.ServerConfig;
 import com.avaje.ebeaninternal.api.SpiEbeanServer;
 import com.avaje.ebeaninternal.server.ddl.DdlGenerator;
 
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.bukkit.Server;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginLoader;
+import org.bukkit.plugin.PluginLogger;
+import org.bukkit.util.config.Configuration;
+
 /**
  * Represents a Java plugin
  */
-public abstract class JavaPlugin extends PluginBase {
+public abstract class JavaPlugin implements Plugin {
     private boolean isEnabled = false;
     private boolean initialized = false;
     private PluginLoader loader = null;
@@ -43,6 +39,7 @@ public abstract class JavaPlugin extends PluginBase {
     private PluginDescriptionFile description = null;
     private File dataFolder = null;
     private ClassLoader classLoader = null;
+    private Configuration config = null;
     private boolean naggable = true;
     private EbeanServer ebean = null;
     private FileConfiguration newConfig = null;
@@ -104,6 +101,24 @@ public abstract class JavaPlugin extends PluginBase {
      */
     public PluginDescriptionFile getDescription() {
         return description;
+    }
+
+    /**
+     * Returns the main configuration located at
+     * <plugin name>/config.yml and loads the file. If the configuration file
+     * does not exist and it cannot be loaded, no error will be emitted and
+     * the configuration file will have no values.
+     *
+     * @return The configuration.
+     * @deprecated See the new {@link JavaPlugin#getConfig()}
+     */
+    @Deprecated
+    public Configuration getConfiguration() {
+        if (config == null) {
+            config = new Configuration(configFile);
+            config.load();
+        }
+        return config;
     }
 
     public FileConfiguration getConfig() {

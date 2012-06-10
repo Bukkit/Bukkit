@@ -90,38 +90,47 @@ public interface LivingEntity extends Entity {
     /**
      * Throws an egg from the entity.
      *
-     * @deprecated Use launchProjectile(Egg.class) instead
      * @return The egg thrown.
      */
-    @Deprecated
     public Egg throwEgg();
 
     /**
      * Throws a snowball from the entity.
      *
-     * @deprecated Use launchProjectile(Snowball.class) instead
      * @return The snowball thrown.
      */
-    @Deprecated
     public Snowball throwSnowball();
 
     /**
      * Shoots an arrow from the entity.
      *
-     * @deprecated Use launchProjectile(Arrow.class) instead
      * @return The arrow shot.
      */
-    @Deprecated
     public Arrow shootArrow();
 
     /**
-     * Launches a {@link Projectile} from the entity.
+     * Returns whether this entity is inside a vehicle.
      *
-     * @param projectile Class of the projectile to launch
-     *
-     * @return The launched projectile.
+     * @return True if the entity is in a vehicle.
      */
-    public <T extends Projectile> T launchProjectile(Class<? extends T> projectile);
+    public boolean isInsideVehicle();
+
+    /**
+     * Leave the current vehicle. If the entity is currently in a vehicle
+     * (and is removed from it), true will be returned, otherwise false will
+     * be returned.
+     *
+     * @return True if the entity was in a vehicle.
+     */
+    public boolean leaveVehicle();
+
+    /**
+     * Get the vehicle that this player is inside. If there is no vehicle,
+     * null will be returned.
+     *
+     * @return The current vehicle.
+     */
+    public Vehicle getVehicle();
 
     /**
      * Returns the amount of air that this entity has remaining, in ticks
@@ -252,7 +261,6 @@ public interface LivingEntity extends Entity {
      * effect of the given {@link PotionEffectType} applied to it.
      *
      * @param type The potion type to check
-     * @return Whether the player has this potion effect active on them.
      */
     public boolean hasPotionEffect(PotionEffectType type);
 

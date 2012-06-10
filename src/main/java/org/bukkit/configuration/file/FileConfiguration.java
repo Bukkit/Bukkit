@@ -1,17 +1,8 @@
 package org.bukkit.configuration.file;
 
 import com.google.common.io.Files;
-
-import org.apache.commons.lang.Validate;
+import java.io.*;
 import org.bukkit.configuration.InvalidConfigurationException;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
 
@@ -47,16 +38,16 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws IllegalArgumentException Thrown when file is null.
      */
     public void save(File file) throws IOException {
-        Validate.notNull(file, "File cannot be null");
+        if (file == null) {
+            throw new IllegalArgumentException("File cannot be null");
+        }
 
         Files.createParentDirs(file);
-
-        String data = saveToString();
 
         FileWriter writer = new FileWriter(file);
 
         try {
-            writer.write(data);
+            this.save(writer);
         } finally {
             writer.close();
         }
@@ -73,17 +64,35 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws IllegalArgumentException Thrown when file is null.
      */
     public void save(String file) throws IOException {
-        Validate.notNull(file, "File cannot be null");
+        if (file == null) {
+            throw new IllegalArgumentException("File cannot be null");
+        }
 
         save(new File(file));
     }
+    
+    /**
+     * Saves this {@link FileConfiguration} into specified writer.
+     * 
+     * @param out Writer for configuration
+     * @throws IOException Thrown when the given configuration cannot be written to for any reason.
+     */
+    public abstract void save(Writer out) throws IOException;
 
     /**
      * Saves this {@link FileConfiguration} to a string, and returns it.
      *
      * @return String containing this configuration.
      */
-    public abstract String saveToString();
+    public String saveToString() {
+        StringWriter writer = new StringWriter();
+        
+        try  {
+            this.save(writer);
+        } catch (IOException e) { }
+        
+        return writer.getBuffer().toString();
+    }
 
     /**
      * Loads this {@link FileConfiguration} from the specified location.
@@ -100,7 +109,9 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws IllegalArgumentException Thrown when file is null.
      */
     public void load(File file) throws FileNotFoundException, IOException, InvalidConfigurationException {
-        Validate.notNull(file, "File cannot be null");
+        if (file == null) {
+            throw new IllegalArgumentException("File cannot be null");
+        }
 
         load(new FileInputStream(file));
     }
@@ -117,25 +128,17 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws IllegalArgumentException Thrown when stream is null.
      */
     public void load(InputStream stream) throws IOException, InvalidConfigurationException {
-        Validate.notNull(stream, "Stream cannot be null");
-
-        InputStreamReader reader = new InputStreamReader(stream);
-        StringBuilder builder = new StringBuilder();
-        BufferedReader input = new BufferedReader(reader);
-
+        if (stream == null) {
+            throw new IllegalArgumentException("Stream cannot be null");
+        }
+        
+        BufferedReader input = new BufferedReader(new InputStreamReader(stream));
 
         try {
-            String line;
-
-            while ((line = input.readLine()) != null) {
-                builder.append(line);
-                builder.append('\n');
-            }
+            load(input);
         } finally {
             input.close();
         }
-
-        loadFromString(builder.toString());
     }
 
     /**
@@ -153,10 +156,24 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws IllegalArgumentException Thrown when file is null.
      */
     public void load(String file) throws FileNotFoundException, IOException, InvalidConfigurationException {
-        Validate.notNull(file, "File cannot be null");
+        if (file == null) {
+            throw new IllegalArgumentException("File cannot be null");
+        }
 
         load(new File(file));
     }
+    
+    /**
+     * Loads this {@link FileConfiguration} from the specified reader.
+     * <p>
+     * All the values contained within this configuration will be removed, leaving
+     * only settings and defaults, and the new values will be loaded from the given stream.
+     * 
+     * @param in Reader for configuration
+     * @throws IOException Thrown when the given file cannot be read.
+     * @throws InvalidConfigurationException Thrown when the given file is not a valid Configuration.
+     */
+    public abstract void load(Reader in) throws IOException, InvalidConfigurationException;
 
     /**
      * Loads this {@link FileConfiguration} from the specified string, as opposed to from file.
@@ -170,7 +187,11 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws InvalidConfigurationException Thrown if the specified string is invalid.
      * @throws IllegalArgumentException Thrown if contents is null.
      */
-    public abstract void loadFromString(String contents) throws InvalidConfigurationException;
+    public void loadFromString(String contents) throws InvalidConfigurationException {
+        try {
+            load(new StringReader(contents));
+        } catch(IOException e) { }
+    }
 
     /**
      * Compiles the header for this {@link FileConfiguration} and returns the result.

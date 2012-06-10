@@ -103,9 +103,4 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
     public String toString() {
         return super.toString() + " " + (isPowered() ? "" : "NOT ") + "POWERED";
     }
-
-    @Override
-    public Button clone() {
-        return (Button) super.clone();
-    }
 }

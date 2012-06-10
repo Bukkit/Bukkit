@@ -7,12 +7,13 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a chunk is unloaded
  */
+@SuppressWarnings("serial")
 public class ChunkUnloadEvent extends ChunkEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
 
     public ChunkUnloadEvent(final Chunk chunk) {
-        super(chunk);
+        super(Type.CHUNK_UNLOAD, chunk);
     }
 
     public boolean isCancelled() {

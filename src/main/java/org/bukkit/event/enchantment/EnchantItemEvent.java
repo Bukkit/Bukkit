@@ -7,39 +7,36 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.inventory.InventoryEvent;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * Called when an ItemStack is successfully enchanted (currently at enchantment table)
  */
-public class EnchantItemEvent extends InventoryEvent implements Cancellable {
+@SuppressWarnings("serial")
+public class EnchantItemEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private final Block table;
-    private final ItemStack item;
+    private Block table;
+    private ItemStack item;
     private int level;
     private boolean cancelled;
-    private final Map<Enchantment,Integer> enchants;
-    private final Player enchanter;
-    private int button;
+    private Map<Enchantment,Integer> enchants;
+    private Player enchanter;
 
-    public EnchantItemEvent(final Player enchanter, final InventoryView view, final Block table, final ItemStack item, final int level, final Map<Enchantment, Integer> enchants, final int i) {
-        super(view);
+    public EnchantItemEvent(Player enchanter, Block table, ItemStack item, int level, Map<Enchantment, Integer> enchants) {
         this.enchanter = enchanter;
         this.table = table;
         this.item = item;
         this.level = level;
         this.enchants = new HashMap<Enchantment, Integer>(enchants);
         this.cancelled = false;
-        this.button = i;
     }
 
     /**
      * Gets the player enchanting the item
      *
-     * @return enchanting player
+     * @returns enchanting player
      */
     public Player getEnchanter() {
         return enchanter;
@@ -87,14 +84,6 @@ public class EnchantItemEvent extends InventoryEvent implements Cancellable {
      */
     public Map<Enchantment, Integer> getEnchantsToAdd() {
         return enchants;
-    }
-
-    /**
-     * Which button was pressed to initiate the enchanting.
-     * @return The button index (0, 1, or 2).
-     */
-    public int whichButton() {
-        return button;
     }
 
     public boolean isCancelled() {

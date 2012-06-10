@@ -19,11 +19,41 @@ import org.bukkit.event.HandlerList;
  *
  * @see BlockSpreadEvent
  */
-public class BlockFormEvent extends BlockGrowEvent implements Cancellable {
+@SuppressWarnings("serial")
+public class BlockFormEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
+    private boolean cancelled;
+    private BlockState newState;
 
-    public BlockFormEvent(final Block block, final BlockState newState) {
-        super(block, newState);
+    public BlockFormEvent(Block block, BlockState newState) {
+        super(Type.BLOCK_FORM, block);
+        this.block = block;
+        this.newState = newState;
+        this.cancelled = false;
+    }
+
+    public BlockFormEvent(Type type, Block block, BlockState newState) {
+        super(type, block);
+        this.block = block;
+        this.newState = newState;
+        this.cancelled = false;
+    }
+
+    /**
+     * Gets the state of the block where it will form or spread to.
+     *
+     * @return The block state of the block where it will form or spread to
+     */
+    public BlockState getNewState() {
+        return newState;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
     }
 
     @Override

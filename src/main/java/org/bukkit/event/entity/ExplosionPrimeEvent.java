@@ -8,20 +8,21 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when an entity has made a decision to explode.
  */
+@SuppressWarnings("serial")
 public class ExplosionPrimeEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel;
     private float radius;
     private boolean fire;
 
-    public ExplosionPrimeEvent(final Entity what, final float radius, final boolean fire) {
-        super(what);
+    public ExplosionPrimeEvent(Entity what, float radius, boolean fire) {
+        super(Type.EXPLOSION_PRIME, what);
         this.cancel = false;
         this.radius = radius;
         this.fire = fire;
     }
 
-    public ExplosionPrimeEvent(final Explosive explosive) {
+    public ExplosionPrimeEvent(Explosive explosive) {
         this(explosive, explosive.getYield(), explosive.isIncendiary());
     }
 

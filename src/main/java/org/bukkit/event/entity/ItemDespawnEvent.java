@@ -1,17 +1,18 @@
 package org.bukkit.event.entity;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Item;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
+@SuppressWarnings("serial")
 public class ItemDespawnEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean canceled;
-    private final Location location;
+    private Location location;
 
-    public ItemDespawnEvent(final Item despawnee, final Location loc) {
-        super(despawnee);
+    public ItemDespawnEvent(Entity spawnee, Location loc) {
+        super(Type.ITEM_DESPAWN, spawnee);
         location = loc;
     }
 
@@ -21,11 +22,6 @@ public class ItemDespawnEvent extends EntityEvent implements Cancellable {
 
     public void setCancelled(boolean cancel) {
         canceled = cancel;
-    }
-
-    @Override
-    public Item getEntity() {
-        return (Item) entity;
     }
 
     /**

@@ -6,11 +6,11 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a World is loaded
  */
+@SuppressWarnings("serial")
 public class WorldLoadEvent extends WorldEvent {
     private static final HandlerList handlers = new HandlerList();
-
-    public WorldLoadEvent(final World world) {
-        super(world);
+    public WorldLoadEvent(World world) {
+        super(Type.WORLD_LOAD, world);
     }
 
     @Override

@@ -1,10 +1,6 @@
 package org.bukkit.inventory;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.commons.lang.Validate;
 
 import org.bukkit.Material;
 import org.bukkit.material.MaterialData;
@@ -15,7 +11,7 @@ import org.bukkit.material.MaterialData;
  */
 public class ShapelessRecipe implements Recipe {
     private ItemStack output;
-    private List<ItemStack> ingredients = new ArrayList<ItemStack>();
+    private ArrayList<MaterialData> ingredients = new ArrayList<MaterialData>();
 
     /**
      * Create a shapeless recipe to craft the specified ItemStack. The constructor merely determines the
@@ -24,13 +20,9 @@ public class ShapelessRecipe implements Recipe {
      * @param result The item you want the recipe to create.
      * @see ShapelessRecipe#addIngredient(Material)
      * @see ShapelessRecipe#addIngredient(MaterialData)
-     * @see ShapelessRecipe#addIngredient(Material,int)
-     * @see ShapelessRecipe#addIngredient(int,Material)
-     * @see ShapelessRecipe#addIngredient(int,MaterialData)
-     * @see ShapelessRecipe#addIngredient(int,Material,int)
      */
     public ShapelessRecipe(ItemStack result) {
-        this.output = new ItemStack(result);
+        this.output = result;
     }
 
     /**
@@ -57,7 +49,7 @@ public class ShapelessRecipe implements Recipe {
      * Adds the specified ingredient.
      *
      * @param ingredient The ingredient to add.
-     * @param rawdata The data value, or -1 to allow any data value.
+     * @param rawdata The data value.
      * @return The changed recipe, so you can chain calls.
      */
     public ShapelessRecipe addIngredient(Material ingredient, int rawdata) {
@@ -72,7 +64,13 @@ public class ShapelessRecipe implements Recipe {
      * @return The changed recipe, so you can chain calls.
      */
     public ShapelessRecipe addIngredient(int count, MaterialData ingredient) {
-        return addIngredient(count, ingredient.getItemType(), ingredient.getData());
+        if (ingredients.size() + count > 9) {
+            throw new IllegalArgumentException("Shapeless recipes cannot have more than 9 ingredients");
+        }
+        while (count-- > 0) {
+            ingredients.add(ingredient);
+        }
+        return this;
     }
 
     /**
@@ -91,100 +89,27 @@ public class ShapelessRecipe implements Recipe {
      *
      * @param count How many to add (can't be more than 9!)
      * @param ingredient The ingredient to add.
-     * @param rawdata The data value, or -1 to allow any data value.
+     * @param rawdata The data value.
      * @return The changed recipe, so you can chain calls.
      */
     public ShapelessRecipe addIngredient(int count, Material ingredient, int rawdata) {
-        Validate.isTrue(ingredients.size() + count <= 9, "Shapeless recipes cannot have more than 9 ingredients");
+        MaterialData data = ingredient.getNewData((byte) rawdata);
 
-        while (count-- > 0) {
-            ingredients.add(new ItemStack(ingredient, 1, (short) rawdata));
+        if (data == null) {
+            data = new MaterialData(ingredient, (byte) rawdata);
         }
-        return this;
+        return addIngredient(count, data);
     }
 
     /**
      * Removes an ingredient from the list. If the ingredient occurs multiple times,
-     * only one instance of it is removed. Only removes exact matches, with a data value
-     * of 0.
-     *
-     * @param ingredient The ingredient to remove
-     * @return The changed recipe.
-     */
-    public ShapelessRecipe removeIngredient(Material ingredient) {
-        return removeIngredient(ingredient, 0);
-    }
-
-    /**
-     * Removes an ingredient from the list. If the ingredient occurs multiple times,
-     * only one instance of it is removed. If the data value is -1, only ingredients
-     * with a -1 data value will be removed.
+     * only one instance of it is removed.
      *
      * @param ingredient The ingredient to remove
      * @return The changed recipe.
      */
     public ShapelessRecipe removeIngredient(MaterialData ingredient) {
-        return removeIngredient(ingredient.getItemType(), ingredient.getData());
-    }
-
-    /**
-     * Removes multiple instances of an ingredient from the list. If there are less instances
-     * then specified, all will be removed. Only removes exact matches, with a data value
-     * of 0.
-     *
-     * @param count The number of copies to remove.
-     * @param ingredient The ingredient to remove
-     * @return The changed recipe.
-     */
-    public ShapelessRecipe removeIngredient(int count, Material ingredient) {
-        return removeIngredient(count, ingredient, 0);
-    }
-
-    /**
-     * Removes multiple instances of an ingredient from the list. If there are less instances
-     * then specified, all will be removed. If the data value is -1, only ingredients
-     * with a -1 data value will be removed.
-     *
-     * @param count The number of copies to remove.
-     * @param ingredient The ingredient to remove.
-     * @return The changed recipe.
-     */
-    public ShapelessRecipe removeIngredient(int count, MaterialData ingredient) {
-        return removeIngredient(count, ingredient.getItemType(), ingredient.getData());
-    }
-
-    /**
-     * Removes an ingredient from the list. If the ingredient occurs multiple times,
-     * only one instance of it is removed. If the data value is -1, only ingredients
-     * with a -1 data value will be removed.
-     *
-     * @param ingredient The ingredient to remove
-     * @param rawdata The data value;
-     * @return The changed recipe.
-     */
-    public ShapelessRecipe removeIngredient(Material ingredient, int rawdata) {
-        return removeIngredient(1, ingredient, rawdata);
-    }
-
-    /**
-     * Removes multiple instances of an ingredient from the list. If there are less instances
-     * then specified, all will be removed. If the data value is -1, only ingredients
-     * with a -1 data value will be removed.
-     *
-     * @param count The number of copies to remove.
-     * @param ingredient The ingredient to remove.
-     * @param rawdata The data value.
-     * @return The changed recipe.
-     */
-    public ShapelessRecipe removeIngredient(int count, Material ingredient, int rawdata) {
-        Iterator<ItemStack> iterator = ingredients.iterator();
-        while (count > 0 && iterator.hasNext()) {
-            ItemStack stack = iterator.next();
-            if (stack.getType() == ingredient && stack.getDurability() == rawdata) {
-                iterator.remove();
-                count--;
-            }
-        }
+        this.ingredients.remove(ingredient);
         return this;
     }
 
@@ -194,7 +119,7 @@ public class ShapelessRecipe implements Recipe {
      * @return The result stack.
      */
     public ItemStack getResult() {
-        return output.clone();
+        return output;
     }
 
     /**
@@ -202,11 +127,7 @@ public class ShapelessRecipe implements Recipe {
      *
      * @return The input list
      */
-    public List<ItemStack> getIngredientList() {
-        ArrayList<ItemStack> result = new ArrayList<ItemStack>(ingredients.size());
-        for (ItemStack ingredient : ingredients) {
-            result.add(ingredient.clone());
-        }
-        return result;
+    public ArrayList<MaterialData> getIngredientList() {
+        return ingredients;
     }
 }

@@ -2,7 +2,6 @@ package org.bukkit.entity;
 
 import org.bukkit.Art;
 import org.bukkit.block.BlockFace;
-import org.bukkit.event.painting.PaintingBreakEvent;
 import org.bukkit.material.Attachable;
 
 /**
@@ -30,7 +29,7 @@ public interface Painting extends Entity, Attachable {
      * @param art The new art
      * @param force If true, force the new art regardless of whether it fits at the current location
      *            Note that forcing it where it can't fit normally causes it to drop as an item unless you override
-     *            this by catching the {@link PaintingBreakEvent}.
+     *            this by catching the PAINTING_BREAK event.
      * @return False if force was false and the new art won't fit at the painting's current location
      */
     public boolean setArt(Art art, boolean force);

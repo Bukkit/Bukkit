@@ -34,9 +34,4 @@ public class PressurePlate extends MaterialData implements PressureSensor {
     public String toString() {
         return super.toString() + (isPressed() ? " PRESSED" : "");
     }
-
-    @Override
-    public PressurePlate clone() {
-        return (PressurePlate) super.clone();
-    }
 }

@@ -55,9 +55,11 @@ public enum EntityEffect {
     }
 
     /**
-     * Gets the data value of this EntityEffect
+     * Gets the EntityEffect with the given data value
      *
-     * @return The data value
+     * @param data Data value to fetch
+     * @return The {@link EntityEffect} representing the given value, or null if
+     *         it doesn't exist
      */
     public byte getData() {
         return data;

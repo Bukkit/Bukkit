@@ -8,14 +8,15 @@ import org.bukkit.event.HandlerList;
 /**
  * Thrown when a player is fishing
  */
+@SuppressWarnings("serial")
 public class PlayerFishEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final Entity entity;
     private boolean cancel = false;
-    private final State state;
+    private State state;
 
-    public PlayerFishEvent(final Player player, final Entity entity, final State state) {
-        super(player);
+    public PlayerFishEvent(final Player player, final Entity entity, State state) {
+        super(Type.PLAYER_FISH, player);
         this.entity = entity;
         this.state = state;
     }

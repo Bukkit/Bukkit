@@ -7,13 +7,15 @@ import org.bukkit.event.HandlerList;
 /**
  * Stores data for thunder state changing in a world
  */
+@SuppressWarnings("serial")
 public class ThunderChangeEvent extends WeatherEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private boolean canceled;
-    private final boolean to;
 
-    public ThunderChangeEvent(final World world, final boolean to) {
-        super(world);
+    private boolean canceled;
+    private boolean to;
+
+    public ThunderChangeEvent(World world, boolean to) {
+        super(Type.THUNDER_CHANGE, world);
         this.to = to;
     }
 

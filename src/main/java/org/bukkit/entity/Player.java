@@ -12,14 +12,13 @@ import org.bukkit.Note;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
-import org.bukkit.conversations.Conversable;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
 
 /**
  * Represents a player, connected or not
  */
-public interface Player extends HumanEntity, Conversable, CommandSender, OfflinePlayer, PluginMessageRecipient {
+public interface Player extends HumanEntity, CommandSender, OfflinePlayer, PluginMessageRecipient {
     /**
      * Gets the "friendly" name to display of this player. This may include color.
      * <p />
@@ -202,18 +201,9 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      *
      * @param loc the location to play the effect at
      * @param effect the {@link Effect}
-     * @param data a data bit needed for some effects
+     * @param data a data bit needed for the RECORD_PLAY, SMOKE, and STEP_SOUND sounds
      */
     public void playEffect(Location loc, Effect effect, int data);
-
-    /**
-     * Plays an effect to just this player.
-     *
-     * @param loc the location to play the effect at
-     * @param effect the {@link Effect}
-     * @param data a data bit needed for some effects
-     */
-    public <T> void playEffect(Location loc, Effect effect, T data);
 
     /**
      * Send a block change. This fakes a block change packet for a user at
@@ -375,6 +365,28 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public void setExp(float exp);
 
     /**
+     * Gets the players current experience points towards the next level.
+     * <p>
+     * This is a percentage value. 0 is "no progress" and 1 is "next level".
+     *
+     * @return Current experience points
+     * @deprecated use {@link #getExp()} - this method is unsafe to use!
+     */
+    @Deprecated
+    public int getExperience();
+
+    /**
+     * Sets the players current experience points towards the next level
+     * <p>
+     * This is a percentage value. 0 is "no progress" and 1 is "next level".
+     *
+     * @param exp New experience points
+     * @deprecated use {@link #setExp(float)} - this method is unsafe to use!
+     */
+    @Deprecated
+    public void setExperience(int exp);
+
+    /**
      * Gets the players current experience level
      *
      * @return Current experience level
@@ -501,17 +513,4 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      */
     public boolean canSee(Player player);
 
-    /**
-     * Checks to see if this player is currently flying or not.
-     *
-     * @return True if the player is flying, else false.
-     */
-    public boolean isFlying();
-
-    /**
-     * Makes this player start or stop flying.
-     *
-     * @param value True to fly.
-     */
-    public void setFlying(boolean value);
 }

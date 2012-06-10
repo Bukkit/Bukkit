@@ -6,12 +6,14 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a player leaves a server
  */
+@SuppressWarnings("serial")
 public class PlayerQuitEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
+
     private String quitMessage;
 
-    public PlayerQuitEvent(final Player who, final String quitMessage) {
-        super(who);
+    public PlayerQuitEvent(Player who, String quitMessage) {
+        super(Type.PLAYER_QUIT, who);
         this.quitMessage = quitMessage;
     }
 

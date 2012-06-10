@@ -6,12 +6,13 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a chunk is loaded
  */
+@SuppressWarnings("serial")
 public class ChunkLoadEvent extends ChunkEvent {
     private static final HandlerList handlers = new HandlerList();
     private final boolean newChunk;
 
     public ChunkLoadEvent(final Chunk chunk, final boolean newChunk) {
-        super(chunk);
+        super(Type.CHUNK_LOAD, chunk);
         this.newChunk = newChunk;
     }
 

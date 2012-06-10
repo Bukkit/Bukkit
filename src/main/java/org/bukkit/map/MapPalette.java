@@ -97,7 +97,7 @@ public final class MapPalette {
 
         byte[] result = new byte[temp.getWidth() * temp.getHeight()];
         for (int i = 0; i < pixels.length; i++) {
-            result[i] = matchColor(new Color(pixels[i], true));
+            result[i] = matchColor(new Color(pixels[i]));
         }
         return result;
     }

@@ -162,7 +162,7 @@ public class PermissibleBase implements Permissible {
         }
     }
 
-    public synchronized void clearPermissions() {
+    private synchronized void clearPermissions() {
         Set<String> perms = permissions.keySet();
 
         for (String name : perms) {

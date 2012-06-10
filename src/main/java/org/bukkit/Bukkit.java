@@ -1,30 +1,24 @@
 package org.bukkit;
 
+import com.avaje.ebean.config.ServerConfig;
 import java.io.File;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
-
+import org.bukkit.World.Environment;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.help.HelpMap;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.scheduler.BukkitScheduler;
-
-import com.avaje.ebean.config.ServerConfig;
 
 /**
  * Represents the Bukkit core, for version and Server singleton handling
@@ -102,14 +96,6 @@ public final class Bukkit {
         return server.getServerId();
     }
 
-    public static String getWorldType() {
-        return server.getWorldType();
-    }
-
-    public static boolean getGenerateStructures() {
-        return server.getGenerateStructures();
-    }
-
     public static boolean getAllowNether() {
         return server.getAllowNether();
     }
@@ -148,6 +134,26 @@ public final class Bukkit {
 
     public static List<World> getWorlds() {
         return server.getWorlds();
+    }
+
+    @Deprecated
+    public static World createWorld(String name, Environment environment) {
+        return server.createWorld(name, environment);
+    }
+
+    @Deprecated
+    public static World createWorld(String name, Environment environment, long seed) {
+        return server.createWorld(name, environment, seed);
+    }
+
+    @Deprecated
+    public static World createWorld(String name, Environment environment, ChunkGenerator generator) {
+        return server.createWorld(name, environment, generator);
+    }
+
+    @Deprecated
+    public static World createWorld(String name, Environment environment, long seed, ChunkGenerator generator) {
+        return server.createWorld(name, environment, seed, generator);
     }
 
     public static World createWorld(WorldCreator options) {
@@ -204,22 +210,6 @@ public final class Bukkit {
 
     public static boolean addRecipe(Recipe recipe) {
         return server.addRecipe(recipe);
-    }
-
-    public static List<Recipe> getRecipesFor(ItemStack result) {
-        return server.getRecipesFor(result);
-    }
-
-    public static Iterator<Recipe> recipeIterator() {
-        return server.recipeIterator();
-    }
-
-    public static void clearRecipes() {
-        server.clearRecipes();
-    }
-
-    public static void resetRecipes() {
-        server.resetRecipes();
     }
 
     public static Map<String, String[]> getCommandAliases() {
@@ -300,69 +290,5 @@ public final class Bukkit {
 
     public static Messenger getMessenger() {
         return server.getMessenger();
-    }
-
-    public static boolean getAllowEnd() {
-        return server.getAllowEnd();
-    }
-
-    public static File getUpdateFolderFile() {
-        return server.getUpdateFolderFile();
-    }
-
-    public static long getConnectionThrottle() {
-        return server.getConnectionThrottle();
-    }
-
-    public static int getTicksPerAnimalSpawns() {
-        return server.getTicksPerAnimalSpawns();
-    }
-
-    public static int getTicksPerMonsterSpawns() {
-        return server.getTicksPerMonsterSpawns();
-    }
-
-    public static boolean useExactLoginLocation() {
-        return server.useExactLoginLocation();
-    }
-
-    public static GameMode getDefaultGameMode() {
-        return server.getDefaultGameMode();
-    }
-
-    public static void setDefaultGameMode(GameMode mode) {
-        server.setDefaultGameMode(mode);
-    }
-
-    public static OfflinePlayer[] getOfflinePlayers() {
-        return server.getOfflinePlayers();
-    }
-
-    public static Inventory createInventory(InventoryHolder owner, InventoryType type) {
-        return server.createInventory(owner, type);
-    }
-
-    public static Inventory createInventory(InventoryHolder owner, int size) {
-        return server.createInventory(owner, size);
-    }
-
-    public static Inventory createInventory(InventoryHolder owner, int size, String title) {
-        return server.createInventory(owner, size, title);
-    }
-
-    public static HelpMap getHelpMap() {
-        return server.getHelpMap();
-    }
-
-    public static int getMonsterSpawnLimit() {
-        return server.getMonsterSpawnLimit();
-    }
-
-    public static int getAnimalSpawnLimit() {
-        return server.getAnimalSpawnLimit();
-    }
-
-    public static int getWaterAnimalSpawnLimit() {
-        return server.getWaterAnimalSpawnLimit();
     }
 }

@@ -54,9 +54,4 @@ public class Tree extends MaterialData {
     public String toString() {
         return getSpecies() + " " + super.toString();
     }
-
-    @Override
-    public Tree clone() {
-        return (Tree) super.clone();
-    }
 }

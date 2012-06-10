@@ -1,7 +1,5 @@
 package org.bukkit.inventory;
 
-import org.bukkit.entity.HumanEntity;
-
 /**
  * Includes interface to the 4 armor slots
  */
@@ -101,6 +99,4 @@ public interface PlayerInventory extends Inventory {
      * @return Held item slot number
      */
     public int getHeldItemSlot();
-
-    public HumanEntity getHolder();
 }

@@ -6,10 +6,12 @@ import org.bukkit.event.Event;
 /**
  * Represents a Weather-related event
  */
+@SuppressWarnings("serial")
 public abstract class WeatherEvent extends Event {
     protected World world;
 
-    public WeatherEvent(final World where) {
+    public WeatherEvent(final Event.Type type, final World where) {
+        super(type);
         world = where;
     }
 

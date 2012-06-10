@@ -1,9 +1,13 @@
 package org.bukkit.command;
 
 import org.bukkit.command.defaults.*;
-
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Iterator;
 import org.bukkit.Server;
 import static org.bukkit.util.Java15Compat.Arrays_copyOfRange;
 
@@ -139,10 +143,6 @@ public class SimpleCommandMap implements CommandMap {
 
         return null;
     }
-    
-    public Set<VanillaCommand> getFallbackCommands() {
-        return Collections.unmodifiableSet(fallbackCommands);
-    }
 
     /**
      * {@inheritDoc}
@@ -156,7 +156,9 @@ public class SimpleCommandMap implements CommandMap {
 
         String sentCommandLabel = args[0].toLowerCase();
         Command target = getCommand(sentCommandLabel);
-
+        if (target == null) {
+            target = getFallback(commandLine.toLowerCase());
+        }
         if (target == null) {
             return false;
         }
@@ -184,15 +186,7 @@ public class SimpleCommandMap implements CommandMap {
     }
 
     public Command getCommand(String name) {
-        Command target =  knownCommands.get(name.toLowerCase());
-        if (target == null) {
-            target = getFallback(name);
-        }
-        return target;
-    }
-
-    public Collection<Command> getCommands() {
-        return knownCommands.values();
+        return knownCommands.get(name.toLowerCase());
     }
 
     public void registerServerAliases() {

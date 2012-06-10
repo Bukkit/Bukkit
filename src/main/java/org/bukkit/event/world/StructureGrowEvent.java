@@ -13,15 +13,16 @@ import org.bukkit.event.HandlerList;
  */
 public class StructureGrowEvent extends WorldEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
+    private static final long serialVersionUID = 1L;
     private boolean cancelled = false;
-    private final Location location;
+    private Location location;
     private final TreeType species;
     private final boolean bonemeal;
-    private final Player player;
-    private final List<BlockState> blocks;
+    private Player player;
+    private List<BlockState> blocks;
 
-    public StructureGrowEvent(final Location location, final TreeType species, final boolean bonemeal, final Player player, final List<BlockState> blocks) {
-        super(location.getWorld());
+    public StructureGrowEvent(Location location, final TreeType species, final boolean bonemeal, Player player, List<BlockState> blocks) {
+        super(Type.STRUCTURE_GROW, location.getWorld());
         this.location = location;
         this.species = species;
         this.bonemeal = bonemeal;

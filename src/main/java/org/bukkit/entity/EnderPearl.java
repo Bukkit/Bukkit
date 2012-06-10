@@ -1,7 +1,7 @@
 package org.bukkit.entity;
 
 /**
- * Represents a thrown Ender Pearl entity
+ * Represents an Ender Pearl entity
  */
 public interface EnderPearl extends Projectile {
 

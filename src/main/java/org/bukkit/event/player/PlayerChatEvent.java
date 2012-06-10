@@ -11,6 +11,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Holds information for player chat and commands
  */
+@SuppressWarnings("serial")
 public class PlayerChatEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
@@ -19,8 +20,12 @@ public class PlayerChatEvent extends PlayerEvent implements Cancellable {
     private final Set<Player> recipients;
 
     public PlayerChatEvent(final Player player, final String message) {
-        super(player);
-        this.recipients = new HashSet<Player>(Arrays.asList(player.getServer().getOnlinePlayers()));
+        this(Type.PLAYER_CHAT, player, message);
+    }
+
+    protected PlayerChatEvent(final Type type, final Player player, final String message) {
+        super(type, player);
+        recipients = new HashSet<Player>(Arrays.asList(player.getServer().getOnlinePlayers()));
         this.message = message;
     }
 

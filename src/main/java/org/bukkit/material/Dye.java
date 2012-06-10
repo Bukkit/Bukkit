@@ -49,9 +49,4 @@ public class Dye extends MaterialData implements Colorable {
     public String toString() {
         return getColor() + " DYE(" + getData() + ")";
     }
-
-    @Override
-    public Dye clone() {
-        return (Dye) super.clone();
-    }
 }
