@@ -11,7 +11,7 @@ public class PlayerPreLoginEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private Result result;
     private String message;
-    private final String name;
+    private String name;
     private final InetAddress ipAddress;
 
     public PlayerPreLoginEvent(final String name, final InetAddress ipAddress) {
@@ -83,6 +83,17 @@ public class PlayerPreLoginEvent extends Event {
      */
     public String getName() {
         return name;
+    }
+    
+    /**
+     * Set the player's name.
+     * @param newName
+     */
+    public void setName(String newName) {
+    	if (newName == null || newName.length()<1) {
+    		throw new IllegalArgumentException("Name must be non-null");
+    	}
+    	name = newName;
     }
 
     /**
