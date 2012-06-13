@@ -575,6 +575,13 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public long getSeed();
 
     /**
+     * Sets the seed for this world.
+     * 
+     * @param seed the new world seed
+     */
+    public void setSeed(long seed);
+
+    /**
      * Gets the current PVP setting for this world.
      *
      * @return True if PVP is enabled
