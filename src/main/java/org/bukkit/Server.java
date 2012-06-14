@@ -160,6 +160,21 @@ public interface Server extends PluginMessageRecipient {
     public void setWhitelist(boolean value);
 
     /**
+     * Returns the current motd
+     *
+     * @return The active motd (message sent to clients browsing their server list)
+     */
+    public String getMotd();
+
+    /**
+     * Sets the motd
+     *
+     * @param newmotd the new message of the day
+     * @param save specifies whether or not the new motd should be persistent (saved to the configuration file)
+     */
+     public void setMotd(String newmotd, boolean save);
+
+    /**
      * Gets a list of whitelisted players
      *
      * @return Set containing all whitelisted players

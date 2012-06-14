@@ -130,6 +130,10 @@ public final class Bukkit {
         return server.getPlayer(name);
     }
 
+    public static String getMotd() {
+        return server.getMotd();
+    }
+
     public static List<Player> matchPlayer(String name) {
         return server.matchPlayer(name);
     }
@@ -276,6 +280,10 @@ public final class Bukkit {
 
     public static void setWhitelist(boolean value) {
         server.setWhitelist(value);
+    }
+
+    public static void setMotd(String newmotd, boolean save) {
+        server.setMotd(newmotd, save);
     }
 
     public static Set<OfflinePlayer> getWhitelistedPlayers() {
