@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.ItemStack;
 
-public abstract class PlayerBucketEvent extends PlayerEvent implements Cancellable {
+public abstract class PlayerBucketEvent extends AbstractPlayerEvent implements Cancellable {
     private ItemStack itemStack;
     private boolean cancelled = false;
     private final Block blockClicked;

@@ -4,6 +4,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Called when a block is broken by a player.
@@ -14,7 +15,7 @@ import org.bukkit.event.HandlerList;
  * <p />
  * If a Block Break event is cancelled, the block will not break.
  */
-public class BlockBreakEvent extends BlockEvent implements Cancellable {
+public class BlockBreakEvent extends BlockEvent implements Cancellable, PlayerEvent {
 
     private static final HandlerList handlers = new HandlerList();
     private final Player player;

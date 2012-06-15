@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Stores details for players attempting to log in
  */
-public class PlayerLoginEvent extends PlayerEvent {
+public class PlayerLoginEvent extends AbstractPlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final InetAddress address;
     private final String hostname;

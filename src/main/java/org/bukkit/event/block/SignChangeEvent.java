@@ -4,13 +4,14 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Called when a sign is changed by a player.
  * <p />
  * If a Sign Change event is cancelled, the sign will not be changed.
  */
-public class SignChangeEvent extends BlockEvent implements Cancellable {
+public class SignChangeEvent extends BlockEvent implements Cancellable, PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
     private final Player player;

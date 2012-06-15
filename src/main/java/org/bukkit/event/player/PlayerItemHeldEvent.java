@@ -6,7 +6,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Fired when a player changes their currently held item
  */
-public class PlayerItemHeldEvent extends PlayerEvent {
+public class PlayerItemHeldEvent extends AbstractPlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final int previous;
     private final int current;

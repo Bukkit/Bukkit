@@ -5,6 +5,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -12,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
  * <p />
  * If a Block Place event is cancelled, the block will not be placed.
  */
-public class BlockPlaceEvent extends BlockEvent implements Cancellable {
+public class BlockPlaceEvent extends BlockEvent implements Cancellable, PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     protected boolean cancel;
     protected boolean canBuild;

@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a player shears an entity
  */
-public class PlayerShearEntityEvent extends PlayerEvent implements Cancellable {
+public class PlayerShearEntityEvent extends AbstractPlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel;
     private final Entity what;

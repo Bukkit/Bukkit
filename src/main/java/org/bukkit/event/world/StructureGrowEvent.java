@@ -7,11 +7,12 @@ import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Event that is called when an organic structure attempts to grow (Sapling -> Tree), (Mushroom -> Huge Mushroom), naturally or using bonemeal.
  */
-public class StructureGrowEvent extends WorldEvent implements Cancellable {
+public class StructureGrowEvent extends WorldEvent implements Cancellable, PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
     private final Location location;
