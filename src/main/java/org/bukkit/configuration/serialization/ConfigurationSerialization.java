@@ -129,10 +129,10 @@ public class ConfigurationSerialization {
 
     /**
      * Attempts to deserialize the given arguments into a new instance of the given class.
-     * <p>
+     * <p />
      * The class must implement {@link ConfigurationSerializable}, including the extra methods
      * as specified in the javadoc of ConfigurationSerializable.
-     * <p>
+     * <p />
      * If a new instance could not be made, an example being the class not fully implementing
      * the interface, null will be returned.
      *
@@ -146,10 +146,10 @@ public class ConfigurationSerialization {
 
     /**
      * Attempts to deserialize the given arguments into a new instance of the given class.
-     * <p>
+     * <p />
      * The class must implement {@link ConfigurationSerializable}, including the extra methods
      * as specified in the javadoc of ConfigurationSerializable.
-     * <p>
+     * <p />
      * If a new instance could not be made, an example being the class not fully implementing
      * the interface, null will be returned.
      *
@@ -164,9 +164,11 @@ public class ConfigurationSerialization {
                 String alias = (String) args.get(SERIALIZED_TYPE_KEY);
 
                 if (alias == null) {
-                    throw new IllegalArgumentException("Specified class does not exist ('" + alias + ")'");
-                } else {
-                    clazz = getClassByAlias(alias);
+                    throw new IllegalArgumentException("Cannot have null alias");
+                }
+                clazz = getClassByAlias(alias);
+                if (clazz == null) {
+                    throw new IllegalArgumentException("Specified class does not exist ('" + alias + "')");
                 }
             } catch (ClassCastException ex) {
                 ex.fillInStackTrace();

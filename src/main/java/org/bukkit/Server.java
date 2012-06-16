@@ -304,7 +304,7 @@ public interface Server extends PluginMessageRecipient {
 
     /**
      * Creates or loads a world with the given name using the specified options.
-     * <p>
+     * <p />
      * If the world is already loaded, it will just return the equivalent of
      * getWorld(creator.name()).
      *
@@ -639,4 +639,9 @@ public interface Server extends PluginMessageRecipient {
      * @returns The water animal spawn limit
      */
     int getWaterAnimalSpawnLimit();
+
+    /**
+     * Returns true if the current {@link Thread} is the server's primary thread
+     */
+    boolean isPrimaryThread();
 }
