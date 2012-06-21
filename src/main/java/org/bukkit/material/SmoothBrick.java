@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.SmoothBrickType;
 
 /**
  * Represents the different types of smooth bricks.
  */
-public class SmoothBrick extends TexturedMaterial {
+public class SmoothBrick extends MaterialData {
 
+    @Deprecated
     private static final List<Material> textures = new ArrayList<Material>();
     static {
         textures.add(Material.STONE);
@@ -22,15 +24,17 @@ public class SmoothBrick extends TexturedMaterial {
         super(Material.SMOOTH_BRICK);
     }
 
+    public SmoothBrick(SmoothBrickType type) {
+        this();
+        setType(type);
+    }
+
     public SmoothBrick(final int type) {
         super(type);
     }
 
     public SmoothBrick(final Material type) {
-        super((textures.contains(type)) ? Material.SMOOTH_BRICK : type);
-        if (textures.contains(type)) {
-            setMaterial(type);
-        }
+        super(type);
     }
 
     public SmoothBrick(final int type, final byte data) {
@@ -41,9 +45,32 @@ public class SmoothBrick extends TexturedMaterial {
         super(type, data);
     }
 
-    @Override
+    /**
+     * Gets the current type of this smooth brick
+     *
+     * @return SmoothBrickType of this smooth brick
+     */
+    public SmoothBrickType getType() {
+        return SmoothBrickType.getByData(getData());
+    }
+
+    /**
+     * Sets the type of this smooth brick
+     *
+     * @param type New type of this smooth brick
+     */
+    public void setType(SmoothBrickType type) {
+        setData(type.getData());
+    }
+
+    @Deprecated
     public List<Material> getTextures() {
         return textures;
+    }
+
+    @Override
+    public String toString() {
+        return getType() + " " + super.toString();
     }
 
     @Override
