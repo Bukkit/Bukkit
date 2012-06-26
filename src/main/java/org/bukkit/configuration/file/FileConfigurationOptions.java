@@ -2,15 +2,19 @@ package org.bukkit.configuration.file;
 
 import org.bukkit.configuration.*;
 
+import java.nio.charset.*;
+
 /**
  * Various settings for controlling the input and output of a {@link FileConfiguration}
  */
 public class FileConfigurationOptions extends MemoryConfigurationOptions {
     private String header = null;
     private boolean copyHeader = true;
+    private Charset encoding;
 
     protected FileConfigurationOptions(MemoryConfiguration configuration) {
         super(configuration);
+        this.encoding = Charset.defaultCharset();
     }
 
     @Override
@@ -104,5 +108,23 @@ public class FileConfigurationOptions extends MemoryConfigurationOptions {
         copyHeader = value;
 
         return this;
+    }
+
+    /**
+     * Gets the character encoding set used by this FileConfiguration object.
+     * @return The character encoding used for this FileConfiguration.
+     */
+    public String getEncoding() {
+        return this.encoding.displayName();
+    }
+
+    /**
+     * Attempts to set the character encoding for this FileConfiguration object.
+     * @param charset The name of the character set, such as UTF-8 or ISO-8859-1
+     * @throws IllegalCharsetNameException If the given charset name is invalid
+     * @throws UnsupportedCharsetException If no support for the given charset exists in this instance of the JVM
+     */
+    public void setEncoding(String charset) throws IllegalCharsetNameException, UnsupportedCharsetException {
+        this.encoding = Charset.forName(charset);
     }
 }
