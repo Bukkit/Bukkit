@@ -6,11 +6,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.Metadatable;
@@ -682,24 +684,24 @@ public interface World extends PluginMessageRecipient, Metadatable {
     /**
      * Sets the spawn flags for this.
      *
-     * @param allowMonsters - if true, monsters are allowed to spawn in this world.
-     * @param allowAnimals - if true, animals are allowed to spawn in this world.
+     * @param allowMonsters - the reasons for which monsters are allowed to spawn in this world.
+     * @param allowAnimals - the reasons for which animals are allowed to spawn in this world.
      */
-    public void setSpawnFlags(boolean allowMonsters, boolean allowAnimals);
+    public void setSpawnFlags(Set<SpawnReason> allowMonsters, Set<SpawnReason> allowAnimals);
 
     /**
-     * Gets whether animals can spawn in this world.
+     * Gets the reasons for which animals can spawn in this world.
      *
-     * @return whether animals can spawn in this world.
+     * @return reasons for which animals can spawn in this world.
      */
-    public boolean getAllowAnimals();
+    public Set<SpawnReason> getAllowAnimals();
 
     /**
-     * Gets whether monsters can spawn in this world.
+     * Gets the reasons for which monsters can spawn in this world.
      *
-     * @return whether monsters can spawn in this world.
+     * @return reasons for which monsters can spawn in this world.
      */
-    public boolean getAllowMonsters();
+    public Set<SpawnReason> getAllowMonsters();
 
     /**
      * Gets the biome for the given block coordinates.
