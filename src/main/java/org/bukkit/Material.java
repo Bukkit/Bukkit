@@ -406,22 +406,26 @@ public enum Material {
      * @return true if this Material is edible.
      */
     public boolean isEdible() {
-        return equals(Material.BREAD)
-                || equals(Material.COOKIE)
-                || equals(Material.MELON)
-                || equals(Material.MUSHROOM_SOUP)
-                || equals(Material.RAW_CHICKEN)
-                || equals(Material.COOKED_CHICKEN)
-                || equals(Material.RAW_BEEF)
-                || equals(Material.COOKED_BEEF)
-                || equals(Material.RAW_FISH)
-                || equals(Material.COOKED_FISH)
-                || equals(Material.PORK)
-                || equals(Material.GRILLED_PORK)
-                || equals(Material.APPLE)
-                || equals(Material.GOLDEN_APPLE)
-                || equals(Material.ROTTEN_FLESH)
-                || equals(Material.SPIDER_EYE);
+        switch (this) {
+        case APPLE:
+        case BREAD:
+        case COOKED_BEEF:
+        case COOKED_CHICKEN:
+        case COOKED_FISH:
+        case COOKIE:
+        case GRILLED_PORK:
+        case GOLDEN_APPLE:
+        case MELON:
+        case MUSHROOM_SOUP:
+        case PORK:
+        case RAW_BEEF:
+        case RAW_CHICKEN:
+        case RAW_FISH:
+        case ROTTEN_FLESH:
+        case SPIDER_EYE:
+            return true;
+        }
+        return false;
     }
 
     /**
