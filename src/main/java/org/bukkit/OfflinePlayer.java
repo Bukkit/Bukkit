@@ -3,6 +3,7 @@ package org.bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.permissions.ServerOperator;
 
 public interface OfflinePlayer extends ServerOperator, AnimalTamer, ConfigurationSerializable {
@@ -92,5 +93,12 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
      * @return Bed Spawn Location if bed exists, otherwise null.
      */
     public Location getBedSpawnLocation();
+    
+    /**
+     * Get the player's inventory.
+     *
+     * @return The inventory of the player, this also contains the armor slots.
+     */
+    public PlayerInventory getInventory();
 
 }
