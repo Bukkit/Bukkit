@@ -947,7 +947,12 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * If set to a negative number the world will use the server-wide spawn limit instead.
      */
     void setWaterAnimalSpawnLimit(int limit);
-
+    /** Gets entity with specified id
+     * 
+     * @param entityId
+     * @return Entity with id <code>entityId</code>
+     */
+    public Entity getEntityById(int entityId);
     /**
      * Represents various map environment types that a world may be
      */
