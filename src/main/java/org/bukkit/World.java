@@ -949,10 +949,10 @@ public interface World extends PluginMessageRecipient, Metadatable {
     void setWaterAnimalSpawnLimit(int limit);
     /** Gets entity with specified id
      * 
-     * @param entityId
-     * @return Entity with id <code>entityId</code>
+     * @param entityID
+     * @return Entity with id <code>entityID</code>
      */
-    public Entity getEntityById(int entityId);
+    public Entity getEntityById(int entityID);
     /**
      * Represents various map environment types that a world may be
      */
