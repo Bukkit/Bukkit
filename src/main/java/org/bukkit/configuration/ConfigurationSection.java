@@ -407,7 +407,7 @@ public interface ConfigurationSection {
      * <p />
      * If the List does not exist but a default value has been specified, this
      * will return the default value. If the List does not exist and no default
-     * value was specified, this will return null.
+     * value was specified, this will return an empty List.
      * <p />
      * This method will attempt to cast any values into a String if possible, but may
      * miss any values out if they are not compatible.
@@ -422,7 +422,7 @@ public interface ConfigurationSection {
      * <p />
      * If the List does not exist but a default value has been specified, this
      * will return the default value. If the List does not exist and no default
-     * value was specified, this will return null.
+     * value was specified, this will return an empty List.
      * <p />
      * This method will attempt to cast any values into a Integer if possible, but may
      * miss any values out if they are not compatible.
@@ -437,7 +437,7 @@ public interface ConfigurationSection {
      * <p />
      * If the List does not exist but a default value has been specified, this
      * will return the default value. If the List does not exist and no default
-     * value was specified, this will return null.
+     * value was specified, this will return an empty List.
      * <p />
      * This method will attempt to cast any values into a Boolean if possible, but may
      * miss any values out if they are not compatible.
@@ -452,7 +452,7 @@ public interface ConfigurationSection {
      * <p />
      * If the List does not exist but a default value has been specified, this
      * will return the default value. If the List does not exist and no default
-     * value was specified, this will return null.
+     * value was specified, this will return an empty List.
      * <p />
      * This method will attempt to cast any values into a Double if possible, but may
      * miss any values out if they are not compatible.
@@ -467,7 +467,7 @@ public interface ConfigurationSection {
      * <p />
      * If the List does not exist but a default value has been specified, this
      * will return the default value. If the List does not exist and no default
-     * value was specified, this will return null.
+     * value was specified, this will return an empty List.
      * <p />
      * This method will attempt to cast any values into a Float if possible, but may
      * miss any values out if they are not compatible.
@@ -482,7 +482,7 @@ public interface ConfigurationSection {
      * <p />
      * If the List does not exist but a default value has been specified, this
      * will return the default value. If the List does not exist and no default
-     * value was specified, this will return null.
+     * value was specified, this will return an empty List.
      * <p />
      * This method will attempt to cast any values into a Long if possible, but may
      * miss any values out if they are not compatible.
@@ -497,7 +497,7 @@ public interface ConfigurationSection {
      * <p />
      * If the List does not exist but a default value has been specified, this
      * will return the default value. If the List does not exist and no default
-     * value was specified, this will return null.
+     * value was specified, this will return an empty List.
      * <p />
      * This method will attempt to cast any values into a Byte if possible, but may
      * miss any values out if they are not compatible.
@@ -512,7 +512,7 @@ public interface ConfigurationSection {
      * <p />
      * If the List does not exist but a default value has been specified, this
      * will return the default value. If the List does not exist and no default
-     * value was specified, this will return null.
+     * value was specified, this will return an empty List.
      * <p />
      * This method will attempt to cast any values into a Character if possible, but may
      * miss any values out if they are not compatible.
@@ -527,7 +527,7 @@ public interface ConfigurationSection {
      * <p />
      * If the List does not exist but a default value has been specified, this
      * will return the default value. If the List does not exist and no default
-     * value was specified, this will return null.
+     * value was specified, this will return an empty List.
      * <p />
      * This method will attempt to cast any values into a Short if possible, but may
      * miss any values out if they are not compatible.
@@ -542,7 +542,7 @@ public interface ConfigurationSection {
      * <p />
      * If the List does not exist but a default value has been specified, this
      * will return the default value. If the List does not exist and no default
-     * value was specified, this will return null.
+     * value was specified, this will return an empty List.
      * <p />
      * This method will attempt to cast any values into a Map if possible, but may
      * miss any values out if they are not compatible.
