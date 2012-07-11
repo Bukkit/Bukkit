@@ -157,6 +157,6 @@ public interface BukkitScheduler {
      * @param taskId The task to check.
      * @return The time in ticks till the task will get executed or a negative value on errors.
      */
-    public List<BukkitTask> getRemainingDelay(int taskId);
+    public long getRemainingDelay(int taskId);
 
 }
