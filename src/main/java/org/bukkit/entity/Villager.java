@@ -27,7 +27,8 @@ public interface Villager extends Ageable, NPC {
         LIBRARIAN(1),
         PRIEST(2),
         BLACKSMITH(3),
-        BUTCHER(4);
+        BUTCHER(4),
+        VILLAGER(5);
 
         private static final Profession[] professions = new Profession[Profession.values().length];
         private final int id;
