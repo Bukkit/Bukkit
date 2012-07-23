@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class EntityDeathEvent extends EntityEvent {
     private static final HandlerList handlers = new HandlerList();
-    private final List<ItemStack> drops;
+    private List<ItemStack> drops;
     private int dropExp = 0;
 
     public EntityDeathEvent(final LivingEntity entity, final List<ItemStack> drops) {
@@ -59,6 +59,15 @@ public class EntityDeathEvent extends EntityEvent {
      */
     public List<ItemStack> getDrops() {
         return drops;
+    }
+    
+    /**
+     * Sets the list of items that the entity will drop when it dies.
+     * 
+     * @param items Items that will be dropped by the entity upon death.
+     */
+    public void setDrops(List<ItemStack> items){
+        this.drops = items;
     }
 
     @Override
