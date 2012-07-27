@@ -17,7 +17,7 @@ public class PrepareItemEnchantEvent extends InventoryEvent implements Cancellab
     private final ItemStack item;
     private final int[] levelsOffered;
     private final int bonus;
-    private boolean cancelled;
+    private Result result;
     private final Player enchanter;
 
     public PrepareItemEnchantEvent(final Player enchanter, InventoryView view, final Block table, final ItemStack item, final int[] levelsOffered, final int bonus) {
@@ -27,7 +27,7 @@ public class PrepareItemEnchantEvent extends InventoryEvent implements Cancellab
         this.item = item;
         this.levelsOffered = levelsOffered;
         this.bonus = bonus;
-        this.cancelled = false;
+        this.result = Result.DEFAULT;
     }
 
     /**
@@ -73,12 +73,20 @@ public class PrepareItemEnchantEvent extends InventoryEvent implements Cancellab
         return bonus;
     }
 
+    public void setResult(Result newResult) {
+        result = newResult;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
     public boolean isCancelled() {
-        return cancelled;
+        return result == Result.DENY;
     }
 
     public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
+        result = cancel ? Result.DENY : Result.ALLOW;
     }
 
     @Override
