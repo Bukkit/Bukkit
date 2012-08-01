@@ -8,12 +8,20 @@ import org.bukkit.plugin.Plugin;
  * Holds information about a permission attachment on a {@link Permissible} object
  */
 public class PermissionAttachment {
+    public static final float DEFAULT_PRIORITY = 5.0f;
+
     private PermissionRemovedExecutor removed;
     private final Map<String, Boolean> permissions = new LinkedHashMap<String, Boolean>();
     private final Permissible permissible;
     private final Plugin plugin;
 
+    private float priority;
+
     public PermissionAttachment(Plugin plugin, Permissible Permissible) {
+        this(plugin, Permissible, DEFAULT_PRIORITY);
+    }
+
+    public PermissionAttachment(Plugin plugin, Permissible Permissible, float priority) {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null");
         } else if (!plugin.isEnabled()) {
@@ -22,6 +30,7 @@ public class PermissionAttachment {
 
         this.permissible = Permissible;
         this.plugin = plugin;
+        this.priority = priority;
     }
 
     /**
@@ -72,6 +81,24 @@ public class PermissionAttachment {
     }
 
     /**
+     * Sets the priority of this attachment
+     *
+     * @param value Priority to set this attachment to
+     */
+    public void setPriority(float value) {
+        priority = value;
+    }
+
+    /**
+     * Gets the priority for this attachment
+     *
+     * @return Priority of this attachment
+     */
+    public float getPriority() {
+        return priority;
+    }
+
+    /**
      * Sets a permission to the given value, by its fully qualified name
      *
      * @param name Name of the permission
@@ -90,7 +117,6 @@ public class PermissionAttachment {
      */
     public void setPermission(Permission perm, boolean value) {
         setPermission(perm.getName(), value);
-        permissible.recalculatePermissions();
     }
 
     /**
@@ -114,7 +140,6 @@ public class PermissionAttachment {
      */
     public void unsetPermission(Permission perm) {
         unsetPermission(perm.getName());
-        permissible.recalculatePermissions();
     }
 
     /**

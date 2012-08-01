@@ -44,6 +44,27 @@ public interface Permissible extends ServerOperator {
     public boolean hasPermission(Permission perm);
 
     /**
+     * Adds a new {@link PermissionAttachment} with a single permission by name and value,
+     * and with a set priority
+     *
+     * @param plugin Plugin responsible for this attachment, may not be null or disabled
+     * @param name Name of the permission to attach
+     * @param value Value of the permission
+     * @param priority Priority of the attachment
+     * @return The PermissionAttachment that was just created
+     */
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, float priority);
+
+    /**
+     * Adds a new {@link PermissionAttachment} to this object with a set priority
+     *
+     * @param plugin Plugin responsible for this attachment, may not be null or disabled
+     * @param priority Priority of the attachment
+     * @return The PermissionAttachment that was just created
+     */
+    public PermissionAttachment addAttachment(Plugin plugin, float priority);
+
+    /**
      * Adds a new {@link PermissionAttachment} with a single permission by name and value
      *
      * @param plugin Plugin responsible for this attachment, may not be null or disabled
@@ -60,6 +81,29 @@ public interface Permissible extends ServerOperator {
      * @return The PermissionAttachment that was just created
      */
     public PermissionAttachment addAttachment(Plugin plugin);
+
+    /**
+     * Temporarily adds a new {@link PermissionAttachment} with a single permission by name and value,
+     * and with a set priority
+     *
+     * @param plugin Plugin responsible for this attachment, may not be null or disabled
+     * @param name Name of the permission to attach
+     * @param value Value of the permission
+     * @param priority Priority of the attachment
+     * @param ticks Amount of ticks to automatically remove this attachment after
+     * @return The PermissionAttachment that was just created
+     */
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, float priority, int ticks);
+
+    /**
+     * Temporarily adds a new empty {@link PermissionAttachment} to this object with a set priority
+     *
+     * @param plugin Plugin responsible for this attachment, may not be null or disabled
+     * @param priority Priority of the attachment
+     * @param ticks Amount of ticks to automatically remove this attachment after
+     * @return The PermissionAttachment that was just created
+     */
+    public PermissionAttachment addAttachment(Plugin plugin, float priority, int ticks);
 
     /**
      * Temporarily adds a new {@link PermissionAttachment} with a single permission by name and value

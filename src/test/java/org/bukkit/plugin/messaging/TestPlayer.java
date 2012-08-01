@@ -517,11 +517,27 @@ public class TestPlayer implements Player {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, float priority) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public PermissionAttachment addAttachment(Plugin plugin, float priority) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public PermissionAttachment addAttachment(Plugin plugin) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, float priority, int ticks) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public PermissionAttachment addAttachment(Plugin plugin, float priority, int ticks) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
