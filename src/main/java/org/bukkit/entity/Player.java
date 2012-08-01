@@ -514,4 +514,16 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param value True to fly.
      */
     public void setFlying(boolean value);
+
+    /**
+     * Change whether this player can push other entities
+     * @param yes true to push other entities, which is the default
+     */
+    public void setCollidesWithEntities(boolean yes);
+
+    /**
+     * Whether this player can push other entities
+     * @return true if the player can push other entities
+     */
+    public boolean getCollidesWithEntities();
 }
