@@ -13,7 +13,7 @@ public class PlayerPotionIngestEvent extends PlayerEvent implements Cancellable 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
     private final Player player;
-    private final PotionEffect effect;
+    private final List effect;
 
     public PlayerPotionIngestEvent(final Player player, final List effect) {
         super(player);
@@ -33,12 +33,12 @@ public class PlayerPotionIngestEvent extends PlayerEvent implements Cancellable 
      *
      * @return The PotionEffect of the potion ingested
      */
-    public PotionEffect getPotionEffect() {
+    public List getPotionEffects() {
         return effect;
     }
-    public void setPotionEffect(PotionEffect effect)
+    public void setPotionEffect(List effects)
     {
-    	this.effect = effect;
+    	this.effects = effects;
     }
     
     @Override
