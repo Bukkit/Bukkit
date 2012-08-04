@@ -44,9 +44,10 @@ public class TeleportCommand extends VanillaCommand {
             Player target = Bukkit.getPlayerExact(args[args.length - 1]);
             if (target == null) {
                 sender.sendMessage("Can't find user " + args[args.length - 1] + ". No tp.");
+            } else {
+                player.teleport(target, TeleportCause.COMMAND);
+                sender.sendMessage("Teleported " + player.getName() + " to " + target.getName());
             }
-            player.teleport(target, TeleportCause.COMMAND);
-            sender.sendMessage("Teleported " + player.getName() + " to " + target.getName());
         } else if (player.getWorld() != null) {
             int x = getInteger(sender, args[args.length - 3], -30000000, 30000000);
             int y = getInteger(sender, args[args.length - 2], 0, 256);
