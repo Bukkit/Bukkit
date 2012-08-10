@@ -37,6 +37,7 @@ public final class PluginDescriptionFile {
     private List<Permission> permissions = null;
     private Map<?, ?> lazyPermissions = null;
     private PermissionDefault defaultPerm = PermissionDefault.OP;
+    private String slug = null;
 
     public PluginDescriptionFile(final InputStream stream) throws InvalidDescriptionException {
         loadMap((Map<?, ?>) yaml.load(stream));
@@ -399,5 +400,9 @@ public final class PluginDescriptionFile {
         }
 
         return map;
+    }
+    
+    public String getSlug() {
+        return slug;
     }
 }
