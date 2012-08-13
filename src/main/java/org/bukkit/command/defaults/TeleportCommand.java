@@ -12,7 +12,7 @@ public class TeleportCommand extends VanillaCommand {
     public TeleportCommand() {
         super("tp");
         this.description = "Teleports the given player to another player or coordinates";
-        this.usageMessage = "/tp [player] <target>\n/tp [player] <x> <y> <z>";
+        this.usageMessage = "/tp [player] <target>\n/tp [player] <x>,<y>,<z>";
         this.setPermission("bukkit.command.teleport");
     }
 
