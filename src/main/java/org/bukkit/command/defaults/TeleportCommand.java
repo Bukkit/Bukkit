@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 public class TeleportCommand extends VanillaCommand {
     public TeleportCommand() {
         super("tp");
-        this.description = "Teleports the given player to another player";
+        this.description = "Teleports the given player to another player or coordinates";
         this.usageMessage = "/tp [player] <target>\n/tp [player] <x> <y> <z>";
         this.setPermission("bukkit.command.teleport");
     }
