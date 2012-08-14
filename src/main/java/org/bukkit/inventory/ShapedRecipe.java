@@ -99,6 +99,20 @@ public class ShapedRecipe implements Recipe {
     }
 
     /**
+     * Sets the item that a character in the recipe shape refers to.
+     *
+     * @param key The character that represents the ingredient in the shape.
+     * @param ingredient The ingredient.
+     * @return The changed recipe, so you can chain calls.
+     */
+    public ShapedRecipe setIngredient(char key, ItemStack item) {
+    	item.setAmount(1);
+        Validate.isTrue(ingredients.containsKey(key), "Symbol does not appear in the shape:", key);
+        ingredients.put(key, new ItemStack(item));
+        return this;
+    }
+    
+    /**
      * Get a copy of the ingredients map.
      *
      * @return The mapping of character to ingredients.
