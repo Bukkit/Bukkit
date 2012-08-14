@@ -6,7 +6,7 @@ import org.bukkit.block.BlockFace;
 /**
  * Represents the tripwire hook
  */
-public class TripwireHook extends MaterialData implements Directional, Redstone {
+public class TripwireHook extends SimpleAttachableMaterialData implements Directional, Redstone {
     
     public TripwireHook() {
         super(Material.TRIPWIRE_HOOK);
@@ -112,4 +112,30 @@ public class TripwireHook extends MaterialData implements Directional, Redstone 
     public String toString() {
         return super.toString() + " facing " + getFacing() + (isActivated()?" Activated":"") + (isConnected()?" Connected":"");
     }
+
+    /**
+     * Gets the face that this block is attached on
+     *
+     * @return BlockFace attached to
+     */
+    public BlockFace getAttachedFace() {
+        byte data = getData();
+
+        switch (data) {
+        case 0x1:
+            return BlockFace.SOUTH;
+
+        case 0x2:
+            return BlockFace.WEST;
+
+        case 0x3:
+            return BlockFace.NORTH;
+
+        case 0x0:
+            return BlockFace.EAST;
+        }
+
+        return null;
+    }
+    
 }
