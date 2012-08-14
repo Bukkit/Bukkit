@@ -40,6 +40,36 @@ public class PlayerInteractEvent extends PlayerEvent implements Cancellable {
     public Action getAction() {
         return action;
     }
+    
+    /**
+     * Checks if it is a left click.
+     * 
+     * @return boolean true if it's a left click
+     */
+     public boolean isLeftClick() {
+         if (getAction() == Action.LEFT_CLICK_BLOCK) {
+             return true;
+         } else if (getAction() == Action.LEFT_CLICK_AIR) {
+             return true;
+         } else {
+             return false;
+         }
+     }
+     
+    /**
+     * Checks if it is a right click.
+     * 
+     * @return boolean true if it's a right click
+     */
+     public boolean isRightClick() {
+         if (getAction() == Action.RIGHT_CLICK_BLOCK) {
+             return true;
+         } else if (getAction() == Action.RIGHT_CLICK_AIR) {
+             return true;
+         } else {
+             return false;
+         }
+     }
 
     /**
      * Gets the cancellation state of this event. Set to true if you
