@@ -1,5 +1,6 @@
 package org.bukkit.inventory;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -131,5 +132,28 @@ public class ShapedRecipe implements Recipe {
      */
     public ItemStack getResult() {
         return output.clone();
+    }
+
+    public boolean matches(Recipe other) {
+        if(other == null) {
+            return false;
+        }
+        if(!(other instanceof ShapedRecipe)) {
+            return false;
+        }
+        ShapedRecipe sother = (ShapedRecipe) other;
+        boolean outputm = sother.output.equals(output);
+        boolean ingredientsm = sother.ingredients.equals(ingredients);
+        boolean rowsm = false;
+        if(rows == null && sother.rows == null) {
+            rowsm = true;
+        }
+        if((rows == null) != (sother.rows == null)) {
+            rowsm = false;
+        }
+        if(rows != null && sother.rows != null) {
+            rowsm = Arrays.equals(rows, sother.rows);
+        }
+        return outputm && ingredientsm && rowsm;
     }
 }

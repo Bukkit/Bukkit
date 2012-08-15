@@ -209,4 +209,17 @@ public class ShapelessRecipe implements Recipe {
         }
         return result;
     }
+
+    public boolean matches(Recipe other) {
+        if(other == null) {
+            return false;
+        }
+        if(!(other instanceof ShapelessRecipe)) {
+            return false;
+        }
+        ShapelessRecipe sother = (ShapelessRecipe) other;
+        boolean outputm = sother.output.equals(output);
+        boolean ingredientsm = sother.ingredients.equals(ingredients);
+        return outputm && ingredientsm;
+        }
 }

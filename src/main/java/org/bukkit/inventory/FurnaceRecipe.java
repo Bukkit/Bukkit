@@ -91,4 +91,17 @@ public class FurnaceRecipe implements Recipe {
     public ItemStack getResult() {
         return output.clone();
     }
+
+    public boolean matches(Recipe other) {
+        if(other == null) {
+            return false;
+        }
+        if(!(other instanceof FurnaceRecipe)) {
+            return false;
+        }
+        FurnaceRecipe sother = (FurnaceRecipe) other;
+        boolean outputm = sother.output.equals(output);
+        boolean ingredientm = sother.ingredient.equals(ingredient);
+        return outputm && ingredientm;
+    }
 }
