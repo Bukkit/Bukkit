@@ -276,7 +276,7 @@ public class JavaPluginLoader implements PluginLoader {
         Map<Class<? extends Event>, Set<RegisteredListener>> ret = new HashMap<Class<? extends Event>, Set<RegisteredListener>>();
         Method[] methods;
         try {
-            methods = listener.getClass().getDeclaredMethods();
+            methods = listener.getClass().getMethods();
         } catch (NoClassDefFoundError e) {
             Bukkit.getServer().getLogger().severe("Plugin " + plugin.getDescription().getName() + " is attempting to register event " + e.getMessage() + ", which does not exist. Ignoring events registered in " + listener.getClass());
             return ret;
@@ -285,6 +285,7 @@ public class JavaPluginLoader implements PluginLoader {
             final Method method = methods[i];
             final EventHandler eh = method.getAnnotation(EventHandler.class);
             if (eh == null) continue;
+            if (isOverridden(method)) continue;
             final Class<?> checkClass = method.getParameterTypes()[0];
             if (!Event.class.isAssignableFrom(checkClass) || method.getParameterTypes().length != 1) {
                 plugin.getServer().getLogger().severe("Wrong method arguments used for event type registered");
@@ -343,6 +344,15 @@ public class JavaPluginLoader implements PluginLoader {
         }
         return ret;
     }
+    
+    private static boolean isOverridden(Method method) { 
+        try { 
+            method.getDeclaringClass().getSuperclass().getMethod(method.getName(), method.getParameterTypes()); 
+            return true; 
+        } catch (NoSuchMethodException e) { 
+            return false; 
+        } 
+    } 
 
     public void enablePlugin(final Plugin plugin) {
         if (!(plugin instanceof JavaPlugin)) {
