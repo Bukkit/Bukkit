@@ -107,7 +107,7 @@ public abstract class InventoryView {
     }
 
     /**
-     * Sets one item in this inventory view by its raw slot ID.
+     * Gets one item in this inventory view by its raw slot ID.
      * @param slot The ID as returned by InventoryClickEvent.getRawSlot()
      * @return The item currently in the slot.
      */
