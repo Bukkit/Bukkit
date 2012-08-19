@@ -1,20 +1,12 @@
 package org.bukkit.entity;
 
-import java.net.InetSocketAddress;
-
-import org.bukkit.Achievement;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Instrument;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Note;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Statistic;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
+
+import java.net.InetSocketAddress;
 
 /**
  * Represents a player, connected or not
@@ -252,6 +244,29 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param data The block data
      */
     public void sendBlockChange(Location loc, int material, byte data);
+
+    /**
+     * Send a sign change. This fakes a sign change packet for a user at
+     * a certain location. This will not actually change the world in any way.
+     * This method will use a sign at the location's block if available.
+     *
+     * @param loc The location of the sign
+     * @param lines The new text on the sign
+     * @param direction The direction byte of the sign
+     */
+    public void sendSignChange(Location loc, String[] lines, byte direction);
+
+    /**
+     * Send a sign change. This fakes a sign change packet for a user at
+     * a certain location. This will not actually change the world in any way.
+     * This method will use a sign at the location's block if available.
+     *
+     * @param loc The location of the sign
+     * @param lines The new text on the sign
+     * @param direction The direction byte of the sign
+     * @param wallSign True if the sign should be a wall sign
+     */
+    public void sendSignChange(Location loc, String[] lines, byte direction, boolean wallSign);
 
     /**
      * Render a map and send it to the player in its entirety. This may be used
