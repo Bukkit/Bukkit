@@ -8,10 +8,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
 
@@ -53,7 +54,7 @@ public abstract class FileConfiguration extends MemoryConfiguration {
 
         String data = saveToString();
 
-        FileWriter writer = new FileWriter(file);
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), options().getEncoding());
 
         try {
             writer.write(data);
@@ -119,7 +120,7 @@ public abstract class FileConfiguration extends MemoryConfiguration {
     public void load(InputStream stream) throws IOException, InvalidConfigurationException {
         Validate.notNull(stream, "Stream cannot be null");
 
-        InputStreamReader reader = new InputStreamReader(stream);
+        InputStreamReader reader = new InputStreamReader(stream, options().getEncoding());
         StringBuilder builder = new StringBuilder();
         BufferedReader input = new BufferedReader(reader);
 
