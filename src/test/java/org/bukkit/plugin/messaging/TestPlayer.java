@@ -47,4 +47,12 @@ public class TestPlayer implements InvocationHandler {
         }
         throw new UnsupportedOperationException(String.valueOf(method));
     }
+	
+	public void setMaxHealth(int i) { 
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+	
+	public void setMaxHealth(int i, boolean b) { 
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

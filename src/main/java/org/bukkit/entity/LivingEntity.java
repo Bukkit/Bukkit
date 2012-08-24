@@ -28,6 +28,19 @@ public interface LivingEntity extends Entity {
      * @throws IllegalArgumentException Thrown if the health is < 0 or > max
      */
     public void setHealth(int health);
+    
+    /**
+     * Sets the entity's max health without touching its current health
+     * @param health The new max health
+     */
+    public void setMaxHealth(int health);
+    
+    /**
+     * Sets the entity's max health and if force is true, it sets its current health to the new max health.
+     * @param health the new max health
+     * @param force boolean, see above
+     */
+    public void setMaxHealth(int health, boolean force);
 
     /**
      * Gets the maximum health this entity may have
