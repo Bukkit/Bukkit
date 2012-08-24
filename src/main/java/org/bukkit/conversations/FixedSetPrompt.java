@@ -31,8 +31,7 @@ public abstract class FixedSetPrompt extends ValidatingPrompt {
 
     /**
      * Utility function to create a formatted string containing all the options declared in the constructor.
-     * The result is formatted like "[bar, cheese, panda]"
-     * @return
+     * @return the result formatted like "[bar, cheese, panda]"
      */
     protected String formatFixedSet() {
         return "[" + StringUtils.join(fixedSet, ", ") + "]";
