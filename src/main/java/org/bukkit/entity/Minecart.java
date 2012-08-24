@@ -81,4 +81,61 @@ public interface Minecart extends Vehicle {
      * @param derailed visible speed
      */
     public void setDerailedVelocityMod(Vector derailed);
+
+    /**
+     * Changes the type of this minecart, returning an object of the new type to continue managing.
+     * Do <b>not</b> continue to use the current object after this - use the returned one instead!
+     *
+     * @param type Type of minecart to change to
+     * @return The instance of the new type (Minecart, {@link StorageMinecart} or {@link PoweredMinecart})
+     *  that represents this minecart.
+     */
+    public Minecart setMinecartType(Type type);
+
+    /**
+     * Gets the type of this minecart.
+     *
+     * @return Type of the minecart.
+     */
+    public Type getMinecartType();
+
+    /**
+     * Represents the different types on minecart.
+     */
+    public enum Type {
+        MINECART(0),
+        STORAGE_MINECART(1),
+        POWERED_MINECART(2);
+        private final int id;
+        private static final Type[] types = values();
+
+        static {
+            for (Type type : values()) {
+                types[type.id] = type;
+            }
+        }
+
+        private Type(int id) {
+            this.id = id;
+        }
+
+        /**
+         * Get Minecraft's ID number representing this minecart type.
+         *
+         * @return
+         */
+        public int getId() {
+            return id;
+        }
+
+        /**
+         * Gets the minecart type with this ID.
+         *
+         * @param id ID to get type of.
+         * @return Minecart type with this ID.
+         */
+        public static Type getType(int id) {
+            return types[id];
+        }
+    }
 }
