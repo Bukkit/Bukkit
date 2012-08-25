@@ -287,7 +287,7 @@ public class JavaPluginLoader implements PluginLoader {
             if (eh == null) continue;
             final Class<?> checkClass = method.getParameterTypes()[0];
             if (!Event.class.isAssignableFrom(checkClass) || method.getParameterTypes().length != 1) {
-                plugin.getServer().getLogger().severe("Wrong method arguments used for event type registered");
+                plugin.getServer().getLogger().severe("Wrong method arguments used for event type registered: Plugin: " + plugin.getName() + " Class: " + listener.getClass().getName() + " Method: " + method.getName());
                 continue;
             }
             final Class<? extends Event> eventClass = checkClass.asSubclass(Event.class);
