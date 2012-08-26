@@ -148,4 +148,15 @@ public interface BukkitScheduler {
      */
     public List<BukkitTask> getPendingTasks();
 
+    /**
+     * Returns the remaining time till the task will get executed.
+     * <p />
+     * If a repeating task is currently running, it might return -1.
+     * A task that is not queued will return -1, too.
+     *
+     * @param taskId The task to check.
+     * @return The time in ticks till the task will get executed or a negative value on errors.
+     */
+    public long getRemainingDelay(int taskId);
+
 }
