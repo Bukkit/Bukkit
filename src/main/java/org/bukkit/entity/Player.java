@@ -282,6 +282,14 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      */
     @Deprecated
     public void updateInventory();
+    
+    /**
+     * Sends an update of the healthbar and foodbar to the player
+     *
+     * @deprecated This method should not be relied upon as it is a temporary work-around for a larger, more complicated issue.
+     */
+    @Deprecated
+    public void updateFoodAndHealth();
 
     /**
      * Awards this player the given achievement
