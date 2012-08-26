@@ -24,6 +24,8 @@ public abstract class MetadataStoreBase<T> {
      * @see MetadataStore#setMetadata(Object, String, MetadataValue)
      */
     public synchronized void setMetadata(T subject, String metadataKey, MetadataValue newMetadataValue) {
+        if (newMetadataValue == null)
+            return;
         String key = cachedDisambiguate(subject, metadataKey);
         if (!metadataMap.containsKey(key)) {
             metadataMap.put(key, new ArrayList<MetadataValue>());
