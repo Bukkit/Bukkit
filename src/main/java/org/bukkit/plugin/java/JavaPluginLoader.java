@@ -278,7 +278,7 @@ public class JavaPluginLoader implements PluginLoader {
         Map<Class<? extends Event>, Set<RegisteredListener>> ret = new HashMap<Class<? extends Event>, Set<RegisteredListener>>();
         Method[] methods;
         try {
-            methods = listener.getClass().getDeclaredMethods();
+            methods = listener.getClass().getMethods();
         } catch (NoClassDefFoundError e) {
             plugin.getLogger().severe("Plugin " + plugin.getDescription().getFullName() + " has failed to register events for " + listener.getClass() + " because " + e.getMessage() + " does not exist.");
             return ret;
@@ -288,6 +288,7 @@ public class JavaPluginLoader implements PluginLoader {
             final Method method = methods[i];
             final EventHandler eh = method.getAnnotation(EventHandler.class);
             if (eh == null) continue;
+            if (isOverridden(method)) continue;
             final Class<?> checkClass = method.getParameterTypes()[0];
             if (!Event.class.isAssignableFrom(checkClass) || method.getParameterTypes().length != 1) {
                 plugin.getLogger().severe(plugin.getDescription().getFullName() + " attempted to register an invalid EventHandler method signature \"" + method.toGenericString() + "\" in " + listener.getClass());
@@ -346,6 +347,15 @@ public class JavaPluginLoader implements PluginLoader {
         }
         return ret;
     }
+    
+    private static boolean isOverridden(Method method) { 
+        try { 
+            method.getDeclaringClass().getSuperclass().getMethod(method.getName(), method.getParameterTypes()); 
+            return true; 
+        } catch (NoSuchMethodException e) { 
+            return false; 
+        } 
+    } 
 
     public void enablePlugin(final Plugin plugin) {
         if (!(plugin instanceof JavaPlugin)) {
