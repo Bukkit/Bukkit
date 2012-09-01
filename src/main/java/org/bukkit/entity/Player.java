@@ -235,7 +235,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      *
      * @param loc The location of the changed block
      * @param material The new block
-     * @param data The block dataMCpp-Server /
+     * @param data The block data
      */
     public void sendBlockChange(Location loc, Material material, byte data);
 
