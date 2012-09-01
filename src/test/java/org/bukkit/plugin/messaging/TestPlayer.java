@@ -47,4 +47,12 @@ public class TestPlayer implements InvocationHandler {
         }
         throw new UnsupportedOperationException(String.valueOf(method));
     }
+
+    public boolean isCounted() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setCounted(boolean counted) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

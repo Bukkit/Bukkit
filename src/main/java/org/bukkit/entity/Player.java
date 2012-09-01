@@ -554,4 +554,19 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @return The current allowed speed, from -1 to 1
      */
     public float getWalkSpeed();
+
+    /**
+     * Checks whether this player is counted in the server list player count.
+     *
+     * @return whether player is counted.
+     */
+   public boolean isCounted();
+
+    /**
+     * Sets whether this player is counted in the server list player count.
+     *
+     * @param counted whether to count this player.
+     * @see org.bukkit.event.server.ServerListPingEvent
+     */
+   public void setCounted(boolean counted);
 }

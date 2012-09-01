@@ -659,4 +659,12 @@ public interface Server extends PluginMessageRecipient {
      * @return The configured WarningState
      */
     public WarningState getWarningState();
+
+    /**
+     * Gets the number of players online as shown by the player list.
+     *
+     * @return number of apparent players online.
+     * @see Player#setCounted(boolean)
+     */
+    public int getApparentPlayerCount();
 }
