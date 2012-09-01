@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Note;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
@@ -49,11 +50,11 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
 
     /**
      * Sets the name that is shown on the in-game player list.
-     * <p>
+     * <p />
      * The name cannot be longer than 16 characters, but {@link ChatColor} is supported.
-     * <p>
+     * <p />
      * If the value is null, the name will be identical to {@link #getName()}.
-     * <p>
+     * <p />
      * This name is case sensitive and unique, two names with different casing will
      * appear as two different people. If a player joins afterwards with
      * a name that conflicts with a player's custom list name, the
@@ -197,6 +198,19 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      */
     public void playNote(Location loc, Instrument instrument, Note note);
 
+
+    /**
+     * Play a sound for a player at the location.
+     * <p />
+     * This function will fail silently if Location or Sound are null.
+     *
+     * @param location The location to play the sound
+     * @param sound The sound to play
+     * @param volume The volume of the sound
+     * @param pitch The pitch of the sound
+     */
+    public void playSound(Location location, Sound sound, float volume, float pitch);
+
     /**
      * Plays an effect to just this player.
      *
@@ -221,7 +235,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      *
      * @param loc The location of the changed block
      * @param material The new block
-     * @param data The block data
+     * @param data The block dataMCpp-Server /
      */
     public void sendBlockChange(Location loc, Material material, byte data);
 
@@ -358,7 +372,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
 
     /**
      * Gets the players current experience points towards the next level.
-     * <p>
+     * <p />
      * This is a percentage value. 0 is "no progress" and 1 is "next level".
      *
      * @return Current experience points
@@ -367,7 +381,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
 
     /**
      * Sets the players current experience points towards the next level
-     * <p>
+     * <p />
      * This is a percentage value. 0 is "no progress" and 1 is "next level".
      *
      * @param exp New experience points
@@ -404,7 +418,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
 
     /**
      * Gets the players current exhaustion level.
-     * <p>
+     * <p />
      * Exhaustion controls how fast the food level drops. While you have a certain
      * amount of exhaustion, your saturation will drop to zero, and then your food
      * will drop to zero.
@@ -422,7 +436,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
 
     /**
      * Gets the players current saturation level.
-     * <p>
+     * <p />
      * Saturation is a buffer for food level. Your food level will not drop if you
      * are saturated > 0.
      *
@@ -516,11 +530,37 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public void setFlying(boolean value);
 
     /**
+     * Sets the speed at which a client will fly. Negative values indicate reverse directions.
+     * @param value The new speed, from -1 to 1.
+     * @throws IllegalArgumentException If new speed is less than -1 or greater than 1
+     */
+    public void setFlySpeed(float value) throws IllegalArgumentException;
+
+    /**
+     * Sets the speed at which a client will walk. Negative values indicate reverse directions.
+     * @param value The new speed, from -1 to 1.
+     * @throws IllegalArgumentException If new speed is less than -1 or greater than 1
+     */
+    public void setWalkSpeed(float value) throws IllegalArgumentException;
+
+    /**
+     * Gets the current allowed speed that a client can fly.
+     * @return The current allowed speed, from -1 to 1
+     */
+    public float getFlySpeed();
+
+    /**
+     * Gets the current allowed speed that a client can walk.
+     * @return The current allowed speed, from -1 to 1
+     */
+    public float getWalkSpeed();
+
+    /**
      * Checks whether this player is counted in the server list player count.
      *
      * @return whether player is counted.
      */
-    public boolean isCounted();
+   public boolean isCounted();
 
     /**
      * Sets whether this player is counted in the server list player count.
@@ -528,5 +568,5 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param counted whether to count this player.
      * @see org.bukkit.event.server.ServerListPingEvent
      */
-    public void setCounted(boolean counted);
+   public void setCounted(boolean counted);
 }

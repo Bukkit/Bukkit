@@ -48,6 +48,22 @@ public abstract class Command {
     public abstract boolean execute(CommandSender sender, String commandLabel, String[] args);
 
     /**
+     * Executed on tab completion for this command, returning a list of options
+     * the player can tab through.
+     * <p />
+     * By returning null, you tell Bukkit to generate a list of players to send
+     * to the sender.
+     * By returning an empty list, no options will be sent.
+     *
+     * @param sender Source object which is executing this command
+     * @param args All arguments passed to the command, split via ' '
+     * @return null to generate a Player list, otherwise a list of options
+     */
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        return null;
+    }
+
+    /**
      * Returns the name of this command
      *
      * @return Name of this command
@@ -110,7 +126,7 @@ public abstract class Command {
         if ((permission == null) || (permission.length() == 0)) {
             return true;
         }
-        
+
         for (String p : permission.split(";")) {
             if (target.hasPermission(p)) {
                 return true;
@@ -276,11 +292,15 @@ public abstract class Command {
     }
 
     public static void broadcastCommandMessage(CommandSender source, String message) {
+        broadcastCommandMessage(source, message, true);
+    }
+
+    public static void broadcastCommandMessage(CommandSender source, String message, boolean sendToSource) {
         Set<Permissible> users = Bukkit.getPluginManager().getPermissionSubscriptions(Server.BROADCAST_CHANNEL_ADMINISTRATIVE);
         String result = source.getName() + ": " + message;
-        String colored = ChatColor.GRAY + "(" + result + ")";
+        String colored = ChatColor.GRAY + "" + ChatColor.ITALIC + "[" + result + "]";
 
-        if (!(source instanceof ConsoleCommandSender)) {
+        if (sendToSource && !(source instanceof ConsoleCommandSender)) {
             source.sendMessage(message);
         }
 

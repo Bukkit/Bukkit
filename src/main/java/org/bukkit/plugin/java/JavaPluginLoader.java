@@ -8,8 +8,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,8 +21,9 @@ import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
 import org.bukkit.Server;
+import org.bukkit.Warning;
+import org.bukkit.Warning.WarningState;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.Event;
@@ -29,6 +32,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.plugin.AuthorNagException;
 import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.bukkit.plugin.InvalidPluginException;
@@ -49,7 +53,7 @@ public class JavaPluginLoader implements PluginLoader {
     private final Server server;
     protected final Pattern[] fileFilters = new Pattern[] { Pattern.compile("\\.jar$"), };
     protected final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
-    protected final Map<String, PluginClassLoader> loaders = new HashMap<String, PluginClassLoader>();
+    protected final Map<String, PluginClassLoader> loaders = new LinkedHashMap<String, PluginClassLoader>();
 
     public JavaPluginLoader(Server instance) {
         server = instance;
@@ -267,22 +271,32 @@ public class JavaPluginLoader implements PluginLoader {
     }
 
     public Map<Class<? extends Event>, Set<RegisteredListener>> createRegisteredListeners(Listener listener, final Plugin plugin) {
+        Validate.notNull(plugin, "Plugin can not be null");
+        Validate.notNull(listener, "Listener can not be null");
+
         boolean useTimings = server.getPluginManager().useTimings();
         Map<Class<? extends Event>, Set<RegisteredListener>> ret = new HashMap<Class<? extends Event>, Set<RegisteredListener>>();
-        Method[] methods;
+        Set<Method> methods;
         try {
-            methods = listener.getClass().getDeclaredMethods();
+            Method[] publicMethods = listener.getClass().getMethods();
+            methods = new HashSet<Method>(publicMethods.length, Float.MAX_VALUE);
+            for (Method method : publicMethods) {
+                methods.add(method);
+            }
+            for (Method method : listener.getClass().getDeclaredMethods()) {
+                methods.add(method);
+            }
         } catch (NoClassDefFoundError e) {
-            Bukkit.getServer().getLogger().severe("Plugin " + plugin.getDescription().getName() + " is attempting to register event " + e.getMessage() + ", which does not exist. Ignoring events registered in " + listener.getClass());
+            plugin.getLogger().severe("Plugin " + plugin.getDescription().getFullName() + " has failed to register events for " + listener.getClass() + " because " + e.getMessage() + " does not exist.");
             return ret;
         }
-        for (int i = 0; i < methods.length; i++) {
-            final Method method = methods[i];
+
+        for (final Method method : methods) {
             final EventHandler eh = method.getAnnotation(EventHandler.class);
             if (eh == null) continue;
             final Class<?> checkClass = method.getParameterTypes()[0];
             if (!Event.class.isAssignableFrom(checkClass) || method.getParameterTypes().length != 1) {
-                plugin.getServer().getLogger().severe("Wrong method arguments used for event type registered");
+                plugin.getLogger().severe(plugin.getDescription().getFullName() + " attempted to register an invalid EventHandler method signature \"" + method.toGenericString() + "\" in " + listener.getClass());
                 continue;
             }
             final Class<? extends Event> eventClass = checkClass.asSubclass(Event.class);
@@ -292,6 +306,30 @@ public class JavaPluginLoader implements PluginLoader {
                 eventSet = new HashSet<RegisteredListener>();
                 ret.put(eventClass, eventSet);
             }
+
+            for (Class<?> clazz = eventClass; Event.class.isAssignableFrom(clazz); clazz = clazz.getSuperclass()) {
+                // This loop checks for extending deprecated events
+                if (clazz.getAnnotation(Deprecated.class) != null) {
+                    Warning warning = clazz.getAnnotation(Warning.class);
+                    WarningState warningState = server.getWarningState();
+                    if (!warningState.printFor(warning)) {
+                        break;
+                    }
+                    plugin.getLogger().log(
+                            Level.WARNING,
+                            String.format(
+                                    "\"%s\" has registered a listener for %s on method \"%s\", but the event is Deprecated." +
+                                    " \"%s\"; please notify the authors %s.",
+                                    plugin.getDescription().getFullName(),
+                                    clazz.getName(),
+                                    method.toGenericString(),
+                                    (warning != null && warning.reason().length() != 0) ? warning.reason() : "Server performance will be affected",
+                                    Arrays.toString(plugin.getDescription().getAuthors().toArray())),
+                            warningState == WarningState.ON ? new AuthorNagException(null) : null);
+                    break;
+                }
+            }
+
             EventExecutor executor = new EventExecutor() {
                 public void execute(Listener listener, Event event) throws EventException {
                     try {

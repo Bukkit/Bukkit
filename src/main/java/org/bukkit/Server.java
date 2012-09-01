@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import org.bukkit.Warning.WarningState;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -304,7 +305,7 @@ public interface Server extends PluginMessageRecipient {
 
     /**
      * Creates or loads a world with the given name using the specified options.
-     * <p>
+     * <p />
      * If the world is already loaded, it will just return the equivalent of
      * getWorld(creator.name()).
      *
@@ -639,4 +640,31 @@ public interface Server extends PluginMessageRecipient {
      * @returns The water animal spawn limit
      */
     int getWaterAnimalSpawnLimit();
+
+    /**
+     * Returns true if the current {@link Thread} is the server's primary thread
+     */
+    boolean isPrimaryThread();
+
+    /**
+     * Gets the message that is displayed on the server list
+     *
+     * @returns the servers MOTD
+     */
+    String getMotd();
+
+    /**
+     * Gets the current warning state for the server
+     *
+     * @return The configured WarningState
+     */
+    public WarningState getWarningState();
+
+    /**
+     * Gets the number of players online as shown by the player list.
+     *
+     * @return number of apparent players online.
+     * @see Player#setCounted(boolean)
+     */
+    public int getApparentPlayerCount();
 }

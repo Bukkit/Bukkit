@@ -5,7 +5,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class OpCommand extends VanillaCommand {
     public OpCommand() {
@@ -18,20 +17,15 @@ public class OpCommand extends VanillaCommand {
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
-        if (args.length != 1)  {
+        if (args.length != 1 || args[0].length() == 0)  {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
 
-        Command.broadcastCommandMessage(sender, "Opping " + args[0]);
-
         OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
         player.setOp(true);
 
-        if (player instanceof Player) {
-            ((Player) player).sendMessage(ChatColor.YELLOW + "You are now op!");
-        }
-
+        Command.broadcastCommandMessage(sender, "Opped " + args[0]);
         return true;
     }
 

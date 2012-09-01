@@ -22,8 +22,7 @@ public class PardonCommand extends VanillaCommand {
         }
 
         Bukkit.getOfflinePlayer(args[0]).setBanned(false);
-        Command.broadcastCommandMessage(sender, "Pardoning " + args[0]);
-
+        Command.broadcastCommandMessage(sender, "Pardoned " + args[0]);
         return true;
     }
 

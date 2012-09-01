@@ -10,32 +10,31 @@ public class ExpCommand extends VanillaCommand {
     public ExpCommand() {
         super("xp");
         this.description = "Gives the specified player a certain amount of experience";
-        this.usageMessage = "/xp <player> <amount>";
+        this.usageMessage = "/xp <amount> [player]";
         this.setPermission("bukkit.command.xp");
     }
 
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
-        if (args.length != 2) {
+        if (args.length < 1) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
+        int exp = getInteger(sender, args[0], 0, 5000);
+        Player player = null;
 
-        Player player = Bukkit.getPlayerExact(args[0]);
+        if (args.length > 1) {
+            player = Bukkit.getPlayer(args[1]);
+        } else if (sender instanceof Player) {
+            player = (Player) sender;
+        }
 
         if (player != null) {
-            try {
-                int exp = Integer.parseInt(args[1]);
-
-                Command.broadcastCommandMessage(sender, "Giving " + exp + " exp to " + player.getName());
-
-                player.giveExp(exp);
-            } catch (NumberFormatException ex) {
-                sender.sendMessage("Invalid exp count: " + args[1]);
-            }
+            player.giveExp(exp);
+            Command.broadcastCommandMessage(sender, "Given " + exp + " exp to " + player.getName());
         } else {
-            sender.sendMessage("Can't find user " + args[0]);
+            sender.sendMessage("Can't find user, was one provided?\n" + ChatColor.RED + "Usage: " + usageMessage);
         }
 
         return true;

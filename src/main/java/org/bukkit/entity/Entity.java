@@ -130,6 +130,13 @@ public interface Entity extends Metadatable {
     public boolean isDead();
 
     /**
+     * Returns false if the entity has died or been despawned for some other
+     * reason.
+     * @return True if valid.
+     */
+    public boolean isValid();
+
+    /**
      * Gets the {@link Server} that contains this Entity
      *
      * @return Server instance running this Entity
@@ -203,7 +210,7 @@ public interface Entity extends Metadatable {
 
     /**
      * Gets the amount of ticks this entity has lived for.
-     * <p>
+     * <p />
      * This is the equivalent to "age" in entities.
      *
      * @return Age of entity
@@ -212,7 +219,7 @@ public interface Entity extends Metadatable {
 
     /**
      * Sets the amount of ticks this entity has lived for.
-     * <p>
+     * <p />
      * This is the equivalent to "age" in entities. May not be less than one tick.
      *
      * @param value Age of entity
@@ -221,7 +228,7 @@ public interface Entity extends Metadatable {
 
     /**
      * Performs the specified {@link EntityEffect} for this entity.
-     * <p>
+     * <p />
      * This will be viewable to all players near the entity.
      *
      * @param type Effect to play.
