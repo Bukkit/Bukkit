@@ -3,6 +3,7 @@ package org.bukkit.event.block;
 import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -40,6 +41,16 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
      */
     public void setItem(ItemStack item) {
         this.item = item;
+    }
+
+
+    /**
+     * Refills the dispenser with the item dispensed.
+     *
+     * @return Whether it succeeded.
+     */
+    public boolean refill() {
+        return ((InventoryHolder)getBlock()).getInventory().addItem(getItem()).isEmpty();
     }
 
     /**
