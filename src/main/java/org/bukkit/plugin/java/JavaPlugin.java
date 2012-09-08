@@ -221,6 +221,19 @@ public abstract class JavaPlugin extends PluginBase {
         }
     }
 
+    /** Is the ebean database enabled for this plugin? We punt the decision to
+     * the description file, but this method can be overridden by a plugin
+     * to make the decision dynamically (such as based on config settings).
+     * NOTE this is invoked PRE-onEnable(), so if you override be sure not
+     * to count on any initializations from onEnable(). getConfig() is safe
+     * to invoke at this point.
+     * 
+     * @return true if database is enabled, false if not
+     */
+    public boolean isDatabaseEnabled() {
+        return getDescription().isDatabaseEnabled();
+    }
+
     /**
      * Initializes this plugin with the given variables.
      * <p />
@@ -244,7 +257,7 @@ public abstract class JavaPlugin extends PluginBase {
             this.classLoader = classLoader;
             this.configFile = new File(dataFolder, "config.yml");
 
-            if (description.isDatabaseEnabled()) {
+            if (isDatabaseEnabled()) {
                 ServerConfig db = new ServerConfig();
 
                 db.setDefaultServer(false);
