@@ -554,4 +554,10 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @return The current allowed speed, from -1 to 1
      */
     public float getWalkSpeed();
+    
+    /**
+     * Gets the language this player has configured.
+     * @return The locale code of the language such as "en_US"
+     */
+    public String getLanguage();
 }
