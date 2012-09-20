@@ -1,5 +1,6 @@
 package org.bukkit.event.entity;
 
+import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
@@ -11,10 +12,12 @@ public class FoodLevelChangeEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
     private int level;
+	private Material consuming;
 
-    public FoodLevelChangeEvent(final HumanEntity what, final int level) {
+    public FoodLevelChangeEvent(final HumanEntity what, final int level, Material consuming) {
         super(what);
         this.level = level;
+        this.consuming = consuming;
     }
 
     @Override
@@ -43,6 +46,24 @@ public class FoodLevelChangeEvent extends EntityEvent implements Cancellable {
         else if (level < 0) level = 0;
 
         this.level = level;
+    }
+    
+    /**
+     * Gets whether the event is related to a food consumption.
+     *
+     * @return true if the entity is consuming a Material
+     */
+    public boolean isConsuming() {
+    	return consuming != null;
+    }
+    
+    /**
+     * Gets the Material that the entity did consume.
+     *
+     * @return The material that the entity did consume. null if the entity did not consume anything
+     */
+    public Material getConsumedMaterial() {
+    	return consuming;
     }
 
     public boolean isCancelled() {
