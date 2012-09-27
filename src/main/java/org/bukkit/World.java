@@ -996,6 +996,18 @@ public interface World extends PluginMessageRecipient, Metadatable {
     void playSound(Location loc, Sound sound, float volume, float pitch);
 
     /**
+     * Play a Sound at the provided Location in the World
+     * <p />
+     * This function will fail silently if Location or Sound are null.
+     *
+     * @param location The location to play the sound
+     * @param sound The sound to play
+     * @param volume The volume of the sound
+     * @param pitch The pitch of the sound
+     */
+    void playSound(Location loc, String sound, float volume, float pitch);
+
+    /**
      * Represents various map environment types that a world may be
      */
     public enum Environment {
