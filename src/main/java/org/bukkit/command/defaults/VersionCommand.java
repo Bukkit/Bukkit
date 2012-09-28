@@ -1,5 +1,6 @@
 package org.bukkit.command.defaults;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,11 +40,15 @@ public class VersionCommand extends BukkitCommand {
 
             Plugin plugin = Bukkit.getPluginManager().getPlugin(name.toString());
             if (plugin == null) {
+                List<Plugin> matches = new ArrayList<Plugin>();
                 for (Plugin p : Bukkit.getPluginManager().getPlugins()) {
                     if (p.getName().equalsIgnoreCase(name.toString())) {
-                        plugin = p;
-                        break;
+                        if (plugin == null) plugin = p;
+                        matches.add(p);
                     }
+                }
+                if (matches.size() > 1) {
+                    sender.sendMessage(PluginsCommand.formatNames(matches, ChatColor.GRAY + "Showing first of %1$d matches: %2$s"));
                 }
             }
 
