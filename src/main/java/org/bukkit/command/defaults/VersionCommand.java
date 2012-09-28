@@ -38,6 +38,14 @@ public class VersionCommand extends BukkitCommand {
             }
 
             Plugin plugin = Bukkit.getPluginManager().getPlugin(name.toString());
+            if (plugin == null) {
+                for (Plugin p : Bukkit.getPluginManager().getPlugins()) {
+                    if (p.getName().equalsIgnoreCase(name.toString())) {
+                        plugin = p;
+                        break;
+                    }
+                }
+            }
 
             if (plugin != null) {
                 PluginDescriptionFile desc = plugin.getDescription();
