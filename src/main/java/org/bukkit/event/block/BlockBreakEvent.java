@@ -28,6 +28,7 @@ public class BlockBreakEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final Player player;
     private boolean cancel;
+    private boolean willDamageTool = true;
     private int exp;
 
     public BlockBreakEvent(final Block theBlock, final Player player) {
@@ -70,6 +71,14 @@ public class BlockBreakEvent extends BlockEvent implements Cancellable {
         this.cancel = cancel;
     }
 
+    public boolean willDamageTool() {
+        return willDamageTool;
+    }
+    
+    public void setWillDamageTool(boolean willDamage) {
+        willDamageTool = willDamage;
+    }
+    
     @Override
     public HandlerList getHandlers() {
         return handlers;
