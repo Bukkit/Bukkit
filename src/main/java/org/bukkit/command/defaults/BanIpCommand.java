@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import java.util.List;
 import java.util.regex.Pattern;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,11 +40,6 @@ public class BanIpCommand extends VanillaCommand {
         }
 
         return true;
-    }
-
-    @Override
-    public List<String> tabComplete(CommandSender sender, String[] args) {
-        return args.length >= 1 ? null : EMPTY_LIST;
     }
 
     private void processIPBan(String ip, CommandSender sender) {

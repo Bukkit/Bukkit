@@ -35,11 +35,6 @@ public class DeopCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String[] args) {
-        return args.length >= 1 ? null : EMPTY_LIST;
-    }
-
-    @Override
     public boolean matches(String input) {
         return input.equalsIgnoreCase("deop");
     }

@@ -2,6 +2,7 @@ package org.bukkit.command.defaults;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -104,6 +105,26 @@ public class HelpCommand extends VanillaCommand {
     @Override
     public boolean matches(String input) {
         return input.equalsIgnoreCase("help") || input.equalsIgnoreCase("?");
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        Validate.notNull(sender, "Sender cannot be null");
+        Validate.notNull(args, "Arguments cannot be null");
+
+        if (args.length == 2) {
+            List<String> matchedTopics = new ArrayList<String>();
+            String searchString = args[1];
+            for (HelpTopic topic : Bukkit.getServer().getHelpMap().getHelpTopics()) {
+                String trimmedTopic = topic.getName().startsWith("/") ? topic.getName().substring(1) : topic.getName();
+
+                if (trimmedTopic.startsWith(searchString)) {
+                    matchedTopics.add(trimmedTopic);
+                }
+            }
+            return matchedTopics;
+        }
+        return Collections.emptyList();
     }
 
     protected HelpTopic findPossibleMatches(String searchString) {

@@ -1,12 +1,22 @@
 package org.bukkit.command.defaults;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.util.CollectionUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class WhitelistCommand extends VanillaCommand {
+
+    private static final List<String> WHITELIST_SUBCOMMANDS = Collections.unmodifiableList(Arrays.asList("add", "remove", "on", "off", "list", "reload"));
+
     public WhitelistCommand() {
         super("whitelist");
         this.description = "Prevents the specified player from using this server";
@@ -87,5 +97,18 @@ public class WhitelistCommand extends VanillaCommand {
     @Override
     public boolean matches(String input) {
         return input.equalsIgnoreCase("whitelist");
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        Validate.notNull(sender, "Sender cannot be null");
+        Validate.notNull(args, "Arguments cannot be null");
+
+        if (args.length == 2) {
+            return CollectionUtil.filterPartialMatches(args[1], new ArrayList<String>(WHITELIST_SUBCOMMANDS));
+        } else if (args.length == 3 && (args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("remove"))) {
+            return super.tabComplete(sender, args);
+        }
+        return Collections.emptyList();
     }
 }

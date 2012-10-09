@@ -1,13 +1,22 @@
 package org.bukkit.command.defaults;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
+import org.bukkit.util.CollectionUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class GameModeCommand extends VanillaCommand {
+    private static final List<String> GAMEMODE_NAMES = Collections.unmodifiableList(Arrays.asList("adventure", "creative", "survival"));
+
     public GameModeCommand() {
         super("gamemode");
         this.description = "Changes the player to a specific game mode";
@@ -76,5 +85,18 @@ public class GameModeCommand extends VanillaCommand {
     @Override
     public boolean matches(String input) {
         return input.equalsIgnoreCase("gamemode");
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        Validate.notNull(sender, "Sender cannot be null");
+        Validate.notNull(args, "Arguments cannot be null");
+
+        if (args.length == 2) {
+            return CollectionUtil.filterPartialMatches(args[1], new ArrayList<String>(GAMEMODE_NAMES));
+        } else if (args.length == 3) {
+            return super.tabComplete(sender, args);
+        }
+        return Collections.emptyList();
     }
 }

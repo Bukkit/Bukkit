@@ -62,4 +62,15 @@ public interface CommandMap {
      * @return Command with the specified name or null if a command with that label doesn't exist
      */
     public Command getCommand(String name);
+
+
+    /**
+     * Looks for the requested command and executes its tab-completer if found.
+     *
+     * @param sender The command's sender
+     * @param cmdLine The entire command string to tab-complete, excluding initial slash
+     * @return a list of possible tab-completions, or null if the sender cannot execute that command
+     * @throws CommandException Thrown when the tab-completer for the given command fails with an unhandled exception
+     */
+    public List<String> tabComplete(CommandSender sender, String cmdLine);
 }
