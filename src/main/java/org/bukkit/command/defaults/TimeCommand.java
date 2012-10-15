@@ -1,12 +1,22 @@
 package org.bukkit.command.defaults;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.util.CollectionUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class TimeCommand extends VanillaCommand {
+    private static final List<String> TABCOMPLETE_ADD_SET = Collections.unmodifiableList(Arrays.asList("add", "set"));
+    private static final List<String> TABCOMPLETE_DAY_NIGHT = Collections.unmodifiableList(Arrays.asList("day", "night"));
+
     public TimeCommand() {
         super("time");
         this.description = "Changes the time on each world";
@@ -65,5 +75,18 @@ public class TimeCommand extends VanillaCommand {
     @Override
     public boolean matches(String input) {
         return input.equalsIgnoreCase("time");
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        Validate.notNull(sender, "Sender cannot be null");
+        Validate.notNull(args, "Arguments cannot be null");
+
+        if (args.length == 2) {
+            return CollectionUtil.filterPartialMatches(args[1], new ArrayList<String>(TABCOMPLETE_ADD_SET));
+        } else if (args.length == 3 && args[1].equalsIgnoreCase("set")) {
+            return CollectionUtil.filterPartialMatches(args[2], new ArrayList<String>(TABCOMPLETE_DAY_NIGHT));
+        }
+        return Collections.emptyList();
     }
 }

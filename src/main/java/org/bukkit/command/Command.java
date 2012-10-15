@@ -1,11 +1,15 @@
 package org.bukkit.command;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permissible;
 
 /**
@@ -50,17 +54,37 @@ public abstract class Command {
     /**
      * Executed on tab completion for this command, returning a list of options
      * the player can tab through.
-     * <p />
-     * By returning null, you tell Bukkit to generate a list of players to send
-     * to the sender.
-     * By returning an empty list, no options will be sent.
      *
      * @param sender Source object which is executing this command
      * @param args All arguments passed to the command, split via ' '
-     * @return null to generate a Player list, otherwise a list of options
+     * @return a list of tab-completions for the specified arguments
      */
     public List<String> tabComplete(CommandSender sender, String[] args) {
-        return null;
+        Validate.notNull(sender, "Sender cannot be null");
+        Validate.notNull(args, "Arguments cannot be null");
+
+        if (!(sender instanceof Player) || args.length == 0) {
+            return Collections.emptyList();
+        }
+
+        String lastWord = args[args.length - 1];
+        if (lastWord.length() == 0) {
+            return Collections.emptyList(); // Do not complete empty player names
+        }
+
+        lastWord = lastWord.toLowerCase();
+        Player senderPlayer = (Player) sender;
+
+        ArrayList<String> matchedPlayers = new ArrayList<String>();
+        for (Player player : sender.getServer().getOnlinePlayers()) {
+            String name = player.getName();
+            if (name.toLowerCase().startsWith(lastWord) && senderPlayer.canSee(player)) {
+                matchedPlayers.add(name);
+            }
+        }
+
+        Collections.sort(matchedPlayers);
+        return matchedPlayers;
     }
 
     /**

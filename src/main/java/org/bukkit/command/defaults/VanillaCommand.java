@@ -6,8 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public abstract class VanillaCommand extends Command {
-    static final List<String> EMPTY_LIST = new ArrayList(0);
-
     protected VanillaCommand(String name) {
         super(name);
     }

@@ -1,6 +1,5 @@
 package org.bukkit.command.defaults;
 
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -33,11 +32,6 @@ public class BanCommand extends VanillaCommand {
 
         Command.broadcastCommandMessage(sender, "Banned player " + args[0]);
         return true;
-    }
-
-    @Override
-    public List<String> tabComplete(CommandSender sender, String[] args) {
-        return args.length >= 1 ? null : EMPTY_LIST;
     }
 
     @Override

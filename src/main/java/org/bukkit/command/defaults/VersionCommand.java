@@ -1,8 +1,11 @@
 package org.bukkit.command.defaults;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -101,5 +104,23 @@ public class VersionCommand extends BukkitCommand {
         }
 
         return result.toString();
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        Validate.notNull(sender, "Sender cannot be null");
+        Validate.notNull(args, "Arguments cannot be null");
+
+        if (args.length == 2) {
+            List<String> completions = new ArrayList<String>();
+            String toComplete = args[1].toLowerCase();
+            for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+                if (plugin.getName().toLowerCase().startsWith(toComplete)) {
+                    completions.add(plugin.getName());
+                }
+            }
+            return completions;
+        }
+        return Collections.emptyList();
     }
 }

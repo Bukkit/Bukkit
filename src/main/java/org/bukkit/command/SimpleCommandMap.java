@@ -186,11 +186,33 @@ public class SimpleCommandMap implements CommandMap {
     }
 
     public Command getCommand(String name) {
-        Command target =  knownCommands.get(name.toLowerCase());
+        Command target = knownCommands.get(name.toLowerCase());
         if (target == null) {
             target = getFallback(name);
         }
         return target;
+    }
+
+    public List<String> tabComplete(CommandSender sender, String cmdLine) {
+        String[] args = cmdLine.split(" ");
+
+        if (args.length == 0) {
+            return null;
+        }
+
+        Command target = getCommand(args[0]);
+
+        if (target == null) {
+            return null;
+        }
+
+        try {
+            return target.tabComplete(sender, args);
+        } catch (CommandException ex) {
+            throw ex;
+        } catch (Throwable ex) {
+            throw new CommandException("Unhandled exception executing tab-completer for '" + cmdLine + "' in " + target, ex);
+        }
     }
 
     public Collection<Command> getCommands() {
