@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -52,8 +53,8 @@ import com.google.common.collect.ImmutableList;
 public class JavaPluginLoader implements PluginLoader {
     private final Server server;
     protected final Pattern[] fileFilters = new Pattern[] { Pattern.compile("\\.jar$"), };
-    protected final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
-    protected final Map<String, PluginClassLoader> loaders = new LinkedHashMap<String, PluginClassLoader>();
+    protected final Map<String, Class<?>> classes = Collections.synchronizedMap(new HashMap<String, Class<?>>());
+    protected final Map<String, PluginClassLoader> loaders = Collections.synchronizedMap(new LinkedHashMap<String, PluginClassLoader>());
 
     public JavaPluginLoader(Server instance) {
         server = instance;
@@ -231,14 +232,16 @@ public class JavaPluginLoader implements PluginLoader {
         if (cachedClass != null) {
             return cachedClass;
         } else {
-            for (String current : loaders.keySet()) {
-                PluginClassLoader loader = loaders.get(current);
+            synchronized (loaders) {
+                for (String current : loaders.keySet()) {
+                    PluginClassLoader loader = loaders.get(current);
 
-                try {
-                    cachedClass = loader.findClass(name, false);
-                } catch (ClassNotFoundException cnfe) {}
-                if (cachedClass != null) {
-                    return cachedClass;
+                    try {
+                        cachedClass = loader.findClass(name, false);
+                    } catch (ClassNotFoundException cnfe) {}
+                    if (cachedClass != null) {
+                        return cachedClass;
+                    }
                 }
             }
         }
