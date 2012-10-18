@@ -42,9 +42,9 @@ public enum DyeColor {
      */
     GRAY(0x7),
     /**
-     * Represents silver dye
+     * Represents light gray dye
      */
-    SILVER(0x8),
+    LIGHT_GRAY(0x8),
     /**
      * Represents cyan dye
      */
