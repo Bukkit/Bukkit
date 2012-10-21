@@ -73,7 +73,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
          */
         CAUGHT_ENTITY,
         /**
-         * When a bobber is stuck in the grund
+         * When a bobber is stuck in the ground
          */
         IN_GROUND,
         /**
