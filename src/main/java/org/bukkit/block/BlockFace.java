@@ -144,61 +144,45 @@ public enum BlockFace {
      * This method corrects that. Anytime you require a representation of
      * data value to BlockFace, use this method to correct the resulting
      * BlockFace.
+     * @param BlockFace the block face that is being rotated
+     * @return the rotated block face, otherwise SELF if the block face is not applicable
      */
     public static BlockFace correctBlockFace(BlockFace face) {
-        BlockFace correctFace = null;
-
         switch (face) {
             case WEST:
-                correctFace = BlockFace.NORTH;
-                break;
+                return BlockFace.NORTH;
             case WEST_NORTH_WEST:
-                correctFace = BlockFace.NORTH_NORTH_EAST;
-                break;
+                return BlockFace.NORTH_NORTH_EAST;
             case NORTH_WEST:
-                correctFace = BlockFace.NORTH_EAST;
-                break;
+                return BlockFace.NORTH_EAST;
             case NORTH_NORTH_WEST:
-                correctFace = BlockFace.EAST_NORTH_EAST;
-                break;
+                return BlockFace.EAST_NORTH_EAST;
             case NORTH:
-                correctFace = BlockFace.EAST;
-                break;
+                return BlockFace.EAST;
             case NORTH_NORTH_EAST:
-                correctFace = BlockFace.EAST_SOUTH_EAST;
-                break;
+                return BlockFace.EAST_SOUTH_EAST;
             case NORTH_EAST:
-                correctFace = BlockFace.SOUTH_EAST;
-                break;
+                return BlockFace.SOUTH_EAST;
             case EAST_NORTH_EAST:
-                correctFace = BlockFace.SOUTH_SOUTH_EAST;
-                break;
+                return BlockFace.SOUTH_SOUTH_EAST;
             case EAST:
-                correctFace = BlockFace.SOUTH;
-                break;
+                return BlockFace.SOUTH;
             case EAST_SOUTH_EAST:
-                correctFace = BlockFace.SOUTH_SOUTH_WEST;
-                break;
+                return BlockFace.SOUTH_SOUTH_WEST;
             case SOUTH_EAST:
-                correctFace = BlockFace.SOUTH_WEST;
-                break;
+                return BlockFace.SOUTH_WEST;
             case SOUTH_SOUTH_EAST:
-                correctFace = BlockFace.WEST_SOUTH_WEST;
-                break;
+                return BlockFace.WEST_SOUTH_WEST;
             case SOUTH:
-                correctFace = BlockFace.WEST;
-                break;
+                return BlockFace.WEST;
             case SOUTH_SOUTH_WEST:
-                correctFace = BlockFace.WEST_NORTH_WEST;
-                break;
+                return BlockFace.WEST_NORTH_WEST;
             case SOUTH_WEST:
-                correctFace = BlockFace.NORTH_WEST;
-                break;
+                return BlockFace.NORTH_WEST;
             case WEST_SOUTH_WEST:
-                correctFace = BlockFace.NORTH_NORTH_WEST;
-                break;
+                return BlockFace.NORTH_NORTH_WEST;
         }
 
-        return correctFace;
+        return BlockFace.SELF;
     }
 }
