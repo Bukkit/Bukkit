@@ -74,7 +74,7 @@ public class TeleportCommand extends VanillaCommand {
     }
 
     private double getCoordinate(CommandSender sender, double current, String input) {
-        return getCoordinate(sender, current, input, -World.WORLD_SIZE, World.WORLD_SIZE);
+        return getCoordinate(sender, current, input, -World.WORLD_LIMIT, World.WORLD_LIMIT);
     }
 
     private double getCoordinate(CommandSender sender, double current, String input, double min, double max) {

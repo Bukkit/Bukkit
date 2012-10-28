@@ -25,7 +25,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
 	/**
 	 * The maximum size of a world
 	 */
-	public final static double WORLD_SIZE = 30000000;
+	public final static double WORLD_LIMIT = 30000000;
 		
     /**
      * Gets the {@link Block} at the given coordinates
