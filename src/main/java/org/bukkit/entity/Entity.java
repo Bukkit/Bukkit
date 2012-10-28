@@ -7,10 +7,9 @@ import org.bukkit.World;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.util.Vector;
-
 import java.util.List;
 import java.util.UUID;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 /**
  * Represents a base entity in the world
