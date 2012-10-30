@@ -5,7 +5,9 @@ import org.bukkit.entity.Painting;
 
 /**
  * Triggered when a painting is removed by an entity
+ * @deprecated  Use {@link #HangingBreakByEntityEvent()} instead.
  */
+@Deprecated
 public class PaintingBreakByEntityEvent extends PaintingBreakEvent {
     private final Entity remover;
 
