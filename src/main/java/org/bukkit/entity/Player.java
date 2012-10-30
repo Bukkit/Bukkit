@@ -371,6 +371,13 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public void giveExp(int amount);
 
     /**
+     * Gives the player the amount of experience levels specified. Levels can be taken by specifying a negative amount.
+     *
+     * @param amount amount of experience levels to give or take
+     */
+    public void giveExpLevels(int amount);
+
+    /**
      * Gets the players current experience points towards the next level.
      * <p />
      * This is a percentage value. 0 is "no progress" and 1 is "next level".
@@ -478,6 +485,14 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param location where to set the respawn location
      */
     public void setBedSpawnLocation(Location location);
+
+    /**
+     * Sets the Location where the player will spawn at their bed.
+     *
+     * @param location where to set the respawn location
+     * @param force whether to forcefully set the respawn location even if a valid bed is not present
+     */
+    public void setBedSpawnLocation(Location location, boolean force);
 
     /**
      * Determines if the Player is allowed to fly via jump key double-tap like in creative mode.
