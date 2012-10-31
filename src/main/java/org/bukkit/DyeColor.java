@@ -12,67 +12,67 @@ public enum DyeColor {
     /**
      * Represents white dye
      */
-    WHITE(0x0),
+    WHITE(0xF),
     /**
      * Represents orange dye
      */
-    ORANGE(0x1),
+    ORANGE(0xE),
     /**
      * Represents magenta dye
      */
-    MAGENTA(0x2),
+    MAGENTA(0xD),
     /**
      * Represents light blue dye
      */
-    LIGHT_BLUE(0x3),
+    LIGHT_BLUE(0xC),
     /**
      * Represents yellow dye
      */
-    YELLOW(0x4),
+    YELLOW(0xB),
     /**
      * Represents lime dye
      */
-    LIME(0x5),
+    LIME(0xA),
     /**
      * Represents pink dye
      */
-    PINK(0x6),
+    PINK(0x9),
     /**
-     * Represents gray dye
+     * Represents (dark) gray dye
      */
-    GRAY(0x7),
+    GRAY(0x8),
     /**
-     * Represents silver dye
+     * Represents silver (light gray) dye
      */
-    SILVER(0x8),
+    SILVER(0x7),
     /**
      * Represents cyan dye
      */
-    CYAN(0x9),
+    CYAN(0x6),
     /**
      * Represents purple dye
      */
-    PURPLE(0xA),
+    PURPLE(0x5),
     /**
      * Represents blue dye
      */
-    BLUE(0xB),
+    BLUE(0x4),
     /**
      * Represents brown dye
      */
-    BROWN(0xC),
+    BROWN(0x3),
     /**
      * Represents green dye
      */
-    GREEN(0xD),
+    GREEN(0x2),
     /**
      * Represents red dye
      */
-    RED(0xE),
+    RED(0x1),
     /**
      * Represents black dye
      */
-    BLACK(0xF);
+    BLACK(0x0);
 
     private final byte data;
     private final static Map<Byte, DyeColor> BY_DATA = Maps.newHashMap();
