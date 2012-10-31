@@ -6,6 +6,7 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -56,11 +57,11 @@ public class TeleportCommand extends VanillaCommand {
             player.teleport(target, TeleportCause.COMMAND);
             Command.broadcastCommandMessage(sender, "Teleported " + player.getName() + " to " + target.getName());
         } else if (player.getWorld() != null) {
-            double x = getCoordinate(sender, player.getLocation().getX(), args[args.length - 3]);
-            double y = getCoordinate(sender,player.getLocation().getY(), args[args.length - 2], 0, 0);
-            double z = getCoordinate(sender, player.getLocation().getZ(), args[args.length - 1]);
-
-            if (x == -30000001 || y == -30000001 || z == -30000001) {
+            final double x = getCoordinate(sender, player.getLocation().getX(), args[args.length - 3]);
+            final double y = getCoordinate(sender,player.getLocation().getY(), args[args.length - 2], 0, 0);
+            final double z = getCoordinate(sender, player.getLocation().getZ(), args[args.length - 1]);
+            
+            if (x == VanillaCommand.INVALID_DOUBLE || y == VanillaCommand.INVALID_DOUBLE || z == VanillaCommand.INVALID_DOUBLE) {
                 sender.sendMessage("Please provide a valid location!");
                 return true;
             }
@@ -73,20 +74,20 @@ public class TeleportCommand extends VanillaCommand {
     }
 
     private double getCoordinate(CommandSender sender, double current, String input) {
-        return getCoordinate(sender, current, input, -30000000, 30000000);
+        return getCoordinate(sender, current, input, -World.WORLD_LIMIT, World.WORLD_LIMIT);
     }
 
-    private double getCoordinate(CommandSender sender, double current, String input, int min, int max) {
-        boolean relative = input.startsWith("~");
+    private double getCoordinate(CommandSender sender, double current, String input, double min, double max) {
+        final boolean relative = input.startsWith("~");
         double result = relative ? current : 0;
 
         if (!relative || input.length() > 1) {
-            boolean exact = input.contains(".");
+            final boolean exact = input.contains(".");
             if (relative) input = input.substring(1);
 
-            double testResult = getDouble(sender, input);
-            if (testResult == -30000001) {
-                return -30000001;
+            final double testResult = getDouble(sender, input);
+            if (testResult == VanillaCommand.INVALID_DOUBLE) {
+                return VanillaCommand.INVALID_DOUBLE;
             }
             result += testResult;
 
@@ -94,11 +95,11 @@ public class TeleportCommand extends VanillaCommand {
         }
         if (min != 0 || max != 0) {
             if (result < min) {
-                result = -30000001;
+                result = VanillaCommand.INVALID_DOUBLE;
             }
 
             if (result > max) {
-                result = -30000001;
+                result = VanillaCommand.INVALID_DOUBLE;
             }
         }
 
