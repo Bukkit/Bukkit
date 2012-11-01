@@ -56,6 +56,9 @@ public class ServerListPingEvent extends ServerEvent {
     public int getNumPlayers() {
         return numPlayers;
     }
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+    }
 
     /**
      * Get the maximum number of players sent.
