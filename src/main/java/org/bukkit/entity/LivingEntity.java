@@ -278,4 +278,18 @@ public interface LivingEntity extends Entity {
      * @return true if there is a line of sight, false if not.
      */
     public boolean hasLineOfSight(Entity other);
+    
+    /**
+     * Returns item in slot
+     * @param slot Slot
+     * @return Item in slot
+     */
+    public ItemStack getEquipment(int slot);
+    
+    /**
+     * Sets item in slot
+     * @param item Item
+     * @param slot Slot
+     */
+    public void setEquipment(ItemStack item, int slot);
 }
