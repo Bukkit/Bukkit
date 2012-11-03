@@ -19,6 +19,19 @@ public interface Wolf extends Animals, Tameable {
      * @param angry true if angry
      */
     public void setAngry(boolean angry);
+    /**
+     * Returns collar color
+     *
+     * @return Collar color
+     */
+    public int getCollarColor();
+
+    /**
+     * Sets color fo collar
+     *
+     * @param RGB color
+     */
+    public void setCollarColor(int color);
 
     /**
      * Checks if this wolf is sitting
