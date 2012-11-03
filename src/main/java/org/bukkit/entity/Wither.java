@@ -3,5 +3,4 @@ package org.bukkit.entity;
 /**
  * Represents a Wither boss
  */
-public interface Wither extends Monster {
-}
+public interface Wither extends Monster, BossEntity {}
