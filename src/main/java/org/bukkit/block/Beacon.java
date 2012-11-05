@@ -2,7 +2,7 @@ package org.bukkit.block;
 
 import org.bukkit.potion.PotionEffectType;
 
-public interface Beacon extends BlockState{
+public interface Beacon extends BlockState {
 
     /**
      * Gets primary effect of beacon

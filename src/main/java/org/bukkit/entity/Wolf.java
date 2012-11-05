@@ -1,11 +1,10 @@
 package org.bukkit.entity;
 
-import org.bukkit.material.Colorable;
 
 /**
  * Represents a Wolf
  */
-public interface Wolf extends Animals, Tameable, Colorable {
+public interface Wolf extends Animals, Tameable {
 
     /**
      * Checks if this wolf is angry
@@ -36,5 +35,19 @@ public interface Wolf extends Animals, Tameable, Colorable {
      * @param sitting true if sitting
      */
     public void setSitting(boolean sitting);
+
+    /**
+     * Gets color of wolf's collar
+     *
+     * @return Color
+     */
+    public int getCollarColor();
+
+    /**
+     * Sets color of wolf's collar
+     *
+     * @param color Color
+     */
+    public void setCollarColor(int color);
 
 }
