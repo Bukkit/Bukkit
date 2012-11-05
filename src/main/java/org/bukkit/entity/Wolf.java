@@ -1,5 +1,6 @@
 package org.bukkit.entity;
 
+
 /**
  * Represents a Wolf
  */
@@ -34,5 +35,19 @@ public interface Wolf extends Animals, Tameable {
      * @param sitting true if sitting
      */
     public void setSitting(boolean sitting);
+
+    /**
+     * Gets color of wolf's collar
+     *
+     * @return Color
+     */
+    public int getCollarColor();
+
+    /**
+     * Sets color of wolf's collar
+     *
+     * @param color Color
+     */
+    public void setCollarColor(int color);
 
 }

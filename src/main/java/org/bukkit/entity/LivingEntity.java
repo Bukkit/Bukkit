@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -278,4 +279,18 @@ public interface LivingEntity extends Entity {
      * @return true if there is a line of sight, false if not.
      */
     public boolean hasLineOfSight(Entity other);
+    
+    /**
+     * Returns item in slot
+     * @param slot Slot
+     * @return Item in slot
+     */
+    public ItemStack getEquipment(int slot);
+    
+    /**
+     * Sets item in slot
+     * @param item Item
+     * @param slot Slot
+     */
+    public void setEquipment(ItemStack item, int slot);
 }

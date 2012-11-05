@@ -405,4 +405,12 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
         return result;
     }
+
+    public void setItemName(String name){
+        
+    }
+    
+    public String getItemName(){
+        return "";
+    }
 }
