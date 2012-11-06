@@ -7,6 +7,7 @@ import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.item.ItemState;
 import org.bukkit.material.MaterialData;
 
 /**
@@ -405,4 +406,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
         return result;
     }
+    
+    public ItemState getState(){
+    	return null;
+    }
+    
 }
