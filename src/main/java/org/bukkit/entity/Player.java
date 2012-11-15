@@ -4,12 +4,14 @@ import java.net.InetSocketAddress;
 
 import org.bukkit.Achievement;
 import org.bukkit.ChatColor;
+import org.bukkit.Difficulty;
 import org.bukkit.Effect;
 import org.bukkit.Instrument;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Note;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.RenderDistance;
 import org.bukkit.Sound;
 import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
@@ -569,4 +571,18 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @return The current allowed speed, from -1 to 1
      */
     public float getWalkSpeed();
+
+    /**
+     * Gets the difficulty setting that the client has set in their options, or null if
+     * the value is unknown.  
+     * @return The difficulty setting in the client's options if known, otherwise null
+     */
+	Difficulty getDifficulty();
+
+	/**
+	 * Gets the current render distance that the client has set in their video settings,
+	 * or null if the value is unknown.
+	 * @return The render distance in the client's options if known, otherwise null
+	 */
+	RenderDistance getRenderDistance();
 }
