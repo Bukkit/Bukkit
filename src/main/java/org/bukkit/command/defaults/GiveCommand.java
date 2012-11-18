@@ -68,15 +68,10 @@ public class GiveCommand extends VanillaCommand {
                 sender.sendMessage("There's no item called " + args[1]);
             }
         } else {
-            sender.sendMessage("Can't find user " + args[0]);
+            sender.sendMessage("Can't find player " + args[0]);
         }
 
         return true;
-    }
-
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("give");
     }
 
     @Override

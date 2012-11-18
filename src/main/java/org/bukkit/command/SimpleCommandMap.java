@@ -27,10 +27,6 @@ public class SimpleCommandMap implements CommandMap {
 
     static {
         fallbackCommands.add(new ListCommand());
-        fallbackCommands.add(new StopCommand());
-        fallbackCommands.add(new SaveCommand());
-        fallbackCommands.add(new SaveOnCommand());
-        fallbackCommands.add(new SaveOffCommand());
         fallbackCommands.add(new OpCommand());
         fallbackCommands.add(new DeopCommand());
         fallbackCommands.add(new BanIpCommand());
@@ -58,6 +54,7 @@ public class SimpleCommandMap implements CommandMap {
         fallbackCommands.add(new SpawnpointCommand());
         fallbackCommands.add(new ClearCommand());
         fallbackCommands.add(new GameRuleCommand());
+        fallbackCommands.add(new EnchantCommand());
     }
 
     public SimpleCommandMap(final Server server) {
@@ -66,6 +63,10 @@ public class SimpleCommandMap implements CommandMap {
     }
 
     private void setDefaultCommands(final Server server) {
+        register("bukkit", new SaveCommand());
+        register("bukkit", new SaveOnCommand());
+        register("bukkit", new SaveOffCommand());
+        register("bukkit", new StopCommand());
         register("bukkit", new VersionCommand("version"));
         register("bukkit", new ReloadCommand("reload"));
         register("bukkit", new PluginsCommand("plugins"));

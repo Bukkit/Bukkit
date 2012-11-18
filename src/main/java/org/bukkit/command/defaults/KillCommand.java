@@ -30,18 +30,13 @@ public class KillCommand extends VanillaCommand {
             if (ede.isCancelled()) return true;
 
             ede.getEntity().setLastDamageCause(ede);
-            player.damage(ede.getDamage());
+            player.setHealth(0);
             sender.sendMessage("Ouch. That look like it hurt.");
         } else {
             sender.sendMessage("You can only perform this command as a player");
         }
 
         return true;
-    }
-
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("kill");
     }
 
     @Override

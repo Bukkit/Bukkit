@@ -7,6 +7,7 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
@@ -36,13 +37,8 @@ public class DeopCommand extends VanillaCommand {
             ((Player) player).sendMessage(ChatColor.YELLOW + "You are no longer op!");
         }
 
-        sender.sendMessage("De-opped " + args[0]);
+        Command.broadcastCommandMessage(sender, "De-opped " + args[0]);
         return true;
-    }
-
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("deop");
     }
 
     @Override
