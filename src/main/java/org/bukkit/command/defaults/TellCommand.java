@@ -41,6 +41,7 @@ public class TellCommand extends VanillaCommand {
                 Bukkit.getLogger().info("[" + sender.getName() + "->" + player.getName() + "] " + message);
             }
 
+            sender.sendMessage("[" + sender.getName() + "->" + player.getName() + "] " + message);
             player.sendMessage(result);
         }
 
@@ -49,6 +50,6 @@ public class TellCommand extends VanillaCommand {
 
     @Override
     public boolean matches(String input) {
-        return input.equalsIgnoreCase("tell");
+        return input.equalsIgnoreCase("tell") || input.equalsIgnoreCase("w") || input.equalsIgnoreCase("msg");
     }
 }

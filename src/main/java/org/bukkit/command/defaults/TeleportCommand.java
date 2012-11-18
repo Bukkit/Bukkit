@@ -51,7 +51,7 @@ public class TeleportCommand extends VanillaCommand {
         if (args.length < 3) {
             Player target = Bukkit.getPlayerExact(args[args.length - 1]);
             if (target == null) {
-                sender.sendMessage("Can't find user " + args[args.length - 1] + ". No tp.");
+                sender.sendMessage("Can't find player " + args[args.length - 1] + ". No tp.");
                 return true;
             }
             player.teleport(target, TeleportCause.COMMAND);
@@ -108,11 +108,6 @@ public class TeleportCommand extends VanillaCommand {
         }
 
         return result;
-    }
-
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("tp");
     }
 
     @Override
