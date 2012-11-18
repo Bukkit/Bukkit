@@ -36,6 +36,10 @@ public class SpawnpointCommand extends VanillaCommand {
             }
         } else {
             player = Bukkit.getPlayerExact(args[0]);
+            if (player == null) {
+                sender.sendMessage("Can't find player " + args[0]);
+                return true;
+            }
         }
 
         World world = player.getWorld();
@@ -43,29 +47,23 @@ public class SpawnpointCommand extends VanillaCommand {
         if (args.length == 4) {
             if (world != null) {
                 int pos = 1;
-                int maxPos = 30000000;
-                int x = getInteger(sender, args[pos++], -maxPos, maxPos);
+                int x = getInteger(sender, args[pos++], MIN_COORD, MAX_COORD);
                 int y = getInteger(sender, args[pos++], 0, world.getMaxHeight());
-                int z = getInteger(sender, args[pos], -maxPos, maxPos);
+                int z = getInteger(sender, args[pos], MIN_COORD, MAX_COORD);
 
                 player.setBedSpawnLocation(new Location(world, x, y, z), true);
-                sender.sendMessage("Set " + player.getDisplayName() + "'s spawnpoint to " + x + ", " + y + ", " + z);
+                Command.broadcastCommandMessage(sender, "Set " + player.getDisplayName() + "'s spawnpoint to " + x + ", " + y + ", " + z);
             }
         } else if (args.length <= 1) {
             Location location = player.getLocation();
             player.setBedSpawnLocation(location, true);
-            sender.sendMessage("Set " + player.getDisplayName() + "'s spawnpoint to " + location.getX() + ", " + location.getY() + ", " + location.getZ());
+            Command.broadcastCommandMessage(sender, "Set " + player.getDisplayName() + "'s spawnpoint to " + location.getX() + ", " + location.getY() + ", " + location.getZ());
         } else {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
 
         return true;
-    }
-
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("spawnpoint");
     }
 
     @Override

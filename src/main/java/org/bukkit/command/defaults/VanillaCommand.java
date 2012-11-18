@@ -6,6 +6,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public abstract class VanillaCommand extends Command {
+    static final int MAX_COORD = 30000000;
+    static final int MIN_COORD_MINUS_ONE = -30000001;
+    static final int MIN_COORD = -30000000;
+
     protected VanillaCommand(String name) {
         super(name);
     }
@@ -38,11 +42,19 @@ public abstract class VanillaCommand extends Command {
         return i;
     }
 
+    Integer getInteger(String value) {
+        try {
+            return Integer.valueOf(value);
+        } catch (NumberFormatException ex) {
+            return null;
+        }
+    }
+
     public static double getDouble(CommandSender sender, String input) {
         try {
             return Double.parseDouble(input);
         } catch (NumberFormatException ex) {
-            return -30000001;
+            return MIN_COORD_MINUS_ONE;
         }
     }
 
@@ -58,13 +70,17 @@ public abstract class VanillaCommand extends Command {
         return result;
     }
 
-    protected String createString(String[] args, int start) {
+    String createString(String[] args, int start) {
+        return createString(args, start, " ");
+    }
+
+    String createString(String[] args, int start, String glue) {
         StringBuilder string = new StringBuilder();
 
         for (int x = start; x < args.length; x++) {
             string.append(args[x]);
             if (x != args.length - 1) {
-                string.append(" ");
+                string.append(glue);
             }
         }
 

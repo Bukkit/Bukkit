@@ -1,9 +1,6 @@
 package org.bukkit.command.defaults;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,12 +8,13 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.StringUtil;
 
-import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class GiveCommand extends VanillaCommand {
+public class ClearCommand extends VanillaCommand {
     private static List<String> materials;
     static {
         ArrayList<String> materialList = new ArrayList<String>();
@@ -27,48 +25,45 @@ public class GiveCommand extends VanillaCommand {
         materials = ImmutableList.copyOf(materialList);
     }
 
-    public GiveCommand() {
-        super("give");
-        this.description = "Gives the specified player a certain amount of items";
-        this.usageMessage = "/give <player> <item> [amount [data]]";
-        this.setPermission("bukkit.command.give");
+    public ClearCommand() {
+        super("clear");
+        this.description = "Clears the player's inventory. Can specify item and data filters too.";
+        this.usageMessage = "/clear <player> [item] [data]";
+        this.setPermission("bukkit.command.clear");
     }
 
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
-        if ((args.length < 2)) {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
-            return false;
+
+        Player player = null;
+        if (args.length > 0) {
+            player = Bukkit.getPlayer(args[0]);
+        } else if (sender instanceof Player) {
+            player = (Player) sender;
         }
 
-        Player player = Bukkit.getPlayerExact(args[0]);
-
         if (player != null) {
-            Material material = Material.matchMaterial(args[1]);
+            int id;
 
-            if (material != null) {
-                int amount = 1;
-                short data = 0;
-
-                if (args.length >= 3) {
-                    amount = this.getInteger(sender, args[2], 1, 64);
-
-                    if (args.length >= 4) {
-                        try {
-                            data = Short.parseShort(args[3]);
-                        } catch (NumberFormatException ex) {}
-                    }
+            if (args.length > 1 && !(args[1].equals("-1"))) {
+                Material material = Material.matchMaterial(args[1]);
+                if (material == null) {
+                    sender.sendMessage(ChatColor.RED + "There's no item called " + args[1]);
+                    return false;
                 }
 
-                player.getInventory().addItem(new ItemStack(material, amount, data));
-
-                Command.broadcastCommandMessage(sender, "Gave " + player.getName() + " some " + material.getId() + " (" + material + ")");
+                id = material.getId();
             } else {
-                sender.sendMessage("There's no item called " + args[1]);
+                id = -1;
             }
+
+            int data = args.length >= 3 ? getInteger(sender, args[2], 0) : -1;
+            int count = player.getInventory().clear(id, data);
+
+            Command.broadcastCommandMessage(sender, "Cleared the inventory of " + player.getDisplayName() + ", removing " + count + " items");
         } else {
-            sender.sendMessage("Can't find player " + args[0]);
+            sender.sendMessage(ChatColor.RED + "Can't find player " + args[0]);
         }
 
         return true;
@@ -85,7 +80,7 @@ public class GiveCommand extends VanillaCommand {
         }
         if (args.length == 2) {
             final String arg = args[1];
-            final List<String> materials = GiveCommand.materials;
+            final List<String> materials = ClearCommand.materials;
             List<String> completion = null;
 
             final int size = materials.size();

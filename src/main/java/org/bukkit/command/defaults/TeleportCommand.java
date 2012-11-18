@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import com.google.common.collect.ImmutableList;
 
 public class TeleportCommand extends VanillaCommand {
+
     public TeleportCommand() {
         super("tp");
         this.description = "Teleports the given player to another player or location";
@@ -50,30 +51,34 @@ public class TeleportCommand extends VanillaCommand {
         if (args.length < 3) {
             Player target = Bukkit.getPlayerExact(args[args.length - 1]);
             if (target == null) {
-                sender.sendMessage("Can't find user " + args[args.length - 1] + ". No tp.");
+                sender.sendMessage("Can't find player " + args[args.length - 1] + ". No tp.");
                 return true;
             }
             player.teleport(target, TeleportCause.COMMAND);
-            Command.broadcastCommandMessage(sender, "Teleported " + player.getName() + " to " + target.getName());
+            Command.broadcastCommandMessage(sender, "Teleported " + player.getDisplayName() + " to " + target.getDisplayName());
         } else if (player.getWorld() != null) {
-            double x = getCoordinate(sender, player.getLocation().getX(), args[args.length - 3]);
-            double y = getCoordinate(sender,player.getLocation().getY(), args[args.length - 2], 0, 0);
-            double z = getCoordinate(sender, player.getLocation().getZ(), args[args.length - 1]);
+            Location playerLocation = player.getLocation();
+            double x = getCoordinate(sender, playerLocation.getX(), args[args.length - 3]);
+            double y = getCoordinate(sender, playerLocation.getY(), args[args.length - 2], 0, 0);
+            double z = getCoordinate(sender, playerLocation.getZ(), args[args.length - 1]);
 
-            if (x == -30000001 || y == -30000001 || z == -30000001) {
+            if (x == MIN_COORD_MINUS_ONE || y == MIN_COORD_MINUS_ONE || z == MIN_COORD_MINUS_ONE) {
                 sender.sendMessage("Please provide a valid location!");
                 return true;
             }
 
-            Location location = new Location(player.getWorld(), x, y, z);
-            player.teleport(location);
-            Command.broadcastCommandMessage(sender, "Teleported " + player.getName() + " to " + + x + "," + y + "," + z);
+            playerLocation.setX(x);
+            playerLocation.setY(y);
+            playerLocation.setZ(z);
+
+            player.teleport(playerLocation);
+            Command.broadcastCommandMessage(sender, String.format("Teleported %s to %.2f, %.2f, %.2f", player.getDisplayName(), x, y, z));
         }
         return true;
     }
 
     private double getCoordinate(CommandSender sender, double current, String input) {
-        return getCoordinate(sender, current, input, -30000000, 30000000);
+        return getCoordinate(sender, current, input, MIN_COORD, MAX_COORD);
     }
 
     private double getCoordinate(CommandSender sender, double current, String input, int min, int max) {
@@ -85,8 +90,8 @@ public class TeleportCommand extends VanillaCommand {
             if (relative) input = input.substring(1);
 
             double testResult = getDouble(sender, input);
-            if (testResult == -30000001) {
-                return -30000001;
+            if (testResult == MIN_COORD_MINUS_ONE) {
+                return MIN_COORD_MINUS_ONE;
             }
             result += testResult;
 
@@ -94,20 +99,15 @@ public class TeleportCommand extends VanillaCommand {
         }
         if (min != 0 || max != 0) {
             if (result < min) {
-                result = -30000001;
+                result = MIN_COORD_MINUS_ONE;
             }
 
             if (result > max) {
-                result = -30000001;
+                result = MIN_COORD_MINUS_ONE;
             }
         }
 
         return result;
-    }
-
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("tp");
     }
 
     @Override
