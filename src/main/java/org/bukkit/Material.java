@@ -336,6 +336,7 @@ public enum Material {
     private final static Map<String, Material> BY_NAME = Maps.newHashMap();
     private final int maxStack;
     private final short durability;
+    private final Constructor<? extends MaterialData>	ctor;
 
     private Material(final int id) {
         this(id, 64);
@@ -362,6 +363,14 @@ public enum Material {
         this.durability = (short) durability;
         this.maxStack = stack;
         this.data = data == null ? MaterialData.class : data;
+        // try to cache the constructor for this material
+        Constructor<? extends MaterialData> ctor = null;
+        try {
+            ctor = this.data.getConstructor(int.class, byte.class);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.ctor = ctor;
     }
 
     /**
@@ -409,9 +418,8 @@ public enum Material {
      */
     public MaterialData getNewData(final byte raw) {
         try {
-            Constructor<? extends MaterialData> ctor = data.getConstructor(int.class, byte.class);
-
-            return ctor.newInstance(id, raw);
+            if (ctor != null)
+                return ctor.newInstance(id, raw);
         } catch (InstantiationException ex) {
             Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
@@ -419,8 +427,6 @@ public enum Material {
         } catch (IllegalArgumentException ex) {
             Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvocationTargetException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
             Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {
             Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
