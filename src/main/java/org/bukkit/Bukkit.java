@@ -386,4 +386,20 @@ public final class Bukkit {
     public static WarningState getWarningState() {
         return server.getWarningState();
     }
+    
+    public static String getShutdownKickMessage(){
+        return server.getShutdownKickMessage();
+    }
+    
+    public static void setShutdownKickMessage(String kickMessage){
+        server.setShutdownKickMessage(kickMessage);
+    }
+    
+    public static String getTempShutdownKickMessage(){
+        return server.getTempShutdownKickMessage();
+    }
+    
+    public static void setTempShutdownKickMessage(String kickMessage){
+        server.setTempShutdownKickMessage(kickMessage);
+    }
 }
