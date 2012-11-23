@@ -672,4 +672,29 @@ public interface Server extends PluginMessageRecipient {
      * @return The configured WarningState
      */
     public WarningState getWarningState();
+    
+    /**
+     * Gets the current kick message for when the server shuts down
+     *
+     * @return The shutdown kick message
+     */
+    public String getShutdownKickMessage();
+    
+    /**
+     * Sets the kick message for when the server shuts down
+     * @param message The kick message to show to players when the server is shutdown
+     */
+    public void setShutdownKickMessage(String message);
+    
+    /**
+     * Gets the temp shutdown kick message
+     * @return The temp shutdown kick message
+     */
+    public String getTempShutdownKickMessage();
+    
+    /**
+     * Sets the kick message for the current session, this is used by the /stop command
+     * @param message
+     */
+    public void setTempShutdownKickMessage(String message);
 }
