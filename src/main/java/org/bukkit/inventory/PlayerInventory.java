@@ -8,7 +8,14 @@ import org.bukkit.entity.HumanEntity;
 public interface PlayerInventory extends Inventory {
 
     /**
-     * Get all ItemStacks from the armor slots
+     * Get all ItemStacks from the armor slots.<br />
+     * 
+     * <UL>
+     * <LI>Index 0 is Boots</LI>
+     * <LI>Index 1 is Leggings</LI>
+     * <LI>Index 2 is Chestplate</LI>
+     * <LI>Index 3 is Helmet</LI>
+     * </UL>
      *
      * @return All the ItemStacks from the armor slots
      */
@@ -45,7 +52,14 @@ public interface PlayerInventory extends Inventory {
     /**
      * Put the given ItemStacks into the armor slots
      *
-     * @param items The ItemStacks to use as armour
+     * <UL>
+     * <LI>Index 0 is Boots</LI>
+     * <LI>Index 1 is Leggings</LI>
+     * <LI>Index 2 is Chestplate</LI>
+     * <LI>Index 3 is Helmet</LI>
+     * </UL>
+     *
+     * @param items The ItemStacks to use as armor
      */
     public void setArmorContents(ItemStack[] items);
 
