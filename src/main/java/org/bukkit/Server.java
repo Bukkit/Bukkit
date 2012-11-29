@@ -496,6 +496,13 @@ public interface Server extends PluginMessageRecipient {
      * Shutdowns the server, stopping everything.
      */
     public void shutdown();
+    
+    /**
+     * Shuts down the server, stopping everything
+     * 
+     * @param disconnectMessage The disconnect message to show to players
+     */
+    public void shutdown(String disconnectMessage);
 
     /**
      * Broadcasts the specified message to every user with the given permission
@@ -672,4 +679,17 @@ public interface Server extends PluginMessageRecipient {
      * @return The configured WarningState
      */
     public WarningState getWarningState();
+    
+    /**
+     * Gets the current disconnect message for when the server shuts down
+     *
+     * @return The shutdown disconnect message
+     */
+    public String getShutdownDisconnectMessage();
+    
+    /**
+     * Sets the disconnect message for when the server shuts down
+     * @param message The disconnect message to show to players when the server is shutdown
+     */
+    public void setShutdownDisconnectMessage(String message);
 }

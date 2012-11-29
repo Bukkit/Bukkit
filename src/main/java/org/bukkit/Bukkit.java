@@ -250,6 +250,10 @@ public final class Bukkit {
     public static void shutdown() {
         server.shutdown();
     }
+    
+    public static void shutdown(String disconnectMessage) {
+        server.shutdown(disconnectMessage);
+    }
 
     public static int broadcast(String message, String permission) {
         return server.broadcast(message, permission);
@@ -385,5 +389,13 @@ public final class Bukkit {
 
     public static WarningState getWarningState() {
         return server.getWarningState();
+    }
+    
+    public static String getShutdownDisconnectMessage(){
+        return server.getShutdownDisconnectMessage();
+    }
+    
+    public static void setShutdownDisconnectMessage(String kickMessage){
+        server.setShutdownDisconnectMessage(kickMessage);
     }
 }
