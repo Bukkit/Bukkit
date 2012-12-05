@@ -2,6 +2,7 @@ package org.bukkit.command.defaults;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -13,7 +14,7 @@ public class StopCommand extends VanillaCommand {
     public StopCommand() {
         super("stop");
         this.description = "Stops the server";
-        this.usageMessage = "/stop";
+        this.usageMessage = "/stop [kick-message]";
         this.setPermission("bukkit.command.stop");
     }
 
@@ -21,8 +22,9 @@ public class StopCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
 
+        String disconnectMessage = (args.length > 0 ? StringUtils.join(args, " ") : Bukkit.getShutdownDisconnectMessage());
         Command.broadcastCommandMessage(sender, "Stopping the server..");
-        Bukkit.shutdown();
+        Bukkit.shutdown(disconnectMessage);
 
         return true;
     }
