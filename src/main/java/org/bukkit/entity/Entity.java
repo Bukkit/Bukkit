@@ -272,4 +272,11 @@ public interface Entity extends Metadatable {
      * @return The current vehicle.
      */
     public Entity getVehicle();
+    
+    /**
+     * Get the height of the entity's head from it's feet
+     *
+     * @return The entity's head's height
+     */
+    public float getHeadHeight();
 }
