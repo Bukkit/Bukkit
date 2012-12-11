@@ -21,6 +21,8 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
+import org.bukkit.nbt.NbtIO;
+import org.bukkit.nbt.tag.CompoundTag;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
@@ -679,4 +681,11 @@ public interface Server extends PluginMessageRecipient {
      * @return The configured WarningState
      */
     public WarningState getWarningState();
+    
+    /**
+     * Gets the {@link NbtIO} for the server.
+     * 
+     * @return The server's {@link NbtIO}.
+     */
+    public NbtIO getNbtIO();
 }

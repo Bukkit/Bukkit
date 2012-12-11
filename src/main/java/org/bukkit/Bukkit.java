@@ -20,6 +20,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
+import org.bukkit.nbt.NbtIO;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
@@ -389,5 +390,9 @@ public final class Bukkit {
 
     public static WarningState getWarningState() {
         return server.getWarningState();
+    }
+    
+    public static NbtIO getNbtIO() {
+        return server.getNbtIO();
     }
 }
