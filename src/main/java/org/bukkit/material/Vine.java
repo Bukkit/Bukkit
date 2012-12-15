@@ -59,7 +59,7 @@ public class Vine extends MaterialData {
 
     /**
      * Check if the vine is attached to the specified face of an adjacent block. You can
-     * check two faces at once by passing eg {@link BlockFace#NORTH_EAST}.
+     * check two faces at once by passing eg {@link BlockFace#NORTH_WEST}.
      *
      * @param face The face to check.
      * @return Whether it is attached to that face.
@@ -74,13 +74,13 @@ public class Vine extends MaterialData {
                 return (getData() & VINE_WEST) > 0;
             case EAST:
                 return (getData() & VINE_SOUTH) > 0;
-            case NORTH_EAST:
-                return isOnFace(BlockFace.WEST) && isOnFace(BlockFace.NORTH);
             case NORTH_WEST:
-                return isOnFace(BlockFace.WEST) && isOnFace(BlockFace.SOUTH);
-            case SOUTH_EAST:
-                return isOnFace(BlockFace.EAST) && isOnFace(BlockFace.NORTH);
+                return isOnFace(BlockFace.WEST) && isOnFace(BlockFace.NORTH);
             case SOUTH_WEST:
+                return isOnFace(BlockFace.WEST) && isOnFace(BlockFace.SOUTH);
+            case NORTH_EAST:
+                return isOnFace(BlockFace.EAST) && isOnFace(BlockFace.NORTH);
+            case SOUTH_EAST:
                 return isOnFace(BlockFace.EAST) && isOnFace(BlockFace.SOUTH);
             case UP: // It's impossible to be accurate with this since it's contextual
                 return true;
@@ -108,19 +108,19 @@ public class Vine extends MaterialData {
             case EAST:
                 setData((byte) (getData() | VINE_SOUTH));
                 break;
-            case NORTH_EAST:
-                putOnFace(BlockFace.WEST);
-                putOnFace(BlockFace.NORTH);
-                break;
             case NORTH_WEST:
                 putOnFace(BlockFace.WEST);
-                putOnFace(BlockFace.SOUTH);
-                break;
-            case SOUTH_EAST:
-                putOnFace(BlockFace.EAST);
                 putOnFace(BlockFace.NORTH);
                 break;
             case SOUTH_WEST:
+                putOnFace(BlockFace.WEST);
+                putOnFace(BlockFace.SOUTH);
+                break;
+            case NORTH_EAST:
+                putOnFace(BlockFace.EAST);
+                putOnFace(BlockFace.NORTH);
+                break;
+            case SOUTH_EAST:
                 putOnFace(BlockFace.EAST);
                 putOnFace(BlockFace.SOUTH);
                 break;
@@ -150,19 +150,19 @@ public class Vine extends MaterialData {
             case EAST:
                 setData((byte) (getData() &~ VINE_SOUTH));
                 break;
-            case NORTH_EAST:
-                removeFromFace(BlockFace.WEST);
-                removeFromFace(BlockFace.NORTH);
-                break;
             case NORTH_WEST:
                 removeFromFace(BlockFace.WEST);
-                removeFromFace(BlockFace.SOUTH);
-                break;
-            case SOUTH_EAST:
-                removeFromFace(BlockFace.EAST);
                 removeFromFace(BlockFace.NORTH);
                 break;
             case SOUTH_WEST:
+                removeFromFace(BlockFace.WEST);
+                removeFromFace(BlockFace.SOUTH);
+                break;
+            case NORTH_EAST:
+                removeFromFace(BlockFace.EAST);
+                removeFromFace(BlockFace.NORTH);
+                break;
+            case SOUTH_EAST:
                 removeFromFace(BlockFace.EAST);
                 removeFromFace(BlockFace.SOUTH);
                 break;

@@ -58,14 +58,14 @@ public class Door extends MaterialData implements Directional, Openable {
         byte d = getData();
 
         if ((d & 0x3) == 0x3) {
-            return BlockFace.NORTH_WEST;
-        } else if ((d & 0x1) == 0x1) {
-            return BlockFace.SOUTH_EAST;
-        } else if ((d & 0x2) == 0x2) {
             return BlockFace.SOUTH_WEST;
+        } else if ((d & 0x1) == 0x1) {
+            return BlockFace.NORTH_EAST;
+        } else if ((d & 0x2) == 0x2) {
+            return BlockFace.SOUTH_EAST;
         }
 
-        return BlockFace.NORTH_EAST;
+        return BlockFace.NORTH_WEST;
     }
 
     @Override
