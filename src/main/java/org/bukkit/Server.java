@@ -679,4 +679,11 @@ public interface Server extends PluginMessageRecipient {
      * @return The configured WarningState
      */
     public WarningState getWarningState();
+    
+    /**
+     * Gets the current version of Minecraft running on this server
+     *
+     * @return version of Minecraft
+     */
+    public String getMinecraftVersion();
 }
