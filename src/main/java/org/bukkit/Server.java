@@ -379,6 +379,13 @@ public interface Server extends PluginMessageRecipient {
     public Logger getLogger();
 
     /**
+     * Returns the allowedCharacters string from server SharedConstants
+     *
+     * @return allowedCharacters from SharedConstants
+     */
+    public String getAllowedCharacters();
+
+    /**
      * Gets a {@link PluginCommand} with the given name or alias
      *
      * @param name Name of the command to retrieve
