@@ -592,4 +592,10 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @throws IllegalArgumentException Thrown if the URL is too long.
      */
     public void setTexturePack(String url);
+    
+    /**
+     * Gets the current ping of the connected client.
+     * @return The current ping.
+     */
+    public Integer getPing();
 }
