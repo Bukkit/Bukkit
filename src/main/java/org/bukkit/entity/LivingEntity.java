@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -278,4 +279,40 @@ public interface LivingEntity extends Entity {
      * @return true if there is a line of sight, false if not.
      */
     public boolean hasLineOfSight(Entity other);
+
+    /**
+     * Returns if the entity despawns when away from players or not.<br />
+     * By default animals are not removed while other mobs are.
+     *
+     * @return true if the entity is removed when away from players
+     */
+    public boolean getRemoveWhenFarAway();
+
+    /**
+     * Sets whether or not the entity despawns when away from players or not.
+     *
+     * @param remove The remove status
+     */
+    public void setRemoveWhenFarAway(boolean remove);
+
+    /**
+     *  Gets the inventory with the equipment worn by this entity.
+     *
+     *  @return the entities inventory.
+     */
+    public EntityEquipment getEquipment();
+
+    /**
+     * Sets whether or not the entity can pick up items
+     *
+     * @param pickup Whether or not the entity can pick up items
+     */
+    public void setCanPickupItems(boolean pickup);
+
+    /**
+     * Gets if the entity can pick up items
+     *
+     * @return whether or not the entity can pick up items
+     */
+    public boolean getCanPickupItems();
 }

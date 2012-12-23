@@ -6,14 +6,14 @@ import org.bukkit.block.BlockFace;
 /**
  * Represents the cocoa plant
  */
-public class CocoaPlant extends MaterialData implements Directional {
+public class CocoaPlant extends MaterialData implements Directional, Attachable {
 
     public enum CocoaPlantSize {
         SMALL,
         MEDIUM,
         LARGE
     }
-    
+
     public CocoaPlant() {
         super(Material.COCOA);
     }
@@ -51,7 +51,7 @@ public class CocoaPlant extends MaterialData implements Directional {
                 return CocoaPlantSize.LARGE;
         }
     }
-    
+
     /**
      * Set size of plant
      * @param sz - size of plant
@@ -70,22 +70,25 @@ public class CocoaPlant extends MaterialData implements Directional {
         }
         setData((byte) dat);
     }
-    
+
+    public BlockFace getAttachedFace() {
+        return getFacing().getOppositeFace();
+    }
+
     public void setFacingDirection(BlockFace face) {
         int dat = getData() & 0xC;
         switch (face) {
-            case WEST:
+            default:
+            case SOUTH:
                 break;
-            case NORTH:
+            case WEST:
                 dat |= 0x1;
                 break;
-            case EAST:
+            case NORTH:
                 dat |= 0x2;
                 break;
-            case SOUTH:
+            case EAST:
                 dat |= 0x3;
-                break;
-            default:
                 break;
         }
         setData((byte) dat);
@@ -94,17 +97,17 @@ public class CocoaPlant extends MaterialData implements Directional {
     public BlockFace getFacing() {
         switch (getData() & 0x3) {
             case 0:
-                return BlockFace.WEST;
-            case 1:
-                return BlockFace.NORTH;
-            case 2:
-                return BlockFace.EAST;
-            case 3:
                 return BlockFace.SOUTH;
+            case 1:
+                return BlockFace.WEST;
+            case 2:
+                return BlockFace.NORTH;
+            case 3:
+                return BlockFace.EAST;
         }
         return null;
     }
-    
+
     @Override
     public CocoaPlant clone() {
         return (CocoaPlant) super.clone();

@@ -5,7 +5,10 @@ import org.bukkit.block.BlockFace;
 
 /**
  * Represents a door.
+ *
+ * @deprecated No longer functions. Do not use.
  */
+@Deprecated
 public class Door extends MaterialData implements Directional, Openable {
     public Door() {
         super(Material.WOODEN_DOOR);
@@ -27,10 +30,18 @@ public class Door extends MaterialData implements Directional, Openable {
         super(type, data);
     }
 
+    /**
+     * @deprecated Does not work (correctly) anymore
+     */
+    @Deprecated
     public boolean isOpen() {
         return ((getData() & 0x4) == 0x4);
     }
 
+    /**
+     * @deprecated Does not work (correctly) anymore
+     */
+    @Deprecated
     public void setOpen(boolean isOpen) {
         setData((byte) (isOpen ? (getData() | 0x4) : (getData() & ~0x4)));
     }
@@ -46,14 +57,18 @@ public class Door extends MaterialData implements Directional, Openable {
      * Configure this part of the door to be either the top or the bottom half;
      *
      * @param isTopHalf True to make it the top half.
+     * @deprecated Shouldn't be used anymore
      */
+    @Deprecated
     public void setTopHalf(boolean isTopHalf) {
         setData((byte) (isTopHalf ? (getData() | 0x8) : (getData() & ~0x8)));
     }
 
     /**
-     * @return the location of the hinges
+     * @return BlockFace.SELF
+     * @deprecated Does not work (correctly) anymore
      */
+    @Deprecated
     public BlockFace getHingeCorner() {
         byte d = getData();
 
@@ -70,26 +85,28 @@ public class Door extends MaterialData implements Directional, Openable {
 
     @Override
     public String toString() {
-        return (isTopHalf() ? "TOP" : "BOTTOM") + " half of " + (isOpen() ? "an OPEN " : "a CLOSED ") + super.toString() + " with hinges " + getHingeCorner();
+        return (isTopHalf() ? "TOP" : "BOTTOM") + " half of " + super.toString();
     }
 
     /**
      * Set the direction that this door should is facing.
      *
      * @param face the direction
+     * @deprecated Does not work (correctly) anymore
      */
+    @Deprecated
     public void setFacingDirection(BlockFace face) {
         byte data = (byte) (getData() & 0x12);
         switch (face) {
-        case EAST:
+        case NORTH:
             data |= 0x1;
             break;
 
-        case SOUTH:
+        case EAST:
             data |= 0x2;
             break;
 
-        case WEST:
+        case SOUTH:
             data |= 0x3;
             break;
         }
@@ -100,21 +117,23 @@ public class Door extends MaterialData implements Directional, Openable {
      * Get the direction that this door is facing.
      *
      * @return the direction
+     * @deprecated Does not work (correctly) anymore
      */
+    @Deprecated
     public BlockFace getFacing() {
         byte data = (byte) (getData() & 0x3);
         switch (data) {
         case 0:
-            return BlockFace.NORTH;
+            return BlockFace.WEST;
 
         case 1:
-            return BlockFace.EAST;
+            return BlockFace.NORTH;
 
         case 2:
-            return BlockFace.SOUTH;
+            return BlockFace.EAST;
 
         case 3:
-            return BlockFace.WEST;
+            return BlockFace.SOUTH;
         }
         return null; // shouldn't happen
     }

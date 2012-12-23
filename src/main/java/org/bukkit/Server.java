@@ -28,6 +28,8 @@ import org.bukkit.plugin.messaging.PluginMessageRecipient;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import com.avaje.ebean.config.ServerConfig;
+import org.bukkit.inventory.ItemFactory;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * Represents a server implementation
@@ -667,9 +669,24 @@ public interface Server extends PluginMessageRecipient {
     String getMotd();
 
     /**
+     * Gets the default message that is displayed when the server is stopped
+     *
+     * @return the shutdown message
+     */
+    String getShutdownMessage();
+
+    /**
      * Gets the current warning state for the server
      *
      * @return The configured WarningState
      */
     public WarningState getWarningState();
+
+    /**
+     * Gets the instance of the item factory (for {@link ItemMeta}).
+     *
+     * @return the item factory
+     * @see ItemFactory
+     */
+    ItemFactory getItemFactory();
 }

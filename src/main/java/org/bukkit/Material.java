@@ -1,14 +1,57 @@
 package org.bukkit;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.map.MapView;
-import org.bukkit.material.*;
+import org.bukkit.material.Bed;
+import org.bukkit.material.Button;
+import org.bukkit.material.Cake;
+import org.bukkit.material.Cauldron;
+import org.bukkit.material.Chest;
+import org.bukkit.material.Coal;
+import org.bukkit.material.CocoaPlant;
+import org.bukkit.material.Command;
+import org.bukkit.material.Crops;
+import org.bukkit.material.DetectorRail;
+import org.bukkit.material.Diode;
+import org.bukkit.material.Dispenser;
+import org.bukkit.material.Door;
+import org.bukkit.material.Dye;
+import org.bukkit.material.EnderChest;
+import org.bukkit.material.FlowerPot;
+import org.bukkit.material.Furnace;
+import org.bukkit.material.Gate;
+import org.bukkit.material.Ladder;
+import org.bukkit.material.Lever;
+import org.bukkit.material.LongGrass;
+import org.bukkit.material.MaterialData;
+import org.bukkit.material.MonsterEggs;
+import org.bukkit.material.Mushroom;
+import org.bukkit.material.PistonBaseMaterial;
+import org.bukkit.material.PistonExtensionMaterial;
+import org.bukkit.material.PoweredRail;
+import org.bukkit.material.PressurePlate;
+import org.bukkit.material.Pumpkin;
+import org.bukkit.material.Rails;
+import org.bukkit.material.RedstoneTorch;
+import org.bukkit.material.RedstoneWire;
+import org.bukkit.material.Sandstone;
+import org.bukkit.material.Sign;
+import org.bukkit.material.Skull;
+import org.bukkit.material.SmoothBrick;
+import org.bukkit.material.SpawnEgg;
+import org.bukkit.material.Stairs;
+import org.bukkit.material.Step;
+import org.bukkit.material.Torch;
+import org.bukkit.material.TrapDoor;
+import org.bukkit.material.Tree;
+import org.bukkit.material.Tripwire;
+import org.bukkit.material.TripwireHook;
+import org.bukkit.material.Vine;
+import org.bukkit.material.WoodenStep;
+import org.bukkit.material.Wool;
 import org.bukkit.potion.Potion;
 import org.bukkit.util.Java15Compat;
 
@@ -18,7 +61,7 @@ import com.google.common.collect.Maps;
  * An enum of all material ids accepted by the official server + client
  */
 public enum Material {
-    AIR(0),
+    AIR(0, 0),
     STONE(1),
     GRASS(2),
     DIRT(3),
@@ -316,6 +359,9 @@ public enum Material {
     CARROT_STICK(398, 1, 25),
     NETHER_STAR(399),
     PUMPKIN_PIE(400),
+    FIREWORK(401),
+    FIREWORK_CHARGE(402),
+    ENCHANTED_BOOK(403, 1),
     GOLD_RECORD(2256, 1),
     GREEN_RECORD(2257, 1),
     RECORD_3(2258, 1),
@@ -331,7 +377,7 @@ public enum Material {
     ;
 
     private final int id;
-    private final Class<? extends MaterialData> data;
+    private final Constructor<? extends MaterialData> ctor;
     private static Material[] byId = new Material[383];
     private final static Map<String, Material> BY_NAME = Maps.newHashMap();
     private final int maxStack;
@@ -342,11 +388,11 @@ public enum Material {
     }
 
     private Material(final int id, final int stack) {
-        this(id, stack, null);
+        this(id, stack, MaterialData.class);
     }
 
     private Material(final int id, final int stack, final int durability) {
-        this(id, stack, durability, null);
+        this(id, stack, durability, MaterialData.class);
     }
 
     private Material(final int id, final Class<? extends MaterialData> data) {
@@ -361,7 +407,14 @@ public enum Material {
         this.id = id;
         this.durability = (short) durability;
         this.maxStack = stack;
-        this.data = data == null ? MaterialData.class : data;
+        // try to cache the constructor for this material
+        try {
+            this.ctor = data.getConstructor(int.class, byte.class);
+        } catch (NoSuchMethodException ex) {
+            throw new AssertionError(ex);
+        } catch (SecurityException ex) {
+            throw new AssertionError(ex);
+        }
     }
 
     /**
@@ -397,7 +450,7 @@ public enum Material {
      * @return MaterialData associated with this Material
      */
     public Class<? extends MaterialData> getData() {
-        return data;
+        return ctor.getDeclaringClass();
     }
 
     /**
@@ -409,24 +462,19 @@ public enum Material {
      */
     public MaterialData getNewData(final byte raw) {
         try {
-            Constructor<? extends MaterialData> ctor = data.getConstructor(int.class, byte.class);
-
             return ctor.newInstance(id, raw);
         } catch (InstantiationException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvocationTargetException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(Material.class.getName()).log(Level.SEVERE, null, ex);
+            final Throwable t = ex.getCause();
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            }
+            if (t instanceof Error) {
+                throw (Error) t;
+            }
+            throw new AssertionError(t);
+        } catch (Throwable t) {
+            throw new AssertionError(t);
         }
-
-        return null;
     }
 
     /**
@@ -444,28 +492,33 @@ public enum Material {
      * @return true if this Material is edible.
      */
     public boolean isEdible() {
-        return equals(Material.BREAD)
-                || equals(Material.CARROT_ITEM)
-                || equals(Material.BAKED_POTATO)
-                || equals(Material.POTATO_ITEM)
-                || equals(Material.POISONOUS_POTATO)
-                || equals(Material.GOLDEN_CARROT)
-                || equals(Material.PUMPKIN_PIE)
-                || equals(Material.COOKIE)
-                || equals(Material.MELON)
-                || equals(Material.MUSHROOM_SOUP)
-                || equals(Material.RAW_CHICKEN)
-                || equals(Material.COOKED_CHICKEN)
-                || equals(Material.RAW_BEEF)
-                || equals(Material.COOKED_BEEF)
-                || equals(Material.RAW_FISH)
-                || equals(Material.COOKED_FISH)
-                || equals(Material.PORK)
-                || equals(Material.GRILLED_PORK)
-                || equals(Material.APPLE)
-                || equals(Material.GOLDEN_APPLE)
-                || equals(Material.ROTTEN_FLESH)
-                || equals(Material.SPIDER_EYE);
+        switch (this) {
+            case BREAD:
+            case CARROT_ITEM:
+            case BAKED_POTATO:
+            case POTATO_ITEM:
+            case POISONOUS_POTATO:
+            case GOLDEN_CARROT:
+            case PUMPKIN_PIE:
+            case COOKIE:
+            case MELON:
+            case MUSHROOM_SOUP:
+            case RAW_CHICKEN:
+            case COOKED_CHICKEN:
+            case RAW_BEEF:
+            case COOKED_BEEF:
+            case RAW_FISH:
+            case COOKED_FISH:
+            case PORK:
+            case GRILLED_PORK:
+            case APPLE:
+            case GOLDEN_APPLE:
+            case ROTTEN_FLESH:
+            case SPIDER_EYE:
+                return true;
+            default:
+                return false;
+        }
     }
 
     /**
@@ -537,6 +590,329 @@ public enum Material {
      * @return True if this material represents a playable music disk.
      */
     public boolean isRecord() {
-        return id >= GOLD_RECORD.id && id <= RECORD_11.id;
+        return id >= GOLD_RECORD.id && id <= RECORD_12.id;
+    }
+
+    /**
+     * Check if the material is a block and solid (cannot be passed through by a player)
+     *
+     * @return True if this material is a block and solid
+     */
+    public boolean isSolid() {
+        if (!isBlock() || id == 0) {
+            return false;
+        }
+        switch (this) {
+            case STONE:
+            case GRASS:
+            case DIRT:
+            case COBBLESTONE:
+            case WOOD:
+            case BEDROCK:
+            case SAND:
+            case GRAVEL:
+            case GOLD_ORE:
+            case IRON_ORE:
+            case COAL_ORE:
+            case LOG:
+            case LEAVES:
+            case SPONGE:
+            case GLASS:
+            case LAPIS_ORE:
+            case LAPIS_BLOCK:
+            case DISPENSER:
+            case SANDSTONE:
+            case NOTE_BLOCK:
+            case BED_BLOCK:
+            case PISTON_STICKY_BASE:
+            case PISTON_BASE:
+            case PISTON_EXTENSION:
+            case WOOL:
+            case PISTON_MOVING_PIECE:
+            case GOLD_BLOCK:
+            case IRON_BLOCK:
+            case DOUBLE_STEP:
+            case STEP:
+            case BRICK:
+            case TNT:
+            case BOOKSHELF:
+            case MOSSY_COBBLESTONE:
+            case OBSIDIAN:
+            case MOB_SPAWNER:
+            case WOOD_STAIRS:
+            case CHEST:
+            case DIAMOND_ORE:
+            case DIAMOND_BLOCK:
+            case WORKBENCH:
+            case SOIL:
+            case FURNACE:
+            case BURNING_FURNACE:
+            case SIGN_POST:
+            case WOODEN_DOOR:
+            case COBBLESTONE_STAIRS:
+            case WALL_SIGN:
+            case STONE_PLATE:
+            case IRON_DOOR_BLOCK:
+            case WOOD_PLATE:
+            case REDSTONE_ORE:
+            case GLOWING_REDSTONE_ORE:
+            case ICE:
+            case SNOW_BLOCK:
+            case CACTUS:
+            case CLAY:
+            case JUKEBOX:
+            case FENCE:
+            case PUMPKIN:
+            case NETHERRACK:
+            case SOUL_SAND:
+            case GLOWSTONE:
+            case JACK_O_LANTERN:
+            case CAKE_BLOCK:
+            case LOCKED_CHEST:
+            case TRAP_DOOR:
+            case MONSTER_EGGS:
+            case SMOOTH_BRICK:
+            case HUGE_MUSHROOM_1:
+            case HUGE_MUSHROOM_2:
+            case IRON_FENCE:
+            case THIN_GLASS:
+            case MELON_BLOCK:
+            case FENCE_GATE:
+            case BRICK_STAIRS:
+            case SMOOTH_STAIRS:
+            case MYCEL:
+            case NETHER_BRICK:
+            case NETHER_FENCE:
+            case NETHER_BRICK_STAIRS:
+            case ENCHANTMENT_TABLE:
+            case BREWING_STAND:
+            case CAULDRON:
+            case ENDER_PORTAL_FRAME:
+            case ENDER_STONE:
+            case DRAGON_EGG:
+            case REDSTONE_LAMP_OFF:
+            case REDSTONE_LAMP_ON:
+            case WOOD_DOUBLE_STEP:
+            case WOOD_STEP:
+            case SANDSTONE_STAIRS:
+            case EMERALD_ORE:
+            case ENDER_CHEST:
+            case EMERALD_BLOCK:
+            case SPRUCE_WOOD_STAIRS:
+            case BIRCH_WOOD_STAIRS:
+            case JUNGLE_WOOD_STAIRS:
+            case COMMAND:
+            case BEACON:
+            case COBBLE_WALL:
+            case ANVIL:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Check if the material is a block and does not block any light
+     *
+     * @return True if this material is a block and does not block any light
+     */
+    public boolean isTransparent() {
+        if (!isBlock()) {
+            return false;
+        }
+        switch (this) {
+            case AIR:
+            case SAPLING:
+            case POWERED_RAIL:
+            case DETECTOR_RAIL:
+            case LONG_GRASS:
+            case DEAD_BUSH:
+            case YELLOW_FLOWER:
+            case RED_ROSE:
+            case BROWN_MUSHROOM:
+            case RED_MUSHROOM:
+            case TORCH:
+            case FIRE:
+            case REDSTONE_WIRE:
+            case CROPS:
+            case LADDER:
+            case RAILS:
+            case LEVER:
+            case REDSTONE_TORCH_OFF:
+            case REDSTONE_TORCH_ON:
+            case STONE_BUTTON:
+            case SNOW:
+            case SUGAR_CANE_BLOCK:
+            case PORTAL:
+            case DIODE_BLOCK_OFF:
+            case DIODE_BLOCK_ON:
+            case PUMPKIN_STEM:
+            case MELON_STEM:
+            case VINE:
+            case WATER_LILY:
+            case NETHER_WARTS:
+            case ENDER_PORTAL:
+            case COCOA:
+            case TRIPWIRE_HOOK:
+            case TRIPWIRE:
+            case FLOWER_POT:
+            case CARROT:
+            case POTATO:
+            case WOOD_BUTTON:
+            case SKULL:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Check if the material is a block and can catch fire
+     *
+     * @return True if this material is a block and can catch fire
+     */
+    public boolean isFlammable() {
+        if (!isBlock()) {
+            return false;
+        }
+        switch (this) {
+            case WOOD:
+            case LOG:
+            case LEAVES:
+            case NOTE_BLOCK:
+            case BED_BLOCK:
+            case LONG_GRASS:
+            case DEAD_BUSH:
+            case WOOL:
+            case TNT:
+            case BOOKSHELF:
+            case WOOD_STAIRS:
+            case CHEST:
+            case WORKBENCH:
+            case SIGN_POST:
+            case WOODEN_DOOR:
+            case WALL_SIGN:
+            case WOOD_PLATE:
+            case JUKEBOX:
+            case FENCE:
+            case LOCKED_CHEST:
+            case TRAP_DOOR:
+            case HUGE_MUSHROOM_1:
+            case HUGE_MUSHROOM_2:
+            case VINE:
+            case FENCE_GATE:
+            case WOOD_DOUBLE_STEP:
+            case WOOD_STEP:
+            case SPRUCE_WOOD_STAIRS:
+            case BIRCH_WOOD_STAIRS:
+            case JUNGLE_WOOD_STAIRS:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Check if the material is a block and can burn away
+     *
+     * @return True if this material is a block and can burn away
+     */
+    public boolean isBurnable() {
+        if (!isBlock()) {
+            return false;
+        }
+        switch (this) {
+            case WOOD:
+            case LOG:
+            case LEAVES:
+            case LONG_GRASS:
+            case WOOL:
+            case TNT:
+            case BOOKSHELF:
+            case WOOD_STAIRS:
+            case FENCE:
+            case VINE:
+            case WOOD_DOUBLE_STEP:
+            case WOOD_STEP:
+            case SPRUCE_WOOD_STAIRS:
+            case BIRCH_WOOD_STAIRS:
+            case JUNGLE_WOOD_STAIRS:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Check if the material is a block and completely blocks vision
+     *
+     * @return True if this material is a block and completely blocks vision
+     */
+    public boolean isOccluding() {
+        if (!isBlock()) {
+            return false;
+        }
+        switch (this) {
+            case STONE:
+            case GRASS:
+            case DIRT:
+            case COBBLESTONE:
+            case WOOD:
+            case BEDROCK:
+            case SAND:
+            case GRAVEL:
+            case GOLD_ORE:
+            case IRON_ORE:
+            case COAL_ORE:
+            case LOG:
+            case SPONGE:
+            case LAPIS_ORE:
+            case LAPIS_BLOCK:
+            case DISPENSER:
+            case SANDSTONE:
+            case NOTE_BLOCK:
+            case WOOL:
+            case GOLD_BLOCK:
+            case IRON_BLOCK:
+            case DOUBLE_STEP:
+            case BRICK:
+            case BOOKSHELF:
+            case MOSSY_COBBLESTONE:
+            case OBSIDIAN:
+            case MOB_SPAWNER:
+            case DIAMOND_ORE:
+            case DIAMOND_BLOCK:
+            case WORKBENCH:
+            case FURNACE:
+            case BURNING_FURNACE:
+            case REDSTONE_ORE:
+            case GLOWING_REDSTONE_ORE:
+            case SNOW_BLOCK:
+            case CLAY:
+            case JUKEBOX:
+            case PUMPKIN:
+            case NETHERRACK:
+            case SOUL_SAND:
+            case JACK_O_LANTERN:
+            case LOCKED_CHEST:
+            case MONSTER_EGGS:
+            case SMOOTH_BRICK:
+            case HUGE_MUSHROOM_1:
+            case HUGE_MUSHROOM_2:
+            case MELON_BLOCK:
+            case MYCEL:
+            case NETHER_BRICK:
+            case ENDER_PORTAL_FRAME:
+            case ENDER_STONE:
+            case REDSTONE_LAMP_OFF:
+            case REDSTONE_LAMP_ON:
+            case WOOD_DOUBLE_STEP:
+            case EMERALD_ORE:
+            case EMERALD_BLOCK:
+            case COMMAND:
+                return true;
+            default:
+                return false;
+        }
     }
 }
