@@ -15,6 +15,13 @@ import org.bukkit.potion.PotionEffectType;
  */
 public interface LivingEntity extends Entity, Damageable {
     /**
+     * Sets the entity's maximum health to specified value
+     *
+     * @param maxHealth New max health for entity
+     */
+    public void setMaxHealth(int maxHealth);
+
+    /**
      * Gets the height of the entity's head above its Location
      *
      * @return Height of the entity's eyes above its Location
