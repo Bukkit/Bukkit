@@ -1062,6 +1062,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return True if rule exists
      */
     public boolean isGameRule(String rule);
+    
+    /**
+     * Recalculates the light level for the block at the specified coordinates.
+     *
+     * @param x X-coordinate of the block
+     * @param y Y-coordinate of the block
+     * @param z Z-coordinate of the block
+     */
+    public void recalculateLightLevelAt(int x, int y, int z);
 
     /**
      * Represents various map environment types that a world may be

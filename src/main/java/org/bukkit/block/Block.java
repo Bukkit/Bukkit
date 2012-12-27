@@ -101,6 +101,11 @@ public interface Block extends Metadatable {
      * @return Block light level
      */
     byte getLightFromBlocks();
+    
+    /**
+     * Recalculates the light level for the block.
+     */
+    public void recalculateLightLevel();
 
     /**
      * Gets the world which contains this Block
