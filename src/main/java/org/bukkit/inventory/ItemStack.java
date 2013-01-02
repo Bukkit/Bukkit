@@ -480,7 +480,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
         ItemMeta meta = getItemMeta();
         if (!Bukkit.getItemFactory().equals(meta, null)) {
-            result.put("meta", meta);
+            result.put("meta", meta.serialize());
         }
 
         return result;
@@ -524,6 +524,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             }
         } else if (args.containsKey("meta")) { // We cannot and will not have meta when enchantments (pre-ItemMeta) exist
             Object raw = args.get("meta");
+            if (raw instanceof Map) {
+    		    raw = ConfigurationSerialization.deserializeObject((Map<String, Object>) raw);
+			}
             if (raw instanceof ItemMeta) {
                 result.setItemMeta((ItemMeta) raw);
             }
