@@ -72,6 +72,13 @@ public interface Chunk {
     BlockState[] getTileEntities();
 
     /**
+     * Get a list of all the blocks with tile entities in the chunk.
+     *
+     * @return The blocks.
+     */
+    Block[] getTileEntityBlocks();
+
+    /**
      * Checks if the chunk is loaded.
      *
      * @return True if it is loaded.
