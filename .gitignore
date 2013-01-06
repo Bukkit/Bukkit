@@ -8,6 +8,7 @@
 
 # we use maven!
 /build.xml
+/dependency-reduced-pom.xml
 
 # maven
 /target
