@@ -595,7 +595,18 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     
     /**
      * Gets the current ping of the connected client.
-     * @return The current ping.
+     * <p />
+     * Notes:
+     *   <ul>
+     *     <li>This method returns a aproximate round trip time from the server to the client and back.</li>
+     *     <li>This round trip time is measured in milliseconds</li>
+     *   </ul>
+     * Warning:
+     *   <ul>
+     *     <li>We cannot guarentee that this number is 100% accurate, considering client handling may interfer</li>
+     *     <li>This calculation is an approximate and must be treated as such</li>
+     *   </ul>
+     * @return The current ping (ms).
      */
-    public Integer getPing();
+    public int getPing();
 }
