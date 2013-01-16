@@ -43,27 +43,7 @@ public class Sign extends MaterialData implements Attachable {
      * @return BlockFace attached to
      */
     public BlockFace getAttachedFace() {
-        if (isWallSign()) {
-            byte data = getData();
-
-            switch (data) {
-            case 0x2:
-                return BlockFace.SOUTH;
-
-            case 0x3:
-                return BlockFace.NORTH;
-
-            case 0x4:
-                return BlockFace.EAST;
-
-            case 0x5:
-                return BlockFace.WEST;
-            }
-
-            return null;
-        } else {
-            return BlockFace.DOWN;
-        }
+        return getFacing().getOppositeFace();
     }
 
     /**
