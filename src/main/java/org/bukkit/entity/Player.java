@@ -592,4 +592,21 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @throws IllegalArgumentException Thrown if the URL is too long.
      */
     public void setTexturePack(String url);
+    
+    /**
+     * Gets the current ping of the connected client.
+     * <p />
+     * Notes:
+     *   <ul>
+     *     <li>This method returns a aproximate round trip time from the server to the client and back.</li>
+     *     <li>This round trip time is measured in milliseconds</li>
+     *   </ul>
+     * Warning:
+     *   <ul>
+     *     <li>We cannot guarentee that this number is 100% accurate, considering client handling may interfer</li>
+     *     <li>This calculation is an approximate and must be treated as such</li>
+     *   </ul>
+     * @return The current ping (ms).
+     */
+    public int getPing();
 }
