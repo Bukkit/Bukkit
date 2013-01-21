@@ -25,7 +25,7 @@ public interface Beacon extends BlockState{
 	public void setPrimary(int level);
 	
     /**
-     * Get the secondary level for the beacon.
+     * Gets the secondary level for the beacon.
      *
      * @return The secondary level of the beacon.
      */
@@ -39,14 +39,14 @@ public interface Beacon extends BlockState{
     public void setSecondary(int level);
 	
     /**
-     * Get the combined level for the beacon.
+     * Gets the effective radius for the beacon.
      *
      * @return The combined level of the beacon.
      */
     public int getLevel();
     
     /**
-     * Sets the combined level of the beacon.
+     * Sets the effective radius of the beacon.
      * 
      * @param level - Sets the combined level.
      */
@@ -57,14 +57,14 @@ public interface Beacon extends BlockState{
      *
      * @return A list of materials accepted to activate the beacon. 
      */
-    public List<Material> getAcceptedMaterials();
+    public Collection<Material> getAcceptedMaterials();
 
     /**
      * Set the materials accepted by the beacon.
      *
      * @param materials - A list of materials to accepted by a beacon. 
      */    
-    public void setAcceptedMaterials(List<Material> materials);
+    public void setAcceptedMaterials(Collection<Material> materials);
     
     /**
      * Gets a collection of potion effect in use by the beacon.

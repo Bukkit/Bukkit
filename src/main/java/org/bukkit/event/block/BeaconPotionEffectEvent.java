@@ -1,7 +1,7 @@
 package org.bukkit.event.block;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Cancellable;
@@ -13,12 +13,12 @@ public class BeaconPotionEffectEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
     private boolean isCancelled;
-    private List<HumanEntity> humans;
-    private List<PotionEffect> potions;
+    private Set<HumanEntity> humans;
+    private Set<PotionEffect> potions;
 
-    public BeaconPotionEffectEvent(List<HumanEntity> humans, List<PotionEffect> potions) {
-        this.humans = (humans != null ? humans : new ArrayList<HumanEntity>());
-        this.potions = (potions != null ? potions : new ArrayList<PotionEffect>());
+    public BeaconPotionEffectEvent(Set<HumanEntity> humans, Set<PotionEffect> potioneffects) {
+        this.humans = (humans != null ? humans : new HashSet<HumanEntity>());
+        this.potions = (potioneffects != null ? potioneffects : new HashSet<PotionEffect>());
         this.isCancelled = false;
     }
 
@@ -36,8 +36,8 @@ public class BeaconPotionEffectEvent extends Event implements Cancellable {
      * 
      * @param humans Affected players.
      */
-    public void setEntities(List<HumanEntity> humans) {
-        this.humans = (humans != null ? humans : new ArrayList<HumanEntity>());
+    public void setEntities(Set<HumanEntity> humans) {
+        this.humans = (humans != null ? humans : new HashSet<HumanEntity>());
     }
 
     /**
@@ -45,8 +45,8 @@ public class BeaconPotionEffectEvent extends Event implements Cancellable {
      * 
      * @param potions Applied potions.
      */
-    public void setEffects(List<PotionEffect> potions) {
-        this.potions = (potions != null ? potions : new ArrayList<PotionEffect>());
+    public void setEffects(Set<PotionEffect> potions) {
+        this.potions = (potions != null ? potions : new HashSet<PotionEffect>());
     }
 
     /**
@@ -54,7 +54,7 @@ public class BeaconPotionEffectEvent extends Event implements Cancellable {
      * 
      * @return List of affected players.
      */
-    public List<HumanEntity> getEntities() {
+    public Set<HumanEntity> getEntities() {
         return this.humans;
     }
 
@@ -63,7 +63,7 @@ public class BeaconPotionEffectEvent extends Event implements Cancellable {
      * 
      * @return Applied potions.
      */
-    public List<PotionEffect> getEffects() {
+    public Set<PotionEffect> getEffects() {
         return this.potions;
     }
 
