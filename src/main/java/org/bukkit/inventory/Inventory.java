@@ -48,6 +48,13 @@ public interface Inventory extends Iterable<ItemStack> {
     public String getName();
 
     /**
+     * Sets the name (title) of the inventory
+     * 
+     * @param name The new name (title) of the inventory
+     */
+    public void setName(String name);
+    
+    /**
      * Get the ItemStack found in the slot at the given index
      *
      * @param index The index of the Slot's ItemStack to return
