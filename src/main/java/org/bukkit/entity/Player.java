@@ -12,6 +12,7 @@ import org.bukkit.Note;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.Statistic;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.map.MapView;
@@ -256,6 +257,19 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @return true if the chunk change packet was sent
      */
     public boolean sendChunkChange(Location loc, int sx, int sy, int sz, byte[] data);
+
+    /**
+     * Send a block change. This fakes a block change packet for a user at
+     * a certain location. This will not actually change the world in any way.
+     *
+     * @param world The world of the changed block
+     * @param x The x coordinate of the block
+     * @param y The y coordinate of the block
+     * @param z The z coordinate of the block
+     * @param material The new block ID
+     * @param data The block data
+     */
+    public void sendBlockChange(World world, int x, int y, int z, int material, byte data);
 
     /**
      * Send a block change. This fakes a block change packet for a user at
