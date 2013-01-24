@@ -24,6 +24,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommandYamlParser;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventException;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -512,27 +513,40 @@ public final class SimplePluginManager implements PluginManager {
     /**
      * Registers the given event to the specified listener using a directly passed EventExecutor
      *
-     * @param event Event class to register
+     * @param type Event class to register
      * @param listener PlayerListener to register
      * @param priority Priority of this event
      * @param executor EventExecutor to register
      * @param plugin Plugin to register
      * @param ignoreCancelled Do not call executor if event was already cancelled
      */
-    public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin, boolean ignoreCancelled) {
+    public void registerEvent(final Class<? extends Event> type, Listener listener, EventPriority priority, final EventExecutor executor, Plugin plugin, boolean ignoreCancelled) {
         Validate.notNull(listener, "Listener cannot be null");
         Validate.notNull(priority, "Priority cannot be null");
         Validate.notNull(executor, "Executor cannot be null");
         Validate.notNull(plugin, "Plugin cannot be null");
 
         if (!plugin.isEnabled()) {
-            throw new IllegalPluginAccessException("Plugin attempted to register " + event + " while not enabled");
+            throw new IllegalPluginAccessException("Plugin attempted to register " + type + " while not enabled");
         }
 
+        EventExecutor filtered = new EventExecutor() {
+            public void execute(Listener listener, Event event) throws EventException {
+                try {
+                    if (!type.isAssignableFrom(event.getClass())) {
+                        return;
+                    }
+                    executor.execute(listener, event);
+                } catch (Throwable t) {
+                    throw new EventException(t);
+                }
+            }
+        };
+
         if (useTimings) {
-            getEventListeners(event).register(new TimedRegisteredListener(listener, executor, priority, plugin, ignoreCancelled));
+            getEventListeners(type).register(new TimedRegisteredListener(listener, filtered, priority, plugin, ignoreCancelled));
         } else {
-            getEventListeners(event).register(new RegisteredListener(listener, executor, priority, plugin, ignoreCancelled));
+            getEventListeners(type).register(new RegisteredListener(listener, filtered, priority, plugin, ignoreCancelled));
         }
     }
 
