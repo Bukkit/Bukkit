@@ -1,7 +1,6 @@
 package org.bukkit;
 
 import java.io.File;
-import org.bukkit.generator.ChunkGenerator;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +11,11 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
+import org.bukkit.TravelAgent;
 import org.bukkit.util.Vector;
 
 /**
@@ -640,6 +641,13 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return List containing any or none BlockPopulators
      */
     public List<BlockPopulator> getPopulators();
+
+    /**
+     * Gets the {@link TravelAgent} for this world
+     *
+     * @return TravelAgent associated with this world
+     */
+    public TravelAgent getTravelAgent();
 
     /**
      * Spawn an entity of a specific class at the given {@link Location}
