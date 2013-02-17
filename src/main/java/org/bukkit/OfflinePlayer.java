@@ -6,10 +6,11 @@ import java.util.UUID;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.Metadatable;
 import org.bukkit.permissions.ServerOperator;
 
-public interface OfflinePlayer extends ServerOperator, AnimalTamer, ConfigurationSerializable {
 
+public interface OfflinePlayer extends ServerOperator, Metadatable, AnimalTamer, ConfigurationSerializable {
     /**
      * Checks if this player is currently online
      *
