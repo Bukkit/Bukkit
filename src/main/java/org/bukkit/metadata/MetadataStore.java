@@ -52,4 +52,19 @@ public interface MetadataStore<T> {
      * @throws IllegalArgumentException If plugin is null
      */
     public void invalidateAll(Plugin owningPlugin);
+
+    /**
+     * Register a provider to do on-demand metadata.
+     * @param metadataKey The key for which this provider is answering for.
+     * @param provider A metadata provider.
+     * @return true if provider was added, false if there was already a provider.
+     */
+    public boolean registerProvider(String metadataKey, MetadataProvider<T> provider);
+    
+    /**
+     * Unregister provider for this key.
+     * @param metadataKey The key for which this provider is answering for.
+     * @return true if provider unregistered, false otherwise.
+     */
+    public boolean unregisterProvider(String metadataKey);
 }

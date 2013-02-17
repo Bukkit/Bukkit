@@ -8,6 +8,7 @@ import java.util.*;
 public abstract class MetadataStoreBase<T> {
     private Map<String, List<MetadataValue>> metadataMap = new HashMap<String, List<MetadataValue>>();
     private WeakHashMap<T, Map<String, String>> disambiguationCache = new WeakHashMap<T, Map<String, String>>();
+    private Map<String, MetadataProvider<T>> providers = new HashMap<String, MetadataProvider<T>>();
 
     /**
      * Adds a metadata value to an object. Each metadata value is owned by a specific{@link Plugin}.
@@ -46,8 +47,8 @@ public abstract class MetadataStoreBase<T> {
     }
 
     /**
-     * Returns all metadata values attached to an object. If multiple plugins have attached metadata, each will value
-     * will be included.
+     * Returns all metadata values attached to an object. If multiple plugins
+     * have attached metadata, each value will be included.
      *
      * @param subject     the object being interrogated.
      * @param metadataKey the unique metadata key being sought.
@@ -55,12 +56,16 @@ public abstract class MetadataStoreBase<T> {
      * @see MetadataStore#getMetadata(Object, String)
      */
     public synchronized List<MetadataValue> getMetadata(T subject, String metadataKey) {
+       
         String key = cachedDisambiguate(subject, metadataKey);
         if (metadataMap.containsKey(key)) {
             return Collections.unmodifiableList(metadataMap.get(key));
-        } else {
-            return Collections.emptyList();
+        } else if (providers.containsKey(metadataKey)) {
+            if (buildProviderData(subject, metadataKey)) {
+                return Collections.unmodifiableList(metadataMap.get(key));
+            }
         }
+        return Collections.emptyList();
     }
 
     /**
@@ -72,7 +77,11 @@ public abstract class MetadataStoreBase<T> {
      */
     public synchronized boolean hasMetadata(T subject, String metadataKey) {
         String key = cachedDisambiguate(subject, metadataKey);
-        return metadataMap.containsKey(key);
+        if (metadataMap.containsKey(key)) return true;
+        if (providers.containsKey(metadataKey)) {
+            return buildProviderData(subject, metadataKey);
+        }
+        return false;
     }
 
     /**
@@ -119,6 +128,29 @@ public abstract class MetadataStoreBase<T> {
     }
 
     /**
+     * Register a provider to do on-demand metadata.
+     * @param metadataKey The key for which this provider is answering for.
+     * @param provider A metadata provider.
+     * @return true if provider was added, false if there was already a provider.
+     */
+    public boolean registerProvider(String metadataKey, MetadataProvider<T> provider) {
+        Validate.notNull(metadataKey, "metadataKey cannot be null");
+        Validate.notNull(provider, "Provider cannot be null");
+        Validate.notNull(provider.getOwningPlugin(), "provider.owningPlugin() cannot be null");
+        return (providers.put(metadataKey, provider) == null);
+    }
+
+    /**
+     * Unregister an on-demand provider.
+     * @param metadataKey The key for which this provider is answering for.
+     * @return true if a provider was removed, false otherwise
+     */
+    public boolean unregisterProvider(String metadataKey) {
+        return (providers.remove(metadataKey) != null);
+    }
+
+
+    /**
      * Caches the results of calls to {@link MetadataStoreBase#disambiguate(Object, String)} in a {@link WeakHashMap}. Doing so maintains a
      * <a href="http://www.codeinstructions.com/2008/09/weakhashmap-is-not-cache-understanding.html">canonical list</a>
      * of disambiguation strings for objects in memory. When those objects are garbage collected, the disambiguation string
@@ -152,4 +184,20 @@ public abstract class MetadataStoreBase<T> {
      * @return a unique metadata key for the given subject.
      */
     protected abstract String disambiguate(T subject, String metadataKey);
+    
+    
+    /**
+     * Retrieve provider data for this key, and set it if it's not null.
+     * @param subject The context for which we're getting this metadata
+     * @param metadataKey The key on which we're answering
+     * @return true if we got provider data, false otherwise.
+     */
+    private boolean buildProviderData(T subject, String metadataKey) {
+        MetadataValue providedValue = providers.get(metadataKey).getValue(subject, metadataKey);
+        if (providedValue != null) {
+            setMetadata(subject, metadataKey, providedValue);
+            return true;
+        }
+        return false;
+    }
 }

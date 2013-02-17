@@ -121,12 +121,63 @@ public class MetadataStoreTest {
         assertTrue(subject.hasMetadata("subject", "key"));
         assertFalse(subject.hasMetadata("subject", "otherKey"));
     }
+    
+    @Test
+    public void testRegisterUnregisterProvider() {
+        StringMetadataProvider p = new StringMetadataProvider();
+        // Test adding provider once
+        assertEquals(subject.registerProvider("uppercased", p), true);
+        // Test adding provider again
+        assertEquals(subject.registerProvider("uppercased", p), false);
+        // Now removal
+        assertEquals(subject.unregisterProvider("uppercased"), true);
+        assertEquals(subject.unregisterProvider("uppercased"), false);
+    }
+    
+    @Test
+    public void testProviderUsage() {
+        assertEquals(subject.getMetadata("foobar", "uppercased").size(), 0);
+        StringMetadataProvider p = new StringMetadataProvider();
+        subject.registerProvider("uppercased", p);
+        assertEquals(0, p.counter.value());
+        List<MetadataValue> values = subject.getMetadata("foobar", "uppercased");
+        assertEquals(1, values.size());
+        assertEquals("FOOBAR", values.get(0).asString());
+        assertEquals(1, p.counter.value());
+        // Check we still get a single value only
+        values = subject.getMetadata("foobar", "uppercased");
+        assertEquals(1, values.size());
+        assertEquals("FOOBAR", values.get(0).asString());
+        // Check the provider wasn't called twice.
+        assertEquals(1, p.counter.value());
+        // Try a new previously un-seen value through the provider.
+        assertEquals(1, subject.getMetadata("hello", "uppercased").size());
+        assertEquals(2, p.counter.value());
+    }
 
     private class StringMetadataStore extends MetadataStoreBase<String> implements MetadataStore<String> {
         @Override
         protected String disambiguate(String subject, String metadataKey) {
             return subject + ":" + metadataKey;
         }
+    }
+    
+    private class StringMetadataProvider implements MetadataProvider<String> {
+        public final Counter counter = new Counter();
+        
+        public Plugin getOwningPlugin() {
+            return pluginX;
+        }
+
+        public MetadataValue getValue(String subject, String key) {
+            counter.increment();
+            if(subject.equals("nodata")) {
+                return null;
+            } else {
+                return new FixedMetadataValue(pluginX, subject.toUpperCase());
+            }
+        }
+        
     }
 
     private class Counter {

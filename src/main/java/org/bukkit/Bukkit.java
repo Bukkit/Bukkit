@@ -12,6 +12,7 @@ import org.bukkit.Warning.WarningState;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.help.HelpMap;
@@ -20,6 +21,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
+import org.bukkit.metadata.MetadataProvider;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
@@ -394,5 +396,19 @@ public final class Bukkit {
 
     public static ItemFactory getItemFactory() {
         return server.getItemFactory();
+    }
+    
+    
+    public static boolean registerPlayerMetadataProvider(String metadataKey, MetadataProvider<OfflinePlayer> provider) {
+        return server.registerPlayerMetadataProvider(metadataKey, provider);
+    }
+    
+    
+    public static boolean registerWorldMetadataProvider(String metadataKey, MetadataProvider<World> provider) {
+        return server.registerWorldMetadataProvider(metadataKey, provider);
+    }
+    
+    public static boolean registerEntityMetadataProvider(String metadataKey, MetadataProvider<Entity> provider) {
+        return server.registerEntityMetadataProvider(metadataKey, provider);
     }
 }

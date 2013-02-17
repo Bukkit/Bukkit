@@ -13,6 +13,7 @@ import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.help.HelpMap;
@@ -21,6 +22,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
+import org.bukkit.metadata.MetadataProvider;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
@@ -689,4 +691,28 @@ public interface Server extends PluginMessageRecipient {
      * @see ItemFactory
      */
     ItemFactory getItemFactory();
+    
+    /**
+     * Register a Player metadata provider for on-demand metadata.
+     * @param metadataKey The key to respond to
+     * @param provider A metadata provider
+     * @return true if we were the first to register, false if another plugin was registered.
+     */
+    public boolean registerPlayerMetadataProvider(String metadataKey, MetadataProvider<OfflinePlayer> provider);
+    
+    /**
+     * Register a World metadata provider for on-demand metadata.
+     * @param metadataKey The key to respond to
+     * @param provider A metadata provider
+     * @return true if we were the first to register, false if another plugin was registered.
+     */
+    public boolean registerWorldMetadataProvider(String metadataKey, MetadataProvider<World> provider);
+    
+    /**
+     * Register a Entity metadata provider for on-demand metadata.
+     * @param metadataKey The key to respond to
+     * @param provider A metadata provider
+     * @return true if we were the first to register, false if another plugin was registered.
+     */
+    public boolean registerEntityMetadataProvider(String metadataKey, MetadataProvider<Entity> provider);
 }
