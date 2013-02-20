@@ -1061,6 +1061,23 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return True if rule exists
      */
     public boolean isGameRule(String rule);
+    
+    /**
+     * Broadcasts the specified message to every player in this world with the given permission
+     * 
+     * @param message the message 
+     * @param permission the permission
+     * @return the number of players who recieved the message
+     */
+    public int broadcast(String message, String permission);
+    
+    /**
+     * Broadcasts the specified message to every player in this world
+     * 
+     * @param message the message
+     * @return the number of players who recieved the message
+     */
+    public int broadcastMessage(String message);
 
     /**
      * Represents various map environment types that a world may be
