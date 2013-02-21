@@ -101,6 +101,10 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable 
          */
         WITHER,
         /**
+         * When a plugin calls {@link org.bukkit.entity.Damageable#heal(int)}
+         */
+        PLUGIN,
+        /**
          * Any other reason not covered by the reasons above
          */
         CUSTOM
