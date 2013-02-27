@@ -69,7 +69,7 @@ public class MaterialData implements Cloneable {
      * @return New ItemStack containing a copy of this MaterialData
      */
     public ItemStack toItemStack() {
-        return new ItemStack(type, 0, data);
+        return new ItemStack(type, 1, data);
     }
 
     /**
