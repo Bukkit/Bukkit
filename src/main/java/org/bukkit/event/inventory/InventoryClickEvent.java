@@ -11,16 +11,40 @@ import org.bukkit.inventory.ItemStack;
 public class InventoryClickEvent extends InventoryEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private SlotType slot_type;
-    private boolean rightClick, shiftClick;
+    private boolean shiftClick;
+    private MouseButton button;
     private Result result;
     private int whichSlot;
     private int rawSlot;
     private ItemStack current = null;
 
+    /**
+     * Represents a mouse click action
+     */
+    public enum MouseButton {
+        /**
+         * Left mouse button
+         */
+        LEFT,
+        /**
+         * Middle mouse button or wheel click
+         */
+        MIDDLE,
+        /**
+         * Right mouse button
+         */
+        RIGHT;
+    }
+
+    @Deprecated
     public InventoryClickEvent(InventoryView what, SlotType type, int slot, boolean right, boolean shift) {
+        this(what, type, slot, (right ? MouseButton.RIGHT : MouseButton.LEFT), shift);
+    }
+
+    public InventoryClickEvent(InventoryView what, SlotType type, int slot, MouseButton button, boolean shift) {
         super(what);
         this.slot_type = type;
-        this.rightClick = right;
+        this.button = button;
         this.shiftClick = shift;
         this.result = Result.DEFAULT;
         this.rawSlot = slot;
@@ -53,21 +77,32 @@ public class InventoryClickEvent extends InventoryEvent implements Cancellable {
     }
 
     /**
+     * @deprecated in favor of {@link #getButton()}
      * @return True if the click is a right-click.
      */
+    @Deprecated
     public boolean isRightClick() {
-        return rightClick;
+        return button == MouseButton.RIGHT;
     }
 
     /**
+     * @deprecated in favor of {@link #getButton()}
      * @return True if the click is a left-click.
      */
+    @Deprecated
     public boolean isLeftClick() {
-        return !rightClick;
+        return button == MouseButton.LEFT;
     }
 
     /**
-     * Shift can be combined with right-click or left-click as a modifier.
+     * @return The mouse button used in this click event
+     */
+    public MouseButton getButton() {
+        return button;
+    }
+
+    /**
+     * Shift can be combined with any click as a modifier.
      * @return True if the click is a shift-click.
      */
     public boolean isShiftClick() {
