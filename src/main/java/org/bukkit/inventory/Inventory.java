@@ -71,8 +71,15 @@ public interface Inventory extends Iterable<ItemStack> {
      * <p />
      * The returned HashMap contains what it couldn't store, where the key is the
      * index of the parameter, and the value is the ItemStack at that index
-     * of the variadic parameter. If all items are stored, it will return an
+     * of the varargs parameter. If all items are stored, it will return an
      * empty HashMap.
+     * 
+     * If you pass in ItemStacks which exceed the maximum stack size for the
+     * Material, first they will be added to partial stacks where
+     * Material.getMaxStackSize() is not exceeded, up to
+     * Material.getMaxStackSize(), when there are no partial stacks left
+     * stacks will be split on Inventory.getMaxStackSize() allowing you to
+     * exceed the maximum stack size for that material.
      *
      * @param items The ItemStacks to add
      * @return A HashMap containing items that didn't fit.
