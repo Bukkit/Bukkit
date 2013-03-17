@@ -726,8 +726,8 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public void spawnParticle(Location location, Particle particle);
     
     /**
-     * Spawns a particle to all players within a default radius around a given location with
-     * the additional id and data.
+     * Spawns a particle to all players within a default radius around a given location with the
+     * additional id and data.
      * 
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
@@ -737,8 +737,8 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public void spawnParticle(Location location, Particle particle, int id, int data);
     
     /**
-     * Spawns a particle to all players within a default radius around a given location 
-     * with the set speed.
+     * Spawns a particle to all players within a default radius around a given location with the set
+     * speed.
      * 
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
@@ -747,8 +747,8 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public void spawnParticle(Location location, Particle particle, float speed);
     
     /**
-     * Spawns a particle to all players within a default radius around a given location 
-     * with the set speed and count.
+     * Spawns a particle to all players within a default radius around a given location with the set
+     * speed and count.
      * 
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
@@ -758,9 +758,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public void spawnParticle(Location location, Particle particle, float speed, int particleCount);
     
     /**
-     * Spawns a particle to all players within a given radius around a given location 
-     * with the set speed, count and the additional id and data. The particle will be randomly 
-     * offset by the given offset for each client.
+     * Spawns a particle to all players within a given radius around a given location with the set
+     * speed, count and the additional id and data. The particle will be randomly offset by the
+     * given offset for each client.
      * 
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
