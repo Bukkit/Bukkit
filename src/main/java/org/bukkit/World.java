@@ -716,6 +716,64 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param radius the radius around the location
      */
     public <T> void playEffect(Location location, Effect effect, T data, int radius);
+    
+    /**
+     * Spawns a particle to all players within a default radius around a given location.
+     * 
+     * @param location the {@link Location} around which players must be to see the particle
+     * @param particle the {@link Particle}
+     */
+    public void spawnParticle(Location location, Particle particle);
+    
+    /**
+     * Spawns a particle to all players within a default radius around a given location with
+     * the additional id and data.
+     * 
+     * @param location the {@link Location} around which players must be to see the particle
+     * @param particle the {@link Particle}
+     * @param id the id to attach
+     * @param data the data to attach
+     */
+    public void spawnParticle(Location location, Particle particle, int id, int data);
+    
+    /**
+     * Spawns a particle to all players within a default radius around a given location 
+     * with the set speed.
+     * 
+     * @param location the {@link Location} around which players must be to see the particle
+     * @param particle the {@link Particle}
+     * @param speed the speed of the particle
+     */
+    public void spawnParticle(Location location, Particle particle, float speed);
+    
+    /**
+     * Spawns a particle to all players within a default radius around a given location 
+     * with the set speed and count.
+     * 
+     * @param location the {@link Location} around which players must be to see the particle
+     * @param particle the {@link Particle}
+     * @param speed the speed of the particle
+     * @param particleCount the number of particles to spawn
+     */
+    public void spawnParticle(Location location, Particle particle, float speed, int particleCount);
+    
+    /**
+     * Spawns a particle to all players within a given radius around a given location 
+     * with the set speed, count and the additional id and data. The particle will be randomly 
+     * offset by the given offset for each client.
+     * 
+     * @param location the {@link Location} around which players must be to see the particle
+     * @param particle the {@link Particle}
+     * @param id the id to attach
+     * @param data the data to attach
+     * @param offsetX the random X offset
+     * @param offsetY the random Y offset
+     * @param offsetZ the random Z offset
+     * @param speed the speed of the particle
+     * @param particle Count the number of particles to spawn
+     * @param radius the radius around the location
+     */
+    public void spawnParticle(Location location, Particle particle, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius);
 
     /**
      * Get empty chunk snapshot (equivalent to all air blocks), optionally including valid biome
