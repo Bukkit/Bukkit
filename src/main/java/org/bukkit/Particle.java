@@ -154,14 +154,14 @@ public enum Particle {
         hasMaterialData = false;
     }
 
-    Particle(boolean hasID) {
-        this.hasMaterial = hasID;
+    Particle(boolean hasMaterial) {
+        this.hasMaterial = hasMaterial;
         hasMaterialData = false;
     }
 
-    Particle(boolean hasID, boolean hasData) {
-        this.hasMaterial = true;
-        this.hasMaterialData = true;
+    Particle(boolean hasMaterial, boolean hasMaterialData) {
+        this.hasMaterial = hasMaterial;
+        this.hasMaterialData = hasMaterialData;
     }
 
     /**
