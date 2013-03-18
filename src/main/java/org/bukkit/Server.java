@@ -676,6 +676,13 @@ public interface Server extends PluginMessageRecipient {
     String getShutdownMessage();
 
     /**
+     * Gets if tab completion for command names is enabled
+     *
+     * @return True if enabled
+     */
+    boolean isCommandTabEnabled();
+
+    /**
      * Gets the current warning state for the server
      *
      * @return The configured WarningState
