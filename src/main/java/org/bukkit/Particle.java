@@ -146,22 +146,22 @@ public enum Particle {
      */
     TILE_CRACK(true, true);
 
-    private final boolean hasID;
-    private final boolean hasData;
+    private final boolean hasMaterial;
+    private final boolean hasMaterialData;
 
     Particle() {
-        hasID = false;
-        hasData = false;
+        hasMaterial = false;
+        hasMaterialData = false;
     }
 
     Particle(boolean hasID) {
-        this.hasID = hasID;
-        hasData = false;
+        this.hasMaterial = hasID;
+        hasMaterialData = false;
     }
 
     Particle(boolean hasID, boolean hasData) {
-        this.hasID = true;
-        this.hasData = true;
+        this.hasMaterial = true;
+        this.hasMaterialData = true;
     }
 
     /**
@@ -169,8 +169,8 @@ public enum Particle {
      * 
      * @return Whether the particle needs extra ID information
      */
-    public boolean hasID() {
-        return hasID;
+    public boolean hasMaterial() {
+        return hasMaterial;
     }
 
     /**
@@ -178,7 +178,7 @@ public enum Particle {
      * 
      * @return Whether the particle needs extra data information
      */
-    public boolean hasData() {
-        return hasData;
+    public boolean hasMaterialData() {
+        return hasMaterialData;
     }
 }
