@@ -138,32 +138,32 @@ public enum Particle {
      */
     HAPPY_VILLAGER(),
     /**
-     * The item's icon breaking. This needs an ID
+     * The item's icon breaking. This needs an item ID
      */
     ICON_CRACK(true),
     /**
-     * The block breaking particles. This needs an ID and data value.
+     * The block breaking particles. This needs an block ID and data value.
      */
     TILE_CRACK(true, true);
-    
+
     private final boolean hasID;
     private final boolean hasData;
-    
+
     Particle() {
         hasID = false;
         hasData = false;
     }
-    
+
     Particle(boolean hasID) {
         this.hasID = hasID;
         hasData = false;
     }
-    
+
     Particle(boolean hasID, boolean hasData) {
         this.hasID = true;
         this.hasData = true;
     }
-    
+
     /**
      * Returns whether the particle needs the extra ID information
      * 
@@ -172,7 +172,7 @@ public enum Particle {
     public boolean hasID() {
         return hasID;
     }
-    
+
     /**
      * Returns whether the particle needs the extra data information
      * 
