@@ -20,6 +20,20 @@ public interface Damageable extends Entity {
     void damage(int amount, Entity source);
 
     /**
+     * Heals the given amount of damage on this entity. If the amount given
+     * would overheal the entity, the health will be capped at maximum.
+     *
+     * <p />
+     * This method will, as a side effect, call a
+     * {@link org.bukkit.event.entity.EntityRegainHealthEvent} with a reason
+     * of CUSTOM.
+     *
+     * @param amount Amount of damage to heal
+     * @throws IllegalArgumentException on negative values
+     */
+    void heal(int amount);
+
+    /**
      * Gets the entity's health from 0 to {@link #getMaxHealth()}, where 0 is dead.
      *
      * @return Health represented from 0 to max
