@@ -30,11 +30,11 @@ public enum Particle {
      */
     TOWNAURA(),
     /**
-     * Crit particles
+     * Critical hit particles
      */
     CRIT(),
     /**
-     * Blue crit particles
+     * Blue critical hit particles
      */
     MAGIC_CRIT(),
     /**
@@ -42,11 +42,11 @@ public enum Particle {
      */
     SMOKE(),
     /**
-     * Multicolored potion particles
+     * Multicolored potion effect particles
      */
     MOB_SPELL(),
     /**
-     * Multicolored potion particles that are slightly transparent
+     * Multicolored potion effect particles that are slightly transparent
      */
     MOB_SPELL_AMBIENT(),
     /**
@@ -138,11 +138,11 @@ public enum Particle {
      */
     HAPPY_VILLAGER(),
     /**
-     * The item's icon breaking. This needs an item ID
+     * The item's icon breaking. This needs a material
      */
     ICON_CRACK(true),
     /**
-     * The block breaking particles. This needs an block ID and data value.
+     * The block breaking particles. This needs a material and a material data value.
      */
     TILE_CRACK(true, true);
 
