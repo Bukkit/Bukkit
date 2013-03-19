@@ -17,4 +17,21 @@ public interface TNTPrimed extends Explosive {
      * @return the number of ticks until this TNTPrimed explodes
      */
     public int getFuseTicks();
+
+    /**
+     * Gets the source of this primed TNT. The source is the entity
+     * responsible for the creation of this primed TNT.
+     * (I.E. player ignites TNT with flint and steel.) Take note
+     * that this can be null if there is no suitable source.
+     * (created by the {@link org.bukkit.World#spawn(Location, Class)}
+     * method, for example.)
+     *
+     * The source will become null if the chunk this primed TNT is in
+     * is unloaded then reloaded. If the source is a player that logs
+     * out, this will actually not become null until the chunk this
+     * primed TNT is in unloads and then reloads.
+     *
+     * @return the source of this primed TNT
+     */
+    public Entity getSource();
 }
