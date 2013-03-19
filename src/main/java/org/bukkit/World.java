@@ -13,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
 import org.bukkit.util.Vector;
@@ -731,9 +732,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
      * @param material the {@link Material}
-     * @param data the block data value
+     * @param data the {@link MaterialData}
      */
-    public void spawnParticle(Location location, Particle particle, org.bukkit.Material material, int data);
+    public void spawnParticle(Location location, Particle particle, org.bukkit.Material material, MaterialData data);
 
     /**
      * Spawns a particle to all players within a default radius of 64 blocks around a given location with the
@@ -769,21 +770,47 @@ public interface World extends PluginMessageRecipient, Metadatable {
 
     /**
      * Spawns a particle to all players within a given radius around a given location with the given
+     * speed, count and the material and data value.
+     * 
+     * @param location the {@link Location} around which players must be to see the particle
+     * @param particle the {@link Particle}
+     * @param material the {@link Material}
+     * @param data the {@link MaterialData}
+     * @param speed the speed of the particle
+     * @param particleCount the number of particles to spawn
+     */
+    public void spawnParticle(Location location, Particle particle, org.bukkit.Material material, MaterialData data, float speed, int particleCount);
+
+    /**
+     * Spawns a particle to all players within a given radius around a given location with the given
+     * speed, count and the block/item id and data value.
+     * 
+     * @param location the {@link Location} around which players must be to see the particle
+     * @param particle the {@link Particle}
+     * @param id the block/item id
+     * @param data the block data value
+     * @param speed the speed of the particle
+     * @param particleCount the number of particles to spawn
+     */
+    public void spawnParticle(Location location, Particle particle, int id, int data, float speed, int particleCount);
+
+    /**
+     * Spawns a particle to all players within a given radius around a given location with the given
      * speed, count and the material and data value. The particle will be randomly offset by the
      * given offset for each client.
      * 
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
      * @param material the {@link Material}
-     * @param data the block data value
+     * @param data the {@link MaterialData}
      * @param offsetX the random X offset
      * @param offsetY the random Y offset
      * @param offsetZ the random Z offset
      * @param speed the speed of the particle
-     * @param particle Count the number of particles to spawn
+     * @param particleCount the number of particles to spawn
      * @param radius the radius around the location
      */
-    public void spawnParticle(Location location, Particle particle, org.bukkit.Material material, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius);
+    public void spawnParticle(Location location, Particle particle, org.bukkit.Material material, MaterialData data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius);
 
     /**
      * Spawns a particle to all players within a given radius around a given location with the given
@@ -798,7 +825,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param offsetY the random Y offset
      * @param offsetZ the random Z offset
      * @param speed the speed of the particle
-     * @param particle Count the number of particles to spawn
+     * @param particleCount the number of particles to spawn
      * @param radius the radius around the location
      */
     public void spawnParticle(Location location, Particle particle, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius);
