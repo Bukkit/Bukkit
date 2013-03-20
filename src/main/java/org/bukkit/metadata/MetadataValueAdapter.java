@@ -9,7 +9,7 @@ import org.bukkit.util.NumberConversions;
  *
  * This provides all the conversion functions for MetadataValue
  * so that writing an implementation of MetadataValue is as simple
- * as implementing value() and invalidate()
+ * as implementing value() and invalidate().
  *
  */
 public abstract class MetadataValueAdapter implements MetadataValue {
