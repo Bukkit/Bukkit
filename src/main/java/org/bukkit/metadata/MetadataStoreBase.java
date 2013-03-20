@@ -56,7 +56,6 @@ public abstract class MetadataStoreBase<T> {
      * @see MetadataStore#getMetadata(Object, String)
      */
     public synchronized List<MetadataValue> getMetadata(T subject, String metadataKey) {
-       
         String key = cachedDisambiguate(subject, metadataKey);
         if (metadataMap.containsKey(key)) {
             return Collections.unmodifiableList(metadataMap.get(key));
@@ -184,8 +183,7 @@ public abstract class MetadataStoreBase<T> {
      * @return a unique metadata key for the given subject.
      */
     protected abstract String disambiguate(T subject, String metadataKey);
-    
-    
+
     /**
      * Retrieve provider data for this key, and set it if it's not null.
      * @param subject The context for which we're getting this metadata

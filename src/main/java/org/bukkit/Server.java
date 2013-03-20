@@ -691,7 +691,7 @@ public interface Server extends PluginMessageRecipient {
      * @see ItemFactory
      */
     ItemFactory getItemFactory();
-    
+
     /**
      * Register a Player metadata provider for on-demand metadata.
      * @param metadataKey The key to respond to
@@ -699,7 +699,7 @@ public interface Server extends PluginMessageRecipient {
      * @return true if we were the first to register, false if another plugin was registered.
      */
     public boolean registerPlayerMetadataProvider(String metadataKey, MetadataProvider<OfflinePlayer> provider);
-    
+
     /**
      * Register a World metadata provider for on-demand metadata.
      * @param metadataKey The key to respond to
@@ -707,7 +707,7 @@ public interface Server extends PluginMessageRecipient {
      * @return true if we were the first to register, false if another plugin was registered.
      */
     public boolean registerWorldMetadataProvider(String metadataKey, MetadataProvider<World> provider);
-    
+
     /**
      * Register a Entity metadata provider for on-demand metadata.
      * @param metadataKey The key to respond to

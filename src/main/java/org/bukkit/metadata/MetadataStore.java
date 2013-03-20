@@ -60,7 +60,7 @@ public interface MetadataStore<T> {
      * @return true if provider was added, false if there was already a provider.
      */
     public boolean registerProvider(String metadataKey, MetadataProvider<T> provider);
-    
+
     /**
      * Unregister provider for this key.
      * @param metadataKey The key for which this provider is answering for.

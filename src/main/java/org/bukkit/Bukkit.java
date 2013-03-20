@@ -397,17 +397,15 @@ public final class Bukkit {
     public static ItemFactory getItemFactory() {
         return server.getItemFactory();
     }
-    
-    
+
     public static boolean registerPlayerMetadataProvider(String metadataKey, MetadataProvider<OfflinePlayer> provider) {
         return server.registerPlayerMetadataProvider(metadataKey, provider);
     }
-    
-    
+
     public static boolean registerWorldMetadataProvider(String metadataKey, MetadataProvider<World> provider) {
         return server.registerWorldMetadataProvider(metadataKey, provider);
     }
-    
+
     public static boolean registerEntityMetadataProvider(String metadataKey, MetadataProvider<Entity> provider) {
         return server.registerEntityMetadataProvider(metadataKey, provider);
     }

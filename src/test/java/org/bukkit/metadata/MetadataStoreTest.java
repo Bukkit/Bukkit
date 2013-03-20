@@ -114,14 +114,14 @@ public class MetadataStoreTest {
         assertEquals(1, subject.getMetadata("subject", "key").size());
         assertEquals(10, subject.getMetadata("subject", "key").get(0).value());
     }
-    
+
     @Test
     public void testHasMetadata() {
         subject.setMetadata("subject", "key", new FixedMetadataValue(pluginX, 10));
         assertTrue(subject.hasMetadata("subject", "key"));
         assertFalse(subject.hasMetadata("subject", "otherKey"));
     }
-    
+
     @Test
     public void testRegisterUnregisterProvider() {
         StringMetadataProvider p = new StringMetadataProvider();
@@ -133,7 +133,7 @@ public class MetadataStoreTest {
         assertEquals(subject.unregisterProvider("uppercased"), true);
         assertEquals(subject.unregisterProvider("uppercased"), false);
     }
-    
+
     @Test
     public void testProviderUsage() {
         assertEquals(subject.getMetadata("foobar", "uppercased").size(), 0);
@@ -161,10 +161,10 @@ public class MetadataStoreTest {
             return subject + ":" + metadataKey;
         }
     }
-    
+
     private class StringMetadataProvider implements MetadataProvider<String> {
         public final Counter counter = new Counter();
-        
+
         public Plugin getOwningPlugin() {
             return pluginX;
         }
@@ -177,7 +177,7 @@ public class MetadataStoreTest {
                 return new FixedMetadataValue(pluginX, subject.toUpperCase());
             }
         }
-        
+
     }
 
     private class Counter {
