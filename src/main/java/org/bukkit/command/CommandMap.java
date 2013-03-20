@@ -1,6 +1,7 @@
 package org.bukkit.command;
 
 import java.util.List;
+import org.bukkit.plugin.Plugin;
 
 public interface CommandMap {
 
@@ -54,6 +55,13 @@ public interface CommandMap {
      * Clears all registered commands.
      */
     public void clearCommands();
+    
+    /**
+     * Removes registered commands for only a specific plugin
+     * 
+     * @param plugin The Plugin to clear commands for.
+     */
+    public void clearCommands(Plugin plugin);
 
     /**
      * Gets the command registered to the specified name

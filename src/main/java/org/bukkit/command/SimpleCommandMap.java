@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Server;
 import org.bukkit.command.defaults.*;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.StringUtil;
 
 public class SimpleCommandMap implements CommandMap {
@@ -203,6 +204,23 @@ public class SimpleCommandMap implements CommandMap {
         aliases.clear();
         setDefaultCommands(server);
     }
+    
+    public synchronized void clearCommands(Plugin plugin) {
+        Validate.notNull(plugin, "Plugin cannot be null");
+        Iterator<Map.Entry<String,Command>> i = knownCommands.entrySet().iterator();
+        while (i.hasNext()) {
+            Map.Entry<String,Command> e = i.next();
+            Command command = e.getValue();
+            if (command instanceof PluginCommand) {
+                PluginCommand pluginCommand = (PluginCommand) command;
+                if (plugin.equals(pluginCommand.getPlugin())) {
+                    i.remove();
+                    pluginCommand.unregister(this);
+                    aliases.remove(e.getKey());
+                }
+            }
+        }
+    }
 
     public Command getCommand(String name) {
         Command target = knownCommands.get(name.toLowerCase());
@@ -282,7 +300,7 @@ public class SimpleCommandMap implements CommandMap {
     }
 
     public Collection<Command> getCommands() {
-        return knownCommands.values();
+        return Collections.unmodifiableCollection(knownCommands.values());
     }
 
     public void registerServerAliases() {

@@ -419,6 +419,12 @@ public final class SimplePluginManager implements PluginManager {
             } catch (Throwable ex) {
                 server.getLogger().log(Level.SEVERE, "Error occurred (in the plugin loader) while unregistering events for " + plugin.getDescription().getFullName() + " (Is it up to date?)", ex);
             }
+            
+            try {
+                commandMap.clearCommands(plugin);
+            } catch (Throwable ex) {
+                server.getLogger().log(Level.SEVERE, "Error occurred (in the plugin loader) while unregistering commands for " + plugin.getDescription().getFullName() + " (Is it up to date?)", ex);
+            }
 
             try {
                 server.getMessenger().unregisterIncomingPluginChannel(plugin);
