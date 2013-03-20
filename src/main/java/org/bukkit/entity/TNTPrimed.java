@@ -29,7 +29,9 @@ public interface TNTPrimed extends Explosive {
      * The source will become null if the chunk this primed TNT is in
      * is unloaded then reloaded. If the source is a player that logs
      * out, this will actually not become null until the chunk this
-     * primed TNT is in unloads and then reloads.
+     * primed TNT is in unloads and then reloads. It will also be
+     * null if the source entity is no longer valid. (Dead or some
+     * other reason it is invalid.)
      *
      * @return the source of this primed TNT
      */
