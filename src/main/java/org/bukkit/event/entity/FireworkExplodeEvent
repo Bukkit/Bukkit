@@ -1,11 +1,10 @@
 package org.bukkit.event.entity;
-
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Firework;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.entity.EntityEvent;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class FireworkExplodeEvent extends EntityEvent implements Cancellable {
     private boolean cancel;
     private final Location location;
 
-    public EntityExplodeEvent(final Firework what, final Location location, final List<Block> blocks, final float yield) {
+    public FireworkExplodeEvent(final Firework what, final Location location, final List<Block> blocks, final float yield) {
         super(what);
         this.location = location;
         this.cancel = false;
@@ -34,8 +33,7 @@ public class FireworkExplodeEvent extends EntityEvent implements Cancellable {
     /**
      * Returns the location where the explosion happened.
      * If it's not possible to get this value from the Firework itself
-     *
-     * @return The location of the explosion
+     * @return The location of the firework explosion
      */
     public Location getLocation() {
         return location;
@@ -45,8 +43,6 @@ public class FireworkExplodeEvent extends EntityEvent implements Cancellable {
     public Firework getEntity() {
         return (Firework)entity;
     }
-
-
 
     @Override
     public HandlerList getHandlers() {
