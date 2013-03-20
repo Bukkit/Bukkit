@@ -6,9 +6,9 @@ import org.bukkit.util.NumberConversions;
 
 /**
  * Optional base class for facilitating MetadataValue implementations.
- * 
- * This provides all the conversion functions for MetadataValue 
- * so that writing an implementation of MetadataValue is as simple 
+ *
+ * This provides all the conversion functions for MetadataValue
+ * so that writing an implementation of MetadataValue is as simple
  * as implementing value() and invalidate()
  *
  */

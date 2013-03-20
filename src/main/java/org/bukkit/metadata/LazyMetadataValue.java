@@ -54,7 +54,6 @@ public class LazyMetadataValue extends MetadataValueAdapter implements MetadataV
         return value;
     }
 
-
     /**
      * Lazily evaluates the value of this metadata item.
      *
