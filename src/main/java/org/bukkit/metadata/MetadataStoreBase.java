@@ -1,8 +1,10 @@
 package org.bukkit.metadata;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Level;
 import java.util.*;
 
 public abstract class MetadataStoreBase<T> {
@@ -148,7 +150,6 @@ public abstract class MetadataStoreBase<T> {
         return (providers.remove(metadataKey) != null);
     }
 
-
     /**
      * Caches the results of calls to {@link MetadataStoreBase#disambiguate(Object, String)} in a {@link WeakHashMap}. Doing so maintains a
      * <a href="http://www.codeinstructions.com/2008/09/weakhashmap-is-not-cache-understanding.html">canonical list</a>
@@ -191,11 +192,37 @@ public abstract class MetadataStoreBase<T> {
      * @return true if we got provider data, false otherwise.
      */
     private boolean buildProviderData(T subject, String metadataKey) {
-        MetadataValue providedValue = providers.get(metadataKey).getValue(subject, metadataKey);
+        MetadataProvider provider = providers.get(metadataKey);
+        MetadataValue providedValue = null;
+        try {
+            providedValue = provider.getValue(subject, metadataKey);
+        } catch (Exception ex) {
+            String message = String.format("Error occurred while calling metadata provider %s in plugin %s for key %s", provider.getClass(), getProviderPluginName(provider), metadataKey);
+            Bukkit.getServer().getLogger().log(Level.SEVERE, message, ex);
+        }
         if (providedValue != null) {
             setMetadata(subject, metadataKey, providedValue);
             return true;
         }
         return false;
+    }
+
+    /**
+     * Helper to get the plugin's full name from a MetadataProvider.
+     * This is wrapped because we're not sure getOwningPlugin will return
+     * a null value or possibly if the call will throw an exception.
+     */
+    private String getProviderPluginName(MetadataProvider provider) {
+        Plugin plugin = null;
+        try {
+            plugin = provider.getOwningPlugin();
+        } catch (Exception ex) {
+            return "<Error in getOwningPlugin: "+ ex.getMessage() + ">";
+        }
+        if (plugin == null) {
+            return "<Unknown Plugin>";
+        } else {
+            return plugin.getDescription().getFullName();
+        }
     }
 }

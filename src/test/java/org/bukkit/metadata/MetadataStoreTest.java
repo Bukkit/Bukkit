@@ -126,12 +126,12 @@ public class MetadataStoreTest {
     public void testRegisterUnregisterProvider() {
         StringMetadataProvider p = new StringMetadataProvider();
         // Test adding provider once
-        assertEquals(subject.registerProvider("uppercased", p), true);
+        assertEquals(true, subject.registerProvider("uppercased", p));
         // Test adding provider again
-        assertEquals(subject.registerProvider("uppercased", p), false);
+        assertEquals(false, subject.registerProvider("uppercased", p));
         // Now removal
-        assertEquals(subject.unregisterProvider("uppercased"), true);
-        assertEquals(subject.unregisterProvider("uppercased"), false);
+        assertEquals(true, subject.unregisterProvider("uppercased"));
+        assertEquals(false, subject.unregisterProvider("uppercased"));
     }
 
     @Test
@@ -171,7 +171,7 @@ public class MetadataStoreTest {
 
         public MetadataValue getValue(String subject, String key) {
             counter.increment();
-            if(subject.equals("nodata")) {
+            if (subject.equals("nodata")) {
                 return null;
             } else {
                 return new FixedMetadataValue(pluginX, subject.toUpperCase());
