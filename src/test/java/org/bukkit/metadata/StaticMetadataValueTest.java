@@ -23,7 +23,7 @@ public class StaticMetadataValueTest {
         assertEquals(5, subject.asShort());
         assertEquals("5", subject.asString());
     }
-    
+
     @Test
     public void testInvalidateDoesNothing() {
         Object o = new Object();

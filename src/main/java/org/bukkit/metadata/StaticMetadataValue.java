@@ -2,12 +2,11 @@ package org.bukkit.metadata;
 
 import org.bukkit.plugin.Plugin;
 
-
 /**
- * A special case metadata item that contains the same value forever after initialization. 
- * 
+ * A special case metadata item that contains the same value forever after initialization.
+ *
  * History/Justification:
- * This is a memory/speed improvement over FixedMetadataValue which could not be 
+ * This is a memory/speed improvement over FixedMetadataValue which could not be
  * improved because doing so would violate previous inheritance hierarchy.
  */
 public class StaticMetadataValue extends MetadataValueAdapter {
@@ -26,7 +25,7 @@ public class StaticMetadataValue extends MetadataValueAdapter {
     }
 
     /**
-     * Get the value associated with this MetadataValue. 
+     * Get the value associated with this MetadataValue.
      */
     public Object value() {
         return this.internalValue;
