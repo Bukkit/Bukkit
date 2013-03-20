@@ -919,7 +919,7 @@ public enum Material {
     /**
      * @return True if this material is affected by gravity.
      */
-    public boolean hasPhysics() {
+    public boolean hasGravity() {
         if (!isBlock()) {
             return false;
         }
@@ -930,5 +930,6 @@ public enum Material {
                 return true;
             default:
                 return false;
+        }
     }
 }
