@@ -915,4 +915,20 @@ public enum Material {
                 return false;
         }
     }
+
+    /**
+     * @return True if this material is affected by gravity.
+     */
+    public boolean hasPhysics() {
+        if (!isBlock()) {
+            return false;
+        }
+        switch (this) {
+            case SAND:
+            case GRAVEL:
+            case ANVIL:
+                return true;
+            default:
+                return false;
+    }
 }
