@@ -198,7 +198,7 @@ public abstract class MetadataStoreBase<T> {
             providedValue = provider.getValue(subject, metadataKey);
         } catch (Exception ex) {
             String message = String.format("Error occurred while calling metadata provider %s in plugin %s for key %s", provider.getClass(), getProviderPluginName(provider), metadataKey);
-            Bukkit.getServer().getLogger().log(Level.SEVERE, message, ex);
+            Bukkit.getLogger().log(Level.SEVERE, message, ex);
         }
         if (providedValue != null) {
             setMetadata(subject, metadataKey, providedValue);
