@@ -1,7 +1,7 @@
 package org.bukkit.inventory;
 
 import org.bukkit.Material;
-import org.bukkit.potion.PotionBitSet;
+import org.bukkit.potion.PotionIngredientMeta;
 
 /**
  * Represents a brewing recipe.
@@ -10,7 +10,7 @@ public class BrewRecipe implements Recipe {
 
     private String bitString;
     private Material ingredient;
-    private PotionBitSet bitSet;
+    private PotionIngredientMeta bitSet;
 
     /**
      * Create a brewing recipe to brew the desired bit modifications into a
@@ -31,7 +31,7 @@ public class BrewRecipe implements Recipe {
      */
     public BrewRecipe(String bitModifier, Material input) {
         bitString = bitModifier;
-        bitSet = new PotionBitSet(bitModifier);
+        bitSet = new PotionIngredientMeta(bitModifier);
         ingredient = input;
     }
 
@@ -44,7 +44,7 @@ public class BrewRecipe implements Recipe {
      * @param input
      *            The ingredient to add.
      */
-    public BrewRecipe(PotionBitSet bitSet, Material input) {
+    public BrewRecipe(PotionIngredientMeta bitSet, Material input) {
         bitString = bitSet.getBitString();
         this.bitSet = bitSet;
         ingredient = input;
@@ -58,7 +58,7 @@ public class BrewRecipe implements Recipe {
      */
     @Override
     public ItemStack getResult() {
-        return new ItemStack(Material.POTION, 1, PotionBitSet.getFinalBits(16, bitString));
+        return new ItemStack(Material.POTION, 1, PotionIngredientMeta.getFinalBits(16, bitString));
     }
 
     /**
@@ -84,7 +84,7 @@ public class BrewRecipe implements Recipe {
      * 
      * @return Returns the bit modifier as a PotionBitSet
      */
-    public PotionBitSet getPotionBitSet() {
+    public PotionIngredientMeta getPotionBitSet() {
         return bitSet;
     }
 

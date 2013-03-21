@@ -1,6 +1,6 @@
 package org.bukkit.potion;
 
-public class PotionBitSet {
+public class PotionIngredientMeta {
 
     private boolean[] bitArray = new boolean[16];
     private boolean[] setFalse = new boolean[16];
@@ -18,14 +18,14 @@ public class PotionBitSet {
          */
         AWKWARD, 
         /**
-         * Represents a thick potion.
+         * Represents a thick potion
          */
         THICK, 
         /**
          * Represents a mundane potion
          */
         MUNDANE,
-    }
+    }   
 
     public enum PotionBit {
         /**
@@ -107,6 +107,10 @@ public class PotionBitSet {
             return bits.clone();
         }
 
+        /**
+         * Gets the specified bit as an integer. Returns -1 on arrays.
+         * @return
+         */
         public int getBit() {
             if (this != UNKNOWN && this != EFFECT)
                 return getBits()[0]; // Only return bit if it doesn't consist of multiple bits
@@ -116,7 +120,7 @@ public class PotionBitSet {
     }
 
     /**
-     * Instantiates a PotionBitSet class to be used with BrewRecipe.
+     * Instantiates a PotionIngredientMeta class to be used with BrewRecipe.
      * 
      * @param type
      *            Type of the potion to be brewed as an integer less than 16
@@ -127,10 +131,9 @@ public class PotionBitSet {
      * @param splash
      *            Sets whether the potion is a splash potion or not
      * @param base
-     *            Sets whether the potion is based upon an awkward potion
-     *            or not.
+     *            Sets the base potion this ingredient will require 
      */
-    public PotionBitSet(int type, boolean levelII, boolean extended, boolean splash, PotionBase base) {
+    public PotionIngredientMeta(int type, boolean levelII, boolean extended, boolean splash, PotionBase base) {
         baseID = type;
         String bits = Integer.toBinaryString(type);
         while(bits.length() < 4)
@@ -173,7 +176,7 @@ public class PotionBitSet {
     }
 
     /**
-     * Instantiates a PotionBitSet class to be used with BrewRecipe.
+     * Instantiates a PotionIngredientMeta class to be used with BrewRecipe.
      * 
      * @param type
      *            Type of the potion to be brewed
@@ -184,12 +187,12 @@ public class PotionBitSet {
      * @param splash
      *            Sets whether the potion is a splash potion
      */
-    public PotionBitSet(int type, boolean levelII, boolean extended, boolean splash) {
+    public PotionIngredientMeta(int type, boolean levelII, boolean extended, boolean splash) {
         this(type, levelII, extended, splash, true);
     }
 
     /**
-     * Instantiates a PotionBitSet class to be used with BrewRecipe.
+     * Instantiates a PotionIngredientMeta class to be used with BrewRecipe.
      * 
      * @param type
      *            Type of the potion to be brewed
@@ -203,12 +206,12 @@ public class PotionBitSet {
      *            Sets whether the potion is based upon an awkward potion
      *            or not.
      */
-    public PotionBitSet(int type, boolean levelII, boolean extended, boolean splash, boolean awkwardBase) {
+    public PotionIngredientMeta(int type, boolean levelII, boolean extended, boolean splash, boolean awkwardBase) {
         this(type, levelII, extended, splash, PotionBase.AWKWARD);
     }
 
     /**
-     * Instantiates a PotionBitSet class to be used with BrewRecipe.
+     * Instantiates a PotionIngredientMeta class to be used with BrewRecipe.
      * 
      * @param type
      *            Type of the potion to be brewed
@@ -219,15 +222,14 @@ public class PotionBitSet {
      * @param splash
      *            Sets whether the potion is a splash potion
      * @param base
-     *            Sets whether the potion is based upon an awkward potion
-     *            or not.
+     *            Sets the base potion this ingredient will require
      */
-    public PotionBitSet(PotionType type, boolean levelII, boolean extended, boolean splash, PotionBase base) {
+    public PotionIngredientMeta(PotionType type, boolean levelII, boolean extended, boolean splash, PotionBase base) {
         this(type.getDamageValue(), levelII, extended, splash, base);
     }
 
     /**
-     * Instantiates a PotionBitSet class to be used with BrewRecipe.
+     * Instantiates a PotionIngredientMeta class to be used with BrewRecipe.
      * 
      * @param type
      *            Type of the potion to be brewed
@@ -238,12 +240,12 @@ public class PotionBitSet {
      * @param splash
      *            Sets whether the potion is a splash potion
      */
-    public PotionBitSet(PotionType type, boolean levelII, boolean extended, boolean splash) {
+    public PotionIngredientMeta(PotionType type, boolean levelII, boolean extended, boolean splash) {
         this(type, levelII, extended, splash, true);
     }
 
     /**
-     * Instantiates a PotionBitSet class to be used with BrewRecipe.
+     * Instantiates a PotionIngredientMeta class to be used with BrewRecipe.
      * 
      * @param type
      *            Type of the potion to be brewed
@@ -257,18 +259,18 @@ public class PotionBitSet {
      *            Sets whether the potion is based upon an awkward potion
      *            or not.
      */
-    public PotionBitSet(PotionType type, boolean levelII, boolean extended, boolean splash, boolean awkwardBase) {
+    public PotionIngredientMeta(PotionType type, boolean levelII, boolean extended, boolean splash, boolean awkwardBase) {
         this(type, levelII, extended, splash, PotionBase.AWKWARD);
     }
 
     /**
-     * Instantiates a PotionBitSet class to be used with BrewRecipe with a bit
+     * Instantiates a PotionIngredientMeta class to be used with BrewRecipe with a bit
      * string
      * 
      * @param bitString
      *            The bit string to be used
      */
-    public PotionBitSet(String bitString) {
+    public PotionIngredientMeta(String bitString) {
         PotionBase base = PotionBase.WATER;
         if (bitString.contains("&4-4"))
             base = PotionBase.AWKWARD;
@@ -297,7 +299,7 @@ public class PotionBitSet {
     }
 
     /**
-     * Instantiates a PotionBitSet class to be used with BrewRecipe with a bit
+     * Instantiates a PotionIngredientMeta class to be used with BrewRecipe with a bit
      * string.
      * 
      * @param bitString
@@ -306,7 +308,7 @@ public class PotionBitSet {
      *            Sets whether the potion is based upon an awkward potion or
      *            not.
      */
-    public PotionBitSet(String bitString, boolean awkwardBase) {
+    public PotionIngredientMeta(String bitString, boolean awkwardBase) {
         String bits;
         if (awkwardBase)
             bits = Integer.toBinaryString(getFinalBits(16, bitString));
@@ -325,15 +327,15 @@ public class PotionBitSet {
     }
 
     /**
-     * Instantiates a PotionBitSet class to be used with BrewRecipe with a bit
+     * Instantiates a PotionIngredientMeta class to be used with BrewRecipe with a bit
      * string.
      * 
      * @param bitString
      *            The bit string to be used
      * @param base
-     *            Which type of potion this one will base off of.
+     *            Sets the base potion this ingredient will require
      */
-    public PotionBitSet(String bitString, PotionBase base) {
+    public PotionIngredientMeta(String bitString, PotionBase base) {
         String bits;
         if (base == PotionBase.AWKWARD)
             bits = Integer.toBinaryString(getFinalBits(16, bitString));
@@ -385,7 +387,7 @@ public class PotionBitSet {
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setBit(int i, boolean set) {
+    public PotionIngredientMeta setBit(int i, boolean set) {
         if (!set)
             setFalse[i] = true;
         bitArray[i] = set;
@@ -393,27 +395,27 @@ public class PotionBitSet {
     }
 
     /**
-     * Checks a specified bit as set
+     * Sets if a specified bit should be checked as set
      * 
      * @param i
      *            Bit to set
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setCheckIf(int i, boolean check) {
+    public PotionIngredientMeta setCheckIfSet(int i, boolean check) {
         bitCheckIf[i] = check;
         return this;
     }
 
     /**
-     * Sets a specified bit as unset
+     * Sets if a specified bit should be checked as unset
      * 
      * @param i
      *            Bit to set
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setCheckNot(int i, boolean check) {
+    public PotionIngredientMeta setCheckNotSet(int i, boolean check) {
         bitCheckNot[i] = check;
         return this;
     }
@@ -426,7 +428,7 @@ public class PotionBitSet {
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setBits(int[] ia, boolean set) {
+    public PotionIngredientMeta setBits(int[] ia, boolean set) {
         for (int i : ia) {
             if (!set)
                 setFalse[i] = true;
@@ -436,28 +438,28 @@ public class PotionBitSet {
     }
 
     /**
-     * Sets multiple bits to be checked as set
+     * Checks an array of bits as set
      * 
      * @param ia
      *            Integer Array of the different bits to set
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setCheckIf(int[] ia, boolean check) {
+    public PotionIngredientMeta setCheckIfSet(int[] ia, boolean check) {
         for (int i : ia)
             bitCheckIf[i] = check;
         return this;
     }
 
     /**
-     * Sets multiple bits to be checked as unset
+     * Checks an array of bits as unset
      * 
      * @param ia
      *            Integer Array of the different bits to set
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setCheckNot(int[] ia, boolean check) {
+    public PotionIngredientMeta setCheckNotSet(int[] ia, boolean check) {
         for (int i : ia)
             bitCheckNot[i] = check;
         return this;
@@ -471,7 +473,7 @@ public class PotionBitSet {
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setBit(PotionBit bit, boolean set) {
+    public PotionIngredientMeta setBit(PotionBit bit, boolean set) {
         if (!set)
             setFalse[bit.getBit()] = true;
 
@@ -481,28 +483,28 @@ public class PotionBitSet {
     }
 
     /**
-     * Checks a specified bit as set
+     * Sets if a specified bit should be checked as set
      * 
      * @param i
      *            Bit to set
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setCheckIf(PotionBit bit, boolean check) {
+    public PotionIngredientMeta setCheckIfSet(PotionBit bit, boolean check) {
         if (bit != PotionBit.EFFECT)
             bitCheckIf[bit.getBit()] = check;
         return this;
     }
 
     /**
-     * Sets a specified bit as unset
+     * Sets if a specified bit should be checked as unset
      * 
      * @param i
      *            Bit to set
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setCheckNot(PotionBit bit, boolean check) {
+    public PotionIngredientMeta setCheckNotSet(PotionBit bit, boolean check) {
         if (bit != PotionBit.EFFECT)
             bitCheckNot[bit.getBit()] = check;
         return this;
@@ -516,7 +518,7 @@ public class PotionBitSet {
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setBits(PotionBit[] bits, boolean set) {
+    public PotionIngredientMeta setBits(PotionBit[] bits, boolean set) {
         int length = bits.length;
         for (PotionBit bit : bits)
             if (bit == PotionBit.EFFECT)
@@ -550,7 +552,7 @@ public class PotionBitSet {
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setCheckIf(PotionBit[] bits, boolean check) {
+    public PotionIngredientMeta setCheckIfSet(PotionBit[] bits, boolean check) {
         int[] ia = new int[bits.length];
         for (int i = 0; i < bits.length; i++)
             ia[i] = bits[i].getBit();
@@ -561,14 +563,14 @@ public class PotionBitSet {
     }
 
     /**
-     * Sets multiple bits to be checked as unset
+     * Sets if multiple bits should be checked as unset
      * 
      * @param ia
      *            Integer Array of the different bits to set
      * @param set
      *            Value (true as set or false as unset) to set them to
      */
-    public PotionBitSet setCheckNot(PotionBit[] bits, boolean check) {
+    public PotionIngredientMeta setCheckNot(PotionBit[] bits, boolean check) {
         int[] ia = new int[bits.length];
         for (int i = 0; i < bits.length; i++)
             ia[i] = bits[i].getBit();

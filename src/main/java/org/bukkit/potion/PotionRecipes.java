@@ -37,7 +37,7 @@ public class PotionRecipes {
      * @param material
      *            The Material data of the ingredient
      */
-    public static void addRecipe(PotionBitSet bitModifier, Material material) {
+    public static void addRecipe(PotionIngredientMeta bitModifier, Material material) {
         recipes.put(material.getId(), bitModifier.getBitString());
         if (!newIngredients.contains(material.getId()))
             newIngredients.add(material.getId());
@@ -104,8 +104,8 @@ public class PotionRecipes {
      *            The potion ingredient to retrieve the bit string with
      * @return The potion's PotionBitSet
      */
-    public static PotionBitSet getPotionBitSetforMaterial(Material material) {
-        return new PotionBitSet(recipes.get(material));
+    public static PotionIngredientMeta getPotionBitSetforMaterial(Material material) {
+        return new PotionIngredientMeta(recipes.get(material));
     }
 
     /**
@@ -128,8 +128,8 @@ public class PotionRecipes {
      *            with
      * @return The potion's PotionBitSet
      */
-    public static PotionBitSet getPotionBitSetforId(int material) {
-        return new PotionBitSet(recipes.get(material));
+    public static PotionIngredientMeta getPotionBitSetforId(int material) {
+        return new PotionIngredientMeta(recipes.get(material));
     }
 
     /**

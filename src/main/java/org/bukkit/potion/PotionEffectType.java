@@ -10,6 +10,11 @@ import org.apache.commons.lang.Validate;
  */
 public abstract class PotionEffectType {
     /**
+     * No effect
+     */
+    public static final PotionEffectType NONE = new PotionEffectTypeWrapper(0);
+    
+    /**
      * Increases movement speed.
      */
     public static final PotionEffectType SPEED = new PotionEffectTypeWrapper(1);
