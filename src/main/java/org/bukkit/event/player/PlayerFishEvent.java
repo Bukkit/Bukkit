@@ -12,6 +12,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final Entity entity;
     private boolean cancel = false;
+    private int exp;
     private final State state;
 
     public PlayerFishEvent(final Player player, final Entity entity, final State state) {
@@ -38,6 +39,28 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
+     * Gets the amount of experience received when fishing.
+     * <p />
+     * Note: This value has no default effect unless the event state is {@link State#CAUGHT_FISH}.
+     *
+     * @return the amount of experience to drop
+     */
+    public int getExpToDrop() {
+        return exp;
+    }
+
+    /**
+     * Sets the amount of experience received when fishing.
+     * <p />
+     * Note: This value has no default effect unless the event state is {@link State#CAUGHT_FISH}.
+     *
+     * @param amount the amount of experience to drop
+     */
+    public void setExpToDrop(int amount) {
+        exp = amount;
+    }
+
+    /**
      * Gets the state of the fishing
      *
      * @return A State detailing the state of the fishing
@@ -61,11 +84,11 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
     public enum State {
 
         /**
-         * When a player is fishing
+         * When a player is fishing, ie casting the line out.
          */
         FISHING,
         /**
-         * When a player has successfully caught a fish
+         * When a player has successfully caught a fish and is reeling it in.
          */
         CAUGHT_FISH,
         /**
@@ -73,7 +96,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
          */
         CAUGHT_ENTITY,
         /**
-         * When a bobber is stuck in the grund
+         * When a bobber is stuck in the ground
          */
         IN_GROUND,
         /**
