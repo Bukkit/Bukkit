@@ -1,8 +1,11 @@
 package org.bukkit.block;
+
+import org.bukkit.inventory.InventoryHolder;
+
 /**
  * Represents a dropper.
  */
-public interface Dropper extends BlockState, ContainerBlock {
+public interface Dropper extends BlockState, InventoryHolder {
 
     /**
      * Try to drop one of item from one itemstack the dropper contain
