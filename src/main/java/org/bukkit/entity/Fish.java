@@ -6,7 +6,7 @@ package org.bukkit.entity;
 public interface Fish extends Projectile {
 
     /**
-     * causes a fish to bite the hook.
+     * Causes a fish to bite the hook.
      */
     public void bite();
 
@@ -34,7 +34,7 @@ public interface Fish extends Projectile {
     /**
      * Sets the chance of a fish biting outdoors during rain.
      *
-     * @param chance - "1-in-chance" chance chance of triggering a bite each tick
+     * @param chance "1-in-chance" chance of triggering a bite each tick
      */
     public void setRainyBiteChance(short chance);
 }
