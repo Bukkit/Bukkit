@@ -25,7 +25,7 @@ public class PotionIngredientMeta {
          * Represents a mundane potion
          */
         MUNDANE,
-    }   
+    }
 
     public enum PotionBit {
         /**

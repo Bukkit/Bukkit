@@ -33,7 +33,7 @@ public class PotionRecipes {
      * Registers a new ingredient to the specified bit modifier
      * 
      * @param bitModifier
-     *            The PotionBitSet to register with the ingredient
+     *            The PotionIngredientMeta to register with the ingredient
      * @param material
      *            The Material data of the ingredient
      */
@@ -93,18 +93,18 @@ public class PotionRecipes {
      *            The potion ingredient to retrieve the bit string with
      * @return The potion's bit string
      */
-    public static String getBitsforMaterial(Material material) {
+    public static String getMetaforMaterial(Material material) {
         return recipes.get(material);
     }
 
     /**
-     * Returns the PotionBitSet for the specified potion ingredient
+     * Returns the PotionIngredientMeta for the specified potion ingredient
      * 
      * @param material
      *            The potion ingredient to retrieve the bit string with
-     * @return The potion's PotionBitSet
+     * @return The potion's PotionIngredientMeta
      */
-    public static PotionIngredientMeta getPotionBitSetforMaterial(Material material) {
+    public static PotionIngredientMeta getPotionIngredientMetaforMaterial(Material material) {
         return new PotionIngredientMeta(recipes.get(material));
     }
 
@@ -116,19 +116,19 @@ public class PotionRecipes {
      *            with
      * @return The potion's bit string
      */
-    public static String getBitsforId(int material) {
+    public static String getMetaforId(int material) {
         return recipes.get(material);
     }
 
     /**
-     * Returns the PotionBitSet for the specified potion ingredient
+     * Returns the PotionIngredientMeta for the specified potion ingredient
      * 
      * @param material
      *            The potion ingredient's integer ID to retrieve the bit string
      *            with
-     * @return The potion's PotionBitSet
+     * @return The potion's PotionIngredientMeta
      */
-    public static PotionIngredientMeta getPotionBitSetforId(int material) {
+    public static PotionIngredientMeta getPotionIngredientMetaforId(int material) {
         return new PotionIngredientMeta(recipes.get(material));
     }
 
