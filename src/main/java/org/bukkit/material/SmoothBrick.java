@@ -9,7 +9,7 @@ import org.bukkit.SmoothBrickType;
 /**
  * Represents the different types of smooth bricks.
  */
-public class SmoothBrick extends MaterialData {
+public class SmoothBrick extends TexturedMaterial {
 
     @Deprecated
     private static final List<Material> textures = new ArrayList<Material>();
