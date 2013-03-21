@@ -16,7 +16,7 @@ public class FireworkExplodeEvent extends EntityEvent implements Cancellable {
     private boolean cancel;
     private final Location location;
 
-    public FireworkExplodeEvent(final Firework what, final Location location, final List<Block> blocks, final float yield) {
+    public FireworkExplodeEvent(final Firework what, final Location location) {
         super(what);
         this.location = location;
         this.cancel = false;
@@ -41,7 +41,7 @@ public class FireworkExplodeEvent extends EntityEvent implements Cancellable {
 
     @Override
     public Firework getEntity() {
-        return (Firework)entity;
+        return (Firework) entity;
     }
 
     @Override
