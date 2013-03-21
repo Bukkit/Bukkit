@@ -73,9 +73,9 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
         this.effect = effect;
         this.cause = cause;
         this.ambient = ambient;
-        this.location=location.clone();
+        this.location = location.clone();
     }
-    
+
     /**
      * Gets the source of the effect.
      * @return location of source
@@ -83,7 +83,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
     public Location getLocation(){
         return location;
     }
-    
+
     /**
      * Gets the ambient flag for beacons. This will be false otherwise (unless set by a plugin)
      * @return true if ambient
@@ -91,7 +91,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
     public boolean isAmbient(){
         return ambient;
     }
-    
+
     /**
      * Sets the ambient flag
      * @param ambient true if ambient
