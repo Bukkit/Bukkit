@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.NetherWartsState;
 import org.bukkit.SmoothBrickType;
 
 /**
@@ -51,7 +52,16 @@ public class SmoothBrick extends TexturedMaterial {
      * @return SmoothBrickType of this smooth brick
      */
     public SmoothBrickType getType() {
-        return SmoothBrickType.getByData(getData());
+        switch (getData()) {
+            case 0x1:
+                return SmoothBrickType.MOSSY;
+            case 0x2:
+                return SmoothBrickType.CRACKED;
+            case 0x3:
+                return SmoothBrickType.CIRCLE;
+            default:
+                return SmoothBrickType.NORMAL;
+        }
     }
 
     /**
@@ -60,7 +70,20 @@ public class SmoothBrick extends TexturedMaterial {
      * @param type New type of this smooth brick
      */
     public void setType(SmoothBrickType type) {
-        setData(type.getData());
+        switch (type) {
+            case NORMAL:
+                setData((byte) 0x0);
+                return;
+            case MOSSY:
+                setData((byte) 0x1);
+                return;
+            case CRACKED:
+                setData((byte) 0x2);
+                return;
+            case CIRCLE:
+                setData((byte) 0x3);
+                return;
+        }
     }
 
     @Deprecated
