@@ -11,11 +11,27 @@ import org.bukkit.event.HandlerList;
  */
 public class BlockBurnEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
+    private final Block sourceBlock;
     private boolean cancelled;
 
     public BlockBurnEvent(final Block block) {
         super(block);
+        this.sourceBlock = null;
         this.cancelled = false;
+    }
+
+    public BlockBurnEvent(final Block block, final Block sourceBlock) {
+        super(block);
+        this.sourceBlock = sourceBlock;
+        this.cancelled = false;
+    }
+
+    /**
+     * Gets the block that caused the burning.
+     * @return The block
+     */
+    public Block getSourceBlock() {
+        return this.sourceBlock;
     }
 
     public boolean isCancelled() {
