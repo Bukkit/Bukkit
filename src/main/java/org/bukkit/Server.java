@@ -509,6 +509,15 @@ public interface Server extends PluginMessageRecipient {
     public int broadcast(String message, String permission);
 
     /**
+     * Broadcasts the specified message to every user in the list
+     * 
+     * @param message Message to broadcast
+     * @param players List of players to broadcast to
+     * @return Amount of users who received the message
+     */
+    public int broadcast(String message, List<Player> players);
+
+    /**
      * Gets the player by the given name, regardless if they are offline or online.
      * <p />
      * This will return an object even if the player does not exist. To this method, all players will exist.
