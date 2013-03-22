@@ -1,48 +1,38 @@
 package org.bukkit.event.entity;
 
+import java.util.List;
+
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when an entity breeds with another
+ * Called when an Ageable entity is born
  * <p />
- * If an EntityBreedEvent is cancelled the entities will not breed, no child is produced,
+ * If an EntityBornEvent is cancelled the parents will not breed, no child is produced,
  * and no experience is dropped.
  */
-public class EntityBreedEvent extends EntityEvent implements Cancellable {
+public class EntityBornEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private final Ageable mate;
-    private final Ageable child;
+    private final List<Ageable> parents;
     private int experienceToDrop;
     private boolean cancel;
 
-    public EntityBreedEvent(Ageable what, Ageable mate, Ageable child, int experienceToDrop) {
+    public EntityBornEvent(Ageable what, List<Ageable> parents, int experienceToDrop) {
         super(what);
-        this.mate = mate;
+        this.parents = parents;
         this.experienceToDrop = experienceToDrop;
-        this.child = child;
         this.cancel = false;
     }
 
     /**
-     * Gets the child that would be produced by this event.
+     * Gets the parents of child that would be produced by this event.
      *
-     * @return Ageable the child entity.
+     * @return Ageable the child entity's parents
      */
-    public Ageable getChild() {
-        return child;
-    }
-
-    /**
-     * Gets the Ageable entity that is breeding with the one that 
-     * fired this event.
-     *
-     * @return Ageable the other entity involved in this breeding event.
-     */
-    public Ageable getMate() {
-        return mate;
+    public List<Ageable> getParents() {
+        return parents;
     }
 
     /**
