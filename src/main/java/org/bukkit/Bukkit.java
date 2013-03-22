@@ -20,6 +20,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
+import org.bukkit.metadata.Metadatable;
+import org.bukkit.metadata.MetadataProvider;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
@@ -394,5 +397,13 @@ public final class Bukkit {
 
     public static ItemFactory getItemFactory() {
         return server.getItemFactory();
+    }
+
+    public static <T extends Metadatable> void registerMetadataProvider(Class<T> clazz, Plugin plugin, MetadataProvider<T> provider) {
+        server.registerMetadataProvider(clazz, plugin, provider);
+    }
+
+    public static <T extends Metadatable> void unregisterMetadataProvider(Class<T> clazz, Plugin plugin) {
+        server.unregisterMetadataProvider(clazz, plugin);
     }
 }

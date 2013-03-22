@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -114,7 +115,7 @@ public class MetadataStoreTest {
         assertEquals(1, subject.getMetadata("subject", "key").size());
         assertEquals(10, subject.getMetadata("subject", "key").get(0).value());
     }
-    
+
     @Test
     public void testHasMetadata() {
         subject.setMetadata("subject", "key", new FixedMetadataValue(pluginX, 10));
@@ -122,11 +123,57 @@ public class MetadataStoreTest {
         assertFalse(subject.hasMetadata("subject", "otherKey"));
     }
 
+    @Test
+    public void testProviderUsage() {
+        List<MetadataProvider<String>> mapping = new ArrayList<MetadataProvider<String>>();
+        StringMetadataStore store = new StringMetadataStore(mapping);
+        assertEquals(store.getMetadata("foobar", "uppercased").size(), 0);
+        StringMetadataProvider p = new StringMetadataProvider();
+        mapping.add(p);
+        assertEquals(0, p.counter.value());
+        List<MetadataValue> values = store.getMetadata("foobar", "uppercased");
+        assertEquals(1, values.size());
+        assertEquals("FOOBAR", values.get(0).asString());
+        assertEquals(1, p.counter.value());
+        // Check we still get a single value only
+        values = store.getMetadata("foobar", "uppercased");
+        assertEquals(1, values.size());
+        assertEquals("FOOBAR", values.get(0).asString());
+        // Check the provider wasn't called twice.
+        assertEquals(1, p.counter.value());
+        // Try a new previously un-seen value through the provider.
+        assertEquals(1, store.getMetadata("hello", "uppercased").size());
+        assertEquals(2, p.counter.value());
+        mapping.clear();
+    }
+
     private class StringMetadataStore extends MetadataStoreBase<String> implements MetadataStore<String> {
+        public StringMetadataStore() {
+            this(new ArrayList<MetadataProvider<String>>());
+        }
+
+        public StringMetadataStore(List<MetadataProvider<String>> mapping) {
+            super(mapping);
+        }
+
         @Override
         protected String disambiguate(String subject, String metadataKey) {
             return subject + ":" + metadataKey;
         }
+    }
+
+    private class StringMetadataProvider implements MetadataProvider<String> {
+        public final Counter counter = new Counter();
+
+        public MetadataValue getValue(String subject, String key) {
+            counter.increment();
+            if (subject.equals("nodata")) {
+                return null;
+            } else {
+                return new FixedMetadataValue(pluginX, subject.toUpperCase());
+            }
+        }
+
     }
 
     private class Counter {
