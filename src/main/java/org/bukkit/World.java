@@ -1062,14 +1062,6 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return True if rule exists
      */
     public boolean isGameRule(String rule);
-    
-    /**
-     * Register a Block metadata provider for on-demand metadata.
-     * @param metadataKey The key to respond to
-     * @param provider a metadata provider
-     * @return true if we were the first to register, false if another plugin was registered.
-     */
-    public boolean registerBlockMetadataProvider(String metadataKey, MetadataProvider<Block> provider);
 
     /**
      * Represents various map environment types that a world may be

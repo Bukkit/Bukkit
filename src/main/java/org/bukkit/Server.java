@@ -22,6 +22,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
+import org.bukkit.metadata.Metadatable;
 import org.bukkit.metadata.MetadataProvider;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
@@ -693,26 +694,19 @@ public interface Server extends PluginMessageRecipient {
     ItemFactory getItemFactory();
 
     /**
-     * Register a Player metadata provider for on-demand metadata.
+     * Register a metadata provider for on-demand metadata.
+     * @param clazz The class type of metadata this provider accepts
      * @param metadataKey The key to respond to
      * @param provider A metadata provider
      * @return true if we were the first to register, false if another plugin was registered.
      */
-    public boolean registerPlayerMetadataProvider(String metadataKey, MetadataProvider<OfflinePlayer> provider);
+    public <T extends Metadatable> boolean registerMetadataProvider(Class<T> clazz, String metadataKey, MetadataProvider<T> provider);
 
     /**
-     * Register a World metadata provider for on-demand metadata.
+     * Unregister a metadata provider.
+     * @param clazz The class type of metadata this provider accepts
      * @param metadataKey The key to respond to
-     * @param provider A metadata provider
      * @return true if we were the first to register, false if another plugin was registered.
      */
-    public boolean registerWorldMetadataProvider(String metadataKey, MetadataProvider<World> provider);
-
-    /**
-     * Register a Entity metadata provider for on-demand metadata.
-     * @param metadataKey The key to respond to
-     * @param provider A metadata provider
-     * @return true if we were the first to register, false if another plugin was registered.
-     */
-    public boolean registerEntityMetadataProvider(String metadataKey, MetadataProvider<Entity> provider);
+    public <T extends Metadatable> void unregisterMetadataProvider(Class<T> clazz, String metadataKey);
 }

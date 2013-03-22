@@ -21,6 +21,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
+import org.bukkit.metadata.Metadatable;
 import org.bukkit.metadata.MetadataProvider;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
@@ -398,15 +399,11 @@ public final class Bukkit {
         return server.getItemFactory();
     }
 
-    public static boolean registerPlayerMetadataProvider(String metadataKey, MetadataProvider<OfflinePlayer> provider) {
-        return server.registerPlayerMetadataProvider(metadataKey, provider);
+    public static <T extends Metadatable> boolean registerMetadataProvider(Class<T> clazz, String metadataKey, MetadataProvider<T> provider) {
+        return server.registerMetadataProvider(clazz, metadataKey, provider);
     }
 
-    public static boolean registerWorldMetadataProvider(String metadataKey, MetadataProvider<World> provider) {
-        return server.registerWorldMetadataProvider(metadataKey, provider);
-    }
-
-    public static boolean registerEntityMetadataProvider(String metadataKey, MetadataProvider<Entity> provider) {
-        return server.registerEntityMetadataProvider(metadataKey, provider);
+    public static <T extends Metadatable> void unregisterMetadataProvider(Class<T> clazz, String metadataKey) {
+        server.unregisterMetadataProvider(clazz, metadataKey);
     }
 }

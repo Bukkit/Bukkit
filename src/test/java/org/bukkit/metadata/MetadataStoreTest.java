@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -156,6 +157,10 @@ public class MetadataStoreTest {
     }
 
     private class StringMetadataStore extends MetadataStoreBase<String> implements MetadataStore<String> {
+        public StringMetadataStore() {
+            super(new HashMap<String, MetadataProvider<String>>());
+        }
+
         @Override
         protected String disambiguate(String subject, String metadataKey) {
             return subject + ":" + metadataKey;

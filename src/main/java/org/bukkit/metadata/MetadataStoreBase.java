@@ -10,7 +10,11 @@ import java.util.*;
 public abstract class MetadataStoreBase<T> {
     private Map<String, List<MetadataValue>> metadataMap = new HashMap<String, List<MetadataValue>>();
     private WeakHashMap<T, Map<String, String>> disambiguationCache = new WeakHashMap<T, Map<String, String>>();
-    private Map<String, MetadataProvider<T>> providers = new HashMap<String, MetadataProvider<T>>();
+    private final Map<String, MetadataProvider<T>> providers;
+
+    protected MetadataStoreBase(Map<String, MetadataProvider<T>> providers) {
+        this.providers = providers;
+    }
 
     /**
      * Adds a metadata value to an object. Each metadata value is owned by a specific{@link Plugin}.
@@ -110,8 +114,9 @@ public abstract class MetadataStoreBase<T> {
     }
 
     /**
-     * Invalidates all metadata in the metadata store that originates from the given plugin. Doing this will force
-     * each invalidated metadata item to be recalculated the next time it is accessed.
+     * Invalidates all metadata in the metadata store that originates from the given plugin.
+     * Doing this will force each invalidated metadata item to be recalculated
+     * the next time it is accessed.
      *
      * @param owningPlugin the plugin requesting the invalidation.
      * @see MetadataStore#invalidateAll(org.bukkit.plugin.Plugin)
