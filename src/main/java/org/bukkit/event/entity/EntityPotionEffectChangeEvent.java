@@ -85,7 +85,8 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
     }
 
     /**
-     * Gets the ambient flag for beacons. This will be false otherwise (unless set by a plugin)
+     * Gets the ambient flag for beacons. This will be false otherwise 
+     * (unless set by a plugin)
      * @return true if ambient
      */
     public boolean isAmbient(){
@@ -110,8 +111,10 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
     }
 
     /**
-     * Gets the potion effect applied to this event. Modifying this modifies the overall effect.<br>
-     * If the entity is going to lose the effect, modifying this has no effect.
+     * Gets the potion effect applied to this event. Modifying this modifies 
+     * the overall effect.<br>
+     * If the entity is going to lose the effect, modifying this has no 
+     * effect.
      * 
      * @return the potion effect
      */
@@ -134,7 +137,8 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
 
     /**
      * Set the event as cancelled.<br>
-     * The event will only cancel if the entity is <b>not</b> losing the effect.
+     * The event will only cancel if the entity is <b>not</b> losing the 
+     * effect.
      * 
      * @param cancel true to cancel, if valid
      */
