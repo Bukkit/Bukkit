@@ -13,7 +13,6 @@ import org.bukkit.plugin.TestPlugin;
 import org.junit.Test;
 
 public class MetadataStoreTest {
-
     private Plugin pluginX = new TestPlugin("x");
     private Plugin pluginY = new TestPlugin("y");
 
@@ -165,10 +164,6 @@ public class MetadataStoreTest {
 
     private class StringMetadataProvider implements MetadataProvider<String> {
         public final Counter counter = new Counter();
-
-        public Plugin getOwningPlugin() {
-            return pluginX;
-        }
 
         public MetadataValue getValue(String subject, String key) {
             counter.increment();

@@ -4,8 +4,14 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.logging.Level;
-import java.util.*;
 
 public abstract class MetadataStoreBase<T> {
     private Map<String, List<MetadataValue>> metadataMap = new HashMap<String, List<MetadataValue>>();
