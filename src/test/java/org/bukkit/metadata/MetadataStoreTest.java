@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -126,11 +126,11 @@ public class MetadataStoreTest {
 
     @Test
     public void testProviderUsage() {
-        HashMap<String, MetadataProvider<String>> mapping = new HashMap<String, MetadataProvider<String>>();
+        List<MetadataProvider<String>> mapping = new ArrayList<MetadataProvider<String>>();
         StringMetadataStore store = new StringMetadataStore(mapping);
         assertEquals(store.getMetadata("foobar", "uppercased").size(), 0);
         StringMetadataProvider p = new StringMetadataProvider();
-        mapping.put("uppercased", p);
+        mapping.add(p);
         assertEquals(0, p.counter.value());
         List<MetadataValue> values = store.getMetadata("foobar", "uppercased");
         assertEquals(1, values.size());
@@ -150,9 +150,10 @@ public class MetadataStoreTest {
 
     private class StringMetadataStore extends MetadataStoreBase<String> implements MetadataStore<String> {
         public StringMetadataStore() {
-            this(new HashMap<String, MetadataProvider<String>>());
+            this(new ArrayList<MetadataProvider<String>>());
         }
-        public StringMetadataStore(HashMap<String, MetadataProvider<String>> mapping) {
+
+        public StringMetadataStore(List<MetadataProvider<String>> mapping) {
             super(mapping);
         }
 

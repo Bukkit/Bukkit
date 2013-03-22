@@ -24,6 +24,7 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.metadata.MetadataProvider;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
@@ -696,17 +697,16 @@ public interface Server extends PluginMessageRecipient {
     /**
      * Register a metadata provider for on-demand metadata.
      * @param clazz The class type of metadata this provider accepts
-     * @param metadataKey The key to respond to
      * @param provider A metadata provider
+     * @param plugin The plugin which is registering this
      * @return true if we were the first to register, false if another plugin was registered.
      */
-    public <T extends Metadatable> boolean registerMetadataProvider(Class<T> clazz, String metadataKey, MetadataProvider<T> provider);
+    public <T extends Metadatable> void registerMetadataProvider(Class<T> clazz, Plugin plugin, MetadataProvider<T> provider);
 
     /**
      * Unregister a metadata provider.
      * @param clazz The class type of metadata this provider accepts
-     * @param metadataKey The key to respond to
-     * @return true if we were the first to register, false if another plugin was registered.
+     * @param plugin the plugin which this provider is registered to
      */
-    public <T extends Metadatable> void unregisterMetadataProvider(Class<T> clazz, String metadataKey);
+    public <T extends Metadatable> void unregisterMetadataProvider(Class<T> clazz, Plugin plugin);
 }

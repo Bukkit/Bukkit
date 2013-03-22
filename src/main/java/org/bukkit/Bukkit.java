@@ -23,6 +23,7 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.metadata.MetadataProvider;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
@@ -399,11 +400,11 @@ public final class Bukkit {
         return server.getItemFactory();
     }
 
-    public static <T extends Metadatable> boolean registerMetadataProvider(Class<T> clazz, String metadataKey, MetadataProvider<T> provider) {
-        return server.registerMetadataProvider(clazz, metadataKey, provider);
+    public static <T extends Metadatable> void registerMetadataProvider(Class<T> clazz, Plugin plugin, MetadataProvider<T> provider) {
+        server.registerMetadataProvider(clazz, plugin, provider);
     }
 
-    public static <T extends Metadatable> void unregisterMetadataProvider(Class<T> clazz, String metadataKey) {
-        server.unregisterMetadataProvider(clazz, metadataKey);
+    public static <T extends Metadatable> void unregisterMetadataProvider(Class<T> clazz, Plugin plugin) {
+        server.unregisterMetadataProvider(clazz, plugin);
     }
 }

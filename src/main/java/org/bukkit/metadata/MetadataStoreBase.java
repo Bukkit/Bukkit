@@ -10,9 +10,9 @@ import java.util.*;
 public abstract class MetadataStoreBase<T> {
     private Map<String, List<MetadataValue>> metadataMap = new HashMap<String, List<MetadataValue>>();
     private WeakHashMap<T, Map<String, String>> disambiguationCache = new WeakHashMap<T, Map<String, String>>();
-    private final Map<String, MetadataProvider<T>> providers;
+    private final Collection<MetadataProvider<T>> providers;
 
-    protected MetadataStoreBase(Map<String, MetadataProvider<T>> providers) {
+    protected MetadataStoreBase(Collection<MetadataProvider<T>> providers) {
         this.providers = providers;
     }
 
@@ -65,10 +65,8 @@ public abstract class MetadataStoreBase<T> {
         String key = cachedDisambiguate(subject, metadataKey);
         if (metadataMap.containsKey(key)) {
             return Collections.unmodifiableList(metadataMap.get(key));
-        } else if (providers.containsKey(metadataKey)) {
-            if (buildProviderData(subject, metadataKey)) {
-                return Collections.unmodifiableList(metadataMap.get(key));
-            }
+        } else if (buildProviderData(subject, metadataKey)) {
+            return Collections.unmodifiableList(metadataMap.get(key));
         }
         return Collections.emptyList();
     }
@@ -83,7 +81,7 @@ public abstract class MetadataStoreBase<T> {
     public synchronized boolean hasMetadata(T subject, String metadataKey) {
         String key = cachedDisambiguate(subject, metadataKey);
         if (metadataMap.containsKey(key)) return true;
-        if (providers.containsKey(metadataKey)) {
+        if (providers.size() > 0) {
             return buildProviderData(subject, metadataKey);
         }
         return false;
@@ -175,37 +173,20 @@ public abstract class MetadataStoreBase<T> {
      * @return true if we got provider data, false otherwise.
      */
     private boolean buildProviderData(T subject, String metadataKey) {
-        MetadataProvider provider = providers.get(metadataKey);
-        MetadataValue providedValue = null;
-        try {
-            providedValue = provider.getValue(subject, metadataKey);
-        } catch (Exception ex) {
-            String message = String.format("Error occurred while calling metadata provider %s in plugin %s for key %s", provider.getClass(), getProviderPluginName(provider), metadataKey);
-            Bukkit.getLogger().log(Level.SEVERE, message, ex);
+        boolean success = false;
+        for (MetadataProvider<T> provider : providers) {
+            MetadataValue providedValue = null;
+            try {
+                providedValue = provider.getValue(subject, metadataKey);
+            } catch (Exception ex) {
+                String message = String.format("Error occurred while calling metadata provider %s for key %s", provider.getClass(), metadataKey);
+                Bukkit.getLogger().log(Level.SEVERE, message, ex);
+            }
+            if (providedValue != null) {
+                setMetadata(subject, metadataKey, providedValue);
+                success = true;
+            }
         }
-        if (providedValue != null) {
-            setMetadata(subject, metadataKey, providedValue);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Helper to get the plugin's full name from a MetadataProvider.
-     * This is wrapped because we're not sure getOwningPlugin will return
-     * a null value or possibly if the call will throw an exception.
-     */
-    private String getProviderPluginName(MetadataProvider provider) {
-        Plugin plugin = null;
-        try {
-            plugin = provider.getOwningPlugin();
-        } catch (Exception ex) {
-            return "<Error in getOwningPlugin: "+ ex.getMessage() + ">";
-        }
-        if (plugin == null) {
-            return "<Unknown Plugin>";
-        } else {
-            return plugin.getDescription().getFullName();
-        }
+        return success;
     }
 }
