@@ -2,6 +2,7 @@ package org.bukkit.inventory;
 
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.InventoryType.SlotType;
 
 /**
  * Represents a view linking two inventories and a single player
@@ -85,6 +86,13 @@ public abstract class InventoryView {
      * @return the inventory type
      */
     public abstract InventoryType getType();
+
+    /**
+     * Gets the slot type by its raw slot ID in this inventory view.
+     * @param slot The raw slot ID
+     * @return The slot type
+     */
+    public abstract SlotType getSlotType(int slot);
 
     /**
      * Sets one item in this inventory view by its raw slot ID.
