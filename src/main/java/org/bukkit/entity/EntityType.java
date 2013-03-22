@@ -3,6 +3,12 @@ package org.bukkit.entity;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.entity.minecart.HopperMinecart;
+import org.bukkit.entity.minecart.SpawnerMinecart;
+import org.bukkit.entity.minecart.RideableMinecart;
+import org.bukkit.entity.minecart.ExplosiveMinecart;
+import org.bukkit.entity.minecart.PoweredMinecart;
+import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -70,13 +76,33 @@ public enum EntityType {
     FALLING_BLOCK("FallingSand", FallingBlock.class, 21, false),
     FIREWORK("FireworksRocketEntity", Firework.class, 22, false),
     /**
-     * A placed minecart of any type.
-     */
-    MINECART("Minecart", Minecart.class, 40),
-    /**
      * A placed boat.
      */
     BOAT("Boat", Boat.class, 41),
+    /**
+     * @see RideableMinecart
+     */
+    MINECART("MinecartRideable", RideableMinecart.class, 42),
+    /**
+     * @see StorageMinecart
+     */
+    MINECART_CHEST("MinecartChest", StorageMinecart.class, 43),
+    /**
+     * @see PoweredMinecart
+     */
+    MINECART_FURNACE("MinecartFurnace", PoweredMinecart.class, 44),
+    /**
+     * @see ExplosiveMinecart
+     */
+    MINECART_TNT("MinecartTNT", ExplosiveMinecart.class, 45),
+    /**
+     * @see HopperMinecart
+     */
+    MINECART_HOPPER("MinecartHopper", HopperMinecart.class, 46),
+    /**
+     * @see SpawnerMinecart
+     */
+    MINECART_MOB_SPAWNER("MinecartMobSpawner", SpawnerMinecart.class, 47),
     CREEPER("Creeper", Creeper.class, 50),
     SKELETON("Skeleton", Skeleton.class, 51),
     SPIDER("Spider", Spider.class, 52),

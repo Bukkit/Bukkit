@@ -17,14 +17,14 @@ public interface Skull extends BlockState {
     /**
      * Gets the owner of the skull
      *
-     * @return the owner if the skull
+     * @return the owner of the skull
      */
     public String getOwner();
 
     /**
      * Sets the owner of the skull
      *
-     * @param owner the new owner of the skull
+     * @param name the new owner of the skull
      * @return true if the owner was successfully set
      */
     public boolean setOwner(String name);
