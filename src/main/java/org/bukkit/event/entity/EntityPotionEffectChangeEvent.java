@@ -18,7 +18,7 @@ import org.bukkit.potion.PotionEffect;
  * </ul>
  */
 public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancellable {
-    public static enum PotionChangeCause{
+    public static enum PotionChangeCause {
         /**
          * Wither-like entity caused event
          */
@@ -67,7 +67,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
      * @param ambient true if ambient
      * @param location the location of the event, if applicable
      */
-    public EntityPotionEffectChangeEvent(LivingEntity who, PotionEffect effect, boolean lostEffect, PotionChangeCause cause, boolean ambient, Location location){
+    public EntityPotionEffectChangeEvent(LivingEntity who, PotionEffect effect, boolean lostEffect, PotionChangeCause cause, boolean ambient, Location location) {
         super(who);
         this.lostEffect = lostEffect;
         this.effect = effect;
@@ -80,7 +80,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
      * Gets the source of the effect.
      * @return location of source
      */
-    public Location getLocation(){
+    public Location getLocation() {
         return location;
     }
 
@@ -89,7 +89,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
      * (unless set by a plugin)
      * @return true if ambient
      */
-    public boolean isAmbient(){
+    public boolean isAmbient() {
         return ambient;
     }
 
@@ -97,7 +97,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
      * Sets the ambient flag
      * @param ambient true if ambient
      */
-    public void setAmbient(boolean ambient){
+    public void setAmbient(boolean ambient) {
         this.ambient = ambient;
     }
 
@@ -106,7 +106,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
      * 
      * @return the cause of the event
      */
-    public PotionChangeCause getCause(){
+    public PotionChangeCause getCause() {
         return cause;
     }
 
@@ -118,7 +118,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
      * 
      * @return the potion effect
      */
-    public PotionEffect getEffect(){
+    public PotionEffect getEffect() {
         return effect;
     }
 
@@ -127,11 +127,11 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
      * 
      * @return true if the entity will lose the effect, false otherwise
      */
-    public boolean isLosingEffect(){
+    public boolean isLosingEffect() {
         return lostEffect;
     }
 
-    public boolean isCancelled(){
+    public boolean isCancelled() {
         return cancel;
     }
 
@@ -142,16 +142,16 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
      * 
      * @param cancel true to cancel, if valid
      */
-    public void setCancelled(boolean cancel){
+    public void setCancelled(boolean cancel) {
         this.cancel = cancel;
     }
 
     @Override
-    public HandlerList getHandlers(){
+    public HandlerList getHandlers() {
         return handlers;
     }
 
-    public static HandlerList getHandlerList(){
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 }
