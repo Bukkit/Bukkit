@@ -134,28 +134,6 @@ public abstract class MetadataStoreBase<T> {
     }
 
     /**
-     * Register a provider to do on-demand metadata.
-     * @param metadataKey The key for which this provider is answering for.
-     * @param provider A metadata provider.
-     * @return true if provider was added, false if there was already a provider.
-     */
-    public boolean registerProvider(String metadataKey, MetadataProvider<T> provider) {
-        Validate.notNull(metadataKey, "metadataKey cannot be null");
-        Validate.notNull(provider, "Provider cannot be null");
-        Validate.notNull(provider.getOwningPlugin(), "provider.owningPlugin() cannot be null");
-        return (providers.put(metadataKey, provider) == null);
-    }
-
-    /**
-     * Unregister an on-demand provider.
-     * @param metadataKey The key for which this provider is answering for.
-     * @return true if a provider was removed, false otherwise
-     */
-    public boolean unregisterProvider(String metadataKey) {
-        return (providers.remove(metadataKey) != null);
-    }
-
-    /**
      * Caches the results of calls to {@link MetadataStoreBase#disambiguate(Object, String)} in a {@link WeakHashMap}. Doing so maintains a
      * <a href="http://www.codeinstructions.com/2008/09/weakhashmap-is-not-cache-understanding.html">canonical list</a>
      * of disambiguation strings for objects in memory. When those objects are garbage collected, the disambiguation string

@@ -13,6 +13,7 @@ import org.bukkit.plugin.TestPlugin;
 import org.junit.Test;
 
 public class MetadataStoreTest {
+
     private Plugin pluginX = new TestPlugin("x");
     private Plugin pluginY = new TestPlugin("y");
 
@@ -124,41 +125,35 @@ public class MetadataStoreTest {
     }
 
     @Test
-    public void testRegisterUnregisterProvider() {
-        StringMetadataProvider p = new StringMetadataProvider();
-        // Test adding provider once
-        assertEquals(true, subject.registerProvider("uppercased", p));
-        // Test adding provider again
-        assertEquals(false, subject.registerProvider("uppercased", p));
-        // Now removal
-        assertEquals(true, subject.unregisterProvider("uppercased"));
-        assertEquals(false, subject.unregisterProvider("uppercased"));
-    }
-
-    @Test
     public void testProviderUsage() {
-        assertEquals(subject.getMetadata("foobar", "uppercased").size(), 0);
+        HashMap<String, MetadataProvider<String>> mapping = new HashMap<String, MetadataProvider<String>>();
+        StringMetadataStore store = new StringMetadataStore(mapping);
+        assertEquals(store.getMetadata("foobar", "uppercased").size(), 0);
         StringMetadataProvider p = new StringMetadataProvider();
-        subject.registerProvider("uppercased", p);
+        mapping.put("uppercased", p);
         assertEquals(0, p.counter.value());
-        List<MetadataValue> values = subject.getMetadata("foobar", "uppercased");
+        List<MetadataValue> values = store.getMetadata("foobar", "uppercased");
         assertEquals(1, values.size());
         assertEquals("FOOBAR", values.get(0).asString());
         assertEquals(1, p.counter.value());
         // Check we still get a single value only
-        values = subject.getMetadata("foobar", "uppercased");
+        values = store.getMetadata("foobar", "uppercased");
         assertEquals(1, values.size());
         assertEquals("FOOBAR", values.get(0).asString());
         // Check the provider wasn't called twice.
         assertEquals(1, p.counter.value());
         // Try a new previously un-seen value through the provider.
-        assertEquals(1, subject.getMetadata("hello", "uppercased").size());
+        assertEquals(1, store.getMetadata("hello", "uppercased").size());
         assertEquals(2, p.counter.value());
+        mapping.clear();
     }
 
     private class StringMetadataStore extends MetadataStoreBase<String> implements MetadataStore<String> {
         public StringMetadataStore() {
-            super(new HashMap<String, MetadataProvider<String>>());
+            this(new HashMap<String, MetadataProvider<String>>());
+        }
+        public StringMetadataStore(HashMap<String, MetadataProvider<String>> mapping) {
+            super(mapping);
         }
 
         @Override
