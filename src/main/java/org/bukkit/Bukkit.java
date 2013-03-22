@@ -255,6 +255,10 @@ public final class Bukkit {
     public static int broadcast(String message, String permission) {
         return server.broadcast(message, permission);
     }
+    
+    public static int broadcast(String message, List<Player> players) {
+        return server.broadcast(message, players);
+    }
 
     public static OfflinePlayer getOfflinePlayer(String name) {
         return server.getOfflinePlayer(name);
