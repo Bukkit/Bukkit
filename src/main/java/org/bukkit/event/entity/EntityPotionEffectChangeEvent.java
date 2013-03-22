@@ -22,27 +22,27 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
         /**
          * Wither-like entity caused event
          */
-        WITHER, 
+        WITHER,
         /**
          * Caused by a zombie
          */
-        ZOMBIE, 
+        ZOMBIE,
         /**
          * Caused by a cave spider
          */
-        CAVE_SPIDER, 
+        CAVE_SPIDER,
         /**
          * Caused by a beacon block
          */
-        BEACON, 
+        BEACON,
         /**
          * Caused by a potion, splashed or consumed
          */
-        POTION, 
+        POTION,
         /**
          * Plugin altered effect
          */
-        PLUGIN, 
+        PLUGIN,
         /**
          * Effect loss
          */
@@ -59,7 +59,6 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
 
     /**
      * Construct a new EntityPotionEffectChangeEvent
-     * 
      * @param who the entity being affected
      * @param effect the effect
      * @param lostEffect true to identify the effect is being lost
@@ -77,7 +76,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
     }
 
     /**
-     * Gets the source of the effect.
+     * Gets the source of the effect
      * @return location of source
      */
     public Location getLocation() {
@@ -85,7 +84,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
     }
 
     /**
-     * Gets the ambient flag for beacons. This will be false otherwise 
+     * Gets the ambient flag for beacons. This will be false otherwise
      * (unless set by a plugin)
      * @return true if ambient
      */
@@ -103,7 +102,6 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
 
     /**
      * Gets the cause associated with this event
-     * 
      * @return the cause of the event
      */
     public PotionChangeCause getCause() {
@@ -111,11 +109,10 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
     }
 
     /**
-     * Gets the potion effect applied to this event. Modifying this modifies 
+     * Gets the potion effect applied to this event. Modifying this modifies
      * the overall effect.<br>
-     * If the entity is going to lose the effect, modifying this has no 
+     * If the entity is going to lose the effect, modifying this has no
      * effect.
-     * 
      * @return the potion effect
      */
     public PotionEffect getEffect() {
@@ -124,7 +121,6 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
 
     /**
      * Used to determine if the entity is going to lose the effect
-     * 
      * @return true if the entity will lose the effect, false otherwise
      */
     public boolean isLosingEffect() {
@@ -137,9 +133,8 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
 
     /**
      * Set the event as cancelled.<br>
-     * The event will only cancel if the entity is <b>not</b> losing the 
+     * The event will only cancel if the entity is <b>not</b> losing the
      * effect.
-     * 
      * @param cancel true to cancel, if valid
      */
     public void setCancelled(boolean cancel) {
