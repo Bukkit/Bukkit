@@ -23,26 +23,32 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
          * Wither-like entity caused event
          */
         WITHER,
+
         /**
          * Caused by a zombie
          */
         ZOMBIE,
+
         /**
          * Caused by a cave spider
          */
         CAVE_SPIDER,
+
         /**
          * Caused by a beacon block
          */
         BEACON,
+
         /**
          * Caused by a potion, splashed or consumed
          */
         POTION,
+
         /**
          * Plugin altered effect
          */
         PLUGIN,
+
         /**
          * Effect loss
          */
