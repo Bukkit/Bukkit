@@ -6,35 +6,17 @@ package org.bukkit.entity;
 public interface Fish extends Projectile {
 
     /**
-     * Causes a fish to bite the hook.
-     */
-    public void bite();
-
-    /**
-     * Gets the chance of a fish biting during normal weather.
+     * Gets the chance of a fish biting.
      *
      * @return chance
      */
-    public short getBiteChance();
+    public double getBiteChance();
 
     /**
-     * Sets the chance of a fish biting during normal weather.
+     * Sets the chance of a fish biting.
      *
-     * @param chance "1-in-chance" chance of triggering a bite each tick
+     * @param chance where 0.0 is never, 1.0 is very frequent
      */
-    public void setBiteChance(short chance);
+    public void setBiteChance(double chance);
 
-    /**
-     * Gets the chance of a fish biting outdoors during rain.
-     *
-     * @return chance
-     */
-    public short getRainyBiteChance();
-
-    /**
-     * Sets the chance of a fish biting outdoors during rain.
-     *
-     * @param chance "1-in-chance" chance of triggering a bite each tick
-     */
-    public void setRainyBiteChance(short chance);
 }
