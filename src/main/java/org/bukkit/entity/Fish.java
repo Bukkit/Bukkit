@@ -8,6 +8,10 @@ public interface Fish extends Projectile {
     /**
      * Gets the chance of a fish biting.
      *
+     * -1.0 = Use vanilla odds.
+     * 0.0 = No Chance.
+     * 1.0 = Instant catch.
+     *
      * @return chance
      */
     public double getBiteChance();
@@ -15,7 +19,11 @@ public interface Fish extends Projectile {
     /**
      * Sets the chance of a fish biting.
      *
-     * @param chance where 0.0 is never, 1.0 is very frequent
+     * -1.0 = Use vanilla odds.
+     * 0.0 = No Chance.
+     * 1.0 = Instant catch.
+     *
+     * @param chance
      */
     public void setBiteChance(double chance);
 
