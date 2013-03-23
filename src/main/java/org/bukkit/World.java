@@ -769,6 +769,21 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public void spawnParticle(Location location, Particle particle, float speed, int particleCount);
 
     /**
+     * Spawns a particle to all players within a default radius of 64 blocks around a given location with the given
+     * speed and count. The particle will be randomly offset by the
+     * given offset for each client.
+     * 
+     * @param location the {@link Location} around which players must be to see the particle
+     * @param particle the {@link Particle}
+     * @param offsetX the random X offset
+     * @param offsetY the random Y offset
+     * @param offsetZ the random Z offset
+     * @param speed the speed of the particle
+     * @param particleCount the number of particles to spawn
+     */
+    public void spawnParticle(Location location, Particle particle, float offsetX, float offsetY, float offsetZ, float speed, int particleCount);
+
+    /**
      * Spawns a particle to all players within a given radius around a given location with the given
      * speed, count and the material and data value.
      * 
