@@ -37,11 +37,11 @@ public class PlayerItemHeldEvent extends PlayerEvent implements Cancellable {
         return current;
     }
 
-    public boolean isCancelled(){
+    public boolean isCancelled() {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel){
+    public void setCancelled(boolean cancel) {
         this.cancel = cancel;
     }
 
