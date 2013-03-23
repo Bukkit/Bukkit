@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.WordUtils;
+import com.google.common.collect.ImmutableList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
