@@ -8,7 +8,6 @@ public interface Fish extends Projectile {
     /**
      * Gets the chance of a fish biting.
      *
-     * -1.0 = Use vanilla odds.
      * 0.0 = No Chance.
      * 1.0 = Instant catch.
      *
@@ -19,7 +18,6 @@ public interface Fish extends Projectile {
     /**
      * Sets the chance of a fish biting.
      *
-     * -1.0 = Use vanilla odds.
      * 0.0 = No Chance.
      * 1.0 = Instant catch.
      *
