@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a TNT is ignited, leading to the creation of a primed TNT.
  * <p />
- * If a TNTIgniteEvent is cancelled, the primed TNT will not be spawned.
+ * If a TNTIgniteEvent is cancelled, the {@link TNTPrimed} will not be spawned.
  */
 public class TNTIgniteEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
@@ -37,7 +37,12 @@ public class TNTIgniteEvent extends BlockEvent implements Cancellable {
     public static HandlerList getHandlerList() {
         return handlers;
     }
-    
+
+    /**
+     * Gets the {@link TNTPrimed} that will be spawned.
+     *
+     * @return The {@link TNTPrimed} that will be spawned
+     */
     public TNTPrimed getEntity() {
         return tntPrimed;
     }
