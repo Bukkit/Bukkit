@@ -720,59 +720,65 @@ public interface World extends PluginMessageRecipient, Metadatable {
 
     /**
      * Spawns a particle to all players within a default radius of 64 blocks around a given location.
-     * 
+     *
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
+     * @throws IllegalArgumentException if location or particle is null
      */
     public void spawnParticle(Location location, Particle particle);
 
     /**
-     * Spawns a particle to all players within a default radius of 64 blocks around a given location with the
-     * given material and data value;
+     * Spawns a particle to all players within a default radius of 64 blocks around a given location
+     * with the given material and data value.
+     *
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
      * @param material the {@link Material}
      * @param data the {@link MaterialData}
+     * @throws IllegalArgumentException if location, particle, material or data is null
      */
     public void spawnParticle(Location location, Particle particle, org.bukkit.Material material, MaterialData data);
 
     /**
-     * Spawns a particle to all players within a default radius of 64 blocks around a given location with the
-     * block/item id and data value.
-     * 
+     * Spawns a particle to all players within a default radius of 64 blocks around a given location
+     * with the block/item id and data value.
+     *
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
      * @param id the block/item id
      * @param data the block data value
+     * @throws IllegalArgumentException if location or particle is null
      */
     public void spawnParticle(Location location, Particle particle, int id, int data);
 
     /**
-     * Spawns a particle to all players within a default radius of 64 blocks around a given location with the given
-     * speed.
-     * 
+     * Spawns a particle to all players within a default radius of 64 blocks around a given location
+     * with the given speed.
+     *
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
      * @param speed the speed of the particle
+     * @throws IllegalArgumentException if location or particle is null
      */
     public void spawnParticle(Location location, Particle particle, float speed);
 
     /**
-     * Spawns a particle to all players within a default radius of 64 blocks around a given location with the given
-     * speed and count.
-     * 
+     * Spawns a particle to all players within a default radius of 64 blocks around a given location
+     * with the given speed and count.
+     *
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
      * @param speed the speed of the particle
      * @param particleCount the number of particles to spawn
+     * @throws IllegalArgumentException if location or particle is null
      */
     public void spawnParticle(Location location, Particle particle, float speed, int particleCount);
 
     /**
-     * Spawns a particle to all players within a default radius of 64 blocks around a given location with the given
-     * speed and count. The particle will be randomly offset by the
-     * given offset for each client.
-     * 
+     * Spawns a particle to all players within a default radius of 64 blocks around a given location
+     * with the given speed and count. The particle will be randomly offset by the given offset for
+     * each client.
+     *
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
      * @param offsetX the random X offset
@@ -780,32 +786,35 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param offsetZ the random Z offset
      * @param speed the speed of the particle
      * @param particleCount the number of particles to spawn
+     * @throws IllegalArgumentException if location or particle is null
      */
     public void spawnParticle(Location location, Particle particle, float offsetX, float offsetY, float offsetZ, float speed, int particleCount);
 
     /**
      * Spawns a particle to all players within a given radius around a given location with the given
      * speed, count and the material and data value.
-     * 
+     *
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
      * @param material the {@link Material}
      * @param data the {@link MaterialData}
      * @param speed the speed of the particle
      * @param particleCount the number of particles to spawn
+     * @throws IllegalArgumentException if location, particle, material or data is null
      */
     public void spawnParticle(Location location, Particle particle, org.bukkit.Material material, MaterialData data, float speed, int particleCount);
 
     /**
      * Spawns a particle to all players within a given radius around a given location with the given
      * speed, count and the block/item id and data value.
-     * 
+     *
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
      * @param id the block/item id
      * @param data the block data value
      * @param speed the speed of the particle
      * @param particleCount the number of particles to spawn
+     * @throws IllegalArgumentException if location or particle is null
      */
     public void spawnParticle(Location location, Particle particle, int id, int data, float speed, int particleCount);
 
@@ -813,7 +822,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * Spawns a particle to all players within a given radius around a given location with the given
      * speed, count and the material and data value. The particle will be randomly offset by the
      * given offset for each client.
-     * 
+     *
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
      * @param material the {@link Material}
@@ -824,6 +833,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param speed the speed of the particle
      * @param particleCount the number of particles to spawn
      * @param radius the radius around the location
+     * @throws IllegalArgumentException if location, particle, material or data is null
      */
     public void spawnParticle(Location location, Particle particle, org.bukkit.Material material, MaterialData data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius);
 
@@ -831,7 +841,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * Spawns a particle to all players within a given radius around a given location with the given
      * speed, count and the block/item id and data value. The particle will be randomly offset by the
      * given offset for each client.
-     * 
+     *
      * @param location the {@link Location} around which players must be to see the particle
      * @param particle the {@link Particle}
      * @param id the block/item id
@@ -842,6 +852,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param speed the speed of the particle
      * @param particleCount the number of particles to spawn
      * @param radius the radius around the location
+     * @throws IllegalArgumentException if location or particle is null
      */
     public void spawnParticle(Location location, Particle particle, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius);
 
