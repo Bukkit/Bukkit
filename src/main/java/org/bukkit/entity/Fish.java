@@ -7,8 +7,8 @@ public interface Fish extends Projectile {
 
     /**
      * Gets the chance of a fish biting.
-     *
-     * 0.0 = No Chance.
+     * <p>
+     * 0.0 = No Chance.<br>
      * 1.0 = Instant catch.
      *
      * @return chance
@@ -17,8 +17,8 @@ public interface Fish extends Projectile {
 
     /**
      * Sets the chance of a fish biting.
-     *
-     * 0.0 = No Chance.
+     * <p>
+     * 0.0 = No Chance.<br>
      * 1.0 = Instant catch.
      *
      * @param chance
