@@ -6,7 +6,10 @@ import org.bukkit.event.HandlerList;
 
 /**
  * Called when a sheep's wool is dyed
+ *
+ * @deprecated Use EntityDyeEvent instead
  */
+@Deprecated
 public class SheepDyeWoolEvent extends EntityDyeEvent {
     private static final HandlerList handlers = new HandlerList();
 
