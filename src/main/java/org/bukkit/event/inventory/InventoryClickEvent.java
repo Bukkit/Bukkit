@@ -102,7 +102,8 @@ public class InventoryClickEvent extends InventoryEvent implements Cancellable {
     }
 
     /**
-     * Shift can be combined with any click as a modifier.
+     * Shift can be combined with left or right click as a modifier.<br>
+     * It is never true for middle clicks.
      * @return True if the click is a shift-click.
      */
     public boolean isShiftClick() {
