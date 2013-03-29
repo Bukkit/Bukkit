@@ -21,7 +21,7 @@ public class ReloadCommand extends BukkitCommand {
         if (!testPermission(sender)) return true;
 
         Bukkit.reload();
-        Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Reload complete.");
+        Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Reload complete." + ChatColor.GRAY);
 
         return true;
     }
