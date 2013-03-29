@@ -283,8 +283,7 @@ public abstract class JavaPlugin extends PluginBase {
      *
      * @param config ServerConfig to populate
      */
-    protected void configureDbConfig(ServerConfig config) {
-    }
+    protected void configureDbConfig(ServerConfig config) {}
 
     private String replaceDatabaseString(String input) {
         input = input.replaceAll("\\{DIR\\}", dataFolder.getPath().replaceAll("\\\\", "/") + "/");
