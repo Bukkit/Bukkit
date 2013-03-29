@@ -540,7 +540,116 @@ public enum Material {
                 return false;
         }
     }
-
+    /**
+     * Gets the value of hunger this item will restore.
+     *
+     * @return The amount of hunger the item will restore. Returns 0 if the item is not edible.
+     */
+    public int getNutrition() {
+        switch (this) {
+            case BREAD:
+                return 5;
+            case CARROT_ITEM:
+                return 4;
+            case BAKED_POTATO:
+                return 6;
+            case POTATO_ITEM:
+                return 1;
+            case POISONOUS_POTATO:
+                return 2;
+            case GOLDEN_CARROT:
+                return 6;
+            case PUMPKIN_PIE:
+                return 8;
+            case COOKIE:
+                return 2;
+            case MELON:
+                return 2;
+            case MUSHROOM_SOUP:
+                return 6;
+            case RAW_CHICKEN:
+                return 2;
+            case COOKED_CHICKEN:
+                return 6;
+            case RAW_BEEF:
+                return 3;
+            case COOKED_BEEF:
+                return 8;
+            case RAW_FISH:
+                return 2;
+            case COOKED_FISH:
+                return 5;
+            case PORK:
+                return 3;
+            case GRILLED_PORK:
+                return 8;
+            case APPLE:
+                return 4;
+            case GOLDEN_APPLE:
+                return 4;
+            case ROTTEN_FLESH:
+                return 4;
+            case SPIDER_EYE:
+                return 2;
+            default:
+                return 0;
+        }
+    }
+    /**
+     * Gets the value of saturation this item will restore.
+     *
+     * @return The amount of saturation the item will restore. Returns 0 if the item is not edible.
+     */
+    public double getSaturation() {
+        switch (this) {
+            case BREAD:
+                return 6;
+            case CARROT_ITEM:
+                return 4.8;
+            case BAKED_POTATO:
+                return 7.2;
+            case POTATO_ITEM:
+                return 0.6;
+            case POISONOUS_POTATO:
+                return 1.2;
+            case GOLDEN_CARROT:
+                return 14.4;
+            case PUMPKIN_PIE:
+                return 4.8;
+            case COOKIE:
+                return 0.4;
+            case MELON:
+                return 1.2;
+            case MUSHROOM_SOUP:
+                return 7.2;
+            case RAW_CHICKEN:
+                return 1.2;
+            case COOKED_CHICKEN:
+                return 7.2;
+            case RAW_BEEF:
+                return 1.8;
+            case COOKED_BEEF:
+                return 2.8;
+            case RAW_FISH:
+                return 1.2;
+            case COOKED_FISH:
+                return 6;
+            case PORK:
+                return 1.8;
+            case GRILLED_PORK:
+                return 12.8;
+            case APPLE:
+                return 2.4;
+            case GOLDEN_APPLE:
+                return 9.6;
+            case ROTTEN_FLESH:
+                return .8;
+            case SPIDER_EYE:
+                return 3.2;
+            default:
+                return 0;
+        }
+    }
     /**
      * Attempts to get the Material with the given ID
      *
