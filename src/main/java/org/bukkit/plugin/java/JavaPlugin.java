@@ -248,6 +248,7 @@ public abstract class JavaPlugin extends PluginBase {
             if (description.isDatabaseEnabled()) {
                 ServerConfig db = new ServerConfig();
 
+                configureDbConfig(db);
                 db.setDefaultServer(false);
                 db.setRegister(false);
                 db.setClasses(getDatabaseClasses());
@@ -275,6 +276,14 @@ public abstract class JavaPlugin extends PluginBase {
      */
     public List<Class<?>> getDatabaseClasses() {
         return new ArrayList<Class<?>>();
+    }
+
+    /**
+     * Populates a given {@link ServerConfig} with plugin-specific attributes.
+     *
+     * @param config ServerConfig to populate
+     */
+    protected void configureDbConfig(ServerConfig config) {
     }
 
     private String replaceDatabaseString(String input) {
