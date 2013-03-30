@@ -4,17 +4,17 @@ package org.bukkit.entity;
  * Represents a villager NPC
  */
 public interface Villager extends Ageable, NPC, Merchant {
-	
+
     /**
      * Gets the current profession of this villager.
      *
      * @return Current profession.
      */
     public Profession getProfession();
-    
+
     /**
      * Sets the new profession of this villager.
-     * 
+     *
      * @param profession New profession.
      */
     public void setProfession(Profession profession);
