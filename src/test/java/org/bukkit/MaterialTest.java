@@ -55,6 +55,27 @@ public class MaterialTest {
         Material.matchMaterial(null);
     }
 
+    @Test(expected = 0)
+    public void getNutritionBlock() {
+        Material.STONE.getNutrition();
+    }
+
+    @Test(expected = 3)
+    public void getNutritionFood() {
+        Material.PORK.getNutrition();
+    }
+
+    @Test(expected = 0)
+    public void getSaturationBlock() {
+        Material.STONE.getSaturation();
+    }
+
+    @Test(expected = 1.8)
+    public void getSaturationFood() {
+        Material.PORK.getSaturation();
+    }
+
+
     @Test
     public void matchMaterialById() {
         for (Material material : Material.values()) {
