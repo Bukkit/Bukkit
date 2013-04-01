@@ -166,6 +166,7 @@ public enum EntityType {
 
     private static final Map<String, EntityType> NAME_MAP = new HashMap<String, EntityType>();
     private static final Map<Short, EntityType> ID_MAP = new HashMap<Short, EntityType>();
+    private ArrayList<String> metadata;
 
     static {
         for (EntityType type : values()) {
@@ -187,11 +188,29 @@ public enum EntityType {
         this.clazz = clazz;
         this.typeId = (short) typeId;
         this.independent = independent;
+        this.metadata = metadata
         if (clazz != null) {
             this.living = LivingEntity.class.isAssignableFrom(clazz);
         }
     }
+    private EntityType(String name, Class<? extends Entity> clazz, int typeId, boolean independent, ArrayList<String> metadatakeys, ArrayList<MetadataValue> metadatavalues) {
+        this.name = name;
+        this.clazz = clazz;
+        this.typeId = (short) typeId;
+        this.independent = independent;
+        if (clazz != null) {
+            this.living = LivingEntity.class.isAssignableFrom(clazz);
+        }
+        for(String s : metadatakeys) {
+            for(MetadataValue v : metadatavalues) {
+                this.living.setMetadata (s, v);
+            }
+        }
+    }
 
+    private EntityType(String name, Class<? extends Entity> clazz, int typeId, ArrayList<String> metadatakeys, ArrayList<MetadataValue> metadatavalues) {
+        this(name, clazz, typeId, true, metadatakeys, metadatavalues);
+    }
     public String getName() {
         return name;
     }
