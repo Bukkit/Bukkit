@@ -2,41 +2,27 @@ package org.bukkit.event.entity;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.TNTPrimed;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.block.BlockEvent;
 
 /**
  * Called when a TNT is ignited, leading to the creation of a primed TNT.
  * <p />
  * If a TNTIgniteEvent is cancelled, the {@link TNTPrimed} will not be spawned.
  */
-public class TNTIgniteEvent extends BlockEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private final TNTPrimed tntPrimed;
-    private boolean cancelled;
+public class TNTIgniteEvent extends FuseStartedEvent {
+    private final Block block;
 
     public TNTIgniteEvent(final Block block, final TNTPrimed entity) {
-        super(block);
-        this.tntPrimed = entity;
+        super(entity);
+        this.block = block;
     }
 
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
-
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
+    /**
+     * Gets the {@link Block} of TNT that started the event.
+     *
+     * @return The TNT Block
+     */
+    public Block getBlock() {
+        return block;
     }
 
     /**
@@ -44,7 +30,8 @@ public class TNTIgniteEvent extends BlockEvent implements Cancellable {
      *
      * @return The {@link TNTPrimed} that will be spawned
      */
+    @Override
     public TNTPrimed getEntity() {
-        return tntPrimed;
+        return (TNTPrimed) entity;
     }
 }
