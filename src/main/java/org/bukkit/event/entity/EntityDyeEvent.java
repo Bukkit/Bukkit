@@ -6,7 +6,11 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when an entity is dyed.
+ * Called when an entity has dye successfully used on them.
+ * <p>
+ * For sheep, this event is called when their wool is dyed. For wolves, this
+ * event is fired when their collar is dyed. Note that this event will not
+ * fire if the dye being used is the same color as the wool or the collar.
  */
 public class EntityDyeEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
