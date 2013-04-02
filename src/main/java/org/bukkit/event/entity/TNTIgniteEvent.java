@@ -1,9 +1,10 @@
-package org.bukkit.event.block;
+package org.bukkit.event.entity;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.block.BlockEvent;
 
 /**
  * Called when a TNT is ignited, leading to the creation of a primed TNT.
