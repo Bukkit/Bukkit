@@ -1,6 +1,5 @@
 package org.bukkit.metadata;
 
-import org.bukkit.plugin.Plugin;
 
 /**
  * Provide "On-Demand" Metadata lookup.
@@ -11,7 +10,7 @@ import org.bukkit.plugin.Plugin;
  *
  * @param <T> A supplied class which can receive Metadata.
  */
-public interface MetadataProvider<T> {
+public interface MetadataProvider<T extends Metadatable> {
     /**
      * Get a Metadata value for a subject.
      * @param subject The object for which we're requesting metadata

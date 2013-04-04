@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.logging.Level;
 
-public abstract class MetadataStoreBase<T> {
+public abstract class MetadataStoreBase<T extends Metadatable> implements MetadataStore<T> {
     private Map<String, List<MetadataValue>> metadataMap = new HashMap<String, List<MetadataValue>>();
     private WeakHashMap<T, Map<String, String>> disambiguationCache = new WeakHashMap<T, Map<String, String>>();
     private final Collection<MetadataProvider<T>> providers;
