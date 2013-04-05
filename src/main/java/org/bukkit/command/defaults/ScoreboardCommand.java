@@ -102,7 +102,7 @@ public class ScoreboardCommand extends VanillaCommand {
                 String name = args[2];
                 String criteria = args[3];
 
-                if (criteria == null) {
+                if (criteria == null || !OBJECTIVES_CRITERIA.contains(criteria)) {
                     sender.sendMessage(ChatColor.RED + "Invalid objective criteria type. Valid types are: " + stringCollectionToString(OBJECTIVES_CRITERIA));
                 } else if (name.length() > 16) {
                     sender.sendMessage(ChatColor.RED + "The name '" + name + "' is too long for an objective, it can be at most 16 characters long");
@@ -385,7 +385,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     String[] playerArray = addedPlayers.toArray(new String[0]);
                     StringBuilder builder = new StringBuilder();
                     for (int x = 0; x < playerArray.length; x++) {
-                        if (x == playerArray.length - 1) {
+                        if (x == playerArray.length - 1 && x != 0) {
                             builder.append(" and ");
                         } else if (x > 0) {
                             builder.append(", ");
