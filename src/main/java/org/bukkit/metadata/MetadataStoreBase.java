@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +15,9 @@ import java.util.logging.Level;
 public abstract class MetadataStoreBase<T extends Metadatable> implements MetadataStore<T> {
     private Map<String, List<MetadataValue>> metadataMap = new HashMap<String, List<MetadataValue>>();
     private WeakHashMap<T, Map<String, String>> disambiguationCache = new WeakHashMap<T, Map<String, String>>();
-    private final Collection<MetadataProvider<T>> providers;
+    private final Map<Class<? extends Metadatable>, List<MetadataProvider<T>>> providers;
 
-    protected MetadataStoreBase(Collection<MetadataProvider<T>> providers) {
+    protected MetadataStoreBase(Map<Class<? extends Metadatable>, List<MetadataProvider<T>>> providers) {
         this.providers = providers;
     }
 
@@ -180,7 +179,7 @@ public abstract class MetadataStoreBase<T extends Metadatable> implements Metada
      */
     private boolean buildProviderData(T subject, String metadataKey) {
         boolean success = false;
-        for (MetadataProvider<T> provider : providers) {
+        for (MetadataProvider<T> provider : providers.get(subject.getClass())) {
             MetadataValue providedValue = null;
             try {
                 providedValue = provider.getValue(subject, metadataKey);
