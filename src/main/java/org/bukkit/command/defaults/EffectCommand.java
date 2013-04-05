@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.NumberConversions;
 import org.bukkit.util.StringUtil;
 
 public class EffectCommand extends VanillaCommand {
@@ -92,7 +93,7 @@ public class EffectCommand extends VanillaCommand {
             final PotionEffect applyEffect = new PotionEffect(effect, duration, amplification);
 
             player.addPotionEffect(applyEffect, true);
-            broadcastCommandMessage(sender, String.format("Given %s (ID %d) * %d to %s for %d seconds", effect.getName(), effect.getId(), amplification, args[0], duration));
+            broadcastCommandMessage(sender, String.format("Given %s (ID %d) * %d to %s for %d seconds", effect.getName(), effect.getId(), amplification, args[0], NumberConversions.floor(duration / 20D)));
         }
 
         return true;
