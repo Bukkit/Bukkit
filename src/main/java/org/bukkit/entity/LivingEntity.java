@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 /**
  * Represents a living entity, such as a monster or player
  */
-public interface LivingEntity extends Entity, Damageable, Intelligent {
+public interface LivingEntity extends Entity, Damageable {
     /**
      * Gets the height of the living entity's eyes above its Location.
      *

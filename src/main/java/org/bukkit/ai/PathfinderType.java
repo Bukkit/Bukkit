@@ -9,10 +9,10 @@ public enum PathfinderType {
     /**
      * Goal pathfinders are peaceful and help mobs to swim, panic and lots of more useful things
      */
-    Goal,
+    GOAL,
     /**
      * Targetting pathfinders help monsters & golems to choose targets
      *  Note: You should call {@link EntityTargetEvent} when you choose target
      */
-    Target
+    TARGET
 }

@@ -3,7 +3,7 @@ package org.bukkit.entity;
 /**
  * Represents a villager NPC
  */
-public interface Villager extends Ageable, NPC {
+public interface Villager extends Ageable, NPC, PathfindingEntity {
     /**
      * Gets the current profession of this villager.
      *
