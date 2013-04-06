@@ -3,7 +3,7 @@ package org.bukkit.entity;
 /**
  * Represents a Skeleton.
  */
-public interface Skeleton extends Monster {
+public interface Skeleton extends Monster, PathfindingEntity {
     /**
      * Gets the current type of this skeleton.
      *
