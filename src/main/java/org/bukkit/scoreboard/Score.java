@@ -42,6 +42,25 @@ public interface Score {
     void setScore(int score) throws IllegalStateException;
 
     /**
+     * Checks if this score is set.
+     * 
+     * @return true if this score is set.
+     * @throws IllegalStateException if the associated objective has been
+     *     unregistered
+     */
+    boolean isSet() throws IllegalStateException;
+
+    /**
+     * Resets this score.
+     * <p>
+     * After calling this, Score.isSet() will return false.
+     * 
+     * @throws IllegalStateException if the associated objective has been
+     *     unregistered
+     */
+    void reset() throws IllegalStateException;
+
+    /**
      * Gets the scoreboard for the associated objective.
      *
      * @return the owning objective's scoreboard, or null if it has been
