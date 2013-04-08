@@ -389,6 +389,10 @@ public final class Bukkit {
         return server.getShutdownMessage();
     }
 
+    public static boolean isCommandTabEnabled() {
+        return server.isCommandTabEnabled();
+    }
+
     public static WarningState getWarningState() {
         return server.getWarningState();
     }

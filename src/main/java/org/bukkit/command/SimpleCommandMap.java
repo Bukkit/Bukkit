@@ -221,6 +221,10 @@ public class SimpleCommandMap implements CommandMap {
         int spaceIndex = cmdLine.indexOf(' ');
 
         if (spaceIndex == -1) {
+            if (!server.isCommandTabEnabled()) {
+                return null;
+            }
+
             ArrayList<String> completions = new ArrayList<String>();
             Map<String, Command> knownCommands = this.knownCommands;
 
