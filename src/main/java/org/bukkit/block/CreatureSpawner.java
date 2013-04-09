@@ -157,7 +157,8 @@ public interface CreatureSpawner extends BlockState {
     public int getRange();
 
     /**
-     * Sets the maximum distance from the spawner that entities will be spawned.
+     * Sets the maximum distance from the spawner that entities will be spawned. This uses a horizontal
+     * square centred on the spawner
      *
      * @param range The distance.
      */
