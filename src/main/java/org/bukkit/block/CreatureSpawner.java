@@ -29,6 +29,7 @@ public interface CreatureSpawner extends BlockState {
      * Set the spawner's creature type.
      *
      * @param creatureType The creature type.
+     * @throws IllegalArgumentException If the entity cannot be spawned from spawners.
      */
     public void setSpawnedType(EntityType creatureType);
 
@@ -36,14 +37,16 @@ public interface CreatureSpawner extends BlockState {
      * Sets the entity that will be spawned.
      *
      * @param entity The entity
+     * @throws IllegalArgumentException If the entity cannot be spawned from spawners.
      */
     public void setSpawnedEntity(Entity entity);
 
     /**
      * Sets the entity that will be spawned.
      *
-     * @param entity The entity
-     * @param includePosition If true position data will be kept
+     * @param entity The entity.
+     * @param includePosition If true position data will be kept.
+     * @throws IllegalArgumentException If the entity cannot be spawned from spawners.
      */
     public void setSpawnedEntity(Entity entity, boolean includePosition);
 
@@ -113,6 +116,7 @@ public interface CreatureSpawner extends BlockState {
      * Set the spawner's minimum delay.
      *
      * @param delay The delay.
+     * @throws IllegalArgumentException if delay is less than or equal to 0
      */
     public void setMinDelay(int delay);
 
@@ -145,7 +149,8 @@ public interface CreatureSpawner extends BlockState {
     public void setCount(int count);
 
     /**
-     * Gets the maximum distance from the spawner that entities will be spawned.
+     * Gets the maximum distance from the spawner that entities will be spawned. This uses a horizontal
+     * square centred on the spawner.
      *
      * @return The distance.
      */
@@ -179,20 +184,22 @@ public interface CreatureSpawner extends BlockState {
      * Sets the number of other entities that need to be within the spawner's range to prevent spawning.
      *
      * @param maxNearbyEntities The number.
+     * @throws IllegalArgumentException If maxNearbyEntities is less than 0.
      */
     public void setMaxNearbyEntities(int maxNearbyEntities);
 
     /**
-     * Gets the range that a player must be within to allow spawning.
+     * Gets the radius of the sphere that a player must be within to allow spawning.
      *
      * @return The range.
      */
     public int getRequiredPlayerRange();
 
     /**
-     * Sets the range that a player must be within to allow spawning.
+     * Sets the radius of the sphere that a player must be within to allow spawning.
      *
      * @param requiredPlayerRange The range.
+     * @throws IllegalArgumentException If requiredPlayerRange is less than or equal to 0.
      */
     public void setRequiredPlayerRange(int requiredPlayerRange);
 }
