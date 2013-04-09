@@ -15,24 +15,15 @@ import org.bukkit.potion.PotionEffect;
  * <li>Splash/edible potion effect gained/lost</li>
  * <li>Plugin altered potion effect gained/lost</li>
  * <li>Mob (Cave Spider, Zombie, Wither, etc) attacks entity</li>
+ * <li>The entity used a milk bucket to remove an effect</li>
  * </ul>
  */
 public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancellable {
-    public static enum PotionChangeCause {
+    public static enum Cause {
         /**
-         * Wither-like entity caused event
+         * A mob caused the event
          */
-        WITHER,
-
-        /**
-         * Caused by a zombie
-         */
-        ZOMBIE,
-
-        /**
-         * Caused by a cave spider
-         */
-        CAVE_SPIDER,
+        MOB,
 
         /**
          * Caused by a beacon block
@@ -45,36 +36,43 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
         POTION,
 
         /**
-         * Plugin altered effect
+         * A plugin added the effect
          */
-        PLUGIN,
+        PLUGIN_ADDED,
 
         /**
-         * Effect loss
+         * A plugin removed the effect
          */
-        LOSS;
+        PLUGIN_REMOVED,
+
+        /**
+         * The effect expired (timer reached 0:00)
+         */
+        EXPIRED,
+
+        /**
+         * The effect was treated (The entity used a milk bucket)
+         */
+        TREATED;
     }
 
     private static final HandlerList handlers = new HandlerList();
-    private boolean lostEffect = false;
     private boolean cancel = false;
     private boolean ambient = false;
     private PotionEffect effect;
-    private PotionChangeCause cause;
+    private Cause cause;
     private Location location;
 
     /**
      * Construct a new EntityPotionEffectChangeEvent
      * @param who the entity being affected
      * @param effect the effect
-     * @param lostEffect true to identify the effect is being lost
      * @param cause the cause to be applied
      * @param ambient true if ambient
      * @param location the location of the event, if applicable
      */
-    public EntityPotionEffectChangeEvent(LivingEntity who, PotionEffect effect, boolean lostEffect, PotionChangeCause cause, boolean ambient, Location location) {
+    public EntityPotionEffectChangeEvent(LivingEntity who, PotionEffect effect, Cause cause, boolean ambient, Location location) {
         super(who);
-        this.lostEffect = lostEffect;
         this.effect = effect;
         this.cause = cause;
         this.ambient = ambient;
@@ -110,7 +108,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
      * Gets the cause associated with this event
      * @return the cause of the event
      */
-    public PotionChangeCause getCause() {
+    public Cause getCause() {
         return cause;
     }
 
@@ -126,11 +124,19 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
     }
 
     /**
-     * Used to determine if the entity is going to lose the effect
-     * @return true if the entity will lose the effect, false otherwise
+     * Used to determine if the entity is gaining the effect.
+     * @return true if the entity is gaining the effect, false otherwise
      */
-    public boolean isLosingEffect() {
-        return lostEffect;
+    public boolean isGainingEffect() {
+        switch(cause){
+        case PLUGIN_ADDED:
+        case POTION:
+        case MOB:
+        case BEACON:
+            return true;
+        default:
+            return false;
+        }
     }
 
     public boolean isCancelled() {
@@ -139,7 +145,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
 
     /**
      * Set the event as cancelled.<br>
-     * The event will only cancel if the entity is <b>not</b> losing the
+     * The event will only cancel if the entity is <b>gaining</b> the
      * effect.
      * @param cancel true to cancel, if valid
      */
