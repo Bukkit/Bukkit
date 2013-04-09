@@ -24,6 +24,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 import com.avaje.ebean.config.ServerConfig;
 import org.bukkit.inventory.ItemFactory;
@@ -50,7 +51,7 @@ public final class Bukkit {
 
     /**
      * Attempts to set the {@link Server} singleton.
-     * <p />
+     * <p>
      * This cannot be done if the Server is already set.
      *
      * @param server Server instance
@@ -394,5 +395,9 @@ public final class Bukkit {
 
     public static ItemFactory getItemFactory() {
         return server.getItemFactory();
+    }
+
+    public static ScoreboardManager getScoreboardManager() {
+        return server.getScoreboardManager();
     }
 }

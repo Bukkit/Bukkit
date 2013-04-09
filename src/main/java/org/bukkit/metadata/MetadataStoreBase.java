@@ -6,8 +6,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.*;
 
 public abstract class MetadataStoreBase<T> {
-    private Map<String, List<MetadataValue>> metadataMap = new HashMap<String, List<MetadataValue>>();
-    private WeakHashMap<T, Map<String, String>> disambiguationCache = new WeakHashMap<T, Map<String, String>>();
+    private Map<String, Map<Plugin, MetadataValue>> metadataMap = new HashMap<String, Map<Plugin, MetadataValue>>();
 
     /**
      * Adds a metadata value to an object. Each metadata value is owned by a specific{@link Plugin}.
@@ -26,23 +25,16 @@ public abstract class MetadataStoreBase<T> {
      * @throws IllegalArgumentException If value is null, or the owning plugin is null
      */
     public synchronized void setMetadata(T subject, String metadataKey, MetadataValue newMetadataValue) {
+        Plugin owningPlugin = newMetadataValue.getOwningPlugin();
         Validate.notNull(newMetadataValue, "Value cannot be null");
-        Validate.notNull(newMetadataValue.getOwningPlugin(), "Plugin cannot be null");
-        String key = cachedDisambiguate(subject, metadataKey);
-        if (!metadataMap.containsKey(key)) {
-            metadataMap.put(key, new ArrayList<MetadataValue>());
+        Validate.notNull(owningPlugin, "Plugin cannot be null");
+        String key = disambiguate(subject, metadataKey);
+        Map<Plugin, MetadataValue> entry = metadataMap.get(key);
+        if (entry == null) {
+            entry = new WeakHashMap<Plugin, MetadataValue>(1);
+            metadataMap.put(key, entry);
         }
-        // we now have a list of subject's metadata for the given metadata key. If newMetadataValue's owningPlugin
-        // is found in this list, replace the value rather than add a new one.
-        List<MetadataValue> metadataList = metadataMap.get(key);
-        for (int i = 0; i < metadataList.size(); i++) {
-            if (metadataList.get(i).getOwningPlugin().equals(newMetadataValue.getOwningPlugin())) {
-                metadataList.set(i, newMetadataValue);
-                return;
-            }
-        }
-        // we didn't find a duplicate...add the new metadata value
-        metadataList.add(newMetadataValue);
+        entry.put(owningPlugin, newMetadataValue);
     }
 
     /**
@@ -55,9 +47,10 @@ public abstract class MetadataStoreBase<T> {
      * @see MetadataStore#getMetadata(Object, String)
      */
     public synchronized List<MetadataValue> getMetadata(T subject, String metadataKey) {
-        String key = cachedDisambiguate(subject, metadataKey);
+        String key = disambiguate(subject, metadataKey);
         if (metadataMap.containsKey(key)) {
-            return Collections.unmodifiableList(metadataMap.get(key));
+            Collection<MetadataValue> values = metadataMap.get(key).values();
+            return Collections.unmodifiableList(new ArrayList<MetadataValue>(values));
         } else {
             return Collections.emptyList();
         }
@@ -71,7 +64,7 @@ public abstract class MetadataStoreBase<T> {
      * @return the existence of the metadataKey within subject.
      */
     public synchronized boolean hasMetadata(T subject, String metadataKey) {
-        String key = cachedDisambiguate(subject, metadataKey);
+        String key = disambiguate(subject, metadataKey);
         return metadataMap.containsKey(key);
     }
 
@@ -86,16 +79,15 @@ public abstract class MetadataStoreBase<T> {
      */
     public synchronized void removeMetadata(T subject, String metadataKey, Plugin owningPlugin) {
         Validate.notNull(owningPlugin, "Plugin cannot be null");
-        String key = cachedDisambiguate(subject, metadataKey);
-        List<MetadataValue> metadataList = metadataMap.get(key);
-        if (metadataList == null) return;
-        for (int i = 0; i < metadataList.size(); i++) {
-            if (metadataList.get(i).getOwningPlugin().equals(owningPlugin)) {
-                metadataList.remove(i);
-                if (metadataList.isEmpty()) {
-                    metadataMap.remove(key);
-                }
-            }
+        String key = disambiguate(subject, metadataKey);
+        Map<Plugin, MetadataValue> entry = metadataMap.get(key);
+        if (entry == null) {
+            return;
+        }
+
+        entry.remove(owningPlugin);
+        if (entry.isEmpty()) {
+            metadataMap.remove(key);
         }
     }
 
@@ -109,35 +101,10 @@ public abstract class MetadataStoreBase<T> {
      */
     public synchronized void invalidateAll(Plugin owningPlugin) {
         Validate.notNull(owningPlugin, "Plugin cannot be null");
-        for (List<MetadataValue> values : metadataMap.values()) {
-            for (MetadataValue value : values) {
-                if (value.getOwningPlugin().equals(owningPlugin)) {
-                    value.invalidate();
-                }
+        for (Map<Plugin, MetadataValue> values : metadataMap.values()) {
+            if (values.containsKey(owningPlugin)) {
+                values.get(owningPlugin).invalidate();
             }
-        }
-    }
-
-    /**
-     * Caches the results of calls to {@link MetadataStoreBase#disambiguate(Object, String)} in a {@link WeakHashMap}. Doing so maintains a
-     * <a href="http://www.codeinstructions.com/2008/09/weakhashmap-is-not-cache-understanding.html">canonical list</a>
-     * of disambiguation strings for objects in memory. When those objects are garbage collected, the disambiguation string
-     * in the list is aggressively garbage collected as well.
-     *
-     * @param subject     The object for which this key is being generated.
-     * @param metadataKey The name identifying the metadata value.
-     * @return a unique metadata key for the given subject.
-     */
-    private String cachedDisambiguate(T subject, String metadataKey) {
-        if (disambiguationCache.containsKey(subject) && disambiguationCache.get(subject).containsKey(metadataKey)) {
-            return disambiguationCache.get(subject).get(metadataKey);
-        } else {
-            if (!disambiguationCache.containsKey(subject)) {
-                disambiguationCache.put(subject, new HashMap<String, String>());
-            }
-            String disambiguation = disambiguate(subject, metadataKey);
-            disambiguationCache.get(subject).put(metadataKey, disambiguation);
-            return disambiguation;
         }
     }
 
