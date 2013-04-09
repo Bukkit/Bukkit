@@ -165,18 +165,18 @@ public enum Particle {
     }
 
     /**
-     * Returns whether the particle needs the extra ID information
+     * Returns whether the particle requires a Material to be created
      * 
-     * @return Whether the particle needs extra ID information
+     * @return Whether the particle requires a Material to be created
      */
     public boolean hasMaterial() {
         return hasMaterial;
     }
 
     /**
-     * Returns whether the particle needs the extra data information
+     * Returns whether the particle requires a data value in order to be created
      * 
-     * @return Whether the particle needs extra data information
+     * @return Whether the particle requires a data value in order to be created
      */
     public boolean hasMaterialData() {
         return hasMaterialData;
