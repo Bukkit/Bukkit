@@ -146,22 +146,22 @@ public enum Particle {
      */
     TILE_CRACK(true, true);
 
-    private final boolean hasMaterial;
-    private final boolean hasMaterialData;
+    private final boolean needsMaterial;
+    private final boolean needsMaterialData;
 
-    Particle() {
-        hasMaterial = false;
-        hasMaterialData = false;
+    private Particle() {
+        needsMaterial = false;
+        needsMaterialData = false;
     }
 
-    Particle(boolean hasMaterial) {
-        this.hasMaterial = hasMaterial;
-        hasMaterialData = false;
+    private Particle(boolean needsMaterial) {
+        this.needsMaterial = needsMaterial;
+        needsMaterialData = false;
     }
 
-    Particle(boolean hasMaterial, boolean hasMaterialData) {
-        this.hasMaterial = hasMaterial;
-        this.hasMaterialData = hasMaterialData;
+    private Particle(boolean hasMaterial, boolean needsMaterialData) {
+        this.needsMaterial = hasMaterial;
+        this.needsMaterialData = needsMaterialData;
     }
 
     /**
@@ -169,8 +169,8 @@ public enum Particle {
      * 
      * @return Whether the particle requires a Material to be created
      */
-    public boolean hasMaterial() {
-        return hasMaterial;
+    public boolean needsMaterial() {
+        return needsMaterial;
     }
 
     /**
@@ -178,7 +178,7 @@ public enum Particle {
      * 
      * @return Whether the particle requires a data value in order to be created
      */
-    public boolean hasMaterialData() {
-        return hasMaterialData;
+    public boolean needsMaterialData() {
+        return needsMaterialData;
     }
 }
