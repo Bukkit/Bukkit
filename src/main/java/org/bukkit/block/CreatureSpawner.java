@@ -34,14 +34,14 @@ public interface CreatureSpawner extends BlockState {
 
     /**
      * Sets the entity that will be spawned.
-     * 
+     *
      * @param entity The entity
      */
     public void setSpawnedEntity(Entity entity);
 
     /**
      * Sets the entity that will be spawned.
-     * 
+     *
      * @param entity The entity
      * @param includePosition If true position data will be kept
      */
@@ -132,56 +132,66 @@ public interface CreatureSpawner extends BlockState {
 
     /**
      * Gets the number of entities that the spawner will attempt to spawn.
-     * 
+     *
      * @return The number.
      */
     public int getCount();
 
     /**
      * Sets the number of entities that the spawner will attempt to spawn.
-     * 
+     *
      * @param count The number.
      */
     public void setCount(int count);
 
     /**
      * Gets the maximum distance from the spawner that entities will be spawned.
-     * 
+     *
      * @return The distance.
      */
     public int getRange();
 
     /**
      * Sets the maximum distance from the spawner that entities will be spawned.
-     * 
+     *
      * @param range The distance.
      */
     public void setRange(int range);
 
     /**
+     * Set the vertical range of this CreatureSpawner. Spawn attempts will be uniformly distributed
+     * in the range specified. Vanilla behavior (1 below, 1 above) is equivalent to calling this with (1, 1).
+     *
+     * @param maxBelow Maximum Y-difference below this CreatureSpawner for spawning attempts
+     * @param maxAbove Maximum Y-difference above this CreatureSpawner for spawning attempts
+     * @throws IllegalArgumentException when no Y-values would be possible (e.g. setVerticalRange(1, -2))
+     */
+    public void setVerticalRange(int maxBelow, int maxAbove);
+
+    /**
      * Gets the number of other entities that need to be within the spawner's range to prevent spawning,
-     * 
+     *
      * @return The number.
      */
     public int getMaxNearbyEntities();
 
     /**
      * Sets the number of other entities that need to be within the spawner's range to prevent spawning.
-     * 
+     *
      * @param maxNearbyEntities The number.
      */
     public void setMaxNearbyEntities(int maxNearbyEntities);
 
     /**
      * Gets the range that a player must be within to allow spawning.
-     * 
+     *
      * @return The range.
      */
     public int getRequiredPlayerRange();
 
     /**
      * Sets the range that a player must be within to allow spawning.
-     * 
+     *
      * @param requiredPlayerRange The range.
      */
     public void setRequiredPlayerRange(int requiredPlayerRange);
