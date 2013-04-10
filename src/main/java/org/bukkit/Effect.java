@@ -202,7 +202,7 @@ public enum Effect {
     /**
      * The particle that appears when hitting a villager
      */
-    THUNDERCLOUD("angryVillager", Type.PARTICLE),
+    VILLAGER_THUNDERCLOUD("angryVillager", Type.PARTICLE),
     /**
      * The particle that appears when trading with a villager
      */
