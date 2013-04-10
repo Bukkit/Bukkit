@@ -683,6 +683,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
     /**
      * Plays an effect to all players within a default radius around a given location.
      *
+     * @param location the {@link Location} around which players must be to see the effect
+     * @param effect the {@link Effect}
+     * @throws IllegalArgumentException if the location or effect is null. It also throws when
+     *                                  the effect requires a material or a material data
+     */
+    public void playEffect(Location location, Effect effect);
+
+    /**
+     * Plays an effect to all players within a default radius around a given location.
+     *
      * @param location the {@link Location} around which players must be to hear the sound
      * @param effect the {@link Effect}
      * @param data a data bit needed for some effects
@@ -719,154 +729,38 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public <T> void playEffect(Location location, Effect effect, T data, int radius);
 
     /**
-     * Spawns a particle to all players within a default radius of 64 blocks around a given location.
+     * Plays an effect to all players within a default radius around a given location.
+     * The effect will use the provided material (and material data if required).
      *
-     * @param location the {@link Location} around which players must be to see the particle
-     * @param particle the {@link Particle}
-     * @throws IllegalArgumentException if location or particle is null. It also throws when particle
-     *                                  requires a Material or MaterialData
-     */
-    public void spawnParticle(Location location, Particle particle);
-
-    /**
-     * Spawns a particle to all players within a default radius of 64 blocks around a given location
-     * with the given material and data value.
-     *
-     * @param location the {@link Location} around which players must be to see the particle
-     * @param particle the {@link Particle}
+     * @param location the {@link Location} around which players must be to see the effect
+     * @param effect effect the {@link Effect}
      * @param material the {@link Material}
      * @param data the {@link MaterialData}
-     * @throws IllegalArgumentException if location, particle, material or data is null. It also
-     *                                  throws when the particle doesn't require a Material or
-     *                                  MaterialData
-     */
-    public void spawnParticle(Location location, Particle particle, org.bukkit.Material material, MaterialData data);
-
-    /**
-     * Spawns a particle to all players within a default radius of 64 blocks around a given location
-     * with the block/item id and data value.
-     *
-     * @param location the {@link Location} around which players must be to see the particle
-     * @param particle the {@link Particle}
-     * @param id the block/item id
-     * @param data the block data value
-     * @throws IllegalArgumentException if location or particle is null. It also throws when the
-     *                                  particle doesn't require a block/item id
-     */
-    public void spawnParticle(Location location, Particle particle, int id, int data);
-
-    /**
-     * Spawns a particle to all players within a default radius of 64 blocks around a given location
-     * with the given speed.
-     *
-     * @param location the {@link Location} around which players must be to see the particle
-     * @param particle the {@link Particle}
-     * @param speed the speed of the particle
-     * @throws IllegalArgumentException if location or particle is null. It also throws when particle
-     *                                  requires a Material or MaterialData
-     */
-    public void spawnParticle(Location location, Particle particle, float speed);
-
-    /**
-     * Spawns a particle to all players within a default radius of 64 blocks around a given location
-     * with the given speed and count.
-     *
-     * @param location the {@link Location} around which players must be to see the particle
-     * @param particle the {@link Particle}
-     * @param speed the speed of the particle
      * @param particleCount the number of particles to spawn
-     * @throws IllegalArgumentException if location or particle is null. It also throws when particle
-     *                                  requires a Material or MaterialData
+     * @throws IllegalArgumentException if the location or effect is null. It also throws when
+     *                                  the effect doesn't requires a material or a material data
      */
-    public void spawnParticle(Location location, Particle particle, float speed, int particleCount);
+    public void playEffect(Location location, Effect effect, org.bukkit.Material material, MaterialData data, int particleCount);
 
     /**
-     * Spawns a particle to all players within a default radius of 64 blocks around a given location
-     * with the given speed and count. The particle will be randomly offset by the given offset for
-     * each client.
+     * Plays an effect to all players within a default radius around a given location.
+     * The effect will use the provided material (and material data if required). The
+     * effect will be randomly offset by offsetX, offsetY, offsetZ for each client if 
+     * the effect is a particle. The effect will have the given speed and particle count
+     * if the effect is a particle
      *
-     * @param location the {@link Location} around which players must be to see the particle
-     * @param particle the {@link Particle}
-     * @param offsetX the random X offset
-     * @param offsetY the random Y offset
-     * @param offsetZ the random Z offset
-     * @param speed the speed of the particle
-     * @param particleCount the number of particles to spawn
-     * @throws IllegalArgumentException if location or particle is null. It also throws when particle
-     *                                  requires a Material or MaterialData
-     */
-    public void spawnParticle(Location location, Particle particle, float offsetX, float offsetY, float offsetZ, float speed, int particleCount);
-
-    /**
-     * Spawns a particle to all players within a given radius around a given location with the given
-     * speed, count and the material and data value.
-     *
-     * @param location the {@link Location} around which players must be to see the particle
-     * @param particle the {@link Particle}
-     * @param material the {@link Material}
-     * @param data the {@link MaterialData}
-     * @param speed the speed of the particle
-     * @param particleCount the number of particles to spawn
-     * @throws IllegalArgumentException if location, particle, material or data is null. It also
-     *                                  throws when the particle doesn't require a Material or
-     *                                  MaterialData
-     */
-    public void spawnParticle(Location location, Particle particle, org.bukkit.Material material, MaterialData data, float speed, int particleCount);
-
-    /**
-     * Spawns a particle to all players within a given radius around a given location with the given
-     * speed, count and the block/item id and data value.
-     *
-     * @param location the {@link Location} around which players must be to see the particle
-     * @param particle the {@link Particle}
-     * @param id the block/item id
-     * @param data the block data value
-     * @param speed the speed of the particle
-     * @param particleCount the number of particles to spawn
-     * @throws IllegalArgumentException if location or particle is null. It also throws when the particle
-     *                                  doesn't require a block/item id
-     */
-    public void spawnParticle(Location location, Particle particle, int id, int data, float speed, int particleCount);
-
-    /**
-     * Spawns a particle to all players within a given radius around a given location with the given
-     * speed, count and the material and data value. The particle will be randomly offset by the
-     * given offset for each client.
-     *
-     * @param location the {@link Location} around which players must be to see the particle
-     * @param particle the {@link Particle}
-     * @param material the {@link Material}
-     * @param data the {@link MaterialData}
-     * @param offsetX the random X offset
-     * @param offsetY the random Y offset
-     * @param offsetZ the random Z offset
-     * @param speed the speed of the particle
-     * @param particleCount the number of particles to spawn
+     * @param location the {@link Location} around which players must be to see the effect
+     * @param effect effect the {@link Effect}
+     * @param id the item/block/data id for the effect
+     * @param data the data value of the block/item for the effect
+     * @param offsetX the amount to be randomly offset by in the X axis
+     * @param offsetY the amount to be randomly offset by in the Y axis
+     * @param offsetZ the amount to be randomly offset by in the Z axis
+     * @param speed the speed of the particles
+     * @param particleCount the number of particles
      * @param radius the radius around the location
-     * @throws IllegalArgumentException if location, particle, material or data is null. It also
-     *                                  throws when the particle doesn't require a Material or
-     *                                  MaterialData
      */
-    public void spawnParticle(Location location, Particle particle, org.bukkit.Material material, MaterialData data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius);
-
-    /**
-     * Spawns a particle to all players within a given radius around a given location with the given
-     * speed, count and the block/item id and data value. The particle will be randomly offset by the
-     * given offset for each client.
-     *
-     * @param location the {@link Location} around which players must be to see the particle
-     * @param particle the {@link Particle}
-     * @param id the block/item id
-     * @param data the block data value
-     * @param offsetX the random X offset
-     * @param offsetY the random Y offset
-     * @param offsetZ the random Z offset
-     * @param speed the speed of the particle
-     * @param particleCount the number of particles to spawn
-     * @param radius the radius around the location
-     * @throws IllegalArgumentException if location or particle is null.
-     */
-    public void spawnParticle(Location location, Particle particle, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius);
+    public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius);
 
     /**
      * Get empty chunk snapshot (equivalent to all air blocks), optionally including valid biome
