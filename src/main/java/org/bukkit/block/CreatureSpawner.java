@@ -1,5 +1,8 @@
 package org.bukkit.block;
 
+import java.util.List;
+
+import org.bukkit.SpawnerEntry;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -17,6 +20,15 @@ public interface CreatureSpawner extends BlockState {
      */
     @Deprecated
     public CreatureType getCreatureType();
+
+    /**
+     * Set the spawner creature type.
+     *
+     * @param creatureType The creature type.
+     * @deprecated In favour of {@link #setSpawnedType(EntityType)}.
+     */
+    @Deprecated
+    public void setCreatureType(CreatureType creatureType);
 
     /**
      * Get the spawner's creature type.
@@ -51,22 +63,51 @@ public interface CreatureSpawner extends BlockState {
     public void setSpawnedEntity(Entity entity, boolean includePosition);
 
     /**
-     * Set the spawner creature type.
+     * Gets a list of the entity types that this spawner could create. Note that modifying
+     * this list will not affect the behviour of the spawner.
      *
-     * @param creatureType The creature type.
-     * @deprecated In favour of {@link #setSpawnedType(EntityType)}.
+     * @return The list of types.
      */
-    @Deprecated
-    public void setCreatureType(CreatureType creatureType);
+    public List<SpawnerEntry> getSpawnPotentials();
 
     /**
-     * Get the spawner's creature type.
-     *
-     * @return The creature type's name.
-     * @deprecated Use {@link #getCreatureTypeName()}.
+     * Removes all spawn possibilities from the spawner.
      */
-    @Deprecated
-    public String getCreatureTypeId();
+    public void clearSpawnPotentials();
+
+    /**
+     * Adds an entity type to the spawn list. The weight is used to control the chance
+     * of each spawn potential occurring, a higher value relative to the other list entries
+     * will result in this spawn being more frequent.
+     *
+     * @param creatureType The entity type.
+     * @param weight The weight.
+     * @throws IllegalArgumentException If the entity cannot be spawned from spawners.
+     */
+    public void addPotentialSpawnedType(EntityType creatureType, int weight);
+
+    /**
+     * Adds an entity to the spawn list. The weight is used to control the chance
+     * of each spawn potential occurring, a higher value relative to the other list entries
+     * will result in this spawn being more frequent.
+     *
+     * @param entity The entity
+     * @param includePosition If true position data will be kept.
+     * @param weight The weight.
+     * @throws IllegalArgumentException If the entity cannot be spawned from spawners.
+     */
+    public void addPotentialSpawnedEntity(Entity entity, boolean includePosition, int weight);
+
+    /**
+     * Adds an entity to the spawn list. The weight is used to control the chance
+     * of each spawn potential occurring, a higher value relative to the other list entries
+     * will result in this spawn being more frequent.
+     *
+     * @param entity The entity.
+     * @param weight The weight.
+     * @throws IllegalArgumentException If the entity cannot be spawned from spawners.
+     */
+    public void addPotentialSpawnedEntity(Entity entity, int weight);
 
     /**
      * Set the spawner mob type.
@@ -81,6 +122,15 @@ public interface CreatureSpawner extends BlockState {
      * @return The creature type's name.
      */
     public String getCreatureTypeName();
+
+    /**
+     * Get the spawner's creature type.
+     *
+     * @return The creature type's name.
+     * @deprecated Use {@link #getCreatureTypeName()}.
+     */
+    @Deprecated
+    public String getCreatureTypeId();
 
     /**
      * Set the spawner mob type.
