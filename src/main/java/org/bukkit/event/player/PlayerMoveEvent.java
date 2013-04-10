@@ -6,7 +6,9 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
- * Holds information for player movement events that occur any time the player makes any kind of movement including looking about.
+ * This event is called whenever the Location of a Player changes.
+ * Most plugins do not need the fine-grained control this event provides, and should listen to
+ * {@link PlayerGridMoveEvent} instead.
  */
 public class PlayerMoveEvent extends PlayerGridMoveEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
@@ -22,5 +24,16 @@ public class PlayerMoveEvent extends PlayerGridMoveEvent implements Cancellable 
 
     public static HandlerList getHandlerList() {
         return handlers;
+    }
+
+    /**
+     * Get the location of the player before this event.
+     * If this event cancelled, the player will return to this location.
+     *
+     * @return Location the player moved from
+     */
+    @Override
+    public Location getFrom() {
+        return super.getFrom();
     }
 }

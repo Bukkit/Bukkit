@@ -6,7 +6,9 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
- * Holds information for player movement events that occur only when a player has changed which block they are on.
+ * This event is called whenever the Location of a Player crosses a block boundary.
+ * <p>
+ * It is recommended that plugins listen to this event in most cases, as it is called less frequently than {@link PlayerMoveEvent}.
  */
 public class PlayerGridMoveEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
@@ -22,11 +24,11 @@ public class PlayerGridMoveEvent extends PlayerEvent implements Cancellable {
 
     /**
      * Gets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
+     * be executed in the server, but will still pass to other plugins.
      * <p>
      * If a move or teleport event is cancelled, the player will be moved or
      * teleported back to the Location as defined by getFrom(). This will not
-     * fire an event
+     * fire an event.
      *
      * @return true if this event is cancelled
      */
@@ -36,11 +38,11 @@ public class PlayerGridMoveEvent extends PlayerEvent implements Cancellable {
 
     /**
      * Sets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
+     * be executed in the server, but will still pass to other plugins.
      * <p>
      * If a move or teleport event is cancelled, the player will be moved or
      * teleported back to the Location as defined by getFrom(). This will not
-     * fire an event
+     * fire an event.
      *
      * @param cancel true if you wish to cancel this event
      */
@@ -49,7 +51,8 @@ public class PlayerGridMoveEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
-     * Gets the location this player moved from
+     * Get the location of the player before they crossed a block boundary.
+     * If this event cancelled, the player will return to this location.
      *
      * @return Location the player moved from
      */
@@ -58,7 +61,8 @@ public class PlayerGridMoveEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
-     * Sets the location to mark as where the player moved from
+     * Sets the location to mark as where the player moved from.
+     * If this event is cancelled, the player will return to this location.
      *
      * @param from New location to mark as the players previous location
      */
@@ -67,7 +71,7 @@ public class PlayerGridMoveEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
-     * Gets the location this player moved to
+     * Gets the location this player moved to.
      *
      * @return Location the player moved to
      */
@@ -76,7 +80,7 @@ public class PlayerGridMoveEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
-     * Sets the location that this player will move to
+     * Sets the location that this player will move to.
      *
      * @param to New Location this player will move to
      */
