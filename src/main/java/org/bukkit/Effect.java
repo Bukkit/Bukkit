@@ -82,27 +82,23 @@ public enum Effect {
     /**
      * The biggest explosion particle effect
      */
-    HUGE_EXPLOSION("hugeexplosion", Type.PARTICLE),
+    EXPLOSION_HUGE("hugeexplosion", Type.PARTICLE),
     /**
      * A larger version of the explode particle
      */
-    LARGE_EXPLODE("largeexplode", Type.PARTICLE),
+    EXPLOSION_LARGE("largeexplode", Type.PARTICLE),
+    /**
+     * Explosion particles
+     */
+    EXPLOSION("explode", Type.PARTICLE),
     /**
      * The spark that comes off a fireworks
      */
     FIREWORKS_SPARK("fireworksSpark", Type.PARTICLE),
     /**
-     * Currently shows nothing
-     */
-    BUBBLE("bubble", Type.PARTICLE),
-    /**
-     * Currently shows nothing
-     */
-    SUSPENDED("suspended", Type.PARTICLE),
-    /**
      * Small gray particles
      */
-    DEPTH_SUSPEND("depthsuspend", Type.PARTICLE),
+    VOID_FOG("depthsuspend", Type.PARTICLE),
     /**
      * Small gray particles
      */
@@ -116,17 +112,13 @@ public enum Effect {
      */
     MAGIC_CRIT("magicCrit", Type.PARTICLE),
     /**
-     * Smoke particles
-     */
-    PARTICLE_SMOKE("smoke", Type.PARTICLE),
-    /**
      * Multicolored potion effect particles
      */
-    MOB_SPELL("mobSpell", Type.PARTICLE),
+    POTION_SWIRL("mobSpell", Type.PARTICLE),
     /**
      * Multicolored potion effect particles that are slightly transparent
      */
-    MOB_SPELL_AMBIENT("mobSpellAmbient", Type.PARTICLE),
+    POTION_SWIRL_TRANSPARENT("mobSpellAmbient", Type.PARTICLE),
     /**
      * A puff of white particles
      */
@@ -150,11 +142,7 @@ public enum Effect {
     /**
      * The symbols that fly towards the enchantment table
      */
-    ENCHANTMENT_TABLE("enchantmenttable", Type.PARTICLE),
-    /**
-     * Explosion particles
-     */
-    EXPLODE("explode", Type.PARTICLE),
+    FLYING_GLYPH("enchantmenttable", Type.PARTICLE),
     /**
      * Fire particles
      */
@@ -162,7 +150,7 @@ public enum Effect {
     /**
      * The particles that pop out of lava
      */
-    LAVA("lava", Type.PARTICLE),
+    LAVA_POP("lava", Type.PARTICLE),
     /**
      * A small gray square
      */
@@ -176,25 +164,29 @@ public enum Effect {
      */
     LARGE_SMOKE("largeSmoke", Type.PARTICLE),
     /**
+     * Smoke particles
+     */
+    PARTICLE_SMOKE("smoke", Type.PARTICLE),
+    /**
      * A puff of smoke
      */
     CLOUD("cloud", Type.PARTICLE),
     /**
      * Multicolored dust particles
      */
-    REDDUST("reddust", Type.PARTICLE),
+    COLOURED_DUST("reddust", Type.PARTICLE),
     /**
      * Snowball breaking
      */
-    SNOWBALL_POOF("snowballpoof", Type.PARTICLE),
+    SNOWBALL_BREAK("snowballpoof", Type.PARTICLE),
     /**
      * The water drip particle that appears on blocks under water
      */
-    DRIP_WATER("dripWater", Type.PARTICLE),
+    WATERDRIP("dripWater", Type.PARTICLE),
     /**
      * The lava drip particle that appears on blocks under lava
      */
-    DRIP_LAVA("dripLava", Type.PARTICLE),
+    LAVADRIP("dripLava", Type.PARTICLE),
     /**
      * White particles
      */
@@ -210,19 +202,21 @@ public enum Effect {
     /**
      * The particle that appears when hitting a villager
      */
-    ANGRY_VILLAGER("angryVillager", Type.PARTICLE),
+    THUNDERCLOUD("angryVillager", Type.PARTICLE),
     /**
      * The particle that appears when trading with a villager
      */
     HAPPY_VILLAGER("happyVillager", Type.PARTICLE),
     /**
-     * The item's icon breaking. This needs a material
+     * The particles generated when a tool breaks.
+     * This particle requires a Material so that the client can select the correct texture.
      */
-    ICON_CRACK("iconcrack", true, false, Type.PARTICLE),
+    ITEM_BREAK("iconcrack", true, false, Type.PARTICLE),
     /**
-     * The block breaking particles. This needs a material and a material data value.
+     * The particles generated while breaking a block.
+     * This particle requires a Material and data value so that the client can select the correct texture.
      */
-    TILE_CRACK("tilecrack", true, true, Type.PARTICLE);
+    TILE_BREAK("tilecrack", true, true, Type.PARTICLE);
 
     private final int id;
     private final Type type;
@@ -261,7 +255,7 @@ public enum Effect {
     /**
      * Gets the ID for this effect.
      *
-     * @return ID of this effect
+     * @return if this Effect isn't of type PARTICLE it returns ID of this effect
      */
     public int getId() {
         return this.id;
@@ -275,7 +269,8 @@ public enum Effect {
     }
 
     /**
-     * @return The class which represents data for this effect, or null if none
+     * @return if this Effect isn't of type PARTICLE it returns the class which represents
+     * data for this effect, or null if none.
      */
     public Class<?> getData() {
         return this.data;
@@ -293,7 +288,7 @@ public enum Effect {
     /**
      * Returns whether the effect requires a Material to be created
      *
-     * @return Whether the effect requires a Material to be created
+     * @return if this Effect is of type PARTICLE, and requires a Material to be created
      */
     public boolean needsMaterial() {
         return needsMaterial;
@@ -302,7 +297,7 @@ public enum Effect {
     /**
      * Returns whether the effect requires a data value in order to be created
      *
-     * @return Whether the effect requires a data value in order to be created
+     * @return if this Effect is of type PARTICLE, and requires both a Material and data ID to be created
      */
     public boolean needsMaterialData() {
         return needsMaterialData;

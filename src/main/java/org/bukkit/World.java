@@ -735,10 +735,11 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param location the {@link Location} around which players must be to see the effect
      * @param effect effect the {@link Effect}
      * @param material the {@link Material}
-     * @param data the {@link MaterialData}
+     * @param data the {@link MaterialData}, or null if not applicable to this Effect
      * @param particleCount the number of particles to spawn
      * @throws IllegalArgumentException if the location or effect is null. It also throws when
-     *                                  the effect doesn't requires a material or a material data
+     *                                  the effect doesn't require either a material or a material
+     *                                  data
      */
     public void playEffect(Location location, Effect effect, org.bukkit.Material material, MaterialData data, int particleCount);
 
