@@ -10,7 +10,9 @@ public class EffectTest {
     public void getById() {
         for (Effect effect : Effect.values()) {
             if (effect.getType() != Effect.Type.PARTICLE) {
-                assertThat(Effect.getById(effect.getId()), is(effect));
+                assertThat(Effect.getById(effect.getIdInt()), is(effect));
+            } else {
+                assertThat(Effect.getByName(effect.getIdString()), is(effect));
             }
         }
     }

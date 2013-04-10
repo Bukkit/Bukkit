@@ -5,6 +5,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import org.bukkit.block.BlockFace;
+import org.bukkit.material.MaterialData;
 import org.bukkit.potion.Potion;
 
 /**
@@ -80,29 +81,9 @@ public enum Effect {
      */
     MOBSPAWNER_FLAMES(2004, Type.VISUAL),
     /**
-     * The biggest explosion particle effect
-     */
-    EXPLOSION_HUGE("hugeexplosion", Type.PARTICLE),
-    /**
-     * A larger version of the explode particle
-     */
-    EXPLOSION_LARGE("largeexplode", Type.PARTICLE),
-    /**
-     * Explosion particles
-     */
-    EXPLOSION("explode", Type.PARTICLE),
-    /**
      * The spark that comes off a fireworks
      */
     FIREWORKS_SPARK("fireworksSpark", Type.PARTICLE),
-    /**
-     * Small gray particles
-     */
-    VOID_FOG("depthsuspend", Type.PARTICLE),
-    /**
-     * Small gray particles
-     */
-    TOWNAURA("townaura", Type.PARTICLE),
     /**
      * Critical hit particles
      */
@@ -120,11 +101,11 @@ public enum Effect {
      */
     POTION_SWIRL_TRANSPARENT("mobSpellAmbient", Type.PARTICLE),
     /**
-     * A puff of white particles
+     * A puff of white potion swirls
      */
     SPELL("spell", Type.PARTICLE),
     /**
-     * A puff of white starts
+     * A puff of white stars
      */
     INSTANT_SPELL("instantSpell", Type.PARTICLE),
     /**
@@ -160,15 +141,31 @@ public enum Effect {
      */
     SPLASH("splash", Type.PARTICLE),
     /**
-     * Currently shows nothing
-     */
-    LARGE_SMOKE("largeSmoke", Type.PARTICLE),
-    /**
      * Smoke particles
      */
     PARTICLE_SMOKE("smoke", Type.PARTICLE),
     /**
-     * A puff of smoke
+     * The biggest explosion particle effect
+     */
+    EXPLOSION_HUGE("hugeexplosion", Type.PARTICLE),
+    /**
+     * A larger version of the explode particle
+     */
+    EXPLOSION_LARGE("largeexplode", Type.PARTICLE),
+    /**
+     * Explosion particles
+     */
+    EXPLOSION("explode", Type.PARTICLE),
+    /**
+     * Small gray particles
+     */
+    VOID_FOG("depthsuspend", Type.PARTICLE),
+    /**
+     * Small gray particles
+     */
+    SMALL_SMOKE("townaura", Type.PARTICLE),
+    /**
+     * A puff of white smoke
      */
     CLOUD("cloud", Type.PARTICLE),
     /**
@@ -211,20 +208,19 @@ public enum Effect {
      * The particles generated when a tool breaks.
      * This particle requires a Material so that the client can select the correct texture.
      */
-    ITEM_BREAK("iconcrack", true, false, Type.PARTICLE),
+    ITEM_BREAK("iconcrack", Type.PARTICLE, Material.class),
     /**
      * The particles generated while breaking a block.
      * This particle requires a Material and data value so that the client can select the correct texture.
      */
-    TILE_BREAK("tilecrack", true, true, Type.PARTICLE);
+    TILE_BREAK("tilecrack", Type.PARTICLE, MaterialData.class);
 
     private final int id;
     private final Type type;
     private final Class<?> data;
     private static final Map<Integer, Effect> BY_ID = Maps.newHashMap();
+    private static final Map<String, Effect> BY_NAME = Maps.newHashMap();
     private final String particleName;
-    private final boolean needsMaterial;
-    private final boolean needsMaterialData;
 
     private Effect(int id, Type type) {
         this(id,type,null);
@@ -235,21 +231,20 @@ public enum Effect {
         this.type = type;
         this.data = data;
         particleName = null;
-        needsMaterial = false;
-        needsMaterialData = false;
+    }
+
+    private Effect(String particleName, Type type, Class<?> data) {
+        this.particleName = particleName;
+        this.type = type;
+        id = 0;
+        this.data = data;
     }
 
     private Effect(String particleName, Type type) {
-        this(particleName, false, false, type);
-    }
-
-    private Effect(String particleName, boolean needsMaterial, boolean needsMaterialData, Type type) {
         this.particleName = particleName;
-        this.needsMaterial = needsMaterial;
-        this.needsMaterialData = needsMaterialData;
         this.type = type;
         id = 0;
-        data = null;
+        this.data = null;
     }
 
     /**
@@ -257,8 +252,27 @@ public enum Effect {
      *
      * @return if this Effect isn't of type PARTICLE it returns ID of this effect
      */
+    @Deprecated
     public int getId() {
         return this.id;
+    }
+
+    /**
+     * Gets the ID for this effect.
+     *
+     * @return if this Effect isn't of type PARTICLE it returns ID of this effect
+     */
+    public int getIdInt() {
+        return this.id;
+    }
+
+    /**
+     * Returns the effect's name. This returns null if the effect is not a particle
+     *
+     * @return The effect's name
+     */
+    public String getIdString() {
+        return particleName;
     }
 
     /**
@@ -277,33 +291,6 @@ public enum Effect {
     }
 
     /**
-     * Returns the particle's name. This returns null if the effect is not a particle
-     *
-     * @return The particle's name
-     */
-    public String getParticleName() {
-        return particleName;
-    }
-
-    /**
-     * Returns whether the effect requires a Material to be created
-     *
-     * @return if this Effect is of type PARTICLE, and requires a Material to be created
-     */
-    public boolean needsMaterial() {
-        return needsMaterial;
-    }
-
-    /**
-     * Returns whether the effect requires a data value in order to be created
-     *
-     * @return if this Effect is of type PARTICLE, and requires both a Material and data ID to be created
-     */
-    public boolean needsMaterialData() {
-        return needsMaterialData;
-    }
-
-    /**
      * Gets the Effect associated with the given ID.
      *
      * @param id ID of the Effect to return
@@ -317,6 +304,24 @@ public enum Effect {
         for (Effect effect : values()) {
             if (effect.type != Type.PARTICLE) {
                 BY_ID.put(effect.id, effect);
+            }
+        }
+    }
+
+    /**
+     * Gets the Effect associated with the given name.
+     *
+     * @param name name of the Effect to return
+     * @return Effect with the given name
+     */
+    public static Effect getByName(String name) {
+        return BY_NAME.get(name);
+    }
+
+    static {
+        for (Effect effect : values()) {
+            if (effect.type == Type.PARTICLE) {
+                BY_NAME.put(effect.particleName, effect);
             }
         }
     }

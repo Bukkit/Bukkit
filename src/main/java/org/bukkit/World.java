@@ -730,25 +730,11 @@ public interface World extends PluginMessageRecipient, Metadatable {
 
     /**
      * Plays an effect to all players within a default radius around a given location.
-     * The effect will use the provided material (and material data if required).
-     *
-     * @param location the {@link Location} around which players must be to see the effect
-     * @param effect effect the {@link Effect}
-     * @param material the {@link Material}
-     * @param data the {@link MaterialData}, or null if not applicable to this Effect
-     * @param particleCount the number of particles to spawn
-     * @throws IllegalArgumentException if the location or effect is null. It also throws when
-     *                                  the effect doesn't require either a material or a material
-     *                                  data
-     */
-    public void playEffect(Location location, Effect effect, org.bukkit.Material material, MaterialData data, int particleCount);
-
-    /**
-     * Plays an effect to all players within a default radius around a given location.
-     * The effect will use the provided material (and material data if required). The
-     * effect will be randomly offset by offsetX, offsetY, offsetZ for each client if 
-     * the effect is a particle. The effect will have the given speed and particle count
-     * if the effect is a particle
+     * The effect will use the provided material (and material data if required). The particle's
+     * position on the client will be the given location, adjusted on each axis by a normal
+     * distribution with mean 0 and standard deviation given in the offset parameters, each particle
+     * has independently calculated offsets. The effect will have the given speed and particle count
+     * if the effect is a particle. Some effect will create multiple particles.
      *
      * @param location the {@link Location} around which players must be to see the effect
      * @param effect effect the {@link Effect}
