@@ -36,6 +36,11 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
         POTION,
 
         /**
+         * Caused by an enchanted golden apple
+         */
+        ENCHANTED_GOLDEN_APPLE,
+
+        /**
          * A plugin added the effect
          */
         PLUGIN_ADDED,
@@ -51,7 +56,9 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
         EXPIRED,
 
         /**
-         * The effect was treated (The entity used a milk bucket)
+         * The effect was treated. Current examples: <br>
+         * <li>Player used milk bucket</li>
+         * <li>Villager cure process was started</li>
          */
         TREATED;
     }
