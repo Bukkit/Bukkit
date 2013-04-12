@@ -8,14 +8,17 @@ import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.potion.PotionEffect;
 
 /**
- * Fired when a entity's potion effects change. <br>
- * Causes for firing:<br>
+ * Fired when a entity's potion effects change.
+ * <p>
+ * Causes for firing:
  * <ul>
  * <li>Beacon potion effect gained/lost</li>
  * <li>Splash/edible potion effect gained/lost</li>
  * <li>Plugin altered potion effect gained/lost</li>
  * <li>Mob (Cave Spider, Zombie, Wither, etc) attacks entity</li>
  * <li>The entity used a milk bucket to remove an effect</li>
+ * <li>The entity was cured of being a Zombie (triggers multiple events)</li>
+ * <li>The entity ate an Enchanted Golden Apple</li>
  * </ul>
  */
 public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancellable {
@@ -56,7 +59,8 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
         EXPIRED,
 
         /**
-         * The effect was treated. Current examples: <br>
+         * The effect was treated. Current examples:
+         * <p>
          * <li>Player used milk bucket</li>
          * <li>Villager cure process was started</li>
          */
@@ -121,7 +125,8 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
 
     /**
      * Gets the potion effect applied to this event. Modifying this modifies
-     * the overall effect.<br>
+     * the overall effect.
+     * <p>
      * If the entity is going to lose the effect, modifying this has no
      * effect.
      * @return the potion effect
@@ -151,7 +156,8 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
     }
 
     /**
-     * Set the event as cancelled.<br>
+     * Set the event as cancelled.
+     * <p>
      * The event will only cancel if the entity is <b>gaining</b> the
      * effect.
      * @param cancel true to cancel, if valid
