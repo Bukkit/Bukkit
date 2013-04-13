@@ -61,8 +61,10 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
         /**
          * The effect was treated. Current examples:
          * <p>
+         * <ul>
          * <li>Player used milk bucket</li>
          * <li>Villager cure process was started</li>
+         * </ul>
          */
         TREATED;
     }
