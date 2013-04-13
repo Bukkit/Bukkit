@@ -142,11 +142,12 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
      * @return true if the entity is gaining the effect, false otherwise
      */
     public boolean isGainingEffect() {
-        switch(cause){
+        switch (cause) {
         case PLUGIN_ADDED:
         case POTION:
         case MOB:
         case BEACON:
+        case ENCHANTED_GOLDEN_APPLE:
             return true;
         default:
             return false;
