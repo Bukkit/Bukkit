@@ -9,7 +9,7 @@ public class CraftItemEvent extends InventoryClickEvent {
     private Recipe recipe;
 
     public CraftItemEvent(Recipe recipe, InventoryView what, SlotType type, int slot, boolean right, boolean shift) {
-        super(what, type, slot, right, shift);
+        super(what, type, slot, right, shift, false);
         this.recipe = recipe;
     }
 
