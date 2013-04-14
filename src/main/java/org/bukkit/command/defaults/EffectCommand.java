@@ -62,6 +62,7 @@ public class EffectCommand extends VanillaCommand {
         }
 
         int duration = 600;
+        int duration_sek;
         int duration_temp = 30;
         int amplification = 0;
 
@@ -92,7 +93,8 @@ public class EffectCommand extends VanillaCommand {
             final PotionEffect applyEffect = new PotionEffect(effect, duration, amplification);
 
             player.addPotionEffect(applyEffect, true);
-            broadcastCommandMessage(sender, String.format("Given %s (ID %d) * %d to %s for %d seconds", effect.getName(), effect.getId(), amplification, args[0], duration));
+            duration_sek = duration / 20;
+            broadcastCommandMessage(sender, String.format("Given %s (ID %d) * %d to %s for %d seconds", effect.getName(), effect.getId(), amplification, args[0], duration_sek));
         }
 
         return true;
