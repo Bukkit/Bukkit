@@ -490,6 +490,15 @@ public final class SimplePluginManager implements PluginManager {
                 }
             } catch (Throwable ex) {
                 server.getLogger().log(Level.SEVERE, "Could not pass event " + event.getEventName() + " to " + registration.getPlugin().getDescription().getFullName(), ex);
+                Plugin plugin = registration.getPlugin();
+                if (plugin instanceof PluginExceptionHandler){
+                	try{
+                    	((PluginExceptionHandler)plugin).uncaughtException(ex);
+                	} catch (Exception e){
+                		/* *sigh, really you couldnt even handle your own bad exception?
+                		 * do nothing */
+                	}
+                }
             }
         }
     }
