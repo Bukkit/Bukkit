@@ -76,38 +76,30 @@ public interface CreatureSpawner extends BlockState {
     public void clearSpawnPotentials();
 
     /**
-     * Adds an entity type to the spawn list. The weight is used to control the chance
-     * of each spawn potential occurring, a higher value relative to the other list entries
-     * will result in this spawn being more frequent.
-     *
-     * @param creatureType The entity type.
-     * @param weight The weight.
-     * @throws IllegalArgumentException If the entity cannot be spawned from spawners.
-     */
-    public void addPotentialSpawnedType(EntityType creatureType, int weight);
-
-    /**
-     * Adds an entity to the spawn list. The weight is used to control the chance
-     * of each spawn potential occurring, a higher value relative to the other list entries
-     * will result in this spawn being more frequent.
+     * Creates a new {@link SpawnerEntry} from an entity, when added to a spawner all properties of the
+     * entity will be included. The position data can be removed by setting the position flag to false.
      *
      * @param entity The entity
-     * @param includePosition If true position data will be kept.
-     * @param weight The weight.
-     * @throws IllegalArgumentException If the entity cannot be spawned from spawners.
+     * @param includePosition The position flag
+     * @param weight The weight
+     * @return The entry
      */
-    public void addPotentialSpawnedEntity(Entity entity, boolean includePosition, int weight);
+    public SpawnerEntry createSpawnerEntry(Entity entity, boolean includePosition, int weight);
 
     /**
-     * Adds an entity to the spawn list. The weight is used to control the chance
-     * of each spawn potential occurring, a higher value relative to the other list entries
-     * will result in this spawn being more frequent.
+     * Creates a new {@link SpawnerEntry} from an entity, if added to a spawner all properties of the entity will be included.
      *
-     * @param entity The entity.
-     * @param weight The weight.
-     * @throws IllegalArgumentException If the entity cannot be spawned from spawners.
+     * @param entity The entity
+     * @return The entry
      */
-    public void addPotentialSpawnedEntity(Entity entity, int weight);
+    public SpawnerEntry createSpawnerEntry(Entity entity);
+
+    /**
+     * Adds a potential spawn to the spawner
+     *
+     * @param entry The entry
+     */
+    public void addSpawnerEntry(SpawnerEntry entry);
 
     /**
      * Set the spawner mob type.
@@ -225,7 +217,7 @@ public interface CreatureSpawner extends BlockState {
     public void setVerticalRange(int maxBelow, int maxAbove);
 
     /**
-     * Gets the number of other entities that need to be within the spawner's range to prevent spawning,
+     * Gets the number of other entities that need to be within the spawner's range to prevent spawning.
      *
      * @return The number.
      */
