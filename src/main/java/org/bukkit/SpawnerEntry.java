@@ -57,6 +57,11 @@ public class SpawnerEntry {
         return weight;
     }
     
+    /**
+     * Gets the weight of this entry, a higher weight means this spawn will be more likely to happen.
+     *
+     * @param weight The weight
+     */
     public void setWeight(int weight) {
         this.weight = weight;
     }
