@@ -4,6 +4,7 @@ import java.net.InetSocketAddress;
 
 import org.bukkit.Achievement;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Effect;
 import org.bukkit.Instrument;
 import org.bukkit.Location;
@@ -646,4 +647,17 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      *     yet or has logged out
      */
     public void setScoreboard(Scoreboard scoreboard) throws IllegalArgumentException, IllegalStateException;
+
+    /**
+     * Updates a chunk for this player
+     * @param chunk The chunk to update
+     */
+    public void updateChunk(Chunk chunk);
+
+    /**
+     * Updates a chunk for this player
+     * @param x X coordinate of the chunk to update
+     * @param z Z coordinate of the chunk to update
+     */
+    public void updateChunk(int x, int z);
 }
