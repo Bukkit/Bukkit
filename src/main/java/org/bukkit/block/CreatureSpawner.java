@@ -85,4 +85,88 @@ public interface CreatureSpawner extends BlockState {
      * @param delay The delay.
      */
     public void setDelay(int delay);
+
+    /**
+     * Gets the minimum delay of the spawner
+     *
+     * @return The minimum delay
+     */
+    public int getMinDelay();
+
+    /**
+     * Sets the minimum delay of the spawner
+     *
+     * @param delay The delay
+     */
+    public void setMinDelay(int delay);
+
+    /**
+     * Gets the maximum delay
+     *
+     * @return The maximum delay
+     */
+    public int getMaxDelay();
+
+    /**
+     * Sets the maximum delay
+     *
+     * @param delay The delay
+     */
+    public void setMaxDelay(int delay);
+
+    /**
+     * Gets the number of entities spawned in one time
+     *
+     * @return Amount of entities
+     */
+    public int getSpawnCount();
+
+    /**
+     * Sets the number of entities spawned in one time
+     *
+     * @param spawncount The amount of entities
+     */
+    public void setSpawnCount(int spawncount);
+
+    /**
+     * Get the amount of entities allowed to be in the zone to spawn
+     *
+     * @return The number of entities
+     */
+    public int getMaxNearbyEntities();
+
+    /**
+     * Set the amount of enteties allowed to be in the zone to spawn
+     *
+     * @param maxnearbyentities The amount of entities
+     */
+    public void setMaxNearbyEntities(int maxnearbyentities);
+
+    /**
+     * Gets the range for the player to be in in order to spawn entities
+     *
+     * @return The range
+     */
+    public int getRequiredPlayerRange();
+
+    /**
+     * Gets the range for the player to be in in order to spawn entities
+     *
+     * @param range The range
+     */
+    public void setRequiredPlayerRange(int range);
+
+    /**
+     * Gets the range in which entities will spawn
+     *
+     * @return The spawn range
+     */
+    public int getSpawnRange();
+
+    /**
+     * Sets the range in which entities will spawn
+     *
+     * @param spawnrange The range
+     */
+    public void setSpawnRange(int spawnrange);
 }
