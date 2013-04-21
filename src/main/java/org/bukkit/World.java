@@ -1064,6 +1064,80 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public boolean isGameRule(String rule);
 
     /**
+     * Sets the type-id of the block at the given location without sending client changes
+     * @param x X coordinate of the block
+     * @param y Y coordinate of the block
+     * @param z Z coordinate of the block
+     * @param type Type-Id to change this block to
+     * @param data The data value to change this block to
+     * @return whether the block was changed
+     */
+    public boolean setBlockTypeIdAndDataFast(int x, int y, int z, int type, byte data);
+
+    /**
+     * Sets the type-id of the block at the given location without sending client changes
+     * @param x Z coordinate of the block
+     * @param y Y coordinate of the block
+     * @param z Z coordinate of the block
+     * @param type Type-Id to change this block to
+     * @return whether the block was changed
+     */
+    public boolean setBlockTypeIdFast(int x, int y, int z, int type);
+
+    /**
+     * Sets the type of the block at the given location without sending client changes
+     * @param x Z coordinate of the block
+     * @param y Y coordinate of the block
+     * @param z Z coordinate of the block
+     * @param type Material to change this block to
+     * @return whether the block was changed
+     */
+    public boolean setBlockTypeFast(int x, int y, int z, Material type);
+
+    /**
+     * Sets the type-id of the block at the given location without sending client changes
+     * @param location The location of the block
+     * @param type Type-Id to change this block to
+     * @param data The data value to change this block to
+     * @return whether the block was changed
+     */
+    public boolean setBlockTypeIdAndDataFast(Location location, int type, byte data);
+
+    /**
+     * Sets the type-id of the block at the given location without sending client changes
+     * @param location The location of the block
+     * @param type Type-Id to change this block to
+     * @return whether the block was changed
+     */
+    public boolean setBlockTypeIdFast(Location location, int type);
+
+    /**
+     * Sets the type of the block at the given location without sending client changes
+     * @param location The location of the block
+     * @param type Material to change this block to
+     * @return whether the block was changed
+     */
+    public boolean setBlockTypeFast(Location location, Material type);
+
+    /**
+     * Sets the metadata of the block at the given location without sending client changes
+     * @param x X coordinate of the block
+     * @param y Y coordinate of the block
+     * @param z Z coordinate of the block
+     * @param data New block specific metadata
+     * @return whether the block was changed
+     */
+    public boolean setBlockDataFast(int x, int y, int z, byte data);
+
+    /**
+     * Sets the metadata of the block at the given location without sending client changes
+     * @param location The location of the block
+     * @param data New block specific metadata
+     * @return whether the block was changed
+     */
+    public boolean setBlockDataFast(Location location, byte data);
+
+    /**
      * Represents various map environment types that a world may be
      */
     public enum Environment {
