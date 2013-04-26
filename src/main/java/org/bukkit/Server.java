@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.bukkit.Warning.WarningState;
+import org.bukkit.block.MassBlockUpdate;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -21,6 +22,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
@@ -699,4 +701,12 @@ public interface Server extends PluginMessageRecipient {
      * @return the scoreboard manager or null if no worlds are loaded.
      */
     ScoreboardManager getScoreboardManager();
+
+    /**
+     * Create a new {@link MassBlockUpdate} object.
+     *
+     * @param plugin the plugin instance
+     * @return a new {@link MassBlockUpdate} object
+     */
+    public MassBlockUpdate createMassBlockUpdate(Plugin plugin);
 }
