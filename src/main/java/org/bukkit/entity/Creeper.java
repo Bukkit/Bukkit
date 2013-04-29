@@ -23,14 +23,14 @@ public interface Creeper extends Monster {
     public void setPowered(boolean value);
     
     /**
-    * Set the radius affected by this explosive's explosion
+    * Set the radius affected by this creeper's explosion
     *
     * @param yield The explosive yield
     */
     public void setYield(float yield);
 
     /**
-    * Return the radius or yield of this explosive's explosion
+    * Return the radius or yield of this creeper's explosion
     *
     * @return the radius of blocks affected
     */
