@@ -14,22 +14,25 @@ public interface Creeper extends Monster {
 
     /**
      * Sets the Powered status of this Creeper
+     * Calling this method will reset yield.
+     * Powered true -> yield = 6F
+     * Powered false -> yield = 3F
      *
      * @param value New Powered status
      */
     public void setPowered(boolean value);
     
     /**
-     * Gets the explosion range of this Creeper.
-     *
-     * @return the explosion range
-     */
-    public int getExplosionRange();
-    
+    * Set the radius affected by this explosive's explosion
+    *
+    * @param yield The explosive yield
+    */
+    public void setYield(float yield);
+
     /**
-     * Sets the explosion range of this Creeper.
-     *
-     * @param value New explosion range
-     */
-    public void setExplosionRange(int value);
+    * Return the radius or yield of this explosive's explosion
+    *
+    * @return the radius of blocks affected
+    */
+    public float getYield();
 }
