@@ -13,7 +13,7 @@ public interface Creeper extends Monster, FusedExplosive {
     public boolean isPowered();
 
     /**
-     * Sets the Powered status of this Creeper
+     * Sets the Powered status of this Creeper, and reset the explosion radius to default (3)
      *
      * @param value New Powered status
      */
