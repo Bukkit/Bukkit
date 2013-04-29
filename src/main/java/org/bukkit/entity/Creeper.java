@@ -18,4 +18,18 @@ public interface Creeper extends Monster {
      * @param value New Powered status
      */
     public void setPowered(boolean value);
+    
+    /**
+     * Gets the explosion range of this Creeper.
+     *
+     * @return the explosion range
+     */
+    public int getExplosionRange();
+    
+    /**
+     * Sets the explosion range of this Creeper.
+     *
+     * @param value New explosion range
+     */
+    public void setExplosionRange(int value);
 }
