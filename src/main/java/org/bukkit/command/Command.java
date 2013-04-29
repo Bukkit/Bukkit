@@ -78,10 +78,6 @@ public abstract class Command {
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
 
-        if (!(sender instanceof Player) || args.length == 0) {
-            return ImmutableList.of();
-        }
-
         String lastWord = args[args.length - 1];
 
         Player senderPlayer = (Player) sender;
