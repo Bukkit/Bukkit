@@ -80,12 +80,11 @@ public abstract class Command {
 
         String lastWord = args[args.length - 1];
 
-        Player senderPlayer = (Player) sender;
-
         ArrayList<String> matchedPlayers = new ArrayList<String>();
+        final boolean noPlayer = !(sender instanceof Player);
         for (Player player : sender.getServer().getOnlinePlayers()) {
             String name = player.getName();
-            if (senderPlayer.canSee(player) && StringUtil.startsWithIgnoreCase(name, lastWord)) {
+            if (noPlayer || ((Player) sender).canSee(player) && StringUtil.startsWithIgnoreCase(name, lastWord)) {
                 matchedPlayers.add(name);
             }
         }
