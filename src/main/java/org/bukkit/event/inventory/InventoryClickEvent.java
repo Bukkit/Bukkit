@@ -113,6 +113,7 @@ public class InventoryClickEvent extends InventoryEvent implements Cancellable {
 
     public void setCancelled(boolean toCancel) {
         result = toCancel ? Result.DENY : Result.ALLOW;
+        getView().setCursor(null);
     }
 
     /**
