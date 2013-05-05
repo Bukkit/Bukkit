@@ -173,6 +173,21 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public void loadChunk(int x, int z);
 
     /**
+     * Loads the {@link Chunk} at the specified coordinates then calls the runnable object
+     * <p>
+     * If the chunk exists and is loaded the runnable object will be called straight away.
+     * If the chunk exists and is not loaded, it will be loaded asynchronously and the runnable object will be called in sync once it is done
+     * If the chunk does not exist it will be generated in the main thread
+     *
+     * If the given runnable is null the chunk is loaded synchronously
+     *
+     * @param x X-coordinate of the chunk
+     * @param z Z-coordinate of the chunk
+     * @param runnable The object to run after the chunk has been loaded
+     */
+    public void loadChunk(int x, int z, Runnable runnable);
+
+    /**
      * Loads the {@link Chunk} at the specified coordinates
      *
      * @param x X-coordinate of the chunk
