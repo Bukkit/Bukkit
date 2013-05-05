@@ -5,16 +5,19 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.BlockEvent;
 import org.bukkit.inventory.BrewerInventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 
-public class BrewEvent extends BlockEvent implements Cancellable {
+public class BrewEndEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private BrewerInventory contents;
     private boolean cancelled;
+    private ItemStack ingredient;
 
-    public BrewEvent(Block brewer, BrewerInventory contents) {
+    public BrewEndEvent(Block brewer, BrewerInventory contents, ItemStack ingredient) {
         super(brewer);
         this.contents = contents;
+        this.ingredient = ingredient;
     }
 
     public BrewerInventory getContents() {
@@ -31,7 +34,11 @@ public class BrewEvent extends BlockEvent implements Cancellable {
             potions[2] = Potion.fromItemStack(contents.getContents()[2]);
         return potions;
     }
-    
+
+    public ItemStack getIngredient() {
+        return ingredient;
+    }
+
     public boolean isCancelled() {
         return cancelled;
     }
