@@ -646,4 +646,20 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      *     yet or has logged out
      */
     public void setScoreboard(Scoreboard scoreboard) throws IllegalArgumentException, IllegalStateException;
+
+    /**
+     * 
+     * Get if this player is counted in the online players count
+     * 
+     * @return boolean, true if the player count
+     */
+    public boolean isCounted();
+
+    /**
+     * 
+     * Set if this player is counted in the online players count
+     * 
+     * @param boolean, true if the player count
+     */
+    public void setCounted(boolean isCounted);
 }
