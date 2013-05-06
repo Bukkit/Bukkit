@@ -23,15 +23,14 @@ public class BrewEvent extends BlockEvent implements Cancellable {
 
     public Potion[] getPotions() {
         Potion[] potions = new Potion[3];
-        if(contents.getContents()[0] != null)
-            potions[0] = Potion.fromItemStack(contents.getContents()[0]);
-        if(contents.getContents()[1] != null)
-            potions[1] = Potion.fromItemStack(contents.getContents()[1]);
-        if(contents.getContents()[2] != null)
-            potions[2] = Potion.fromItemStack(contents.getContents()[2]);
+        for (int i = 0; i < 3; i++) {
+            if (contents.getContents()[i] != null) {
+                potions[0] = Potion.fromItemStack(contents.getContents()[i]);
+            }
+        }
         return potions;
     }
-    
+
     public boolean isCancelled() {
         return cancelled;
     }
