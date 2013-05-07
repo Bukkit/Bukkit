@@ -83,26 +83,10 @@ public enum InventoryAction {
      */
     COLLECT_TO_CURSOR,
     /**
-     * The progress of the drag is reset. This usually means a bad packet
-     * ordering.
-     * @see InventoryDragEvent
-     */
-    RESET_DRAG_STATE,
-    /**
-     * A drag is started.
-     * @see InventoryDragEvent
-     */
-    BEGIN_DRAG,
-    /**
      * A slot is added to the drag.
      * @see InventoryDragEvent
      */
     DRAG_ADD_SLOT,
-    /**
-     * The drag is finished.
-     * @see InventoryDragEvent
-     */
-    FINISH_DRAG,
     /**
      * One item from the cursor is placed in each selected slot.
      */
