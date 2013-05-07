@@ -18,14 +18,12 @@ import com.google.common.collect.ImmutableSet;
  */
 public class InventoryDragEvent extends InventoryActionEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
     private ItemStack newCursor;
     private Map<Integer, ItemStack> addedItems;
     private Set<Integer> containerSlots;
 
     public InventoryDragEvent(InventoryView what, ItemStack newCursor, boolean right, Map<Integer, ItemStack> slots) {
         super(what, right ? ClickType.DRAG_RIGHT : ClickType.DRAG_LEFT, right ? InventoryAction.PLACE_DRAG_SINGLE : InventoryAction.PLACE_DRAG_EVEN);
-        this.cancelled = false;
         this.newCursor = newCursor;
         this.addedItems = slots;
         ImmutableSet.Builder<Integer> b = ImmutableSet.builder();
@@ -83,11 +81,11 @@ public class InventoryDragEvent extends InventoryActionEvent implements Cancella
     }
 
     public boolean isCancelled() {
-        return cancelled;
+        return result != Result.DENY;
     }
 
     public void setCancelled(boolean cancel) {
-        cancelled = cancel;
+        result = cancel ? Result.DENY : Result.ALLOW;
     }
 
     @Override

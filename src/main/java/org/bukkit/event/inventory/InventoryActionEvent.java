@@ -1,6 +1,8 @@
 package org.bukkit.event.inventory;
 
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event.Result;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
@@ -8,14 +10,16 @@ import org.bukkit.inventory.ItemStack;
  * An abstract base for the various types of actions a HumanEntity can do in
  * an Inventory.
  */
-public abstract class InventoryActionEvent extends InventoryEvent {
+public abstract class InventoryActionEvent extends InventoryEvent implements Cancellable {
     protected final ClickType click;
     protected final InventoryAction action;
+    protected Result result;
 
     public InventoryActionEvent(InventoryView transaction, ClickType click, InventoryAction action) {
         super(transaction);
         this.click = click;
         this.action = action;
+        result = Result.DEFAULT;
     }
 
     /**
@@ -102,4 +106,23 @@ public abstract class InventoryActionEvent extends InventoryEvent {
     public HumanEntity getPlayer() {
         return getView().getPlayer();
     }
+
+    /**
+     * Set the result of the InventoryClickEvent.
+     *
+     * @param newResult new {@link Result}
+     */
+    public void setResult(Result newResult) {
+        result = newResult;
+    }
+
+    /**
+     * Get the {@link Result} of the event.
+     */
+    public Result getResult() {
+        return result;
+    }
+
+    public abstract boolean isCancelled();
+    public abstract void setCancelled(boolean cancel);
 }

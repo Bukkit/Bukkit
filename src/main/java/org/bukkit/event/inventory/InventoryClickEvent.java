@@ -24,7 +24,6 @@ import org.bukkit.inventory.ItemStack;
 public class InventoryClickEvent extends InventoryActionEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private SlotType slot_type;
-    protected Result result;
     private int whichSlot;
     private int rawSlot;
     private ItemStack current = null;
@@ -38,7 +37,6 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
     public InventoryClickEvent(InventoryView what, SlotType type, int slot, ClickType click, InventoryAction action) {
         super(what, click, action);
         this.slot_type = type;
-        this.result = Result.DEFAULT;
         this.rawSlot = slot;
         this.whichSlot = what.convertSlot(slot);
     }
@@ -65,22 +63,6 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
             return current;
         }
         return getView().getItem(rawSlot);
-    }
-
-    /**
-     * Set the result of the InventoryClickEvent.
-     *
-     * @param newResult new {@link Result}
-     */
-    public void setResult(Result newResult) {
-        result = newResult;
-    }
-
-    /**
-     * Get the {@link Result} of the event.
-     */
-    public Result getResult() {
-        return result;
     }
 
     /**
@@ -116,9 +98,9 @@ public class InventoryClickEvent extends InventoryActionEvent implements Cancell
     /**
      * Proxy method to {@link InventoryClickEvent#setResult(Result)} for the
      * Cancellable interface. setResult is preferred, as it allows you to
-     * specify the default behavior.
+     * specify use of the default behavior.
      *
-     * @param toCancel result is DENY if true, ALLOW if false
+     * @param toCancel result becomes DENY if true, ALLOW if false
      */
     public void setCancelled(boolean toCancel) {
         result = toCancel ? Result.DENY : Result.ALLOW;

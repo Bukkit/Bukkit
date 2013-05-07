@@ -47,7 +47,7 @@ public class InventoryCreativeEvent extends InventoryClickEvent {
 
     /**
      * Whether is creative event would be allowed without plugin
-     * intervention.
+     * intervention. (In other words, the default result.)
      * @return if the item is allowed in the inventory
      */
     public boolean isValidItem() {
@@ -81,11 +81,5 @@ public class InventoryCreativeEvent extends InventoryClickEvent {
         } else {
             return !defaultResult;
         }
-    }
-
-    @Override
-    public void setCancelled(boolean cancel) {
-        // Avoid ALLOW as best we can without violating the contract
-        result = cancel ? Result.DENY : defaultResult ? Result.DEFAULT : Result.ALLOW;
     }
 }
