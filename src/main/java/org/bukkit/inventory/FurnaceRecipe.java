@@ -1,5 +1,6 @@
 package org.bukkit.inventory;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.material.MaterialData;
 
@@ -90,5 +91,56 @@ public class FurnaceRecipe implements Recipe {
      */
     public ItemStack getResult() {
         return output.clone();
+    }
+
+    /**
+     * Checks if the supplied object is a recipe that has identical ingredients and identical results.<br>
+     * This is just like {@link #isSimilar(Recipe)} except it also checks results.
+     * 
+     * @return True if object is the same recipe as this recipe.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj instanceof FurnaceRecipe) {
+            FurnaceRecipe r = (FurnaceRecipe) obj;
+
+            if (!this.getResult().equals(r.getResult())) {
+                return false;
+            }
+
+            return this.isSimilar(r);
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if recipes are of the same type and have the same ingredient.
+     * 
+     * @param recipe the recipe to compare against, must not be null.
+     * @return
+     */
+    public boolean isSimilar(Recipe recipe) {
+        Validate.notNull(recipe, "Recipe can not be null.");
+
+        if (recipe == this) {
+            return true;
+        }
+
+        if (recipe instanceof FurnaceRecipe) {
+            FurnaceRecipe r = (FurnaceRecipe) recipe;
+
+            return this.getInput().getTypeId() == r.getInput().getTypeId(); // TODO use equals() on items when furnace data PR is pulled
+        }
+
+        return false;
     }
 }
