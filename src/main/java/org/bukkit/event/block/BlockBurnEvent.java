@@ -12,9 +12,11 @@ import org.bukkit.event.HandlerList;
 public class BlockBurnEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
+    private final Block blockFire;
 
-    public BlockBurnEvent(final Block block) {
+    public BlockBurnEvent(final Block block, final Block blockFire) {
         super(block);
+        this.blockFire = blockFire;
         this.cancelled = false;
     }
 
@@ -33,5 +35,14 @@ public class BlockBurnEvent extends BlockEvent implements Cancellable {
 
     public static HandlerList getHandlerList() {
         return handlers;
+    }
+
+    /**
+     * Get the fire block at the source of the event
+     *
+     * @return The fire block at the source of the event
+     */
+    public Block getFireBlock() {
+        return blockFire;
     }
 }
