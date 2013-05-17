@@ -38,7 +38,7 @@ public class BlockBurnEvent extends BlockEvent implements Cancellable {
     }
 
     /**
-     * Get the fire block at the source of the event
+     * Gets the fire block that destroyed this one.
      *
      * @return The fire block at the source of the event
      */
