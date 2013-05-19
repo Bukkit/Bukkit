@@ -352,4 +352,24 @@ public interface LivingEntity extends Entity, Damageable {
      * @return if the custom name is displayed
      */
     public boolean isCustomNameVisible();
+    
+    /**
+     * Sets the goal target of the mob.
+     * <p>
+     * The goal target is used for some mobs as a way to target their enemies;
+     * for example, setting a wolf's goal target will cause it to become angry
+     * and attack the targeted entity.
+     * <p>
+     * This value has no effect on many entities.
+     * 
+     * @param entity the living entity to target
+     */
+    public void setGoalTarget(LivingEntity entity);
+    
+    /**
+     * Gets the goal target of the mob.
+     * 
+     * @return goal target of the mob or null
+     */
+    public LivingEntity getGoalTarget();
 }
