@@ -14,7 +14,9 @@ import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.Metadatable;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
+import org.bukkit.util.FutureCallback;
 import org.bukkit.util.Vector;
 
 /**
@@ -176,17 +178,21 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * Loads the {@link Chunk} at the specified coordinates then calls the runnable object
      * <p>
      * Once the chunk is ready for use, the runnable object will be called in the main thread.
-     *
-     * If the chunk is already loaded the runnable object will be called straight away.
-     * If the chunk needs to be generated it will be loaded in the main thread.
-     * Else the chunk will be loaded asynchronously.
-     *
+     * <p>
+     * If the chunk is already loaded the runnable object will be called straight away.</br>
+     * If the chunk needs to be generated it will be loaded in the main thread.</br>
+     * Else the chunk will be loaded asynchronously.</br>
+     * <p>
+     * Note that it is possible that the chunk will never be loaded</br>
+     * This can happen if another plugin unloads it.
      *
      * @param x X-coordinate of the chunk
      * @param z Z-coordinate of the chunk
+     * @param plugin The plugin which is making the request
      * @param runnable The object to run after the chunk has been loaded
+     * @return FutureCallback object which stores the status of the callback
      */
-    public void loadChunkWithCallback(int x, int z, Runnable runnable);
+    public FutureCallback loadChunkWithCallback(int x, int z, Plugin plugin, Runnable runnable);
 
     /**
      * Loads the {@link Chunk} at the specified coordinates
