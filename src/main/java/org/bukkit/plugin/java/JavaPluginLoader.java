@@ -386,7 +386,6 @@ public class JavaPluginLoader implements PluginLoader {
                 continue;
             }
             final Class<? extends Event> eventClass = checkClass.asSubclass(Event.class);
-            method.setAccessible(true);
             Set<RegisteredListener> eventSet = ret.get(eventClass);
             if (eventSet == null) {
                 eventSet = new HashSet<RegisteredListener>();
