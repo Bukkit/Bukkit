@@ -193,7 +193,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param z Z-coordinate of the chunk
      * @param callback The callback to run after the chunk has been loaded
      */
-    public void loadChunkWithCallback(int x, int z, QueuedProcess<Chunk> callback);
+    public void loadChunkWithCallback(int x, int z, QueuedProcess<? super Chunk> callback);
 
     /**
      * Loads the {@link Chunk} at the specified coordinates
