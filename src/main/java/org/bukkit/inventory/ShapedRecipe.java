@@ -16,6 +16,7 @@ public class ShapedRecipe implements Recipe {
     private ItemStack output;
     private String[] rows;
     private Map<Character, ItemStack> ingredients = new HashMap<Character, ItemStack>();
+    private int hash;
 
     /**
      * Create a shaped recipe to craft the specified ItemStack. The constructor merely determines the
@@ -29,6 +30,7 @@ public class ShapedRecipe implements Recipe {
      */
     public ShapedRecipe(ItemStack result) {
         this.output = new ItemStack(result);
+        calculateHashCode();
     }
 
     /**
@@ -61,7 +63,7 @@ public class ShapedRecipe implements Recipe {
             }
         }
         this.ingredients = newIngredients;
-
+        calculateHashCode();
         return this;
     }
 
@@ -104,6 +106,7 @@ public class ShapedRecipe implements Recipe {
         }
 
         ingredients.put(key, new ItemStack(ingredient, 1, (short) raw));
+        calculateHashCode();
         return this;
     }
 
@@ -140,6 +143,29 @@ public class ShapedRecipe implements Recipe {
      */
     public ItemStack getResult() {
         return output.clone();
+    }
+
+    @Override
+    public int hashCode() {
+        return hash;
+    }
+
+    private void calculateHashCode() {
+        ItemStack[] matrix = shapeToMatrix(this.getShape(), this.ingredients);
+        StringBuilder str = new StringBuilder("shaped:");
+
+        for (ItemStack item : matrix) {
+            if (item == null) {
+                str.append('0');
+            } else {
+                str.append(item.hashCode());
+            }
+            str.append(';');
+        }
+
+        str.append('=').append(output.hashCode());
+
+        hash = str.toString().hashCode();
     }
 
     @Override

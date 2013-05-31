@@ -16,6 +16,7 @@ import org.bukkit.material.MaterialData;
 public class ShapelessRecipe implements Recipe {
     private ItemStack output;
     private List<ItemStack> ingredients = new ArrayList<ItemStack>();
+    private int hash;
 
     /**
      * Create a shapeless recipe to craft the specified ItemStack. The constructor merely determines the
@@ -31,6 +32,7 @@ public class ShapelessRecipe implements Recipe {
      */
     public ShapelessRecipe(ItemStack result) {
         this.output = new ItemStack(result);
+        calculateHashCode();
     }
 
     /**
@@ -105,6 +107,7 @@ public class ShapelessRecipe implements Recipe {
         while (count-- > 0) {
             ingredients.add(new ItemStack(ingredient, 1, (short) rawdata));
         }
+        calculateHashCode();
         return this;
     }
 
@@ -190,6 +193,7 @@ public class ShapelessRecipe implements Recipe {
                 count--;
             }
         }
+        calculateHashCode();
         return this;
     }
 
@@ -221,6 +225,23 @@ public class ShapelessRecipe implements Recipe {
      * 
      * @return True if object is the same recipe as this recipe.
      */
+    @Override
+    public int hashCode() {
+        return hash;
+    }
+
+    private void calculateHashCode() {
+        StringBuilder str = new StringBuilder("shapeless:");
+
+        for (ItemStack item : ingredients) {
+            str.append(item.hashCode()).append(';');
+        }
+
+        str.append('=').append(output.hashCode());
+
+        hash = str.toString().hashCode();
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

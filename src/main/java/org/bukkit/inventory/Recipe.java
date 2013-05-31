@@ -13,6 +13,13 @@ public interface Recipe {
     ItemStack getResult();
 
     /**
+     * A pre-generated hashcode for the recipe, unique for each recipe's ingredients and result regardless of definition style.
+     *
+     * @return unique hashcode of this recipe
+     */
+    int hashCode();
+
+    /**
      * Checks if the supplied object is a recipe that has identical ingredient layout and identical results.
      * <br>This is like {@link #isSimilar(Recipe)} except it checks the result.
      *
