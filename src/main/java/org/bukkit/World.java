@@ -14,9 +14,8 @@ import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.Metadatable;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
-import org.bukkit.util.FutureCallback;
+import org.bukkit.util.QueuedProcess;
 import org.bukkit.util.Vector;
 
 /**
@@ -175,12 +174,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public void loadChunk(int x, int z);
 
     /**
-     * Loads the {@link Chunk} at the specified coordinates then calls the runnable object
+     * Loads the {@link Chunk} at the specified coordinates then runs the
+     * callback
      * <p>
-     * Once the chunk is ready for use, the runnable object will be called in the main thread.
+     * Once the chunk is ready for use, the callback will be run in the main
+     * thread.
      * <p>
-     * If the chunk is already loaded the runnable object will be called straight away.</br>
-     * If the chunk needs to be generated it will be loaded in the main thread.</br>
+     * If the chunk is already loaded the callback will be run straight
+     * away.</br>
+     * If the chunk needs to be generated it will be loaded in the main
+     * thread.</br>
      * Else the chunk will be loaded asynchronously.</br>
      * <p>
      * Note that it is possible that the chunk will never be loaded</br>
@@ -188,11 +191,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      *
      * @param x X-coordinate of the chunk
      * @param z Z-coordinate of the chunk
-     * @param plugin The plugin which is making the request
-     * @param runnable The object to run after the chunk has been loaded
-     * @return FutureCallback object which stores the status of the callback
+     * @param callback The callback to run after the chunk has been loaded
      */
-    public FutureCallback loadChunkWithCallback(int x, int z, Plugin plugin, Runnable runnable);
+    public void loadChunkWithCallback(int x, int z, QueuedProcess<Chunk> callback);
 
     /**
      * Loads the {@link Chunk} at the specified coordinates
