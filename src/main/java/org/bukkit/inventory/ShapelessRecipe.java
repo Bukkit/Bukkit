@@ -244,12 +244,6 @@ public class ShapelessRecipe implements Recipe {
         return false;
     }
 
-    /**
-     * Checks if recipes are of the same type and have the same ingredients.
-     * 
-     * @param recipe the recipe to compare against, must not be null.
-     * @return True if both recipes have the same unique ingredient mix, false otherwise.
-     */
     public boolean isSimilar(Recipe recipe) {
         Validate.notNull(recipe, "Recipe can not be null.");
 

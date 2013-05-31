@@ -93,12 +93,6 @@ public class FurnaceRecipe implements Recipe {
         return output.clone();
     }
 
-    /**
-     * Checks if the supplied object is a recipe that has identical ingredients and identical results.<br>
-     * This is just like {@link #isSimilar(Recipe)} except it also checks results.
-     * 
-     * @return True if object is the same recipe as this recipe.
-     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -122,12 +116,6 @@ public class FurnaceRecipe implements Recipe {
         return false;
     }
 
-    /**
-     * Check if recipes are of the same type and have the same ingredient.
-     * 
-     * @param recipe the recipe to compare against, must not be null.
-     * @return
-     */
     public boolean isSimilar(Recipe recipe) {
         Validate.notNull(recipe, "Recipe can not be null.");
 

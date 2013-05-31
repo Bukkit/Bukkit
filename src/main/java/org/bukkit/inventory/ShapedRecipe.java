@@ -142,12 +142,6 @@ public class ShapedRecipe implements Recipe {
         return output.clone();
     }
 
-    /**
-     * Checks if the supplied object is a recipe that has identical ingredient layout and identical results.<br>
-     * This is just like {@link #isSimilar(Recipe)} except it also checks results.
-     * 
-     * @return True if object is the same recipe as this recipe.
-     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -172,11 +166,9 @@ public class ShapedRecipe implements Recipe {
     }
 
     /**
-     * Checks if recipes are of the same type and have matching ingredients and shape.<br>
-     * Shape is also checked horizontally mirrored if does not match as-is.
-     * 
-     * @param recipe the recipe to compare against, must not be null.
-     * @return True if both recipes have the same unique ingredient mix, false otherwise.
+     * {@inheritDoc}
+     * <br>
+     * <br>Shape is also checked horizontally mirrored if does not match as-is.
      */
     public boolean isSimilar(Recipe recipe) {
         Validate.notNull(recipe, "Recipe can not be null.");
