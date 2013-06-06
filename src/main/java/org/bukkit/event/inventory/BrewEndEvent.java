@@ -4,15 +4,13 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.ItemStack;
 
+
+/**
+ * This event is called after an ingredient is consumed in a brewing stand.
+ */
 public class BrewEndEvent extends BrewEvent {
     private ItemStack ingredient;
 
-    /**
-     * This event is called after an ingredient is consumed in a brewing stand.
-     * @param brewer 
-     * @param contents
-     * @param ingredient
-     */
     public BrewEndEvent(Block brewer, BrewerInventory contents, ItemStack ingredient) {
         super(brewer, contents);
         this.ingredient = ingredient;
