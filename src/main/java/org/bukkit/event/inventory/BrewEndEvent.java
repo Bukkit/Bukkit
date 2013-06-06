@@ -1,57 +1,28 @@
 package org.bukkit.event.inventory;
 
 import org.bukkit.block.Block;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.block.BlockEvent;
 import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.Potion;
 
-public class BrewEndEvent extends BlockEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private BrewerInventory contents;
-    private boolean cancelled;
+public class BrewEndEvent extends BrewEvent {
     private ItemStack ingredient;
 
+    /**
+     * This event is called after an ingredient is consumed in a brewing stand.
+     * @param brewer 
+     * @param contents
+     * @param ingredient
+     */
     public BrewEndEvent(Block brewer, BrewerInventory contents, ItemStack ingredient) {
-        super(brewer);
-        this.contents = contents;
+        super(brewer, contents);
         this.ingredient = ingredient;
     }
 
-    public BrewerInventory getContents() {
-        return contents;
-    }
-
-    public Potion[] getPotions() {
-        Potion[] potions = new Potion[3];
-        for (int i = 0; i < 3; i++) {
-            if (contents.getContents()[i] != null) {
-                potions[i] = Potion.fromItemStack(contents.getContents()[i]);
-            }
-        }
-        return potions;
-    }
-
+    /**
+     * Returns the ingredient used in this brewing session.
+     * @return The ingredient used as an {@link org.bukkit.inventory.ItemStack}.
+     */
     public ItemStack getIngredient() {
         return ingredient;
-    }
-
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    public void setCancelled(boolean cancel) {
-        cancelled = cancel;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
     }
 }
