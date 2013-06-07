@@ -31,6 +31,7 @@ import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.util.FileUtil;
+import org.bukkit.util.Security;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -539,7 +540,7 @@ public final class SimplePluginManager implements PluginManager {
     private HandlerList getEventListeners(Class<? extends Event> type) {
         try {
             Method method = getRegistrationClass(type).getDeclaredMethod("getHandlerList");
-            method.setAccessible(true);
+            Security.setAccessible(method, server);
             return (HandlerList) method.invoke(null);
         } catch (Exception e) {
             throw new IllegalPluginAccessException(e.toString());
