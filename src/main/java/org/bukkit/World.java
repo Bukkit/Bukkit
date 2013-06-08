@@ -1,7 +1,9 @@
 package org.bukkit;
 
 import java.io.File;
+
 import org.bukkit.generator.ChunkGenerator;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -1062,6 +1064,25 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return True if rule exists
      */
     public boolean isGameRule(String rule);
+
+    /**
+     * Broadcasts the specified message to every user in this world with the given permission
+     *
+     * @param message Message to broadcast
+     * @param permission Permission the users must have to receive the broadcast
+     * @return Amount of users who received the message
+     */
+    public int broadcast(String message, String permission);
+
+    /**
+     * Broadcast a message to all players in this world.
+     * <p>
+     * This is the same as calling {@link #broadcast(java.lang.String, java.lang.String)} to {@link #BROADCAST_CHANNEL_USERS}
+     *
+     * @param message the message
+     * @return the number of players
+     */
+    public int broadcastMessage(String message);
 
     /**
      * Represents various map environment types that a world may be
