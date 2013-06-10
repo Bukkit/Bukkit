@@ -283,8 +283,7 @@ public enum Effect {
     }
 
     /**
-     * @return if this Effect isn't of type PARTICLE it returns the class which represents
-     * data for this effect, or null if none.
+     * @return The class which represents data for this effect, or null if none
      */
     public Class<?> getData() {
         return this.data;
