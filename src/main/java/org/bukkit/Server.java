@@ -120,7 +120,14 @@ public interface Server extends PluginMessageRecipient {
      * @return The ID of this server
      */
     public String getServerId();
-
+    
+    /**
+     * Get level name (level-name setting)
+     *
+     * @return The name of level-name
+     */
+    public String getLevelName();
+    
     /**
      * Get world type (level-type setting) for default world
      *
