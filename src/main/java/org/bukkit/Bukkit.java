@@ -134,7 +134,14 @@ public final class Bukkit {
     public static String getServerId() {
         return server.getServerId();
     }
-
+    
+    /**
+     * @see Server#getLevelName()
+     */
+    public static String getLevelName() {
+        return server.getLevelName();
+    }
+    
     /**
      * @see Server#getWorldType()
      */
