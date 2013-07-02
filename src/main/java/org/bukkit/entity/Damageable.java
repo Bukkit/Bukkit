@@ -13,11 +13,12 @@ public interface Damageable extends Entity {
 
     /**
      * This method exists for legacy reasons to provide backwards
-     * compatibility. It will not exist at runtime and should not be used
-     * under any circumstances.
+     * compatibility. It should not be used under any circumstances.
+     *
+     * @deprecated Use {@link #damage(double)}, i.e. <code>entity.damage((double) amount)</code>
      */
     @Deprecated
-    void _INVALID_damage(int amount);
+    void damage(int amount);
 
     /**
      * Deals the given amount of damage to this entity, from a specified entity.
@@ -29,26 +30,28 @@ public interface Damageable extends Entity {
 
     /**
      * This method exists for legacy reasons to provide backwards
-     * compatibility. It will not exist at runtime and should not be used
-     * under any circumstances.
+     * compatibility. It should not be used under any circumstances.
+     *
+     * @deprecated Use {@link #damage(double, Entity)}, i.e. <code>entity.damage((double) amount, source)</code>
      */
     @Deprecated
-    void _INVALID_damage(int amount, Entity source);
+    void damage(int amount, Entity source);
 
     /**
      * Gets the entity's health from 0 to {@link #getMaxHealth()}, where 0 is dead.
      *
      * @return Health represented from 0 to max
      */
-    double getHealth();
+    double getHP();
 
     /**
      * This method exists for legacy reasons to provide backwards
-     * compatibility. It will not exist at runtime and should not be used
-     * under any circumstances.
+     * compatibility. It should not be used under any circumstances.
+     *
+     * @deprecated Use {@link #getHP()}
      */
     @Deprecated
-    int _INVALID_getHealth();
+    int getHealth();
 
     /**
      * Sets the entity's health from 0 to {@link #getMaxHealth()}, where 0 is dead.
@@ -56,30 +59,32 @@ public interface Damageable extends Entity {
      * @param health New health represented from 0 to max
      * @throws IllegalArgumentException Thrown if the health is < 0 or > {@link #getMaxHealth()}
      */
-    void setHealth(double health);
+    void setHP(double health);
 
     /**
      * This method exists for legacy reasons to provide backwards
-     * compatibility. It will not exist at runtime and should not be used
-     * under any circumstances.
+     * compatibility. It should not be used under any circumstances.
+     *
+     * @deprecated Use {@link #setHP(double)}
      */
     @Deprecated
-    void _INVALID_setHealth(int health);
+    void setHealth(int health);
 
     /**
      * Gets the maximum health this entity has.
      *
      * @return Maximum health
      */
-    double getMaxHealth();
+    double getMaxHP();
 
     /**
      * This method exists for legacy reasons to provide backwards
-     * compatibility. It will not exist at runtime and should not be used
-     * under any circumstances.
+     * compatibility. It should not be used under any circumstances.
+     *
+     * @deprecated Use {@link #getMaxHP()}
      */
     @Deprecated
-    int _INVALID_getMaxHealth();
+    int getMaxHealth();
 
     /**
      * Sets the maximum health this entity can have.
@@ -90,18 +95,28 @@ public interface Damageable extends Entity {
      *
      * @param health amount of health to set the maximum to
      */
-    void setMaxHealth(double health);
+    void setMaxHP(double health);
 
     /**
      * This method exists for legacy reasons to provide backwards
-     * compatibility. It will not exist at runtime and should not be used
-     * under any circumstances.
+     * compatibility. It should not be used under any circumstances.
+     *
+     * @deprecated Use {@link #setMaxHP(double)}
      */
     @Deprecated
-    void _INVALID_setMaxHealth(int health);
+    void setMaxHealth(int health);
 
     /**
      * Resets the max health to the original amount.
      */
+    void resetMaxHP();
+
+    /**
+     * This method exists for legacy reasons to provide backwards
+     * compatibility. It should not be used under any circumstances.
+     *
+     * @deprecated Use {@link #resetMaxHP()}
+     */
+    @Deprecated
     void resetMaxHealth();
 }
