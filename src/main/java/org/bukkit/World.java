@@ -1028,7 +1028,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * Get existing rules
      *
      * @return An array of rules
+     * @deprecated use {@link World#getExistingGameRules()}
      */
+    @Deprecated
     public String[] getGameRules();
 
     /**
@@ -1038,7 +1040,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      *
      * @param rule Rule to look up value of
      * @return String value of rule
+     * @deprecated use {@link World#getGameRuleValue(GameRule)}
      */
+    @Deprecated
     public String getGameRuleValue(String rule);
 
     /**
@@ -1052,7 +1056,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param rule Rule to set
      * @param value Value to set rule to
      * @return True if rule was set
+     * @deprecated use {@link World#setGameRuleValue(GameRule, String)}
      */
+    @Deprecated
     public boolean setGameRuleValue(String rule, String value);
 
     /**
@@ -1062,6 +1068,33 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return True if rule exists
      */
     public boolean isGameRule(String rule);
+
+    /**
+     * Get existing rules
+     *
+     * @return An array of {@link GameRule}s
+     */
+    public GameRule[] getExistingGameRules();
+
+    /**
+     * Gets the current state of the specified rule
+     *
+     * @param rule {@link GameRule} to look up value of
+     * @return String value of rule
+     */
+    public String getGameRuleValue(GameRule rule);
+
+    /**
+     * Set the specified gamerule to specified value.
+     * <p>
+     * The rule may attempt to validate the value passed, will return true if
+     * value was set.
+     *
+     * @param rule {@link GameRule} to set
+     * @param value Value to set rule to
+     * @return {@code true} if rule was set
+     */
+    public boolean setGameRuleValue(GameRule rule, String value);
 
     /**
      * Represents various map environment types that a world may be
