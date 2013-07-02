@@ -79,8 +79,9 @@ public enum GameRule {
     }
 
     static {
-        for(GameRule rule : values()) 
+        for(GameRule rule : values()) { 
             BY_RULE.put(rule.toString(), rule);
+        }
     }
 
 }
