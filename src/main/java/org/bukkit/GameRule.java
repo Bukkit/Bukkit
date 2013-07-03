@@ -73,7 +73,7 @@ public enum GameRule {
      * @param rule Value to check
      * @return The GameRule with the given value or {@link null} if it does not exist
      */
-    public static GameRule getByRule(String rule) {
+    public static GameRule getByString(String rule) {
         Validate.notNull(rule, "Rule cannot be null");
         return BY_RULE.get(rule);
     }
