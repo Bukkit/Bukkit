@@ -30,10 +30,8 @@ public class SayCommand extends VanillaCommand {
 
         StringBuilder message = new StringBuilder();
         message.append("[");
-        if (sender instanceof Player) {
+        if (sender instanceof Player || sender instanceof BlockCommandSender) {
             message.append(sender.getName());
-        } else if (sender instanceof BlockCommandSender) {
-            message.append("@");
         } else if (sender instanceof ConsoleCommandSender) {
             message.append("Server");
         }
