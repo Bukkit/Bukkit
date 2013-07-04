@@ -5,21 +5,21 @@ package org.bukkit.entity;
  */
 public interface Horse extends Animals, Vehicle {
 
-     /**
+    /**
      * Gets the current type of this horse.
      *
      * @return Current type
      */
     public HorseType getHorseType();
 
-     /**
+    /**
      * Sets the new type of this horse.
      *
      * @param type New type
      */
     public void setHorseType(HorseType type);
 
-     /*
+    /*
      * Represents the various different Horse types.
      */
     public enum HorseType {
@@ -42,7 +42,7 @@ public interface Horse extends Animals, Vehicle {
             this.id = id;
         }
 
-         /**
+        /**
          * Gets the ID of this horse type.
          *
          * @return Horse type ID
@@ -51,7 +51,7 @@ public interface Horse extends Animals, Vehicle {
             return id;
         }
 
-         /**
+        /**
          * Gets a horse type by its ID.
          *
          * @param id ID of the horse type to get.
