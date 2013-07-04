@@ -61,8 +61,4 @@ public interface Horse extends Animals, Vehicle {
             return (id >= types.length) ? null : types[id];
         }
     }
-  
-  
-  
   }
-
