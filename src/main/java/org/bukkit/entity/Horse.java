@@ -5,16 +5,18 @@ package org.bukkit.entity;
  */
 public interface Horse extends Animals, Vehicle {
 
-    public Type getHorseType();
+    //Gets The Horses Type
+    public HorseType getHorseType();
 
-
+    //Sets The Horses Type
     public void setHorseType(HorseType type);
 
+    //Horse Types
     public enum HorseType {
         NORMAL(0),
         DONKEY(1),
         MULE(2),
-        UNDEAD(3);
+        UNDEAD(3),
         SKELETAL(4);
 
         private static final HorseType[] types = new HorseType[HorseType.values().length];
@@ -44,3 +46,4 @@ public interface Horse extends Animals, Vehicle {
   
   
   }
+
