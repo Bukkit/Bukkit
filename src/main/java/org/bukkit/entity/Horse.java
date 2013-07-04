@@ -4,7 +4,6 @@ package org.bukkit.entity;
  * Represents a Horse.
  */
 public interface Horse extends Animals, Vehicle {
-
     /**
      * Gets the current type of this horse.
      *
