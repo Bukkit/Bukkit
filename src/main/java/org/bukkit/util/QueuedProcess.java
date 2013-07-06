@@ -2,7 +2,9 @@ package org.bukkit.util;
 
 
 /**
- * To be used when you wish an object to be queued for loading at a later time
+ * A process to be called later which takes an argument. Typically, the
+ * provided object will be created by an asynchronous procedure, and the
+ * QueuedProcess will be ran when the object is ready for use.
  */
 public interface QueuedProcess<T> {
     /**
