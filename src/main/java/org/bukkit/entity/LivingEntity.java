@@ -369,4 +369,37 @@ public interface LivingEntity extends Entity, Damageable {
      * @return if the custom name is displayed
      */
     public boolean isCustomNameVisible();
+
+    /**
+    * Gets if the living entity is on a leash.
+    *
+    * @return whether or not the living entity is on a leash
+    */
+    public boolean isLeashed();
+
+    /**
+    * Gets the living entity's leash.
+    * If the living entity is not leashed this method will return null.
+    * <p>
+    * If a player is holding the leash, this value is the player's entity.
+    *
+    * @return the living entitiy's leash
+    */
+    public Entity getLeash();
+
+    /**
+    * Sets the living entity's leash.
+    * <p>
+    * Setting the leash to null will remove the leash without dropping it.
+    *
+    * @param the leash to attach the living entitiy to
+    */
+    public void setLeash(Entity leash);
+
+    /**
+    * Breaks the leash.
+    * <p>
+    * Produces the same effect as a player left clicking a leash tied to a fence post.
+    */
+    public void breakLeash();
 }
