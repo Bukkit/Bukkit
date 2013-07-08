@@ -81,7 +81,7 @@ public interface Entity extends Metadatable {
     public boolean teleport(Location location, TeleportCause cause);
 
     /**
-     * Teleports this entity to the target Entity.  If this entity is riding a
+     * Teleports this entity to the target Entity. If this entity is riding a
      * vehicle, it will be dismounted prior to teleportation.
      *
      * @param destination Entity to teleport this entity to
