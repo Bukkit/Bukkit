@@ -5,11 +5,9 @@ import java.util.List;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
-import org.bukkit.entity.Player;
 
 import com.google.common.collect.ImmutableList;
 
@@ -31,14 +29,12 @@ public class SayCommand extends VanillaCommand {
 
         StringBuilder message = new StringBuilder();
         message.append("[");
-        if (sender instanceof Player || sender instanceof BlockCommandSender) {
-            message.append(sender.getName());
-        } else if (sender instanceof RemoteConsoleCommandSender) {
+        if (sender instanceof RemoteConsoleCommandSender) {
             message.append("Rcon");
         } else if (sender instanceof ConsoleCommandSender) {
             message.append("Server");
         } else {
-            message.append("Unknown");
+            message.append(sender.getName());
         }
         message.append("]");
 
