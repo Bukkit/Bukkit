@@ -667,4 +667,12 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param scale if the client health display is scaled
      */
     public void setScaleHealth(boolean scale);
+
+    /**
+     * Gets the player's selected locale. The returned value is a standard
+     * language code, such as en_US.
+     *
+     * @return the player's current locale
+     */
+    public String getLocale();
 }
