@@ -33,7 +33,7 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
      * @param banned true if banned
      * @return the new {@link BanEntry} if true, otherwise null
      */
-    public BanEntry setBanned(boolean banned);
+    public void setBanned(boolean banned);
 
     /**
      * Set the {@link BanEntry} for this player
