@@ -1,10 +1,14 @@
 package org.bukkit.command.defaults;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.bukkit.BanEntry;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,17 +26,26 @@ public class BanCommand extends VanillaCommand {
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
-        if (args.length == 0)  {
+        if (args.length == 0) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
 
-        // TODO: Ban Reason support
-        Bukkit.getOfflinePlayer(args[0]).setBanned(true);
+        String message = "Banned by admin";
+        if (sender instanceof Player) message = message + " \"" + sender.getName() + "\".";
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
+        BanEntry entry = offlinePlayer.setBanned(true);
+        entry.setSource(sender);
+        if (args.length >= 2) {
+            String reason = StringUtils.join(Arrays.copyOfRange(args, 1, args.length), " ");
+            entry.setReason(reason);
+            message = message + "\nReason: " + reason;
+        }
+        offlinePlayer.setBanEntry(entry);
 
         Player player = Bukkit.getPlayer(args[0]);
         if (player != null) {
-            player.kickPlayer("Banned by admin.");
+            player.kickPlayer(message);
         }
 
         Command.broadcastCommandMessage(sender, "Banned player " + args[0]);
