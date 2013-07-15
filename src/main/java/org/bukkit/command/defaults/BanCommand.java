@@ -34,7 +34,8 @@ public class BanCommand extends VanillaCommand {
         String message = "Banned by admin";
         if (sender instanceof Player) message = message + " \"" + sender.getName() + "\".";
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
-        BanEntry entry = offlinePlayer.setBanned(true);
+        offlinePlayer.setBanned(true);
+        BanEntry entry = offlinePlayer.getBanEntry();
         entry.setSource(sender);
         if (args.length >= 2) {
             String reason = StringUtils.join(Arrays.copyOfRange(args, 1, args.length), " ");
