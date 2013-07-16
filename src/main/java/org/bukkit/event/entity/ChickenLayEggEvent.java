@@ -74,7 +74,7 @@ public class ChickenLayEggEvent extends EntityEvent implements Cancellable {
 	 * Sets the amount of time after the current event completes before the next egg is laid.
 	 * This value cannot be less than zero.
 	 * 
-	 * @param ticks The time, in ticks, before teh next egg drop
+	 * @param ticks The time, in ticks, before the next egg drop
 	 */
     public void setTicksUntilNextEgg(int ticks) {
         if (ticks < 0) // default to the current value, assigned by another plugin or by vanilla server code
@@ -85,7 +85,7 @@ public class ChickenLayEggEvent extends EntityEvent implements Cancellable {
     /**
      * @return whether the "mob.chicken.plop" sound will play when the egg is laid
      */
-    public boolean willSoundPlay() {
+    public boolean willPlaySound() {
         return playSound;
     }
 
@@ -95,7 +95,7 @@ public class ChickenLayEggEvent extends EntityEvent implements Cancellable {
      * 
      * @param play Whether the chicken should make a sound when laying the egg (defaults to true)
      */
-    public void playSound(boolean play) {
+    public void setWillPlaySound(boolean play) {
         playSound = play;
     }
 
