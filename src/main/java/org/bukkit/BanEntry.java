@@ -5,6 +5,9 @@ import java.util.Date;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
+/**
+ * Represents an entry into the bans log (banned-players.txt file)
+ */
 public interface BanEntry {
     /**
      * Returns the player associated with this entry
