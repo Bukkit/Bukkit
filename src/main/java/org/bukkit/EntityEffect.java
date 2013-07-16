@@ -45,7 +45,12 @@ public enum EntityEffect {
     /**
      * When a sheep eats a LONG_GRASS block.
      */
-    SHEEP_EAT(10);
+    SHEEP_EAT(10),
+    
+    /**
+     * When a firework explodes.
+     */
+    FIREWORK_EXPLODE(17);
 
     private final byte data;
     private final static Map<Byte, EntityEffect> BY_DATA = Maps.newHashMap();
