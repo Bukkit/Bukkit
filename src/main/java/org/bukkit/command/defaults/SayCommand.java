@@ -29,9 +29,7 @@ public class SayCommand extends VanillaCommand {
 
         StringBuilder message = new StringBuilder();
         message.append("[");
-        if (sender instanceof RemoteConsoleCommandSender) {
-            message.append("Rcon");
-        } else if (sender instanceof ConsoleCommandSender) {
+        if (sender instanceof ConsoleCommandSender) {
             message.append("Server");
         } else {
             message.append(sender.getName());
