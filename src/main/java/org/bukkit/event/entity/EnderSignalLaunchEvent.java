@@ -12,36 +12,36 @@ import org.bukkit.event.HandlerList;
  * <br>
  * This currently can only be initiated by a player.
  */
-public class EnderSignalLaunchEvent extends EntityEvent implements Cancellable{
+public class EnderSignalLaunchEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private HumanEntity launcher;
     private boolean cancel = false;
-    
-    public EnderSignalLaunchEvent(Entity what, HumanEntity shooter){
+
+    public EnderSignalLaunchEvent(Entity what, HumanEntity shooter) {
         super(what);
         this.launcher = shooter;
     }
-    
+
     /**
      * Gets who launched the ender signal.
      * @return the launcher of the ender signal
      */
-    public HumanEntity getLauncher(){
+    public HumanEntity getLauncher() {
         return launcher;
     }
-    
+
     @Override
-    public EnderSignal getEntity(){
+    public EnderSignal getEntity() {
         return (EnderSignal) entity;
     }
 
     @Override
-    public boolean isCancelled(){
+    public boolean isCancelled() {
         return cancel;
     }
 
     @Override
-    public void setCancelled(boolean cancel){
+    public void setCancelled(boolean cancel) {
         this.cancel = cancel;
     }
 
