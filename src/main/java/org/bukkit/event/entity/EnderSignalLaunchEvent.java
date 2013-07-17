@@ -7,7 +7,8 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
- * Thrown when an ender signal (eye of ender) is launched.
+ * This event is called when an Eye of Ender item is launched by a player
+ * to become an Ender Signal entity.
  * <br>
  * This currently can only be initiated by a player.
  */
