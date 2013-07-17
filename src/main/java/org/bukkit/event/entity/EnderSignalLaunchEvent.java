@@ -7,45 +7,41 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
- * Thrown when an ender signal (eye of ender) is launched by a human
+ * Thrown when an ender signal (eye of ender) is launched.<br>
+ * This currently can only be initiated by a player.
  */
 public class EnderSignalLaunchEvent extends EntityEvent implements Cancellable{
     private static final HandlerList handlers = new HandlerList();
-	private HumanEntity shooter;
-	private boolean cancel = false;
-	
-	/**
-	 * Creates a new EnderSignalLaunchEvent
-	 * @param what the {@link org.bukkit.entity.EnderSignal} object
-	 * @param shooter the shooter, likely a player
-	 */
-	public EnderSignalLaunchEvent(Entity what, HumanEntity shooter){
-		super(what);
-		this.shooter = shooter;
-	}
-	
-	/**
-	 * Gets who shot the ender signal
-	 * @return the shooter
-	 */
-	public HumanEntity getShooter(){
-		return shooter;
-	}
-	
-	@Override
-	public EnderSignal getEntity(){
-		return (EnderSignal)entity;
-	}
+    private HumanEntity shooter;
+    private boolean cancel = false;
+    
+    public EnderSignalLaunchEvent(Entity what, HumanEntity shooter){
+        super(what);
+        this.shooter = shooter;
+    }
+    
+    /**
+     * Gets who launched the ender signal
+     * @return the shooter
+     */
+    public HumanEntity getShooter(){
+        return shooter;
+    }
+    
+    @Override
+    public EnderSignal getEntity(){
+        return (EnderSignal) entity;
+    }
 
-	@Override
-	public boolean isCancelled(){
-		return cancel;
-	}
+    @Override
+    public boolean isCancelled(){
+        return cancel;
+    }
 
-	@Override
-	public void setCancelled(boolean cancel){
-		this.cancel=cancel;
-	}
+    @Override
+    public void setCancelled(boolean cancel){
+        this.cancel = cancel;
+    }
 
     @Override
     public HandlerList getHandlers() {
