@@ -17,9 +17,9 @@ public class EnderSignalLaunchEvent extends EntityEvent implements Cancellable {
     private HumanEntity launcher;
     private boolean cancel = false;
 
-    public EnderSignalLaunchEvent(Entity what, HumanEntity shooter) {
+    public EnderSignalLaunchEvent(Entity what, HumanEntity launcher) {
         super(what);
-        this.launcher = shooter;
+        this.launcher = launcher;
     }
 
     /**
