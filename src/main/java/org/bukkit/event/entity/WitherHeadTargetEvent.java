@@ -18,6 +18,11 @@ public class WitherHeadTargetEvent extends EntityEvent implements Cancellable {
         this.target = target;
     }
 
+    /**
+     * Get the enum representation of which head is targeting an entity
+     *
+     * @return Which wither head
+     */
     public WitherHead getWitherHead() {
         return head;
     }
