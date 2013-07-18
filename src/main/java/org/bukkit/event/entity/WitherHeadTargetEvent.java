@@ -6,16 +6,17 @@ import org.bukkit.entity.Wither.WitherHead;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
-public class WitherHeadTargetEvent extends EntityEvent implements Cancellable {
+/**
+ * Called when a wither head targets or untargets an entity for its wither skull attack
+ */
+public class WitherHeadTargetEvent extends EntityTargetLivingEntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
     private WitherHead head;
-    private LivingEntity target;
 
-    public WitherHeadTargetEvent(Entity entity, LivingEntity target, WitherHead head) {
-        super(entity);
+    public WitherHeadTargetEvent(Entity entity, LivingEntity target, TargetReason reason, WitherHead head) {
+        super(entity, target, reason);
         this.head = head;
-        this.target = target;
     }
 
     /**
@@ -33,28 +34,6 @@ public class WitherHeadTargetEvent extends EntityEvent implements Cancellable {
 
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
-    }
-
-    /**
-     * Get the entity that this is targeting.
-     *
-     * @return The entity
-     */
-    public LivingEntity getTarget() {
-        return target;
-    }
-
-    /**
-     * Set the entity that you want the mob to target instead.
-     * It is possible to be null, null will cause the entity to be
-     * target-less.
-     * <p>
-     * Setting this to null is essentially the same as cancelling the event
-     *
-     * @param target The entity to target
-     */
-    public void setTarget(LivingEntity target) {
-        this.target = target;
     }
 
     @Override
