@@ -5,7 +5,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a pig is saddled
+ * Called when an entity is saddled.
  */
 public class EntitySaddleEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
