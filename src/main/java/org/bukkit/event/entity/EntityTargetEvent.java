@@ -122,7 +122,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
          */
         DEFEND_VILLAGE,
         /**
-         * When an wither selects it's chase target as an attack target for it's middle head
+         * When a wither boss selects an attack target for its primary head.
          */
         WITHER_TARGET,
         /**
