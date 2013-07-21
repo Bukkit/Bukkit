@@ -693,16 +693,16 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public double getHealthScale();
 
     /**
-     * Sets the players's current number of arrows sticking out of its body.
+     * Sets the amount of arrows sticking in a player's body.
      * <p>
-     * Can only use values between 0 and 127
+     * Can only use values between 0 and 127.
      *
      * @param arrows the amount of arrows to stick in the body
      */
     public void setArrowsInPlayer(int arrows);
 
     /**
-     * Returns the amount of arrows currently stuck in the player.
+     * Returns the amount of arrows stuck in the player.
      *
      * @return amount of arrows stuck in the player
      */
