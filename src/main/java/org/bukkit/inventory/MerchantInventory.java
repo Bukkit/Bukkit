@@ -26,4 +26,11 @@ public interface MerchantInventory extends Inventory {
      * @param rightInput The right input slot's item.
      */
     public VillagerTrade getMatchingOffer(ItemStack leftInput, ItemStack rightInput);
+    
+    /**
+     * Add a new trade to the list of trades by the merchant
+     * 
+     * @param tradeRecipe - the {@link VillagerTrade} object representing the trading recipe
+     */
+    public void addTrade(VillagerTrade tradeRecipe);
 }
