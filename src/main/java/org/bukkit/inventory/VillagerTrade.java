@@ -8,7 +8,7 @@ public class VillagerTrade {
     private ItemStack leftInput;
     private ItemStack rightInput;
     private int useCount = 0;
-    private int maxUses = 3;
+    private int maxUses = 7;
     
     /**
      * Creates a VillagerTrade with the specified result.
@@ -78,6 +78,42 @@ public class VillagerTrade {
      */
     public void setRightInput(ItemStack rightInput) {
         this.rightInput = new ItemStack(rightInput);
+    }
+    
+    /**
+     * Set the current number of uses.
+     * 
+     * @param uses The new use count.
+     */
+    public void setUseCount(int uses) {
+        this.useCount = uses;
+    }
+    
+    /**
+     * Set the maximum number of uses.
+     * 
+     * @param maxUses The new max use count.
+     */
+    public void setMaxUses(int maxUses) {
+        this.maxUses = maxUses;
+    }
+    
+    /**
+     * Get the current number of trade uses.
+     * 
+     * @return The current number of trades made with this recipe.
+     */
+    public int getUseCount() {
+        return useCount;
+    }
+    
+    /**
+     * Get the maximum number of trade uses.
+     * 
+     * @return The maximum number of trades that can be made with this recipe.
+     */
+    public int getMaxUses() {
+        return maxUses;
     }
     
     /**
