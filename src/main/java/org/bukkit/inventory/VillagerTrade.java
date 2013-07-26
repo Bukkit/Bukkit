@@ -153,36 +153,62 @@ public class VillagerTrade {
     public boolean completesTrade(ItemStack leftInput, ItemStack rightInput) {
         return compareNulls(leftInput, this.leftInput) && compareNulls(rightInput, this.rightInput);
     }
-    
-    /**
-     * Compare two trades to check equality
-     * 
-     * @param compareTradeObj The trade to compare this one to.
-     * @return True for trades that have the same inputs and output, false otherwise.
-     */
+
     @Override
-    public boolean equals(Object compareTradeObj) {
-        if (compareTradeObj instanceof VillagerTrade) {
-            VillagerTrade compareTrade = (VillagerTrade) compareTradeObj;
-            
-            return compareNulls(leftInput, compareTrade.leftInput) && compareNulls(rightInput, compareTrade.rightInput) &&
-                    compareNulls(result, compareTrade.result);
-        } else {
-            return false;
-        }
-    }
-    
-    /**
-     * Create a unique hashcode that represents the data in this trade.
-     * @return The hashcode of this object
-     */
-    @Override
-    public int hashCode() {
-        // I am lost on this.
-        return super.hashCode();
-    }
-    
-    /*
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((leftInput == null) ? 0 : leftInput.hashCode());
+		result = prime * result + maxUses;
+		result = prime * result + ((this.result == null) ? 0 : this.result.hashCode());
+		result = prime * result + ((rightInput == null) ? 0 : rightInput.hashCode());
+		result = prime * result + useCount;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof VillagerTrade)) {
+			return false;
+		}
+		VillagerTrade other = (VillagerTrade) obj;
+		if (leftInput == null) {
+			if (other.leftInput != null) {
+				return false;
+			}
+		} else if (!leftInput.equals(other.leftInput)) {
+			return false;
+		}
+		if (maxUses != other.maxUses) {
+			return false;
+		}
+		if (result == null) {
+			if (other.result != null) {
+				return false;
+			}
+		} else if (!result.equals(other.result)) {
+			return false;
+		}
+		if (rightInput == null) {
+			if (other.rightInput != null) {
+				return false;
+			}
+		} else if (!rightInput.equals(other.rightInput)) {
+			return false;
+		}
+		if (useCount != other.useCount) {
+			return false;
+		}
+		return true;
+	}
+
+	/*
      * Compare two ItemStacks which may be null for equality
      */
     private boolean compareNulls(ItemStack stack1, ItemStack stack2) {
