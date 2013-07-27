@@ -1,11 +1,12 @@
 package org.bukkit.entity;
 
-import org.bukkit.inventory.MerchantOffers;
+import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.MerchantInventory;
 
 /**
  * Represents a villager NPC
  */
-public interface Villager extends Ageable, NPC {
+public interface Villager extends Ageable, NPC, InventoryHolder {
     /**
      * Gets the current profession of this villager.
      *
@@ -21,11 +22,12 @@ public interface Villager extends Ageable, NPC {
     public void setProfession(Profession profession);
 
     /**
-     * Gets the merchant offers to manipulate.
+     * Get the inventory of the villager. Changes to the MerchantInventory will
+     * be immediately reflected in the villager.
      *
-     * @return Merchant offers
+     * @return the MerchantInventory of this villager
      */
-    public MerchantOffers getMerchantOffers();
+    public MerchantInventory getInventory();
 
     /**
      * Represents the various different Villager professions there may be.
