@@ -699,12 +699,12 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      *
      * @param arrows the amount of arrows to stick in the body
      */
-    public void setArrowsInPlayer(int arrows);
+    public void setVisibleArrows(int arrows);
 
     /**
      * Returns the amount of arrows stuck in the player.
      *
      * @return amount of arrows stuck in the player
      */
-    public int getArrowsInPlayer();
+    public int getVisibleArrows();
 }
