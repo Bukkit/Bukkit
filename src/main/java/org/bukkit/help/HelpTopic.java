@@ -18,7 +18,7 @@ public abstract class HelpTopic {
     protected String shortText;
     protected String fullText;
     protected String amendedPermission;
-    
+
     /**
      * Determines if a {@link Player} is allowed to see this help topic. HelpTopic implementations should take
      * server administrator wishes into account as set by the {@link HelpTopic#amendCanSee(String)} function.

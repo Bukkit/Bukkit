@@ -9,7 +9,7 @@ import java.util.List;
  * FixedSetPrompt is the base class for any prompt that requires a fixed set response from the user.
  */
 public abstract class FixedSetPrompt extends ValidatingPrompt {
-    
+
     protected List<String> fixedSet;
 
     /**
@@ -31,7 +31,7 @@ public abstract class FixedSetPrompt extends ValidatingPrompt {
 
     /**
      * Utility function to create a formatted string containing all the options declared in the constructor.
-     * 
+     *
      * @return the options formatted like "[bar, cheese, panda]" if bar, cheese, and panda were the options used
      */
     protected String formatFixedSet() {
