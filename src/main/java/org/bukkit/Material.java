@@ -16,7 +16,6 @@ import org.bukkit.material.Command;
 import org.bukkit.material.Crops;
 import org.bukkit.material.DetectorRail;
 import org.bukkit.material.Diode;
-import org.bukkit.material.DirectionalContainer;
 import org.bukkit.material.Dispenser;
 import org.bukkit.material.Door;
 import org.bukkit.material.Dye;

@@ -5,7 +5,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.command.defaults.VanillaCommand;
 import org.bukkit.help.HelpTopic;
 
