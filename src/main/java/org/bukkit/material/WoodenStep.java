@@ -6,7 +6,7 @@ import org.bukkit.TreeSpecies;
 /**
  * Represents the different types of wooden steps.
  */
-public class WoodenStep extends MaterialData {
+public class WoodenStep extends Step {
 
     public WoodenStep() {
         super(Material.WOOD_STEP);
@@ -53,26 +53,6 @@ public class WoodenStep extends MaterialData {
         setData((byte) ((getData() & 0xC) | species.getData()));
     }
 
-    /**
-     * Test if step is inverted
-     * @return true if inverted (top half), false if normal (bottom half)
-     */
-    public boolean isInverted() {
-        return ((getData() & 0x8) != 0);
-    }
-    
-    /**
-     * Set step inverted state
-     * @param inv - true if step is inverted (top half), false if step is normal (bottom half)
-     */
-    public void setInverted(boolean inv) {
-        int dat = getData() & 0x7;
-        if (inv) {
-            dat |= 0x8;
-        }
-        setData((byte) dat);
-    }
-    
     @Override
     public WoodenStep clone() {
         return (WoodenStep) super.clone();
