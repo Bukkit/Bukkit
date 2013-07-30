@@ -12,8 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.regex.Pattern;
-
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
 
@@ -21,8 +19,7 @@ import org.bukkit.configuration.MemoryConfiguration;
  * This is a base class for all File based implementations of {@link Configuration}
  */
 public abstract class FileConfiguration extends MemoryConfiguration {
-    private static final String NEWLINE_PLATFORM = System.getProperty("line.separator");
-    private static final Pattern NEWLINE_ANY = Pattern.compile("\\r?\\n");
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     /**
      * Creates an empty {@link FileConfiguration} with no default values.
@@ -61,7 +58,7 @@ public abstract class FileConfiguration extends MemoryConfiguration {
         FileWriter writer = new FileWriter(file);
 
         try {
-            writer.write(NEWLINE_ANY.matcher(data).replaceAll(NEWLINE_PLATFORM));
+            writer.write(data.replaceAll("\\r?\\n", LINE_SEPARATOR));
         } finally {
             writer.close();
         }
