@@ -4,13 +4,18 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Map;
+
 import org.bukkit.configuration.MemoryConfigurationTest;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
 import static org.junit.Assert.*;
 
 public abstract class FileConfigurationTest extends MemoryConfigurationTest {
+
+    protected static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
@@ -137,7 +142,7 @@ public abstract class FileConfigurationTest extends MemoryConfigurationTest {
         }
 
         String result = config.saveToString();
-        String expected = getTestHeaderResult() + "\n" + getTestValuesString();
+        String expected = getTestHeaderResult() + LINE_SEPARATOR + getTestValuesString();
 
         assertEquals(expected, result);
     }
@@ -150,7 +155,7 @@ public abstract class FileConfigurationTest extends MemoryConfigurationTest {
         String header = getTestHeaderResult();
         String expected = getTestHeaderInput();
 
-        config.loadFromString(header + "\n" + saved);
+        config.loadFromString(header + LINE_SEPARATOR + saved);
 
         assertEquals(expected, config.options().header());
 
@@ -159,7 +164,7 @@ public abstract class FileConfigurationTest extends MemoryConfigurationTest {
         }
 
         assertEquals(values.keySet(), config.getKeys(true));
-        assertEquals(header + "\n" + saved, config.saveToString());
+        assertEquals(header + LINE_SEPARATOR + saved, config.saveToString());
     }
 
     @Test
@@ -183,7 +188,7 @@ public abstract class FileConfigurationTest extends MemoryConfigurationTest {
         }
 
         assertEquals(values.keySet(), config.getKeys(true));
-        assertEquals(header + "\n" + saved, config.saveToString());
+        assertEquals(header + LINE_SEPARATOR + saved, config.saveToString());
 
         config = getConfig();
         config.loadFromString(getTestHeaderResult() + saved);
@@ -202,7 +207,7 @@ public abstract class FileConfigurationTest extends MemoryConfigurationTest {
         assertEquals("", config.saveToString());
 
         config = getConfig();
-        config.loadFromString("\n\n"); // Should trim the first newlines of a header
+        config.loadFromString(LINE_SEPARATOR + LINE_SEPARATOR); // Should trim the first newlines of a header
 
         assertEquals("", config.saveToString());
     }
