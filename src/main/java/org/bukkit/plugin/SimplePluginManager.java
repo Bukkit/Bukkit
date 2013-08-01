@@ -547,6 +547,10 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     private Class<? extends Event> getRegistrationClass(Class<? extends Event> clazz) {
+		return getRegistrationClass(clazz, null);
+	}
+
+	private Class<? extends Event> getRegistrationClass(Class<? extends Event> clazz, String childClassName) {
         try {
             clazz.getDeclaredMethod("getHandlerList");
             return clazz;
@@ -554,9 +558,9 @@ public final class SimplePluginManager implements PluginManager {
             if (clazz.getSuperclass() != null
                     && !clazz.getSuperclass().equals(Event.class)
                     && Event.class.isAssignableFrom(clazz.getSuperclass())) {
-                return getRegistrationClass(clazz.getSuperclass().asSubclass(Event.class));
+                return getRegistrationClass(clazz.getSuperclass().asSubclass(Event.class), childClassName!=null ? childClassName : clazz.getName());
             } else {
-                throw new IllegalPluginAccessException("Unable to find handler list for event " + clazz.getName());
+                throw new IllegalPluginAccessException("Unable to find handler list for event " + childClassName);
             }
         }
     }
