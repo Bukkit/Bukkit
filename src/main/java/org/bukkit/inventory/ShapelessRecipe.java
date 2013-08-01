@@ -109,6 +109,19 @@ public class ShapelessRecipe implements Recipe {
     }
 
     /**
+     * Adds the specified ingredient.
+     *
+     * @param ingredient The ingredient to add.
+     * @return The changed recipe, so you can chain calls.
+     */
+    public ShapelessRecipe addIngredient(ItemStack item) {
+    	item.setAmount(1);
+        Validate.isTrue(ingredients.size() + 1 <= 9, "Shapeless recipes cannot have more than 9 ingredients");
+        ingredients.add(new ItemStack(item));
+    	return this;
+    }
+
+    /**
      * Removes an ingredient from the list. If the ingredient occurs multiple times,
      * only one instance of it is removed. Only removes exact matches, with a data value
      * of 0.
