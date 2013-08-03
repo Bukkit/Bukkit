@@ -4,7 +4,6 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event.Result;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * An abstract base class for events that describe an interaction between a
