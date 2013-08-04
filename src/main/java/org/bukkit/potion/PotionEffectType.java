@@ -109,6 +109,22 @@ public abstract class PotionEffectType {
      */
     public static final PotionEffectType WITHER = new PotionEffectTypeWrapper(20);
 
+    /**
+     * Increases the maximum health of an entity.
+     */
+    public static final PotionEffectType HEALTH_BOOST = new PotionEffectTypeWrapper(21);
+
+    /**
+     * Increases the maximum health of an entity with health that cannot be
+     * regenerated, but is refilled every 30 seconds.
+     */
+    public static final PotionEffectType ABSORPTION = new PotionEffectTypeWrapper(22);
+
+    /**
+     * Increases the food level of an entity each tick.
+     */
+    public static final PotionEffectType SATURATION = new PotionEffectTypeWrapper(23);
+
     private final int id;
 
     protected PotionEffectType(int id) {
@@ -182,7 +198,7 @@ public abstract class PotionEffectType {
         return "PotionEffectType[" + id + ", " + getName() + "]";
     }
 
-    private static final PotionEffectType[] byId = new PotionEffectType[21];
+    private static final PotionEffectType[] byId = new PotionEffectType[24];
     private static final Map<String, PotionEffectType> byName = new HashMap<String, PotionEffectType>();
     // will break on updates.
     private static boolean acceptingNew = true;

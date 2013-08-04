@@ -130,9 +130,20 @@ public interface Plugin extends TabExecutor {
     public void setNaggable(boolean canNag);
 
     /**
-     * Gets the {@link EbeanServer} tied to this plugin
+     * Gets the {@link EbeanServer} tied to this plugin. This will only be
+     * available if enabled in the {@link
+     * PluginDescriptionFile#isDatabaseEnabled()}
+     * <p>
+     * <i>For more information on the use of <a href="http://www.avaje.org/">
+     * Avaje Ebeans ORM</a>, see <a
+     * href="http://www.avaje.org/ebean/documentation.html">Avaje Ebeans
+     * Documentation</a></i>
+     * <p>
+     * <i>For an example using Ebeans ORM, see <a
+     * href="https://github.com/Bukkit/HomeBukkit">Bukkit's Homebukkit Plugin
+     * </a></i>
      *
-     * @return Ebean server instance
+     * @return ebean server instance or null if not enabled
      */
     public EbeanServer getDatabase();
 
@@ -155,7 +166,7 @@ public interface Plugin extends TabExecutor {
 
     /**
      * Returns the name of the plugin.
-     *
+     * <p>
      * This should return the bare name of the plugin and should be used for comparison.
      *
      * @return name of the plugin
