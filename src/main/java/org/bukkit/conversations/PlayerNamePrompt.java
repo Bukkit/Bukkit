@@ -17,7 +17,7 @@ public abstract class PlayerNamePrompt extends ValidatingPrompt{
     @Override
     protected boolean isInputValid(ConversationContext context, String input) {
         return plugin.getServer().getPlayer(input) != null;
-        
+
     }
 
     @Override

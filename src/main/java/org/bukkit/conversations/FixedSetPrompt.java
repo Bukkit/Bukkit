@@ -9,7 +9,7 @@ import java.util.List;
  * FixedSetPrompt is the base class for any prompt that requires a fixed set response from the user.
  */
 public abstract class FixedSetPrompt extends ValidatingPrompt {
-    
+
     protected List<String> fixedSet;
 
     /**

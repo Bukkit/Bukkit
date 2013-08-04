@@ -33,7 +33,7 @@ public class ShapedRecipe implements Recipe {
     /**
      * Set the shape of this recipe to the specified rows. Each character represents a different
      * ingredient; exactly what each character represents is set separately. The first row supplied
-     * corresponds with the upper most part of the recipe on the workbench e.g. if all three 
+     * corresponds with the upper most part of the recipe on the workbench e.g. if all three
      * rows are supplies the first string represents the top row on the workbench.
      *
      * @param shape The rows of the recipe (up to 3 rows).

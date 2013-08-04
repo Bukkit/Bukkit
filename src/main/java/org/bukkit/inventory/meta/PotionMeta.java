@@ -45,7 +45,7 @@ public interface PotionMeta extends ItemMeta {
 
     /**
      * Checks for a specific custom potion effect type on this potion.
-     * 
+     *
      * @param type the potion effect type to check for
      * @return true if the potion has this effect
      */

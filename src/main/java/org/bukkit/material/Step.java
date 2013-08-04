@@ -55,7 +55,7 @@ public class Step extends TexturedMaterial {
     public boolean isInverted() {
         return ((getData() & 0x8) != 0);
     }
-    
+
     /**
      * Set step inverted state
      *
@@ -68,7 +68,7 @@ public class Step extends TexturedMaterial {
         }
         setData((byte) dat);
     }
-    
+
     @Override
     protected int getTextureIndex() {
         return getData() & 0x7;

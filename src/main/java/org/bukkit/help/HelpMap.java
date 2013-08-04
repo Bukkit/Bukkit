@@ -27,7 +27,7 @@ public interface HelpMap {
      * @return All the registered help topics.
      */
     public Collection<HelpTopic> getHelpTopics();
-    
+
     /**
      * Adds a topic to the server's help index.
      *
