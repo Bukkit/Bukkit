@@ -27,6 +27,10 @@ public enum EntityType {
      */
     EXPERIENCE_ORB("XPOrb", ExperienceOrb.class, 2),
     /**
+     * A leash attached to a fencepost.
+     */
+    LEASH_HITCH("LeashKnot", LeashHitch.class, 8),
+    /**
      * A painting on a wall.
      */
     PAINTING("Painting", Painting.class, 9),
@@ -35,7 +39,7 @@ public enum EntityType {
      */
     ARROW("Arrow", Arrow.class, 10),
     /**
-     * A flyinf snowball.
+     * A flying snowball.
      */
     SNOWBALL("Snowball", Snowball.class, 11),
     /**
@@ -223,6 +227,7 @@ public enum EntityType {
      * Some entities cannot be spawned using {@link World#spawnEntity(Location, EntityType)}
      * or {@link World#spawn(Location, Class)}, usually
      * because they require additional information in order to spawn.
+     *
      * @return False if the entity type cannot be spawned
      */
     public boolean isSpawnable() {
