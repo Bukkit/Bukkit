@@ -107,7 +107,7 @@ public enum Material {
     GOLD_BLOCK(41, "Block of Gold"),
     IRON_BLOCK(42, "Block of Iron"),
     DOUBLE_STEP(43, Step.class, "Double Slab"),
-    STEP(44, Step.class, "Slav"),
+    STEP(44, Step.class, "Slab"),
     BRICK(45, "Bricks"),
     TNT(46, "TNT"),
     BOOKSHELF(47, "Bookshelf"),
