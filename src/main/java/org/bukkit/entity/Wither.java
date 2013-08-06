@@ -6,6 +6,7 @@ import org.bukkit.Location;
  * Represents a Wither boss
  */
 public interface Wither extends Monster {
+
     /**
      * Gets the current target of a wither head.
      *
@@ -13,6 +14,7 @@ public interface Wither extends Monster {
      * @return the current target of a wither head, or null if none
      */
     public LivingEntity getTarget(WitherHead head);
+
     /**
      * Sets the current target of a wither head.
      *
@@ -20,6 +22,7 @@ public interface Wither extends Monster {
      * @param entity the entity to set as the target
      */
     public void setTarget(WitherHead head, LivingEntity entity);
+
     /**
      * Fires a wither skull from a wither head.
      *
@@ -27,6 +30,7 @@ public interface Wither extends Monster {
      * @param entity the entity to fire at
      */
     public void shoot(WitherHead head, LivingEntity entity);
+
     /**
      * Fires a wither skull from a wither head.
      *
@@ -34,6 +38,7 @@ public interface Wither extends Monster {
      * @param location the location to fire at
      */
     public void shoot(WitherHead head, Location location);
+
     
     /**
      * An enum to specify which head of the wither
