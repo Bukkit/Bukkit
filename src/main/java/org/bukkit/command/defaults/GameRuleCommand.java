@@ -3,6 +3,8 @@ package org.bukkit.command.defaults;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
@@ -60,6 +62,14 @@ public class GameRuleCommand extends VanillaCommand {
             World world = ((HumanEntity) sender).getWorld();
             if (world != null) {
                 return world;
+            }
+        } else if (sender instanceof BlockCommandSender) {
+            Block block = ((BlockCommandSender) sender).getBlock();
+            if (block != null) {
+                World world = block.getWorld();
+                if (world != null) {
+                    return world;
+                }
             }
         }
 
