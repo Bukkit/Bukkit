@@ -19,6 +19,15 @@ public class EntityShootBowEvent extends EntityEvent implements Cancellable {
     private boolean cancelled;
     private boolean consumeCancelled;
 
+    @Deprecated
+    public EntityShootBowEvent(final LivingEntity shooter, final ItemStack bow, final Projectile projectile, final float force) {
+        super(shooter);
+        this.bow = bow;
+        this.projectile = projectile;
+        this.force = force;
+        this.projectileStack = null;
+    }
+    
     public EntityShootBowEvent(final LivingEntity shooter, final ItemStack bow, final ItemStack projectileStack, final Projectile projectile, final float force) {
         super(shooter);
         this.bow = bow;
@@ -42,9 +51,9 @@ public class EntityShootBowEvent extends EntityEvent implements Cancellable {
     }
 
     /**
-     * Gets the projectile ItemStack fired by the bow; is null if the shooter is a skeleton
+     * Gets the projectile ItemStack fired by the bow
      * 
-     * @return the projectile ItemStack involved in this event, or null
+     * @return the projectile ItemStack involved in this event
      */
     public ItemStack getProjectileStack() {
         return projectileStack;
@@ -82,7 +91,7 @@ public class EntityShootBowEvent extends EntityEvent implements Cancellable {
      * 
      * @return if the stack is being consumed
      */
-    public boolean isStackConsumeCancelled() {
+    public boolean isConsumingStack() {
         return consumeCancelled;
     }
 
@@ -91,7 +100,7 @@ public class EntityShootBowEvent extends EntityEvent implements Cancellable {
      * 
      * @param cancel true if you wish to cancel projectile consumption
      */
-    public void setStackConsumeCancelled(boolean cancel) {
+    public void setConsumingStack(boolean cancel) {
         consumeCancelled = cancel;
     }
 
