@@ -96,7 +96,7 @@ public class EntityShootBowEvent extends EntityEvent implements Cancellable {
     }
 
     /**
-     * Set whether the projectile ItemStack will be consumed in this event; this has no effect to a skeleton
+     * Sets whether the projectile ItemStack will be consumed in this event; this has no effect to a skeleton
      * 
      * @param cancel true if you wish to cancel projectile consumption
      */
