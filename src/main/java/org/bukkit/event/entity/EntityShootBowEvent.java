@@ -13,13 +13,16 @@ import org.bukkit.inventory.ItemStack;
 public class EntityShootBowEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final ItemStack bow;
+    private final ItemStack projectileStack;
     private Entity projectile;
     private final float force;
     private boolean cancelled;
+    private boolean consumeCancelled;
 
-    public EntityShootBowEvent(final LivingEntity shooter, final ItemStack bow, final Projectile projectile, final float force) {
+    public EntityShootBowEvent(final LivingEntity shooter, final ItemStack bow, final ItemStack projectileStack, final Projectile projectile, final float force) {
         super(shooter);
         this.bow = bow;
+        this.projectileStack = projectileStack;
         this.projectile = projectile;
         this.force = force;
     }
@@ -36,6 +39,15 @@ public class EntityShootBowEvent extends EntityEvent implements Cancellable {
      */
     public ItemStack getBow() {
         return bow;
+    }
+
+    /**
+     * Gets the projectile ItemStack fired by the bow; is null if the shooter is a skeleton
+     * 
+     * @return the projectile ItemStack involved in this event, or null
+     */
+    public ItemStack getProjectileStack() {
+        return projectileStack;
     }
 
     /**
@@ -63,6 +75,24 @@ public class EntityShootBowEvent extends EntityEvent implements Cancellable {
      */
     public float getForce() {
         return force;
+    }
+
+    /**
+     * Gets whether the projectile ItemStack will be consumed in this event; this has no effect to a skeleton
+     * 
+     * @return if the stack is being consumed
+     */
+    public boolean isStackConsumeCancelled() {
+        return consumeCancelled;
+    }
+
+    /**
+     * Set whether the projectile ItemStack will be consumed in this event; this has no effect to a skeleton
+     * 
+     * @param cancel true if you wish to cancel projectile consumption
+     */
+    public void setStackConsumeCancelled(boolean cancel) {
+        consumeCancelled = cancel;
     }
 
     public boolean isCancelled() {
