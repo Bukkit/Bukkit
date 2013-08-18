@@ -64,6 +64,11 @@ public enum InventoryType {
      * A hopper inventory, with 5 slots of type CONTAINER.
      */
     HOPPER(5, "Item Hopper"),
+    /**
+     * A horse inventory, with either two ARMOUR slots or one AMOUR slot and
+     * 15 CONTAINER slots.
+     */
+    HORSE(2, "Horse"),
     ;
 
     private final int size;
