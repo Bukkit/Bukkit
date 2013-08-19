@@ -39,13 +39,24 @@ public interface Wither extends Monster {
      */
     public void shoot(WitherHead head, Location location);
 
-    
     /**
      * An enum to specify which head of the wither
      */
     public enum WitherHead {
+
+        /**
+         * The Left head in respect to a frontal view
+         */
         LEFT,
+
+        /**
+         * The Center head in respect to a frontal view
+         */
         CENTER,
+
+        /**
+         * The Right head in respect to a frontal view
+         */
         RIGHT,
     }
 }
