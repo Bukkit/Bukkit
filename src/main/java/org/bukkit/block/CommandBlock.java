@@ -37,4 +37,18 @@ public interface CommandBlock extends BlockState {
      * @param name New name for this CommandBlock.
      */
     public void setName(String name);
+
+    /**
+     * Sets the redstone level for this CommandBlock. This redstone level
+     * is used by comparators when placed against the CommandBlock facing 
+     * away from it
+     * @param level redstone level, 0-15
+     */
+	public void setRedstoneLevel(int level);
+
+	/**
+	 * Gets the redstone level of this CommandBlock.
+	 * @return redstone level, 0-15
+	 */
+	public int getRedstoneLevel();
 }
