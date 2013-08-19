@@ -56,7 +56,9 @@ public interface Villager extends Ageable, NPC, InventoryHolder {
          * Gets the ID of this profession.
          *
          * @return Profession ID.
+         * @deprecated Magic value
          */
+        @Deprecated
         public int getId() {
             return id;
         }
@@ -66,7 +68,9 @@ public interface Villager extends Ageable, NPC, InventoryHolder {
          *
          * @param id ID of the profession to get.
          * @return Resulting profession, or null if not found.
+         * @deprecated Magic value
          */
+        @Deprecated
         public static Profession getProfession(int id) {
             return (id >= professions.length) ? null : professions[id];
         }
