@@ -64,13 +64,7 @@ public class GameRuleCommand extends VanillaCommand {
                 return world;
             }
         } else if (sender instanceof BlockCommandSender) {
-            Block block = ((BlockCommandSender) sender).getBlock();
-            if (block != null) {
-                World world = block.getWorld();
-                if (world != null) {
-                    return world;
-                }
-            }
+            return ((BlockCommandSender) sender).getBlock().getWorld();
         }
 
         return Bukkit.getWorlds().get(0);
