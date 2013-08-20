@@ -10,8 +10,12 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
  * This event is called when a {@link org.bukkit.entity.Item} receives damage
  * and is about to be removed.
  * <p>
- * This event will never be called when a Item of
- * {@link org.bukkit.Material#NETHER_STAR} is hurt by an explosion.
+ * Canceling this event will result in the item remaining in the world and not
+ * dying. If you cancel this event, it is advisable to examine the DamageCause
+ * and attempt to remove the Item from the "situation" by means of teleport().
+ * <p>
+ * Items whose ItemStack are of the NETHER_STAR Material have innate
+ * resistance to explosions. This may change in the future.
  */
 public class ItemDeathEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
