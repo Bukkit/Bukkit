@@ -695,11 +695,13 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     /**
      * Sets the amount of arrows sticking in a player's body.
      * <p>
-     * Can only use values between 0 and 127.
+     * Can only use values between 0 and 127, inclusive.
      *
      * @param arrows the amount of arrows to stick in the body
+     * @throws IllegalArgumentException if number is less than 0
+     * @throws IllegalArgumentException if number is greater than 127
      */
-    public void setVisibleArrows(int arrows);
+    public void setVisibleArrows(int arrows) throws IllegalArgumentException;
 
     /**
      * Returns the amount of arrows stuck in the player.
