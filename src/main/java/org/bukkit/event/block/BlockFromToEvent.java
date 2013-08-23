@@ -2,6 +2,7 @@ package org.bukkit.event.block;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
@@ -15,18 +16,21 @@ public class BlockFromToEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     protected Block to;
     protected BlockFace face;
+    protected BlockState newState;
     protected boolean cancel;
 
-    public BlockFromToEvent(final Block block, final BlockFace face) {
+    public BlockFromToEvent(final Block block, final BlockFace face, final BlockState newState) {
         super(block);
         this.face = face;
+        this.newState = newState;
         this.cancel = false;
     }
 
-    public BlockFromToEvent(final Block block, final Block toBlock) {
+    public BlockFromToEvent(final Block block, final Block toBlock, final BlockState newState) {
         super(block);
         this.to = toBlock;
         this.face = BlockFace.SELF;
+        this.newState = newState;
         this.cancel = false;
     }
 
@@ -37,6 +41,15 @@ public class BlockFromToEvent extends BlockEvent implements Cancellable {
      */
     public BlockFace getFace() {
         return face;
+    }
+
+    /**
+     * Gets the state the block will have.
+     *
+     * @return The state that the block will have
+     */
+    public BlockState getNewState() {
+        return newState;
     }
 
     /**
