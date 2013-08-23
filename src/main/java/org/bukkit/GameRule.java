@@ -1,57 +1,62 @@
 package org.bukkit;
 
-import java.util.Map;
-
+import com.google.common.collect.Maps;
 import org.apache.commons.lang.Validate;
 
-import com.google.common.collect.Maps;
+import java.util.Map;
 
 /**
  * Represents the many game rules that can be set with {@link World#setGameRuleValue(GameRule, String)}
  */
 public enum GameRule {
     /**
-     * Used to toggle text output of command block commands to the console
+     * Represents the game rule to toggle text output of command block commands
+     * to the console
      */
     COMMAND_BLOCK_OUTPUT("commandBlockOutput"),
 
     /**
-     * Used to toggle the day/night cycle
+     * Represents the game rule to toggle the day/night cycle
      */
-    DO_DAYLIGHT_CYCLE("doDaylightCycle"),
+    DAYLIGHT_CYCLE("doDaylightCycle"),
 
     /**
-     * Used to toggle whether fire spreads and dissipates
+     * Represents the game rule to toggle whether fire spreads and dissipates
      */
-    DO_FIRE_TICK("doFireTick"),
+    FIRE_TICK("doFireTick"),
 
     /**
-     * Used to toggle whether mobs drop loot
+     * Represents the game rule to toggle whether mobs drop loot
      */
-    DO_MOB_LOOT("doMobLoot"),
+    MOB_LOOT("doMobLoot"),
 
     /**
-     * Used to toggle the natural spawning of mobs (does not effect mob eggs or mob spawners)
+     * Represents the game rule to toggle the natural spawning of mobs.
+     * This does not effect mob eggs or mob spawners
      */
-    DO_MOB_SPAWNING("doMobSpawning"),
+    MOB_SPAWNING("doMobSpawning"),
 
     /**
-     * Used to toggle the dropping of blocks when broken (includes TNT destroying blocks)
+     * Represents the game rule to toggle the dropping of blocks when broken.
+     * This includes TNT destroying blocks
      */
-    DO_TILE_DROPS("doTileDrops"),
+    TILE_DROPS("doTileDrops"),
 
     /**
-     * Used to toggle whether players will keep their inventory on death
+     * Represents the game rule to toggle whether players will keep their
+     * inventory on death
      */
     KEEP_INVENTORY("keepInventory"),
 
     /**
-     * Used to toggle mobs griefing blocks (e.g creepers blowing up blocks, endermen picking up blocks, etc)
+     * Represents the game rule to toggle mobs griefing blocks.
+     * For example: creepers blowing up blocks or endermen picking up blocks
      */
     MOB_GRIEFING("mobGriefing"),
 
     /**
-     * Used to toggle players naturally regaining health regardless of their hunger level
+     * Represents the game rule to toggle players naturally regaining health
+     * regardless of their hunger level
      */
     NATURAL_REGENERATION("naturalRegeneration");
 
@@ -79,9 +84,8 @@ public enum GameRule {
     }
 
     static {
-        for(GameRule rule : values()) { 
+        for(GameRule rule : values()) {
             BY_RULE.put(rule.toString(), rule);
         }
     }
-
 }
