@@ -37,7 +37,7 @@ public class BlockFromToEvent extends BlockEvent implements Cancellable {
     /**
      * Old constructor with BlockFace
      *
-     * @deprecated use {@link BlockFromToEvent(Block, BlockFace, BlockStatus)} instead.
+     * @deprecated use {@link BlockFromToEvent(Block, BlockFace, BlockState)} instead.
      */
     @Deprecated
     public BlockFromToEvent(final Block block, final BlockFace face) {
@@ -47,7 +47,7 @@ public class BlockFromToEvent extends BlockEvent implements Cancellable {
     /**
      * Old constructor with Block
      *
-     * @deprecated use {@link BlockFromToEvent(Block, Block, BlockStatus)} instead.
+     * @deprecated use {@link BlockFromToEvent(Block, Block, BlockState)} instead.
      */
     @Deprecated
     public BlockFromToEvent(final Block block, final Block toBlock) {
