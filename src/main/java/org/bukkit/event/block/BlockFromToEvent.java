@@ -35,6 +35,26 @@ public class BlockFromToEvent extends BlockEvent implements Cancellable {
     }
 
     /**
+     * Old constructor with BlockFace
+     *
+     * @deprecated use {@link BlockFromToEvent(Block, BlockFace, BlockStatus)} instead.
+     */
+    @Deprecated
+    public BlockFromToEvent(final Block block, final BlockFace face) {
+        this(block, face, null);
+    }
+
+    /**
+     * Old constructor with Block
+     *
+     * @deprecated use {@link BlockFromToEvent(Block, Block, BlockStatus)} instead.
+     */
+    @Deprecated
+    public BlockFromToEvent(final Block block, final Block toBlock) {
+        this(block, toBlock, null);
+    }
+
+    /**
      * Gets the BlockFace that the block is moving to.
      *
      * @return The BlockFace that the block is moving to
