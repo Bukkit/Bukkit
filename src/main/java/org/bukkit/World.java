@@ -1,17 +1,13 @@
 package org.bukkit;
 
 import java.io.File;
-import org.bukkit.generator.ChunkGenerator;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
@@ -1070,29 +1066,30 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public boolean isGameRule(String rule);
 
     /**
-     * Get existing rules
+     * Get existing rules for this world
      *
-     * @return An array of {@link GameRule}s
+     * @return An array of existing {@link GameRule}s
      */
     public GameRule[] getExistingGameRules();
 
     /**
      * Gets the current state of the specified rule
      *
-     * @param rule {@link GameRule} to look up value of
+     * @param rule The {@link GameRule} to determine the value of
      * @return String value of rule
      */
     public String getGameRuleValue(GameRule rule);
 
     /**
-     * Set the specified gamerule to specified value.
+     * Set a specified {@link GameRule} to specified value.
      * <p>
-     * The rule may attempt to validate the value passed, will return true if
-     * value was set.
+     * This may validate the value to ensure it is applicable to the GameRule.
+     * If the value was not valid this will return {@code false}.
      *
-     * @param rule {@link GameRule} to set
-     * @param value Value to set rule to
-     * @return {@code true} if rule was set
+     * @param rule The GameRule to set
+     * @param value The value to set the GameRule to
+     * @return {@code true} if the GameRule was set to the specified value;
+     *         false otherwise
      */
     public boolean setGameRuleValue(GameRule rule, String value);
 

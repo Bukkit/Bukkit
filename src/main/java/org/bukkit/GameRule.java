@@ -1,14 +1,16 @@
 package org.bukkit;
 
-import com.google.common.collect.Maps;
 import org.apache.commons.lang.Validate;
 
 import java.util.Map;
+
+import com.google.common.collect.Maps;
 
 /**
  * Represents the many game rules that can be set with {@link World#setGameRuleValue(GameRule, String)}
  */
 public enum GameRule {
+
     /**
      * Represents the game rule to toggle text output of command block commands
      * to the console
