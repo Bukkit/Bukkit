@@ -54,9 +54,9 @@ public class BlockFromToEvent extends BlockEvent implements Cancellable {
     }
 
     /**
-     * Gets the BlockState the new block will have.
+     * Gets the BlockState the new block will have or null if unknown.
      *
-     * @return The BlockState the new block will have
+     * @return The BlockState the new block will have or null if unknown
      */
     public BlockState getNewState() {
         return newState;
