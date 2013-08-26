@@ -20,9 +20,9 @@ public class WitherHeadTargetEvent extends EntityTargetLivingEntityEvent impleme
     }
 
     /**
-     * Get the enum representation of which head is targeting an entity
+     * Gets which head of the wither is targeting an entity
      *
-     * @return Which wither head
+     * @return Which wither head is targeting an entity
      */
     public WitherHead getWitherHead() {
         return head;
