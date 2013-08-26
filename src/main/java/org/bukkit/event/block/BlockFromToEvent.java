@@ -19,6 +19,16 @@ public class BlockFromToEvent extends BlockEvent implements Cancellable {
     protected BlockState newState;
     protected boolean cancel;
 
+    @Deprecated
+    public BlockFromToEvent(final Block block, final BlockFace face) {
+        this(block, face, null);
+    }
+
+    @Deprecated
+    public BlockFromToEvent(final Block block, final Block toBlock) {
+        this(block, toBlock, null);
+    }
+
     public BlockFromToEvent(final Block block, final BlockFace face, final BlockState newState) {
         super(block);
         this.face = face;
@@ -35,26 +45,6 @@ public class BlockFromToEvent extends BlockEvent implements Cancellable {
     }
 
     /**
-     * Old constructor with BlockFace
-     *
-     * @deprecated use {@link BlockFromToEvent(Block, BlockFace, BlockState)} instead.
-     */
-    @Deprecated
-    public BlockFromToEvent(final Block block, final BlockFace face) {
-        this(block, face, null);
-    }
-
-    /**
-     * Old constructor with Block
-     *
-     * @deprecated use {@link BlockFromToEvent(Block, Block, BlockState)} instead.
-     */
-    @Deprecated
-    public BlockFromToEvent(final Block block, final Block toBlock) {
-        this(block, toBlock, null);
-    }
-
-    /**
      * Gets the BlockFace that the block is moving to.
      *
      * @return The BlockFace that the block is moving to
@@ -64,9 +54,9 @@ public class BlockFromToEvent extends BlockEvent implements Cancellable {
     }
 
     /**
-     * Gets the state the block will have.
+     * Gets the BlockState the new block will have.
      *
-     * @return The state that the block will have
+     * @return The BlockState the new block will have
      */
     public BlockState getNewState() {
         return newState;
