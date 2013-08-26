@@ -40,7 +40,7 @@ public interface Wither extends Monster {
     public void shoot(WitherHead head, Location location);
 
     /**
-     * An enum to specify which head of the wither
+     * An enum to specify a head on the Wither
      */
     public enum WitherHead {
 
@@ -57,6 +57,6 @@ public interface Wither extends Monster {
         /**
          * The Right head in respect to a frontal view
          */
-        RIGHT,
+        RIGHT
     }
 }
