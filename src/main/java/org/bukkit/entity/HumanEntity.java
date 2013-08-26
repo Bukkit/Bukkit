@@ -59,8 +59,6 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      *
      * @param inventory The inventory to open
      * @return The newly opened inventory view
-     * @throws IllegalArgumentException if the specified inventory cannot be
-     * opened via this method.
      */
     public InventoryView openInventory(Inventory inventory);
 
@@ -89,11 +87,11 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      * the bottom.
      *
      * @param location The location to attach it to. If null, the player's
-     *            location is used.
+     *     location is used.
      * @param force If false, and there is no anvil at the location, no
-     *            inventory will be opened and null will be returned.
+     *     inventory will be opened and null will be returned.
      * @return The newly opened inventory view, or null if it could not be
-     *         opened.
+     *     opened.
      */
     public InventoryView openAnvil(Location location, boolean force); 
 
