@@ -7,7 +7,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 /**
- * Represents the many game rules that can be set with {@link World#setGameRuleValue(GameRule, String)}
+ * An enum to represent the possible game rule values
  */
 public enum GameRule {
 
@@ -34,12 +34,14 @@ public enum GameRule {
 
     /**
      * Represents the game rule to toggle the natural spawning of mobs.
+     * <p>
      * This does not effect mob eggs or mob spawners
      */
     MOB_SPAWNING("doMobSpawning"),
 
     /**
      * Represents the game rule to toggle the dropping of blocks when broken.
+     * <p>
      * This includes TNT destroying blocks
      */
     TILE_DROPS("doTileDrops"),
@@ -52,7 +54,8 @@ public enum GameRule {
 
     /**
      * Represents the game rule to toggle mobs griefing blocks.
-     * For example: creepers blowing up blocks or endermen picking up blocks
+     * <p>
+     * Example: Creepers exploding or Endermen picking up blocks
      */
     MOB_GRIEFING("mobGriefing"),
 
@@ -77,8 +80,8 @@ public enum GameRule {
     /**
      * Gets the {@link GameRule} represented by the specified string
      *
-     * @param rule Value to check
-     * @return The GameRule with the given value or {@link null} if it does not exist
+     * @param rule The rule to look for
+     * @return The GameRule with the specified name or null if not found
      */
     public static GameRule getByString(String rule) {
         Validate.notNull(rule, "Rule cannot be null");

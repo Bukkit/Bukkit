@@ -1,7 +1,11 @@
 package org.bukkit;
 
 import java.io.File;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -1084,12 +1088,12 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * Set a specified {@link GameRule} to specified value.
      * <p>
      * This may validate the value to ensure it is applicable to the GameRule.
-     * If the value was not valid this will return {@code false}.
+     * If the value was not valid this will return false.
      *
      * @param rule The GameRule to set
      * @param value The value to set the GameRule to
-     * @return {@code true} if the GameRule was set to the specified value;
-     *         false otherwise
+     * @return true if the GameRule was set to the specified value; false
+     *              otherwise
      */
     public boolean setGameRuleValue(GameRule rule, String value);
 
