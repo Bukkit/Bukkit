@@ -1,13 +1,14 @@
 package org.bukkit.command.defaults;
 
-import com.google.common.collect.ImmutableList;
+import java.util.List;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
 public class SayCommand extends VanillaCommand {
     public SayCommand() {
@@ -32,7 +33,7 @@ public class SayCommand extends VanillaCommand {
         } else {
             message.append(sender.getName());
         }
-        message.append("]");
+        message.append("] ");
 
         if (args.length > 0) {
             message.append(args[0]);
