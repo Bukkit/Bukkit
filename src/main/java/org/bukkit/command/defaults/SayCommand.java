@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 import com.google.common.collect.ImmutableList;
 
@@ -27,9 +28,11 @@ public class SayCommand extends VanillaCommand {
         }
 
         StringBuilder message = new StringBuilder();
-        message.append(ChatColor.DARK_PURPLE).append("[");
+        message.append(ChatColor.LIGHT_PURPLE).append("[");
         if (sender instanceof ConsoleCommandSender) {
             message.append("Server");
+        } else if (sender instanceof Player) {
+            message.append(((Player) sender).getDisplayName());
         } else {
             message.append(sender.getName());
         }
