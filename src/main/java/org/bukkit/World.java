@@ -13,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
 import org.bukkit.util.Vector;
@@ -682,6 +683,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
     /**
      * Plays an effect to all players within a default radius around a given location.
      *
+     * @param location the {@link Location} around which players must be to see the effect
+     * @param effect the {@link Effect}
+     * @throws IllegalArgumentException if the location or effect is null. It also throws when
+     *                                  the effect requires a material or a material data
+     */
+    public void playEffect(Location location, Effect effect);
+
+    /**
+     * Plays an effect to all players within a default radius around a given location.
+     *
      * @param location the {@link Location} around which players must be to hear the sound
      * @param effect the {@link Effect}
      * @param data a data bit needed for some effects
@@ -716,6 +727,27 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param radius the radius around the location
      */
     public <T> void playEffect(Location location, Effect effect, T data, int radius);
+
+    /**
+     * Plays an effect to all players within a default radius around a given location.
+     * The effect will use the provided material (and material data if required). The particle's
+     * position on the client will be the given location, adjusted on each axis by a normal
+     * distribution with mean 0 and standard deviation given in the offset parameters, each particle
+     * has independently calculated offsets. The effect will have the given speed and particle count
+     * if the effect is a particle. Some effect will create multiple particles.
+     *
+     * @param location the {@link Location} around which players must be to see the effect
+     * @param effect effect the {@link Effect}
+     * @param id the item/block/data id for the effect
+     * @param data the data value of the block/item for the effect
+     * @param offsetX the amount to be randomly offset by in the X axis
+     * @param offsetY the amount to be randomly offset by in the Y axis
+     * @param offsetZ the amount to be randomly offset by in the Z axis
+     * @param speed the speed of the particles
+     * @param particleCount the number of particles
+     * @param radius the radius around the location
+     */
+    public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius);
 
     /**
      * Get empty chunk snapshot (equivalent to all air blocks), optionally including valid biome
