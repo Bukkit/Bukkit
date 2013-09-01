@@ -709,8 +709,7 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public void setPermissionManager(PermissionManager plugin) throws IllegalArgumentException {
-        if (plugin == null)
-            throw new IllegalArgumentException("Plugin cannot be null");
+        Validate.notNull(plugin, "Plugin cannot be null");
         this.permissionManager = plugin;
     }
 
