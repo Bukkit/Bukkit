@@ -30,6 +30,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
+import org.bukkit.permissions.PermissionManager;
 import org.bukkit.util.FileUtil;
 
 import com.google.common.collect.ImmutableSet;
@@ -49,6 +50,7 @@ public final class SimplePluginManager implements PluginManager {
     private final Map<String, Map<Permissible, Boolean>> permSubs = new HashMap<String, Map<Permissible, Boolean>>();
     private final Map<Boolean, Map<Permissible, Boolean>> defSubs = new HashMap<Boolean, Map<Permissible, Boolean>>();
     private boolean useTimings = false;
+    private PermissionManager permissionManager = new SuperPermissions();
 
     public SimplePluginManager(Server instance, SimpleCommandMap commandMap) {
         server = instance;
@@ -701,4 +703,15 @@ public final class SimplePluginManager implements PluginManager {
     public void useTimings(boolean use) {
         useTimings = use;
     }
+
+    public PermissionManager getPermissionManager() {
+        return permissionManager;
+    }
+
+    public void setPermissionManager(PermissionManager plugin) throws IllegalArgumentException {
+        if (plugin == null)
+            throw new IllegalArgumentException("Plugin cannot be null");
+        this.permissionManager = plugin;
+    }
+
 }

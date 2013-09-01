@@ -74,7 +74,7 @@ public class PermissibleBase implements Permissible {
             Permission perm = Bukkit.getServer().getPluginManager().getPermission(name);
 
             if (perm != null) {
-                return perm.getDefault().getValue(isOp());
+                return Bukkit.getServer().getPluginManager().getPermissionManager().checkPermission(this, perm);
             } else {
                 return Permission.DEFAULT_PERMISSION.getValue(isOp());
             }

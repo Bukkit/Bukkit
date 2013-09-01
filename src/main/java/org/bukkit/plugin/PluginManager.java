@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionManager;
 
 /**
  * Handles all plugin management from the Server
@@ -272,4 +273,18 @@ public interface PluginManager {
      * @return True if event timings are to be used
      */
     public boolean useTimings();
+
+    /**
+     * Gets the current permission plugin.
+     * @return The permission plugin (SuperPermissions by default).
+     */
+    public PermissionManager getPermissionManager();
+
+    /**
+     * Sets the permission plugin to the one specified.
+     * @param manager The PermissionPlugin to make the permission handler.
+     * @throws IllegalArgumentException Thrown if plugin is null.
+     */
+    public void setPermissionManager(PermissionManager manager) throws IllegalArgumentException;
+
 }
