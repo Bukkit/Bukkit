@@ -688,7 +688,7 @@ public interface Server extends PluginMessageRecipient {
      *
      * @return The configured WarningState
      */
-    WarningState getWarningState();
+    public WarningState getWarningState();
 
     /**
      * Gets the instance of the item factory (for {@link ItemMeta}).
