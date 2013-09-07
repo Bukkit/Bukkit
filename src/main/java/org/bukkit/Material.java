@@ -992,7 +992,7 @@ public enum Material {
                 return false;
         }
     }
-    
+
     /**
      * Check if the material is a block and is interactive
      *
