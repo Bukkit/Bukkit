@@ -992,4 +992,50 @@ public enum Material {
                 return false;
         }
     }
+    
+    /**
+     * Check if the material is a block and is interactive
+     *
+     * @return True if this material is a block and is interactive
+     */
+    public boolean isInteractive() {
+        if (!isBlock()) {
+            return false;
+        }
+        switch (this) {
+            case DISPENSER:
+            case NOTE_BLOCK:
+            case BED_BLOCK:
+            case CHEST:
+            case WORKBENCH:
+            case FURNACE:
+            case BURNING_FURNACE:
+            case WOODEN_DOOR:
+            case LEVER:
+            case REDSTONE_ORE:
+            case STONE_BUTTON:
+            case JUKEBOX:
+            case CAKE_BLOCK:
+            case DIODE_BLOCK_ON:
+            case DIODE_BLOCK_OFF:
+            case TRAP_DOOR:
+            case FENCE_GATE:
+            case ENCHANTMENT_TABLE:
+            case BREWING_STAND:
+            case DRAGON_EGG:
+            case ENDER_CHEST:
+            case COMMAND:
+            case BEACON:
+            case WOOD_BUTTON:
+            case ANVIL:
+            case TRAPPED_CHEST:
+            case REDSTONE_COMPARATOR_ON:
+            case REDSTONE_COMPARATOR_OFF:
+            case HOPPER:
+            case DROPPER:
+                return true;
+            default:
+                return false;
+        }
+    }
 }
