@@ -39,6 +39,11 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
         POTION,
 
         /**
+         * Caused by a golden apple
+         */
+        GOLDEN_APPLE,
+
+        /**
          * Caused by an enchanted golden apple
          */
         ENCHANTED_GOLDEN_APPLE,
