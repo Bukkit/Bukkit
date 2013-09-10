@@ -45,4 +45,11 @@ public interface FallingBlock extends Entity {
      * @param drop true to break into an item when obstructed
      */
     void setDropItem(boolean drop);
+
+    /**
+     * Set if the falling block will damage entities it falls on
+     *
+     * @param flag true to deal damage
+     */
+    void setHurtEntities(boolean flag);
 }
