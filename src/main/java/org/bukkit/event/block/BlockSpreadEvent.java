@@ -12,6 +12,7 @@ import org.bukkit.event.HandlerList;
  * <ul>
  * <li>Mushrooms spreading.</li>
  * <li>Fire spreading.</li>
+ * <li>Vine spreading.</li>
  * </ul>
  * <p>
  * If a Block Spread event is cancelled, the block will not spread.
