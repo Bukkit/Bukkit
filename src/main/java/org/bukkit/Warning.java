@@ -15,10 +15,12 @@ import com.google.common.collect.ImmutableMap;
 @Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Warning {
+
     /**
      * This represents the states that server verbose for warnings may be.
      */
     public enum WarningState {
+
         /**
          * Indicates all warnings should be printed for deprecated items.
          */

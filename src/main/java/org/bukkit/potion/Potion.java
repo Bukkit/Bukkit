@@ -37,7 +37,9 @@ public class Potion {
         }
     }
 
-    /** @deprecated In favour of {@link #Potion(PotionType, int)} */
+    /**
+     * @deprecated In favour of {@link #Potion(PotionType, int)}
+     */
     @SuppressWarnings("javadoc")
     @Deprecated
     public Potion(PotionType type, Tier tier) {
@@ -45,14 +47,18 @@ public class Potion {
         Validate.notNull(type, "Type cannot be null");
     }
 
-    /** @deprecated In favour of {@link #Potion(PotionType, int, boolean)} */
+    /**
+     * @deprecated In favour of {@link #Potion(PotionType, int, boolean)}
+     */
     @SuppressWarnings("javadoc")
     @Deprecated
     public Potion(PotionType type, Tier tier, boolean splash) {
         this(type, tier == Tier.TWO ? 2 : 1, splash);
     }
 
-    /** @deprecated In favour of {@link #Potion(PotionType, int, boolean, boolean)} */
+    /**
+     * @deprecated In favour of {@link #Potion(PotionType, int, boolean, boolean)}
+     */
     @SuppressWarnings("javadoc")
     @Deprecated
     public Potion(PotionType type, Tier tier, boolean splash, boolean extended) {
@@ -304,7 +310,9 @@ public class Potion {
      * item stacks.
      *
      * @return The damage value of this potion
+     * @deprecated Magic value
      */
+    @Deprecated
     public short toDamageValue() {
         short damage;
         if (type == PotionType.WATER) {
@@ -370,6 +378,11 @@ public class Potion {
     private static final int TIER_SHIFT = 5;
     private static final int NAME_BIT = 0x3F;
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public static Potion fromDamage(int damage) {
         PotionType type = PotionType.getByDamageValue(damage & POTION_BIT);
         Potion potion;
@@ -417,6 +430,11 @@ public class Potion {
         brewer = other;
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public int getNameId() {
         return name;
     }

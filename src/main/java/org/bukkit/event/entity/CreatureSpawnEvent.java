@@ -152,6 +152,10 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
          */
         NETHER_PORTAL,
         /**
+         * When an entity calls for reinforcements
+         */
+        REINFORCEMENTS,
+        /**
          * When a creature is spawned by plugins
          */
         CUSTOM,
