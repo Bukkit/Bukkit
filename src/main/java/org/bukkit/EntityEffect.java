@@ -45,7 +45,23 @@ public enum EntityEffect {
     /**
      * When a sheep eats a LONG_GRASS block.
      */
-    SHEEP_EAT(10);
+    SHEEP_EAT(10),
+    
+    
+    /**
+     * When a Villager mates
+     */
+    VILLAGER_HEARTS(12),
+    
+    /**
+     * When a Villager is hit by a player
+     */
+    VILLAGER_HIT(13),
+    
+    /**
+     * When a Villager has a new trade avaliable
+     */
+    VILLAGER_TRADE(14);
 
     private final byte data;
     private final static Map<Byte, EntityEffect> BY_DATA = Maps.newHashMap();
