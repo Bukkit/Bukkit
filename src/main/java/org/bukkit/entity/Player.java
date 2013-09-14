@@ -698,8 +698,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * Can only use values between 0 and 127, inclusive.
      *
      * @param arrows the amount of arrows to stick in the body
-     * @throws IllegalArgumentException if number is less than 0
-     * @throws IllegalArgumentException if number is greater than 127
+     * @throws IllegalArgumentException if arrows is outside the range [0, 127]
      */
     public void setVisibleArrows(int arrows) throws IllegalArgumentException;
 
