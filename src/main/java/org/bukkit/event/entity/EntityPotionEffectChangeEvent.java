@@ -164,7 +164,7 @@ public class EntityPotionEffectChangeEvent extends EntityEvent implements Cancel
     }
 
     /**
-     * Set the event as cancelled.
+     * Sets the event as cancelled.
      * <p>
      * The event will only cancel if the entity is <b>gaining</b> the
      * effect.
