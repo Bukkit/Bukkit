@@ -8,11 +8,11 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a fused {@link Explosive} is ignited.
  */
-public class FuseStartedEvent extends EntityEvent implements Cancellable {
+public class ExplosiveFuseStartEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    public FuseStartedEvent(Explosive what) {
+    public ExplosiveFuseStartEvent(Explosive what) {
         super(what);
     }
 
