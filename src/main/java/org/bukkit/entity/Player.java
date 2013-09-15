@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Note;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.SleepingResult;
 import org.bukkit.Sound;
 import org.bukkit.Statistic;
 import org.bukkit.WeatherType;
@@ -545,6 +546,30 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param force whether to forcefully set the respawn location even if a valid bed is not present
      */
     public void setBedSpawnLocation(Location location, boolean force);
+
+    /**
+    * Attempts to put the player to sleep in the bed at given Location.
+    *
+    * @param bed the location of the bed.
+    * @return OK, if the player is put to sleep. Else the reason why not.
+    */
+    public SleepingResult sleep(Location bed);
+
+    /**
+    * Attempts to put the player to sleep in the bed at given Location.
+    *
+    * @param bed the location of the bed.
+    * @param overrideDistanceCheck whether to forcefully put the player in bed even if they are not in range.
+    * @return OK, if the player is put to sleep. Else the reason why not.
+    */
+    public SleepingResult sleep(Location bed, boolean overrideDistanceCheck);
+
+    /**
+    * If the player is currently sleeping, wakes up the player.
+    *
+    * @param setRespawn Whether to set the respawn location when being woken up.
+    */
+    public void wake(boolean setRespawn);
 
     /**
      * Determines if the Player is allowed to fly via jump key double-tap like in creative mode.
