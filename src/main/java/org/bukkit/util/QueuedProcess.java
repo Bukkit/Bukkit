@@ -1,6 +1,5 @@
 package org.bukkit.util;
 
-
 /**
  * A process to be called later which takes an argument. Typically, the
  * provided object will be created by an asynchronous procedure, and the
