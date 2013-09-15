@@ -10,7 +10,7 @@ import org.bukkit.event.HandlerList;
  */
 public class VehicleMoveEvent extends VehicleEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
+    private boolean cancelled = false;
     private final Location from;
     private final Location to;
 
