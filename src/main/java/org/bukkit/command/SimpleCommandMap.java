@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Server;
 import org.bukkit.command.defaults.*;
+import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 public class SimpleCommandMap implements CommandMap {
@@ -58,6 +59,8 @@ public class SimpleCommandMap implements CommandMap {
         fallbackCommands.add(new TestForCommand());
         fallbackCommands.add(new EffectCommand());
         fallbackCommands.add(new ScoreboardCommand());
+        fallbackCommands.add(new PlaySoundCommand());
+        fallbackCommands.add(new SpreadPlayersCommand());
     }
 
     public SimpleCommandMap(final Server server) {
@@ -224,6 +227,8 @@ public class SimpleCommandMap implements CommandMap {
             ArrayList<String> completions = new ArrayList<String>();
             Map<String, Command> knownCommands = this.knownCommands;
 
+            final String prefix = (sender instanceof Player ? "/" : "");
+
             for (VanillaCommand command : fallbackCommands) {
                 String name = command.getName();
 
@@ -239,7 +244,7 @@ public class SimpleCommandMap implements CommandMap {
                     continue;
                 }
 
-                completions.add('/' + name);
+                completions.add(prefix + name);
             }
 
             for (Map.Entry<String, Command> commandEntry : knownCommands.entrySet()) {
@@ -252,7 +257,7 @@ public class SimpleCommandMap implements CommandMap {
                 String name = commandEntry.getKey(); // Use the alias, not command name
 
                 if (StringUtil.startsWithIgnoreCase(name, cmdLine)) {
-                    completions.add('/' + name);
+                    completions.add(prefix + name);
                 }
             }
 

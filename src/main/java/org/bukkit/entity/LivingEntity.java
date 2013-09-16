@@ -14,6 +14,7 @@ import org.bukkit.potion.PotionEffectType;
  * Represents a living entity, such as a monster or player
  */
 public interface LivingEntity extends Entity, Damageable {
+
     /**
      * Gets the height of the living entity's eyes above its Location.
      *
@@ -50,7 +51,9 @@ public interface LivingEntity extends Entity, Damageable {
      *     limited by server by at least 100 blocks, no less)
      * @return list containing all blocks along the living entity's line
      *     of sight
+     * @deprecated Magic value
      */
+    @Deprecated
     public List<Block> getLineOfSight(HashSet<Byte> transparent, int maxDistance);
 
     /**
@@ -61,7 +64,9 @@ public interface LivingEntity extends Entity, Damageable {
      * @param maxDistance this is the maximum distance to scan
      *     (may be limited by server by at least 100 blocks, no less)
      * @return block that the living entity has targeted
+     * @deprecated Magic value
      */
+    @Deprecated
     public Block getTargetBlock(HashSet<Byte> transparent, int maxDistance);
 
     /**
@@ -75,7 +80,9 @@ public interface LivingEntity extends Entity, Damageable {
      *     further limited by the server, but never to less than 100 blocks
      * @return list containing the last 2 blocks along the living entity's
      *     line of sight
+     * @deprecated Magic value
      */
+    @Deprecated
     public List<Block> getLastTwoTargetBlocks(HashSet<Byte> transparent, int maxDistance);
 
     /**
@@ -170,14 +177,30 @@ public interface LivingEntity extends Entity, Damageable {
      *
      * @return damage taken since the last no damage ticks time period
      */
-    public int getLastDamage();
+    public double getLastDamage();
+
+    /**
+     * This method exists for legacy reasons to provide backwards
+     * compatibility. It will not exist at runtime and should not be used
+     * under any circumstances.
+     */
+    @Deprecated
+    public int _INVALID_getLastDamage();
 
     /**
      * Sets the damage dealt within the current no damage ticks time period.
      *
      * @param damage amount of damage
      */
-    public void setLastDamage(int damage);
+    public void setLastDamage(double damage);
+
+    /**
+     * This method exists for legacy reasons to provide backwards
+     * compatibility. It will not exist at runtime and should not be used
+     * under any circumstances.
+     */
+    @Deprecated
+    public void _INVALID_setLastDamage(int damage);
 
     /**
      * Returns the living entity's current no damage ticks.
@@ -288,7 +311,7 @@ public interface LivingEntity extends Entity, Damageable {
     public void setRemoveWhenFarAway(boolean remove);
 
     /**
-     *  Gets the inventory with the equipment worn by the living entity.
+     * Gets the inventory with the equipment worn by the living entity.
      *
      * @return the living entity's inventory
      */
@@ -316,7 +339,7 @@ public interface LivingEntity extends Entity, Damageable {
      * <p>
      * This value has no effect on players, they will always use their real
      * name.
-     * 
+     *
      * @param name the name to set
      */
     public void setCustomName(String name);
@@ -327,7 +350,7 @@ public interface LivingEntity extends Entity, Damageable {
      * <p>
      * This value has no effect on players, they will always use their real
      * name.
-     * 
+     *
      * @return name of the mob or null
      */
     public String getCustomName();
@@ -338,7 +361,7 @@ public interface LivingEntity extends Entity, Damageable {
      * <p>
      * This value has no effect on players, they will always display their
      * name.
-     * 
+     *
      * @param flag custom name or not
      */
     public void setCustomNameVisible(boolean flag);
@@ -348,8 +371,35 @@ public interface LivingEntity extends Entity, Damageable {
      * <p>
      * This value has no effect on players, they will always display their
      * name.
-     * 
+     *
      * @return if the custom name is displayed
      */
     public boolean isCustomNameVisible();
+
+    /**
+     * Returns whether the entity is currently leashed.
+     *
+     * @return whether the entity is leashed
+     */
+    public boolean isLeashed();
+
+    /**
+     * Gets the entity that is currently leading this entity.
+     *
+     * @return the entity holding the leash
+     * @throws IllegalStateException if not currently leashed
+     */
+    public Entity getLeashHolder() throws IllegalStateException;
+
+    /**
+     * Sets the leash on this entity to be held by the supplied entity.
+     * <p>
+     * This method has no effect on EnderDragons, Withers, Players, or Bats.
+     * Non-living entities excluding leashes will not persist as leash
+     * holders.
+     *
+     * @param holder the entity to leash this entity to
+     * @return whether the operation was successful
+     */
+    public boolean setLeashHolder(Entity holder);
 }

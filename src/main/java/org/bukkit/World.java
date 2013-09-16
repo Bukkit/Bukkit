@@ -51,7 +51,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param z Z-coordinate of the block
      * @return Type ID of the block at the given coordinates
      * @see #getBlockAt(int, int, int) Returns a live Block object at the given location
+     * @deprecated Magic value
      */
+    @Deprecated
     public int getBlockTypeIdAt(int x, int y, int z);
 
     /**
@@ -60,7 +62,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param location Location of the block
      * @return Type ID of the block at the given location
      * @see #getBlockAt(org.bukkit.Location) Returns a live Block object at the given location
+     * @deprecated Magic value
      */
+    @Deprecated
     public int getBlockTypeIdAt(Location location);
 
     /**
@@ -995,6 +999,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
 
     /**
      * Gets the limit for number of animals that can spawn in a chunk in this world
+     *
      * @return The animal spawn limit
      */
     int getAnimalSpawnLimit();
@@ -1009,6 +1014,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
 
     /**
      * Gets the limit for number of water animals that can spawn in a chunk in this world
+     *
      * @return The water animal spawn limit
      */
     int getWaterAnimalSpawnLimit();
@@ -1023,6 +1029,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
 
     /**
      * Gets the limit for number of ambient mobs that can spawn in a chunk in this world
+     *
      * @return The ambient spawn limit
      */
     int getAmbientSpawnLimit();
@@ -1114,16 +1121,21 @@ public interface World extends PluginMessageRecipient, Metadatable {
          * Gets the dimension ID of this environment
          *
          * @return dimension ID
+         * @deprecated Magic value
          */
+        @Deprecated
         public int getId() {
             return id;
         }
 
         /**
          * Get an environment by ID
+         *
          * @param id The ID of the environment
          * @return The environment
+         * @deprecated Magic value
          */
+        @Deprecated
         public static Environment getEnvironment(int id) {
             return lookup.get(id);
         }

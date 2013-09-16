@@ -23,6 +23,7 @@ import org.bukkit.scoreboard.Scoreboard;
  * Represents a player, connected or not
  */
 public interface Player extends HumanEntity, Conversable, CommandSender, OfflinePlayer, PluginMessageRecipient {
+
     /**
      * Gets the "friendly" name to display of this player. This may include color.
      * <p>
@@ -186,7 +187,9 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param loc The location of a note block.
      * @param instrument The instrument ID.
      * @param note The note ID.
+     * @deprecated Magic value
      */
+    @Deprecated
     public void playNote(Location loc, byte instrument, byte note);
 
     /**
@@ -214,12 +217,30 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public void playSound(Location location, Sound sound, float volume, float pitch);
 
     /**
+     * Play a sound for a player at the location.
+     * <p>
+     * This function will fail silently if Location or Sound are null. No
+     * sound will be heard by the player if their client does not have the
+     * respective sound for the value passed.
+     *
+     * @param location the location to play the sound
+     * @param sound the internal sound name to play
+     * @param volume the volume of the sound
+     * @param pitch the pitch of the sound
+     * @deprecated Magic value
+     */
+    @Deprecated
+    public void playSound(Location location, String sound, float volume, float pitch);
+
+    /**
      * Plays an effect to just this player.
      *
      * @param loc the location to play the effect at
      * @param effect the {@link Effect}
      * @param data a data bit needed for some effects
+     * @deprecated Magic value
      */
+    @Deprecated
     public void playEffect(Location loc, Effect effect, int data);
 
     /**
@@ -238,7 +259,9 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param loc The location of the changed block
      * @param material The new block
      * @param data The block data
+     * @deprecated Magic value
      */
+    @Deprecated
     public void sendBlockChange(Location loc, Material material, byte data);
 
     /**
@@ -256,7 +279,9 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param sz The z size of the cuboid
      * @param data The data to be sent
      * @return true if the chunk change packet was sent
+     * @deprecated Magic value
      */
+    @Deprecated
     public boolean sendChunkChange(Location loc, int sx, int sy, int sz, byte[] data);
 
     /**
@@ -266,7 +291,9 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param loc The location of the changed block
      * @param material The new block ID
      * @param data The block data
+     * @deprecated Magic value
      */
+    @Deprecated
     public void sendBlockChange(Location loc, int material, byte data);
 
     /**
@@ -560,7 +587,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * not be reliable, as it is a state provided by the client, and may therefore not be accurate.
      *
      * @return True if the player standing on a solid block, else false.
-     * @deprecated Inconsistent with {@link org.bukkit.craftbukkit.entity.Entity#isOnGround()}
+     * @deprecated Inconsistent with {@link org.bukkit.entity.Entity#isOnGround()}
      */
     @Deprecated
     public boolean isOnGround();
@@ -581,6 +608,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
 
     /**
      * Sets the speed at which a client will fly. Negative values indicate reverse directions.
+     *
      * @param value The new speed, from -1 to 1.
      * @throws IllegalArgumentException If new speed is less than -1 or greater than 1
      */
@@ -588,6 +616,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
 
     /**
      * Sets the speed at which a client will walk. Negative values indicate reverse directions.
+     *
      * @param value The new speed, from -1 to 1.
      * @throws IllegalArgumentException If new speed is less than -1 or greater than 1
      */
@@ -595,12 +624,14 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
 
     /**
      * Gets the current allowed speed that a client can fly.
+     *
      * @return The current allowed speed, from -1 to 1
      */
     public float getFlySpeed();
 
     /**
      * Gets the current allowed speed that a client can walk.
+     *
      * @return The current allowed speed, from -1 to 1
      */
     public float getWalkSpeed();
@@ -646,4 +677,48 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      *     yet or has logged out
      */
     public void setScoreboard(Scoreboard scoreboard) throws IllegalArgumentException, IllegalStateException;
+
+    /**
+     * Gets if the client is displayed a 'scaled' health, that is, health on a
+     * scale from 0-{@link #getHealthScale()}.
+     *
+     * @return if client health display is scaled
+     * @see Player#setHealthScaled(boolean)
+     */
+    public boolean isHealthScaled();
+
+    /**
+     * Sets if the client is displayed a 'scaled' health, that is, health on a
+     * scale from 0-{@link #getHealthScale()}.
+     * <p>
+     * Displayed health follows a simple formula <code>displayedHealth =
+     * getHealth() / getMaxHealth() * getHealthScale()</code>.
+     *
+     * @param scale if the client health display is scaled
+     */
+    public void setHealthScaled(boolean scale);
+
+    /**
+     * Sets the number to scale health to for the client; this will also
+     * {@link #setHealthScaled(boolean) setHealthScaled(true)}.
+     * <p>
+     * Displayed health follows a simple formula <code>displayedHealth =
+     * getHealth() / getMaxHealth() * getHealthScale()</code>.
+     *
+     * @param scale the number to scale health to
+     * @throws IllegalArgumentException if scale is &lt;0
+     * @throws IllegalArgumentException if scale is {@link Double#NaN}
+     * @throws IllegalArgumentException if scale is too high
+     */
+    public void setHealthScale(double scale) throws IllegalArgumentException;
+
+    /**
+     * Gets the number that health is scaled to for the client.
+     *
+     * @return the number that health would be scaled to for the client if
+     *     HealthScaling is set to true
+     * @see Player#setHealthScale(double)
+     * @see Player#setHealthScaled(boolean)
+     */
+    public double getHealthScale();
 }

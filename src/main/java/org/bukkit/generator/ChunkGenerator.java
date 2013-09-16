@@ -14,14 +14,16 @@ import org.bukkit.block.Block;
  * For example, the nether chunk generator should shape netherrack and soulsand
  */
 public abstract class ChunkGenerator {
+
     /**
      * Interface to biome data for chunk to be generated: initialized with default values for world type and seed.
-     *
+     * <p>
      * Custom generator is free to access and tailor values during generateBlockSections() or generateExtBlockSections().
      */
     public interface BiomeGrid {
         /**
          * Get biome at x, z within chunk being generated
+         *
          * @param x - 0-15
          * @param z - 0-15
          * @return Biome value
@@ -136,7 +138,9 @@ public abstract class ChunkGenerator {
      * @param z The Z-coordinate of the chunk
      * @param biomes Proposed biome values for chunk - can be updated by generator
      * @return short[][] containing the types for each block created by this generator
+     * @deprecated Magic value
      */
+    @Deprecated
     public short[][] generateExtBlockSections(World world, Random random, int x, int z, BiomeGrid biomes) {
         return null; // Default - returns null, which drives call to generateBlockSections()
     }
@@ -185,7 +189,9 @@ public abstract class ChunkGenerator {
      * @param z The Z-coordinate of the chunk
      * @param biomes Proposed biome values for chunk - can be updated by generator
      * @return short[][] containing the types for each block created by this generator
+     * @deprecated Magic value
      */
+    @Deprecated
     public byte[][] generateBlockSections(World world, Random random, int x, int z, BiomeGrid biomes) {
         return null; // Default - returns null, which drives call to generate()
     }

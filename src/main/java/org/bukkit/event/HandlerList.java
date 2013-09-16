@@ -10,6 +10,7 @@ import java.util.Map.Entry;
  * A list of event handlers, stored per-event. Based on lahwran's fevents.
  */
 public class HandlerList {
+
     /**
      * Handler array. This field being an array is the key to this system's speed.
      */
@@ -193,7 +194,6 @@ public class HandlerList {
      * Get a specific plugin's registered listeners associated with this handler list
      *
      * @param plugin the plugin to get the listeners of
-     *
      * @return the list of registered listeners
      */
     public static ArrayList<RegisteredListener> getRegisteredListeners(Plugin plugin) {

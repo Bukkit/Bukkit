@@ -11,16 +11,27 @@ public class Tripwire extends MaterialData {
         super(Material.TRIPWIRE);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Tripwire(final int type) {
         super(type);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Tripwire(final int type, final byte data) {
         super(type, data);
     }
 
     /**
      * Test if tripwire is currently activated
+     *
      * @return true if activated, false if not
      */
     public boolean isActivated() {
@@ -29,6 +40,7 @@ public class Tripwire extends MaterialData {
     
     /**
      * Set tripwire activated state
+     *
      * @param act - true if activated, false if not
      */
     public void setActivated(boolean act) {
@@ -41,6 +53,7 @@ public class Tripwire extends MaterialData {
     
     /**
      * Test if object triggering this tripwire directly
+     *
      * @return true if object activating tripwire, false if not
      */
     public boolean isObjectTriggering() {
@@ -49,6 +62,7 @@ public class Tripwire extends MaterialData {
 
     /**
      * Set object triggering state for this tripwire
+     *
      * @param trig - true if object activating tripwire, false if not
      */
     public void setObjectTriggering(boolean trig) {

@@ -38,6 +38,7 @@ public interface Inventory extends Iterable<ItemStack> {
      * <li>Stacks larger than the default max size for this type of inventory may not display
      * correctly in the client.
      * </ul>
+     *
      * @param size The new maximum stack size for items in this inventory.
      */
     public void setMaxStackSize(int size);
@@ -125,7 +126,9 @@ public interface Inventory extends Iterable<ItemStack> {
      *
      * @param materialId The materialId to check for
      * @return true if an ItemStack in this inventory contains the materialId
+     * @deprecated Magic value
      */
+    @Deprecated
     public boolean contains(int materialId);
 
     /**
@@ -152,7 +155,9 @@ public interface Inventory extends Iterable<ItemStack> {
      * @param materialId The materialId to check for
      * @param amount The minimum amount to look for
      * @return true if this contains any matching ItemStack with the given materialId and amount
+     * @deprecated Magic value
      */
+    @Deprecated
     public boolean contains(int materialId, int amount);
 
     /**
@@ -166,21 +171,28 @@ public interface Inventory extends Iterable<ItemStack> {
     public boolean contains(Material material, int amount) throws IllegalArgumentException;
 
     /**
-     * Checks if the inventory contains any ItemStacks matching the given ItemStack and at least the minimum amount specified
-     * This will only match if both the type and the amount of the stack match
+     * Checks if the inventory contains at least the minimum amount specified
+     * of exactly matching ItemStacks.
+     * <p>
+     * An ItemStack only counts if both the type and the amount of the stack
+     * match.
      *
-     * @param item The ItemStack to match against
-     * @param amount The amount of stacks to find
-     * @return false if item is null, true if amount less than 1, true if amount of exactly matching ItemStacks were found.
+     * @param item the ItemStack to match against
+     * @param amount how many identical stacks to check for
+     * @return false if item is null, true if amount less than 1, true if
+     *     amount of exactly matching ItemStacks were found
+     * @see #containsAtLeast(ItemStack, int)
      */
     public boolean contains(ItemStack item, int amount);
 
     /**
-     * Checks if the inventory contains any ItemStacks matching the given ItemStack and at least the minimum amount specified
+     * Checks if the inventory contains ItemStacks matching the given
+     * ItemStack whose amounts sum to at least the minimum amount specified.
      *
-     * @param item The ItemStack to match against
-     * @param amount The minimum amount
-     * @return false if item is null, true if amount less than 1, true if enough ItemStacks were found to add to the given amount
+     * @param item the ItemStack to match against
+     * @param amount the minimum amount
+     * @return false if item is null, true if amount less than 1, true if
+     *     enough ItemStacks were found to add to the given amount
      */
     public boolean containsAtLeast(ItemStack item, int amount);
 
@@ -194,7 +206,9 @@ public interface Inventory extends Iterable<ItemStack> {
      *
      * @param materialId The materialId to look for
      * @return A HashMap containing the slot index, ItemStack pairs
+     * @deprecated Magic value
      */
+    @Deprecated
     public HashMap<Integer, ? extends ItemStack> all(int materialId);
 
     /**
@@ -229,7 +243,9 @@ public interface Inventory extends Iterable<ItemStack> {
      *
      * @param materialId The materialId to look for
      * @return The slot index of the given materialId or -1 if not found
+     * @deprecated Magic value
      */
+    @Deprecated
     public int first(int materialId);
 
     /**
@@ -261,7 +277,9 @@ public interface Inventory extends Iterable<ItemStack> {
      * Removes all stacks in the inventory matching the given materialId.
      *
      * @param materialId The material to remove
+     * @deprecated Magic value
      */
+    @Deprecated
     public void remove(int materialId);
 
     /**
@@ -324,6 +342,7 @@ public interface Inventory extends Iterable<ItemStack> {
      */
     public InventoryHolder getHolder();
 
+    @Override
     public ListIterator<ItemStack> iterator();
 
     /**

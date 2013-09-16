@@ -11,6 +11,11 @@ public class TrapDoor extends SimpleAttachableMaterialData implements Openable {
         super(Material.TRAP_DOOR);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public TrapDoor(final int type) {
         super(type);
     }
@@ -19,10 +24,20 @@ public class TrapDoor extends SimpleAttachableMaterialData implements Openable {
         super(type);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public TrapDoor(final int type, final byte data) {
         super(type, data);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public TrapDoor(final Material type, final byte data) {
         super(type, data);
     }
@@ -45,6 +60,7 @@ public class TrapDoor extends SimpleAttachableMaterialData implements Openable {
 
     /**
      * Test if trapdoor is inverted
+     *
      * @return true if inverted (top half), false if normal (bottom half)
      */
     public boolean isInverted() {
@@ -53,6 +69,7 @@ public class TrapDoor extends SimpleAttachableMaterialData implements Openable {
 
     /**
      * Set trapdoor inverted state
+     *
      * @param inv - true if inverted (top half), false if normal (bottom half)
      */
     public void setInverted(boolean inv) {

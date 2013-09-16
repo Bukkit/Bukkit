@@ -23,6 +23,11 @@ public class Tree extends MaterialData {
         setDirection(dir);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Tree(final int type) {
         super(type);
     }
@@ -31,10 +36,20 @@ public class Tree extends MaterialData {
         super(type);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Tree(final int type, final byte data) {
         super(type, data);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Tree(final Material type, final byte data) {
         super(type, data);
     }
@@ -77,6 +92,7 @@ public class Tree extends MaterialData {
     }
     /**
      * Set direction of the log
+     *
      * @param dir - direction of end of log (BlockFace.SELF for no direction)
      */
     public void setDirection(BlockFace dir) {

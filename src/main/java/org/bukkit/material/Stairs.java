@@ -8,6 +8,11 @@ import org.bukkit.block.BlockFace;
  */
 public class Stairs extends MaterialData implements Directional {
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Stairs(final int type) {
         super(type);
     }
@@ -16,10 +21,20 @@ public class Stairs extends MaterialData implements Directional {
         super(type);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Stairs(final int type, final byte data) {
         super(type, data);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Stairs(final Material type, final byte data) {
         super(type, data);
     }
@@ -90,6 +105,7 @@ public class Stairs extends MaterialData implements Directional {
 
     /**
      * Test if step is inverted
+     *
      * @return true if inverted (top half), false if normal (bottom half)
      */
     public boolean isInverted() {
@@ -98,6 +114,7 @@ public class Stairs extends MaterialData implements Directional {
 
     /**
      * Set step inverted state
+     *
      * @param inv - true if step is inverted (top half), false if step is normal (bottom half)
      */
     public void setInverted(boolean inv) {
