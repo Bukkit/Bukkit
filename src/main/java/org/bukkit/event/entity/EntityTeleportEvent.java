@@ -17,6 +17,17 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
     private Location to;
     private TeleportCause cause = TeleportCause.UNKNOWN;
 
+    /*
+     * @Deprecated Added teleport cause 
+     */
+    @Deprecated
+    public EntityTeleportEvent(Entity what, Location from, Location to) {
+        super(what);
+        this.from = from;
+        this.to = to;
+        this.cancel = false;
+    }
+
     public EntityTeleportEvent(Entity what, Location from, Location to, TeleportCause cause) {
         super(what);
         this.from = from;
