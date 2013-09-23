@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 /**
  * Thrown when a non-player entity (such as an Enderman) tries to teleport from one
@@ -14,12 +15,45 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
     private boolean cancel;
     private Location from;
     private Location to;
+    private TeleportCause cause = TeleportCause.UNKNOWN;
 
-    public EntityTeleportEvent(Entity what, Location from, Location to) {
+    public EntityTeleportEvent(Entity what, Location from, Location to, TeleportCause cause) {
         super(what);
         this.from = from;
         this.to = to;
         this.cancel = false;
+        this.cause = cause;
+    }
+
+    public TeleportCause getCause() {
+    	return cause;
+    }
+    
+    public enum TeleportCause {
+        /**
+         * Indicates the teleporation was caused by a player throwing an Ender Pearl
+         */
+        ENDER_PEARL,
+        /**
+         * Indicates the teleportation was caused by a player executing a command
+         */
+        COMMAND,
+        /**
+         * Indicates the teleportation was caused by a plugin
+         */
+        PLUGIN,
+        /**
+         * Indicates the teleportation was caused by a player entering a Nether portal
+         */
+        NETHER_PORTAL,
+        /**
+         * Indicates the teleportation was caused by a player entering an End portal
+         */
+        END_PORTAL,
+        /**
+         * Indicates the teleportation was caused by an event not covered by this enum
+         */
+        UNKNOWN;
     }
 
     public boolean isCancelled() {
