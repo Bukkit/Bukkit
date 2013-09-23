@@ -30,7 +30,7 @@ public class EntityPortalEvent extends EntityTeleportEvent {
         super(entity, from, to, cause);
         this.travelAgent = pta;
     }
-    
+
     /**
      * Sets whether or not the Travel Agent will be used.
      * <p>
