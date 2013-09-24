@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
@@ -55,7 +56,7 @@ public interface LivingEntity extends Entity, Damageable {
      */
     @Deprecated
     public List<Block> getLineOfSight(HashSet<Byte> transparent, int maxDistance);
-    
+
     /**
      * Gets all blocks along the living entity's line of sight.
      * <p>
@@ -83,7 +84,7 @@ public interface LivingEntity extends Entity, Damageable {
      */
     @Deprecated
     public Block getTargetBlock(HashSet<Byte> transparent, int maxDistance);
-    
+
     /**
      * Gets the block that the living entity has targeted.
      *
@@ -110,7 +111,7 @@ public interface LivingEntity extends Entity, Damageable {
      */
     @Deprecated
     public List<Block> getLastTwoTargetBlocks(HashSet<Byte> transparent, int maxDistance);
-    
+
     /**
      * Gets the last two blocks along the living entity's line of sight.
      * <p>
