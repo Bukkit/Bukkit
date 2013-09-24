@@ -70,7 +70,7 @@ public interface LivingEntity extends Entity, Damageable {
      * @return list containing all blocks along the living entity's line
      *     of sight
      */
-    public List<Block> getLineOfSight(HashSet<Material> transparent, int maxDistance);
+    public List<Block> getSightLine(HashSet<Material> transparent, int maxDistance);
 
     /**
      * Gets the block that the living entity has targeted.
@@ -94,7 +94,7 @@ public interface LivingEntity extends Entity, Damageable {
      *     (may be limited by server by at least 100 blocks, no less)
      * @return block that the living entity has targeted
      */
-    public Block getTargetBlock(HashSet<Material> transparent, int maxDistance);
+    public Block getTargetedBlock(HashSet<Material> transparent, int maxDistance);
 
     /**
      * Gets the last two blocks along the living entity's line of sight.
@@ -124,7 +124,7 @@ public interface LivingEntity extends Entity, Damageable {
      * @return list containing the last 2 blocks along the living entity's
      *     line of sight
      */
-    public List<Block> getLastTwoTargetBlocks(HashSet<Material> transparent, int maxDistance);
+    public List<Block> getLastTwoTargetedBlocks(HashSet<Material> transparent, int maxDistance);
 
     /**
      * Throws an egg from the living entity.
