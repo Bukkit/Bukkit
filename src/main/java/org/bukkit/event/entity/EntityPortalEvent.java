@@ -17,9 +17,6 @@ public class EntityPortalEvent extends EntityTeleportEvent {
     protected boolean useTravelAgent = true;
     protected TravelAgent travelAgent;
 
-    /*
-     * @Deprecated Super constructor deprecated: No teleport cause
-     */
     @Deprecated
     public EntityPortalEvent(final Entity entity, final Location from, final Location to, final TravelAgent pta) {
         super(entity, from, to);

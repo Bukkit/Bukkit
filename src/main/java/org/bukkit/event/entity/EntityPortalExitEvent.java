@@ -17,9 +17,6 @@ public class EntityPortalExitEvent extends EntityTeleportEvent {
     private Vector before;
     private Vector after;
 
-    /*
-     * @Deprecated Super constructor deprecated: No teleport cause
-     */
     @Deprecated
     public EntityPortalExitEvent(final Entity entity, final Location from, final Location to, final Vector before, final Vector after) {
         super(entity, from, to);
