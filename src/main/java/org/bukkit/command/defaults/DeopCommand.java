@@ -31,13 +31,12 @@ public class DeopCommand extends VanillaCommand {
         }
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
+		Bukkit.broadcastMessage(ChatColor.RED + sender.getName() + ChatColor.GOLD + " " + "De-Opped " + args[0]); 
         player.setOp(false);
 
         if (player instanceof Player) {
             ((Player) player).sendMessage(ChatColor.YELLOW + "You are no longer op!");
         }
-
-        Command.broadcastCommandMessage(sender, "De-opped " + args[0]);
         return true;
     }
 
