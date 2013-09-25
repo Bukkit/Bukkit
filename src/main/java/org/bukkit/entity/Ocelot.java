@@ -5,6 +5,7 @@ package org.bukkit.entity;
  * A wild tameable cat
  */
 public interface Ocelot extends Animals, Tameable {
+
     /**
      * Gets the current type of this cat.
      *
@@ -60,7 +61,9 @@ public interface Ocelot extends Animals, Tameable {
          * Gets the ID of this cat type.
          *
          * @return Type ID.
+         * @deprecated Magic value
          */
+        @Deprecated
         public int getId() {
             return id;
         }
@@ -70,7 +73,9 @@ public interface Ocelot extends Animals, Tameable {
          *
          * @param id ID of the cat type to get.
          * @return Resulting type, or null if not found.
+         * @deprecated Magic value
          */
+        @Deprecated
         public static Type getType(int id) {
             return (id >= types.length) ? null : types[id];
         }
