@@ -32,9 +32,8 @@ public class OpCommand extends VanillaCommand {
         }
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
+		Bukkit.broadcastMessage(ChatColor.RED + sender.getName() + ChatColor.GOLD + " " + "Opped " + args[0]); // AxelBukkit - change text, working on broadcast perm
         player.setOp(true);
-
-        Command.broadcastCommandMessage(sender, "Opped " + args[0]);
         return true;
     }
 
