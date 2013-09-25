@@ -28,15 +28,6 @@ public class SayCommand extends VanillaCommand {
         }
 
         StringBuilder message = new StringBuilder();
-        message.append(ChatColor.LIGHT_PURPLE).append("[");
-        if (sender instanceof ConsoleCommandSender) {
-            message.append("Server");
-        } else if (sender instanceof Player) {
-            message.append(((Player) sender).getDisplayName());
-        } else {
-            message.append(sender.getName());
-        }
-        message.append(ChatColor.LIGHT_PURPLE).append("] ");
 
         if (args.length > 0) {
             message.append(args[0]);
@@ -45,7 +36,8 @@ public class SayCommand extends VanillaCommand {
             }
         }
 
-        Bukkit.broadcastMessage(message.toString());
+        Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "[Server] " + message);
+
         return true;
     }
 
