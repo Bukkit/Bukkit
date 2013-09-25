@@ -24,7 +24,6 @@ public class TellCommand extends VanillaCommand {
 
         Player player = Bukkit.getPlayerExact(args[0]);
 
-        // If a player is hidden from the sender pretend they are offline
         if (player == null || (sender instanceof Player && !((Player) sender).canSee(player))) {
             sender.sendMessage("There's no player by that name online.");
         } else {
@@ -35,10 +34,8 @@ public class TellCommand extends VanillaCommand {
                 message.append(args[i]);
             }
 
-            String result = ChatColor.GRAY + sender.getName() + " whispers " + message;
-
-            sender.sendMessage("[" + sender.getName() + "->" + player.getName() + "] " + message);
-            player.sendMessage(result);
+            sender.sendMessage("[" + ChatColor.RED + sender.getName() + ChatColor.WHITE + " > " + ChatColor.RED + player.getName() + ChatColor.WHITE + "] " + message);
+            player.sendMessage("[" + ChatColor.RED + sender.getName() + ChatColor.WHITE + " > " + ChatColor.RED + player.getName() + ChatColor.WHITE + "] " + message);
         }
 
         return true;
