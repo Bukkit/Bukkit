@@ -7,6 +7,7 @@ import org.apache.commons.lang.Validate;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -23,11 +24,15 @@ public class StopCommand extends VanillaCommand {
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
+	    String reason = this.createString(args, 0);
+		if (args.length > 0) {
+		Bukkit.broadcastMessage(ChatColor.RED + sender.getName() + ChatColor.GOLD + " Stopping the server for: " + reason);
+		}
+		if (args.length == 0) {
+		Bukkit.broadcastMessage(ChatColor.RED + sender.getName() + ChatColor.GOLD + " Stopping the server");
+		}
+		Bukkit.shutdown();
 
-        Command.broadcastCommandMessage(sender, "Stopping the server..");
-        Bukkit.shutdown();
-
-        String reason = this.createString(args, 0);
         if (StringUtils.isNotEmpty(reason)) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 player.kickPlayer(reason);

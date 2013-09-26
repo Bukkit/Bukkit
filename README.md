@@ -1,11 +1,8 @@
-Bukkit
-======
+AxelBukkit-API
+===========
 
-A Minecraft Server API.
+[CraftBukkit](https://github.com/kosgan10/craftbukkit) and [Bukkit API](https://github.com/kosgan10/bukkit) modifications
 
-Website: [http://bukkit.org](http://bukkit.org)  
-Bugs/Suggestions: [http://leaky.bukkit.org](http://leaky.bukkit.org)  
-Contributing Guidelines: [CONTRIBUTING.md](https://github.com/Bukkit/Bukkit/blob/master/CONTRIBUTING.md)
 
 Compilation
 -----------
@@ -13,4 +10,5 @@ Compilation
 We use maven to handle our dependencies.
 
 * Install [Maven 3](http://maven.apache.org/download.html)
-* Check out this repo and: `mvn clean install`
+* Check out and: `mvn clean install`
+* If you need, check my [CraftBukkit(server side) repo!](https://github.com/kosgan10/craftbukkit) and: `mvn clean package`

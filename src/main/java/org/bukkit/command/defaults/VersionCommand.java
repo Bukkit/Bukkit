@@ -21,7 +21,7 @@ public class VersionCommand extends BukkitCommand {
         this.description = "Gets the version of this server including any plugins in use";
         this.usageMessage = "/version [plugin name]";
         this.setPermission("bukkit.command.version");
-        this.setAliases(Arrays.asList("ver", "about"));
+        this.setAliases(Arrays.asList("ver", "about", "axelbukkit"));
     }
 
     @Override
@@ -29,7 +29,7 @@ public class VersionCommand extends BukkitCommand {
         if (!testPermission(sender)) return true;
 
         if (args.length == 0) {
-            sender.sendMessage("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")");
+            sender.sendMessage(ChatColor.YELLOW + "This server is running " + ChatColor.BLUE + "Axel" + ChatColor.RED + "Bukkit" + ChatColor.YELLOW + " version" + Bukkit.getVersion() + "(Implementing API version " + Bukkit.getBukkitVersion() + ")");
         } else {
             StringBuilder name = new StringBuilder();
 
@@ -63,6 +63,9 @@ public class VersionCommand extends BukkitCommand {
             }
         }
         return true;
+		if (args[0].equalsIgnoreCase == "minecraft" || args[0].equalsIgnoreCase == "mc") {
+			sender.sendMessage(ChatColor.YELLOW + "This server is running in: " + "MC 1.6.4");
+		}
     }
 
     private void describeToSender(Plugin plugin, CommandSender sender) {
