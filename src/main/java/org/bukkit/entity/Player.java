@@ -721,4 +721,20 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @see Player#setHealthScaled(boolean)
      */
     public double getHealthScale();
+    
+    /**
+     * Sets the view distance for the player
+     * 
+     * @param distance the number to set the player's view distance to
+     * @throws IllegalArgumentException if distance is too high
+     * @throws IllegalArgumentException if distance is too low
+     */
+    public void setViewDistance(int distance) throws IllegalArgumentException;
+    
+    /**
+     * Gets the player's view distance
+     * 
+     * @return the player's view distance
+     */
+    public int getViewDistance();
 }
