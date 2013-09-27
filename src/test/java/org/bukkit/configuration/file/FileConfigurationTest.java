@@ -4,17 +4,14 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Map;
-
 import org.bukkit.configuration.MemoryConfigurationTest;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
 import static org.junit.Assert.*;
 
 public abstract class FileConfigurationTest extends MemoryConfigurationTest {
-
-    protected static final String LINE_SEPARATOR = System.getProperty("line.separator");
+    static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
