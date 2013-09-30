@@ -1,6 +1,7 @@
 package org.bukkit.command.defaults;
 
 import java.util.List;
+import java.lang.StringBuilder;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
@@ -27,8 +28,17 @@ public class BanCommand extends VanillaCommand {
             return false;
         }
 
-        // TODO: Ban Reason support
-        Bukkit.getOfflinePlayer(args[0]).setBanned(true);
+        // TA DAAAAAAA: Ban Reason support. Also, names :D
+        if (args.length > 2){
+            StringBuilder reason = new StringBuilder();
+            for(String arg: args) {
+                reason.append(arg + " ");
+            }
+            Bukkit.getOfflinePlayer(args[0]).setBanned(true, reason, sender.getName());
+        } else {
+            Bukkit.getOfflinePlayer(args[0]).setBanned(true);
+        }
+        
 
         Player player = Bukkit.getPlayer(args[0]);
         if (player != null) {
