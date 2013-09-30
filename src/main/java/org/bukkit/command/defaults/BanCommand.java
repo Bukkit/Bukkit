@@ -34,9 +34,9 @@ public class BanCommand extends VanillaCommand {
             for(String arg: args) {
                 reason.append(arg + " ");
             }
-            Bukkit.getOfflinePlayer(args[0]).setBanned(true, reason, sender.getName());
+            Bukkit.getOfflinePlayer(args[0]).setBanned(true, sender.getName(), reason.toString());
         } else {
-            Bukkit.getOfflinePlayer(args[0]).setBanned(true);
+            Bukkit.getOfflinePlayer(args[0]).setBanned(true, sender.getName());
         }
         
 
