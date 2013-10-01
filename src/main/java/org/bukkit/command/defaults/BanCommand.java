@@ -32,7 +32,9 @@ public class BanCommand extends VanillaCommand {
         if (args.length > 2){
             StringBuilder reason = new StringBuilder();
             for(String arg: args) {
+            	if(!arg.equals(args[0])) { //skip adding player name to ban reason
                 reason.append(arg + " ");
+            	}
             }
             Bukkit.getOfflinePlayer(args[0]).setBanned(true, sender.getName(), reason.toString());
         } else {
