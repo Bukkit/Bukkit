@@ -30,13 +30,10 @@ public class BanCommand extends VanillaCommand {
 
         if (args.length > 1){
             StringBuilder reason = new StringBuilder();
-            for(String arg: args) {
-                if(!arg.equals(args[0])) {
-                    reason.append(arg + " ");
-                }
+            for(int i=1; i<args.length; i++) {
+                reason.append(args[i]).append(" ");
             }
-            reason.replace(reason.lastIndexOf(" "), reason.lastIndexOf(" "), "");
-            Bukkit.getOfflinePlayer(args[0]).setBanned(true, sender.getName(), reason.toString());
+            Bukkit.getOfflinePlayer(args[0]).setBanned(true, sender.getName(), reason.substring(0, reason.length()-1));
         } else {
             Bukkit.getOfflinePlayer(args[0]).setBanned(true, sender.getName());
         }
