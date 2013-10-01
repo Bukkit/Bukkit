@@ -29,13 +29,14 @@ public class BanCommand extends VanillaCommand {
         }
 
         // TA DAAAAAAA: Ban Reason support. Also, names :D
-        if (args.length > 2){
+        if (args.length > 1){
             StringBuilder reason = new StringBuilder();
             for(String arg: args) {
             	if(!arg.equals(args[0])) { //skip adding player name to ban reason
                 reason.append(arg + " ");
             	}
             }
+            reason.replace(reason.lastIndexOf(" "), reason.lastIndexOf(" "), "");
             Bukkit.getOfflinePlayer(args[0]).setBanned(true, sender.getName(), reason.toString());
         } else {
             Bukkit.getOfflinePlayer(args[0]).setBanned(true, sender.getName());
