@@ -224,6 +224,19 @@ public class Location implements Cloneable {
     }
 
     /**
+     * Floors the x, y, and z values of the location.
+     * 
+     * @return the same location
+     */
+    public Location floor() {
+        x = locToBlock(x);
+        y = locToBlock(y);
+        z = locToBlock(z);
+
+        return this;
+    }
+
+    /**
      * Adds the location by another.
      *
      * @see Vector
