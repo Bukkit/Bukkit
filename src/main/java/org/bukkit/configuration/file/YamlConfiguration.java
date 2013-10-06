@@ -30,6 +30,7 @@ public class YamlConfiguration extends FileConfiguration {
 
     @Override
     public String saveToString() {
+        yamlOptions.setAllowUnicode(false);
         yamlOptions.setIndent(options().indent());
         yamlOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         yamlRepresenter.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
