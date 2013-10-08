@@ -721,4 +721,9 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @see Player#setHealthScaled(boolean)
      */
     public double getHealthScale();
+
+    /**
+     * Respawns the player if dead.
+     */
+    public void respawn();
 }
