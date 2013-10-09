@@ -29,11 +29,11 @@ public class BanCommand extends VanillaCommand {
         }
 
         if (args.length > 1){
-            StringBuilder reason = new StringBuilder();
-            for(int i = 1; i < args.length ; i++) {
-                reason.append(args[i]).append(" ");
+            StringBuilder reason = new StringBuilder(args[1]); 
+            for(int i = 2; i < args.length ; i++) {
+                reason.append(" ").append(args[i]);
             }
-            Bukkit.getOfflinePlayer(args[0]).setBanned(true,sender.getName(),reason.substring(0,reason.length()-1));
+            Bukkit.getOfflinePlayer(args[0]).setBanned(true,sender.getName(),reason.toString());
         } else {
             Bukkit.getOfflinePlayer(args[0]).setBanned(true,sender.getName());
         }
