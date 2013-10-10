@@ -1,7 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <parent>
+      <groupId>tk.teamfield3</groupId>
+      <artifactId>tukkit-parent</artifactId>
+      <version>dev-SNAPSHOT</version>
+      <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.bukkit</groupId>
-    <artifactId>bukkit</artifactId>
+    <artifactId>tukkit</artifactId>
     <version>1.6.4-R0.1-SNAPSHOT</version>
     <name>Bukkit</name>
     <url>http://www.bukkit.org</url>
@@ -21,22 +29,12 @@
         <url>http://ci.bukkit.org</url>
     </ciManagement>
 
-    <distributionManagement>
-        <site>
-            <id>jd.bukkit.org</id>
-            <url>file:///home/javadocs/public_html/</url>
-        </site>
-        <repository>
-            <id>repobo-rel</id>
-            <name>repo.bukkit.org Releases</name>
-            <url>http://repo.bukkit.org/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>repobo-snap</id>
-            <name>repo.bukkit.org Snapshots</name>
-            <url>http://repo.bukkit.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+  <distributionManagement>
+	<repository>            
+        <id>dropbox</id>                        
+        <url>file:///C:/Users/Benjamin/Dropbox/Public/mvn-repostory</url>                      
+    </repository> 
+  </distributionManagement>
 
     <build>
         <plugins>

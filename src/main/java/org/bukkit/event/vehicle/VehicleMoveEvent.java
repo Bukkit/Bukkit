@@ -55,4 +55,5 @@ public class VehicleMoveEvent extends VehicleEvent implements Cancellable {
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
 }
