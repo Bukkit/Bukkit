@@ -7,11 +7,9 @@ import java.util.Map.Entry;
 import org.bukkit.plugin.Plugin;
 
 /**
- * Holds information about a permission attachment on a {@link Permissible}
- * object
+ * Holds information about a permission attachment on a {@link Permissible} object
  */
 public class PermissionAttachment {
-
     private PermissionRemovedExecutor removed;
     private final Map<String, Boolean> permissions = new LinkedHashMap<String, Boolean>();
     private final Permissible permissible;
@@ -38,8 +36,7 @@ public class PermissionAttachment {
     }
 
     /**
-     * Sets an object to be called for when this attachment is removed from a
-     * {@link Permissible}. May be null.
+     * Sets an object to be called for when this attachment is removed from a {@link Permissible}. May be null.
      *
      * @param ex Object to be called when this is removed
      */
@@ -48,8 +45,7 @@ public class PermissionAttachment {
     }
 
     /**
-     * Gets the class that was previously set to be called when this attachment
-     * was removed from a {@link Permissible}. May be null.
+     * Gets the class that was previously set to be called when this attachment was removed from a {@link Permissible}. May be null.
      *
      * @return Object to be called when this is removed
      */
@@ -67,11 +63,9 @@ public class PermissionAttachment {
     }
 
     /**
-     * Gets a copy of all set permissions and values contained within this
-     * attachment.
+     * Gets a copy of all set permissions and values contained within this attachment.
      * <p>
-     * This map may be modified but will not affect the attachment, as it is a
-     * copy.
+     * This map may be modified but will not affect the attachment, as it is a copy.
      *
      * @return Copy of all permissions and values expressed by this attachment
      */
@@ -113,7 +107,9 @@ public class PermissionAttachment {
     }
 
     /**
-     * Adds/changes all the permissions in the supplied map.
+     * For every string in the map, set the corresponding permission to the
+     * value of the boolean, overwriting if necessary. Existing permissions not
+     * in the supplied map will remain unchanged.
      * <p>
      * As the {@link Permissible}'s net permissions are only recalculated once,
      * this is faster than calling
@@ -198,8 +194,7 @@ public class PermissionAttachment {
     /**
      * Removes this attachment from its registered {@link Permissible}
      *
-     * @return true if the permissible was removed successfully, false if it did
-     * not exist
+     * @return true if the permissible was removed successfully, false if it did not exist
      */
     public boolean remove() {
         try {
