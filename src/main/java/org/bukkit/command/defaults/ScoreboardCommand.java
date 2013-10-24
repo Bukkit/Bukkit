@@ -164,6 +164,9 @@ public class ScoreboardCommand extends VanillaCommand {
                         sender.sendMessage("Cleared objective display slot '" + slotName + "'");
                     }
                 }
+            } else {
+                sender.sendMessage(ChatColor.RED + "Usage: /scoreboard objectives <list|add|remove|setdisplay>");
+                return false;
             }
         } else if (args[0].equalsIgnoreCase("players")) {
             if (args.length == 1) {
@@ -261,6 +264,9 @@ public class ScoreboardCommand extends VanillaCommand {
                         }
                     }
                 }
+            } else {
+                sender.sendMessage(ChatColor.RED + "/scoreboard players <set|add|remove|reset|list>");
+                return false;
             }
         } else if (args[0].equalsIgnoreCase("teams")) {
             if (args.length == 1) {
@@ -469,6 +475,9 @@ public class ScoreboardCommand extends VanillaCommand {
                     }
                     sender.sendMessage("Set option " + option + " for team " + team.getName() + " to " + value);
                 }
+            } else {
+                sender.sendMessage(ChatColor.RED + "/scoreboard teams <list|add|remove|empty|join|leave|option>");
+                return false;
             }
         } else {
             sender.sendMessage(ChatColor.RED + "Usage: /scoreboard <objectives|players|teams>");
