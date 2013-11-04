@@ -116,6 +116,10 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
          */
         DEFEND_VILLAGE,
         /**
+         * When the target tempts the entity.
+         */
+        TEMPTED,
+        /**
          * For custom calls to the event
          */
         CUSTOM
