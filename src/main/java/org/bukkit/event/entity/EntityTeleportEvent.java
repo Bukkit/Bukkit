@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 /**
  * Thrown when a non-player entity (such as an Enderman) tries to teleport from one
@@ -14,12 +15,26 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
     private boolean cancel;
     private Location from;
     private Location to;
+    private TeleportCause cause = TeleportCause.UNKNOWN;
 
+    @Deprecated
     public EntityTeleportEvent(Entity what, Location from, Location to) {
         super(what);
         this.from = from;
         this.to = to;
         this.cancel = false;
+    }
+
+    public EntityTeleportEvent(Entity what, Location from, Location to, TeleportCause cause) {
+        super(what);
+        this.from = from;
+        this.to = to;
+        this.cancel = false;
+        this.cause = cause;
+    }
+
+    public TeleportCause getCause() {
+    	return cause;
     }
 
     public boolean isCancelled() {
