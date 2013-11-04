@@ -297,6 +297,21 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public void sendBlockChange(Location loc, int material, byte data);
 
     /**
+     * Send a sign change. This fakes a sign change packet for a user at
+     * a certain location. This will not actually change the world in any way.
+     * This method will use a sign at the location's block or a faked sign
+     * sent via {@link #sendBlockChange(org.bukkit.Location, int, byte)} or
+     * {@link #sendBlockChange(org.bukkit.Location, org.bukkit.Material, byte)}.
+     * This method notifies the client of an unknown sign if neither of
+     * these exist.
+     *
+     * @param loc The location of the sign
+     * @param lines The new text on the sign
+     * @throws IllegalArgumentException if location is null
+     */
+    public void sendSignChange(Location loc, String[] lines);
+
+    /**
      * Render a map and send it to the player in its entirety. This may be used
      * when streaming the map in the normal manner is not desirable.
      *
