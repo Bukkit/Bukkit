@@ -40,7 +40,7 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
      *
      * @return All blown-up blocks
      */
-    public List<Block> blockList() {
+    public List<Block> getBlockList() {
         return blocks;
     }
 
