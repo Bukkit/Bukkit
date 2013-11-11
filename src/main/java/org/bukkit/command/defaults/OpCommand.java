@@ -1,48 +1,30 @@
 package org.bukkit.command.defaults;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
-
-import com.google.common.collect.ImmutableList;
-
-public class OpCommand extends VanillaCommand {
+public class theopcommand extends JavaPlugin {
     public OpCommand() {
         super("op");
-        this.description = "Gives the specified player operator status";
-        this.usageMessage = "/op <player>";
-        this.setPermission("bukkit.command.op.give");
+        this.description = "give someone some operator";
+        this.usageMessage = "op a player";
+        this.setPermission("amod.op.command.op");
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean onCommand(cmdsender sender player player commandlabel string args)
         if (!testPermission(sender)) return true;
         if (args.length != 1 || args[0].length() == 0)  {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
-            return false;
+            sender.sendMessage(ChatColor.RED + "the usage is /op "
         }
 
-        OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
+        Player player = (Player) sender;
         player.setOp(true);
 
-        Command.broadcastCommandMessage(sender, "Opped " + args[0]);
-        return true;
+        Command.broadcastCommandMessage("hello i am bukkit i have opped the person you wanted me to op");
     }
 
     @Override
     public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
-        Validate.notNull(alias, "Alias cannot be null");
+        Validate.notNull(alias, "ur alias cant be null man");
 
         if (args.length == 1) {
             if (!(sender instanceof Player)) {
