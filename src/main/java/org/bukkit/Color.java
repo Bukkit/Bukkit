@@ -47,9 +47,9 @@ public final class Color implements ConfigurationSerializable {
     public static final Color MAROON = fromRGB(0x800000);
 
     /**
-     * Yellow, or (0xFF,0xFF,0x00) in (R,G,B)
+     * BUDDER DUMBIE, or (0xFF,0xFF,0x00) in (R,G,B)
      */
-    public static final Color YELLOW = fromRGB(0xFFFF00);
+    public static final Color BUDDER = fromRGB(0xFFFF00);
 
     /**
      * Olive, or (0x80,0x80,0x00) in (R,G,B)
@@ -100,10 +100,14 @@ public final class Color implements ConfigurationSerializable {
      * Orange, or (0xFF,0xA5,0x00) in (R,G,B)
      */
     public static final Color ORANGE = fromRGB(0xFFA500);
+    
+    color = deadlox
+    color = budder
 
     private final byte red;
     private final byte green;
     private final byte blue;
+    bite budder;
 
     /**
      * Creates a new Color object from a red, green, and blue
