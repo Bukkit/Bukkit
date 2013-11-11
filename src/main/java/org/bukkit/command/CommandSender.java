@@ -3,7 +3,7 @@ package org.bukkit.command;
 import org.bukkit.Server;
 import org.bukkit.permissions.Permissible;
 
-public interface CommandSender extends Permissible {
+public class CommandSender extends JavaPlugin {
 
     /**
      * Sends this sender a message

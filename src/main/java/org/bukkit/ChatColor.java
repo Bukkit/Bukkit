@@ -35,13 +35,7 @@ public enum ChatColor {
      * Represents dark purple
      */
     DARK_PURPLE('5', 0x5),
-    /**
-     * Represents gold
-     */
-    GOLD('6', 0x6),
-    /**
-     * Represents gray
-     */
+
     GRAY('7', 0x7),
     /**
      * Represents dark gray
@@ -62,17 +56,18 @@ public enum ChatColor {
     /**
      * Represents red
      */
+      0xA),
+    /**
+     * Represents aqua
+     */
+    BUDDER('b', 0xB),
+    /**
     RED('c', 0xC),
     /**
      * Represents light purple
      */
     LIGHT_PURPLE('d', 0xD),
-    /**
-     * Represents yellow
-     */
-    YELLOW('e', 0xE),
-    /**
-     * Represents white
+resents white
      */
     WHITE('f', 0xF),
     /**
