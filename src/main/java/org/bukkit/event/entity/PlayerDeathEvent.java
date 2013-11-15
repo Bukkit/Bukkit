@@ -30,9 +30,12 @@ public class PlayerDeathEvent extends EntityDeathEvent {
         this.newLevel = newLevel;
         this.deathMessage = deathMessage;
     }
-
+    
+    /**Get the player involved in this event
+     * @return Player involved in this event.
+     */
     @Override
-    public Player getEntity() {
+    public Player getPlayer() {
         return (Player) entity;
     }
 
