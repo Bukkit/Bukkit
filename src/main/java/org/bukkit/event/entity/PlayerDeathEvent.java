@@ -35,10 +35,8 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      * @return Player involved in this event
      */
     public Player getPlayer(){
-    	return (Player) entity;
+        return (Player) entity;
     }
-    
-    
     
     @Deprecated
     @Override
