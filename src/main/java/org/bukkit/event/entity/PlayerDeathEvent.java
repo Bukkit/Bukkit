@@ -37,7 +37,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
     public Player getPlayer(){
         return (Player) entity;
     }
-    
+
     @Deprecated
     @Override
     /**
