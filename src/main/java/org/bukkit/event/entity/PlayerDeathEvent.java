@@ -31,7 +31,20 @@ public class PlayerDeathEvent extends EntityDeathEvent {
         this.deathMessage = deathMessage;
     }
 
+    /**
+     * @return Player involved in this event
+     */
+    public Player getPlayer(){
+    	return (Player) entity;
+    }
+    
+    
+    
+    @Deprecated
     @Override
+    /**
+     * Deprecated - replaced by getPlayer() as it more accuratley describes the method.
+     */
     public Player getEntity() {
         return (Player) entity;
     }
