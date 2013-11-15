@@ -41,7 +41,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
     @Deprecated
     @Override
     /**
-     * Deprecated - replaced by getPlayer() as it more accuratley describes the method.
+     * @deprecated  replaced by getPlayer() as it more accuratley describes the method.
      */
     public Player getEntity() {
         return (Player) entity;
