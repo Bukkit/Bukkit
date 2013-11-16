@@ -12,6 +12,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
+import static org.bukkit.util.StringUtil._;
+
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.YAMLException;
@@ -23,7 +25,7 @@ import org.yaml.snakeyaml.representer.Representer;
  */
 public class YamlConfiguration extends FileConfiguration {
     protected static final String COMMENT_PREFIX = "# ";
-    protected static final String BLANK_CONFIG = "{}\n";
+    protected static final String BLANK_CONFIG = "{}" + _;
     private final DumperOptions yamlOptions = new DumperOptions();
     private final Representer yamlRepresenter = new YamlRepresenter();
     private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
@@ -81,7 +83,7 @@ public class YamlConfiguration extends FileConfiguration {
     }
 
     protected String parseHeader(String input) {
-        String[] lines = input.split("\r?\n", -1);
+        String[] lines = input.split("\r?" + _ + "", -1);
         StringBuilder result = new StringBuilder();
         boolean readingHeader = true;
         boolean foundHeader = false;
@@ -91,7 +93,7 @@ public class YamlConfiguration extends FileConfiguration {
 
             if (line.startsWith(COMMENT_PREFIX)) {
                 if (i > 0) {
-                    result.append("\n");
+                    result.append("" + _ + "");
                 }
 
                 if (line.length() > COMMENT_PREFIX.length()) {
@@ -100,7 +102,7 @@ public class YamlConfiguration extends FileConfiguration {
 
                 foundHeader = true;
             } else if ((foundHeader) && (line.length() == 0)) {
-                result.append("\n");
+                result.append("" + _ + "");
             } else if (foundHeader) {
                 readingHeader = false;
             }
@@ -131,11 +133,11 @@ public class YamlConfiguration extends FileConfiguration {
         }
 
         StringBuilder builder = new StringBuilder();
-        String[] lines = header.split("\r?\n", -1);
+        String[] lines = header.split("\r?" + _ + "", -1);
         boolean startedHeader = false;
 
         for (int i = lines.length - 1; i >= 0; i--) {
-            builder.insert(0, "\n");
+            builder.insert(0, "" + _ + "");
 
             if ((startedHeader) || (lines[i].length() != 0)) {
                 builder.insert(0, lines[i]);

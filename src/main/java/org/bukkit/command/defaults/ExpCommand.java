@@ -1,7 +1,7 @@
 package org.bukkit.command.defaults;
 
 import java.util.List;
-
+import static org.bukkit.util.StringUtil._;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -64,7 +64,7 @@ public class ExpCommand extends VanillaCommand {
                     }
                 }
             } else {
-                sender.sendMessage("Can't find player, was one provided?\n" + ChatColor.RED + "Usage: " + usageMessage);
+                sender.sendMessage("Can't find player, was one provided?" + _ + ChatColor.RED + "Usage: " + usageMessage);
                 return false;
             }
 

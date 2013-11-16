@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import static org.bukkit.util.StringUtil._;
 
 import com.google.common.collect.ImmutableList;
 
@@ -37,7 +38,7 @@ public class KickCommand extends VanillaCommand {
             }
 
             player.kickPlayer(reason);
-            Command.broadcastCommandMessage(sender, "Kicked player " + player.getName() + ". With reason:\n" + reason);
+            Command.broadcastCommandMessage(sender, "Kicked player " + player.getName() + ". With reason:" + _ + "" + reason);
         } else {
             sender.sendMessage( args[0] + " not found.");
         }

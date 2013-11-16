@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static org.bukkit.util.StringUtil._;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
@@ -27,7 +28,7 @@ public class HelpCommand extends VanillaCommand {
     public HelpCommand() {
         super("help");
         this.description = "Shows the help menu";
-        this.usageMessage = "/help <pageNumber>\n/help <topic>\n/help <topic> <pageNumber>";
+        this.usageMessage = "/help <pageNumber>" + _ + "/help <topic>" + _ + "/help <topic> <pageNumber>";
         this.setPermission("bukkit.command.help");
     }
 

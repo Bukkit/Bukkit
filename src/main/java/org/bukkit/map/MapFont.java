@@ -75,7 +75,7 @@ public class MapFont {
     public boolean isValid(String text) {
         for (int i = 0; i < text.length(); ++i) {
             char ch = text.charAt(i);
-            if (ch == '\u00A7' || ch == '\n') continue;
+            if (ch == '\u00A7' || ch == '\u2028') continue;
             if (chars.get(ch) == null) return false;
         }
         return true;
