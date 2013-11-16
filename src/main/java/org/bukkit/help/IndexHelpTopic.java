@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.ChatPaginator;
+import static org.bukkit.util.StringUtil._;
 
 import java.util.Collection;
 
@@ -62,19 +63,19 @@ public class IndexHelpTopic extends HelpTopic {
 
         if (preamble != null) {
             sb.append(buildPreamble(sender));
-            sb.append("\n");
+            sb.append(_);
         }
 
         for (HelpTopic topic : allTopics) {
             if (topic.canSee(sender)) {
-                String lineStr = buildIndexLine(sender, topic).replace("\n", ". ");
+                String lineStr = buildIndexLine(sender, topic).replace(_, ". ");
                 if (sender instanceof Player && lineStr.length() > ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
                     sb.append(lineStr.substring(0, ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH - 3));
                     sb.append("...");
                 } else {
                     sb.append(lineStr);
                 }
-                sb.append("\n");
+                sb.append(_);
             }
         }
         return sb.toString();

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.plugin.Plugin;
+import static org.bukkit.util.StringUtil._;
 
 /**
  * Represents a {@link Command} belonging to a plugin
@@ -47,7 +48,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
         }
 
         if (!success && usageMessage.length() > 0) {
-            for (String line : usageMessage.replace("<command>", commandLabel).split("\n")) {
+            for (String line : usageMessage.replace("<command>", commandLabel).split(_)) {
                 sender.sendMessage(line);
             }
         }

@@ -6,6 +6,7 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import static org.bukkit.util.StringUtil._;
 
 import com.google.common.collect.ImmutableList;
 
@@ -37,7 +38,7 @@ public class ListCommand extends VanillaCommand {
             online.append(player.getDisplayName());
         }
 
-        sender.sendMessage("There are " + players.length + "/" + Bukkit.getMaxPlayers() + " players online:\n" + online.toString());
+        sender.sendMessage("There are " + players.length + "/" + Bukkit.getMaxPlayers() + " players online:" + _ + online.toString());
 
         return true;
     }

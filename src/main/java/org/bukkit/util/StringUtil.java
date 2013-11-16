@@ -4,6 +4,8 @@ import java.util.Collection;
 import org.apache.commons.lang.Validate;
 
 public class StringUtil {
+	
+	public static String _ = System.lineSeparator();
 
     /**
      * Copies all elements from the iterable collection of originals to the collection provided.

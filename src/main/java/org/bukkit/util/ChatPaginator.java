@@ -1,6 +1,7 @@
 package org.bukkit.util;
 
 import org.bukkit.ChatColor;
+import static org.bukkit.util.StringUtil._;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -65,7 +66,7 @@ public class ChatPaginator {
         }
 
         // A string shorter than the lineWidth is a single line
-        if (rawString.length() <= lineLength && !rawString.contains("\n")) {
+        if (rawString.length() <= lineLength && !rawString.contains(_)) {
             return new String[] {rawString};
         }
 
@@ -86,7 +87,7 @@ public class ChatPaginator {
                 continue;
             }
 
-            if (c == ' ' || c == '\n') {
+            if (c == ' ' || c == '\u2028') {
                 if (line.length() == 0 && word.length() > lineLength) { // special case: extremely long word begins a line
                     for (String partialWord : word.toString().split("(?<=\\G.{" + lineLength + "})")) {
                         lines.add(partialWord);
@@ -110,7 +111,7 @@ public class ChatPaginator {
                 }
                 word = new StringBuilder();
 
-                if (c == '\n') { // Newline forces the line to flush
+                if (c == '\u2028') { // Newline forces the line to flush
                     lines.add(line.toString());
                     line = new StringBuilder();
                 }
@@ -161,7 +162,6 @@ public class ChatPaginator {
         }
 
         public String[] getLines() {
-
             return lines;
         }
     }

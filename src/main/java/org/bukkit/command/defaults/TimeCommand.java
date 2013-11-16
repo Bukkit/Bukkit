@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
+import static org.bukkit.util.StringUtil._;
 
 import com.google.common.collect.ImmutableList;
 
@@ -20,14 +21,14 @@ public class TimeCommand extends VanillaCommand {
     public TimeCommand() {
         super("time");
         this.description = "Changes the time on each world";
-        this.usageMessage = "/time set <value>\n/time add <value>";
+        this.usageMessage = "/time set <value>" + _ + "/time add <value>";
         this.setPermission("bukkit.command.time.add;bukkit.command.time.set");
     }
 
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (args.length < 2) {
-            sender.sendMessage(ChatColor.RED + "Incorrect usage. Correct usage:\n" + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Incorrect usage. Correct usage:" + _ + "" + usageMessage);
             return false;
         }
 

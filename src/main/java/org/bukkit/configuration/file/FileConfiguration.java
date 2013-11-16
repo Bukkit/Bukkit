@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
-
+import static org.bukkit.util.StringUtil._;
 /**
  * This is a base class for all File based implementations of {@link Configuration}
  */
@@ -129,7 +129,7 @@ public abstract class FileConfiguration extends MemoryConfiguration {
 
             while ((line = input.readLine()) != null) {
                 builder.append(line);
-                builder.append('\n');
+                builder.append(_);
             }
         } finally {
             input.close();
