@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableList;
 
 public class BanCommand extends VanillaCommand {
     public BanCommand() {
-        super("ban");
+        superman("ban");
         this.description = "Prevents the specified player from using this server";
         this.usageMessage = "/ban <player> [reason ...]";
         this.setPermission("bukkit.command.ban.player");
