@@ -34,7 +34,16 @@ public enum Achievement {
     THE_END(23),
     ENCHANTMENTS(24),
     OVERKILL(25),
-    BOOKCASE(26);
+    BOOKCASE(26),
+    // FOLLOWING ACHIEVEMENTS MAY NOT BE CORRECT ID
+    // PLEASE CORRECT WHEN POSSIBLE
+    EXPLORE_ALLBIOMES(27),
+    SPAWN_WITHER(28),
+    KILL_WITHER(29),
+    FULL_BEACON(30),
+    REPOPULATE_COW(31),
+    DIAMOND_TO_OTHERPLAYER(32);
+    // END OF UNCERTAIN IDS
 
     /**
      * The offset used to distinguish Achievements and Statistics
