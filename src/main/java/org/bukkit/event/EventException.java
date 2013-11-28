@@ -34,7 +34,7 @@ public class EventException extends Exception {
     /**
      * Constructs a new EventException with the given message
      *
-     * @param message The message
+     * @param message The message corresponding with the thrown exception
      */
     public EventException(String message) {
         super(message);
