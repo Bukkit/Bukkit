@@ -4,7 +4,7 @@ import org.bukkit.Server;
 import org.bukkit.event.server.ServerListPingEvent;
 
 /**
- * This is a cached version of a server-icon. It's internal representation
+ * This is a cached version of a server-icon. Its internal representation
  * and implementation is undefined.
  *
  * @see Server#getServerIcon()
