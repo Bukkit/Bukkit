@@ -21,7 +21,7 @@ public class GiveCommand extends VanillaCommand {
     static {
         ArrayList<String> materialList = new ArrayList<String>();
         for (Material material : Material.values()) {
-            materialList.add(material.name());
+            materialList.add(material.getStringId());
         }
         Collections.sort(materialList);
         materials = ImmutableList.copyOf(materialList);
@@ -45,7 +45,7 @@ public class GiveCommand extends VanillaCommand {
         Player player = Bukkit.getPlayerExact(args[0]);
 
         if (player != null) {
-            Material material = Material.matchMaterial(args[1]);
+            Material material = Material.getItemMaterial(args[1]);
 
             if (material != null) {
                 int amount = 1;
