@@ -56,7 +56,7 @@ public class WoodenStep extends MaterialData {
      * @return TreeSpecies of this tree
      */
     public TreeSpecies getSpecies() {
-        return TreeSpecies.getByData((byte) (getData() & 0x3));
+        return TreeSpecies.getByData((byte) (getData() & 0x7));
     }
 
     /**
@@ -65,7 +65,7 @@ public class WoodenStep extends MaterialData {
      * @param species New species of this tree
      */
     public void setSpecies(TreeSpecies species) {
-        setData((byte) ((getData() & 0xC) | species.getData()));
+        setData((byte) ((getData() & 0x8) | species.getData()));
     }
 
     /**

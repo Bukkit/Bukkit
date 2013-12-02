@@ -5,19 +5,19 @@ import org.bukkit.TreeSpecies;
 import org.bukkit.block.BlockFace;
 
 /**
- * Represents the different types of Trees. This class supports all 6 TreeSpecies.
+ * Represents the different types of Logs. This class only supports ACACIA/DARK_OAK Species.
  */
-public class Tree extends MaterialData {
-    public Tree() {
-        super(Material.SAPLING);
+public class Log2 extends Log {
+    public Log2() {
+        super(Material.LOG_2);
     }
 
-    public Tree(TreeSpecies species) {
+    public Log2(TreeSpecies species) {
         this();
         setSpecies(species);
     }
 
-    public Tree(TreeSpecies species, BlockFace dir) {
+    public Log2(TreeSpecies species, BlockFace dir) {
         this();
         setSpecies(species);
         setDirection(dir);
@@ -28,11 +28,11 @@ public class Tree extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public Tree(final int type) {
+    public Log2(final int type) {
         super(type);
     }
 
-    public Tree(final Material type) {
+    public Log2(final Material type) {
         super(type);
     }
 
@@ -41,7 +41,7 @@ public class Tree extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public Tree(final int type, final byte data) {
+    public Log2(final int type, final byte data) {
         super(type, data);
     }
 
@@ -50,7 +50,7 @@ public class Tree extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public Tree(final Material type, final byte data) {
+    public Log2(final Material type, final byte data) {
         super(type, data);
     }
 
@@ -59,8 +59,9 @@ public class Tree extends MaterialData {
      *
      * @return TreeSpecies of this tree
      */
+    @Override
     public TreeSpecies getSpecies() {
-        return TreeSpecies.getByData((byte) (getData() & 0x7));
+        return TreeSpecies.getByData((byte) ((getData() & 0x3) + 4));
     }
 
     /**
@@ -68,17 +69,25 @@ public class Tree extends MaterialData {
      *
      * @param species New species of this tree
      */
+    @Override
     public void setSpecies(TreeSpecies species) {
-        setData((byte) ((getData() & 0x8) | species.getData()));
+        switch (species) {
+        case ACACIA:
+        case DARK_OAK:
+            setData((byte) ((getData() & 0xC) | (species.getData() - 4)));
+            break;
+        default:
+            throw new IllegalArgumentException("TreeSpecies " + species + " is not supported by " + getItemType());
+        }
     }
 
     @Override
     public String toString() {
-        return getSpecies() + " " + super.toString();
+        return getSpecies() + " " + getDirection() + " " + super.toString();
     }
 
     @Override
-    public Tree clone() {
-        return (Tree) super.clone();
+    public Log2 clone() {
+        return (Log2) super.clone();
     }
 }
