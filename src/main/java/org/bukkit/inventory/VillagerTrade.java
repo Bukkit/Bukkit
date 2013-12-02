@@ -84,7 +84,7 @@ public class VillagerTrade {
     }
 
     /**
-     * Set the left input item required to complete the trade.
+     * Sets the left input item required to complete the trade.
      *
      * @param leftInput The left input item.
      */
@@ -93,7 +93,7 @@ public class VillagerTrade {
     }
 
     /**
-     * Set the right input item required to complete the trade.
+     * Sets the right input item required to complete the trade.
      *
      * @param rightInput The right input item.
      */
@@ -102,7 +102,7 @@ public class VillagerTrade {
     }
 
     /**
-     * Set the number of times this trade has been used.
+     * Sets the number of times this trade has been used.
      *
      * @param uses The new use count.
      */
@@ -110,53 +110,35 @@ public class VillagerTrade {
         this.useCount = uses;
     }
 
-    public void setUsesLeft(int remaining) {
-        if (remaining <= maxUses) {
-            useCount = maxUses - remaining;
-        } else {
-            useCount = 0;
-            maxUses = remaining;
-        }
-    }
-
     /**
-     * Set the maximum number of uses.
+     * Sets the maximum number of uses.
      *
-     * @param maxUses The new max use count.
+     * @param maximumUses The new max use count.
      */
-    public void setMaxUses(int maxUses) {
-        this.maxUses = maxUses;
+    public void setMaximumUses(int maximumUses) {
+        this.maxUses = maximumUses;
     }
 
     /**
-     * Get how many times this trade has been used.
+     * Gets how many times this trade has been used.
      *
      * @return The number of trades that have been made with this recipe.
      */
-    public int getUseCount() {
+    public int getUses() {
         return useCount;
     }
 
     /**
-     * Get the number of times this trade can be used before expiring.
-     *
-     * @return Remaining number of trades before it is locked.
-     */
-    public int getRemainingUses() {
-        return maxUses - useCount;
-    }
-
-    /**
-     * Get the maximum number of trade uses.
+     * Gets the maximum number of trade uses.
      *
      * @return The maximum number of trades that can be made with this recipe.
      */
-    public int getMaxUses() {
+    public int getMaximumUses() {
         return maxUses;
     }
 
     /**
-     * Returns the left input item required to complete the trade.
+     * Gets the left input item required to complete the trade.
      *
      * @return The left input item
      */
@@ -165,7 +147,7 @@ public class VillagerTrade {
     }
 
     /**
-     * Returns the right input item required to complete the trade.
+     * Gets the right input item required to complete the trade.
      *
      * @return The right input item
      */
@@ -174,7 +156,7 @@ public class VillagerTrade {
     }
 
     /**
-     * Returns the resulting item for completing the trade.
+     * Gets the resulting item for completing the trade.
      *
      * @return The result of the trade
      */

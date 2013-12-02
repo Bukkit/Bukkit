@@ -6,22 +6,22 @@ import org.bukkit.entity.Villager;
 
 public interface MerchantInventory extends Inventory {
     /**
-     * Returns a list of all VillagerTrades being offered by this merchant.
+     * Gets a list of all VillagerTrades being offered by this merchant.
      *
-     * @return The merchant offers
+     * @return A list of all availible merchant offers
      */
     public List<VillagerTrade> getTrades();
 
     /**
-     * Change the list of offered trades to the provided list.
+     * Sets the list of offered trades to the provided list.
      *
-     * @param newTrades
+     * @param newTrades The trades that will replace what the villager previously 
+     *                  offered
      */
     public void setTrades(List<VillagerTrade> newTrades);
 
     /**
-     * Get whichever VillagerTrade is currently being used to display the result
-     * item (slot 2).
+     * Gets the matching VillagerTrade object for the current input items
      *
      * @return A trade that matches the current inventory or null if no match is
      *         found.
@@ -29,28 +29,28 @@ public interface MerchantInventory extends Inventory {
     public VillagerTrade getMatchingTrade();
 
     /**
-     * Get the Villager this MerchantInventory belongs to.
+     * Gets the Villager this MerchantInventory belongs to.
      *
-     * @return the villager
+     * @return the villager entity
      */
     public Villager getHolder();
 
     /**
-     * Get the item in the left slot. Identical to getItem(0).
+     * Gets the item in the left input slot.
      *
      * @return left slot item
      */
     public ItemStack getLeftItem();
 
     /**
-     * Get the item in the right slot. Identical to getItem(1).
+     * Gets the item in the right input slot.
      *
      * @return right slot item
      */
     public ItemStack getRightItem();
 
     /**
-     * Get the item in the result slot. Identical to getItem(2).
+     * Gets the item in the result slot.
      *
      * @return result slot item
      * @see #getMatchingTrade()
