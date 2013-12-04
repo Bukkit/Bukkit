@@ -1,5 +1,6 @@
 package org.bukkit.event.hanging;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Hanging;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -10,13 +11,13 @@ public class HangingFrameRemoveItemEvent extends HangingEvent implements Cancell
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
     private ItemStack item;
-    private Player player;
+    private Entity entity;
 
-    public HangingFrameRemoveItemEvent(Hanging itemFrame, Player remover, ItemStack item) {
+    public HangingFrameRemoveItemEvent(Hanging itemFrame, Entity remover, ItemStack item) {
         super(itemFrame);
         cancelled = false;
         this.item = item;
-        this.player = remover;
+        this.entity = remover;
     }
 
     @Override
@@ -38,11 +39,21 @@ public class HangingFrameRemoveItemEvent extends HangingEvent implements Cancell
         cancelled = cancel;
     }
 
+    /**
+     * Gets the item being dropped from the item frame
+     *
+     * @return The ItemStack being dropped from the frame.
+     */
     public ItemStack getItem() {
         return item;
     }
 
-    public Player getPlayer() {
-        return player;
+    /**
+     * Gets the entity responsible for causing the item to be removed.
+     *
+     * @return The entity that caused the item to drop from the frame.
+     */
+    public Entity getRemover() {
+        return entity;
     }
 }
