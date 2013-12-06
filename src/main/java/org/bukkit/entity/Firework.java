@@ -17,4 +17,9 @@ public interface Firework extends Entity {
      * @param meta The FireworkMeta to apply
      */
     void setFireworkMeta(FireworkMeta meta);
+
+    /**
+     * Cause this firework to explode
+     */
+    void detonate();
 }
