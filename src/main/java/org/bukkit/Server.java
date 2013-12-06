@@ -263,6 +263,16 @@ public interface Server extends PluginMessageRecipient {
     public Player getPlayer(String name);
 
     /**
+     * Gets a player object by the given UUID
+     * <p>
+     * This method may not return objects for offline players
+     *
+     * @param uuid UUID to look up
+     * @return Player if it was found, otherwise null
+     */
+    public Player getPlayer(UUID uuid);
+
+    /**
      * Gets the player with the exact given name, case insensitive
      *
      * @param name Exact name of the player to retrieve
