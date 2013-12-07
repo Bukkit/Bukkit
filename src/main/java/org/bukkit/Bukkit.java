@@ -187,6 +187,13 @@ public final class Bukkit {
     }
 
     /**
+     * @see Server#getPlayer(UUID uuid)
+     */
+    public static Player getPlayer(UUID uuid) {
+        return server.getPlayer(uuid);
+    }
+
+    /**
      * @see Server#matchPlayer(String name)
      */
     public static List<Player> matchPlayer(String name) {
