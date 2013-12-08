@@ -2,19 +2,19 @@ package org.bukkit;
 
 public enum Locale {
     //Sorts of english
-    ENGLISH("English (US)", "en_US"),
-    UK_ENGLISH("English (UK)", "en_GB"),
+    ENGLISH("English", "en_US"),
+    BRITISH_ENGLISH("British English", "en_GB"),
     AUSTRALIAN_ENGLISH("Australian English", "en_AU"),
     CANADIAN_ENGLISH("Canadian English", "en_CA"),
     PIRATE_SPEAK("Pirate Speak", "en_PT"),
 
     //Sorts of French
-    CANADIAN_FRENCH("Français", "fr_CA"),
     FRENCH("Français", "fr_FR"),
+    CANADIAN_FRENCH("Français", "fr_CA"),
 
     //Sorts of spanish
-    ARGENTINEAN_SPANISH("Español Argentino", "es_AR"),
     SPANISH("Español", "es_ES"),
+    ARGENTINEAN_SPANISH("Español Argentino", "es_AR"),
     MEXICO_SPANISH("Español México", "es_MX"),
     URUGUAY_SPANISH("Español Uruguay", "es_UY"),
     VENEZUELA_SPANISH("Español Venezuela", "es_VE"),
@@ -24,8 +24,8 @@ public enum Locale {
     TRADITIONAL_CHINESE("繁體中文", "zh_TW"),
 
     //Sorts of PORTUGUESE
-    BRAZIL_PORTUGUESE("Português", "pt_BR"),
     PORTUGUESE("Português", "pt_PT"),
+    BRAZIL_PORTUGUESE("Português", "pt_BR"),
 
     //Other unique locales
     AFRIKAANS("Afrikaans", "af_ZA"),
