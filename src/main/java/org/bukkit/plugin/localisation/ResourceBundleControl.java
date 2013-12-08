@@ -6,8 +6,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -42,13 +44,15 @@ public class ResourceBundleControl extends ResourceBundle.Control {
         //Construct the File from the Filesystem
         File file = new File(baseDir, resourceName);
 
-        InputStream is = null;
+        InputStreamReader is = null;
         ResourceBundle bundle = null;
 
         try {
             //If the File is there load it
+            System.out.println(file.getAbsoluteFile().toString());
             if (file.isFile()) {
-                is = new FileInputStream(file);
+                System.out.println("Reading from disk");
+                is = new InputStreamReader(new FileInputStream(file), "UTF8");
             } else {
                 //If the file is not on the Disk read it from the JAR
                 if (reload) {
@@ -57,11 +61,11 @@ public class ResourceBundleControl extends ResourceBundle.Control {
                         URLConnection connection = url.openConnection();
                         if (connection != null) {
                             connection.setUseCaches(false);
-                            is = connection.getInputStream();
+                            is = new InputStreamReader(connection.getInputStream(), "UTF8");
                         }
                     }
                 } else {
-                    is = loader.getResourceAsStream("lang/" + resourceName);
+                    is = new InputStreamReader(loader.getResourceAsStream("lang/" + resourceName), "UTF8");
                 }
             }
 

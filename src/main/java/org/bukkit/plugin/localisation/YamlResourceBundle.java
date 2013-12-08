@@ -4,8 +4,9 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
@@ -17,15 +18,36 @@ public class YamlResourceBundle extends ResourceBundle {
      * Load a new YamlResource from a InputStream
      *
      * @param stream
+     * @throws IOException if the stream could not be closed
      */
-    public YamlResourceBundle(InputStream stream) {
+    public YamlResourceBundle(InputStreamReader stream) throws IOException {
         try {
+            //Read from the InputStreamReader till he is empty
+            BufferedReader br = new BufferedReader(stream);
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+
+            System.out.println(sb.toString());
+
             lookup = new YamlConfiguration();
-            lookup.load(stream);
+            lookup.loadFromString(sb.toString());
         } catch (IOException e) {
             lookup = null;
+            e.printStackTrace();
         } catch (InvalidConfigurationException e) {
             lookup = null;
+            e.printStackTrace();
+        } finally {
+            if(stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    throw e;
+                }
+            }
         }
     }
 
