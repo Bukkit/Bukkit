@@ -5,11 +5,13 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.Validate;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.localisation.ResourceBundleControl;
@@ -91,14 +93,14 @@ public class LocaleManager {
 
     /**
      * Translate the Text based on the Player locale.
-     * If the locale from the player is not loaded the LocaleManager
-     * will use the default Locale. If this is also not loaded it
-     * will use the translationKey as text and give it back
+     * If the locale from the player is not loaded the LocaleManager will try to load it, if this fails
+     * it will use the default Locale. If this is also not loaded you will get a MissingResourceException
      *
      * @param player Player from which the Locale should be used
      * @param translationKey The key in the YML which should be translated
      * @param args The Arguments which will be passed into the String when translating
      * @return The translated String
+     * @throws MissingResourceException when the Resource for the locale could not be loaded or the key could not be found in the Resource
      */
     public String translate(Player player, String translationKey, Object ...args) {
         //Validate the Player
@@ -107,6 +109,32 @@ public class LocaleManager {
 
         //Get the resource and translate
         ResourceBundle resource = getResourceBundle(lookupLocale(player.getLocale()));
+        MessageFormat msgFormat = new MessageFormat(resource.getString(translationKey));
+        msgFormat.setLocale(resource.getLocale());
+        return msgFormat.format(args);
+    }
+
+    /**
+     * Translate the Text based on the Player locale / default Locale.
+     * If the locale from the player is not loaded the LocaleManager
+     * will use the default Locale. If this is also not loaded it
+     * will use the translationKey as text and give it back
+     *
+     * @param commandSender CommandSender which can be a Player, if a Player the locale from it will be used otherwise the default one will be taken
+     * @param translationKey The key in the YML which should be translated
+     * @param args The Arguments which will be passed into the String when translating
+     * @return The translated String
+     * @throws MissingResourceException when the Resource for the locale could not be loaded or the key could not be found in the Resource
+     */
+    public String translate(CommandSender commandSender, String translationKey, Object ...args) {
+        //Validate the CommandSender
+        Validate.notNull(commandSender, "Commandsender can not be null");
+
+        //If the CommandSender is a Player use the correct method
+        if(commandSender instanceof Player) return translate((Player) commandSender, translationKey, args);
+
+        //Get the resource and translate
+        ResourceBundle resource = getResourceBundle(defaultLocale);
         MessageFormat msgFormat = new MessageFormat(resource.getString(translationKey));
         msgFormat.setLocale(resource.getLocale());
         return msgFormat.format(args);
