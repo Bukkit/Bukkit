@@ -19,7 +19,11 @@ public class SignChangeEvent extends BlockEvent implements Cancellable {
     public SignChangeEvent(final Block theBlock, final Player thePlayer, final String[] theLines) {
         super(theBlock);
         this.player = thePlayer;
-        this.lines = theLines;
+        lines = new String[theLines.length];
+
+        for (int i = 0; i < theLines.length; i++) {
+            setLine(i, theLines[i]);
+        }
     }
 
     /**
@@ -62,7 +66,13 @@ public class SignChangeEvent extends BlockEvent implements Cancellable {
      *     or < 0
      */
     public void setLine(int index, String line) throws IndexOutOfBoundsException {
-        lines[index] = line;
+        StringBuilder builder = new StringBuilder();
+        for (char c : line.toCharArray()) {
+            if (c < 0xF700 || c > 0xF747) {
+                builder.append(c);
+            }
+        }
+        lines[index] = builder.toString();
     }
 
     public boolean isCancelled() {
