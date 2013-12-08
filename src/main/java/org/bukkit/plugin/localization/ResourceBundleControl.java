@@ -16,9 +16,12 @@ import java.util.ResourceBundle;
 
 public class ResourceBundleControl extends ResourceBundle.Control {
     private File baseDir;
+    private String pluginName;
+    private long lastReload = System.currentTimeMillis();
 
-    public ResourceBundleControl(File baseDir) {
+    public ResourceBundleControl(File baseDir, String pluginName) {
         this.baseDir = baseDir;
+        this.pluginName = pluginName.toLowerCase();
     }
 
     @Override
@@ -75,6 +78,17 @@ public class ResourceBundleControl extends ResourceBundle.Control {
         }
 
         return bundle;
+    }
+
+    public boolean needsReload(String baseName, Locale locale, String format, ClassLoader loader, ResourceBundle bundle, long loadTime) {
+        return baseName.equals(pluginName) && loadTime < lastReload;
+    }
+
+    /**
+     * Set a new Timestamp so all Resources of this Plugin will be forced to reload
+     */
+    public void reloadResources() {
+        this.lastReload = System.currentTimeMillis();
     }
 
     /**

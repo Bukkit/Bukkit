@@ -41,7 +41,7 @@ public class LocaleManager {
         File languageDirectory = plugin.getLocaleDirectory();
         if(!languageDirectory.exists()) languageDirectory.mkdirs();
 
-        resourceBundleControl = new ResourceBundleControl(languageDirectory);
+        resourceBundleControl = new ResourceBundleControl(languageDirectory, plugin.getDescription().getName());
     }
 
     /**
@@ -138,6 +138,13 @@ public class LocaleManager {
         MessageFormat msgFormat = new MessageFormat(resource.getString(translationKey));
         msgFormat.setLocale(resource.getLocale());
         return msgFormat.format(args);
+    }
+
+    /**
+     * Tells the ResourceManager to reload all Locale Resources which has been loaded by this Plugin
+     */
+    public void reload() {
+        resourceBundleControl.reloadResources();
     }
 
     /**
