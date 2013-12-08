@@ -5,10 +5,10 @@ package org.bukkit.entity;
  */
 public interface Arrow extends Projectile {
 	
-    /**
-   * Set the knockbackStrenght for an arrow. Must be nonnegative.
-   *
-   * @param knockbackStrength the punch level effect.
-   */
-  public void setKnockbackStrength(int knockbackStrength);	
+   /**
+    * Set the knockbackStrenght for an arrow. Must be nonnegative.
+    *
+    * @param knockbackStrength the punch level effect.
+    */
+   public void setKnockbackStrength(int knockbackStrength);
 }
