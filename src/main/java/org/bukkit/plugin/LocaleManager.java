@@ -70,7 +70,7 @@ public class LocaleManager {
         Locale.setDefault(defaultLocale);
 
         //Get the ResourceBundle
-        ResourceBundle temp = YamlResourceBundle.getBundle("lang", locale, plugin.getClass().getClassLoader(), resourceBundleControl);
+        ResourceBundle temp = YamlResourceBundle.getBundle(plugin.getDescription().getName().toLowerCase(), locale, plugin.getClass().getClassLoader(), resourceBundleControl);
 
         //Change the default Locale back
         Locale.setDefault(oldDefault);
