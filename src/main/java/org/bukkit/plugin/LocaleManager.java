@@ -1,15 +1,16 @@
 package org.bukkit.plugin;
 
-import org.apache.commons.lang.Validate;
-import org.bukkit.Locale;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+
+import org.apache.commons.lang.Validate;
+
+import org.bukkit.Locale;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 public class LocaleManager {
     private HashMap<Locale, YamlConfiguration> loadedLocales = new HashMap<Locale, YamlConfiguration>();
