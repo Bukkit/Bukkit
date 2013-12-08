@@ -1,29 +1,79 @@
 package org.bukkit.plugin;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 
+import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.Validate;
 
-import org.bukkit.Locale;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.localisation.ResourceBundleControl;
+import org.bukkit.plugin.localisation.YamlResourceBundle;
 
 public class LocaleManager {
-    private HashMap<Locale, YamlConfiguration> loadedLocales = new HashMap<Locale, YamlConfiguration>();
+    //The BundleControl to use for this LocaleManager
+    private final ResourceBundleControl resourceBundleControl;
+
+    //The Plugin which has loaded this LocaleManager
+    private JavaPlugin plugin;
+
+    //Use the same Resolver Cache for all Plugins
+    private final static Map<String, Locale> localeCache = new HashMap<String, Locale>();
+
+    //The fallback Locale to use
     private Locale defaultLocale;
 
     /**
-     * Validate that the Locale is not null and also not loaded
+     * Construct a new LocaleManager for this Plugin
      *
-     * @param locale Locale to validate
+     * @param plugin The plugin for which this LocaleManager should be loaded
      */
-    private void validateInput(Locale locale) {
-        Validate.notNull(locale, "Locale can not be null");
-        Validate.isTrue(!loadedLocales.containsKey(locale), "This locale has already been loaded");
+    public LocaleManager(JavaPlugin plugin) {
+        this.plugin = plugin;
+
+        File languageDirectory = plugin.getLocaleDirectory();
+        if(!languageDirectory.exists()) languageDirectory.mkdirs();
+
+        resourceBundleControl = new ResourceBundleControl(languageDirectory);
+    }
+
+    /**
+     * Get the correct java.util.Locale for the ISO locale String
+     *
+     * @param isoLocale The ISO String which should be looked up
+     * @return The correct Locale from Java
+     */
+    private Locale lookupLocale(String isoLocale) {
+        if (!localeCache.containsKey(isoLocale)) {
+            localeCache.put(isoLocale, LocaleUtils.toLocale(isoLocale));
+        }
+
+        return localeCache.get(isoLocale);
+    }
+
+    /**
+     * Get the correct ResourceBundle based on the Locale
+     *
+     * @param locale Locale which should be loaded
+     * @return ResourceBundle which represents the Locale
+     */
+    private ResourceBundle getResourceBundle(Locale locale) {
+        //Set the default Locale to the java.util.Locale
+        Locale oldDefault = Locale.getDefault();
+        Locale.setDefault(defaultLocale);
+
+        //Get the ResourceBundle
+        ResourceBundle temp = YamlResourceBundle.getBundle("lang", locale, plugin.getClass().getClassLoader(), resourceBundleControl);
+
+        //Change the default Locale back
+        Locale.setDefault(oldDefault);
+
+        return temp;
     }
 
     /**
@@ -35,84 +85,8 @@ public class LocaleManager {
     public void setDefaultLocale(Locale locale) {
         //Validate the locale
         Validate.notNull(locale, "Locale can not be null");
-        Validate.isTrue(loadedLocales.containsKey(locale), "This locale is not loaded");
 
         defaultLocale = locale;
-    }
-
-    /**
-     * Load a locale from a File
-     *
-     * @param locale Locale to load into
-     * @param languageFile File to load from
-     * @throws LocaleLoadFailedException Thrown if any error loading the Locale happend
-     */
-    public void load(Locale locale, File languageFile) throws LocaleLoadFailedException {
-        //Check for valid params
-        validateInput(locale);
-        Validate.notNull(languageFile, "File can not be null");
-        Validate.isTrue(languageFile.exists(), "File does not exist");
-
-        //Load the File and store it into the HashMap
-        YamlConfiguration yamlConfiguration = new YamlConfiguration();
-        try {
-            yamlConfiguration.load(languageFile);
-            loadedLocales.put(locale, yamlConfiguration);
-        } catch (IOException e) {
-            throw new LocaleLoadFailedException("Could not load Locale: " + locale.getCode(), e);
-        } catch (InvalidConfigurationException e) {
-            throw new LocaleLoadFailedException("Could not load Locale: " + locale.getCode(), e);
-        }
-    }
-
-    /**
-     * Load a locale from an InputStream
-     *
-     * @param locale Locale to load into
-     * @param inputStream InputStream to load from
-     * @throws LocaleLoadFailedException Thrown if any error loading the Locale happend
-     */
-    public void load(Locale locale, InputStream inputStream) throws LocaleLoadFailedException {
-        //Check for valid params
-        validateInput(locale);
-        Validate.notNull(inputStream, "InputStream can not be null");
-
-        //Load the File and store it into the HashMap
-        YamlConfiguration yamlConfiguration = new YamlConfiguration();
-        try {
-            yamlConfiguration.load(inputStream);
-            loadedLocales.put(locale, yamlConfiguration);
-        } catch (IOException e) {
-            throw new LocaleLoadFailedException("Could not load Locale: " + locale.getCode(), e);
-        } catch (InvalidConfigurationException e) {
-            throw new LocaleLoadFailedException("Could not load Locale: " + locale.getCode(), e);
-        }
-    }
-
-    /**
-     * Checks if a Locale is already loaded
-     *
-     * @param locale Locale to check
-     * @return True if loaded / false if not
-     */
-    public boolean isLocaleLoaded(Locale locale) {
-        //Check if locale is not null
-        Validate.notNull(locale, "Locale can not be null");
-
-        return loadedLocales.containsKey(locale);
-    }
-
-    /**
-     * Removes a loaded Locale. This must be done before you replace a Locale
-     *
-     * @param locale Locale which should be removed
-     */
-    public void remove(Locale locale) {
-        //Check if locale is valid
-        Validate.notNull(locale, "Locale can not be null");
-        Validate.isTrue(loadedLocales.containsKey(locale), "Locale is not loaded");
-
-        loadedLocales.remove(locale);
     }
 
     /**
@@ -131,21 +105,19 @@ public class LocaleManager {
         Validate.notNull(player, "Player can not be null");
         Validate.notNull(player.getLocale(), "The Players locale is null");
 
-        //Validate the Locale => If the Players locale is loaded use it, else use the default one
-        YamlConfiguration localeDirectory = loadedLocales.get(defaultLocale);
-        if(loadedLocales.containsKey(player.getLocale())) {
-            localeDirectory = loadedLocales.get(player.getLocale());
-        }
+        //Get the resource and translate
+        ResourceBundle resource = getResourceBundle(lookupLocale(player.getLocale()));
+        MessageFormat msgFormat = new MessageFormat(resource.getString(translationKey));
+        msgFormat.setLocale(resource.getLocale());
+        return msgFormat.format(args);
+    }
 
-        //Validate that the loadedLocale is not null
-        Validate.notNull(localeDirectory, "The locale Directory is empty");
+    /**
+     * Be sure to remove resources loaded and to remove refs
+     */
+    public void cleanup() {
+        plugin = null;
 
-        //Get the text to translate
-        String textToTranslate = translationKey;
-        if(localeDirectory.contains(translationKey)) {
-            textToTranslate = localeDirectory.getString(translationKey);
-        }
-
-        return String.format(textToTranslate, args);
+        resourceBundleControl.cleanup();
     }
 }

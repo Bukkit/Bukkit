@@ -6,7 +6,6 @@ import org.bukkit.Achievement;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Instrument;
-import org.bukkit.Locale;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Note;
@@ -728,5 +727,5 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      *
      * @return the Locale which has been set
      */
-    public Locale getLocale();
+    public String getLocale();
 }

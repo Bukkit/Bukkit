@@ -1,7 +1,6 @@
 package org.bukkit.event.player;
 
 import org.bukkit.ChatMode;
-import org.bukkit.Locale;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
@@ -10,11 +9,11 @@ import org.bukkit.event.HandlerList;
  */
 public class PlayerSettingsChangeEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
-    private final Locale newLocale;
+    private final String newLocale;
     private final ChatMode newChatMode;
     private final int newViewDistance;
 
-    public PlayerSettingsChangeEvent(final Player player, final Locale newLocale, final ChatMode newChatMode, final int newViewDistance) {
+    public PlayerSettingsChangeEvent(final Player player, final String newLocale, final ChatMode newChatMode, final int newViewDistance) {
         super(player);
         this.newLocale = newLocale;
         this.newViewDistance = newViewDistance;
@@ -24,9 +23,9 @@ public class PlayerSettingsChangeEvent extends PlayerEvent {
     /**
      * Get the Players new Locale which he has selected in the Client
      *
-     * @return Locale Enum based on the selection in the Client. May be null if no supported Locale was found
+     * @return The locale in ISO Format
      */
-    public Locale getNewLocale() {
+    public String getNewLocale() {
         return newLocale;
     }
 
