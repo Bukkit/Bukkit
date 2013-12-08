@@ -1,4 +1,4 @@
-package org.bukkit.plugin.localisation;
+package org.bukkit.plugin.localization;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;

@@ -14,8 +14,8 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.localisation.ResourceBundleControl;
-import org.bukkit.plugin.localisation.YamlResourceBundle;
+import org.bukkit.plugin.localization.ResourceBundleControl;
+import org.bukkit.plugin.localization.YamlResourceBundle;
 
 public class LocaleManager {
     //The BundleControl to use for this LocaleManager
