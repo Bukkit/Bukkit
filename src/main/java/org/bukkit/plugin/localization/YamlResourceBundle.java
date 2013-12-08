@@ -30,8 +30,6 @@ public class YamlResourceBundle extends ResourceBundle {
                 sb.append(line + "\n");
             }
 
-            System.out.println(sb.toString());
-
             lookup = new YamlConfiguration();
             lookup.loadFromString(sb.toString());
         } catch (IOException e) {

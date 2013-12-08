@@ -47,9 +47,7 @@ public class ResourceBundleControl extends ResourceBundle.Control {
 
         try {
             //If the File is there load it
-            System.out.println(file.getAbsoluteFile().toString());
             if (file.isFile()) {
-                System.out.println("Reading from disk");
                 is = new InputStreamReader(new FileInputStream(file), "UTF8");
             } else {
                 //If the file is not on the Disk read it from the JAR
