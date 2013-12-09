@@ -113,7 +113,7 @@ public class LocaleManager {
      * it will use the default Locale. If this is also not loaded you will get a ResourceNotLoadedException
      *
      * @param player Player from which the Locale should be used
-     * @param translationKey The key in the YML which should be translated
+     * @param translationKey The key in the ResourceLoader which should be translated
      * @param args The Arguments which will be passed into the String when translating
      * @return The translated String
      * @throws org.bukkit.plugin.localization.ResourceNotLoadedException when the Resource for the locale could not be loaded or the key is missing
@@ -141,7 +141,7 @@ public class LocaleManager {
      * will use the translationKey as text and give it back
      *
      * @param commandSender CommandSender which can be a Player, if a Player the locale from it will be used otherwise the default one will be taken
-     * @param translationKey The key in the YML which should be translated
+     * @param translationKey The key in the ResourceLoader which should be translated
      * @param args The Arguments which will be passed into the String when translating
      * @return The translated String
      * @throws org.bukkit.plugin.localization.ResourceNotLoadedException when the Resource for the locale could not be loaded or the key is missing
