@@ -120,15 +120,6 @@ public abstract class JavaPlugin extends PluginBase {
         return localeManager;
     }
 
-    /**
-     * Tells the ResourceBundle where to search on the Disk
-     *
-     * @return The Directory to search for Locales
-     */
-    public File getLocaleDirectory() {
-        return new File(this.getDataFolder(), "language");
-    }
-
     public FileConfiguration getConfig() {
         if (newConfig == null) {
             reloadConfig();

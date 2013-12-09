@@ -1,12 +1,9 @@
 package org.bukkit.plugin;
 
-import java.io.File;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.Validate;
@@ -14,15 +11,15 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.localization.ResourceBundleControl;
-import org.bukkit.plugin.localization.YamlResourceBundle;
+import org.bukkit.plugin.localization.ResourceLoadFailedException;
+import org.bukkit.plugin.localization.ResourceLoader;
+import org.bukkit.plugin.localization.ResourceManager;
+import org.bukkit.plugin.localization.ResourceNotLoadedException;
+import org.bukkit.plugin.localization.loader.YamlResourceLoader;
 
 public class LocaleManager {
-    //The BundleControl to use for this LocaleManager
-    private final ResourceBundleControl resourceBundleControl;
-
-    //The Plugin which has loaded this LocaleManager
-    private JavaPlugin plugin;
+    //The ResourceManager to use for this LocaleManager
+    private ResourceManager resourceManager;
 
     //Use the same Resolver Cache for all Plugins
     private final static Map<String, Locale> localeCache = new HashMap<String, Locale>();
@@ -36,12 +33,23 @@ public class LocaleManager {
      * @param plugin The plugin for which this LocaleManager should be loaded
      */
     public LocaleManager(JavaPlugin plugin) {
-        this.plugin = plugin;
+        resourceManager = new ResourceManager(plugin);
+        resourceManager.registerLoader(new YamlResourceLoader());
+    }
 
-        File languageDirectory = plugin.getLocaleDirectory();
-        if(!languageDirectory.exists()) languageDirectory.mkdirs();
+    /**
+     * Load a new Locale into the ResourceManager for this Plugin
+     *
+     * @param locale Locale which should be loaded
+     * @param param The param which should be given to the ResourceLoader
+     * @throws org.bukkit.plugin.localization.ResourceLoadFailedException if the loading has thrown any Error
+     */
+    public void load(Locale locale, String param) throws ResourceLoadFailedException {
+        //Validate the input
+        Validate.notNull(locale);
+        Validate.notNull(param);
 
-        resourceBundleControl = new ResourceBundleControl(languageDirectory, plugin.getDescription().getName());
+        resourceManager.load(locale, param);
     }
 
     /**
@@ -59,23 +67,30 @@ public class LocaleManager {
     }
 
     /**
-     * Get the correct ResourceBundle based on the Locale
+     * Gets the correct String out of the Locale. If the locale given is not loaded by the underlying ResourceManager
+     * it takes the set default Locale to read the String from.
      *
-     * @param locale Locale which should be loaded
-     * @return ResourceBundle which represents the Locale
+     * @param locale Locale which should be read for
+     * @param key The key which should be looked up
+     * @return The String stored in the ResourceLoader
+     * @throws ResourceNotLoadedException
      */
-    private ResourceBundle getResourceBundle(Locale locale) {
-        //Set the default Locale to the java.util.Locale
-        Locale oldDefault = Locale.getDefault();
-        Locale.setDefault(defaultLocale);
+    private String getTranslationString(Locale locale, String key) throws ResourceNotLoadedException {
+        return resourceManager.get(locale, key);
+    }
 
-        //Get the ResourceBundle
-        ResourceBundle temp = YamlResourceBundle.getBundle(plugin.getDescription().getName().toLowerCase(), locale, plugin.getClass().getClassLoader(), resourceBundleControl);
+    /**
+     * Check if the given Locale has been loaded by the ResourceManager. If not return the default Locale
+     *
+     * @param locale Locale which should be checked
+     * @return The default locale or the param
+     */
+    private Locale checkForDefault(Locale locale) {
+        if(!resourceManager.isLoaded(locale)) {
+            return defaultLocale;
+        }
 
-        //Change the default Locale back
-        Locale.setDefault(oldDefault);
-
-        return temp;
+        return locale;
     }
 
     /**
@@ -87,6 +102,7 @@ public class LocaleManager {
     public void setDefaultLocale(Locale locale) {
         //Validate the locale
         Validate.notNull(locale, "Locale can not be null");
+        Validate.isTrue(resourceManager.isLoaded(locale), "Locale has not been loaded");
 
         defaultLocale = locale;
     }
@@ -94,23 +110,27 @@ public class LocaleManager {
     /**
      * Translate the Text based on the Player locale.
      * If the locale from the player is not loaded the LocaleManager will try to load it, if this fails
-     * it will use the default Locale. If this is also not loaded you will get a MissingResourceException
+     * it will use the default Locale. If this is also not loaded you will get a ResourceNotLoadedException
      *
      * @param player Player from which the Locale should be used
      * @param translationKey The key in the YML which should be translated
      * @param args The Arguments which will be passed into the String when translating
      * @return The translated String
-     * @throws MissingResourceException when the Resource for the locale could not be loaded or the key could not be found in the Resource
+     * @throws org.bukkit.plugin.localization.ResourceNotLoadedException when the Resource for the locale could not be loaded or the key is missing
      */
-    public String translate(Player player, String translationKey, Object ...args) {
+    public String translate(Player player, String translationKey, Object ...args) throws ResourceNotLoadedException {
         //Validate the Player
         Validate.notNull(player, "Player can not be null");
         Validate.notNull(player.getLocale(), "The Players locale is null");
+        Validate.notNull(translationKey, "The translationKey can not be null");
 
         //Get the resource and translate
-        ResourceBundle resource = getResourceBundle(lookupLocale(player.getLocale()));
-        MessageFormat msgFormat = new MessageFormat(resource.getString(translationKey));
-        msgFormat.setLocale(resource.getLocale());
+        Locale playerLocale = checkForDefault(lookupLocale(player.getLocale()));
+        String translationString = getTranslationString(playerLocale, translationKey);
+        if(translationString == null) throw new ResourceNotLoadedException("The key(" + translationKey + ") is not present in the Locale " + playerLocale.toString());
+
+        MessageFormat msgFormat = new MessageFormat(translationString);
+        msgFormat.setLocale(playerLocale);
         return msgFormat.format(args);
     }
 
@@ -124,35 +144,49 @@ public class LocaleManager {
      * @param translationKey The key in the YML which should be translated
      * @param args The Arguments which will be passed into the String when translating
      * @return The translated String
-     * @throws MissingResourceException when the Resource for the locale could not be loaded or the key could not be found in the Resource
+     * @throws org.bukkit.plugin.localization.ResourceNotLoadedException when the Resource for the locale could not be loaded or the key is missing
      */
-    public String translate(CommandSender commandSender, String translationKey, Object ...args) {
+    public String translate(CommandSender commandSender, String translationKey, Object ...args) throws ResourceNotLoadedException {
         //Validate the CommandSender
         Validate.notNull(commandSender, "Commandsender can not be null");
+        Validate.notNull(translationKey, "The translationKey can not be null");
 
         //If the CommandSender is a Player use the correct method
         if(commandSender instanceof Player) return translate((Player) commandSender, translationKey, args);
 
         //Get the resource and translate
-        ResourceBundle resource = getResourceBundle(defaultLocale);
-        MessageFormat msgFormat = new MessageFormat(resource.getString(translationKey));
-        msgFormat.setLocale(resource.getLocale());
+        String translationString = getTranslationString(defaultLocale, translationKey);
+        if(translationString == null) throw new ResourceNotLoadedException("The key(" + translationKey + ") is not present in the Locale " + defaultLocale.toString());
+
+        MessageFormat msgFormat = new MessageFormat(translationString);
+        msgFormat.setLocale(defaultLocale);
         return msgFormat.format(args);
+    }
+
+    /**
+     * Register a new custom ResourceLoader. See {@link org.bukkit.plugin.localization.ResourceManager#registerLoader(org.bukkit.plugin.localization.ResourceLoader)}
+     *
+     * @param loader
+     */
+    public void registerLoader(ResourceLoader loader) {
+        //Check if loader is good
+        Validate.notNull(loader);
+
+        resourceManager.registerLoader(loader);
     }
 
     /**
      * Tells the ResourceManager to reload all Locale Resources which has been loaded by this Plugin
      */
     public void reload() {
-        resourceBundleControl.reloadResources();
+        resourceManager.reload();
     }
 
     /**
      * Be sure to remove resources loaded and to remove refs
      */
     public void cleanup() {
-        plugin = null;
-
-        resourceBundleControl.cleanup();
+        resourceManager.cleanup();
+        resourceManager = null;
     }
 }
