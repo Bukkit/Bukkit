@@ -94,4 +94,22 @@ public class LocaleManagerTest {
         testPlugin.getLocaleManager().setDefaultLocale(Locale.US);
         testPlugin.getLocaleManager().reload();
     }
+
+    @Test()
+    public void testLocaleChange() throws Exception {
+        LocaleTestPlugin testPlugin = new LocaleTestPlugin("LocaleTest");
+        testPlugin.getLocaleManager().registerLoader(new InMemoryResourceLoader());
+        testPlugin.getLocaleManager().load(Locale.US, "This is a in Memory Test:inmemory");
+        testPlugin.getLocaleManager().load(new Locale("de", "DE"), "Dies ist ein RAM Test:inmemory");
+        testPlugin.getLocaleManager().setDefaultLocale(Locale.US);
+
+        TestPlayer testPlayer = new TestPlayer();
+        assertThat(testPlugin.getLocaleManager().translate(testPlayer, "test"), is("Dies ist ein RAM Test"));
+
+        testPlayer.setLocale("en_US");
+        assertThat(testPlugin.getLocaleManager().translate(testPlayer, "test"), is("This is a in Memory Test"));
+
+        testPlayer.setLocale("cy_CZ");
+        assertThat(testPlugin.getLocaleManager().translate(testPlayer, "test"), is("This is a in Memory Test"));
+    }
 }

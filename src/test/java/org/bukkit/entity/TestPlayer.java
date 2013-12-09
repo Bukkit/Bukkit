@@ -43,6 +43,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public class TestPlayer implements Player {
+    private String locale = "de_DE";
+
     @Override
     public String getDisplayName() {
         throw new UnsupportedOperationException("Not supported."); 
@@ -635,7 +637,7 @@ public class TestPlayer implements Player {
 
     @Override
     public String getLocale() {
-        return "de_DE";
+        return locale;
     }
 
     @Override
@@ -1166,5 +1168,9 @@ public class TestPlayer implements Player {
     @Override
     public void setOp(boolean value) {
         throw new UnsupportedOperationException("Not supported."); 
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 }
