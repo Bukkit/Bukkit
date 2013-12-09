@@ -148,7 +148,7 @@ public class ResourceManager {
      */
     public void reload() {
         //Reload all ResourceLoaders
-        for(ResourceLoader loader : registerdLoaders) {
+        for(ResourceLoader loader : loadedLocales.values()) {
             try {
                 loader.reload();
             } catch (ResourceLoadFailedException e) {

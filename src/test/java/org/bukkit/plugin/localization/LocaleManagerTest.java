@@ -71,4 +71,27 @@ public class LocaleManagerTest {
         testPlugin.getLocaleManager().setDefaultLocale(Locale.US);
         testPlugin.getLocaleManager().translate(new TestPlayer(), "test1");
     }
+
+    @Test(expected = NullPointerException.class)
+    public void testCleanup() throws Exception {
+        LocaleTestPlugin testPlugin = new LocaleTestPlugin("LocaleTest");
+        testPlugin.getLocaleManager().registerLoader(new InMemoryResourceLoader());
+        testPlugin.getLocaleManager().load(Locale.US, "This is a in Memory Test:inmemory");
+        testPlugin.getLocaleManager().load(new Locale("de", "DE"), "Dies ist ein RAM Test:inmemory");
+        testPlugin.getLocaleManager().setDefaultLocale(Locale.US);
+        testPlugin.getLocaleManager().cleanup();
+
+        //A reload should throw a NullPointer since the ResourceManager has been cleared out
+        testPlugin.getLocaleManager().reload();
+    }
+
+    @Test()
+    public void testReload() throws Exception {
+        LocaleTestPlugin testPlugin = new LocaleTestPlugin("LocaleTest");
+        testPlugin.getLocaleManager().registerLoader(new InMemoryResourceLoader());
+        testPlugin.getLocaleManager().load(Locale.US, "This is a in Memory Test:inmemory");
+        testPlugin.getLocaleManager().load(new Locale("de", "DE"), "Dies ist ein RAM Test:inmemory");
+        testPlugin.getLocaleManager().setDefaultLocale(Locale.US);
+        testPlugin.getLocaleManager().reload();
+    }
 }
