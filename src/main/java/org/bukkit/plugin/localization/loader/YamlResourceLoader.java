@@ -3,6 +3,7 @@ package org.bukkit.plugin.localization.loader;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.localization.ResourceLoadFailedException;
 import org.bukkit.plugin.localization.ResourceLoader;
@@ -32,7 +33,7 @@ public class YamlResourceLoader extends FileResourceLoader implements ResourceLo
      * @param file The file to load
      * @throws ResourceLoadFailedException if the stream could not be closed
      */
-    public YamlResourceLoader(JavaPlugin plugin, String file) throws ResourceLoadFailedException {
+    public YamlResourceLoader(Plugin plugin, String file) throws ResourceLoadFailedException {
         super(plugin);
 
         this.file = file;

@@ -1,7 +1,7 @@
 package org.bukkit.plugin.localization;
 
 import org.apache.commons.lang.Validate;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -18,14 +18,14 @@ public class ResourceManager {
     private ArrayList<ResourceLoader> registerdLoaders = new ArrayList<ResourceLoader>();
 
     //The Plugin for which this Manager manages Resources
-    private JavaPlugin plugin;
+    private Plugin plugin;
 
     /**
      * Constructs a new ResourceManager which handles the loading and getting, reloading and cleanup for Resources
      *
      * @param plugin The Plugin for which this ResourceManager
      */
-    public ResourceManager(JavaPlugin plugin) {
+    public ResourceManager(Plugin plugin) {
         this.plugin = plugin;
     }
 
@@ -128,7 +128,7 @@ public class ResourceManager {
      */
     private ResourceLoader buildNewResourceLoader(ResourceLoader loader, String argument) {
         try {
-            Constructor constructor = loader.getClass().getConstructor(JavaPlugin.class, String.class);
+            Constructor constructor = loader.getClass().getConstructor(Plugin.class, String.class);
             return (ResourceLoader) constructor.newInstance(this.plugin, argument);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException("Could not construct new ResourceLoader", e);

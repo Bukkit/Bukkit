@@ -33,7 +33,7 @@ public class LocaleManager {
      *
      * @param plugin The plugin for which this LocaleManager should be loaded
      */
-    public LocaleManager(JavaPlugin plugin) {
+    public LocaleManager(Plugin plugin) {
         resourceManager = new ResourceManager(plugin);
         resourceManager.registerLoader(new YamlResourceLoader());
         resourceManager.registerLoader(new PropertiesResourceLoader());

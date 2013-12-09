@@ -1,6 +1,6 @@
 package org.bukkit.plugin.localization.loader;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.localization.ResourceLoadFailedException;
 import org.bukkit.plugin.localization.ResourceLoader;
 
@@ -30,7 +30,7 @@ public class PropertiesResourceLoader extends FileResourceLoader implements Reso
      * @param file The file to load
      * @throws org.bukkit.plugin.localization.ResourceLoadFailedException if the stream could not be closed
      */
-    public PropertiesResourceLoader(JavaPlugin plugin, String file) throws ResourceLoadFailedException {
+    public PropertiesResourceLoader(Plugin plugin, String file) throws ResourceLoadFailedException {
         super(plugin);
 
         this.file = file;

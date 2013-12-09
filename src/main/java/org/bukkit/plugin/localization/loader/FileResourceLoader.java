@@ -1,6 +1,6 @@
 package org.bukkit.plugin.localization.loader;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.localization.ResourceLoadFailedException;
 
 import java.io.File;
@@ -10,13 +10,13 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 public abstract class FileResourceLoader {
-    protected JavaPlugin plugin;
+    protected Plugin plugin;
 
     public FileResourceLoader() {
 
     }
 
-    public FileResourceLoader(JavaPlugin plugin) {
+    public FileResourceLoader(Plugin plugin) {
         this.plugin = plugin;
     }
 

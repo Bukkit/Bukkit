@@ -61,6 +61,10 @@ public class TestPlugin extends PluginBase {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    public LocaleManager getLocaleManager() {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
     public PluginLoader getPluginLoader() {
         throw new UnsupportedOperationException("Not supported.");
     }
