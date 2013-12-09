@@ -15,6 +15,7 @@ import org.bukkit.plugin.localization.ResourceLoadFailedException;
 import org.bukkit.plugin.localization.ResourceLoader;
 import org.bukkit.plugin.localization.ResourceManager;
 import org.bukkit.plugin.localization.ResourceNotLoadedException;
+import org.bukkit.plugin.localization.loader.PropertiesResourceLoader;
 import org.bukkit.plugin.localization.loader.YamlResourceLoader;
 
 public class LocaleManager {
@@ -35,6 +36,7 @@ public class LocaleManager {
     public LocaleManager(JavaPlugin plugin) {
         resourceManager = new ResourceManager(plugin);
         resourceManager.registerLoader(new YamlResourceLoader());
+        resourceManager.registerLoader(new PropertiesResourceLoader());
     }
 
     /**
