@@ -144,7 +144,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * Gets the players unique ID.
+     * Gets the player's unique ID.
      *
      * @return The unique ID
      */
