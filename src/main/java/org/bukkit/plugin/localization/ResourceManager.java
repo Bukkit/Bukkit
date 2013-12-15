@@ -100,12 +100,26 @@ public class ResourceManager {
         Validate.notNull(key);
 
         //If Locale is not loaded throw a ResourceNotLoadedException
-        if(!loadedLocales.containsKey(locale)) {
-            throw new ResourceNotLoadedException("The locale " + locale.toString() + " has not been loaded");
+        if(loadedLocales.containsKey(locale)) {
+            //Check if this Locale contains the key searched for
+            if(loadedLocales.get(locale).getKeys().contains(key)) {
+                return loadedLocales.get(locale).get(key);
+            }
         }
 
-        //Get the Loader and read the key out of it
-        return loadedLocales.get(locale).get(key);
+        //Check if there is a Resource for the language only (so you can inherit en to en_US for example)
+        Locale baseLocale = new Locale(locale.getLanguage());
+
+        //If Locale is not loaded throw a ResourceNotLoadedException
+        if(loadedLocales.containsKey(baseLocale)) {
+            //Check if this Locale contains the key searched for
+            if(loadedLocales.get(baseLocale).getKeys().contains(key)) {
+                return loadedLocales.get(baseLocale).get(key);
+            }
+        }
+
+        //If not locale was found which contains the key throw an Exception
+        throw new ResourceNotLoadedException("The locale " + locale.toString() + ":" + key +" has not been loaded");
     }
 
     /**

@@ -112,4 +112,19 @@ public class LocaleManagerTest {
         testPlayer.setLocale("cy_CZ");
         assertThat(testPlugin.getLocaleManager().translate(testPlayer, "test"), is("This is a in Memory Test"));
     }
+
+    @Test()
+    public void testInheritLocale() throws Exception {
+        LocaleTestPlugin testPlugin = new LocaleTestPlugin("LocaleTest");
+        testPlugin.getLocaleManager().registerLoader(new InMemoryResourceLoader());
+        testPlugin.getLocaleManager().load(new Locale("en"), "This is a in Memory Test:inmemory");
+        testPlugin.getLocaleManager().setDefaultLocale(new Locale("en"));
+
+        TestPlayer testPlayer = new TestPlayer();
+        testPlayer.setLocale("en_US");
+        assertThat(testPlugin.getLocaleManager().translate(testPlayer, "test"), is("This is a in Memory Test"));
+
+        testPlugin.getLocaleManager().load(new Locale("en", "US"), "enUS:inmemory");
+        assertThat(testPlugin.getLocaleManager().translate(testPlayer, "test"), is("enUS"));
+    }
 }
