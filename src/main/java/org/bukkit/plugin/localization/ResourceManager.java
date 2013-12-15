@@ -34,18 +34,18 @@ public class ResourceManager {
     }
 
     /**
-     * Register a new ResourceLoader. It must implement the {@link org.bukkit.plugin.localization.ResourceLoadFailedException}
+     * Register a new ResourceLoader. It must implement the {@link ResourceLoadFailedException}
      * and have a Constructor which takes two Arguments, JavaPlugin as first and a String as second Parameter. It also
      * needs to have a empty default Constructor so you can register the ResourceLoader without it having loaded any
      * Resource in it.
      *
      *
      * The JavaPlugin will be the Plugin for which this loader should load.
-     * The String is the second parameter from {@link org.bukkit.plugin.LocaleManager#load(java.util.Locale, String)}
+     * The String is the second parameter from {@link org.bukkit.plugin.LocaleManager#load(Locale, String)}
      *
      * @param loader New loader which can be used to load Resources
      */
-    public void registerLoader(ResourceLoader loader) {
+    public synchronized void registerLoader(ResourceLoader loader) {
         //Validate the input
         Validate.notNull(loader);
 
@@ -59,7 +59,7 @@ public class ResourceManager {
      * @param param The param which the ResourceLoader should load
      * @throws ResourceLoadFailedException
      */
-    private void loadLocale(Locale locale, String param) throws ResourceLoadFailedException {
+    private synchronized void loadLocale(Locale locale, String param) throws ResourceLoadFailedException {
         //Get the correct loader for this param
         for(ResourceLoader loader : registerdLoaders) {
             for(String ending : loader.getFormats()) {
@@ -81,10 +81,10 @@ public class ResourceManager {
      * old Resources with new ones
      *
      * @param locale Locale for which this Resource should be loaded
-     * @param param The param from {@link org.bukkit.plugin.LocaleManager#load(java.util.Locale, String)}
+     * @param param The param from {@link org.bukkit.plugin.LocaleManager#load(Locale, String)}
      * @throws ResourceLoadFailedException
      */
-    public void load(Locale locale, String param) throws ResourceLoadFailedException {
+    public synchronized void load(Locale locale, String param) throws ResourceLoadFailedException {
         //Check if parameters are correct
         Validate.notNull(locale);
         Validate.notNull(param);
@@ -173,9 +173,9 @@ public class ResourceManager {
      * @param loader The ResourceLoader which should be duplicated
      * @param argument The argument which should be given as Loadstring
      * @return A hopefully new ResourceLoader
-     * @throws java.lang.RuntimeException
+     * @throws RuntimeException
      */
-    private ResourceLoader buildNewResourceLoader(ResourceLoader loader, String argument) {
+    private synchronized ResourceLoader buildNewResourceLoader(ResourceLoader loader, String argument) {
         try {
             Constructor constructor = loader.getClass().getConstructor(Plugin.class, String.class);
             return (ResourceLoader) constructor.newInstance(this.plugin, argument);
@@ -195,7 +195,7 @@ public class ResourceManager {
      *
      * If one of the ResourceLoaders reports an error upon reloading it will get printed to the Plugins Logger
      */
-    public void reload() {
+    public synchronized void reload() {
         //Reload all ResourceLoaders
         for(SoftReference<ResourceLoader> loader : loadedLocales.values()) {
             try {
@@ -210,7 +210,7 @@ public class ResourceManager {
     /**
      * If the Plugin should be unloaded remove all loaded Things and unref the plugin
      */
-    public void cleanup() {
+    public synchronized void cleanup() {
         //Cleanup all ResourceLoaders
         for(SoftReference<ResourceLoader> loader : loadedLocales.values()) {
             if(loader.get() != null)

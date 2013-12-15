@@ -44,9 +44,9 @@ public class LocaleManager {
      *
      * @param locale Locale which should be loaded
      * @param param The param which should be given to the ResourceLoader
-     * @throws org.bukkit.plugin.localization.ResourceLoadFailedException if the loading has thrown any Error
+     * @throws ResourceLoadFailedException if the loading has thrown any Error
      */
-    public void load(Locale locale, String param) throws ResourceLoadFailedException {
+    public synchronized void load(Locale locale, String param) throws ResourceLoadFailedException {
         //Validate the input
         Validate.notNull(locale);
         Validate.notNull(param);
@@ -60,7 +60,7 @@ public class LocaleManager {
      * @param isoLocale The ISO String which should be looked up
      * @return The correct Locale from Java
      */
-    private Locale lookupLocale(String isoLocale) {
+    private synchronized Locale lookupLocale(String isoLocale) {
         if (!localeCache.containsKey(isoLocale)) {
             localeCache.put(isoLocale, LocaleUtils.toLocale(isoLocale));
         }
@@ -148,7 +148,7 @@ public class LocaleManager {
      * @param translationKey The key in the ResourceLoader which should be translated
      * @param args The Arguments which will be passed into the String when translating
      * @return The translated String
-     * @throws org.bukkit.plugin.localization.ResourceNotLoadedException when the Resource for the locale could not be loaded or the key is missing
+     * @throws ResourceNotLoadedException when the Resource for the locale could not be loaded or the key is missing
      * @throws ResourceLoadFailedException when the GC has cleared out the ResourceLoader and it could not be reloaded into the cache
      */
     public String translate(CommandSender commandSender, String translationKey, Object ...args) throws ResourceNotLoadedException, ResourceLoadFailedException {
@@ -169,7 +169,7 @@ public class LocaleManager {
     }
 
     /**
-     * Register a new custom ResourceLoader. See {@link org.bukkit.plugin.localization.ResourceManager#registerLoader(org.bukkit.plugin.localization.ResourceLoader)}
+     * Register a new custom ResourceLoader. See {@link ResourceManager#registerLoader(ResourceLoader)}
      *
      * @param loader
      */
@@ -183,14 +183,14 @@ public class LocaleManager {
     /**
      * Tells the ResourceManager to reload all Locale Resources which has been loaded by this Plugin
      */
-    public void reload() {
+    public synchronized void reload() {
         resourceManager.reload();
     }
 
     /**
      * Be sure to remove resources loaded and to remove refs
      */
-    public void cleanup() {
+    public synchronized void cleanup() {
         resourceManager.cleanup();
         resourceManager = null;
     }
