@@ -13,13 +13,16 @@ import java.util.logging.Level;
 
 public class ResourceManager {
     //Save all loaded Locales with their loadString
-    private HashMap<Locale, String> loadedLocaleLoadStrings = new HashMap<Locale, String>();
+    private final HashMap<Locale, String> loadedLocaleLoadStrings = new HashMap<Locale, String>();
 
     //Save all Loaded Locales
-    private HashMap<Locale, SoftReference<ResourceLoader>> loadedLocales = new HashMap<Locale, SoftReference<ResourceLoader>>();
+    private final HashMap<Locale, SoftReference<ResourceLoader>> loadedLocales = new HashMap<Locale, SoftReference<ResourceLoader>>();
 
     //The list of all available ResourceLoaders
-    private ArrayList<ResourceLoader> registerdLoaders = new ArrayList<ResourceLoader>();
+    private final ArrayList<ResourceLoader> registerdLoaders = new ArrayList<ResourceLoader>();
+
+    //Construct a object which can be locked on
+    private final Object sharedLock = new Object();
 
     //The Plugin for which this Manager manages Resources
     private Plugin plugin;
@@ -49,7 +52,9 @@ public class ResourceManager {
         //Validate the input
         Validate.notNull(loader);
 
-        registerdLoaders.add(loader);
+        synchronized (sharedLock) {
+            registerdLoaders.add(loader);
+        }
     }
 
     /**
@@ -65,8 +70,10 @@ public class ResourceManager {
             for(String ending : loader.getFormats()) {
                 if(param.endsWith(ending)) {
                     try {
-                        loadedLocales.put(locale, new SoftReference<ResourceLoader>(buildNewResourceLoader(loader, param)));
-                        loadedLocaleLoadStrings.put(locale, param);
+                        synchronized (sharedLock) {
+                            loadedLocales.put(locale, new SoftReference<ResourceLoader>(buildNewResourceLoader(loader, param)));
+                            loadedLocaleLoadStrings.put(locale, param);
+                        }
                     } catch (RuntimeException e) {
                         throw new ResourceLoadFailedException(e);
                     }
@@ -91,13 +98,15 @@ public class ResourceManager {
 
         //Check if locale has already been loaded
         if(loadedLocales.containsKey(locale)) {
-            //Unload the locale and get the new one
-            ResourceLoader loader = loadedLocales.get(locale).get();
-            if(loader != null)
-                loader.cleanup();
+            synchronized (sharedLock) {
+                //Unload the locale and get the new one
+                ResourceLoader loader = loadedLocales.get(locale).get();
+                if(loader != null)
+                    loader.cleanup();
 
-            loadedLocales.remove(locale);
-            loadedLocaleLoadStrings.remove(locale);
+                loadedLocales.remove(locale);
+                loadedLocaleLoadStrings.remove(locale);
+            }
         }
 
         loadLocale(locale, param);
@@ -108,9 +117,11 @@ public class ResourceManager {
      * @param locale The Locale to check for
      * @throws ResourceLoadFailedException
      */
-    private void reloadIfGCCleared(Locale locale) throws ResourceLoadFailedException {
+    private synchronized void reloadIfGCCleared(Locale locale) throws ResourceLoadFailedException {
         if(loadedLocales.get(locale).get() == null) {
-            loadLocale(locale, loadedLocaleLoadStrings.get(locale));
+            synchronized (sharedLock) {
+                loadLocale(locale, loadedLocaleLoadStrings.get(locale));
+            }
         }
     }
 
@@ -218,8 +229,6 @@ public class ResourceManager {
         }
 
         //Remove all refs
-        registerdLoaders = null;
-        loadedLocales = null;
         plugin = null;
     }
 }
