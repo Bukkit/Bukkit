@@ -3,6 +3,7 @@ package org.bukkit.plugin.localization;
 import org.apache.commons.lang.Validate;
 import org.bukkit.plugin.Plugin;
 
+import java.lang.ref.SoftReference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -11,8 +12,11 @@ import java.util.Locale;
 import java.util.logging.Level;
 
 public class ResourceManager {
+    //Save all loaded Locales with their loadString
+    private HashMap<Locale, String> loadedLocaleLoadStrings = new HashMap<Locale, String>();
+
     //Save all Loaded Locales
-    private HashMap<Locale, ResourceLoader> loadedLocales = new HashMap<Locale, ResourceLoader>();
+    private HashMap<Locale, SoftReference<ResourceLoader>> loadedLocales = new HashMap<Locale, SoftReference<ResourceLoader>>();
 
     //The list of all available ResourceLoaders
     private ArrayList<ResourceLoader> registerdLoaders = new ArrayList<ResourceLoader>();
@@ -49,6 +53,29 @@ public class ResourceManager {
     }
 
     /**
+     * Try to load the ResourceLoader for this locale and param
+     *
+     * @param locale The locale which should be loaded for
+     * @param param The param which the ResourceLoader should load
+     * @throws ResourceLoadFailedException
+     */
+    private void loadLocale(Locale locale, String param) throws ResourceLoadFailedException {
+        //Get the correct loader for this param
+        for(ResourceLoader loader : registerdLoaders) {
+            for(String ending : loader.getFormats()) {
+                if(param.endsWith(ending)) {
+                    try {
+                        loadedLocales.put(locale, new SoftReference<ResourceLoader>(buildNewResourceLoader(loader, param)));
+                        loadedLocaleLoadStrings.put(locale, param);
+                    } catch (RuntimeException e) {
+                        throw new ResourceLoadFailedException(e);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Load a new Resource for the locale. The Loaders gets selected based of the ending of the Parameter. If
      * a Locale has been loaded before it gets unloaded and the new one gets loaded instead. So you can overload
      * old Resources with new ones
@@ -65,36 +92,40 @@ public class ResourceManager {
         //Check if locale has already been loaded
         if(loadedLocales.containsKey(locale)) {
             //Unload the locale and get the new one
-            ResourceLoader loader = loadedLocales.get(locale);
-            loader.cleanup();
+            ResourceLoader loader = loadedLocales.get(locale).get();
+            if(loader != null)
+                loader.cleanup();
+
             loadedLocales.remove(locale);
+            loadedLocaleLoadStrings.remove(locale);
         }
 
-        //Get the correct loader for this param
-        for(ResourceLoader loader : registerdLoaders) {
-            for(String ending : loader.getFormats()) {
-                if(param.endsWith(ending)) {
-                    try {
-                        loadedLocales.put(locale, buildNewResourceLoader(loader, param));
-                    } catch (RuntimeException e) {
-                        throw new ResourceLoadFailedException(e);
-                    }
-                }
-            }
+        loadLocale(locale, param);
+    }
+
+    /**
+     * Checks if the GC has unloaded this Locale ResourceLoader for the need of more RAM, if so try to reload the Locale
+     * @param locale The Locale to check for
+     * @throws ResourceLoadFailedException
+     */
+    private void reloadIfGCCleared(Locale locale) throws ResourceLoadFailedException {
+        if(loadedLocales.get(locale).get() == null) {
+            loadLocale(locale, loadedLocaleLoadStrings.get(locale));
         }
     }
 
     /**
      * Get the String for key out of the correct Loader. If the Locale has not been loaded you will get an
-     * {@link org.bukkit.plugin.localization.ResourceNotLoadedException}. If the Resource has been loaded but
+     * {@link ResourceNotLoadedException}. If the Resource has been loaded but
      * it missed a translation you will get null
      *
      * @param locale Locale to lookup
      * @param key Key to search in the loader
      * @return The String which has been resolved by the Loader
      * @throws ResourceNotLoadedException
+     * @throws ResourceLoadFailedException
      */
-    public String get(Locale locale, String key) throws ResourceNotLoadedException {
+    public String get(Locale locale, String key) throws ResourceNotLoadedException, ResourceLoadFailedException {
         //Validate the input
         Validate.notNull(locale);
         Validate.notNull(key);
@@ -102,8 +133,10 @@ public class ResourceManager {
         //If Locale is not loaded throw a ResourceNotLoadedException
         if(loadedLocales.containsKey(locale)) {
             //Check if this Locale contains the key searched for
-            if(loadedLocales.get(locale).getKeys().contains(key)) {
-                return loadedLocales.get(locale).get(key);
+            reloadIfGCCleared(locale);
+
+            if(loadedLocales.get(locale).get().getKeys().contains(key)) {
+                return loadedLocales.get(locale).get().get(key);
             }
         }
 
@@ -113,8 +146,10 @@ public class ResourceManager {
         //If Locale is not loaded throw a ResourceNotLoadedException
         if(loadedLocales.containsKey(baseLocale)) {
             //Check if this Locale contains the key searched for
-            if(loadedLocales.get(baseLocale).getKeys().contains(key)) {
-                return loadedLocales.get(baseLocale).get(key);
+            reloadIfGCCleared(baseLocale);
+
+            if(loadedLocales.get(baseLocale).get().getKeys().contains(key)) {
+                return loadedLocales.get(baseLocale).get().get(key);
             }
         }
 
@@ -162,9 +197,10 @@ public class ResourceManager {
      */
     public void reload() {
         //Reload all ResourceLoaders
-        for(ResourceLoader loader : loadedLocales.values()) {
+        for(SoftReference<ResourceLoader> loader : loadedLocales.values()) {
             try {
-                loader.reload();
+                if(loader.get() != null)
+                    loader.get().reload();
             } catch (ResourceLoadFailedException e) {
                 plugin.getLogger().log(Level.SEVERE, "Could not reload all Resources", e);
             }
@@ -176,8 +212,9 @@ public class ResourceManager {
      */
     public void cleanup() {
         //Cleanup all ResourceLoaders
-        for(ResourceLoader loader : registerdLoaders) {
-            loader.cleanup();
+        for(SoftReference<ResourceLoader> loader : loadedLocales.values()) {
+            if(loader.get() != null)
+                loader.get().cleanup();
         }
 
         //Remove all refs

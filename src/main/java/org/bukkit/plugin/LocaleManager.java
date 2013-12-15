@@ -75,9 +75,10 @@ public class LocaleManager {
      * @param locale Locale which should be read for
      * @param key The key which should be looked up
      * @return The String stored in the ResourceLoader
-     * @throws ResourceNotLoadedException
+     * @throws ResourceNotLoadedException If the Resource was not registered
+     * @throws ResourceLoadFailedException If the Resource was cleared out and could not be reloaded into the Cache
      */
-    private String getTranslationString(Locale locale, String key) throws ResourceNotLoadedException {
+    private String getTranslationString(Locale locale, String key) throws ResourceNotLoadedException, ResourceLoadFailedException {
         return resourceManager.get(locale, key);
     }
 
@@ -118,9 +119,10 @@ public class LocaleManager {
      * @param translationKey The key in the ResourceLoader which should be translated
      * @param args The Arguments which will be passed into the String when translating
      * @return The translated String
-     * @throws org.bukkit.plugin.localization.ResourceNotLoadedException when the Resource for the locale could not be loaded or the key is missing
+     * @throws ResourceNotLoadedException when the Resource for the locale could not be loaded or the key is missing
+     * @throws ResourceLoadFailedException when the GC has cleared out the ResourceLoader and it could not be reloaded into the cache
      */
-    public String translate(Player player, String translationKey, Object ...args) throws ResourceNotLoadedException {
+    public String translate(Player player, String translationKey, Object ...args) throws ResourceNotLoadedException, ResourceLoadFailedException {
         //Validate the Player
         Validate.notNull(player, "Player can not be null");
         Validate.notNull(player.getLocale(), "The Players locale is null");
@@ -147,8 +149,9 @@ public class LocaleManager {
      * @param args The Arguments which will be passed into the String when translating
      * @return The translated String
      * @throws org.bukkit.plugin.localization.ResourceNotLoadedException when the Resource for the locale could not be loaded or the key is missing
+     * @throws ResourceLoadFailedException when the GC has cleared out the ResourceLoader and it could not be reloaded into the cache
      */
-    public String translate(CommandSender commandSender, String translationKey, Object ...args) throws ResourceNotLoadedException {
+    public String translate(CommandSender commandSender, String translationKey, Object ...args) throws ResourceNotLoadedException, ResourceLoadFailedException {
         //Validate the CommandSender
         Validate.notNull(commandSender, "Commandsender can not be null");
         Validate.notNull(translationKey, "The translationKey can not be null");
