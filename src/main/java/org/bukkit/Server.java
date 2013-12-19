@@ -782,4 +782,12 @@ public interface Server extends PluginMessageRecipient {
      *     ServerListPingEvent#setServerIcon(CachedServerIcon)}
      */
     CachedServerIcon loadServerIcon(BufferedImage image) throws IllegalArgumentException, Exception;
+
+    /**
+     * Sets the generator for the specified world
+     * 
+     * @param Name of the world on which the generator is set
+     * @param Name of the generator
+     */
+    public void setWorldGenerator(String worldName, String generatorName);
 }
