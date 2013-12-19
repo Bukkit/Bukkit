@@ -29,7 +29,7 @@ public class BanCommand extends VanillaCommand {
             return false;
         }
 
-        String reason = null;
+        String ban_reason = null;
         if (args.length >= 2) {
             ban_reason = StringUtils.join(ArrayUtils.subarray(args, 1, args.length), " ");
         }
