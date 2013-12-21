@@ -724,7 +724,10 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
 
     /**
      * Gets the Locale which the Player has set inside his Client. The Output is the ISO formatted Locale String.
-     * For example "en_US" for American English or "de_DE" for German
+     * For example "en_US" for American English or "de_DE" for German. The Codes for the Language is given by ISO 639-1.
+     * The Country part is given by ISO 3166-1 alpha-2. So each String is build up like this: ISO 639-1 + "_" + ISO 3166-1 alpha-2
+     *
+     * Little fun fact: en_PT which is Pirate English in Minecraft should be English spoken in Portugal.
      *
      * @return the Locale which has been set
      */
