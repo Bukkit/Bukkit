@@ -723,7 +723,8 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public double getHealthScale();
 
     /**
-     * Gets the Locale which the Player has set inside his Client
+     * Gets the Locale which the Player has set inside his Client. The Output is the ISO formatted Locale String.
+     * For example "en_US" for American English or "de_DE" for German
      *
      * @return the Locale which has been set
      */
