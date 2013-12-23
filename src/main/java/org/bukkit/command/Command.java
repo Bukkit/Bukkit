@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.minecart.CommandMinecart;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.util.StringUtil;
@@ -64,13 +65,14 @@ public abstract class Command {
     }
 
     /**
-     * Executed on tab completion for this command, returning a list of options
-     * the player can tab through.
+     * Executed on tab completion for this command, returning a list of
+     * options the player can tab through.
      *
      * @param sender Source object which is executing this command
      * @param alias the alias being used
      * @param args All arguments passed to the command, split via ' '
-     * @return a list of tab-completions for the specified arguments. This will never be null. List may be immutable.
+     * @return a list of tab-completions for the specified arguments. This
+     *     will never be null. List may be immutable.
      * @throws IllegalArgumentException if sender, alias, or args is null
      */
     public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
@@ -108,7 +110,8 @@ public abstract class Command {
     }
 
     /**
-     * Gets the permission required by users to be able to perform this command
+     * Gets the permission required by users to be able to perform this
+     * command
      *
      * @return Permission name, or null if none
      */
@@ -117,7 +120,8 @@ public abstract class Command {
     }
 
     /**
-     * Sets the permission required by users to be able to perform this command
+     * Sets the permission required by users to be able to perform this
+     * command
      *
      * @param permission Permission name or null
      */
@@ -126,9 +130,11 @@ public abstract class Command {
     }
 
     /**
-     * Tests the given {@link CommandSender} to see if they can perform this command.
+     * Tests the given {@link CommandSender} to see if they can perform this
+     * command.
      * <p>
-     * If they do not have permission, they will be informed that they cannot do this.
+     * If they do not have permission, they will be informed that they cannot
+     * do this.
      *
      * @param target User to test
      * @return true if they can use it, otherwise false
@@ -150,7 +156,8 @@ public abstract class Command {
     }
 
     /**
-     * Tests the given {@link CommandSender} to see if they can perform this command.
+     * Tests the given {@link CommandSender} to see if they can perform this
+     * command.
      * <p>
      * No error is sent to the sender.
      *
@@ -181,12 +188,14 @@ public abstract class Command {
     }
 
     /**
-     * Sets the label of this command
-     * If the command is currently registered the label change will only take effect after
-     * its been reregistered e.g. after a /reload
+     * Sets the label of this command.
+     * <p>
+     * If the command is currently registered the label change will only take
+     * effect after its been re-registered e.g. after a /reload
      *
      * @param name The command's name
-     * @return returns true if the name change happened instantly or false if it was scheduled for reregistration
+     * @return returns true if the name change happened instantly or false if
+     *     it was scheduled for re-registration
      */
     public boolean setLabel(String name) {
         this.nextLabel = name;
@@ -198,11 +207,12 @@ public abstract class Command {
     }
 
     /**
-     * Registers this command to a CommandMap
+     * Registers this command to a CommandMap.
      * Once called it only allows changes the registered CommandMap
      *
      * @param commandMap the CommandMap to register this command to
-     * @return true if the registration was successful (the current registered CommandMap was the passed CommandMap or null) false otherwise
+     * @return true if the registration was successful (the current registered
+     *     CommandMap was the passed CommandMap or null) false otherwise
      */
     public boolean register(CommandMap commandMap) {
         if (allowChangesFrom(commandMap)) {
@@ -214,10 +224,13 @@ public abstract class Command {
     }
 
     /**
-     * Unregisters this command from the passed CommandMap applying any outstanding changes
+     * Unregisters this command from the passed CommandMap applying any
+     * outstanding changes
      *
      * @param commandMap the CommandMap to unregister
-     * @return true if the unregistration was successfull (the current registered CommandMap was the passed CommandMap or null) false otherwise
+     * @return true if the unregistration was successfull (the current
+     *     registered CommandMap was the passed CommandMap or null) false
+     *     otherwise
      */
     public boolean unregister(CommandMap commandMap) {
         if (allowChangesFrom(commandMap)) {
@@ -253,7 +266,8 @@ public abstract class Command {
     }
 
     /**
-     * Returns a message to be displayed on a failed permission check for this command
+     * Returns a message to be displayed on a failed permission check for this
+     * command
      *
      * @return Permission check failed message
      */
@@ -339,9 +353,20 @@ public abstract class Command {
     public static void broadcastCommandMessage(CommandSender source, String message, boolean sendToSource) {
         String result = source.getName() + ": " + message;
 
-        if (source instanceof BlockCommandSender && ((BlockCommandSender) source).getBlock().getWorld().getGameRuleValue("commandBlockOutput").equalsIgnoreCase("false")) {
-            Bukkit.getConsoleSender().sendMessage(result);
-            return;
+        if (source instanceof BlockCommandSender) {
+            BlockCommandSender blockCommandSender = (BlockCommandSender) source;
+
+            if (blockCommandSender.getBlock().getWorld().getGameRuleValue("commandBlockOutput").equalsIgnoreCase("false")) {
+                Bukkit.getConsoleSender().sendMessage(result);
+                return;
+            }
+        } else if (source instanceof CommandMinecart) {
+            CommandMinecart commandMinecart = (CommandMinecart) source;
+
+            if (commandMinecart.getWorld().getGameRuleValue("commandBlockOutput").equalsIgnoreCase("false")) {
+                Bukkit.getConsoleSender().sendMessage(result);
+                return;
+            }
         }
 
         Set<Permissible> users = Bukkit.getPluginManager().getPermissionSubscriptions(Server.BROADCAST_CHANNEL_ADMINISTRATIVE);

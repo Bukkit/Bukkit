@@ -86,7 +86,8 @@ public abstract class Enchantment {
     public static final Enchantment DIG_SPEED = new EnchantmentWrapper(32);
 
     /**
-     * Allows blocks to drop themselves instead of fragments (for example, stone instead of cobblestone)
+     * Allows blocks to drop themselves instead of fragments (for example,
+     * stone instead of cobblestone)
      */
     public static final Enchantment SILK_TOUCH = new EnchantmentWrapper(33);
 
@@ -119,6 +120,16 @@ public abstract class Enchantment {
      * Provides infinite arrows when shooting a bow
      */
     public static final Enchantment ARROW_INFINITE = new EnchantmentWrapper(51);
+
+    /**
+     * Decreases odds of catching worthless junk
+     */
+    public static final Enchantment LUCK = new EnchantmentWrapper(61);
+
+    /**
+     * Increases rate of fish biting your hook
+     */
+    public static final Enchantment LURE = new EnchantmentWrapper(62);
 
     private static final Map<Integer, Enchantment> byId = new HashMap<Integer, Enchantment>();
     private static final Map<String, Enchantment> byName = new HashMap<String, Enchantment>();
@@ -177,8 +188,11 @@ public abstract class Enchantment {
     public abstract boolean conflictsWith(Enchantment other);
 
     /**
-     * Checks if this Enchantment may be applied to the given {@link ItemStack}.
-     * This does not check if it conflicts with any enchantments already applied to the item.
+     * Checks if this Enchantment may be applied to the given {@link
+     * ItemStack}.
+     * <p>
+     * This does not check if it conflicts with any enchantments already
+     * applied to the item.
      *
      * @param item Item to test
      * @return True if the enchantment may be applied, otherwise False
