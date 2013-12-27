@@ -167,45 +167,79 @@ public class Location implements Cloneable {
     }
 
     /**
-     * Sets the yaw of this location
+     * Sets the yaw of this location, measured in degrees.
+     * <ul>
+     * <li>A yaw of 0 or 360 represents the positive z direction.
+     * <li>A yaw of 180 represents the negative z direction.
+     * <li>A yaw of 90 represents the negative x direction.
+     * <li>A yaw of 270 represents the positive x direction.
+     * </ul>
+     * Increasing yaw values are the equivalent of turning to your
+     * right-facing, increasing the scale of the next respective axis, and
+     * decreasing the scale of the previous axis.
      *
-     * @param yaw New yaw
+     * @param yaw new rotation's yaw
      */
     public void setYaw(float yaw) {
         this.yaw = yaw;
     }
 
     /**
-     * Gets the yaw of this location
+     * Gets the yaw of this location, measured in degrees.
+     * <ul>
+     * <li>A yaw of 0 or 360 represents the positive z direction.
+     * <li>A yaw of 180 represents the negative z direction.
+     * <li>A yaw of 90 represents the negative x direction.
+     * <li>A yaw of 270 represents the positive x direction.
+     * </ul>
+     * Increasing yaw values are the equivalent of turning to your
+     * right-facing, increasing the scale of the next respective axis, and
+     * decreasing the scale of the previous axis.
      *
-     * @return Yaw
+     * @return the rotation's yaw
      */
     public float getYaw() {
         return yaw;
     }
 
     /**
-     * Sets the pitch of this location
+     * Sets the pitch of this location, measured in degrees.
+     * <ul>
+     * <li>A pitch of 0 represents level forward facing.
+     * <li>A pitch of 90 represents downward facing, or negative y
+     *     direction.
+     * <li>A pitch of -90 represents upward facing, or positive y direction.
+     * <ul>
+     * Increasing pitch values the equivalent of looking down.
      *
-     * @param pitch New pitch
+     * @param pitch new incline's pitch
      */
     public void setPitch(float pitch) {
         this.pitch = pitch;
     }
 
     /**
-     * Gets the pitch of this location
+     * Sets the pitch of this location, measured in degrees.
+     * <ul>
+     * <li>A pitch of 0 represents level forward facing.
+     * <li>A pitch of 90 represents downward facing, or negative y
+     *     direction.
+     * <li>A pitch of -90 represents upward facing, or positive y direction.
+     * <ul>
+     * Increasing pitch values the equivalent of looking down.
      *
-     * @return Pitch
+     * @return the incline's pitch
      */
     public float getPitch() {
         return pitch;
     }
 
     /**
-     * Gets a Vector pointing in the direction that this Location is facing
+     * Gets a unit-vector pointing in the direction that this Location is
+     * facing.
      *
-     * @return Vector
+     * @return a vector pointing the direction of this location's {@link
+     *     #getPitch() pitch} and {@link #getYaw() yaw}
      */
     public Vector getDirection() {
         Vector vector = new Vector();
@@ -215,12 +249,45 @@ public class Location implements Cloneable {
 
         vector.setY(-Math.sin(Math.toRadians(rotY)));
 
-        double h = Math.cos(Math.toRadians(rotY));
+        double xz = Math.cos(Math.toRadians(rotY));
 
-        vector.setX(-h * Math.sin(Math.toRadians(rotX)));
-        vector.setZ(h * Math.cos(Math.toRadians(rotX)));
+        vector.setX(-xz * Math.sin(Math.toRadians(rotX)));
+        vector.setZ(xz * Math.cos(Math.toRadians(rotX)));
 
         return vector;
+    }
+
+    /**
+     * Sets the {@link #getYaw() yaw} and {@link #getPitch() pitch} to point
+     * in the direction of the vector.
+     */
+    public Location setDirection(Vector vector) {
+        /*
+         * Sin = Opp / Hyp
+         * Cos = Adj / Hyp
+         * Tan = Opp / Adj
+         *
+         * x = -Opp
+         * z = Adj
+         */
+        final double _2PI = 2 * Math.PI;
+        final double x = vector.getX();
+        final double z = vector.getZ();
+
+        if (x == 0 && z == 0) {
+            pitch = vector.getY() > 0 ? -90 : 90;
+            return this;
+        }
+
+        double theta = Math.atan2(-x, z);
+        yaw = (float) Math.toDegrees((theta + _2PI) % _2PI);
+
+        double x2 = NumberConversions.square(x);
+        double z2 = NumberConversions.square(z);
+        double xz = Math.sqrt(x2 + z2);
+        pitch = (float) Math.toDegrees(Math.atan(-vector.getY() / xz));
+
+        return this;
     }
 
     /**
@@ -323,12 +390,12 @@ public class Location implements Cloneable {
     }
 
     /**
-     * Gets the magnitude of the location, defined as sqrt(x^2+y^2+z^2). The value
-     * of this method is not cached and uses a costly square-root function, so
-     * do not repeatedly call this method to get the location's magnitude. NaN
-     * will be returned if the inner result of the sqrt() function overflows,
-     * which will be caused if the length is too long. Not world-aware and
-     * orientation independent.
+     * Gets the magnitude of the location, defined as sqrt(x^2+y^2+z^2). The
+     * value of this method is not cached and uses a costly square-root
+     * function, so do not repeatedly call this method to get the location's
+     * magnitude. NaN will be returned if the inner result of the sqrt()
+     * function overflows, which will be caused if the length is too long. Not
+     * world-aware and orientation independent.
      *
      * @see Vector
      * @return the magnitude
@@ -349,11 +416,11 @@ public class Location implements Cloneable {
     }
 
     /**
-     * Get the distance between this location and another. The value
-     * of this method is not cached and uses a costly square-root function, so
-     * do not repeatedly call this method to get the location's magnitude. NaN
-     * will be returned if the inner result of the sqrt() function overflows,
-     * which will be caused if the distance is too long.
+     * Get the distance between this location and another. The value of this
+     * method is not cached and uses a costly square-root function, so do not
+     * repeatedly call this method to get the location's magnitude. NaN will
+     * be returned if the inner result of the sqrt() function overflows, which
+     * will be caused if the distance is too long.
      *
      * @see Vector
      * @param o The other location
@@ -385,8 +452,8 @@ public class Location implements Cloneable {
     }
 
     /**
-     * Performs scalar multiplication, multiplying all components with a scalar.
-     * Not world-aware.
+     * Performs scalar multiplication, multiplying all components with a
+     * scalar. Not world-aware.
      *
      * @param m The factor
      * @see Vector
@@ -464,7 +531,8 @@ public class Location implements Cloneable {
     /**
      * Constructs a new {@link Vector} based on this Location
      *
-     * @return New Vector containing the coordinates represented by this Location
+     * @return New Vector containing the coordinates represented by this
+     *     Location
      */
     public Vector toVector() {
         return new Vector(x, y, z);
@@ -480,7 +548,8 @@ public class Location implements Cloneable {
     }
 
     /**
-     * Safely converts a double (location coordinate) to an int (block coordinate)
+     * Safely converts a double (location coordinate) to an int (block
+     * coordinate)
      *
      * @param loc Precise coordinate
      * @return Block coordinate
