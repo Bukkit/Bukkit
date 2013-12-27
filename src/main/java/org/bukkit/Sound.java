@@ -3,8 +3,10 @@ package org.bukkit;
 /**
  * An Enum of Sounds the server is able to send to players.
  * <p>
- * WARNING: At any time, sounds may be added/removed from this Enum or even MineCraft itself! There is no guarantee the sounds will play.
- * There is no guarantee values will not be removed from this Enum. As such, you should not depend on the ordinal values of this class.
+ * WARNING: At any time, sounds may be added/removed from this Enum or even
+ * MineCraft itself! There is no guarantee the sounds will play. There is no
+ * guarantee values will not be removed from this Enum. As such, you should
+ * not depend on the ordinal values of this class.
  */
 public enum Sound {
     AMBIENCE_CAVE,
@@ -14,7 +16,6 @@ public enum Sound {
     ANVIL_LAND,
     ANVIL_USE,
     ARROW_HIT,
-    BREATH,
     BURP,
     CHEST_CLOSE,
     CHEST_OPEN,
@@ -31,7 +32,6 @@ public enum Sound {
     FIZZ,
     FUSE,
     GLASS,
-    HURT,
     HURT_FLESH,
     ITEM_BREAK,
     ITEM_PICKUP,
@@ -156,6 +156,7 @@ public enum Sound {
     ZOMBIE_INFECT,
     ZOMBIE_UNFECT,
     ZOMBIE_REMEDY,
+    ZOMBIE_WALK,
     ZOMBIE_PIG_IDLE,
     ZOMBIE_PIG_ANGRY,
     ZOMBIE_PIG_DEATH,
@@ -181,6 +182,7 @@ public enum Sound {
     HORSE_ANGRY,
     HORSE_ARMOR,
     HORSE_BREATHE,
+    HORSE_DEATH,
     HORSE_GALLOP,
     HORSE_HIT,
     HORSE_IDLE,
@@ -194,6 +196,7 @@ public enum Sound {
     DONKEY_HIT,
     DONKEY_IDLE,
     HORSE_SKELETON_DEATH,
+    HORSE_SKELETON_HIT,
     HORSE_SKELETON_IDLE,
     HORSE_ZOMBIE_DEATH,
     HORSE_ZOMBIE_HIT,
