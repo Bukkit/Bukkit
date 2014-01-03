@@ -788,4 +788,10 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @see Player#setHealthScaled(boolean)
      */
     public double getHealthScale();
+    
+    /**
+     * Gets the language locale the player has enabled on their client.
+     * @return The player's current locale.
+     */
+    public String getLocale();
 }
