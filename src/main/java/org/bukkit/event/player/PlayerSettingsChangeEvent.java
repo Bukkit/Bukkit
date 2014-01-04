@@ -13,6 +13,14 @@ public class PlayerSettingsChangeEvent extends PlayerEvent {
     private final ChatMode newChatMode;
     private final int newViewDistance;
 
+    /**
+     * Construct a new Event. This should only be done from CraftBukkit
+     *
+     * @param player which has changed its settings
+     * @param newLocale the new Locale which the Player has selected
+     * @param newChatMode the new Chat Mode which the Player has selected
+     * @param newViewDistance the new View Distance which the Player has selected
+     */
     public PlayerSettingsChangeEvent(final Player player, final String newLocale, final ChatMode newChatMode, final int newViewDistance) {
         super(player);
         this.newLocale = newLocale;
