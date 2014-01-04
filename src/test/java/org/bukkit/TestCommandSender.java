@@ -1,96 +1,45 @@
 package org.bukkit;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionAttachment;
-import org.bukkit.permissions.PermissionAttachmentInfo;
-import org.bukkit.plugin.Plugin;
 
-import java.util.Set;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.HashMap;
 
-public class TestCommandSender implements CommandSender {
-    @Override
-    public void sendMessage(String message) {
-        throw new UnsupportedOperationException("Not supported.");
+public class TestCommandSender implements InvocationHandler {
+    private static interface MethodHandler {
+        Object handle(CommandSender plugin, Object[] args);
     }
 
-    @Override
-    public void sendMessage(String[] messages) {
-        throw new UnsupportedOperationException("Not supported.");
+    private static final Constructor<? extends CommandSender> constructor;
+    private static final HashMap<Method, MethodHandler> methods = new HashMap<Method, MethodHandler>();
+
+    static {
+        try {
+            constructor = Proxy.getProxyClass(CommandSender.class.getClassLoader(), CommandSender.class).asSubclass(CommandSender.class).getConstructor(InvocationHandler.class);
+        } catch (Throwable t) {
+            throw new Error(t);
+        }
     }
 
-    @Override
-    public Server getServer() {
-        throw new UnsupportedOperationException("Not supported.");
+    private TestCommandSender() {}
+
+    public static CommandSender getInstance() {
+        try {
+            return constructor.newInstance(new TestCommandSender());
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
+        }
     }
 
-    @Override
-    public String getName() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
+    public Object invoke(Object proxy, Method method, Object[] args) {
+        MethodHandler handler = methods.get(method);
+        if (handler != null) {
+            return handler.handle((CommandSender) proxy, args);
+        }
 
-    @Override
-    public boolean isPermissionSet(String name) {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public boolean isPermissionSet(Permission perm) {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public boolean hasPermission(String name) {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public boolean hasPermission(Permission perm) {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public PermissionAttachment addAttachment(Plugin plugin) {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public void removeAttachment(PermissionAttachment attachment) {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public void recalculatePermissions() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public Set<PermissionAttachmentInfo> getEffectivePermissions() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public boolean isOp() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public void setOp(boolean value) {
-        throw new UnsupportedOperationException("Not supported.");
+        throw new UnsupportedOperationException(String.valueOf(method));
     }
 }
