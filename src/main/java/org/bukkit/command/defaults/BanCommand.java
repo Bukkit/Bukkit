@@ -29,16 +29,16 @@ public class BanCommand extends VanillaCommand {
             return false;
         }
 
-        String ban_reason = null;
+        String banReason = null;
         if (args.length >= 2) {
-            ban_reason = StringUtils.join(ArrayUtils.subarray(args, 1, args.length), " ");
+            banReason = StringUtils.join(ArrayUtils.subarray(args, 1, args.length), " ");
         }
         
         Bukkit.getOfflinePlayer(args[0]).setBanned(true);
 
         Player player = Bukkit.getPlayer(args[0]);
         if (player != null) {
-            player.kickPlayer("Banned by admin." + (ban_reason != null ? ("\nReason: " + ban_reason) : ""));
+            player.kickPlayer("Banned by admin." + (banReason != null ? ("\nReason: " + banReason) : ""));
         }
 
         Command.broadcastCommandMessage(sender, "Banned player " + args[0]);
