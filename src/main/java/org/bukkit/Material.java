@@ -1026,6 +1026,7 @@ public enum Material {
             case SAND:
             case GRAVEL:
             case ANVIL:
+            case DRAGON_EGG:
                 return true;
             default:
                 return false;
