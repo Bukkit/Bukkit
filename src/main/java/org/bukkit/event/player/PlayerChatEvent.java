@@ -95,9 +95,8 @@ public class PlayerChatEvent extends PlayerEvent implements Cancellable {
      * @param format String.Format compatible format string
      */
     public void setFormat(final String format) {
-        // Oh for a better way to do this!
         try {
-            String.format(format, player, message);
+            String.format(format, player, message.replace("%", "%%"));
         } catch (RuntimeException ex) {
             ex.fillInStackTrace();
             throw ex;
