@@ -121,4 +121,18 @@ public interface Chunk {
      * @return true if the chunk has unloaded successfully, otherwise false
      */
     boolean unload();
+    
+    /**
+     * Gets chunk inhabited tick count.  Affects various mob spawns and drops.
+     * 
+     * @return The total ticks chunk loaded due to player presence
+     */
+    long getInhabitedTime();
+    
+    /**
+     * Set chunk inhabited tick count.  Affects various mob spawns and drops.
+     * 
+     * @param inhabitedTime The new inhabited time, in ticks
+     */
+    void setInhabitedTime(long inhabitedTime);
 }

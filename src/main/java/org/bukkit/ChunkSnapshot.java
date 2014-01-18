@@ -126,4 +126,11 @@ public interface ChunkSnapshot {
      * @return true if empty, false if not
      */
     boolean isSectionEmpty(int sy);
+    
+    /**
+     * Gets chunk inhabited tick count.  Affects various mob spawns and drops.
+     * 
+     * @return The total ticks chunk loaded due to player presence
+     */
+    long getInhabitedTime();
 }
