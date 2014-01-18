@@ -173,6 +173,13 @@ public final class Bukkit {
     }
 
     /**
+     * @see Server#broadcastXmlMessage(String message)
+     */
+    public static int broadcastXmlMessage(String message) {
+        return server.broadcastXmlMessage(message);
+    }
+
+    /**
      * @see Server#getUpdateFolder()
      */
     public static String getUpdateFolder() {
@@ -403,6 +410,13 @@ public final class Bukkit {
      */
     public static int broadcast(String message, String permission) {
         return server.broadcast(message, permission);
+    }
+
+    /**
+     * @see Server#broadcastXml(String message, String permission)
+     */
+    public static int broadcastXml(String message, String permission) {
+        return server.broadcastXml(message, permission);
     }
 
     /**

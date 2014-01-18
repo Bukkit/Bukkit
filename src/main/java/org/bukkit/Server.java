@@ -195,6 +195,17 @@ public interface Server extends PluginMessageRecipient {
     public int broadcastMessage(String message);
 
     /**
+     * Broadcast an XML message to all players.
+     * <p>
+     * This is the same as calling {@link #broadcast(java.lang.String,
+     * java.lang.String)} to {@link #BROADCAST_CHANNEL_USERS}
+     *
+     * @param message the message
+     * @return the number of players
+     */
+    public int broadcastXmlMessage(String message);
+
+    /**
      * Gets the name of the update folder. The update folder is used to safely
      * update plugins at the right moment on a plugin load.
      * <p>
@@ -531,6 +542,16 @@ public interface Server extends PluginMessageRecipient {
      * @return Amount of users who received the message
      */
     public int broadcast(String message, String permission);
+
+    /**
+     * Broadcasts the specified XML message to every user with the given
+     * permission
+     *
+     * @param message Message to broadcast
+     * @param permission Permission the users must have to receive the broadcast
+     * @return Amount of users who received the message
+     */
+    public int broadcastXml(String message, String permission);
 
     /**
      * Gets the player by the given name, regardless if they are offline or

@@ -20,6 +20,13 @@ public interface CommandSender extends Permissible {
     public void sendMessage(String[] messages);
 
     /**
+     * Sends this sender one or multiple XML messages
+     *
+     * @param messages An array of messages to be displayed
+     */
+    public void sendXmlMessage(String... messages);
+
+    /**
      * Returns the server instance that this command is running on
      *
      * @return Server instance
