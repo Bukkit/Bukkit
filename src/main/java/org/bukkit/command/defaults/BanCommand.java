@@ -24,21 +24,23 @@ public class BanCommand extends VanillaCommand {
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
-        if (args.length == 0)  {
+        if (args.length == 0) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
 
-        String banReason = null;
-        if (args.length >= 2) {
+        String banReason;
+        if (args.length >= 1) {
             banReason = StringUtils.join(ArrayUtils.subarray(args, 1, args.length), " ");
+
+            Bukkit.getOfflinePlayer(args[0]).setBanned(banReason.toString(), true);
+        } else {
+            Bukkit.getOfflinePlayer(args[0]).setBanned(true);
         }
-        
-        Bukkit.getOfflinePlayer(args[0]).setBanned(true);
 
         Player player = Bukkit.getPlayer(args[0]);
         if (player != null) {
-            player.kickPlayer("Banned by admin." + (banReason != null ? ("\nReason: " + banReason) : ""));
+            player.kickPlayer("Banned by admin.");
         }
 
         Command.broadcastCommandMessage(sender, "Banned player " + args[0]);
