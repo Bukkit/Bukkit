@@ -39,7 +39,7 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
      * Bans or unban this player with reason
      * 
      * @param banned true if banned
-     * @param reason for banning player
+     * @param reason for banning player, ignored if not banning
      */
     public void setBanned(String reason, boolean banned)
 
