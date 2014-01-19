@@ -1,7 +1,9 @@
 package org.bukkit.event.server;
 
 import java.net.InetAddress;
+import java.util.List;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.util.CachedServerIcon;
 
@@ -14,12 +16,23 @@ public class ServerListPingEvent extends ServerEvent {
     private String motd;
     private final int numPlayers;
     private int maxPlayers;
+    private List<Player> playerSample;
 
+    /**
+     * 
+     * @deprecated Use {@link #ServerListPingEvent(InetAddress, String, int, int, List)}
+     */
     public ServerListPingEvent(final InetAddress address, final String motd, final int numPlayers, final int maxPlayers) {
+        this(address, motd, numPlayers, maxPlayers, null);
+    }
+    
+    
+    public ServerListPingEvent(final InetAddress address, final String motd, final int numPlayers, final int maxPlayers, final List<Player> playerSample) {
         this.address = address;
         this.motd = motd;
         this.numPlayers = numPlayers;
         this.maxPlayers = maxPlayers;
+        this.playerSample = playerSample;
     }
 
     /**
@@ -74,6 +87,14 @@ public class ServerListPingEvent extends ServerEvent {
      */
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+    
+    /**
+     * Get the list of players to be sent to the client. 
+     * @return The sample of players
+     */
+    public List<Player> getPlayerSample(){
+        return this.playerSample;
     }
 
     /**
