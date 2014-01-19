@@ -826,8 +826,24 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param x X coordinate of the block
      * @param z Z coordinate of the block
      * @return Temperature of the requested block
+     * @deprecated Does not take into account the height of the world. Use {@link
+     *     #getTemperature(int, int, int) getTemperature} instead.
      */
+    @Deprecated
     public double getTemperature(int x, int z);
+
+    /**
+     * Gets the temperature for the given block coordinates.
+     * <p>
+     * It is safe to run this method when the block does not exist, it will
+     * not create the block.
+     *
+     * @param x X coordinate of the block
+     * @param y Y coordinate of the block
+     * @param z Z coordinate of the block
+     * @return Temperature of the requested block
+     */
+    public double getTemperature(int x, int y, int z);
 
     /**
      * Gets the humidity for the given block coordinates.
