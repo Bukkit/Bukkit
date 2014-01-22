@@ -5,8 +5,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 /**
- * PluginNameConversationPrefix is a {@link ConversationPrefix} implementation that displays the plugin name in front of
- * conversation output.
+ * PluginNameConversationPrefix is a {@link ConversationPrefix} implementation
+ * that displays the plugin name in front of conversation output.
  */
 public class PluginNameConversationPrefix implements ConversationPrefix {
     
@@ -30,6 +30,7 @@ public class PluginNameConversationPrefix implements ConversationPrefix {
 
     /**
      * Prepends each conversation message with the plugin name.
+     *
      * @param context Context information about the conversation.
      * @return An empty string.
      */

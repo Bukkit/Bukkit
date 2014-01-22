@@ -10,16 +10,17 @@ import org.bukkit.Material;
 import org.bukkit.material.MaterialData;
 
 /**
- * Represents a shapeless recipe, where the arrangement of the ingredients on the crafting grid
- * does not matter.
+ * Represents a shapeless recipe, where the arrangement of the ingredients on
+ * the crafting grid does not matter.
  */
 public class ShapelessRecipe implements Recipe {
     private ItemStack output;
     private List<ItemStack> ingredients = new ArrayList<ItemStack>();
 
     /**
-     * Create a shapeless recipe to craft the specified ItemStack. The constructor merely determines the
-     * result and type; to set the actual recipe, you'll need to call the appropriate methods.
+     * Create a shapeless recipe to craft the specified ItemStack. The
+     * constructor merely determines the result and type; to set the actual
+     * recipe, you'll need to call the appropriate methods.
      *
      * @param result The item you want the recipe to create.
      * @see ShapelessRecipe#addIngredient(Material)
@@ -59,7 +60,9 @@ public class ShapelessRecipe implements Recipe {
      * @param ingredient The ingredient to add.
      * @param rawdata The data value, or -1 to allow any data value.
      * @return The changed recipe, so you can chain calls.
+     * @deprecated Magic value
      */
+    @Deprecated
     public ShapelessRecipe addIngredient(Material ingredient, int rawdata) {
         return addIngredient(1, ingredient, rawdata);
     }
@@ -93,7 +96,9 @@ public class ShapelessRecipe implements Recipe {
      * @param ingredient The ingredient to add.
      * @param rawdata The data value, or -1 to allow any data value.
      * @return The changed recipe, so you can chain calls.
+     * @deprecated Magic value
      */
+    @Deprecated
     public ShapelessRecipe addIngredient(int count, Material ingredient, int rawdata) {
         Validate.isTrue(ingredients.size() + count <= 9, "Shapeless recipes cannot have more than 9 ingredients");
 
@@ -109,9 +114,9 @@ public class ShapelessRecipe implements Recipe {
     }
 
     /**
-     * Removes an ingredient from the list. If the ingredient occurs multiple times,
-     * only one instance of it is removed. Only removes exact matches, with a data value
-     * of 0.
+     * Removes an ingredient from the list. If the ingredient occurs multiple
+     * times, only one instance of it is removed. Only removes exact matches,
+     * with a data value of 0.
      *
      * @param ingredient The ingredient to remove
      * @return The changed recipe.
@@ -121,9 +126,9 @@ public class ShapelessRecipe implements Recipe {
     }
 
     /**
-     * Removes an ingredient from the list. If the ingredient occurs multiple times,
-     * only one instance of it is removed. If the data value is -1, only ingredients
-     * with a -1 data value will be removed.
+     * Removes an ingredient from the list. If the ingredient occurs multiple
+     * times, only one instance of it is removed. If the data value is -1,
+     * only ingredients with a -1 data value will be removed.
      *
      * @param ingredient The ingredient to remove
      * @return The changed recipe.
@@ -133,9 +138,9 @@ public class ShapelessRecipe implements Recipe {
     }
 
     /**
-     * Removes multiple instances of an ingredient from the list. If there are less instances
-     * then specified, all will be removed. Only removes exact matches, with a data value
-     * of 0.
+     * Removes multiple instances of an ingredient from the list. If there are
+     * less instances then specified, all will be removed. Only removes exact
+     * matches, with a data value of 0.
      *
      * @param count The number of copies to remove.
      * @param ingredient The ingredient to remove
@@ -146,9 +151,9 @@ public class ShapelessRecipe implements Recipe {
     }
 
     /**
-     * Removes multiple instances of an ingredient from the list. If there are less instances
-     * then specified, all will be removed. If the data value is -1, only ingredients
-     * with a -1 data value will be removed.
+     * Removes multiple instances of an ingredient from the list. If there are
+     * less instances then specified, all will be removed. If the data value
+     * is -1, only ingredients with a -1 data value will be removed.
      *
      * @param count The number of copies to remove.
      * @param ingredient The ingredient to remove.
@@ -159,28 +164,32 @@ public class ShapelessRecipe implements Recipe {
     }
 
     /**
-     * Removes an ingredient from the list. If the ingredient occurs multiple times,
-     * only one instance of it is removed. If the data value is -1, only ingredients
-     * with a -1 data value will be removed.
+     * Removes an ingredient from the list. If the ingredient occurs multiple
+     * times, only one instance of it is removed. If the data value is -1,
+     * only ingredients with a -1 data value will be removed.
      *
      * @param ingredient The ingredient to remove
      * @param rawdata The data value;
      * @return The changed recipe.
+     * @deprecated Magic value
      */
+    @Deprecated
     public ShapelessRecipe removeIngredient(Material ingredient, int rawdata) {
         return removeIngredient(1, ingredient, rawdata);
     }
 
     /**
-     * Removes multiple instances of an ingredient from the list. If there are less instances
-     * then specified, all will be removed. If the data value is -1, only ingredients
-     * with a -1 data value will be removed.
+     * Removes multiple instances of an ingredient from the list. If there are
+     * less instances then specified, all will be removed. If the data value
+     * is -1, only ingredients with a -1 data value will be removed.
      *
      * @param count The number of copies to remove.
      * @param ingredient The ingredient to remove.
      * @param rawdata The data value.
      * @return The changed recipe.
+     * @deprecated Magic value
      */
+    @Deprecated
     public ShapelessRecipe removeIngredient(int count, Material ingredient, int rawdata) {
         Iterator<ItemStack> iterator = ingredients.iterator();
         while (count > 0 && iterator.hasNext()) {

@@ -7,7 +7,8 @@ import java.util.Map.Entry;
 import org.bukkit.plugin.Plugin;
 
 /**
- * Holds information about a permission attachment on a {@link Permissible} object
+ * Holds information about a permission attachment on a {@link Permissible}
+ * object
  */
 public class PermissionAttachment {
     private PermissionRemovedExecutor removed;
@@ -36,7 +37,8 @@ public class PermissionAttachment {
     }
 
     /**
-     * Sets an object to be called for when this attachment is removed from a {@link Permissible}. May be null.
+     * Sets an object to be called for when this attachment is removed from a
+     * {@link Permissible}. May be null.
      *
      * @param ex Object to be called when this is removed
      */
@@ -45,7 +47,8 @@ public class PermissionAttachment {
     }
 
     /**
-     * Gets the class that was previously set to be called when this attachment was removed from a {@link Permissible}. May be null.
+     * Gets the class that was previously set to be called when this
+     * attachment was removed from a {@link Permissible}. May be null.
      *
      * @return Object to be called when this is removed
      */
@@ -63,9 +66,11 @@ public class PermissionAttachment {
     }
 
     /**
-     * Gets a copy of all set permissions and values contained within this attachment.
+     * Gets a copy of all set permissions and values contained within this
+     * attachment.
      * <p>
-     * This map may be modified but will not affect the attachment, as it is a copy.
+     * This map may be modified but will not affect the attachment, as it is a
+     * copy.
      *
      * @return Copy of all permissions and values expressed by this attachment
      */
@@ -145,7 +150,8 @@ public class PermissionAttachment {
     /**
      * Removes the specified permission from this attachment.
      * <p>
-     * If the permission does not exist in this attachment, nothing will happen.
+     * If the permission does not exist in this attachment, nothing will
+     * happen.
      * <p>
      * This method will recalculate permissions on the attached
      * {@link Permissible}. If multiple permissions need to be unset,
@@ -162,7 +168,8 @@ public class PermissionAttachment {
     /**
      * Removes the specified permission from this attachment.
      * <p>
-     * If the permission does not exist in this attachment, nothing will happen.
+     * If the permission does not exist in this attachment, nothing will
+     * happen.
      * <p>
      * This method will recalculate permissions on the attached
      * {@link Permissible}. If multiple permissions need to be unset,
@@ -194,7 +201,8 @@ public class PermissionAttachment {
     /**
      * Removes this attachment from its registered {@link Permissible}
      *
-     * @return true if the permissible was removed successfully, false if it did not exist
+     * @return true if the permissible was removed successfully, false if it
+     *     did not exist
      */
     public boolean remove() {
         try {

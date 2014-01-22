@@ -12,6 +12,7 @@ public enum PotionType {
     STRENGTH(9, PotionEffectType.INCREASE_DAMAGE, 2),
     SLOWNESS(10, PotionEffectType.SLOW, 1),
     INSTANT_DAMAGE(12, PotionEffectType.HARM, 2),
+    WATER_BREATHING(13, PotionEffectType.WATER_BREATHING, 1),
     INVISIBILITY(14, PotionEffectType.INVISIBILITY, 1),
     ;
 
@@ -28,6 +29,11 @@ public enum PotionType {
         return effect;
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public int getDamageValue() {
         return damageValue;
     }
@@ -40,6 +46,11 @@ public enum PotionType {
         return effect == null ? true : effect.isInstant();
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public static PotionType getByDamageValue(int damage) {
         for (PotionType type : PotionType.values()) {
             if (type.damageValue == damage)

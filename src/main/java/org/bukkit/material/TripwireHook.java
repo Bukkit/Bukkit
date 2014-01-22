@@ -12,10 +12,20 @@ public class TripwireHook extends SimpleAttachableMaterialData implements Redsto
         super(Material.TRIPWIRE_HOOK);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public TripwireHook(final int type) {
         super(type);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public TripwireHook(final int type, final byte data) {
         super(type, data);
     }
@@ -27,6 +37,7 @@ public class TripwireHook extends SimpleAttachableMaterialData implements Redsto
 
     /**
      * Test if tripwire is connected
+     *
      * @return true if connected, false if not
      */
     public boolean isConnected() {
@@ -35,6 +46,7 @@ public class TripwireHook extends SimpleAttachableMaterialData implements Redsto
 
     /**
      * Set tripwire connection state
+     *
      * @param connected - true if connected, false if not
      */
     public void setConnected(boolean connected) {
@@ -47,6 +59,7 @@ public class TripwireHook extends SimpleAttachableMaterialData implements Redsto
 
     /**
      * Test if hook is currently activated
+     *
      * @return true if activated, false if not
      */
     public boolean isActivated() {
@@ -55,6 +68,7 @@ public class TripwireHook extends SimpleAttachableMaterialData implements Redsto
 
     /**
      * Set hook activated state
+     *
      * @param act - true if activated, false if not
      */
     public void setActivated(boolean act) {

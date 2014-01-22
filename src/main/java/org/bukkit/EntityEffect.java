@@ -58,7 +58,9 @@ public enum EntityEffect {
      * Gets the data value of this EntityEffect
      *
      * @return The data value
+     * @deprecated Magic value
      */
+    @Deprecated
     public byte getData() {
         return data;
     }
@@ -67,8 +69,11 @@ public enum EntityEffect {
      * Gets the EntityEffect with the given data value
      *
      * @param data Data value to fetch
-     * @return The {@link EntityEffect} representing the given value, or null if it doesn't exist
+     * @return The {@link EntityEffect} representing the given value, or null
+     *     if it doesn't exist
+     * @deprecated Magic value
      */
+    @Deprecated
     public static EntityEffect getByData(final byte data) {
         return BY_DATA.get(data);
     }

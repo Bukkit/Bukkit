@@ -26,11 +26,21 @@ public class Mushroom extends MaterialData {
         Validate.isTrue(shroom == Material.HUGE_MUSHROOM_1 || shroom == Material.HUGE_MUSHROOM_2, "Not a mushroom!");
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Mushroom(Material shroom, byte data) {
         super(shroom, data);
         Validate.isTrue(shroom == Material.HUGE_MUSHROOM_1 || shroom == Material.HUGE_MUSHROOM_2, "Not a mushroom!");
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Mushroom(int type, byte data){
         super(type, data);
         Validate.isTrue(type == Material.HUGE_MUSHROOM_1.getId() || type == Material.HUGE_MUSHROOM_2.getId(), "Not a mushroom!");
@@ -52,6 +62,7 @@ public class Mushroom extends MaterialData {
 
     /**
      * Checks whether a face of the block is painted.
+     *
      * @param face The face to check.
      * @return True if it is painted.
      */
@@ -79,10 +90,13 @@ public class Mushroom extends MaterialData {
     }
 
     /**
-     * Set a face of the block to be painted or not. Note that due to the nature of how the data is stored,
-     * setting a face painted or not is not guaranteed to leave the other faces unchanged.
+     * Set a face of the block to be painted or not. Note that due to the
+     * nature of how the data is stored, setting a face painted or not is not
+     * guaranteed to leave the other faces unchanged.
+     *
      * @param face The face to paint or unpaint.
-     * @param painted True if you want to paint it, false if you want the pores to show.
+     * @param painted True if you want to paint it, false if you want the
+     *     pores to show.
      */
     public void setFacePainted(BlockFace face, boolean painted) {
         if (painted == isFacePainted(face)) {
@@ -142,7 +156,8 @@ public class Mushroom extends MaterialData {
     }
 
     /**
-     * @return A set of all faces that are currently painted (an empty set if it is a stem)
+     * @return A set of all faces that are currently painted (an empty set if
+     *     it is a stem)
      */
     public Set<BlockFace> getPaintedFaces() {
         EnumSet<BlockFace> faces = EnumSet.noneOf(BlockFace.class);

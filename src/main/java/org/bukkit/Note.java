@@ -39,7 +39,9 @@ public class Note {
          * Returns the not sharped id of this tone.
          *
          * @return the not sharped id of this tone.
+         * @deprecated Magic value
          */
+        @Deprecated
         public byte getId() {
             return getId(false);
         }
@@ -51,7 +53,9 @@ public class Note {
          *
          * @param sharped Set to true to return the sharped id.
          * @return the id of this tone.
+         * @deprecated Magic value
          */
+        @Deprecated
         public byte getId(boolean sharped) {
             byte id = (byte) (sharped && sharpable ? this.id + 1 : this.id);
 
@@ -72,8 +76,11 @@ public class Note {
          *
          * @param id the id of the tone.
          * @return if the tone id is the sharped id of the tone.
-         * @throws IllegalArgumentException if neither the tone nor the semitone have the id.
+         * @throws IllegalArgumentException if neither the tone nor the
+         *     semitone have the id.
+         * @deprecated Magic value
          */
+        @Deprecated
         public boolean isSharped(byte id) {
             if (id == getId(false)) {
                 return false;
@@ -90,7 +97,9 @@ public class Note {
          *
          * @param id the id of the tone.
          * @return the tone to id.
+         * @deprecated Magic value
          */
+        @Deprecated
         public static Tone getById(byte id) {
             return BY_DATA.get(id);
         }
@@ -113,8 +122,8 @@ public class Note {
     /**
      * Creates a new note.
      *
-     * @param note Internal note id. {@link #getId()} always return this value.
-     *            The value has to be in the interval [0;&nbsp;24].
+     * @param note Internal note id. {@link #getId()} always return this
+     *     value. The value has to be in the interval [0;&nbsp;24].
      */
     public Note(int note) {
         Validate.isTrue(note >= 0 && note <= 24, "The note value has to be between 0 and 24.");
@@ -126,7 +135,8 @@ public class Note {
      * Creates a new note.
      *
      * @param octave The octave where the note is in. Has to be 0 - 2.
-     * @param tone The tone within the octave. If the octave is 2 the note has to be F#.
+     * @param tone The tone within the octave. If the octave is 2 the note has
+     *     to be F#.
      * @param sharped Set if the tone is sharped (e.g. for F#).
      */
     public Note(int octave, Tone tone, boolean sharped) {
@@ -158,7 +168,8 @@ public class Note {
      * Creates a new note for a sharp tone, such as A-sharp.
      *
      * @param octave The octave where the note is in. Has to be 0 - 2.
-     * @param tone The tone within the octave. If the octave is 2 the note has to be F#.
+     * @param tone The tone within the octave. If the octave is 2 the note has
+     *     to be F#.
      * @return The new note.
      */
     public static Note sharp(int octave, Tone tone) {
@@ -197,7 +208,9 @@ public class Note {
      * Returns the internal id of this note.
      *
      * @return the internal id of this note.
+     * @deprecated Magic value
      */
+    @Deprecated
     public byte getId() {
         return note;
     }

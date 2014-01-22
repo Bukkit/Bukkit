@@ -54,6 +54,7 @@ public final class FireworkEffect implements ConfigurationSerializable {
 
     /**
      * This is a builder for FireworkEffects.
+     *
      * @see FireworkEffect#builder()
      */
     public static final class Builder {
@@ -141,7 +142,8 @@ public final class FireworkEffect implements ConfigurationSerializable {
          * @param colors The colors to add
          * @return This object, for chaining
          * @throws IllegalArgumentException If colors is null
-         * @throws IllegalArgumentException If any color is null (may be thrown after changes have occurred)
+         * @throws IllegalArgumentException If any color is null (may be
+         *     thrown after changes have occurred)
          */
         public Builder withColor(Color...colors) throws IllegalArgumentException {
             Validate.notNull(colors, "Cannot have null colors");
@@ -161,10 +163,12 @@ public final class FireworkEffect implements ConfigurationSerializable {
         /**
          * Add several primary colors to the firework effect.
          *
-         * @param colors An iterable object whose iterator yields the desired colors
+         * @param colors An iterable object whose iterator yields the desired
+         *     colors
          * @return This object, for chaining
          * @throws IllegalArgumentException If colors is null
-         * @throws IllegalArgumentException If any color is null (may be thrown after changes have occurred)
+         * @throws IllegalArgumentException If any color is null (may be
+         *     thrown after changes have occurred)
          */
         public Builder withColor(Iterable<?> colors) throws IllegalArgumentException {
             Validate.notNull(colors, "Cannot have null colors");
@@ -186,7 +190,8 @@ public final class FireworkEffect implements ConfigurationSerializable {
          * @param color The color to add
          * @return This object, for chaining
          * @throws IllegalArgumentException If colors is null
-         * @throws IllegalArgumentException If any color is null (may be thrown after changes have occurred)
+         * @throws IllegalArgumentException If any color is null (may be
+         *     thrown after changes have occurred)
          */
         public Builder withFade(Color color) throws IllegalArgumentException {
             Validate.notNull(color, "Cannot have null color");
@@ -206,7 +211,8 @@ public final class FireworkEffect implements ConfigurationSerializable {
          * @param colors The colors to add
          * @return This object, for chaining
          * @throws IllegalArgumentException If colors is null
-         * @throws IllegalArgumentException If any color is null (may be thrown after changes have occurred)
+         * @throws IllegalArgumentException If any color is null (may be
+         *     thrown after changes have occurred)
          */
         public Builder withFade(Color...colors) throws IllegalArgumentException {
             Validate.notNull(colors, "Cannot have null colors");
@@ -230,10 +236,12 @@ public final class FireworkEffect implements ConfigurationSerializable {
         /**
          * Add several fade colors to the firework effect.
          *
-         * @param colors An iterable object whose iterator yields the desired colors
+         * @param colors An iterable object whose iterator yields the desired
+         *     colors
          * @return This object, for chaining
          * @throws IllegalArgumentException If colors is null
-         * @throws IllegalArgumentException If any color is null (may be thrown after changes have occurred)
+         * @throws IllegalArgumentException If any color is null (may be
+         *     thrown after changes have occurred)
          */
         public Builder withFade(Iterable<?> colors) throws IllegalArgumentException {
             Validate.notNull(colors, "Cannot have null colors");
@@ -254,7 +262,9 @@ public final class FireworkEffect implements ConfigurationSerializable {
         }
 
         /**
-         * Create a {@link FireworkEffect} from the current contents of this builder.
+         * Create a {@link FireworkEffect} from the current contents of this
+         * builder.
+         * <p>
          * To successfully build, you must have specified at least one color.
          *
          * @return The representative firework effect

@@ -6,8 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * The ChatPaginator takes a raw string of arbitrary length and breaks it down into an array of strings appropriate
- * for displaying on the Minecraft player console.
+ * The ChatPaginator takes a raw string of arbitrary length and breaks it down
+ * into an array of strings appropriate for displaying on the Minecraft player
+ * console.
  */
 public class ChatPaginator {
     public static final int GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH = 55; // Will never wrap, even with the largest characters
@@ -19,6 +20,7 @@ public class ChatPaginator {
 
     /**
      * Breaks a raw string up into pages using the default width and height.
+     *
      * @param unpaginatedString The raw string to break.
      * @param pageNumber The page number to fetch.
      * @return A single chat page.
@@ -29,6 +31,7 @@ public class ChatPaginator {
 
     /**
      * Breaks a raw string up into pages using a provided width and height.
+     *
      * @param unpaginatedString The raw string to break.
      * @param pageNumber The page number to fetch.
      * @param lineLength The desired width of a chat line.
@@ -49,8 +52,9 @@ public class ChatPaginator {
     }
 
     /**
-     * Breaks a raw string up into a series of lines. Words are wrapped using spaces as decimeters and the newline
-     * character is respected.
+     * Breaks a raw string up into a series of lines. Words are wrapped using
+     * spaces as decimeters and the newline character is respected.
+     *
      * @param rawString The raw string to break.
      * @param lineLength The length of a line of text.
      * @return An array of word-wrapped lines.

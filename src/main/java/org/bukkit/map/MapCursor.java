@@ -4,7 +4,6 @@ package org.bukkit.map;
  * Represents a cursor on a map.
  */
 public final class MapCursor {
-
     private byte x, y;
     private byte direction, type;
     private boolean visible;
@@ -17,7 +16,9 @@ public final class MapCursor {
      * @param direction The facing of the cursor, from 0 to 15.
      * @param type The type (color/style) of the map cursor.
      * @param visible Whether the cursor is visible by default.
+     * @deprecated Magic value
      */
+    @Deprecated
     public MapCursor(byte x, byte y, byte direction, byte type, boolean visible) {
         this.x = x;
         this.y = y;
@@ -66,7 +67,9 @@ public final class MapCursor {
      * Get the type of this cursor.
      *
      * @return The type (color/style) of the map cursor.
+     * @deprecated Magic value
      */
+    @Deprecated
     public byte getRawType() {
         return type;
     }
@@ -123,7 +126,9 @@ public final class MapCursor {
      * Set the type of this cursor.
      *
      * @param type The type (color/style) of the map cursor.
+     * @deprecated Magic value
      */
+    @Deprecated
     public void setRawType(byte type) {
         if (type < 0 || type > 15) {
             throw new IllegalArgumentException("Type must be in the range 0-15");
@@ -141,9 +146,10 @@ public final class MapCursor {
     }
 
     /**
-     * Represents the standard types of map cursors. More may be made available
-     * by texture packs - the value is used by the client as an index in the
-     * file './misc/mapicons.png' from minecraft.jar or from a texture pack.
+     * Represents the standard types of map cursors. More may be made
+     * available by texture packs - the value is used by the client as an
+     * index in the file './misc/mapicons.png' from minecraft.jar or from a
+     * texture pack.
      */
     public enum Type {
         WHITE_POINTER(0),
@@ -158,10 +164,20 @@ public final class MapCursor {
             this.value = (byte) value;
         }
 
+        /**
+         *
+         * @deprecated Magic value
+         */
+        @Deprecated
         public byte getValue() {
             return value;
         }
 
+        /**
+         *
+         * @deprecated Magic value
+         */
+        @Deprecated
         public static Type byValue(byte value) {
             for (Type t : values()) {
                 if (t.value == value) return t;

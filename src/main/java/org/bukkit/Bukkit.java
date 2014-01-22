@@ -1,5 +1,6 @@
 package org.bukkit;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,7 @@ import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.util.CachedServerIcon;
 
 import com.avaje.ebean.config.ServerConfig;
 import org.bukkit.inventory.ItemFactory;
@@ -256,7 +258,9 @@ public final class Bukkit {
 
     /**
      * @see Server#getMap(short id)
+     * @deprecated Magic value
      */
+    @Deprecated
     public static MapView getMap(short id) {
         return server.getMap(id);
     }
@@ -570,7 +574,8 @@ public final class Bukkit {
     }
 
     /**
-     * @see Server#createInventory(InventoryHolder owner, int size, String title)
+     * @see Server#createInventory(InventoryHolder owner, int size, String
+     *     title)
      */
     public static Inventory createInventory(InventoryHolder owner, int size, String title) {
         return server.createInventory(owner, size, title);
@@ -651,5 +656,48 @@ public final class Bukkit {
      */
     public static ScoreboardManager getScoreboardManager() {
         return server.getScoreboardManager();
+    }
+
+    /**
+     * @see Server#getServerIcon()
+     */
+    public static CachedServerIcon getServerIcon() {
+        return server.getServerIcon();
+    }
+
+    /**
+     * @see Server#loadServerIcon(File)
+     */
+    public static CachedServerIcon loadServerIcon(File file) throws Exception {
+        return server.loadServerIcon(file);
+    }
+
+    /**
+     * @see Server#loadServerIcon(BufferedImage)
+     */
+    public static CachedServerIcon loadServerIcon(BufferedImage image) throws Exception {
+        return server.loadServerIcon(image);
+    }
+
+    /**
+     * @see Server#setIdleTimeout(int)
+     */
+    public static void setIdleTimeout(int threshold) {
+        server.setIdleTimeout(threshold);
+    }
+
+    /**
+     * @see Server#getIdleTimeout()
+     */
+    public static int getIdleTimeout() {
+        return server.getIdleTimeout();
+    }
+
+    /**
+     * @see Server#getUnsafe()
+     */
+    @Deprecated
+    public static UnsafeValues getUnsafe() {
+        return server.getUnsafe();
     }
 }

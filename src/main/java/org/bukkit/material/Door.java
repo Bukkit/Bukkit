@@ -14,6 +14,11 @@ public class Door extends MaterialData implements Directional, Openable {
         super(Material.WOODEN_DOOR);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Door(final int type) {
         super(type);
     }
@@ -22,10 +27,20 @@ public class Door extends MaterialData implements Directional, Openable {
         super(type);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Door(final int type, final byte data) {
         super(type, data);
     }
 
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     public Door(final Material type, final byte data) {
         super(type, data);
     }
@@ -54,7 +69,7 @@ public class Door extends MaterialData implements Directional, Openable {
     }
 
     /**
-     * Configure this part of the door to be either the top or the bottom half;
+     * Configure this part of the door to be either the top or the bottom half
      *
      * @param isTopHalf True to make it the top half.
      * @deprecated Shouldn't be used anymore

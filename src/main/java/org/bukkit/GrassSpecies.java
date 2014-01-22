@@ -33,7 +33,9 @@ public enum GrassSpecies {
      * Gets the associated data value representing this species
      *
      * @return A byte containing the data value of this grass species
+     * @deprecated Magic value
      */
+    @Deprecated
     public byte getData() {
         return data;
     }
@@ -41,11 +43,12 @@ public enum GrassSpecies {
     /**
      * Gets the GrassSpecies with the given data value
      *
-     * @param data
-     *            Data value to fetch
-     * @return The {@link GrassSpecies} representing the given value, or null if
-     *         it doesn't exist
+     * @param data Data value to fetch
+     * @return The {@link GrassSpecies} representing the given value, or null
+     *     if it doesn't exist
+     * @deprecated Magic value
      */
+    @Deprecated
     public static GrassSpecies getByData(final byte data) {
         return BY_DATA.get(data);
     }

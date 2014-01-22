@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Server;
 import org.bukkit.command.defaults.*;
+import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 public class SimpleCommandMap implements CommandMap {
@@ -58,6 +59,11 @@ public class SimpleCommandMap implements CommandMap {
         fallbackCommands.add(new TestForCommand());
         fallbackCommands.add(new EffectCommand());
         fallbackCommands.add(new ScoreboardCommand());
+        fallbackCommands.add(new PlaySoundCommand());
+        fallbackCommands.add(new SpreadPlayersCommand());
+        fallbackCommands.add(new SetWorldSpawnCommand());
+        fallbackCommands.add(new SetIdleTimeoutCommand());
+        fallbackCommands.add(new AchievementCommand());
     }
 
     public SimpleCommandMap(final Server server) {
@@ -114,14 +120,18 @@ public class SimpleCommandMap implements CommandMap {
     }
 
     /**
-     * Registers a command with the given name is possible, otherwise uses fallbackPrefix to create a unique name if its not an alias
+     * Registers a command with the given name is possible, otherwise uses
+     * fallbackPrefix to create a unique name if its not an alias
      *
      * @param label the name of the command, without the '/'-prefix.
-     * @param fallbackPrefix a prefix which is prepended to the command with a ':' one or more times to make the command unique
+     * @param fallbackPrefix a prefix which is prepended to the command with a
+     *     ':' one or more times to make the command unique
      * @param command the command to register
-     * @return true if command was registered with the passed in label, false otherwise.
-     *         If isAlias was true a return of false indicates no command was registerd
-     *         If isAlias was false a return of false indicates the fallbackPrefix was used one or more times to create a unique name for the command
+     * @return true if command was registered with the passed in label, false
+     *     otherwise. If isAlias was true a return of false indicates no
+     *     command was registered. If isAlias was false a return of false
+     *     indicates the fallbackPrefix was used one or more times to create a
+     *     unique name for the command
      */
     private synchronized boolean register(String label, String fallbackPrefix, Command command, boolean isAlias) {
         String lowerLabel = label.trim().toLowerCase();
@@ -224,6 +234,8 @@ public class SimpleCommandMap implements CommandMap {
             ArrayList<String> completions = new ArrayList<String>();
             Map<String, Command> knownCommands = this.knownCommands;
 
+            final String prefix = (sender instanceof Player ? "/" : "");
+
             for (VanillaCommand command : fallbackCommands) {
                 String name = command.getName();
 
@@ -239,7 +251,7 @@ public class SimpleCommandMap implements CommandMap {
                     continue;
                 }
 
-                completions.add('/' + name);
+                completions.add(prefix + name);
             }
 
             for (Map.Entry<String, Command> commandEntry : knownCommands.entrySet()) {
@@ -252,7 +264,7 @@ public class SimpleCommandMap implements CommandMap {
                 String name = commandEntry.getKey(); // Use the alias, not command name
 
                 if (StringUtil.startsWithIgnoreCase(name, cmdLine)) {
-                    completions.add('/' + name);
+                    completions.add(prefix + name);
                 }
             }
 

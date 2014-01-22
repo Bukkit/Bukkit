@@ -4,11 +4,12 @@ package org.bukkit.event.inventory;
  * An estimation of what the result will be.
  */
 public enum InventoryAction {
+
     /**
      * Nothing will happen from the click.
-     * There may be cases where nothing will happen and this is value is
-     * not provided, but it is guaranteed that this value is accurate
-     * when given.
+     * <p>
+     * There may be cases where nothing will happen and this is value is not
+     * provided, but it is guaranteed that this value is accurate when given.
      */
     NOTHING,
     /**
@@ -65,8 +66,8 @@ public enum InventoryAction {
      */
     MOVE_TO_OTHER_INVENTORY,
     /**
-     * The clicked item is moved to the hotbar, and the item currently
-     * there is re-added to the player's inventory.
+     * The clicked item is moved to the hotbar, and the item currently there
+     * is re-added to the player's inventory.
      */
     HOTBAR_MOVE_AND_READD,
     /**
@@ -78,8 +79,8 @@ public enum InventoryAction {
      */
     CLONE_STACK,
     /**
-     * The inventory is searched for the same material, and they are put
-     * on the cursor up to {@link org.bukkit.Material#getMaxStackSize()}.
+     * The inventory is searched for the same material, and they are put on
+     * the cursor up to {@link org.bukkit.Material#getMaxStackSize()}.
      */
     COLLECT_TO_CURSOR,
     /**
