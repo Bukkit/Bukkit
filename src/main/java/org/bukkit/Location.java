@@ -557,4 +557,106 @@ public class Location implements Cloneable {
     public static int locToBlock(double loc) {
         return NumberConversions.floor(loc);
     }
+
+    /**
+     * Transforms an axis from the local reference frame described by this
+     * location into the world reference frame.
+     * <p>
+     * x=left, y=up, z=forward
+     *
+     * @param axis a local-coordinate axis
+     * @return a world-coordinate axis
+     */
+    public Vector toWorldAxis(Vector axis) {
+        final double yaw = Math.toRadians(this.getYaw());
+        final double pitch = Math.toRadians(this.getPitch());
+
+        final double cosYaw = Math.cos(yaw);
+        final double sinYaw = Math.sin(yaw);
+        final double cosPitch = Math.cos(pitch);
+        final double sinPitch = Math.sin(pitch);
+
+        final Vector forward = new Vector(
+                -sinYaw*cosPitch,
+                -sinPitch,
+                cosYaw*cosPitch
+        );
+        final Vector up = new Vector(
+                -sinYaw*sinPitch,
+                cosPitch,
+                cosYaw*sinPitch
+        );
+        final Vector left = new Vector(
+                cosYaw,
+                0,
+                sinYaw
+        );
+
+        return left.multiply(axis.getX()).add(up.multiply(axis.getY())).add(forward.multiply(axis.getZ()));
+    }
+
+    /**
+     * Transforms an axis from the world reference frame into the local reference frame described by this
+     * location.
+     * <p>
+     * x=left, y=up, z=forward
+     *
+     * @param axis a world-coordinate axis
+     * @return a local-coordinate axis
+     */
+    public Vector toLocalAxis(Vector axis) {
+        final double yaw = Math.toRadians(this.getYaw());
+        final double pitch = Math.toRadians(this.getPitch());
+
+        final double cosYaw = Math.cos(yaw);
+        final double sinYaw = Math.sin(yaw);
+        final double cosPitch = Math.cos(pitch);
+        final double sinPitch = Math.sin(pitch);
+
+        final Vector xAxis = new Vector(
+                cosYaw,
+                -sinYaw*sinPitch,
+                -sinYaw*cosPitch
+        );
+
+        final Vector yAxis = new Vector(
+                0,
+                cosPitch,
+                -sinPitch
+        );
+
+        final Vector zAxis = new Vector(
+                sinYaw,
+                cosYaw*sinPitch,
+                cosYaw*cosPitch
+        );
+
+        return xAxis.multiply(axis.getX()).add(yAxis.multiply(axis.getY())).add(zAxis.multiply(axis.getZ()));
+    }
+
+    /**
+     * Transforms a position from the local reference frame described by this
+     * location into the world reference frame.
+     * <p>
+     * x=left, y=up, z=forward
+     *
+     * @param position a local-coordinate position
+     * @return a world-coordinate position
+     */
+    public Vector toWorld(Vector position) {
+        return toWorldAxis(position).add(toVector());
+    }
+
+    /**
+     * Transforms a position from the world reference frame into the local reference frame described by this
+     * location.
+     * <p>
+     * x=left, y=up, z=forward
+     *
+     * @param position a world-coordinate position
+     * @return a local-coordinate position
+     */
+    public Vector toLocal(Vector position) {
+        return toLocalAxis(position.clone().subtract(toVector()));
+    }
 }
