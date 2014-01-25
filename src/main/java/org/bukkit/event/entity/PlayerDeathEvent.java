@@ -32,7 +32,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
     }
 
     @Override
-    public Player getEntity() {
+    public Player getPlayer() {
         return (Player) entity;
     }
 
