@@ -51,6 +51,7 @@ public class LocationTransformTest {
         assertVectorEquals(vector, reference.toLocalAxis(reference.toWorldAxis(vector)));
         assertVectorEquals(vector, reference.toWorld(reference.toLocal(vector)));
         assertVectorEquals(vector, reference.toLocal(reference.toWorld(vector)));
+        assertThat(reference.toWorldAxis(vector).length(), is(closeTo(vector.length(), 1e-12)));
     }
 
     private void testTransform(Location reference) {

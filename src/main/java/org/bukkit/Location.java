@@ -562,7 +562,10 @@ public class Location implements Cloneable {
      * Transforms an axis from the local reference frame described by this
      * location into the world reference frame.
      * <p>
-     * x=left, y=up, z=forward
+     * The following conditions apply:
+     * <li>X axis points to the left</li>
+     * <li>Y axis points upward</li>
+     * <li>Z axis points forward</li>
      *
      * @param axis a local-coordinate axis
      * @return a world-coordinate axis
@@ -576,20 +579,22 @@ public class Location implements Cloneable {
         final double cosPitch = Math.cos(pitch);
         final double sinPitch = Math.sin(pitch);
 
-        final Vector forward = new Vector(
-                -sinYaw*cosPitch,
-                -sinPitch,
-                cosYaw*cosPitch
-        );
-        final Vector up = new Vector(
-                -sinYaw*sinPitch,
-                cosPitch,
-                cosYaw*sinPitch
-        );
         final Vector left = new Vector(
                 cosYaw,
                 0,
                 sinYaw
+        );
+
+        final Vector up = new Vector(
+                -sinYaw * sinPitch,
+                cosPitch,
+                cosYaw * sinPitch
+        );
+
+        final Vector forward = new Vector(
+                -sinYaw * cosPitch,
+                -sinPitch,
+                cosYaw * cosPitch
         );
 
         return left.multiply(axis.getX()).add(up.multiply(axis.getY())).add(forward.multiply(axis.getZ()));
@@ -599,7 +604,10 @@ public class Location implements Cloneable {
      * Transforms an axis from the world reference frame into the local reference frame described by this
      * location.
      * <p>
-     * x=left, y=up, z=forward
+     * The following conditions apply:
+     * <li>X axis points to the left</li>
+     * <li>Y axis points upward</li>
+     * <li>Z axis points forward</li>
      *
      * @param axis a world-coordinate axis
      * @return a local-coordinate axis
@@ -615,8 +623,8 @@ public class Location implements Cloneable {
 
         final Vector xAxis = new Vector(
                 cosYaw,
-                -sinYaw*sinPitch,
-                -sinYaw*cosPitch
+                -sinYaw * sinPitch,
+                -sinYaw * cosPitch
         );
 
         final Vector yAxis = new Vector(
@@ -627,8 +635,8 @@ public class Location implements Cloneable {
 
         final Vector zAxis = new Vector(
                 sinYaw,
-                cosYaw*sinPitch,
-                cosYaw*cosPitch
+                cosYaw * sinPitch,
+                cosYaw * cosPitch
         );
 
         return xAxis.multiply(axis.getX()).add(yAxis.multiply(axis.getY())).add(zAxis.multiply(axis.getZ()));
@@ -638,7 +646,10 @@ public class Location implements Cloneable {
      * Transforms a position from the local reference frame described by this
      * location into the world reference frame.
      * <p>
-     * x=left, y=up, z=forward
+     * The following conditions apply:
+     * <li>X axis points to the left</li>
+     * <li>Y axis points upward</li>
+     * <li>Z axis points forward</li>
      *
      * @param position a local-coordinate position
      * @return a world-coordinate position
@@ -651,7 +662,10 @@ public class Location implements Cloneable {
      * Transforms a position from the world reference frame into the local reference frame described by this
      * location.
      * <p>
-     * x=left, y=up, z=forward
+     * The following conditions apply:
+     * <li>X axis points to the left</li>
+     * <li>Y axis points upward</li>
+     * <li>Z axis points forward</li>
      *
      * @param position a world-coordinate position
      * @return a local-coordinate position
