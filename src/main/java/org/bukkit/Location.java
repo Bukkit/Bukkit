@@ -563,9 +563,11 @@ public class Location implements Cloneable {
      * location into the world reference frame.
      * <p>
      * The following conditions apply:
-     * <li>X axis points to the left</li>
-     * <li>Y axis points upward</li>
-     * <li>Z axis points forward</li>
+     * <ul>
+     * <li>X axis points to the left
+     * <li>Y axis points upward
+     * <li>Z axis points forward
+     * </ul>
      *
      * @param axis a local-coordinate axis
      * @return a world-coordinate axis
@@ -605,9 +607,11 @@ public class Location implements Cloneable {
      * location.
      * <p>
      * The following conditions apply:
-     * <li>X axis points to the left</li>
-     * <li>Y axis points upward</li>
-     * <li>Z axis points forward</li>
+     * <ul>
+     * <li>X axis points to the left
+     * <li>Y axis points upward
+     * <li>Z axis points forward
+     * </ul>
      *
      * @param axis a world-coordinate axis
      * @return a local-coordinate axis
@@ -647,9 +651,11 @@ public class Location implements Cloneable {
      * location into the world reference frame.
      * <p>
      * The following conditions apply:
-     * <li>X axis points to the left</li>
-     * <li>Y axis points upward</li>
-     * <li>Z axis points forward</li>
+     * <ul>
+     * <li>X axis points to the left
+     * <li>Y axis points upward
+     * <li>Z axis points forward
+     * </ul>
      *
      * @param position a local-coordinate position
      * @return a world-coordinate position
@@ -663,9 +669,11 @@ public class Location implements Cloneable {
      * location.
      * <p>
      * The following conditions apply:
-     * <li>X axis points to the left</li>
-     * <li>Y axis points upward</li>
-     * <li>Z axis points forward</li>
+     * <ul>
+     * <li>X axis points to the left
+     * <li>Y axis points upward
+     * <li>Z axis points forward
+     * </ul>
      *
      * @param position a world-coordinate position
      * @return a local-coordinate position
