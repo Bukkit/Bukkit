@@ -30,7 +30,7 @@ public class BanCommand extends VanillaCommand {
         // TODO: Ban Reason support
         Bukkit.getOfflinePlayer(args[0]).setBanned(true);
 
-        Player player = Bukkit.getPlayer(args[0]);
+        Player player = Bukkit.getPlayerExact(args[0]);
         if (player != null) {
             player.kickPlayer("Banned by admin.");
         }
