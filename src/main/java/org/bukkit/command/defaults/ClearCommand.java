@@ -38,7 +38,7 @@ public class ClearCommand extends VanillaCommand {
 
         Player player = null;
         if (args.length > 0) {
-            player = Bukkit.getPlayer(args[0]);
+            player = Bukkit.getPlayerExact(args[0]);
         } else if (sender instanceof Player) {
             player = (Player) sender;
         }
