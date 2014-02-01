@@ -3,7 +3,7 @@ package org.bukkit.entity;
 import org.bukkit.Location;
 
 /**
- * Represents a Wither boss
+ * Represents a Wither boss.
  */
 public interface Wither extends Monster {
 
@@ -40,22 +40,22 @@ public interface Wither extends Monster {
     public void shoot(WitherHead head, Location location);
 
     /**
-     * An enum to specify a head on the Wither
+     * An enum to specify a head on the Wither.
      */
     public enum WitherHead {
 
         /**
-         * The Left head in respect to a frontal view
+         * The Left head in respect to a frontal view.
          */
         LEFT,
 
         /**
-         * The Center head in respect to a frontal view
+         * The Center head in respect to a frontal view.
          */
         CENTER,
 
         /**
-         * The Right head in respect to a frontal view
+         * The Right head in respect to a frontal view.
          */
         RIGHT
     }
