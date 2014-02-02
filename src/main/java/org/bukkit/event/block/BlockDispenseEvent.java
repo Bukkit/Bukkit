@@ -17,11 +17,21 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
     private boolean cancelled = false;
     private ItemStack item;
     private Vector velocity;
+    private int slot;
 
+    /**
+     * @deprecated Use {@link #BlockDispenseEvent(Block, ItemStack, Vector, int)} instead
+     */
+    @Deprecated
     public BlockDispenseEvent(final Block block, final ItemStack dispensed, final Vector velocity) {
+        this(block, dispensed, velocity, -1);
+    }
+
+    public BlockDispenseEvent(final Block block, final ItemStack dispensed, final Vector velocity, final int slot) {
         super(block);
         this.item = dispensed;
         this.velocity = velocity;
+        this.slot = slot;
     }
 
     /**
@@ -43,6 +53,15 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
     public void setItem(ItemStack item) {
         this.item = item;
     }
+
+    /**
+     * Gets the slot the item is being dispensed from. This returns -1 if the slot was not provided.
+     *
+     * @return The index of the slot being dispensed from, or -1 if not present
+     */
+     public int getSlot() {
+         return slot;
+     }
 
     /**
      * Gets the velocity.
