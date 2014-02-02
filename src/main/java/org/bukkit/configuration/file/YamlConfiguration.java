@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -23,10 +24,19 @@ import org.yaml.snakeyaml.representer.Representer;
  */
 public class YamlConfiguration extends FileConfiguration {
     protected static final String COMMENT_PREFIX = "# ";
-    protected static final String BLANK_CONFIG = "{}\n";
     private final DumperOptions yamlOptions = new DumperOptions();
     private final Representer yamlRepresenter = new YamlRepresenter();
-    private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
+    private final Yaml yaml;
+    private final String emptyConfig;
+
+    public YamlConfiguration() {
+        // some DumperOptions are only applied when constructing a Yaml instance
+        yamlOptions.setLineBreak(DumperOptions.LineBreak.getPlatformLineBreak());
+        yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
+
+        // representation of an empty configuration can vary based on Yaml instance options
+        emptyConfig = yaml.dump(Collections.<String, Object>emptyMap());
+    }
 
     @Override
     public String saveToString() {
@@ -37,7 +47,7 @@ public class YamlConfiguration extends FileConfiguration {
         String header = buildHeader();
         String dump = yaml.dump(getValues(false));
 
-        if (dump.equals(BLANK_CONFIG)) {
+        if (dump.equals(emptyConfig)) {
             dump = "";
         }
 
@@ -135,7 +145,7 @@ public class YamlConfiguration extends FileConfiguration {
         boolean startedHeader = false;
 
         for (int i = lines.length - 1; i >= 0; i--) {
-            builder.insert(0, "\n");
+            builder.insert(0, yamlOptions.getLineBreak().getString());
 
             if ((startedHeader) || (lines[i].length() != 0)) {
                 builder.insert(0, lines[i]);
