@@ -10,12 +10,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Note;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.Statistic;
 import org.bukkit.WeatherType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.map.MapView;
+import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -260,6 +262,33 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param data a data bit needed for some effects
      */
     public <T> void playEffect(Location loc, Effect effect, T data);
+
+    /**
+     * Displays a particle effect to just this player.
+     *
+     * @param loc the location to play the effect at
+     * @param particle the {@link Particle}
+     * @param offsetX the X axis random offset
+     * @param offsetY the Y axis random offset
+     * @param offsetZ the Z axis random offset
+     * @param data the data of the particles, sometimes speed
+     * @param amount the number of particles to show
+     */
+    public void showParticle(Location loc, Particle particle, float offsetX, float offsetY, float offsetZ, float data, int amount);
+
+    /**
+     * Displays a particle effect to just this player.
+     *
+     * @param loc the location to play the effect at
+     * @param particle the {@link Particle}
+     * @param material the {@link MaterialData} of the particle, for some particles
+     * @param offsetX the X axis random offset
+     * @param offsetY the Y axis random offset
+     * @param offsetZ the Z axis random offset
+     * @param data the data of the particles, sometimes speed
+     * @param amount the number of particles to show
+     */
+    public void showParticle(Location loc, Particle particle, MaterialData material, float offsetX, float offsetY, float offsetZ, float data, int amount);
 
     /**
      * Send a block change. This fakes a block change packet for a user at a
