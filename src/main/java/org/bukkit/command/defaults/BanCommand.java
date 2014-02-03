@@ -2,6 +2,8 @@ package org.bukkit.command.defaults;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,13 +24,19 @@ public class BanCommand extends VanillaCommand {
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
-        if (args.length == 0)  {
+        if (args.length == 0) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
 
-        // TODO: Ban Reason support
-        Bukkit.getOfflinePlayer(args[0]).setBanned(true);
+        String banReason;
+        if (args.length >= 1) {
+            banReason = StringUtils.join(ArrayUtils.subarray(args, 1, args.length), " ");
+
+            Bukkit.getOfflinePlayer(args[0]).setBanned(banReason.toString(), true);
+        } else {
+            Bukkit.getOfflinePlayer(args[0]).setBanned(true);
+        }
 
         Player player = Bukkit.getPlayer(args[0]);
         if (player != null) {
