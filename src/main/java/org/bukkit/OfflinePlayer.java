@@ -36,6 +36,25 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
     public void setBanned(boolean banned);
 
     /**
+     * Set the {@link BanEntry} for this player
+     * <p>
+     * If the specified entry is null, this will remove the player's entry.
+     * Calling this method will also save the entry to the bans file.
+     * 
+     * @param entry the entry to set
+     */
+    public void setBanEntry(BanEntry entry);
+
+    /**
+     * Returns the {@link BanEntry} for this player if they are banned
+     * <p>
+     * If the player is not banned, this will create a new BanEntry instance.
+     * 
+     * @return an existing ban entry, or a new one if the player is not banned
+     */
+    public BanEntry getBanEntry();
+
+    /**
      * Checks if this player is whitelisted or not
      *
      * @return true if whitelisted
