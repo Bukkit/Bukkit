@@ -158,5 +158,19 @@ public enum Particle {
      * Dust textured like a specific block.
      * Requires a block material to be specified.
      */
-    BLOCK_DUST
+    BLOCK_DUST;
+
+    /**
+     * Whether this particle requires a material to be specified.
+     */
+    public boolean usesMaterial() {
+        return this == ITEM_BREAK || this == BLOCK_BREAK || this == BLOCK_DUST;
+    }
+
+    /**
+     * Whether this particle makes use of the data portion of the material specified.
+     */
+    public boolean usesData() {
+        return this == BLOCK_BREAK || this == BLOCK_DUST;
+    }
 }
