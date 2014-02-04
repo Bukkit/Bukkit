@@ -10,14 +10,14 @@ public interface FlowerPot extends BlockState {
     /**
      * Get the material in the flower pot
      * 
-     * @return item ItemStack for the block currently in the flower pot.
+     * @return item ItemStack for the item currently in the flower pot (material is AIR if it is empty).
      */
     ItemStack getContents();
 
     /**
      * Set the contents of the flower pot
      * 
-     * @param itemStack ItemStack of the block to put in the flower pot.
+     * @param itemStack ItemStack of the item to put in the flower pot or null/material as AIR to empty it.
      */
     void setContents(ItemStack itemStack);
 
