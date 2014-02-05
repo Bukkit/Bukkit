@@ -122,6 +122,10 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
          */
         DEFEND_VILLAGE,
         /**
+         * When a wither boss selects an attack target for its primary head.
+         */
+        WITHER_TARGET,
+        /**
          * For custom calls to the event.
          */
         CUSTOM
