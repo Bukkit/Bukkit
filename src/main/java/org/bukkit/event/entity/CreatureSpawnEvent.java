@@ -14,7 +14,7 @@ import org.bukkit.event.HandlerList;
  */
 public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private boolean canceled;
+    private boolean cancelled;
     private final SpawnReason spawnReason;
 
     public CreatureSpawnEvent(final LivingEntity spawnee, final SpawnReason spawnReason) {
