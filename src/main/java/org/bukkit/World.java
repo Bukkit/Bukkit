@@ -704,6 +704,22 @@ public interface World extends PluginMessageRecipient, Metadatable {
 
     /**
      * Spawn a {@link FallingBlock} entity at the given {@link Location} of
+     * the specified {@link Material}. The material dictates what is falling.
+     * When the FallingBlock hits the ground, it will place that block.
+     * <p>
+     * The Material must be a block type, check with {@link Material#isBlock()
+     * material.isBlock()}. The Material may not be air.
+     *
+     * @param location The {@link Location} to spawn the FallingBlock
+     * @param material The block {@link Material} type
+     * @return The spawned {@link FallingBlock} instance
+     * @throws IllegalArgumentException if {@link Location} or {@link
+     *     Material} are null or {@link Material} is not a block
+     */
+    public FallingBlock spawnFallingBlock(Location location, Material material) throws IllegalArgumentException;
+
+    /**
+     * Spawn a {@link FallingBlock} entity at the given {@link Location} of
      * the specified blockId (converted to {@link Material})
      *
      * @param location The {@link Location} to spawn the FallingBlock
