@@ -10,7 +10,7 @@ public class PlaySoundCommand extends VanillaCommand {
     public PlaySoundCommand() {
         super("playsound");
         this.description = "Plays a sound to a given player";
-        this.usageMessage = "/playsound <sound> <player> [x] [y] [z] [volume] [pitch] [minimumVolume]";
+        this.usageMessage = "/playsound <sound> [player] [x] [y] [z] [volume] [pitch] [minimumVolume]";
         this.setPermission("bukkit.command.playsound");
     }
 
@@ -20,12 +20,19 @@ public class PlaySoundCommand extends VanillaCommand {
             return true;
         }
 
-        if (args.length < 2) {
+        if (args.length < 1) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
+
         final String soundArg = args[0];
-        final String playerArg = args[1];
+        String playerArg = null;
+
+        if (args.length == 1) {
+            playerArg = sender.getName();
+        } else {
+            playerArg = args[1];
+        }
 
         final Player player = Bukkit.getPlayerExact(playerArg);
         if (player == null) {
@@ -43,7 +50,6 @@ public class PlaySoundCommand extends VanillaCommand {
         double minimumVolume = 0.0D;
 
         switch (args.length) {
-        default:
         case 8:
             minimumVolume = getDouble(sender, args[7], 0.0D, 1.0D);
         case 7:
@@ -56,8 +62,6 @@ public class PlaySoundCommand extends VanillaCommand {
             y = getRelativeDouble(y, sender, args[3]);
         case 3:
             x = getRelativeDouble(x, sender, args[2]);
-        case 2:
-            // Noop
         }
 
         final double fixedVolume = volume > 1.0D ? volume * 16.0D : 16.0D;
