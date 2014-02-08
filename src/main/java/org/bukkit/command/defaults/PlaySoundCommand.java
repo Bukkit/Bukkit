@@ -20,9 +20,16 @@ public class PlaySoundCommand extends VanillaCommand {
             return true;
         }
 
-        if (args.length < 1) {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
-            return false;
+        if (sender instanceof Player) {
+            if (args.length < 1) {
+                sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+                return false;
+            }
+        } else {
+            if (args.length < 2) {
+                sender.sendMessage(ChatColor.RED + "Usage: /playsound <sound> <player> [x] [y] [z] [volume] [pitch] [minimumVolume]");
+                return false;
+            }
         }
 
         final String soundArg = args[0];
