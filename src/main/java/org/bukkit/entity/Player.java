@@ -291,6 +291,19 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public void showParticle(Location loc, Particle particle, MaterialData material, float offsetX, float offsetY, float offsetZ, float speed, int amount);
 
     /**
+     * Displays a particle to just this player.
+     *
+     * @param loc the location to play the effect at
+     * @param particle the name of the particle to display
+     * @param offsetX the X axis random offset
+     * @param offsetY the Y axis random offset
+     * @param offsetZ the Z axis random offset
+     * @param speed the speed of the particles
+     * @param amount the number of particles to show
+     */
+    public void showParticle(Location loc, String particle, float offsetX, float offsetY, float offsetZ, float speed, int amount);
+
+    /**
      * Send a block change. This fakes a block change packet for a user at a
      * certain location. This will not actually change the world in any way.
      *

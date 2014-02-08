@@ -1184,6 +1184,19 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public void showParticle(Location loc, Particle particle, MaterialData material, float offsetX, float offsetY, float offsetZ, float speed, int amount);
 
     /**
+     * Displays a particle at the provided Location in the World.
+     *
+     * @param loc the location to play the effect at
+     * @param particle the name of the particle to display
+     * @param offsetX the X axis random offset
+     * @param offsetY the Y axis random offset
+     * @param offsetZ the Z axis random offset
+     * @param speed the speed of the particles
+     * @param amount the number of particles to show
+     */
+    public void showParticle(Location loc, String particle, float offsetX, float offsetY, float offsetZ, float speed, int amount);
+
+    /**
      * Represents various map environment types that a world may be
      */
     public enum Environment {
