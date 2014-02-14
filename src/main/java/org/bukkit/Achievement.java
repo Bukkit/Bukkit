@@ -5,6 +5,7 @@ package org.bukkit;
  */
 public enum Achievement {
     OPEN_INVENTORY,
+    KILL_WOLF,
     MINE_WOOD (OPEN_INVENTORY),
     BUILD_WORKBENCH (MINE_WOOD),
     BUILD_PICKAXE (BUILD_WORKBENCH),
@@ -36,6 +37,7 @@ public enum Achievement {
     KILL_WITHER (SPAWN_WITHER),
     FULL_BEACON (KILL_WITHER),
     BREED_COW (KILL_COW),
+    BULD_BED (KILL_WOLF),
     DIAMONDS_TO_YOU (GET_DIAMONDS),
     ;
 
@@ -46,7 +48,7 @@ public enum Achievement {
     }
 
     private Achievement(Achievement parent) {
-        this.parent = parent;
+        this.parent = parent; 
     }
 
     /**
