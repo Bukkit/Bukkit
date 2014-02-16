@@ -42,6 +42,7 @@ import org.bukkit.material.Sandstone;
 import org.bukkit.material.Sign;
 import org.bukkit.material.Skull;
 import org.bukkit.material.SmoothBrick;
+import org.bukkit.material.SnowLayer;
 import org.bukkit.material.SpawnEgg;
 import org.bukkit.material.Stairs;
 import org.bukkit.material.Step;
@@ -140,7 +141,7 @@ public enum Material {
     REDSTONE_TORCH_OFF(75, RedstoneTorch.class),
     REDSTONE_TORCH_ON(76, RedstoneTorch.class),
     STONE_BUTTON(77, Button.class),
-    SNOW(78),
+    SNOW(78, SnowLayer.class),
     ICE(79),
     SNOW_BLOCK(80),
     CACTUS(81, MaterialData.class),
