@@ -40,6 +40,46 @@ public class SnowLayer extends MaterialData {
     }
 
     /**
+     * Adds a layer to the current snow layer. If this goes over
+     * the max height for a snow layer the current height will
+     * not be affected.
+     *
+     * @return the new SnowLayerHeight value if modified, null otherwise
+     */
+    public SnowLayerHeight addLayer() {
+        SnowLayerHeight newHeight = SnowLayerHeight.fromHeight((byte) (getData() + 1));
+
+        // New height is invalid
+        if (newHeight == null) {
+            return null;
+        }
+
+        setData(newHeight.getHeightData());
+
+        return newHeight;
+    }
+
+    /**
+     * Removes a layer from the current snow layer. If the resulting
+     * height were to go below the first layer, then the block's height
+     * will not be affected.
+     *
+     * @return the new SnowLayerHeight value if modified, null otherwise
+     */
+    public SnowLayerHeight removeLayer() {
+        SnowLayerHeight newHeight = SnowLayerHeight.fromHeight((byte) (getData() - 1));
+
+        // New neight is invalid
+        if (newHeight == null) {
+            return null;
+        }
+
+        setData(newHeight.getHeightData());
+
+        return newHeight;
+    }
+
+    /**
      * Gets the height of this snow layer
      * @return the height of this snow layer
      */

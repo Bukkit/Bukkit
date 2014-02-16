@@ -38,7 +38,12 @@ public enum SnowLayerHeight {
     /*
      * The seventh snow layer.
      */
-    LAYER_SEVEN(0x6);
+    LAYER_SEVEN(0x6),
+
+    /*
+     * The eight snow layer.
+     */
+    LAYER_EIGHT(0x7);
 
     private byte heightData;
 
