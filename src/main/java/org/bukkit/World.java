@@ -607,8 +607,8 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public boolean createExplosion(double x, double y, double z, float power, boolean setFire, boolean breakBlocks);
 
     /**
-     * Creates explosion at given coordinates with given power and optionally
-     * setting blocks on fire or breaking blocks.
+     * Creates explosion at given coordinates with given power, setting the source
+     * of the explosion, and optionally setting blocks on fire or breaking blocks
      *
      * @param source Source entity
      * @param x X coordinate
