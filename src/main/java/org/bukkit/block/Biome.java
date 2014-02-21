@@ -14,6 +14,7 @@ public enum Biome {
     OCEAN,
     RIVER,
     EXTREME_HILLS,
+    EXTREME_HILLS_EDGE,
     FROZEN_OCEAN,
     FROZEN_RIVER,
     ICE_PLAINS,
