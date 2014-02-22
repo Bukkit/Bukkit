@@ -69,6 +69,17 @@ public enum InventoryType {
      * A hopper inventory, with 5 slots of type CONTAINER.
      */
     HOPPER(5, "Item Hopper"),
+    /**
+     * A horse inventory, with 2 slots of type ARMOR.
+     * Used by all horses that don't have a chest attached.
+     * The second armor slot may not be visible in the GUI.
+     */
+    HORSE(2, "Horse"),
+    /**
+     * A horse inventory, with 2 slots of type ARMOR and 15 slots of type CONTAINER.
+     * The second armor slot is not visible in the GUI.
+     */
+    HORSE_PACK(17, "Horse"),
     ;
 
     private final int size;
