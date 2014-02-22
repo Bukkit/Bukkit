@@ -650,6 +650,20 @@ public interface Server extends PluginMessageRecipient {
     Inventory createInventory(InventoryHolder owner, InventoryType type);
 
     /**
+     * Creates an empty inventory of the specified type with the specified title. If the type is {@link
+     * InventoryType#CHEST}, the new inventory has a size of 27; otherwise the
+     * new inventory has the normal size for its type.
+     *
+     * @param owner The holder of the inventory; can be null if there's no
+     *     holder.
+     * @param type The type of inventory to create.
+     * @param title The title of the inventory, to be displayed when it is
+     *     viewed.
+     * @return The new inventory.
+     */
+    Inventory createInventory(InventoryHolder owner, InventoryType type, String title);
+
+    /**
      * Creates an empty inventory of type {@link InventoryType#CHEST} with the
      * specified size.
      *
