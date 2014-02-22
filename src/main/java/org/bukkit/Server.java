@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.help.HelpMap;
+import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -640,7 +641,10 @@ public interface Server extends PluginMessageRecipient {
     /**
      * Creates an empty inventory of the specified type. If the type is {@link
      * InventoryType#CHEST}, the new inventory has a size of 27; otherwise the
-     * new inventory has the normal size for its type.
+     * new inventory has the normal size for its type. The new inventory can be
+     * cast to the subinterface appropriate to its type - for example, if you pass
+     * {@link InventoryType#BREWING}, then the new inventory can be cast to
+     * {@link BrewerInventory}.
      *
      * @param owner The holder of the inventory; can be null if there's no
      *     holder.
@@ -652,7 +656,10 @@ public interface Server extends PluginMessageRecipient {
     /**
      * Creates an empty inventory of the specified type with the specified title. If the type is {@link
      * InventoryType#CHEST}, the new inventory has a size of 27; otherwise the
-     * new inventory has the normal size for its type.
+     * new inventory has the normal size for its type. The new inventory can be
+     * cast to the subinterface appropriate to its type - for example, if you pass
+     * {@link InventoryType#BREWING}, then the new inventory can be cast to
+     * {@link BrewerInventory}.
      *
      * @param owner The holder of the inventory; can be null if there's no
      *     holder.
