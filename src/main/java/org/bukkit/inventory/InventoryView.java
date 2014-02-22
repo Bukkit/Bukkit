@@ -225,7 +225,7 @@ public abstract class InventoryView {
      *
      * @return The title.
      */
-    public final String getTitle() {
+    public String getTitle() {
         return getTopInventory().getTitle();
     }
 }
