@@ -3,6 +3,7 @@ package org.bukkit.entity;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.entity.minecart.CommandMinecart;
 import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.SpawnerMinecart;
 import org.bukkit.entity.minecart.RideableMinecart;
@@ -19,8 +20,8 @@ public enum EntityType {
     /**
      * An item resting on the ground.
      * <p>
-     * Spawn with {@link World#dropItem(Location, ItemStack)}
-     * or {@link World#dropItemNaturally(Location, ItemStack)}
+     * Spawn with {@link World#dropItem(Location, ItemStack)} or {@link
+     * World#dropItemNaturally(Location, ItemStack)}
      */
     DROPPED_ITEM("Item", Item.class, 1, false),
     /**
@@ -80,6 +81,10 @@ public enum EntityType {
      */
     FALLING_BLOCK("FallingSand", FallingBlock.class, 21, false),
     FIREWORK("FireworksRocketEntity", Firework.class, 22, false),
+    /**
+     * @see CommandMinecart
+     */
+    MINECART_COMMAND("MinecartCommandBlock", CommandMinecart.class, 40),
     /**
      * A placed boat.
      */
@@ -153,7 +158,7 @@ public enum EntityType {
     FISHING_HOOK(null, Fish.class, -1, false),
     /**
      * A bolt of lightning.
-     *
+     * <p>
      * Spawn with {@link World#strikeLightning(Location)}.
      */
     LIGHTNING(null, LightningStrike.class, -1, false),
@@ -245,9 +250,10 @@ public enum EntityType {
     }
 
     /**
-     * Some entities cannot be spawned using {@link World#spawnEntity(Location, EntityType)}
-     * or {@link World#spawn(Location, Class)}, usually
-     * because they require additional information in order to spawn.
+     * Some entities cannot be spawned using {@link
+     * World#spawnEntity(Location, EntityType)} or {@link
+     * World#spawn(Location, Class)}, usually because they require additional
+     * information in order to spawn.
      *
      * @return False if the entity type cannot be spawned
      */

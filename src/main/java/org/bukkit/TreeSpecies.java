@@ -24,7 +24,16 @@ public enum TreeSpecies {
     /**
      * Represents jungle trees.
      */
-    JUNGLE(0x3);
+    JUNGLE(0x3),
+    /**
+     * Represents acacia trees.
+     */
+    ACACIA(0x4),
+    /**
+     * Represents dark oak trees.
+     */
+    DARK_OAK(0x5),
+    ;
 
     private final byte data;
     private final static Map<Byte, TreeSpecies> BY_DATA = Maps.newHashMap();
@@ -48,8 +57,8 @@ public enum TreeSpecies {
      * Gets the TreeSpecies with the given data value
      *
      * @param data Data value to fetch
-     * @return The {@link TreeSpecies} representing the given value, or null if
-     *         it doesn't exist
+     * @return The {@link TreeSpecies} representing the given value, or null
+     *     if it doesn't exist
      * @deprecated Magic value
      */
     @Deprecated

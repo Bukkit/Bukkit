@@ -19,7 +19,15 @@ public enum Action {
      */
     RIGHT_CLICK_AIR,
     /**
-     * Ass-pressure
+     * Stepping onto or into a block (Ass-pressure)
+     *
+     * Examples:
+     * <ul>
+     * <li>Jumping on soil
+     * <li>Standing on pressure plate
+     * <li>Triggering redstone ore
+     * <li>Triggering tripwire
+     * </ul>
      */
     PHYSICAL,
 }

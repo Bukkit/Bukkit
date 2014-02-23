@@ -1,82 +1,69 @@
 package org.bukkit;
 
-import java.util.Map;
-
-import com.google.common.collect.Maps;
-
 /**
- * Represents an achievement, which may be given to players
+ * Represents an achievement, which may be given to players.
  */
 public enum Achievement {
-    OPEN_INVENTORY(0),
-    MINE_WOOD(1),
-    BUILD_WORKBENCH(2),
-    BUILD_PICKAXE(3),
-    BUILD_FURNACE(4),
-    ACQUIRE_IRON(5),
-    BUILD_HOE(6),
-    MAKE_BREAD(7),
-    BAKE_CAKE(8),
-    BUILD_BETTER_PICKAXE(9),
-    COOK_FISH(10),
-    ON_A_RAIL(11),
-    BUILD_SWORD(12),
-    KILL_ENEMY(13),
-    KILL_COW(14),
-    FLY_PIG(15),
-    SNIPE_SKELETON(16),
-    GET_DIAMONDS(17),
-    NETHER_PORTAL(18),
-    GHAST_RETURN(19),
-    GET_BLAZE_ROD(20),
-    BREW_POTION(21),
-    END_PORTAL(22),
-    THE_END(23),
-    ENCHANTMENTS(24),
-    OVERKILL(25),
-    BOOKCASE(26);
+    OPEN_INVENTORY,
+    MINE_WOOD (OPEN_INVENTORY),
+    BUILD_WORKBENCH (MINE_WOOD),
+    BUILD_PICKAXE (BUILD_WORKBENCH),
+    BUILD_FURNACE (BUILD_PICKAXE),
+    ACQUIRE_IRON (BUILD_FURNACE),
+    BUILD_HOE (BUILD_WORKBENCH),
+    MAKE_BREAD (BUILD_HOE),
+    BAKE_CAKE (BUILD_HOE),
+    BUILD_BETTER_PICKAXE (BUILD_PICKAXE),
+    COOK_FISH (BUILD_FURNACE),
+    ON_A_RAIL (ACQUIRE_IRON),
+    BUILD_SWORD (BUILD_WORKBENCH),
+    KILL_ENEMY (BUILD_SWORD),
+    KILL_COW (BUILD_SWORD),
+    FLY_PIG (KILL_COW),
+    SNIPE_SKELETON (KILL_ENEMY),
+    GET_DIAMONDS (ACQUIRE_IRON),
+    NETHER_PORTAL (GET_DIAMONDS),
+    GHAST_RETURN (NETHER_PORTAL),
+    GET_BLAZE_ROD (NETHER_PORTAL),
+    BREW_POTION (GET_BLAZE_ROD),
+    END_PORTAL (GET_BLAZE_ROD),
+    THE_END (END_PORTAL),
+    ENCHANTMENTS (GET_DIAMONDS),
+    OVERKILL (ENCHANTMENTS),
+    BOOKCASE (ENCHANTMENTS),
+    EXPLORE_ALL_BIOMES (END_PORTAL),
+    SPAWN_WITHER (THE_END),
+    KILL_WITHER (SPAWN_WITHER),
+    FULL_BEACON (KILL_WITHER),
+    BREED_COW (KILL_COW),
+    DIAMONDS_TO_YOU (GET_DIAMONDS),
+    ;
 
-    /**
-     * The offset used to distinguish Achievements and Statistics
-     */
-    public final static int STATISTIC_OFFSET = 0x500000;
-    private final static Map<Integer, Achievement> BY_ID = Maps.newHashMap();
-    private final int id;
+    private final Achievement parent;
 
-    private Achievement(int id) {
-        this.id = STATISTIC_OFFSET + id;
+    private Achievement() {
+        parent = null;
+    }
+
+    private Achievement(Achievement parent) {
+        this.parent = parent;
     }
 
     /**
-     * Gets the ID for this achievement.
-     * <p>
-     * Note that this is offset using {@link #STATISTIC_OFFSET}
-     *
-     * @return ID of this achievement
-     * @deprecated Magic value
+     * Returns whether or not this achievement has a parent achievement.
+     * 
+     * @return whether the achievement has a parent achievement
      */
-    @Deprecated
-    public int getId() {
-        return id;
+    public boolean hasParent() {
+        return parent != null;
     }
 
     /**
-     * Gets the achievement associated with the given ID.
-     * <p>
-     * Note that the ID must already be offset using {@link #STATISTIC_OFFSET}
-     *
-     * @param id ID of the achievement to return
-     * @return Achievement with the given ID
-     * @deprecated Magic value
+     * Returns the parent achievement of this achievement, or null if none.
+     * 
+     * @return the parent achievement or null
      */
-    @Deprecated
-    public static Achievement getById(int id) {
-        return BY_ID.get(id);
-    }
-
-    static {
-        for (Achievement achievement : values()) {
-            BY_ID.put(achievement.id, achievement);
-        }
+    public Achievement getParent() {
+        return parent;
     }
 }
