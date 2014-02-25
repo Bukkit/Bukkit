@@ -143,7 +143,7 @@ public class Conversation {
      *
      * @param prefix The ConversationPrefix to use.
      */
-    void setPrefix(ConversationPrefix prefix) {
+    public void setPrefix(ConversationPrefix prefix) {
         this.prefix = prefix;
     }
 
@@ -152,11 +152,23 @@ public class Conversation {
      *
      * @param canceller The {@link ConversationCanceller} to add.
      */
-    void addConversationCanceller(ConversationCanceller canceller) {
+    public void addConversationCanceller(ConversationCanceller canceller) {
         canceller.setConversation(this);
         this.cancellers.add(canceller);
     }
 
+
+    /**
+     * Removes a {@link ConversationCanceller} to the cancellers collection.
+     * 
+     * @param canceller The {@link ConversationCanceller} to remove.
+     */
+    public void removeConversationCanceller(ConversationCanceller canceller){
+        if(canceller.getConversation() == this && this.cancellers.contains(canceller)){
+            this.cancellers.remove(cancellers);
+            canceller.setConversation(null);
+        }
+    }
     /**
      * Gets the list of {@link ConversationCanceller}s
      *
