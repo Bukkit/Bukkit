@@ -41,7 +41,7 @@ public enum SnowLayerHeight {
     LAYER_SEVEN(0x6),
 
     /*
-     * The eight snow layer.
+     * The eighth snow layer.
      */
     LAYER_EIGHT(0x7);
 
@@ -62,8 +62,8 @@ public enum SnowLayerHeight {
     /**
      * Gets the snow layer height from the specified data.
      *
-     * @param height the snow layer height specified by data
-     * @return a SnowLayerHeight enum based on the height, or
+     * @param heightData the snow layer height specified by data
+     * @return a SnowLayerHeight value based on the height, or
      *     null if the height value is invalid
      */
     public static SnowLayerHeight fromHeight(byte heightData) {

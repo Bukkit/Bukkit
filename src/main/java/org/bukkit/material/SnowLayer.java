@@ -1,5 +1,6 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.SnowLayerHeight;
 
@@ -69,7 +70,7 @@ public class SnowLayer extends MaterialData {
     public SnowLayerHeight removeLayer() {
         SnowLayerHeight newHeight = SnowLayerHeight.fromHeight((byte) (getData() - 1));
 
-        // New neight is invalid
+        // New height is invalid
         if (newHeight == null) {
             return null;
         }
