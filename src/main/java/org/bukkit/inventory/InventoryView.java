@@ -20,6 +20,7 @@ public abstract class InventoryView {
     public enum Property {
         /**
          * The progress of the down-pointing arrow in a brewing inventory.
+         * This also affects the bubbles.
          */
         BREW_TIME(0, InventoryType.BREWING),
         /**
@@ -32,6 +33,7 @@ public abstract class InventoryView {
         BURN_TIME(1, InventoryType.FURNACE),
         /**
          * How many total ticks the current fuel should last.
+         * This is in effect the BURN_TIME that will make the flame full.
          */
         TICKS_FOR_CURRENT_FUEL(2, InventoryType.FURNACE),
         /**
@@ -48,7 +50,26 @@ public abstract class InventoryView {
          * In an enchanting inventory, the bottom button's experience level
          * value.
          */
-        ENCHANT_BUTTON3(2, InventoryType.ENCHANTING);
+        ENCHANT_BUTTON3(2, InventoryType.ENCHANTING),
+        /**
+         * In an anvil inventory, the reported enchantment cost
+         */
+        ANVIL_COST(0, InventoryType.ANVIL),
+        /**
+         * In a beacon inventory, the level of effects it enables.
+         */
+        BEACON_LEVEL(0, InventoryType.BEACON),
+        /**
+         * In a beacon inventory, the primary potion effect.
+         * Only displayed potion effects are accepted.
+         */
+        BEACON_PRIMARY(1, InventoryType.BEACON),
+        /**
+         * In a beacon inventory, the secondary potion effect.
+         * Only displayed potion effects are accepted.
+         */
+        BEACON_SECONDARY(2, InventoryType.BEACON),
+        ;
         int id;
         InventoryType style;
         private Property(int id, InventoryType appliesTo) {
