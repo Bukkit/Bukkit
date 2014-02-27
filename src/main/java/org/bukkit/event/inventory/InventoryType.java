@@ -10,11 +10,8 @@ import org.bukkit.inventory.HorseInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.MerchantInventory;
 
-/**
- * These constants specify the style and appearance of an inventory, not its use.
- * Thus, any inventory which uses the basic nine-per-row layout is of type CHEST, for example.
- */
 public enum InventoryType {
+
     /**
      * A chest inventory, with 0, 9, 18, 27, 36, 45, or 54 slots of type
      * CONTAINER.
@@ -26,9 +23,7 @@ public enum InventoryType {
     DISPENSER(9,"Dispenser", Inventory.class),
     /**
      * A dropper inventory, with 9 slots of type CONTAINER.
-     * @deprecated Will be replaced with {@link InventoryType#DISPENSER}
      */
-    @Deprecated
     DROPPER(9, "Dropper", Inventory.class),
     /**
      * A furnace inventory, with a RESULT slot, a CRAFTING slot, and a FUEL
@@ -70,9 +65,7 @@ public enum InventoryType {
     MERCHANT(3,"Villager", MerchantInventory.class),
     /**
      * The ender chest inventory, with 27 slots.
-     * @deprecated Will be replaced with {@link InventoryType#CHEST}
      */
-    @Deprecated
     ENDER_CHEST(27,"Ender Chest", Inventory.class),
     /**
      * An anvil inventory, with 2 CRAFTING slots and 1 RESULT slot
