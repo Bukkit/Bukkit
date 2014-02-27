@@ -3,6 +3,7 @@ package org.bukkit.inventory;
 import org.bukkit.GameMode;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.potion.PotionEffectType;
 
 /**
  * Represents a view linking two inventories and a single player (whose
@@ -22,63 +23,69 @@ public abstract class InventoryView {
          * The progress of the down-pointing arrow in a brewing inventory.
          * This also affects the bubbles.
          */
-        BREW_TIME(0, InventoryType.BREWING),
+        BREW_TIME(0, InventoryType.BREWING, Integer.class),
         /**
          * The progress of the right-pointing arrow in a furnace inventory.
          */
-        COOK_TIME(0, InventoryType.FURNACE),
+        COOK_TIME(0, InventoryType.FURNACE, Integer.class),
         /**
          * The progress of the flame in a furnace inventory.
          */
-        BURN_TIME(1, InventoryType.FURNACE),
+        BURN_TIME(1, InventoryType.FURNACE, Integer.class),
         /**
          * How many total ticks the current fuel should last.
          * This is in effect the BURN_TIME that will make the flame full.
          */
-        TICKS_FOR_CURRENT_FUEL(2, InventoryType.FURNACE),
+        TICKS_FOR_CURRENT_FUEL(2, InventoryType.FURNACE, Integer.class),
         /**
          * In an enchanting inventory, the top button's experience level
          * value.
          */
-        ENCHANT_BUTTON1(0, InventoryType.ENCHANTING),
+        ENCHANT_BUTTON1(0, InventoryType.ENCHANTING, Integer.class),
         /**
          * In an enchanting inventory, the middle button's experience level
          * value.
          */
-        ENCHANT_BUTTON2(1, InventoryType.ENCHANTING),
+        ENCHANT_BUTTON2(1, InventoryType.ENCHANTING, Integer.class),
         /**
          * In an enchanting inventory, the bottom button's experience level
          * value.
          */
-        ENCHANT_BUTTON3(2, InventoryType.ENCHANTING),
+        ENCHANT_BUTTON3(2, InventoryType.ENCHANTING, Integer.class),
         /**
          * In an anvil inventory, the reported enchantment cost
          */
-        ANVIL_COST(0, InventoryType.ANVIL),
+        ANVIL_COST(0, InventoryType.ANVIL, Integer.class),
         /**
          * In a beacon inventory, the level of effects it enables.
          */
-        BEACON_LEVEL(0, InventoryType.BEACON),
+        BEACON_LEVEL(0, InventoryType.BEACON, Integer.class),
         /**
          * In a beacon inventory, the primary potion effect.
          * Only displayed potion effects are accepted.
          */
-        BEACON_PRIMARY(1, InventoryType.BEACON),
+        BEACON_PRIMARY(1, InventoryType.BEACON, PotionEffectType.class),
         /**
          * In a beacon inventory, the secondary potion effect.
          * Only displayed potion effects are accepted.
          */
-        BEACON_SECONDARY(2, InventoryType.BEACON),
+        BEACON_SECONDARY(2, InventoryType.BEACON, PotionEffectType.class),
         ;
         int id;
         InventoryType style;
-        private Property(int id, InventoryType appliesTo) {
+        Class<?> clz;
+        private Property(int id, InventoryType appliesTo, Class<?> value) {
             this.id = id;
             style = appliesTo;
+            clz = value;
         }
 
         public InventoryType getType() {
             return style;
+        }
+
+        public Class<?> getValueType() {
+            return clz;
         }
 
         /**
@@ -236,9 +243,60 @@ public abstract class InventoryView {
      * @param value the new value for the window property
      * @return true if the property was updated successfully, false if the
      *     property is not supported by that inventory
+     * @deprecated In favour of {@link #setIntegerProperty(Property, int)}.
      */
+    @Deprecated
     public final boolean setProperty(Property prop, int value) {
         return getPlayer().setWindowProperty(prop, value);
+    }
+
+    /**
+     * Sets an extra property of this inventory if supported by that
+     * inventory, for example the state of a progress bar.
+     *
+     * @param <T> The type of the property, as specified by the {@link Property} constant.
+     * @param prop the window property to update
+     * @param value the new value for the window property
+     * @return true if the property was updated successfully, false if the
+     *     property is not supported by that inventory or the wrong type was passed
+     */
+    public final <T> boolean setProperty(Property prop, T value) {
+        return getPlayer().setWindowProperty(prop, value);
+    }
+
+    /**
+     * Sets an extra property of this inventory if supported by that
+     * inventory, for example the state of a progress bar.
+     *
+     * @param prop the window property to update
+     * @param value the new value for the window property
+     * @return true if the property was updated successfully, false if the
+     *     property is not supported by that inventory
+     */
+    public final boolean setIntegerProperty(Property prop, int value) {
+        return getPlayer().setWindowProperty(prop, Integer.valueOf(value));
+    }
+
+    /**
+     * Fetches an extra property of this inventory if supported by that
+     * inventory, for example the state of a progress bar.
+     *
+     * @param prop The property to check
+     * @return The current value of the property, or null if unsupported by that inventory
+     */
+    public final Object getProperty(Property prop) {
+        return getPlayer().getWindowProperty(prop);
+    }
+
+    /**
+     * Fetches an extra property of this inventory if supported by that
+     * inventory, for example the state of a progress bar.
+     *
+     * @param prop The property to check
+     * @return The current value of the property, or null if unsupported by that inventory
+     */
+    public final int getIntegerProperty(Property prop) {
+        return (Integer) getProperty(prop);
     }
 
     /**

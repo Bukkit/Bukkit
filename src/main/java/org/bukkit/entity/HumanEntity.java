@@ -43,8 +43,29 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      * @param prop The property.
      * @param value The value to set the property to.
      * @return True if the property was successfully set.
+     * @deprecated In favour of {@link #setWindowIntegerProperty(Property, int)}.
      */
     public boolean setWindowProperty(InventoryView.Property prop, int value);
+
+    /**
+     * If the player currently has an inventory window open, this method will
+     * set a property of that window, such as the state of a progress bar.
+     *
+     * @param <T> The type of the property, as specified by the {@link Property} constant.
+     * @param prop The property.
+     * @param value The value to set the property to.
+     * @return True if the property was successfully set.
+     */
+    public <T> boolean setWindowProperty(InventoryView.Property prop, T value);
+
+    /**
+     * If the player currently has an inventory window open, this method will
+     * fetch a property of that window, such as the state of a progress bar.
+     *
+     * @param prop The property to fetch
+     * @return The current value of the property, or null if unsupported
+     */
+    public Object getWindowProperty(InventoryView.Property prop);
 
     /**
      * Gets the inventory view the player is currently viewing. If they do not
