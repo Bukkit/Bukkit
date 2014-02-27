@@ -33,7 +33,7 @@ public enum InventoryType {
     /**
      * A workbench inventory, with 9 CRAFTING slots and a RESULT slot.
      */
-    WORKBENCH(10,"Crafting", CraftingInventory.class),
+    WORKBENCH(10,"Crafting", CraftingInventory.class, true),
     /**
      * A player's crafting inventory, with 4 CRAFTING slots and a RESULT slot.
      * Also implies that the 4 ARMOR slots are accessible.
@@ -43,7 +43,7 @@ public enum InventoryType {
      * An enchantment table inventory, with one CRAFTING slot and three
      * enchanting buttons.
      */
-    ENCHANTING(1,"Enchanting", EnchantingInventory.class),
+    ENCHANTING(1,"Enchanting", EnchantingInventory.class, true),
     /**
      * A brewing stand inventory, with one FUEL slot and three CRAFTING slots.
      */
@@ -70,7 +70,7 @@ public enum InventoryType {
     /**
      * An anvil inventory, with 2 CRAFTING slots and 1 RESULT slot
      */
-    ANVIL(3, "Repairing", AnvilInventory.class),
+    ANVIL(3, "Repairing", AnvilInventory.class, true),
     /**
      * A beacon inventory, with 1 CRAFTING slot
      */
@@ -95,11 +95,17 @@ public enum InventoryType {
     private final int size;
     private final String title;
     private final Class<? extends Inventory> invenInterface;
+    private final boolean isCrafting;
 
-    private InventoryType(int defaultSize, String defaultTitle, Class<? extends Inventory> iface) {
+    private InventoryType(int defaultSize, String defaultTitle, Class<? extends Inventory> iface, boolean isCraft) {
         size = defaultSize;
         title = defaultTitle;
         invenInterface = iface;
+        isCrafting = isCraft;
+    }
+
+    private InventoryType(int defaultSize, String defaultTitle, Class<? extends Inventory> iface) {
+        this(defaultSize, defaultTitle, iface, false);
     }
 
     public int getDefaultSize() {
@@ -112,6 +118,10 @@ public enum InventoryType {
 
     public Class<? extends Inventory> getInventoryClass() {
         return invenInterface;
+    }
+
+    public boolean isCraftingType() {
+        return isCrafting;
     }
 
     public enum SlotType {

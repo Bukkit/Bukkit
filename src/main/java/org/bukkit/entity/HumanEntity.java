@@ -2,6 +2,7 @@ package org.bukkit.entity;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
@@ -94,7 +95,9 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      *     no inventory will be opened and null will be returned.
      * @return The newly opened inventory view, or null if it could not be
      *     opened.
+     * @deprecated In favour of {@link #openCrafting(InventoryType, Location, boolean)}
      */
+    @Deprecated
     public InventoryView openWorkbench(Location location, boolean force);
 
     /**
@@ -107,8 +110,29 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      *     location, no inventory will be opened and null will be returned.
      * @return The newly opened inventory view, or null if it could not be
      *     opened.
+     * @deprecated In favour of {@link #openCrafting(InventoryType, Location, boolean)}
      */
+    @Deprecated
     public InventoryView openEnchanting(Location location, boolean force);
+
+    /**
+     * Opens an empty crafting inventory window with the player's inventory
+     * on the bottom. The window functions as a normal crafting screen of the
+     * specified type.
+     *
+     * Supported types are those for which {@link InventoryType#isCraftingType()}
+     * returns true.
+     *
+     * @param type The type of crafting inventory to open.
+     * @param location The location to attach it to. If null, the player's
+     *     location is used.
+     * @param force If false, and there is no crafting block of the appropriate
+     *     type at the location, no inventory will be opened and null will be returned.
+     * @return The newly opened inventory view, or null if it could not be
+     *     opened.
+     * @throws IllegalArgumentException if the passed type is not a supported crafting type
+     */
+    public InventoryView openCrafting(InventoryType type, Location location, boolean force);
 
     /**
      * Opens an inventory window to the specified inventory view.
