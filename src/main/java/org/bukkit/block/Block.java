@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.Metadatable;
 
 /**
@@ -21,6 +22,7 @@ public interface Block extends Metadatable {
      * Gets the metadata for this block
      *
      * @return block specific metadata
+     * @see #getTypeData()
      * @deprecated Magic value
      */
     @Deprecated
@@ -80,6 +82,13 @@ public interface Block extends Metadatable {
      */
     @Deprecated
     int getTypeId();
+    
+    /**
+     * Gets the type and metadata for this block
+     *
+     * @return type and metadata as a MaterialData object
+     */
+    MaterialData getTypeData();
 
     /**
      * Gets the light level between 0-15
@@ -163,6 +172,7 @@ public interface Block extends Metadatable {
      * Sets the metadata for this block
      *
      * @param data New block specific metadata
+     * @see #setType(MaterialData data)
      * @deprecated Magic value
      */
     @Deprecated
@@ -173,6 +183,7 @@ public interface Block extends Metadatable {
      *
      * @param data New block specific metadata
      * @param applyPhysics False to cancel physics from the changed block.
+     * @see #setType(MaterialData data, boolean applyPhysics)
      * @deprecated Magic value
      */
     @Deprecated
@@ -213,10 +224,28 @@ public interface Block extends Metadatable {
      * @param data The data value to change this block to
      * @param applyPhysics False to cancel physics on the changed block
      * @return whether the block was changed
+     * @see #setType(MaterialData data, boolean applyPhysics)
      * @deprecated Magic value
      */
     @Deprecated
     boolean setTypeIdAndData(int type, byte data, boolean applyPhysics);
+    
+    /**
+     * Sets the type of this block
+     *
+     * @param data The type and data value to change this block to
+     * @param applyPhysics False to cancel physics on the changed block
+     * @return whether the block was changed
+     */
+    boolean setType(MaterialData data, boolean applyPhysics);
+    
+    /**
+     * Sets the type of this block
+     *
+     * @param data The type and data value to change this block to
+     * @return whether the block was changed
+     */
+    boolean setType(MaterialData data);
 
     /**
      * Gets the face relation of this block compared to the given block
