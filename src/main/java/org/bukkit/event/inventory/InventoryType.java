@@ -1,5 +1,6 @@
 package org.bukkit.event.inventory;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.BeaconInventory;
 import org.bukkit.inventory.BrewerInventory;
@@ -33,7 +34,7 @@ public enum InventoryType {
     /**
      * A workbench inventory, with 9 CRAFTING slots and a RESULT slot.
      */
-    WORKBENCH(10,"Crafting", CraftingInventory.class, true),
+    WORKBENCH(10,"Crafting", CraftingInventory.class, Material.WORKBENCH),
     /**
      * A player's crafting inventory, with 4 CRAFTING slots and a RESULT slot.
      * Also implies that the 4 ARMOR slots are accessible.
@@ -43,7 +44,7 @@ public enum InventoryType {
      * An enchantment table inventory, with one CRAFTING slot and three
      * enchanting buttons.
      */
-    ENCHANTING(1,"Enchanting", EnchantingInventory.class, true),
+    ENCHANTING(1,"Enchanting", EnchantingInventory.class, Material.ENCHANTMENT_TABLE),
     /**
      * A brewing stand inventory, with one FUEL slot and three CRAFTING slots.
      */
@@ -70,7 +71,7 @@ public enum InventoryType {
     /**
      * An anvil inventory, with 2 CRAFTING slots and 1 RESULT slot
      */
-    ANVIL(3, "Repairing", AnvilInventory.class, true),
+    ANVIL(3, "Repairing", AnvilInventory.class, Material.ANVIL),
     /**
      * A beacon inventory, with 1 CRAFTING slot
      */
@@ -95,17 +96,17 @@ public enum InventoryType {
     private final int size;
     private final String title;
     private final Class<? extends Inventory> invenInterface;
-    private final boolean isCrafting;
+    private final Material craftBench;
 
-    private InventoryType(int defaultSize, String defaultTitle, Class<? extends Inventory> iface, boolean isCraft) {
+    private InventoryType(int defaultSize, String defaultTitle, Class<? extends Inventory> iface, Material craft) {
         size = defaultSize;
         title = defaultTitle;
         invenInterface = iface;
-        isCrafting = isCraft;
+        craftBench = craft;
     }
 
     private InventoryType(int defaultSize, String defaultTitle, Class<? extends Inventory> iface) {
-        this(defaultSize, defaultTitle, iface, false);
+        this(defaultSize, defaultTitle, iface, null);
     }
 
     public int getDefaultSize() {
@@ -120,8 +121,23 @@ public enum InventoryType {
         return invenInterface;
     }
 
+    /**
+     * Check if this inventory is a crafting inventory.
+     *
+     * @return True if this type of inventory is used for crafting
+     */
     public boolean isCraftingType() {
-        return isCrafting;
+        return craftBench != null;
+    }
+
+    /**
+     * If this inventory is a crafting inventory, this returns the Material type
+     * of the block associated with it.
+     *
+     * @return The associated block type, or null if not a crafting inventory
+     */
+    public Material getCraftingType() {
+        return craftBench;
     }
 
     public enum SlotType {
