@@ -46,6 +46,7 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      * @return True if the property was successfully set.
      * @deprecated In favour of {@link #setWindowIntegerProperty(Property, int)}.
      */
+    @Deprecated
     public boolean setWindowProperty(InventoryView.Property prop, int value);
 
     /**

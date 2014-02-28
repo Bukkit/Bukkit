@@ -61,7 +61,7 @@ public enum InventoryType {
      */
     CREATIVE(9,"Creative", Inventory.class),
     /**
-     * The merchant inventory, with 2 TRADE-IN slots, and 1 RESULT slot.
+     * The merchant inventory, with 2 CRAFTING slots, and 1 RESULT slot.
      */
     MERCHANT(3,"Villager", MerchantInventory.class),
     /**
@@ -109,14 +109,30 @@ public enum InventoryType {
         this(defaultSize, defaultTitle, iface, null);
     }
 
+    /**
+     * Get the default size of inventories of this type. Most inventories are always their default
+     * size, but some may support other sizes as well.
+     *
+     * @return The default size
+     */
     public int getDefaultSize() {
         return size;
     }
 
+    /**
+     * Get the default title for inventories of this type.
+     *
+     * @return The default title
+     */
     public String getDefaultTitle() {
         return title;
     }
 
+    /**
+     * Get the class used to represent inventories of this type.
+     *
+     * @return The inventory class
+     */
     public Class<? extends Inventory> getInventoryClass() {
         return invenInterface;
     }
