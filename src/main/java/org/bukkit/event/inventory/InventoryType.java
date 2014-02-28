@@ -44,11 +44,11 @@ public enum InventoryType {
      * An enchantment table inventory, with one CRAFTING slot and three
      * enchanting buttons.
      */
-    ENCHANTING(1,"Enchanting", EnchantingInventory.class, Material.ENCHANTMENT_TABLE),
+    ENCHANTING(1,"Enchant", EnchantingInventory.class, Material.ENCHANTMENT_TABLE),
     /**
      * A brewing stand inventory, with one FUEL slot and three CRAFTING slots.
      */
-    BREWING(4,"Brewing", BrewerInventory.class),
+    BREWING(4,"Brewing Stand", BrewerInventory.class),
     /**
      * A player's inventory, with 9 QUICKBAR slots, 27 CONTAINER slots, and 4
      * ARMOR slots. The ARMOUR slots may not be visible to the player, though.
@@ -71,11 +71,11 @@ public enum InventoryType {
     /**
      * An anvil inventory, with 2 CRAFTING slots and 1 RESULT slot
      */
-    ANVIL(3, "Repairing", AnvilInventory.class, Material.ANVIL),
+    ANVIL(3, "Repair & Name", AnvilInventory.class, Material.ANVIL),
     /**
      * A beacon inventory, with 1 CRAFTING slot
      */
-    BEACON(1, "container.beacon", BeaconInventory.class),
+    BEACON(1, "", BeaconInventory.class),
     /**
      * A hopper inventory, with 5 slots of type CONTAINER.
      */
@@ -90,7 +90,7 @@ public enum InventoryType {
      * A horse inventory, with 2 slots of type ARMOR and 15 slots of type CONTAINER.
      * The second armor slot is not visible in the GUI.
      */
-    HORSE_PACK(17, "Horse", HorseInventory.class),
+    HORSE_PACK(17, "Donkey", HorseInventory.class),
     ;
 
     private final int size;
