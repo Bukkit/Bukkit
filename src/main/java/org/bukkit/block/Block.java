@@ -172,7 +172,7 @@ public interface Block extends Metadatable {
      * Sets the metadata for this block
      *
      * @param data New block specific metadata
-     * @see #setType(MaterialData data)
+     * @see #setTypeData(MaterialData data)
      * @deprecated Magic value
      */
     @Deprecated
@@ -183,7 +183,7 @@ public interface Block extends Metadatable {
      *
      * @param data New block specific metadata
      * @param applyPhysics False to cancel physics from the changed block.
-     * @see #setType(MaterialData data, boolean applyPhysics)
+     * @see #setTypeData(MaterialData data, boolean applyPhysics)
      * @deprecated Magic value
      */
     @Deprecated
@@ -224,7 +224,7 @@ public interface Block extends Metadatable {
      * @param data The data value to change this block to
      * @param applyPhysics False to cancel physics on the changed block
      * @return whether the block was changed
-     * @see #setType(MaterialData data, boolean applyPhysics)
+     * @see #setTypeData(MaterialData data, boolean applyPhysics)
      * @deprecated Magic value
      */
     @Deprecated
@@ -237,7 +237,7 @@ public interface Block extends Metadatable {
      * @param applyPhysics False to cancel physics on the changed block
      * @return whether the block was changed
      */
-    boolean setType(MaterialData data, boolean applyPhysics);
+    boolean setTypeData(MaterialData data, boolean applyPhysics);
     
     /**
      * Sets the type of this block
@@ -245,7 +245,7 @@ public interface Block extends Metadatable {
      * @param data The type and data value to change this block to
      * @return whether the block was changed
      */
-    boolean setType(MaterialData data);
+    boolean setTypeData(MaterialData data);
 
     /**
      * Gets the face relation of this block compared to the given block
