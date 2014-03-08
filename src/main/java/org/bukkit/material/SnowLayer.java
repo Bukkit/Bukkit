@@ -1,8 +1,6 @@
 package org.bukkit.material;
 
-import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
-import org.bukkit.SnowLayerHeight;
 
 /**
  * Represents a snow layer block.
@@ -45,19 +43,19 @@ public class SnowLayer extends MaterialData {
      * the max height for a snow layer the current height will
      * not be affected.
      *
-     * @return the new SnowLayerHeight value if modified, null otherwise
+     * @return true if a layer was added, false otherwise
      */
-    public SnowLayerHeight addLayer() {
-        SnowLayerHeight newHeight = SnowLayerHeight.fromHeight((byte) (getData() + 1));
+    public boolean addLayer() {
+        byte data = getData();
 
-        // New height is invalid
-        if (newHeight == null) {
-            return null;
+        if (data < 7) {
+            data++;
+            setData(data);
+
+            return true;
+        } else {
+            return false;
         }
-
-        setData(newHeight.getHeightData());
-
-        return newHeight;
     }
 
     /**
@@ -65,35 +63,37 @@ public class SnowLayer extends MaterialData {
      * height were to go below the first layer, then the block's height
      * will not be affected.
      *
-     * @return the new SnowLayerHeight value if modified, null otherwise
+     * @return true if a layer was removed, false otherwise
      */
-    public SnowLayerHeight removeLayer() {
-        SnowLayerHeight newHeight = SnowLayerHeight.fromHeight((byte) (getData() - 1));
+    public boolean removeLayer() {
+        byte data = getData();
 
-        // New height is invalid
-        if (newHeight == null) {
-            return null;
+        if (data > 0) {
+            data--;
+            setData(data);
+
+            return true;
+        } else {
+            return false;
         }
-
-        setData(newHeight.getHeightData());
-
-        return newHeight;
     }
 
     /**
      * Gets the height of this snow layer
      * @return the height of this snow layer
      */
-    public SnowLayerHeight getHeight() {
-        return SnowLayerHeight.fromHeight(getData());
+    public byte getHeight() {
+        return getData();
     }
 
     /**
      * Sets the height of this snow layer
      * @param height the height of the new snow layer
      */
-    public void setHeight(SnowLayerHeight height) {
-        setData(height.getHeightData());
+    public void setHeight(int height) {
+        if (height < 8) {
+            setData((byte) height);
+        }
     }
 
     @Override
