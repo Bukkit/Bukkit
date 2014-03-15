@@ -809,6 +809,12 @@ public interface Server extends PluginMessageRecipient {
     public int getIdleTimeout();
 
     /**
+     * Gets the user-specified resource pack URL
+     * @return the resource pack the server provides
+     */
+    public String getResourcePack();
+
+    /**
      * @see UnsafeValues
      */
     @Deprecated

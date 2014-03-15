@@ -664,6 +664,10 @@ public final class Bukkit {
     public static ScoreboardManager getScoreboardManager() {
         return server.getScoreboardManager();
     }
+    
+    public static String getResourcePack() {
+        return server.getResourcePack();
+    }
 
     /**
      * @see Server#getServerIcon()
