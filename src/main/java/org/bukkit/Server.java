@@ -644,7 +644,7 @@ public interface Server extends PluginMessageRecipient {
      *
      * @param owner The holder of the inventory; can be null if there's no
      *     holder.
-     * @param type The type of inventory to create.
+     * @param type The type of inventory to create.~/Documents/mcdevelopment/TestPluginBukkit3615
      * @return The new inventory.
      */
     Inventory createInventory(InventoryHolder owner, InventoryType type);
@@ -671,7 +671,7 @@ public interface Server extends PluginMessageRecipient {
      * @param title The title of the inventory, to be displayed when it is
      *     viewed.
      * @return The new inventory.
-     * @throws IllegalArgumentException If the size is not a multiple of 9.
+     * @throws IllegalArgumentException If the size is not a multiple of~/Documents/mcdevelopment/TestPluginBukkit3615 9.
      */
     Inventory createInventory(InventoryHolder owner, int size, String title);
 
@@ -809,7 +809,10 @@ public interface Server extends PluginMessageRecipient {
     public int getIdleTimeout();
 
     /**
-     * Gets the user-specified resource pack URL
+     * Gets the user-specified resource pack URL.
+     * 
+     * Defaults to an empty string if there is none.
+     * 
      * @return the resource pack the server provides
      */
     public String getResourcePack();

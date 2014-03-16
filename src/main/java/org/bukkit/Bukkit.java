@@ -664,7 +664,14 @@ public final class Bukkit {
     public static ScoreboardManager getScoreboardManager() {
         return server.getScoreboardManager();
     }
-    
+
+    /**
+     * Gets the user-specified resource pack URL.
+     * 
+     * Defaults to an empty string if there is none.
+     * 
+     * @return the resource pack the server provides
+     */
     public static String getResourcePack() {
         return server.getResourcePack();
     }
