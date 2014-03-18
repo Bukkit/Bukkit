@@ -405,11 +405,12 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *     exception is thrown.
      */
     @Utility
-    public void addEnchantments(Map<Enchantment, Integer> enchantments) {
+    public ItemStack addEnchantments(Map<Enchantment, Integer> enchantments) {
         Validate.notNull(enchantments, "Enchantments cannot be null");
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             addEnchantment(entry.getKey(), entry.getValue());
         }
+        return this;
     }
 
     /**
@@ -424,7 +425,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *     not applicable
      */
     @Utility
-    public void addEnchantment(Enchantment ench, int level) {
+    public ItemStack addEnchantment(Enchantment ench, int level) {
         Validate.notNull(ench, "Enchantment cannot be null");
         if ((level < ench.getStartLevel()) || (level > ench.getMaxLevel())) {
             throw new IllegalArgumentException("Enchantment level is either too low or too high (given " + level + ", bounds are " + ench.getStartLevel() + " to " + ench.getMaxLevel() + ")");
@@ -433,6 +434,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         }
 
         addUnsafeEnchantment(ench, level);
+        return this;
     }
 
     /**
@@ -445,10 +447,11 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param enchantments Enchantments to add
      */
     @Utility
-    public void addUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
+    public ItemStack addUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             addUnsafeEnchantment(entry.getKey(), entry.getValue());
         }
+        return this;
     }
 
     /**
@@ -463,8 +466,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param ench Enchantment to add
      * @param level Level of the enchantment
      */
-    public void addUnsafeEnchantment(Enchantment ench, int level) {
+    public ItemStack addUnsafeEnchantment(Enchantment ench, int level) {
         (meta == null ? meta = Bukkit.getItemFactory().getItemMeta(getType0()) : meta).addEnchant(ench, level, true);
+        return this;
     }
 
     /**
