@@ -42,7 +42,7 @@ public interface Arrow extends Projectile {
     
     /**
      * Gets whether this arrow can be picked up
-     * 
+     *
      * @return true if it can be picked up
      */
     public boolean canPickup();
