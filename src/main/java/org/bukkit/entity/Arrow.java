@@ -39,4 +39,11 @@ public interface Arrow extends Projectile {
      * @param critical whether or not it should be critical
      */
     public void setCritical(boolean critical);
+    
+    /**
+     * Gets whether this arrow can be picked up
+     * 
+     * @return true if it can be picked up
+     */
+    public boolean canPickup();
 }
