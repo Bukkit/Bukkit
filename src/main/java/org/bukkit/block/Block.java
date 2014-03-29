@@ -82,7 +82,7 @@ public interface Block extends Metadatable {
      */
     @Deprecated
     int getTypeId();
-    
+
     /**
      * Gets the type and metadata for this block
      *
@@ -229,7 +229,7 @@ public interface Block extends Metadatable {
      */
     @Deprecated
     boolean setTypeIdAndData(int type, byte data, boolean applyPhysics);
-    
+
     /**
      * Sets the type of this block
      *
@@ -238,7 +238,7 @@ public interface Block extends Metadatable {
      * @return whether the block was changed
      */
     boolean setTypeData(MaterialData data, boolean applyPhysics);
-    
+
     /**
      * Sets the type of this block
      *
