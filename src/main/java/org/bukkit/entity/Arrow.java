@@ -41,14 +41,14 @@ public interface Arrow extends Projectile {
     public void setCritical(boolean critical);
 
     /**
-     * Gets whether this arrow can be picked up by a who is player in survival or adventure mode
+     * Gets whether this arrow can be picked up by a player who is in survival or adventure mode
      *
      * @return true if it can be picked up
      */
     public boolean canPickup();
 
     /**
-     * Sets whether or not this arrow can be picked up by a who is player in survival or adventure mode
+     * Sets whether or not this arrow can be picked up by a player who is in survival or adventure mode
      *
      * @param canPickup if the arrow can be picked up 
      */
