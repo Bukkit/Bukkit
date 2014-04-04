@@ -186,4 +186,11 @@ public interface Plugin extends TabExecutor {
      * @return name of the plugin
      */
     public String getName();
+
+    /**
+     * Returns the LocaleManager for this Plugin
+     *
+     * @return localeManager for the Plugin
+     */
+    public LocaleManager getLocaleManager();
 }

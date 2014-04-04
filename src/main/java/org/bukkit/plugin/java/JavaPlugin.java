@@ -12,6 +12,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.avaje.ebean.EbeanServer;
+import com.avaje.ebean.EbeanServerFactory;
+import com.avaje.ebean.config.DataSourceConfig;
+import com.avaje.ebean.config.ServerConfig;
+import com.avaje.ebeaninternal.api.SpiEbeanServer;
+import com.avaje.ebeaninternal.server.ddl.DdlGenerator;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Server;
 import org.bukkit.Warning.WarningState;
@@ -21,18 +28,12 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.plugin.LocaleManager;
 import org.bukkit.plugin.AuthorNagException;
 import org.bukkit.plugin.PluginBase;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginLogger;
-
-import com.avaje.ebean.EbeanServer;
-import com.avaje.ebean.EbeanServerFactory;
-import com.avaje.ebean.config.DataSourceConfig;
-import com.avaje.ebean.config.ServerConfig;
-import com.avaje.ebeaninternal.api.SpiEbeanServer;
-import com.avaje.ebeaninternal.server.ddl.DdlGenerator;
 
 /**
  * Represents a Java plugin
@@ -50,6 +51,7 @@ public abstract class JavaPlugin extends PluginBase {
     private FileConfiguration newConfig = null;
     private File configFile = null;
     private PluginLogger logger = null;
+    private LocaleManager localeManager = null;
 
     public JavaPlugin() {
         final ClassLoader classLoader = this.getClass().getClassLoader();
@@ -137,6 +139,18 @@ public abstract class JavaPlugin extends PluginBase {
      */
     public final PluginDescriptionFile getDescription() {
         return description;
+    }
+
+    /**
+     * Returns the LocaleManager for this Plugin
+     *
+     * @return A LocaleManager which has been loaded for this Plugin
+     */
+    public LocaleManager getLocaleManager() {
+        if (localeManager == null) {
+            localeManager = new LocaleManager(this);
+        }
+        return localeManager;
     }
 
     public FileConfiguration getConfig() {
