@@ -76,7 +76,7 @@ public enum Achievement {
      * @return the Minecraft id of the achievement
      */
     public String getID(){
-    	return "minecraft:" + id;
+    	return "achievement." + id;
     }
 }
 
