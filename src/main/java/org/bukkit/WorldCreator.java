@@ -2,6 +2,7 @@ package org.bukkit;
 
 import java.util.Random;
 import org.bukkit.command.CommandSender;
+import org.bukkit.generator.BiomeGenerator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
 
@@ -13,6 +14,7 @@ public class WorldCreator {
     private long seed;
     private World.Environment environment = World.Environment.NORMAL;
     private ChunkGenerator generator = null;
+    private BiomeGenerator biomeGenerator = null;
     private WorldType type = WorldType.NORMAL;
     private boolean generateStructures = true;
 
@@ -44,6 +46,7 @@ public class WorldCreator {
         seed = world.getSeed();
         environment = world.getEnvironment();
         generator = world.getGenerator();
+        biomeGenerator = world.getBiomeGenerator();
 
         return this;
     }
@@ -62,6 +65,7 @@ public class WorldCreator {
         seed = creator.seed();
         environment = creator.environment();
         generator = creator.generator();
+        biomeGenerator = creator.biomeGenerator();
 
         return this;
     }
@@ -151,6 +155,18 @@ public class WorldCreator {
     }
 
     /**
+     * Gets the biome-generator that will be used to create or load the world.
+     * <p>
+     * This may be null, in which case the "natural" generator for this
+     * environment will be used.
+     *
+     * @return Biome generator
+     */
+    public BiomeGenerator biomeGenerator() {
+        return biomeGenerator;
+    }
+
+    /**
      * Sets the generator that will be used to create or load the world.
      * <p>
      * This may be null, in which case the "natural" generator for this
@@ -161,6 +177,21 @@ public class WorldCreator {
      */
     public WorldCreator generator(ChunkGenerator generator) {
         this.generator = generator;
+
+        return this;
+    }
+
+    /**
+     * Sets the biome-generator that will be used to create or load the world.
+     * <p>
+     * This may be null, in which case the "natural" generator for this
+     * environment will be used.
+     *
+     * @param biomeGenerator Biome generator
+     * @return This object, for chaining
+     */
+    public WorldCreator biomeGenerator(BiomeGenerator biomeGenerator) {
+        this.biomeGenerator = biomeGenerator;
 
         return this;
     }
@@ -185,6 +216,23 @@ public class WorldCreator {
     }
 
     /**
+     * Sets the biome-generator that will be used to create or load the world.
+     * <p>
+     * This may be null, in which case the "natural" generator for this
+     * environment will be used.
+     * <p>
+     * If the generator cannot be found for the given name, the natural
+     * environment generator will be used instead and a warning will be
+     * printed to the console.
+     *
+     * @param biomeGenerator Name of the generator to use, in "plugin:id" notation
+     * @return This object, for chaining
+     */
+    public WorldCreator biomeGenerator(String biomeGenerator) {
+        return biomeGenerator(biomeGenerator, Bukkit.getConsoleSender());
+    }
+
+    /**
      * Sets the generator that will be used to create or load the world.
      * <p>
      * This may be null, in which case the "natural" generator for this
@@ -203,6 +251,25 @@ public class WorldCreator {
         this.generator = getGeneratorForName(name, generator, output);
 
         return this;
+    }
+
+    /**
+     * Sets the biome-generator that will be used to create or load the world.
+     * <p>
+     * This may be null, in which case the "natural"  generator for this
+     * environment will be used.
+     * <p>
+     * If the generator cannot be found for the given name, the natural
+     * environment generator will be used instead and a warning will be
+     * printed to the specified output
+     *
+     * @param generator Name of the generator to use, in "plugin:id" notation
+     * @param output {@link CommandSender} that will receive any error
+     *     messages
+     * @return This object, for chaining
+     */
+    public WorldCreator biomeGenerator(String biomeGenerator, CommandSender output) {
+        return biomeGenerator(getBiomeGeneratorForName(name, biomeGenerator, output));
     }
 
     /**
@@ -287,6 +354,50 @@ public class WorldCreator {
                 output.sendMessage("Could not set generator for world '" + world + "': Plugin '" + plugin.getDescription().getFullName() + "' is not enabled");
             } else {
                 result = plugin.getDefaultWorldGenerator(world, id);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Attempts to get the {@link BiomeGenerator} with the given name.
+     * <p>
+     * If the generator is not found, null will be returned and a message will
+     * be printed to the specified {@link BiomeGenerator} explaining why.
+     * <p>
+     * The name must be in the "plugin:id" notation, or optionally just
+     * "plugin", where "plugin" is the safe-name of a plugin and "id" is an
+     * optional unique identifier for the generator you wish to request from
+     * the plugin.
+     *
+     * @param world Name of the world this will be used for
+     * @param name Name of the biome-generator to retrieve
+     * @param output Where to output if errors are present
+     * @return Resulting biome-generator, or null
+     */
+    public static BiomeGenerator getBiomeGeneratorForName(String world, String name, CommandSender output) {
+        BiomeGenerator result = null;
+
+        if (world == null) {
+            throw new IllegalArgumentException("World name must be specified");
+        }
+
+        if (output == null) {
+            output = Bukkit.getConsoleSender();
+        }
+
+        if (name != null) {
+            String[] split = name.split(":", 2);
+            String id = (split.length > 1) ? split[1] : null;
+            Plugin plugin = Bukkit.getPluginManager().getPlugin(split[0]);
+
+            if (plugin == null) {
+                output.sendMessage("Could not set generator for world '" + world + "': Plugin '" + split[0] + "' does not exist");
+            } else if (!plugin.isEnabled()) {
+                output.sendMessage("Could not set generator for world '" + world + "': Plugin '" + plugin.getDescription().getFullName() + "' is not enabled");
+            } else {
+                result = plugin.getDefaultBiomeGenerator(world, id);
             }
         }
 

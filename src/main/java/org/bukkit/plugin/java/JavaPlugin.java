@@ -20,6 +20,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.generator.BiomeGenerator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.AuthorNagException;
 import org.bukkit.plugin.PluginBase;
@@ -369,6 +370,10 @@ public abstract class JavaPlugin extends PluginBase {
     public void onEnable() {}
 
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+        return null;
+    }
+
+    public BiomeGenerator getDefaultBiomeGenerator(String worldName, String id) {
         return null;
     }
 
