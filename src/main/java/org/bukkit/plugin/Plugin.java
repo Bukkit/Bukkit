@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.generator.BiomeGenerator;
 import org.bukkit.generator.ChunkGenerator;
 
 import com.avaje.ebean.EbeanServer;
@@ -167,6 +168,17 @@ public interface Plugin extends TabExecutor {
      * @return ChunkGenerator for use in the default world generation
      */
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id);
+
+    /**
+     * Gets a {@link BiomeGenerator} for use in a default world, as specified
+     * in the server configuration
+     *
+     * @param worldName Name of the world that this will be applied to
+     * @param id Unique ID, if any, that was specified to indicate which
+     *     biome-generator was requested
+     * @return BiomeGenerator for use in the default world generation
+     */
+    public BiomeGenerator getDefaultBiomeGenerator(String worldName, String id);
 
     /**
      * Returns the plugin logger associated with this server's logger. The

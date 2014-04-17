@@ -1,6 +1,7 @@
 package org.bukkit;
 
 import java.io.File;
+import org.bukkit.generator.BiomeGenerator;
 import org.bukkit.generator.ChunkGenerator;
 import java.util.Collection;
 import java.util.HashMap;
@@ -660,6 +661,13 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return ChunkGenerator associated with this world
      */
     public ChunkGenerator getGenerator();
+
+    /**
+     * Gets the biome generator for this world
+     *
+     * @return BiomeGenerator associated with this world
+     */
+    public BiomeGenerator getBiomeGenerator();
 
     /**
      * Saves world to disk
