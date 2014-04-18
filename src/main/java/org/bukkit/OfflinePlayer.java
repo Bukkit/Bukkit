@@ -115,4 +115,11 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
      */
     public Location getBedSpawnLocation();
 
+    /**
+    * Get LastKnown Player Name in case name changing
+    * @return Last known name if exists, otherwise null,
+    * will return null if last known name equals actual name
+    */
+    public String getLastKnownName();
+
 }
