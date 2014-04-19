@@ -27,6 +27,9 @@ public class EntityDeathEvent extends EntityEvent {
     public LivingEntity getEntity() {
         return (LivingEntity) entity;
     }
+    public LivingEntity getKiller() {
+        return getEntity().getKiller();
+    }
 
     /**
      * Gets how much EXP should be dropped from this death.
