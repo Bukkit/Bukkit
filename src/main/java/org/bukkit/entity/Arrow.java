@@ -4,6 +4,15 @@ package org.bukkit.entity;
  * Represents an arrow.
  */
 public interface Arrow extends Projectile {
+	/**
+	 * represents different states to check for when a player tries to pickup an arrow
+	 * ALL: Arrow can always be picked up
+	 * CREATIVE: Arrow can be picked up by a player in creative mode
+	 * NONE: Arrow can never be picked up
+	 */
+	public enum Pickup {
+		ALL, CREATIVE, NONE
+	}
 
     /**
      * Gets the knockback strength for an arrow, which is the
@@ -41,16 +50,16 @@ public interface Arrow extends Projectile {
     public void setCritical(boolean critical);
 
     /**
-     * Gets whether this arrow can be picked up by a player who is in survival or adventure mode
+     * Gets required condition for picking up this arrow
      *
-     * @return true if it can be picked up
+     * @return condition as defined in Arrow.Pickup
      */
-    public boolean canPickup();
+    public Arrow.Pickup getPickup();
 
     /**
-     * Sets whether or not this arrow can be picked up by a player who is in survival or adventure mode
+     * Sets the condition required for picking up this arrow
      *
-     * @param canPickup if the arrow can be picked up 
+     * @param canPickup condition for allowing pickup
      */
-    public void allowPickup(boolean canPickup);
+    public void setPickup(Arrow.Pickup pickup);
 }
