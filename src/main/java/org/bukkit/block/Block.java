@@ -8,6 +8,7 @@ import org.bukkit.World;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.Metadatable;
+import org.bukkit.util.Vector;
 
 /**
  * Represents a block. This is a live object, and only one Block may exist for
@@ -381,4 +382,18 @@ public interface Block extends Metadatable {
      */
     Collection<ItemStack> getDrops(ItemStack tool);
 
+	/**
+	 * Returns a pair of vectors representing two opposite corners of the
+	 * block's actual hit box; the volume of the block which is actually
+	 * occupied.  This may be significantly smaller than the block's full
+	 * extent; for example a carpet occupies only 1/16th of a block's
+	 * vertical size.
+	 * <p>
+	 * The first vector returned always represents the point with the
+	 * smallest X, Y, and Z co-ordinates; the second vector represents the
+	 * point with the largest X, Y, and Z co-ordinates.
+	 *
+	 * @return a pair of vectors
+	 */
+	Vector[] getHitBox();
 }

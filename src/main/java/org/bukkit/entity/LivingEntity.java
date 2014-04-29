@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockTransparencyFilter;
+import org.bukkit.block.BlockTargetResult;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -56,6 +58,26 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
     @Deprecated
     public List<Block> getLineOfSight(HashSet<Byte> transparent, int maxDistance);
 
+	/**
+	 * Gets all blocks along the living entity's line of sight.
+	 * <p>
+	 * This list contains all blocks from the living entity's eye position to
+	 * target inclusive; the last member of the list represents the target block.
+	 * For all members of the list except the final one, the getTargetFace() and
+	 * getTargetLocation() methods will return null.
+	 *
+	 * @param filter a block transparency filter; if null, then only air blocks
+	 *     will be considered transparent
+	 * @param maxDistance this is the maximum distance to scan (may be limited
+	 *     by the server - see {@link org.bukkit.Server#getViewDistance()})
+	 * @param useHitBoxes true if block hit boxes should be used when considering
+	 *     whether or not the entities line of sight intersects the block.  If
+	 *     false, the block's full volume is considered.
+	 * @return a list of BlockTargetResult objects, each of which represents one
+	 *     block along the entity's line of sight
+	 */
+	public List<BlockTargetResult> getLineOfSight(BlockTransparencyFilter filter, int maxDistance, boolean useHitBoxes);
+
     /**
      * Gets the block that the living entity has targeted.
      *
@@ -84,6 +106,36 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
      */
     @Deprecated
     public List<Block> getLastTwoTargetBlocks(HashSet<Byte> transparent, int maxDistance);
+
+	/**
+	 * Gets the block that the living entity has targeted.
+	 *
+	 * @param filter a block transparency filter; if null, then only air blocks
+	 *     will be considered transparent
+	 * @param maxDistance this is the maximum distance to scan (may be limited
+	 *     by the server - see {@link org.bukkit.Server#getViewDistance()})
+	 * @param useHitBoxes true if block hit boxes should be used when considering
+	 *     whether or not the entities line of sight intersects the block.  If
+	 *     false, the block's full volume is considered.
+	 * @return a BlockTargetResult object
+	 */
+	public BlockTargetResult getTargetBlock(BlockTransparencyFilter filter, int maxDistance, boolean useHitBoxes);
+
+	/**
+	 * Gets the last two blocks along the living entity's line of sight.
+	 * <p>
+	 * The last member of the list represents the targeted block.
+	 *
+	 * @param filter a block transparency filter; if null, then only air blocks
+	 *     will be considered transparent
+	 * @param maxDistance this is the maximum distance to scan (may be limited
+	 *     by the server - see {@link org.bukkit.Server#getViewDistance()})
+	 * @param useHitBoxes true if block hit boxes should be used when considering
+	 *     whether or not the entities line of sight intersects the block.  If
+	 *     false, the block's full volume is used.
+	 * @return a list of two BlockTargetResult objects
+	 */
+	public List<BlockTargetResult> getLastTwoTargetBlocks(BlockTransparencyFilter filter, int maxDistance, boolean useHitBoxes);
 
     /**
      * Throws an egg from the living entity.
