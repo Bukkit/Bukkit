@@ -5,11 +5,11 @@ import org.bukkit.Location;
 /**
  * Represents the result of calling a method to determine blocks intersected by
  * an entity's line of sight:
- * {@link org.bukkit.entity.LivingEntity#getLineOfSight(BlockTransparencyFilter, int, boolean)}
+ * {@link org.bukkit.entity.LivingEntity#getLineOfSight(Predicate<Block>, int, boolean)}
  * or
- * {@link org.bukkit.entity.LivingEntity#getTargetBlock(BlockTransparencyFilter, int, boolean)}
+ * {@link org.bukkit.entity.LivingEntity#getTargetBlock(Predicate<Block>, int, boolean)}
  * or
- * {@link org.bukkit.entity.LivingEntity#getLastTwoTargetBlocks(BlockTransparencyFilter, int, boolean)}
+ * {@link org.bukkit.entity.LivingEntity#getLastTwoTargetBlocks(Predicate<Block>, int, boolean)}
  */
 public class BlockTargetResult {
 	private final Block block;
