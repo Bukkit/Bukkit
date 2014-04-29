@@ -7,7 +7,6 @@ import java.util.List;
 import com.google.common.base.Predicate;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockTransparencyFilter;
 import org.bukkit.block.BlockTargetResult;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
