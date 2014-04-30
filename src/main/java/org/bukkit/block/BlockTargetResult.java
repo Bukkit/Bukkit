@@ -5,50 +5,51 @@ import org.bukkit.Location;
 /**
  * Represents the result of calling a method to determine blocks intersected by
  * an entity's line of sight:
- * {@link org.bukkit.entity.LivingEntity#getLineOfSight(Predicate<Block>, int, boolean)}
+ *
+ * {@link org.bukkit.entity.LivingEntity#getLineOfSight(com.google.common.base.Predicate, int, boolean)}
  * or
- * {@link org.bukkit.entity.LivingEntity#getTargetBlock(Predicate<Block>, int, boolean)}
+ * {@link org.bukkit.entity.LivingEntity#getTargetBlock(com.google.common.base.Predicate, int, boolean)}
  * or
- * {@link org.bukkit.entity.LivingEntity#getLastTwoTargetBlocks(Predicate<Block>, int, boolean)}
+ * {@link org.bukkit.entity.LivingEntity#getLastTwoTargetBlocks(com.google.common.base.Predicate, int, boolean)}
  */
 public class BlockTargetResult {
-	private final Block block;
-	private final BlockFace face;
-	private final Location location;
+    private final Block block;
+    private final BlockFace face;
+    private final Location location;
 
-	public BlockTargetResult(Block block, BlockFace face, Location location) {
-		this.block = block;
-		this.face = face;
-		this.location = location;
-	}
+    public BlockTargetResult(Block block, BlockFace face, Location location) {
+        this.block = block;
+        this.face = face;
+        this.location = location;
+    }
 
-	/**
-	 * Get the block which is intersected by the entity's line of sight.
-	 *
-	 * @return the block
-	 */
-	public Block getBlock() {
-		return block;
-	}
+    /**
+     * Get the block which is intersected by the entity's line of sight.
+     *
+     * @return the block
+     */
+    public Block getBlock() {
+        return block;
+    }
 
-	/**
-	 * Get the closest face of the block intersected by the entity's line of sight.
-	 * This may be null if the line of sight did not intersect this block's hit box.
-	 *
-	 * @return the intersected block face
-	 */
-	public BlockFace getTargetFace() {
-		return face;
-	}
+    /**
+     * Get the closest face of the block intersected by the entity's line of sight.
+     * This may be null if the line of sight did not intersect this block's hit box.
+     *
+     * @return the intersected block face
+     */
+    public BlockFace getTargetFace() {
+        return face;
+    }
 
-	/**
-	 * Get the precise closest location where the entity's line of sight
-	 * intersected the block's hit box.  This may be null if the line of sight did
-	 * not intersect this block's hit box.
-	 *
-	 * @return the intersected location
-	 */
-	public Location getTargetLocation() {
-		return location;
-	}
+    /**
+     * Get the precise closest location where the entity's line of sight
+     * intersected the block's hit box.  This may be null if the line of sight did
+     * not intersect this block's hit box.
+     *
+     * @return the intersected location
+     */
+    public Location getTargetLocation() {
+        return location;
+    }
 }
