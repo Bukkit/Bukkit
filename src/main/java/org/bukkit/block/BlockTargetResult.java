@@ -1,16 +1,18 @@
 package org.bukkit.block;
 
 import org.bukkit.Location;
+import org.bukkit.entity.LivingEntity;
+import com.google.common.base.Predicate;
 
 /**
- * Represents the result of calling a method to determine blocks intersected by
- * an entity's line of sight:
+ * Represents the result of calling a method to determine blocks intersected
+ * by an entity's line of sight:
  *
- * {@link org.bukkit.entity.LivingEntity#getLineOfSight(com.google.common.base.Predicate, int, boolean)}
+ * {@link LivingEntity#getLineOfSight(Predicate, int, boolean)}
  * or
- * {@link org.bukkit.entity.LivingEntity#getTargetBlock(com.google.common.base.Predicate, int, boolean)}
+ * {@link LivingEntity#getTargetBlock(Predicate, int, boolean)}
  * or
- * {@link org.bukkit.entity.LivingEntity#getLastTwoTargetBlocks(com.google.common.base.Predicate, int, boolean)}
+ * {@link LivingEntity#getLastTwoTargetBlocks(Predicate, int, boolean)}
  */
 public class BlockTargetResult {
     private final Block block;
@@ -33,8 +35,9 @@ public class BlockTargetResult {
     }
 
     /**
-     * Get the closest face of the block intersected by the entity's line of sight.
-     * This may be null if the line of sight did not intersect this block's hit box.
+     * Get the closest face of the block intersected by the entity's line of
+     * sight.  This may be null if the line of sight did not intersect this
+     * block's hit box.
      *
      * @return the intersected block face
      */
@@ -44,8 +47,8 @@ public class BlockTargetResult {
 
     /**
      * Get the precise closest location where the entity's line of sight
-     * intersected the block's hit box.  This may be null if the line of sight did
-     * not intersect this block's hit box.
+     * intersected the block's hit box.  This may be null if the line of sight
+     * did not intersect this block's hit box.
      *
      * @return the intersected location
      */
