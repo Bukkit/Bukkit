@@ -6,12 +6,20 @@ package org.bukkit.entity;
 public interface Arrow extends Projectile {
 	/**
 	 * represents different states to check for when a player tries to pickup an arrow
-	 * ALL: Arrow can always be picked up
-	 * CREATIVE: Arrow can be picked up by a player in creative mode
-	 * NONE: Arrow can never be picked up
 	 */
 	public enum Pickup {
-		ALL, CREATIVE, NONE
+		/**
+		 * Arrow can always be picked up
+		 */
+		ALL,
+		/**
+		 * Arrow can be picked up by a player in creative mode
+		 */
+		CREATIVE,
+		/**
+		 * Arrow can never be picked up
+		 */
+		NONE
 	}
 
     /**
