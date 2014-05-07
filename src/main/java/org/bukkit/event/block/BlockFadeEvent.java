@@ -13,6 +13,7 @@ import org.bukkit.event.HandlerList;
  * <li>Snow melting due to being near a light source.
  * <li>Ice melting due to being near a light source.
  * <li>Fire burning out after time, without destroying fuel block.
+ * <li>Cauldron loses water when entity extinguish itself in it.
  * </ul>
  * <p>
  * If a Block Fade event is cancelled, the block will not fade, melt or
