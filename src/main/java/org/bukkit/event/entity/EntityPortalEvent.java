@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.TravelAgent;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 /**
  * Called when a non-player entity is about to teleport because it is in
@@ -16,8 +17,17 @@ public class EntityPortalEvent extends EntityTeleportEvent {
     protected boolean useTravelAgent = true;
     protected TravelAgent travelAgent;
 
+    /**
+     * @deprecated Use {@link #EntityPortalEvent(Entity, Location, Location, TravelAgent, TeleportCause)} instead
+     */
+    @Deprecated
     public EntityPortalEvent(final Entity entity, final Location from, final Location to, final TravelAgent pta) {
         super(entity, from, to);
+        this.travelAgent = pta;
+    }
+
+    public EntityPortalEvent(final Entity entity, final Location from, final Location to, final TravelAgent pta, final TeleportCause cause) {
+        super(entity, from, to, cause);
         this.travelAgent = pta;
     }
 

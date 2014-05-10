@@ -3,6 +3,7 @@ package org.bukkit.event.entity;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.util.Vector;
 
 /**
@@ -16,8 +17,18 @@ public class EntityPortalExitEvent extends EntityTeleportEvent {
     private Vector before;
     private Vector after;
 
+    /**
+     * @deprecated Use {@link #EntityPortalExitEvent(Entity, Location, Location, Vector, Vector, TeleportCause)} instead
+     */
+    @Deprecated
     public EntityPortalExitEvent(final Entity entity, final Location from, final Location to, final Vector before, final Vector after) {
         super(entity, from, to);
+        this.before = before;
+        this.after = after;
+    }
+
+    public EntityPortalExitEvent(final Entity entity, final Location from, final Location to, final Vector before, final Vector after, final TeleportCause cause) {
+        super(entity, from, to, cause);
         this.before = before;
         this.after = after;
     }
