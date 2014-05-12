@@ -23,4 +23,33 @@ public interface Firework extends Entity {
      * remaining fuse.
      */
     void detonate();
+    
+    /**
+     * get the total number of ticks before the firework will detonate
+     *
+     * @return number of ticks to live in total
+     */
+    int getTotalLifetime();
+    
+    /**
+     * set the total number of ticks before the firework will detonate
+     *
+     * @param ticks number of ticks to live in total
+     */
+    void setTotalLifetime(int ticks);
+    
+    /**
+     * get the remaining number of ticks before the firework will detonate
+     *
+     * @return remaining number of ticks to live
+     */
+    int getRemainingLifetime();
+    
+    /**
+     * set the remaining number of ticks before the firework will detonate
+     *
+     * @param ticks remaining number of ticks to live
+     */
+    void setRemainingLifetime(int ticks);
+    
 }
