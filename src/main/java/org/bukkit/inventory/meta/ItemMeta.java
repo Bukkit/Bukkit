@@ -3,6 +3,7 @@ package org.bukkit.inventory.meta;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
 
@@ -62,6 +63,36 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
      * @param lore the lore that will be set
      */
     void setLore(List<String> lore);
+
+    /**
+     * Check to see if this Item has any custom or unknown data.
+     * <p>
+     * This is normally data that has been put here by a Plugin.
+     *
+     * @return true if this Item has any custom data
+     */
+    boolean hasCustomData();
+
+    /**
+     * Retrieve a read/write accessor fo this Item's custom data.
+     * <p>
+     * Changes made to this object will affect the Item's custom
+     * data directly.
+     * <p>
+     * These objects should not be retained, it is best to get a
+     * new reference each time you want to modify the item, since
+     * items may get copied as they move around or spawn and get
+     * picked up.
+     * <p>
+     * If this item has no custom data, calling this will initialize
+     * custom data for the item.
+     * <p>
+     * Use hasData for an efficient pre-check if you
+     * only getting data to look for a specific key or value.
+     *
+     * @return Access to the Item's custom data
+     */
+    ConfigurationSection getCustomData();
 
     /**
      * Checks for the existence of any enchantments.
