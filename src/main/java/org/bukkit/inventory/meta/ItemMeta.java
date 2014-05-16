@@ -6,14 +6,18 @@ import java.util.Map;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.metadata.Metadatable;
 
 /**
  * This type represents the storage mechanism for auxiliary item data.
  * <p>
  * An implementation will handle the creation and application for ItemMeta.
  * This class should not be implemented by a plugin in a live environment.
+ * <p>
+ * The implementing class should implement Metadatable as a persistent data store attached
+ * to each ItemStack, and only accept PersistentMetadataValue entries.
  */
-public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+public interface ItemMeta extends Cloneable, ConfigurationSerializable, Metadatable {
 
     /**
      * Checks for existence of a display name.
@@ -65,34 +69,12 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     void setLore(List<String> lore);
 
     /**
-     * Check to see if this Item has any custom or unknown data.
-     * <p>
-     * This is normally data that has been put here by a Plugin.
+     * Check to see if the Metadatable store contains any data for any
+     * Plugin.
      *
-     * @return true if this Item has any custom data
+     * @return true if there is any custom data present
      */
-    boolean hasCustomData();
-
-    /**
-     * Retrieve a read/write accessor fo this Item's custom data.
-     * <p>
-     * Changes made to this object will affect the Item's custom
-     * data directly.
-     * <p>
-     * These objects should not be retained, it is best to get a
-     * new reference each time you want to modify the item, since
-     * items may get copied as they move around or spawn and get
-     * picked up.
-     * <p>
-     * If this item has no custom data, calling this will initialize
-     * custom data for the item.
-     * <p>
-     * Use hasData for an efficient pre-check if you
-     * only getting data to look for a specific key or value.
-     *
-     * @return Access to the Item's custom data
-     */
-    ConfigurationSection getCustomData();
+    public boolean hasMetadata();
 
     /**
      * Checks for the existence of any enchantments.
