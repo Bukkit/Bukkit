@@ -106,7 +106,7 @@ public class IndexHelpTopic extends HelpTopic {
         line.append(topic.getName());
         line.append(": ");
         line.append(ChatColor.WHITE);
-        line.append(topic.getShortText());
+        line.append(topic.getShortText().isEmpty() ? ChatColor.ITALIC + "No information available." : topic.getShortText());
         return line.toString();
     }
 }

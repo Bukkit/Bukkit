@@ -1,13 +1,11 @@
 package org.bukkit.help;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.command.defaults.VanillaCommand;
-import org.bukkit.help.HelpTopic;
 
 /**
  * Lacking an alternative, the help system will create instances of
@@ -42,14 +40,26 @@ public class GenericCommandHelpTopic extends HelpTopic {
         sb.append(ChatColor.GOLD);
         sb.append("Description: ");
         sb.append(ChatColor.WHITE);
-        sb.append(command.getDescription());
+
+        if (command.getDescription().isEmpty()) {
+            sb.append(ChatColor.ITALIC);
+            sb.append("No information available.");
+        } else {
+            sb.append(command.getDescription());
+        }
 
         sb.append("\n");
 
         sb.append(ChatColor.GOLD);
         sb.append("Usage: ");
         sb.append(ChatColor.WHITE);
-        sb.append(command.getUsage().replace("<command>", name.substring(1)));
+
+        if (command.getUsage().isEmpty()) {
+            sb.append(ChatColor.ITALIC);
+            sb.append("No information available.");
+        } else {
+            sb.append(command.getUsage().replace("<command>", name.substring(1)));
+        }
 
         if (command.getAliases().size() > 0) {
             sb.append("\n");
