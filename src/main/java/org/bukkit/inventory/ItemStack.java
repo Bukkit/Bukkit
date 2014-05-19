@@ -602,30 +602,35 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * An efficient quick check to see if this ItemStack has any Metadata in
+     * This can be overridden to provide an efficient quick check to
+     * see if this ItemStack has any Metadata in
      * its ItemMeta store, without actually unpacking the ItemMeta object.
      * <p>
      * Use this in place of getItemMeta().hasMetadata() for simple first-pass
      * checks for data, if you don't necessarily need to unpack the data.
+     * <p>
+     * The default implementation defers to ItemMeta.
      *
      * @return True if getItemMeta().hasMetadata()
      */
     public boolean hasMetadata() {
-        return false;
+        return meta != null && meta.hasMetadata();
     }
 
     /**
-     * An efficient quick check to see if this ItemStack has a
-     * particular metadata key in its ItemMeta store,
+     * This can be overridden to provide an efficient quick check to
+     * see if this ItemStack has any Metadata in its ItemMeta store,
      * without actually unpacking the ItemMeta object.
      * <p>
      * Use this in place of getItemMeta().hasMetadata("field") for simple first-pass
      * checks for data, if you don't necessarily need to unpack the data.
+     * <p>
+     * The default implementation defers to ItemMeta.
      *
      * @param key The String key to check for
      * @return True if getItemMeta().hasMetadata(key)
      */
     public boolean hasMetadata(String key) {
-        return false;
+        return meta != null && meta.hasMetadata(key);
     }
 }
