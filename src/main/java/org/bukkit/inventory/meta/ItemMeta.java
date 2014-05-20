@@ -7,6 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.metadata.Metadatable;
+import org.bukkit.plugin.Plugin;
 
 /**
  * This type represents the storage mechanism for auxiliary item data.
@@ -75,6 +76,17 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable, Metadata
      * @return true if there is any custom data present
      */
     public boolean hasMetadata();
+
+    /**
+     * Check to see if the Metadatable store contains a specific key
+     * for a specific Plugin.
+     *
+     * @param key The String key to check for
+     * @param plugin The Plugin for which to check for data
+     * @return True if the specified key is registered in this store
+     *   for the specified Plugin
+     */
+    public boolean hasMetadata(String key, Plugin plugin);
 
     /**
      * Checks for the existence of any enchantments.
