@@ -6,6 +6,7 @@ import java.util.Map;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.Plugin;
 
@@ -81,12 +82,21 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable, Metadata
      * Check to see if the Metadatable store contains a specific key
      * for a specific Plugin.
      *
-     * @param key The String key to check for
-     * @param plugin The Plugin for which to check for data
-     * @return True if the specified key is registered in this store
+     * @param key the String key to check for
+     * @param plugin the Plugin for which to check for data
+     * @return true if the specified key is registered in this store
      *   for the specified Plugin
      */
     public boolean hasMetadata(String key, Plugin plugin);
+
+    /**
+     * Return a single metadata value for a given key and Plugin.
+     *
+     * @param metadataKey the unique metadata key being sought
+     * @param owningPlugin the plugin that owns the data being sought
+     * @return the requested value, or null if not found
+     */
+    public MetadataValue getMetadata(String metadataKey, Plugin owningPlugin);
 
     /**
      * Checks for the existence of any enchantments.
