@@ -159,6 +159,23 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable, Metadata
     */
     boolean hasConflictingEnchant(Enchantment ench);
 
+    /**
+     * See if this item is glowing for any reason.
+     * This could be due to enchantments, or to having its gow effect set with setGlowEffect(true)
+     *
+     * @return true if this item is glowing
+     */
+    boolean hasGlowEffect();
+
+    /**
+     * Force this item to glow, or remove an item's glow.
+     *
+     * Glow can only be removed this way if there are no enchantments on the item.
+     *
+     * @param glow if true, a visual glow effect will be added to the item, effect removed if false
+     */
+    void setGlowEffect(boolean glow);
+
     @SuppressWarnings("javadoc")
     ItemMeta clone();
 }
