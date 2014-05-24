@@ -1,6 +1,7 @@
 package org.bukkit.command.defaults;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,9 +25,20 @@ public class PluginsCommand extends BukkitCommand {
         return true;
     }
 
+    private static final Comparator<Plugin> PLUGIN_COMPARATOR = new Comparator<Plugin>() {
+        public int compare(Plugin a, Plugin b) {
+            if (a.isEnabled() != b.isEnabled()) {
+                return a.isEnabled() ? -1 : 1;
+            } else {
+                return String.CASE_INSENSITIVE_ORDER.compare(a.getDescription().getName(), b.getDescription().getName());
+            }
+        }
+    };
+
     private String getPluginList() {
         StringBuilder pluginList = new StringBuilder();
         Plugin[] plugins = Bukkit.getPluginManager().getPlugins();
+        Arrays.sort(plugins, PLUGIN_COMPARATOR); 
 
         for (Plugin plugin : plugins) {
             if (pluginList.length() > 0) {
