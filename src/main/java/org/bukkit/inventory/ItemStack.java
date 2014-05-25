@@ -603,14 +603,12 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * This can be overridden to provide an efficient quick check to
-     * see if this ItemStack has a specific key in its metadata store,
+     * This may provide a more efficient check to see if this ItemStack
+     * has a specific key in its metadata store,
      * without actually unpacking the ItemMeta object.
      * <p>
      * Use this in place of getItemMeta().hasMetadata("field") for simple first-pass
      * checks for data, if you don't necessarily need to unpack the data.
-     * <p>
-     * The default implementation defers to ItemMeta.
      *
      * @param key The String key to check for
      * @return True if getItemMeta().hasMetadata(key)
@@ -620,15 +618,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * This can be overridden to provide an efficient quick check to
-     * see if this ItemStack has a specific key in its metadata store
-     * for a specific plugin, without actually unpacking the ItemMeta object.
+     * This may provide a more efficient check to see if this ItemStack
+     * has a specific key in its metadata store for a specific plugin,
+     * without actually unpacking the ItemMeta object.
      * <p>
      * Use this in place of getItemMeta().hasMetadata("field", plugin) for
      * simple first-pass checks for data, if you don't necessarily need to
      * unpack the data.
-     * <p>
-     * The default implementation defers to ItemMeta.
      *
      * @param key The String key to check for
      * @param plugin The Plugin for which to check for data
