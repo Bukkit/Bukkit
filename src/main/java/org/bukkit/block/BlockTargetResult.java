@@ -7,12 +7,11 @@ import com.google.common.base.Predicate;
 /**
  * Represents the result of calling a method to determine blocks intersected
  * by an entity's line of sight:
- *
- * {@link LivingEntity#getLineOfSight(Predicate, int, boolean)}
- * or
- * {@link LivingEntity#getTargetBlock(Predicate, int, boolean)}
- * or
- * {@link LivingEntity#getLastTwoTargetBlocks(Predicate, int, boolean)}
+ * <p><ul>
+ * <li>{@link LivingEntity#getLineOfSight(Predicate, int, boolean)}</li>
+ * <li>{@link LivingEntity#getTargetBlock(Predicate, int, boolean)}</li>
+ * <li>{@link LivingEntity#getLastTwoTargetBlocks(Predicate, int, boolean)}</li>
+ * </ul>
  */
 public class BlockTargetResult {
     private final Block block;
