@@ -5,17 +5,14 @@ import org.bukkit.entity.LivingEntity;
 import com.google.common.base.Predicate;
 
 /**
- * Represents the result of calling a method to determine blocks intersected
- * by an entity's line of sight:
- * <p>
+ * Represents the result of calling the following methods to determine blocks
+ * or block hit boxes intersected by an entity's line of sight:
  * <ul>
  * <li>
  *     {@link LivingEntity#getLineOfSight(Predicate, int, boolean)}
- * </li>
- * <li>
+ * </li><li>
  *     {@link LivingEntity#getTargetBlock(Predicate, int, boolean)}
- * </li>
- * <li>
+ * </li><li>
  *     {@link LivingEntity#getLastTwoTargetBlocks(Predicate, int, boolean)}
  * </li>
  * </ul>
@@ -32,7 +29,14 @@ public class BlockTargetResult {
     }
 
     /**
-     * Get the block which is intersected by the entity's line of sight.
+     * Get the block which the entity's line of sight passed through.
+     * <p>
+     * While the return value from this method will always be non-null, it
+     * does not necessarily indicate that this block was actually intersected
+     * by the entity's line of sight, only that this block was considered for
+     * intersection by a block targeting method.  To check for intersection,
+     * use the {@link #getTargetFace()} and/or
+     * {@link #getTargetLocation()} methods.
      *
      * @return the block
      */
@@ -42,8 +46,9 @@ public class BlockTargetResult {
 
     /**
      * Get the closest face of the block intersected by the entity's line of
-     * sight.  This may be null if the line of sight did not intersect this
-     * block's hit box.
+     * sight.  This may be null if the line of sight did not actually
+     * intersect this block's hit box, as determined by
+     * {@link Block#getHitBox(org.bukkit.Location, org.bukkit.util.Vector)}.
      *
      * @return the intersected block face
      */
@@ -52,9 +57,11 @@ public class BlockTargetResult {
     }
 
     /**
-     * Get the precise closest location where the entity's line of sight
-     * intersected the block's hit box.  This may be null if the line of sight
-     * did not intersect this block's hit box.
+     * Get the precise location where the entity's line of sight intersected
+     * the block's hit box (on the face of the hit box closest to the entity).
+     * This may be null if the line of sight did not actually intersect this
+     * block's hit box, as determined by
+     * {@link Block#getHitBox(org.bukkit.Location, org.bukkit.util.Vector)}.
      *
      * @return the intersected location
      */
