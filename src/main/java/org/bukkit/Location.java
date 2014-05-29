@@ -1,8 +1,11 @@
 package org.bukkit;
 
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
+
+import java.util.List;
 
 /**
  * Represents a 3-dimensional position in a world
@@ -80,6 +83,19 @@ public class Location implements Cloneable {
      */
     public Block getBlock() {
         return world.getBlockAt(this);
+    }
+
+    /**
+     * Returns a list of entities within a bounding box centered around this
+     * location
+     *
+     * @param x 1/2 the size of the box along x axis
+     * @param y 1/2 the size of the box along y axis
+     * @param z 1/2 the size of the box along z axis
+     * @return List<Entity> List of entities nearby
+     */
+    public List<Entity> getNearbyEntities(double x, double y, double z) {
+        return world.getEntities(this, x, y, z);
     }
 
     /**

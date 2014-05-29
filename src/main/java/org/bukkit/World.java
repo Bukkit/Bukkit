@@ -430,6 +430,18 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public Collection<Entity> getEntitiesByClasses(Class<?>... classes);
 
     /**
+     * Returns a list of entities within a bounding box centered around the
+     * specified location
+     *
+     * @param center the center of the bounding box
+     * @param x 1/2 the size of the box along x axis
+     * @param y 1/2 the size of the box along y axis
+     * @param z 1/2 the size of the box along z axis
+     * @return List<Entity> List of entities nearby
+     */
+    public List<Entity> getEntities(Location center, double x, double y, double z);
+
+    /**
      * Get a list of all players in this World
      *
      * @return A list of all Players currently residing in this world
