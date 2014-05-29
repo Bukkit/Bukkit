@@ -81,7 +81,7 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
      * @return a list of {@code BlockTargetResult} objects, each of which
      *     represents one block along the entity's line of sight
      */
-    public List<BlockTargetResult> getLineOfSight(Predicate<Block> transparent, int maxDistance, boolean useHitBoxes);
+    public List<BlockTargetResult> getLineOfSight(Predicate<? super Block> transparent, int maxDistance, boolean useHitBoxes);
 
     /**
      * Gets the block that the living entity has targeted.
@@ -124,7 +124,7 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
      *     the block.  If false, the block's full volume is used.
      * @return a BlockTargetResult object
      */
-    public BlockTargetResult getTargetBlock(Predicate<Block> transparent, int maxDistance, boolean useHitBoxes);
+    public BlockTargetResult getTargetBlock(Predicate<? super Block> transparent, int maxDistance, boolean useHitBoxes);
 
     /**
      * Gets the last two blocks along the living entity's line of sight.
@@ -140,7 +140,7 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
      *     the block.  If false, the block's full volume is used.
      * @return a list of two BlockTargetResult objects
      */
-    public List<BlockTargetResult> getLastTwoTargetBlocks(Predicate<Block> transparent, int maxDistance, boolean useHitBoxes);
+    public List<BlockTargetResult> getLastTwoTargetBlocks(Predicate<? super Block> transparent, int maxDistance, boolean useHitBoxes);
 
     /**
      * Throws an egg from the living entity.
