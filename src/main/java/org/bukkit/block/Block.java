@@ -383,17 +383,41 @@ public interface Block extends Metadatable {
     Collection<ItemStack> getDrops(ItemStack tool);
 
     /**
-     * Returns a pair of vectors representing two opposite corners of the
-     * block's actual hit box; the volume of the block which is actually
+     * Store the block's hit box information in the provided parameters.
+     * <p>
+     * The block's hit box is the volume of the block which is actually
      * occupied.  This may be significantly smaller than the block's full
      * extent; for example a carpet occupies only 1/16th of a block's
      * vertical size.
      * <p>
-     * The first vector returned always represents the point with the
-     * smallest X, Y, and Z co-ordinates; the second vector represents the
-     * point with the largest X, Y, and Z co-ordinates.
+     * The floor location represents the smallest (closest to negative
+     * infinity) X, Y, and Z co-ordinates of the hit box.
      *
-     * @return a pair of vectors
+     * @param floor Location in which to store the hit box's floor location
+     * @param size Vector in which to store the hit box's size
      */
-    Vector[] getHitBox();
+    void getHitBox(Location floor, Vector size);
+
+    /**
+     * Returns the floor location of the block's hit box.
+     * <p>
+     * See {@link #getHitBox(org.bukkit.Location, org.bukkit.util.Vector)} for
+     * more discussion on hit boxes.
+     * <p>
+     * The floor location represents the smallest (closest to negative
+     * infinity) X, Y, and Z co-ordinates of the hit box.
+     *
+     * @return a Location representing the hit box's floor location
+     */
+    Location getHitBoxFloor();
+
+    /**
+     * Returns the size of the block's hit box.
+     * <p>
+     * See {@link #getHitBox(org.bukkit.Location, org.bukkit.util.Vector)} for
+     * more discussion on hit boxes.
+     *
+     * @return a Vector representing the hit box's size
+     */
+    Vector getHitBoxSize();
 }
