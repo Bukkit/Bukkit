@@ -430,7 +430,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public Collection<Entity> getEntitiesByClasses(Class<?>... classes);
 
     /**
-     * Returns a list of entities within a bounding box centered around the
+     * Returns a collection of entities within a bounding box centered around the
      * specified location
      *
      * @param center the center of the bounding box
@@ -439,7 +439,35 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param z 1/2 the size of the box along z axis
      * @return List<Entity> List of entities nearby
      */
-    public List<Entity> getEntities(Location center, double x, double y, double z);
+    public Collection<Entity> getEntities(Location center, double x, double y, double z);
+
+    /**
+     * Get a collection of all entities in this World matching the given
+     * class/interface within a specific area
+     *
+     * @param center the center of the bounding box
+     * @param x 1/2 the size of the box along x axis
+     * @param y 1/2 the size of the box along y axis
+     * @param z 1/2 the size of the box along z axis
+     * @param cls The class representing the type of entity to match
+     * @return A List of all Entities currently residing in this world that
+     *     match the given class/interface within the given area
+     */
+    public <T extends Entity> Collection<T> getEntitiesByClass(Location center, double x, double y, double z, Class<T> cls);
+
+    /**
+     * Get a collection of all entities in this World matching any of the
+     * given classes/interfaces within a specific area
+     *
+     * @param center the center of the bounding box
+     * @param x 1/2 the size of the box along x axis
+     * @param y 1/2 the size of the box along y axis
+     * @param z 1/2 the size of the box along z axis
+     * @param classes The classes representing the types of entity to match
+     * @return A List of all Entities currently residing in this world that
+     *     match one or more of the given classes/interfaces in the area
+     */
+    public Collection<Entity> getEntitiesByClasses(Location center, double x, double y, double z, Class<?>... classes);
 
     /**
      * Get a list of all players in this World
