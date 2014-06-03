@@ -15,7 +15,6 @@ import org.bukkit.event.HandlerList;
  * <ul>
  * <li>Snow forming due to a snow storm.
  * <li>Ice forming in a snowy Biome like Taiga or Tundra.
- * <li>Cauldron filling with water due to rain.
  * </ul>
  * <p>
  * If a Block Form event is cancelled, the block will not be formed.
