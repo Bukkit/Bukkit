@@ -4,7 +4,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.HandlerList;
 
 /**
- * Thrown whenever an Entity is removed from the world
+ * Called whenever an Entity is removed from the world.
  */
 public class EntityDespawnEvent extends EntityEvent {
     private static final HandlerList handlers = new HandlerList();
