@@ -129,7 +129,8 @@ public enum Effect {
      * and is used to choose the appropiate texture based on the block
      * material. The particles are rendered on top of that.
      */
-    LAND_DUST(2006, Type.VISUAL, Integer.class);
+    LAND_DUST(2006, Type.VISUAL, Integer.class),
+    ;
 
     private final int id;
     private final Type type;
