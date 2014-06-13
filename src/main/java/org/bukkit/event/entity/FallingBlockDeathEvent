@@ -5,16 +5,27 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Called when a FallingBlock dies.
+ */
 public class FallingBlockDeathEvent extends Event implements Cancellable {
 
     private static HandlerList handlers = new HandlerList();
     private FallingBlock fallingBlock;
     private boolean isCancelled = false;
 
+    /**
+     * @param fallingBlock the FallingBlock that calling the event.
+     */
     public FallingBlockDeathEvent(FallingBlock fallingBlock) {
         this.fallingBlock = fallingBlock;
     }
 
+    /**
+     * Gets the dying FallingBlock
+     * 
+     * @return the FallingBlock that is dying
+     */
     public FallingBlock getFallingBlock() {
         return fallingBlock;
     }
