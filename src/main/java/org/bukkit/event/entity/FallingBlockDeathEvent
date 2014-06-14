@@ -1,32 +1,20 @@
 package org.bukkit.event.entity;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
  * Called when a FallingBlock dies.
  */
-public class FallingBlockDeathEvent extends EntityEvent implements Cancellable {
+public class FallingBlockDeathEvent extends EntityEvent {
 
     private static HandlerList handlers = new HandlerList();
-    private boolean isCancelled = false;
 
     /**
      * @param what the FallingBlock which called the event.
      */
     public FallingBlockDeathEvent(Entity what) {
         super(what);
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return isCancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean cancel) {
-        isCancelled = cancel;
     }
 
     public static HandlerList getHandlerList() {
