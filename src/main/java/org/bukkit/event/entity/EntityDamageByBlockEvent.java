@@ -20,9 +20,9 @@ public class EntityDamageByBlockEvent extends EntityDamageEvent {
     }
 
     /**
-     * Returns the block that damaged the player.
+     * Returns the block that damaged the entity.
      *
-     * @return Block that damaged the player
+     * @return Block that damaged the entity
      */
     public Block getDamager() {
         return damager;
