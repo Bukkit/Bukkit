@@ -48,6 +48,10 @@ public class EntityDespawnEvent extends EntityEvent {
          */
         CHUNK_UNLOAD,
         /**
+         * When a living entity despawns because it died
+         */
+        DEATH,
+        /**
          * When an entity is missing a DespawnReason
          */
         DEFAULT
