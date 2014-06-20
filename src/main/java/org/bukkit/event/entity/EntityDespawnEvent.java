@@ -52,6 +52,11 @@ public class EntityDespawnEvent extends EntityEvent {
          */
         DEATH,
         /**
+         * When an entity despawns because a plugin or GameRule removed it,
+         * or a non-living entity died (EG, ender crystal destroyed)
+         */
+        REMOVED,
+        /**
          * When an entity is missing a DespawnReason
          */
         DEFAULT
