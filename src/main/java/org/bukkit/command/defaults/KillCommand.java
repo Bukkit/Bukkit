@@ -31,7 +31,7 @@ public class KillCommand extends VanillaCommand {
 
             ede.getEntity().setLastDamageCause(ede);
             player.setHealth(0);
-            sender.sendMessage("Ouch. That look like it hurt.");
+            sender.sendMessage("Ouch. That looks like it hurt.");
         } else {
             sender.sendMessage("You can only perform this command as a player");
         }
