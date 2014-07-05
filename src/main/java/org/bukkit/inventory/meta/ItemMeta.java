@@ -124,6 +124,20 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     */
     boolean hasConflictingEnchant(Enchantment ench);
 
+    /**
+     * Returns whether this does not lose durability on use.
+     *
+     * @return true if this does not lose durability on use, false otherwise.
+     */
+    boolean isUnbreakable();
+
+    /**
+     * Sets whether this does not lose durability on use
+     *
+     * @param unbreakable this indicates whether this does not lose durability on use
+     */
+    void setUnbreakable(boolean unbreakable);
+
     @SuppressWarnings("javadoc")
     ItemMeta clone();
 }
