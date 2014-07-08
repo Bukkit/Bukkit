@@ -1,9 +1,11 @@
 package org.bukkit.entity;
 
+import org.bukkit.merchant.Merchant;
+
 /**
  * Represents a villager NPC
  */
-public interface Villager extends Ageable, NPC {
+public interface Villager extends Ageable, NPC, Merchant {
 
     /**
      * Gets the current profession of this villager.
