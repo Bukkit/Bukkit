@@ -1035,4 +1035,10 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @see Player#setHealthScaled(boolean)
      */
     public double getHealthScale();
+    
+    /**
+     * Return ping value between player and server
+     */
+    public int getPing();
+    
 }
