@@ -13,6 +13,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.bukkit.Warning.WarningState;
+import org.bukkit.chat.RichMessage;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -235,6 +236,17 @@ public interface Server extends PluginMessageRecipient {
      * @return the number of players
      */
     public int broadcastMessage(String message);
+
+    /**
+     * Broadcast a rich message to all players.
+     * <p>
+     * This is the same as calling {@link #broadcast(RichMessage, String)}
+     * to {@link #BROADCAST_CHANNEL_USERS}
+     *
+     * @param message the rich message
+     * @return the number of players
+     */
+    public int broadcastMessage(RichMessage message);
 
     /**
      * Gets the name of the update folder. The update folder is used to safely
@@ -593,6 +605,17 @@ public interface Server extends PluginMessageRecipient {
      * @return number of message recipients
      */
     public int broadcast(String message, String permission);
+
+    /**
+     * Broadcasts the specified rich message to every user with the given
+     * permission name.
+     *
+     * @param message rich message to broadcast
+     * @param permission the required permission {@link Permissible
+     *     permissibles} must have to receive the broadcast
+     * @return number of message recipients
+     */
+    public int broadcast(RichMessage message, String permission);
 
     /**
      * Gets the player by the given name, regardless if they are offline or
