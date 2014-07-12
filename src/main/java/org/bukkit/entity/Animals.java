@@ -25,7 +25,7 @@ public interface Animals extends Ageable {
      * Specify a non-null player to indicate that the given player was the one who induced breeding, which will give any built in or plugin created rewards (EG: experience) to that player when the breeding is successful.
      *
      * @param breeding whether the animal should try to breed.
-	 * @param player the player that induced the breeding.
+     * @param player the player that induced the breeding.
      */
     public void setBreeding(boolean breeding, Player player);
 
