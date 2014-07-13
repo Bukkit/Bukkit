@@ -42,8 +42,10 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
         Validate.isTrue(modifiers.containsKey(DamageModifier.BASE), "BASE DamageModifier missing");
         Validate.isTrue(!modifiers.containsKey(null), "Cannot have null DamageModifier");
         Validate.noNullElements(modifiers.values(), "Cannot have null modifier values");
-        Validate.isTrue(modifiers.keySet().equals(modifierFunctions.keySet()), "Must have a modifier function for each DamageModifier");
-        Validate.noNullElements(modifierFunctions.values(), "Cannot have null modifier function");
+        if (modifierFunctions != null) {
+            Validate.isTrue(modifiers.keySet().equals(modifierFunctions.keySet()), "Must have a modifier function for each DamageModifier");
+            Validate.noNullElements(modifierFunctions.values(), "Cannot have null modifier function");
+        }
         this.originals = new EnumMap<DamageModifier, Double>(modifiers);
         this.cause = cause;
         this.modifiers = modifiers;
