@@ -37,8 +37,10 @@ public interface Animals extends Ageable {
      *
      * @param breeding whether the animal should try to breed.
      * @param player the player that induced the breeding.
+     * @param timeout how many ticks until the breeding state automatically
+     * cancels. The default is 600.
      */
-    public void setBreeding(boolean breeding, Player player);
+    public void setBreeding(boolean breeding, Player player, int timeout);
 
     /**
      * Set whether this animal is currently trying to breed.
@@ -51,6 +53,7 @@ public interface Animals extends Ageable {
      * breed from the entity, and even stop an in-progress mating session.
      * This will assume a null player, meaning that no player will be given
      * any rewards (EG: experience) for a successful breeding.
+     * This will also assume a default breed timeout of 600 ticks.
      *
      * @param breeding whether the animal should try to breed.
      */
