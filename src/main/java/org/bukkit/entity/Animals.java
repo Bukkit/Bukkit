@@ -34,6 +34,8 @@ public interface Animals extends Ageable {
      * one who induced breeding, which will give any built in or plugin
      * created rewards (EG: experience) to that player when the breeding
      * is successful.
+     * Specify a null player to simply not reward a player for successful
+     * breeding.
      *
      * @param breeding whether the animal should try to breed.
      * @param player the player that induced the breeding.
