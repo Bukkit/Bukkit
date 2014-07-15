@@ -106,4 +106,11 @@ public interface Animals extends Ageable {
      */
     public void setBreeding(boolean breeding);
 
+    /**
+    * Instantly breeds this animal with another.
+    * Will spawn a baby animal at this animal's location.
+    *
+    * @param animal the animal to breed with.
+    */
+    public void breedWith(Animals animal);
 }
