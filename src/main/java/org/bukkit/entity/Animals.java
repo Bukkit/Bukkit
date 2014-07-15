@@ -109,6 +109,7 @@ public interface Animals extends Ageable {
     /**
     * Instantly breeds this animal with another.
     * Will spawn a baby animal at this animal's location.
+    * The input animal must be of the same entity type as this animal.
     *
     * @param animal the animal to breed with.
     */
