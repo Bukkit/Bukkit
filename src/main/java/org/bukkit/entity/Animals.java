@@ -1,6 +1,7 @@
 package org.bukkit.entity;
 
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Ageable;
 
 /**
  * Represents an Animal.
@@ -110,8 +111,11 @@ public interface Animals extends Ageable {
     * Instantly breeds this animal with another.
     * Will spawn a baby animal at this animal's location.
     * The input animal must be of the same entity type as this animal.
+    * Both this animal and the input animal will be unable to breed natural
+    * for a short period of time.
+    * Returns the baby entity created, or null if the event was cancelled.
     *
     * @param animal the animal to breed with.
     */
-    public void breedWith(Animals animal);
+    public Ageable breedWith(Animals animal);
 }
