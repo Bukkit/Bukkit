@@ -55,6 +55,51 @@ public interface Animals extends Ageable {
      * breed from the entity, and even stop an in-progress mating session.
      * This will assume a null player, meaning that no player will be given
      * any rewards (EG: experience) for a successful breeding.
+     * Specify a null player to simply not reward a player for successful
+     * breeding.
+     *
+     * @param breeding whether the animal should try to breed.
+     * @param player the player that induced the breeding.
+     * @param timeout how many ticks until the breeding state automatically
+     * cancels. The default is 600.
+     */
+    public void setBreeding(boolean breeding, int timeout);
+
+    /**
+     * Set whether this animal is currently trying to breed.
+     * An animal is considered to be breeding when it has been given food
+     * (EG: wheat) and is looking for another animal of its species to mate
+     * with and produce a baby animal.
+     * If 'breeding' is true, this function has the same result as given the
+     * entity its breeding food (EG: wheat).
+     * If 'breeding' is false, this function will take away any desire to
+     * breed from the entity, and even stop an in-progress mating session.
+     * Specify a non-null player to indicate that the given player was the
+     * one who induced breeding, which will give any built in or plugin
+     * created rewards (EG: experience) to that player when the breeding
+     * is successful.
+     * Specify a null player to simply not reward a player for successful
+     * breeding.
+     * This will also assume a default breed timeout of 600 ticks.
+     *
+     * @param breeding whether the animal should try to breed.
+     * @param player the player that induced the breeding.
+     * @param timeout how many ticks until the breeding state automatically
+     * cancels. The default is 600.
+     */
+    public void setBreeding(boolean breeding, Player player);
+
+    /**
+     * Set whether this animal is currently trying to breed.
+     * An animal is considered to be breeding when it has been given food
+     * (EG: wheat) and is looking for another animal of its species to mate
+     * with and produce a baby animal.
+     * If 'breeding' is true, this function has the same result as given the
+     * entity its breeding food (EG: wheat).
+     * If 'breeding' is false, this function will take away any desire to
+     * breed from the entity, and even stop an in-progress mating session.
+     * This will assume a null player, meaning that no player will be given
+     * any rewards (EG: experience) for a successful breeding.
      * This will also assume a default breed timeout of 600 ticks.
      *
      * @param breeding whether the animal should try to breed.
