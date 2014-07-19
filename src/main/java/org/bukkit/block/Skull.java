@@ -15,14 +15,17 @@ public interface Skull extends BlockState {
     public boolean hasOwner();
 
     /**
-     * Gets the owner of the skull
+     * Gets the owner of the skull, if one exists
      *
-     * @return the owner of the skull
+     * @return the owner of the skull or null if the skull does not have an owner
      */
     public String getOwner();
 
     /**
      * Sets the owner of the skull
+     * <p>
+     * Involves a potentially blocking web request to acquire the profile data for
+     * the provided name.
      *
      * @param name the new owner of the skull
      * @return true if the owner was successfully set
