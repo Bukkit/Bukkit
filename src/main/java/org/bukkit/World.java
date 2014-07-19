@@ -835,13 +835,13 @@ public interface World extends PluginMessageRecipient, Metadatable {
     /**
      * Gets the temperature for the given block coordinates.
      * <p>
-     * It is safe to run this method when the block does not exist, it will
-     * not create the block.
+     * If the block does not exist at the given coordinates, it will
+     * return an estimate based off the world seed.
      *
-     * @param x X coordinate of the block
-     * @param y Y coordinate of the block
-     * @param z Z coordinate of the block
-     * @return Temperature of the requested block
+     * @param x The X coordinate of the block
+     * @param y The Y coordinate of the block
+     * @param z The Z coordinate of the block
+     * @return The temperature of the requested block
      */
     public double getTemperature(int x, int y, int z);
 
