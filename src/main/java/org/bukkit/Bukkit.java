@@ -666,11 +666,7 @@ public final class Bukkit {
     }
 
     /**
-     * Gets the user-specified resource pack URL.
-     * 
-     * Defaults to an empty string if there is none.
-     * 
-     * @return the resource pack the server provides
+     * @see Server#getResourcePack()
      */
     public static String getResourcePack() {
         return server.getResourcePack();
