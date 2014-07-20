@@ -809,9 +809,8 @@ public interface Server extends PluginMessageRecipient {
     public int getIdleTimeout();
 
     /**
-     * Gets the user-specified resource pack URL.
-     * 
-     * Defaults to an empty string if there is none.
+     * Gets the user-specified resource pack URL. It defaults to an empty string
+     * if there is no specified URL.
      * 
      * @return the resource pack the server provides
      */
