@@ -21,7 +21,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
  * existing events {@link CreatureSpawnEvent}, {@link ItemSpawnEvent}, and
  * {@link ProjectileLaunchEvent}, respectively.
  * </p>
- * 
+ *
  * @see CreatureSpawnEvent
  * @see ItemSpawnEvent
  * @see ProjectileLaunchEvent
@@ -51,7 +51,7 @@ public class EntitySpawnEvent extends EntityEvent implements Cancellable {
 
     /**
      * Gets the location at which the entity is spawning.
-     * 
+     *
      * @return The location at which the entity is spawning
      */
     public Location getLocation() {
@@ -60,7 +60,7 @@ public class EntitySpawnEvent extends EntityEvent implements Cancellable {
 
     /**
      * Gets the reason for why the entity is being spawned.
-     * 
+     *
      * @return A SpawnReason value detailing the reason for the entity being
      *         spawned
      */
