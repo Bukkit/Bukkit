@@ -8,7 +8,6 @@ import com.google.common.collect.Maps;
  * Represents the different species of fish.
  */
 public enum FishSpecies {
-
     /**
      * Represents the common fish species.
      */

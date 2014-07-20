@@ -1,5 +1,6 @@
 package org.bukkit.material;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.FishSpecies;
 import org.bukkit.Material;
 
@@ -62,6 +63,8 @@ public class CookedFish extends MaterialData {
      * @param species New species of this fish
      */
     public void setSpecies(FishSpecies species) {
+        Validate.notNull(species, "FishSpecies cannot be null");
+
         setData(species.getData());
     }
 
