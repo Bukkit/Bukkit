@@ -1,8 +1,13 @@
 package org.bukkit.chat;
 
+import org.apache.commons.lang.Validate;
+import org.bukkit.Achievement;
+import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.regex.Pattern;
 
 public class Message implements Iterable<Message.Part> {
 
@@ -16,13 +21,7 @@ public class Message implements Iterable<Message.Part> {
         return result;
     }
 
-    public static Message localized(String id, String... params) {
-        Message result = new Message();
-        result.appendLocalized(id, params);
-        return result;
-    }
-
-    // <insert 1 million more static builders here>
+    // TODO <insert 1 million more static builders here>
 
     private final List<Part> parts;
 
@@ -36,33 +35,111 @@ public class Message implements Iterable<Message.Part> {
     }
 
     public Message append(String text) {
-        this.parts.add(Part.of(text));
+        append(Part.of(text));
         return this;
     }
 
-    public Message appendLocalized(String id, String... params) {
-        this.parts.add(Part.localized(id, params));
+    public Message appendLocalized(String id, String... parameters) {
+        append(Part.ofLocalized(id, parameters));
         return this;
     }
 
-    // <insert 1 million more append methods here>
+    public Message append(String[] hoverLines, String text) {
+        append(Part.of(hoverLines, text));
+        return this;
+    }
+
+    public Message appendLocalized(String[] hoverLines, String id, String... parameters) {
+        append(Part.ofLocalized(hoverLines, id, parameters));
+        return this;
+    }
+
+    public Message append(ItemStack item) {
+        append(Part.of(item));
+        return this;
+    }
+
+    public Message append(ItemStack item, String text) {
+        append(Part.of(item, text));
+        return this;
+    }
+
+    public Message appendLocalized(ItemStack item, String id, String... parameters) {
+        append(Part.ofLocalized(item, id, parameters));
+        return this;
+    }
+
+    public Message append(Achievement achievement) {
+        append(Part.of(achievement));
+        return this;
+    }
+
+    public Message append(Achievement achievement, String text) {
+        append(Part.of(achievement, text));
+        return this;
+    }
+
+    public Message appendLocalized(Achievement achievement, String id, String... parameters) {
+        append(Part.ofLocalized(achievement, id, parameters));
+        return this;
+    }
+
+    public Message append(Click clickAction, String text) {
+        append(Part.of(clickAction, text));
+        return this;
+    }
+
+    public Message appendLocalized(Click clickAction, String id, String... parameters) {
+        append(Part.ofLocalized(clickAction, id, parameters));
+        return this;
+    }
+
+    public Message append(Click clickAction, String[] hoverLines, String text) {
+        append(Part.of(clickAction, hoverLines, text));
+        return this;
+    }
+
+    public Message appendLocalized(Click clickAction, String[] hoverLines, String id, String... parameters) {
+        append(Part.ofLocalized(clickAction, hoverLines, id, parameters));
+        return this;
+    }
+
+    public Message append(Click clickAction, ItemStack item) {
+        append(Part.of(clickAction, item));
+        return this;
+    }
+
+    public Message append(Click clickAction, ItemStack item, String text) {
+        append(Part.of(clickAction, item, text));
+        return this;
+    }
+
+    public Message appendLocalized(Click clickAction, ItemStack item, String id, String... parameters) {
+        append(Part.ofLocalized(clickAction, item, id, parameters));
+        return this;
+    }
+
+    public Message append(Click clickAction, Achievement achievement) {
+        append(Part.of(clickAction, achievement));
+        return this;
+    }
+
+    public Message append(Click clickAction, Achievement achievement, String text) {
+        append(Part.of(clickAction, achievement, text));
+        return this;
+    }
+
+    public Message appendLocalized(Click clickAction, Achievement achievement, String id, String... parameters) {
+        append(Part.ofLocalized(clickAction, achievement, id, parameters));
+        return this;
+    }
 
     public Message insert(int pos, Part part) {
         this.parts.add(pos, part);
         return this;
     }
 
-    public Message insert(int pos, String text) {
-        this.parts.add(pos, Part.of(text));
-        return this;
-    }
-
-    public Message insertLocalized(int pos, String id, String... params) {
-        this.parts.add(pos, Part.localized(id, params));
-        return this;
-    }
-
-    // <insert 1 million more insert methods here>
+    // TODO <insert 1 million more insert methods here>
 
     @Override
     public ListIterator<Part> iterator() {
@@ -72,71 +149,278 @@ public class Message implements Iterable<Message.Part> {
     public static class Part {
 
         public static Part of(String text) {
-            Part result = new Part();
-            result.text = text;
-            return result;
+            Validate.notNull(text, "text can't be null");
+            Part res = new Part();
+            res.text = text;
+            return res;
         }
 
-        public static Part localized(String id, String... params) {
-            Part result = new Part();
-            result.localizedTextId = id;
-            result.localizedTextParams = params;
-            return result;
+        public static Part ofLocalized(String id, String... parameters) {
+            Validate.notNull(id, "id can't be null");
+            Part res = new Part();
+            res.localizedTextId = id;
+            if (parameters != null) {
+                res.localizedTextParameters = parameters.length == 0 ? null : parameters;
+            }
+            return res;
         }
 
-        // <insert 1 million more static builders here>
+        public static Part of(String[] hoverLines, String text) {
+            Validate.notEmpty(hoverLines, "hoverLines can't be empty");
+            Validate.notNull(text, "text can't be null");
+            Part res = new Part();
+            if (hoverLines != null) {
+                res.hoverLines = hoverLines.length == 0 ? null : hoverLines;
+            }
+            res.text = text;
+            return res;
+        }
 
-        private Part() {}
+        public static Part ofLocalized(String[] hoverLines, String id, String... parameters) {
+            Validate.notNull(id, "id can't be null");
+            Part res = new Part();
+            if (hoverLines != null) {
+                res.hoverLines = hoverLines.length == 0 ? null : hoverLines;
+            }
+            res.localizedTextId = id;
+            if (parameters != null) {
+                res.localizedTextParameters = parameters.length == 0 ? null : parameters;
+            }
+            return res;
+        }
+
+        public static Part of(ItemStack item) {
+            Validate.notNull(item, "item can't be null");
+            Part res = new Part();
+            res.hoverObject = item.clone();
+            return res;
+        }
+
+        public static Part of(ItemStack item, String text) {
+            Validate.notNull(text, "text can't be null");
+            Part res = new Part();
+            res.hoverObject = item.clone();
+            res.text = text;
+            return res;
+        }
+
+        public static Part ofLocalized(ItemStack item, String id, String... parameters) {
+            Validate.notNull(id, "id can't be null");
+            Part res = new Part();
+            res.hoverObject = item;
+            res.localizedTextId = id;
+            if (parameters != null) {
+                res.localizedTextParameters = parameters.length == 0 ? null : parameters;
+            }
+            return res;
+        }
+
+        public static Part of(Achievement achievement) {
+            Validate.notNull(achievement, "achievement can't be null");
+            Part res = new Part();
+            res.hoverObject = achievement;
+            return res;
+        }
+
+        public static Part of(Achievement achievement, String text) {
+            Validate.notNull(text, "text can't be null");
+            Part res = new Part();
+            res.hoverObject = achievement;
+            res.text = text;
+            return res;
+        }
+
+        public static Part ofLocalized(Achievement achievement, String id, String... parameters) {
+            Validate.notNull(id, "id can't be null");
+            Part res = new Part();
+            res.hoverObject = achievement;
+            res.localizedTextId = id;
+            if (parameters != null) {
+                res.localizedTextParameters = parameters.length == 0 ? null : parameters;
+            }
+            return res;
+        }
+
+        public static Part of(Click clickAction, String text) {
+            Validate.notNull(text, "text can't be null");
+            Part res = new Part();
+            res.clickAction = clickAction;
+            res.text = text;
+            return res;
+        }
+
+        public static Part ofLocalized(Click clickAction, String id, String... parameters) {
+            Validate.notNull(id, "id can't be null");
+            Part res = new Part();
+            res.clickAction = clickAction;
+            res.localizedTextId = id;
+            if (parameters != null) {
+                res.localizedTextParameters = parameters.length == 0 ? null : parameters;
+            }
+            return res;
+        }
+
+        public static Part of(Click clickAction, String[] hoverLines, String text) {
+            Validate.notEmpty(hoverLines, "hoverLines can't be empty");
+            Validate.notNull(text, "text can't be null");
+            Part res = new Part();
+            res.clickAction = clickAction;
+            if (hoverLines != null) {
+                res.hoverLines = hoverLines.length == 0 ? null : hoverLines;
+            }
+            res.text = text;
+            return res;
+        }
+
+        public static Part ofLocalized(Click clickAction, String[] hoverLines, String id, String... parameters) {
+            Validate.notNull(id, "id can't be null");
+            Part res = new Part();
+            res.clickAction = clickAction;
+            if (hoverLines != null) {
+                res.hoverLines = hoverLines.length == 0 ? null : hoverLines;
+            }
+            res.localizedTextId = id;
+            if (parameters != null) {
+                res.localizedTextParameters = parameters.length == 0 ? null : parameters;
+            }
+            return res;
+        }
+
+        public static Part of(Click clickAction, ItemStack item) {
+            Validate.notNull(item, "item can't be null");
+            Part res = new Part();
+            res.clickAction = clickAction;
+            res.hoverObject = item.clone();
+            return res;
+        }
+
+        public static Part of(Click clickAction, ItemStack item, String text) {
+            Validate.notNull(text, "text can't be null");
+            Part res = new Part();
+            res.clickAction = clickAction;
+            res.hoverObject = item.clone();
+            res.text = text;
+            return res;
+        }
+
+        public static Part ofLocalized(Click clickAction, ItemStack item, String id, String... parameters) {
+            Validate.notNull(id, "id can't be null");
+            Part res = new Part();
+            res.clickAction = clickAction;
+            res.hoverObject = item;
+            res.localizedTextId = id;
+            if (parameters != null) {
+                res.localizedTextParameters = parameters.length == 0 ? null : parameters;
+            }
+            return res;
+        }
+
+        public static Part of(Click clickAction, Achievement achievement) {
+            Validate.notNull(achievement, "achievement can't be null");
+            Part res = new Part();
+            res.clickAction = clickAction;
+            res.hoverObject = achievement;
+            return res;
+        }
+
+        public static Part of(Click clickAction, Achievement achievement, String text) {
+            Validate.notNull(text, "text can't be null");
+            Part res = new Part();
+            res.clickAction = clickAction;
+            res.hoverObject = achievement;
+            res.text = text;
+            return res;
+        }
+
+        public static Part ofLocalized(Click clickAction, Achievement achievement, String id, String... parameters) {
+            Validate.notNull(id, "id can't be null");
+            Part res = new Part();
+            res.clickAction = clickAction;
+            res.hoverObject = achievement;
+            res.localizedTextId = id;
+            if (parameters != null) {
+                res.localizedTextParameters = parameters.length == 0 ? null : parameters;
+            }
+            return res;
+        }
 
         private String text;
+        private String[] hoverLines;
+
         private String localizedTextId;
-        private String[] localizedTextParams;
-        private MessageClick click;
-        private MessageHover hover;
+        private String[] localizedTextParameters;
+
+        private Object hoverObject;
+        private Click clickAction;
+
+        private Part() {}
 
         public String getText() {
             return this.text;
         }
 
-        public Part setText(String text) {
-            this.text = text;
-            return this;
+        public String[] getHoverLines() {
+            return this.hoverLines;
         }
 
         public String getLocalizedTextId() {
             return this.localizedTextId;
         }
 
-        public Part setLocalizedTextId(String id) {
-            this.localizedTextId = id;
-            return this;
+        public String[] getLocalizedTextParameters() {
+            return this.localizedTextParameters;
         }
 
-        public String[] getLocalizedTextParams() {
-            return this.localizedTextParams;
+        public Object getHoverObject() {
+            return this.hoverObject;
         }
 
-        public Part setLocalizedTextParams(String[] params) {
-            this.localizedTextParams = params;
-            return this;
+        public Click getClickAction() {
+            return this.clickAction;
+        }
+    }
+
+    public static class Click {
+        private static final Pattern HTTP_REGEX = Pattern.compile("^https?://.*", Pattern.CASE_INSENSITIVE);
+
+        public static Click ofOpenUrl(String url) {
+            Validate.isTrue(HTTP_REGEX.matcher(url).matches(), "Provided url is invalid: " + url);
+            return forType(Type.OPEN_URL, url);
         }
 
-        public MessageClick getClick() {
-            return this.click;
+        public static Click ofSendText(String text) {
+            return forType(Type.SEND_TEXT, text);
         }
 
-        public Part setClick(MessageClick click) {
-            this.click = click;
-            return this;
+        public static Click ofSetText(String text) {
+            return forType(Type.SET_TEXT, text);
         }
 
-        public MessageHover getHover() {
-            return this.hover;
+        private static Click forType(Type type, String action) {
+            Validate.notEmpty(action);
+            return new Click(type, action);
         }
 
-        public Part setHover(MessageHover hover) {
-            this.hover = hover;
-            return this;
+        public enum Type {
+            OPEN_URL,
+            SEND_TEXT,
+            SET_TEXT,
+        }
+
+        private final Type type;
+        private final String text;
+
+        private Click(Type type, String text) {
+            this.type = type;
+            this.text = text;
+        }
+
+        public Type getType() {
+            return this.type;
+        }
+
+        public String getText() {
+            return this.text;
         }
     }
 }
