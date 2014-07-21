@@ -92,10 +92,6 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
          */
         ENDERMAN,
         /**
-         * Indicates the teleportation was caused by a plugin
-         */
-        PLUGIN,
-        /**
          * Indicates the teleportation was caused by an entity entering a
          * Nether portal
          */
