@@ -29,7 +29,7 @@ public class EntityDespawnEvent extends EntityEvent {
          */
         DEFAULT
     }
-    
+
     private static final HandlerList handlers = new HandlerList();
     private final DespawnReason despawnReason;
 
