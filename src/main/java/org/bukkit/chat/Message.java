@@ -28,6 +28,11 @@ public class Message implements Iterable<Message.Part> {
     private Message() {
         this.parts = new ArrayList<Part>();
     }
+    
+    public Message append(Message message) {
+        this.parts.addAll(message.parts);
+        return this;
+    }
 
     public Message append(Part part) {
         this.parts.add(part);
