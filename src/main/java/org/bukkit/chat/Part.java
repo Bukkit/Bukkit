@@ -4,6 +4,8 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Achievement;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+
 public final class Part {
 
     public static Part of(String text) {
@@ -167,4 +169,44 @@ public final class Part {
         this.clickAction = clickAction;
         return this;
     }
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		Part part = (Part) o;
+
+		if (localizedText != part.localizedText) {
+			return false;
+		}
+		if (clickAction != null ? !clickAction.equals(part.clickAction) : part.clickAction != null) {
+			return false;
+		}
+		if (hover != null ? !hover.equals(part.hover) : part.hover != null) {
+			return false;
+		}
+		if (!Arrays.equals(localizedTextParameters, part.localizedTextParameters)) {
+			return false;
+		}
+		if (text != null ? !text.equals(part.text) : part.text != null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = text != null ? text.hashCode() : 0;
+		result = 31 * result + (localizedText ? 1 : 0);
+		result = 31 * result + (localizedTextParameters != null ? Arrays.hashCode(localizedTextParameters) : 0);
+		result = 31 * result + (hover != null ? hover.hashCode() : 0);
+		result = 31 * result + (clickAction != null ? clickAction.hashCode() : 0);
+		return result;
+	}
 }

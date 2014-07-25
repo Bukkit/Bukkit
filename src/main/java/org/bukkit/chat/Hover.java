@@ -67,4 +67,32 @@ public final class Hover {
         this.object = lines;
         return this;
     }
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		Hover hover = (Hover) o;
+
+		if (!object.equals(hover.object)) {
+			return false;
+		}
+		if (type != hover.type) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = type.hashCode();
+		result = 31 * result + object.hashCode();
+		return result;
+	}
 }
