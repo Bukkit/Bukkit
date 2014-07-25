@@ -28,7 +28,7 @@ public class Message implements Iterable<Message.Part> {
     private Message() {
         this.parts = new ArrayList<Part>();
     }
-    
+
     public Message append(Message message) {
         this.parts.addAll(message.parts);
         return this;
@@ -365,7 +365,7 @@ public class Message implements Iterable<Message.Part> {
         }
 
         public String[] getHoverLines() {
-            return this.hoverLines;
+            return this.hoverLines.clone();
         }
 
         public String getLocalizedTextId() {
@@ -373,10 +373,14 @@ public class Message implements Iterable<Message.Part> {
         }
 
         public String[] getLocalizedTextParameters() {
-            return this.localizedTextParameters;
+            return this.localizedTextParameters.clone();
         }
 
         public Object getHoverObject() {
+            if (this.hoverObject instanceof ItemStack) {
+                // We need to return a clone, since items are mutable
+                return ((ItemStack) this.hoverObject).clone();
+            }
             return this.hoverObject;
         }
 
