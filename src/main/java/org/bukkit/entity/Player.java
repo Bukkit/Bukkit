@@ -13,6 +13,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.Statistic;
 import org.bukkit.WeatherType;
+import org.bukkit.chat.Message;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.map.MapView;
@@ -125,6 +126,13 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @return true if the command was successful, otherwise false
      */
     public boolean performCommand(String command);
+
+    /**
+     * Sends a rich message to this Player.
+     *
+     * @param message the rich message
+     */
+    public void sendMessage(Message message);
 
     /**
      * Returns if the player is in sneak mode
