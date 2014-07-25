@@ -14,10 +14,22 @@ public final class Message implements Iterable<Part> {
         return new Message();
     }
 
-    public static Message of(String string) {
+    public static Message of(Part part) {
         Message result = new Message();
-        result.append(string);
+        result.append(part);
         return result;
+    }
+
+    public static Message of(String string) {
+        return Message.of(Part.of(string));
+    }
+
+    public static Message ofLocalized(String id, String... parameters) {
+        return Message.of(Part.of(id, parameters));
+    }
+
+    public static Message of(String text, String... hoverText) {
+        return Message.of(Part.of(text, hoverText));
     }
 
     // TODO <insert 1 million more static builders here>
@@ -48,8 +60,8 @@ public final class Message implements Iterable<Part> {
         return this;
     }
 
-    public Message append(String[] hoverText, String text) {
-        append(Part.of(hoverText, text));
+    public Message append(String text, String... hoverText) {
+        append(Part.of(text, hoverText));
         return this;
     }
 
@@ -98,8 +110,8 @@ public final class Message implements Iterable<Part> {
         return this;
     }
 
-    public Message append(Click clickAction, String[] hoverText, String text) {
-        append(Part.of(clickAction, hoverText, text));
+    public Message append(Click clickAction, String text, String... hoverText) {
+        append(Part.of(clickAction, text, hoverText));
         return this;
     }
 

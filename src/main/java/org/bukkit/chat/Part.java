@@ -16,10 +16,10 @@ public final class Part {
         return new Part().setLocalizedText(id, parameters);
     }
 
-    public static Part of(String[] hoverText, String text) {
-        Validate.notEmpty(hoverText, "hoverText can't be empty");
+    public static Part of(String text, String... hoverText) {
         Validate.notNull(text, "text can't be null");
-        return new Part().setHover(Hover.of(hoverText)).setText(text);
+        Validate.notEmpty(hoverText, "hoverText can't be empty");
+        return new Part().setText(text).setHover(Hover.of(hoverText));
     }
 
     public static Part ofLocalized(String[] hoverText, String id, String... parameters) {
@@ -67,10 +67,10 @@ public final class Part {
         return new Part().setClickAction(clickAction).setLocalizedText(id, parameters);
     }
 
-    public static Part of(Click clickAction, String[] hoverText, String text) {
-        Validate.notEmpty(hoverText, "hoverText can't be empty");
+    public static Part of(Click clickAction, String text, String... hoverText) {
         Validate.notNull(text, "text can't be null");
-        return new Part().setClickAction(clickAction).setHover(Hover.of(hoverText)).setText(text);
+        Validate.notEmpty(hoverText, "hoverText can't be empty");
+        return new Part().setClickAction(clickAction).setText(text).setHover(Hover.of(hoverText));
     }
 
     public static Part ofLocalized(Click clickAction, String[] hoverText, String id, String... parameters) {
