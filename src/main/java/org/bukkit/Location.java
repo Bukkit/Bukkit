@@ -1,11 +1,11 @@
 package org.bukkit;
 
+import java.util.Collection;
+
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
-
-import java.util.Collection;
 
 /**
  * Represents a 3-dimensional position in a world
