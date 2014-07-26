@@ -171,26 +171,26 @@ public final class Message implements Iterable<Part> {
         return this.parts.listIterator();
     }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-		Message parts1 = (Message) o;
+        Message parts1 = (Message) o;
 
-		if (!parts.equals(parts1.parts)) {
-			return false;
-		}
+        if (!parts.equals(parts1.parts)) {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public int hashCode() {
-		return parts.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return parts.hashCode();
+    }
 }

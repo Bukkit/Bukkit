@@ -56,31 +56,31 @@ public final class Click {
         this.text = text;
     }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-		Click click = (Click) o;
+        Click click = (Click) o;
 
-		if (!text.equals(click.text)) {
-			return false;
-		}
-		if (type != click.type) {
-			return false;
-		}
+        if (!text.equals(click.text)) {
+            return false;
+        }
+        if (type != click.type) {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public int hashCode() {
-		int result = type.hashCode();
-		result = 31 * result + text.hashCode();
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        int result = type.hashCode();
+        result = 31 * result + text.hashCode();
+        return result;
+    }
 }
