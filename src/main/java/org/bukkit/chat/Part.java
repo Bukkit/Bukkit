@@ -172,7 +172,16 @@ public final class Part {
 
     @Override
     public String toString() {
-        return this.text;
+        if (this.text == null) {
+            // text can be null only if this is an Achievement or Item part
+            if (this.hover.getType() == Hover.Type.SHOW_ACHIEVEMENT) {
+                return this.hover.getAchievement().name();
+            } else { // SHOW_ITEM
+                return this.hover.getItem().getType().name();
+            }
+        } else {
+            return this.text;
+        }
     }
 
     @Override
