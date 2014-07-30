@@ -171,6 +171,11 @@ public final class Part {
     }
 
     @Override
+    public String toString() {
+        return this.text;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

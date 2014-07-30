@@ -172,6 +172,15 @@ public final class Message implements Iterable<Part> {
     }
 
     @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        for (Part p : this.parts) {
+            builder.append(p.toString());
+        }
+        return builder.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
