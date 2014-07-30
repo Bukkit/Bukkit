@@ -327,7 +327,7 @@ public enum Material {
     EGG(344, 16),
     COMPASS(345),
     FISHING_ROD(346, 1, 64),
-    WATCH(347),
+    CLOCK(347),
     GLOWSTONE_DUST(348),
     RAW_FISH(349),
     COOKED_FISH(350),
