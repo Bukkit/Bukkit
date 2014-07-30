@@ -32,10 +32,10 @@ public final class Click {
         ;
     }
 
-    private Type type;
-    private String text;
+    private final Type type;
+    private final String text;
 
-    Click(Type type, String text) {
+    private Click(Type type, String text) {
         this.type = type;
         this.text = text;
     }
@@ -46,14 +46,6 @@ public final class Click {
 
     public String getText() {
         return this.text;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     @Override
