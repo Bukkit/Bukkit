@@ -698,7 +698,6 @@ public enum Material {
             case SOIL:
             case FURNACE:
             case BURNING_FURNACE:
-            case SIGN_POST:
             case WOODEN_DOOR:
             case COBBLESTONE_STAIRS:
             case IRON_DOOR_BLOCK:
