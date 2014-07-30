@@ -701,10 +701,7 @@ public enum Material {
             case SIGN_POST:
             case WOODEN_DOOR:
             case COBBLESTONE_STAIRS:
-            case WALL_SIGN:
-            case STONE_PLATE:
             case IRON_DOOR_BLOCK:
-            case WOOD_PLATE:
             case REDSTONE_ORE:
             case GLOWING_REDSTONE_ORE:
             case ICE:
@@ -758,8 +755,6 @@ public enum Material {
             case COBBLE_WALL:
             case ANVIL:
             case TRAPPED_CHEST:
-            case GOLD_PLATE:
-            case IRON_PLATE:
             case DAYLIGHT_DETECTOR:
             case REDSTONE_BLOCK:
             case QUARTZ_ORE:
@@ -777,6 +772,7 @@ public enum Material {
             case ACACIA_STAIRS:
             case DARK_OAK_STAIRS:
             case PACKED_ICE:
+            case FLOWER_POT:
                 return true;
             default:
                 return false;
