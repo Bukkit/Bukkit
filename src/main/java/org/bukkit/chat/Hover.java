@@ -18,6 +18,7 @@ public final class Hover {
 
     public static Hover of(String... lines) {
         Validate.notEmpty(lines, "lines can't be empty");
+        Validate.noNullElements(lines, "lines can't contain null elements");
         // TODO Support \n in Strings here if wanted
         return new Hover(Type.SHOW_TEXT, lines.clone());
     }
