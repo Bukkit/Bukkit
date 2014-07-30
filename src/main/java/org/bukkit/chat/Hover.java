@@ -13,13 +13,13 @@ public final class Hover {
 
     public static Hover of(ItemStack item) {
         Validate.notNull(item, "item can't be null");
-        return new Hover(Type.SHOW_ITEM, item);
+        return new Hover(Type.SHOW_ITEM, item.clone());
     }
 
     public static Hover of(String... lines) {
         Validate.notEmpty(lines, "lines can't be empty");
         // TODO Support \n in Strings here if wanted
-        return new Hover(Type.SHOW_TEXT, lines);
+        return new Hover(Type.SHOW_TEXT, lines.clone());
     }
 
     public enum Type {
@@ -46,11 +46,11 @@ public final class Hover {
     }
 
     public ItemStack getItem() {
-        return this.type == Type.SHOW_ITEM ? (ItemStack) this.object : null;
+        return this.type == Type.SHOW_ITEM ? ((ItemStack) this.object).clone() : null;
     }
 
     public String[] getText() {
-        return this.type == Type.SHOW_TEXT ? (String[]) this.object : null;
+        return this.type == Type.SHOW_TEXT ? ((String[]) this.object).clone() : null;
     }
 
     @Override
