@@ -772,6 +772,10 @@ public enum Material {
             case DARK_OAK_STAIRS:
             case PACKED_ICE:
             case FLOWER_POT:
+            case STONE_PLATE:
+            case WOOD_PLATE:
+            case IRON_PLATE:
+            case GOLD_PLATE:
                 return true;
             default:
                 return false;
