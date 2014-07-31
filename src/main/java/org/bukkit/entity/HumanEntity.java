@@ -92,18 +92,27 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
     public InventoryView openEnchanting(Location location, boolean force);
 
     /**
-     * Opens a sign window for editing the specified sign. When the player closes the
-     * window, a {@link SignChangeEvent} will be triggered.
-     * @param sign The sign you want to edit.
-     * @param editable Whether the sign change should be automatically accepted by the server.
-     */
-    public void openSign(Sign sign, boolean editable);
-
-    /**
-     * Opens a sign window not linked to a physical sign in the world. When the player closes the
-     * window, a {@link SignChangeEvent} will be triggered.
+     * Opens a sign window not linked to a physical sign in the world. When the
+     * player closes the window, a {@link SignChangeEvent} will be triggered.
      */
     public void openSign();
+
+    /**
+     * Opens a sign window for editing the specified sign. When the player
+     * closes the window, a {@link SignChangeEvent} will be triggered.
+     *
+     * @param sign The sign you want to edit
+     */
+    public void openSign(Sign sign);
+
+    /**
+     * Opens a sign window for editing the specified sign. When the player closes
+     * the window, a {@link SignChangeEvent} will be triggered.
+     *
+     * @param sign The sign you want to edit
+     * @param editable Whether the sign change should be automatically accepted by the server
+     */
+    public void openSign(Sign sign, boolean editable);
 
     /**
      * Opens an inventory window to the specified inventory view.
