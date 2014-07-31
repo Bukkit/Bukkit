@@ -2,12 +2,14 @@ package org.bukkit.command.defaults;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.BanEntry;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
 
@@ -48,6 +50,7 @@ public class BanListCommand extends VanillaCommand {
                     message.append(", ");
                 }
             }
+
             message.append(banlist[x].getTarget());
         }
 

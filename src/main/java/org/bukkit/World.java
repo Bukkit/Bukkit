@@ -484,7 +484,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * <p>
      * Note that setting the relative time below the current relative time
      * will actually move the clock forward a day. If you require to rewind
-     * time, please see {@link #setFullTime()}
+     * time, please see {@link #setFullTime(long)}
      *
      * @param time The new relative time to set the in-game time to (in
      *     hours*1000)
@@ -699,7 +699,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return The spawned {@link FallingBlock} instance
      * @throws IllegalArgumentException if {@link Location} or {@link
      *     Material} are null or {@link Material} is not a block
+     * @deprecated Magic value
      */
+    @Deprecated
     public FallingBlock spawnFallingBlock(Location location, Material material, byte data) throws IllegalArgumentException;
 
     /**
@@ -713,7 +715,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @throws IllegalArgumentException if location is null, or blockId is
      *     invalid
      * @see #spawnFallingBlock(org.bukkit.Location, org.bukkit.Material, byte)
+     * @deprecated Magic value
      */
+    @Deprecated
     public FallingBlock spawnFallingBlock(Location location, int blockId, byte blockData) throws IllegalArgumentException;
 
     /**

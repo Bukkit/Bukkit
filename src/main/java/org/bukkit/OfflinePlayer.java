@@ -1,5 +1,8 @@
 package org.bukkit;
 
+import java.util.Date;
+import java.util.UUID;
+
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Player;
@@ -16,10 +19,20 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
 
     /**
      * Returns the name of this player
+     * <p>
+     * Names are no longer unique past a single game session. For persistent storage
+     * it is recommended that you use {@link #getUniqueId()} instead.
      *
-     * @return Player name
+     * @return Player name or null if we have not seen a name for this player yet
      */
     public String getName();
+
+    /**
+     * Returns the UUID of this player
+     *
+     * @return Player UUID
+     */
+    public UUID getUniqueId();
 
     /**
      * Checks if this player is banned or not
@@ -32,7 +45,9 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
      * Bans or unbans this player
      *
      * @param banned true if banned
-     * @deprecated Use {@link org.bukkit.BanList#addBan(String, String, java.util.Date, String)} or {@link org.bukkit.BanList#unban(String)} to enhance functionality
+     * @deprecated Use {@link org.bukkit.BanList#addBan(String, String, Date,
+     *     String)} or {@link org.bukkit.BanList#pardon(String)} to enhance
+     *     functionality
      */
     @Deprecated
     public void setBanned(boolean banned);
