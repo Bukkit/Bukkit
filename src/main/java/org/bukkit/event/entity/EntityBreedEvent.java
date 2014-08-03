@@ -15,14 +15,14 @@ public class EntityBreedEvent extends EntityEvent implements Cancellable {
     private final Ageable baby;
     private Player breeder;
     private boolean cancelled;
-    private int XP;
+    private int xp;
 
-    public EntityBreedEvent(final Animals entity, final Animals entityTwo, final Player breeder, final Ageable baby, final int XP) {
+    public EntityBreedEvent(final Animals entity, final Animals entityTwo, final Player breeder, final Ageable baby, final int xp) {
         super(entity);
         this.entityTwo = entityTwo;
         this.breeder = breeder;
         this.baby = baby;
-        this.XP = XP;
+        this.xp = xp;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class EntityBreedEvent extends EntityEvent implements Cancellable {
      * @return the total amount of experience.
      */
     public int getExperience() {
-        return XP;
+        return xp;
     }
 
     /**
@@ -103,6 +103,6 @@ public class EntityBreedEvent extends EntityEvent implements Cancellable {
      * @param newXP the amount of XP to drop.
      */
     public void setExperience(int newXP) {
-        XP = newXP;
+        xp = newXP;
     }
 }
