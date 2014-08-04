@@ -40,6 +40,16 @@ public class EntityBreedEvent extends EntityEvent implements Cancellable {
     }
 
     /**
+     * Returns an array containing both parent entities.
+     * The array always has a length of 2.
+     *
+     * @return an array of both parent entities.
+     */
+    public Animals[] getParents() {
+        return new Animals[] { (Animals)entity, entityTwo };
+    }
+
+    /**
     * Returns the (currently unspawned) baby entity.
     *
     * @return the baby entity.
