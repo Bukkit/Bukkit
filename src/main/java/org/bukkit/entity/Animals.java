@@ -60,7 +60,6 @@ public interface Animals extends Ageable {
      * breeding.
      *
      * @param breeding whether the animal should try to breed.
-     * @param player the player that induced the breeding.
      * @param timeout how many ticks until the breeding state automatically
      * cancels. The default is 600.
      */
@@ -85,8 +84,6 @@ public interface Animals extends Ageable {
      *
      * @param breeding whether the animal should try to breed.
      * @param player the player that induced the breeding.
-     * @param timeout how many ticks until the breeding state automatically
-     * cancels. The default is 600.
      */
     public void setBreeding(boolean breeding, Player player);
 
