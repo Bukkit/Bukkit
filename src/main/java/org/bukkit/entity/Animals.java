@@ -37,6 +37,8 @@ public interface Animals extends Ageable {
      * is successful.
      * Specify a null player to simply not reward a player for successful
      * breeding.
+     * If the first argument is true, this will force the entity to be able
+     * to breed, which will turn baby animals into adults.
      *
      * @param breeding whether the animal should try to breed.
      * @param player the player that induced the breeding.
@@ -58,6 +60,8 @@ public interface Animals extends Ageable {
      * any rewards (EG: an achievement) for a successful breeding.
      * Specify a null player to simply not reward a player for successful
      * breeding.
+     * If the first argument is true, this will force the entity to be able
+     * to breed, which will turn baby animals into adults.
      *
      * @param breeding whether the animal should try to breed.
      * @param timeout how many ticks until the breeding state automatically
@@ -81,6 +85,8 @@ public interface Animals extends Ageable {
      * Specify a null player to simply not reward a player for successful
      * breeding.
      * This will also assume a default breed timeout of 600 ticks.
+     * If the first argument is true, this will force the entity to be able
+     * to breed, which will turn baby animals into adults.
      *
      * @param breeding whether the animal should try to breed.
      * @param player the player that induced the breeding.
@@ -99,6 +105,8 @@ public interface Animals extends Ageable {
      * This will assume a null player, meaning that no player will be given
      * any rewards (EG: an achievement) for a successful breeding.
      * This will also assume a default breed timeout of 600 ticks.
+     * If the first argument is true, this will force the entity to be able
+     * to breed, which will turn baby animals into adults.
      *
      * @param breeding whether the animal should try to breed.
      */
