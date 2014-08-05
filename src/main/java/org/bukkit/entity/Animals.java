@@ -111,16 +111,4 @@ public interface Animals extends Ageable {
      * @param breeding whether the animal should try to breed.
      */
     public void setBreeding(boolean breeding);
-
-    /**
-    * Instantly breeds this animal with another.
-    * Will spawn a baby animal at this animal's location.
-    * The input animal must be of the same entity type as this animal.
-    * Both this animal and the input animal will be unable to breed natural
-    * for a short period of time.
-    * Returns the baby entity created, or null if the event was cancelled.
-    *
-    * @param animal the animal to breed with.
-    */
-    public Ageable breedWith(Animals animal);
 }
