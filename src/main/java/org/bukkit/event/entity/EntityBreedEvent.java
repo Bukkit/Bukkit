@@ -11,30 +11,21 @@ import org.bukkit.event.HandlerList;
  */
 public class EntityBreedEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private final Animals entityTwo;
-    private final Ageable baby;
+    private final Animals parentOne;
+    private final Animals parentTwo;
     private boolean cancelled;
     private int xp;
 
-    public EntityBreedEvent(final Animals entity, final Animals entityTwo, final Ageable baby, final int xp) {
-        super(entity);
-        this.entityTwo = entityTwo;
-        this.baby = baby;
+    public EntityBreedEvent(final Animals parentOne, final Animals parentTwo, final Ageable baby, final int xp) {
+        super(baby);
+        this.parentOne = parentOne;
+        this.parentTwo = parentTwo;
         this.xp = xp;
     }
 
     @Override
-    public Animals getEntity() {
-        return (Animals) entity;
-    }
-
-    /**
-    * Returns the living entity that the main entity has bred with.
-    *
-    * @return the living entity that was bred with.
-    */
-    public Animals getBredWith() {
-        return entityTwo;
+    public Ageable getEntity() {
+        return (Ageable) entity;
     }
 
     /**
@@ -44,16 +35,7 @@ public class EntityBreedEvent extends EntityEvent implements Cancellable {
      * @return an array of both parent entities.
      */
     public Animals[] getParents() {
-        return new Animals[] { (Animals)entity, entityTwo };
-    }
-
-    /**
-    * Returns the (currently unspawned) baby entity.
-    *
-    * @return the baby entity.
-    */
-    public Ageable getBaby() {
-        return baby;
+        return new Animals[] { parentOne, parentTwo };
     }
 
     public boolean isCancelled() {
