@@ -111,4 +111,11 @@ public interface Animals extends Ageable {
      * @param breeding whether the animal should try to breed.
      */
     public void setBreeding(boolean breeding);
+
+    /**
+     * Gets the Player that last caused this animal to breed, if any.
+     *
+     * @return the breeder player, or null if none.
+     */
+    public Player getBreeder();
 }
