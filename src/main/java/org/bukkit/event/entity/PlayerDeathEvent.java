@@ -138,18 +138,18 @@ public class PlayerDeathEvent extends EntityDeathEvent {
     }
 
     /**
-     * Sets if the Player should keep their inventory at respawn.
+     * Sets if the Player keeps inventory on death.
      *
-     * @param keepInventory True to keep the current inventory
+     * @param keepInventory True to keep the inventory
      */
     public void setKeepInventory(boolean keepInventory) {
         this.keepInventory = keepInventory;
     }
 
     /**
-     * Gets if the Player should keep their inventory at respawn.
+     * Gets if the Player keeps inventory on death.
      *
-     * @return True if the player should keep their inventory at respawn
+     * @return True if the player keeps inventory on death
      */
     public boolean getKeepInventory() {
         return keepInventory;
