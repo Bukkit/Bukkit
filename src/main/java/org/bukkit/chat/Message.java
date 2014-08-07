@@ -32,7 +32,74 @@ public final class Message implements Iterable<Part> {
         return Message.of(Part.of(text, hoverText));
     }
 
-    // TODO <insert 1 million more static builders here>
+
+    public static Message ofLocalized(String[] hoverText, String id, String... parameters) {
+        return Message.of(Part.ofLocalized(hoverText, id, parameters));
+    }
+
+    public static Message of(ItemStack item) {
+        return Message.of(Part.of(item));
+    }
+
+    public static Message of(ItemStack item, String text) {
+        return Message.of(Part.of(item, text));
+    }
+
+    public static Message ofLocalized(ItemStack item, String id, String... parameters) {
+        return Message.of(Part.ofLocalized(item, id, parameters));
+    }
+
+    public static Message of(Achievement achievement) {
+        return Message.of(Part.of(achievement));
+    }
+
+    public static Message of(Achievement achievement, String text) {
+        return Message.of(Part.of(achievement, text));
+    }
+
+    public static Message ofLocalized(Achievement achievement, String id, String... parameters) {
+        return Message.of(Part.ofLocalized(achievement, id, parameters));
+    }
+
+    public static Message of(Click clickAction, String text) {
+        return Message.of(Part.of(clickAction, text));
+    }
+
+    public static Message ofLocalized(Click clickAction, String id, String... parameters) {
+        return Message.of(Part.ofLocalized(clickAction, id, parameters));
+    }
+
+    public static Message of(Click clickAction, String text, String... hoverText) {
+        return Message.of(Part.of(clickAction, text, hoverText));
+    }
+
+    public static Message ofLocalized(Click clickAction, String[] hoverText, String id, String... parameters) {
+        return Message.of(Part.ofLocalized(clickAction, hoverText, id, parameters));
+    }
+
+    public static Message of(Click clickAction, ItemStack item) {
+        return Message.of(Part.of(clickAction, item));
+    }
+
+    public static Message of(Click clickAction, ItemStack item, String text) {
+        return Message.of(Part.of(clickAction, item, text));
+    }
+
+    public static Message ofLocalized(Click clickAction, ItemStack item, String id, String... parameters) {
+        return Message.of(Part.ofLocalized(clickAction, item, id, parameters));
+    }
+
+    public static Message of(Click clickAction, Achievement achievement) {
+        return Message.of(Part.of(clickAction, achievement));
+    }
+
+    public static Message of(Click clickAction, Achievement achievement, String text) {
+        return Message.of(Part.of(clickAction, achievement, text));
+    }
+
+    public static Message ofLocalized(Click clickAction, Achievement achievement, String id, String... parameters) {
+        return Message.of(Part.ofLocalized(clickAction, achievement, id, parameters));
+    }
 
     private final List<Part> parts;
 
@@ -155,7 +222,105 @@ public final class Message implements Iterable<Part> {
         return this;
     }
 
-    // TODO <insert 1 million more insert methods here>
+    public Message insert(int pos, String text) {
+        insert(pos, Part.of(text));
+        return this;
+    }
+
+    public Message insertLocalized(int pos, String id, String... parameters) {
+        insert(pos, Part.ofLocalized(id, parameters));
+        return this;
+    }
+
+    public Message insert(int pos, String text, String... hoverText) {
+        insert(pos, Part.of(text, hoverText));
+        return this;
+    }
+
+    public Message insertLocalized(int pos, String[] hoverText, String id, String... parameters) {
+        insert(pos, Part.ofLocalized(hoverText, id, parameters));
+        return this;
+    }
+
+    public Message insert(int pos, ItemStack item) {
+        insert(pos, Part.of(item));
+        return this;
+    }
+
+    public Message insert(int pos, ItemStack item, String text) {
+        insert(pos, Part.of(item, text));
+        return this;
+    }
+
+    public Message insertLocalized(int pos, ItemStack item, String id, String... parameters) {
+        insert(pos, Part.ofLocalized(item, id, parameters));
+        return this;
+    }
+
+    public Message insert(int pos, Achievement achievement) {
+        insert(pos, Part.of(achievement));
+        return this;
+    }
+
+    public Message insert(int pos, Achievement achievement, String text) {
+        insert(pos, Part.of(achievement, text));
+        return this;
+    }
+
+    public Message insertLocalized(int pos, Achievement achievement, String id, String... parameters) {
+        insert(pos, Part.ofLocalized(achievement, id, parameters));
+        return this;
+    }
+
+    public Message insert(int pos, Click clickAction, String text) {
+        insert(pos, Part.of(clickAction, text));
+        return this;
+    }
+
+    public Message insertLocalized(int pos, Click clickAction, String id, String... parameters) {
+        insert(pos, Part.ofLocalized(clickAction, id, parameters));
+        return this;
+    }
+
+    public Message insert(int pos, Click clickAction, String text, String... hoverText) {
+        insert(pos, Part.of(clickAction, text, hoverText));
+        return this;
+    }
+
+    public Message insertLocalized(int pos, Click clickAction, String[] hoverText, String id, String... parameters) {
+        insert(pos, Part.ofLocalized(clickAction, hoverText, id, parameters));
+        return this;
+    }
+
+    public Message insert(int pos, Click clickAction, ItemStack item) {
+        insert(pos, Part.of(clickAction, item));
+        return this;
+    }
+
+    public Message insert(int pos, Click clickAction, ItemStack item, String text) {
+        insert(pos, Part.of(clickAction, item, text));
+        return this;
+    }
+
+    public Message insertLocalized(int pos, Click clickAction, ItemStack item, String id, String... parameters) {
+        insert(pos, Part.ofLocalized(clickAction, item, id, parameters));
+        return this;
+    }
+
+    public Message insert(int pos, Click clickAction, Achievement achievement) {
+        insert(pos, Part.of(clickAction, achievement));
+        return this;
+    }
+
+    public Message insert(int pos, Click clickAction, Achievement achievement, String text) {
+        insert(pos, Part.of(clickAction, achievement, text));
+        return this;
+    }
+
+    public Message insertLocalized(int pos, Click clickAction, Achievement achievement, String id, String... parameters) {
+        insert(pos, Part.ofLocalized(clickAction, achievement, id, parameters));
+        return this;
+    }
 
     public Part get(int i) {
         return this.parts.get(i);
