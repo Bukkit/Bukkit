@@ -16,6 +16,7 @@ import org.bukkit.material.MaterialData;
 /**
  * Represents a stack of items
  */
+@SerializableAs("ItemStack")
 public class ItemStack implements Cloneable, ConfigurationSerializable {
     private int type = 0;
     private int amount = 0;
