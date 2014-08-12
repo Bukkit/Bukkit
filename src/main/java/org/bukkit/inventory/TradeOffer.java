@@ -10,9 +10,18 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 /**
  * Represents a Merchant's trade offer that always will have the following:
- * An {@link org.bukkit.inventory.ItemStack} that is being bought, another
- * ItemStack that is being sold, and the maximum amount of times this trade
- * can be used.
+ * <ul>
+ *     <li>
+ *         An {@link ItemStack} being bought.
+ *     </li><li>
+ *         A possible second ItemStack being bought.
+ *     </li><li>
+ *         An ItemStack being sold
+ *     </li>
+ *     <li>
+ *         The maxmium amount of times this trade can be used
+ *     </li>
+ * </ul>
  *
  * Each TradeOffer has a limited amount of uses. Once the uses have reached
  * their maximum, the TradeOffer is no longer valid for a player's trade.
@@ -46,7 +55,8 @@ public final class TradeOffer implements ConfigurationSerializable {
     }
 
     /**
-     * This is a builder for TradeOffer.
+     * This is a builder that allows customizing a TradeOffer before building into
+     * an immutable TradeOffer.
      *
      * @see TradeOffer#builder()
      */
@@ -60,12 +70,11 @@ public final class TradeOffer implements ConfigurationSerializable {
         Builder() {}
 
         /**
-         * Sets the first buying item for the trade offer.
+         * Sets the first buying item for the trade offer. The first item in a
+         * TradeOffer cannot be {@link Material#AIR} or null.
          *
          * @param itemStack the first buying item
          * @return this object, for chaining
-         * @throws IllegalArgumentException if the itemstack is null
-         * @throws IllegalArgumentException if the itemstack type is AIR
          */
         public Builder withFirstItem(ItemStack itemStack) {
             Validate.notNull(itemStack, "Cannot have a null item for a TradeOffer's first item!");
@@ -76,11 +85,11 @@ public final class TradeOffer implements ConfigurationSerializable {
         }
 
         /**
-         * Sets the second buying item for the trade offer.
+         * Sets the second buying item for the trade offer. The second item in a
+         * TradeOffer can be null.
          *
          * @param itemStack the second buying item
          * @return this object, for chaining
-         * @throws IllegalArgumentException if the itemstack type is AIR
          */
         public Builder withSecondItem(ItemStack itemStack) {
             if (itemStack == null) {
@@ -98,8 +107,6 @@ public final class TradeOffer implements ConfigurationSerializable {
          *
          * @param itemStack the resulting offered item
          * @return this object, for chaining
-         * @throws IllegalArgumentException if the itemstack is null
-         * @throws IllegalArgumentException if the itemstack type is AIR
          */
         public Builder withResultingItem(ItemStack itemStack) {
             Validate.notNull(itemStack, "Cannot have a null item for a TradeOffer's resulting item!");
@@ -114,7 +121,6 @@ public final class TradeOffer implements ConfigurationSerializable {
          *
          * @param uses the maximum uses this TradeOffer will have
          * @return this object, for chaining
-         * @throws IllegalArgumentException if the uses is less than zero
          */
         public Builder withMaxUses(int uses) {
             Validate.isTrue(uses > 0, "Cannot have zero or less than zero uses!");
@@ -127,7 +133,6 @@ public final class TradeOffer implements ConfigurationSerializable {
          *
          * @param uses the current uses this TradeOffer will have
          * @return this object, for chaining
-         * @throws IllegalArgumentException if the uses is less than zero
          */
         public Builder withSetUses(int uses) {
             Validate.isTrue(uses >= 0, "Cannot have less than zero uses!");
@@ -137,7 +142,7 @@ public final class TradeOffer implements ConfigurationSerializable {
 
         /**
          * Gets a new TradeOffer from the current state of this builder.
-         * <p>
+         * </p>
          * To successfully build, you must have specified at least the
          * {@link #withFirstItem(ItemStack)} and
          * {@link #withResultingItem(ItemStack)}
@@ -175,7 +180,7 @@ public final class TradeOffer implements ConfigurationSerializable {
     }
 
     /**
-     * Gets the first item (or left item) required by this offer.
+     * Gets the first item required by this offer.
      *
      * @return the first input item (or left item)
      */
@@ -184,16 +189,15 @@ public final class TradeOffer implements ConfigurationSerializable {
     }
 
     /**
-     * Gets a copy of the second ItemStack belonging to this TradeOffer.
-     * If the second item is null or {@link #hasSecondItem()} is false, an
-     * exception is thrown.
+     * Gets a copy of the second ItemStack belonging to this TradeOffer. If there
+     * is no second item, returns null.
      *
      * @return the second input item (or right item)
      * @throws IllegalStateException if the item is null
      */
     public ItemStack getSecondItem() {
         if (!hasSecondItem()) {
-            throw new IllegalStateException("There is no second ItemStack to get for this TradeOffer!");
+            return null;
         } else {
             return secondItem.clone();
         }
@@ -211,7 +215,7 @@ public final class TradeOffer implements ConfigurationSerializable {
     /**
      * Returns true if this offer has a second item requirement.
      *
-     * @return true if this offer has nothing as a second item requirement
+     * @return True if this offer has a second item requirement
      */
     public boolean hasSecondItem() {
         return this.secondItem != null;

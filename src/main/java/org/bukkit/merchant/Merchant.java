@@ -4,7 +4,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.MerchantInventory;
 
 /**
- * Represents a Merchant that can trade with a Player items for items
+ * Represents a Merchant that is able to trade items with Players.
  */
 public interface Merchant extends InventoryHolder {
 

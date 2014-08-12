@@ -95,26 +95,22 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
 
     /**
      * Opens a trade inventory window with the player's inventory on the bottom
-     * and the respective offers from the
-     * {@link org.bukkit.inventory.MerchantInventory#getOffers()}
+     * and the respective offers from the {@link org.bukkit.inventory.MerchantInventory#getOffers()}.
      *
      * @param merchant the merchant to trade with
-     * @param force if false, and the merchant is too far away from the player,
-     *     the inventory will be closed if this player is too far
-     * @return the newly opened inventory view, or null if it could not be
-     *     opened
-     * @throws IllegalArgumentException if the merchant is null
+     * @param force if false, and the merchant is too far away from the player, the
+     *     inventory will be closed if this player is too far
+     * @return the newly opened inventory view, or null if it could not be opened
      */
     public InventoryView openTrade(Merchant merchant, boolean force);
 
     /**
-     * Opens a trade inventory window with the player's inventory on the bottom
-     * and the specified offers listed in said trade inventory window.
+     * Opens a trade inventory window with the player's inventory on the bottom and
+     * the specified offers listed in said trade inventory window.
      *
      * @param offers the offers to send to the player
      * @param customName The custom name to label the trade window
-     * @return the newly opened inventory view, or null if it could not be
-     *     opened
+     * @return the newly opened inventory view, or null if it could not be opened
      * @throws IllegalArgumentException if the offers are null
      */
     public InventoryView openTrade(Collection<TradeOffer> offers, String customName);

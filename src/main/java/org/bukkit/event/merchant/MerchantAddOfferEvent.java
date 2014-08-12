@@ -28,7 +28,7 @@ public class MerchantAddOfferEvent extends MerchantEvent implements Cancellable 
     }
 
     /**
-     * Gets a copy of the list of offers being added to.
+     * Gets an immutable copy of the list of TradeOffers the merchant currently has.
      *
      * @return a copy of the current offers from the merchant
      */
@@ -37,7 +37,7 @@ public class MerchantAddOfferEvent extends MerchantEvent implements Cancellable 
     }
 
     /**
-     * Gets the offer to add to the Merchant's list of offers.
+     * Gets the immutable TradeOffer being added to the Merchant's current offers.
      *
      * @return the offer to add
      */

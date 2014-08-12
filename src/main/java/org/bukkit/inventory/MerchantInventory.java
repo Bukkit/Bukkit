@@ -5,10 +5,7 @@ import java.util.List;
 import org.bukkit.merchant.Merchant;
 
 /**
- * Interface to the inventory of a Merchant. MerchantInventory is the only
- * place to contain {@link org.bukkit.inventory.TradeOffer} list that a
- * Player is sent for
- * {@link org.bukkit.entity.HumanEntity#openTrade(org.bukkit.merchant.Merchant, boolean)}
+ * Represents the inventory of a merchant which contains a list of {@link TradeOffer}s.
  */
 public interface MerchantInventory extends Inventory {
 
@@ -31,7 +28,6 @@ public interface MerchantInventory extends Inventory {
      * offers.
      *
      * @param offer to add
-     * @throws IllegalArgumentException if the offer is null
      */
     public void addOffer(TradeOffer offer);
 
@@ -40,7 +36,6 @@ public interface MerchantInventory extends Inventory {
      * offers by this inventory.
      *
      * @param offer to remove
-     * @throws IllegalArgumentException if the offer is null
      */
     public void removeOffer(TradeOffer offer);
 }

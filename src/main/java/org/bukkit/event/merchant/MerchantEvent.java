@@ -18,9 +18,9 @@ public abstract class MerchantEvent extends Event {
     }
 
     /**
-     * Gets the merchant object itself.
+     * Gets the merchant involved with this event.
      *
-     * @return the merchant object
+     * @return The merchant
      */
     public Merchant getMerchant() {
         return this.merchant;
