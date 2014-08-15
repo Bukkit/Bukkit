@@ -99,6 +99,14 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable, Metadata
     public MetadataValue getMetadata(String metadataKey, Plugin owningPlugin);
 
     /**
+     * Set a MetadataValue for a given key.
+     *
+     * @param metadataKey A unique key to identify this metadata.
+     * @param newMetadataValue The metadata value to apply.
+     */
+    public void setMetadata(String metadataKey, MetadataValue newMetadataValue);
+
+    /**
      * Checks for the existence of any enchantments.
      *
      * @return true if an enchantment exists on this meta
