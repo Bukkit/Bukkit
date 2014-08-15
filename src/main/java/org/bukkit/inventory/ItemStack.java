@@ -297,6 +297,15 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         }
         return toString.append('}').toString();
     }
+    @Override
+    @Utility
+    public String getCleanName(boolean capitals, ItemStack is) {
+        String CleanName == is.getItemMeta().getDisplayName().replace("_", " ").toLowerCase();
+        if(capitals == true) {
+            WordUtils.capitalize(CleanName);
+        }
+        return CleanName
+    }
 
     @Override
     @Utility
