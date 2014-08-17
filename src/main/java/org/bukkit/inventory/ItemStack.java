@@ -12,6 +12,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
+import org.bukkit.plugin.Plugin;
 
 /**
  * Represents a stack of items
@@ -599,5 +600,37 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         }
 
         return true;
+    }
+
+    /**
+     * This may provide a more efficient check to see if this ItemStack
+     * has a specific key in its metadata store,
+     * without actually unpacking the ItemMeta object.
+     * <p>
+     * Use this in place of getItemMeta().hasMetadata("field") for simple first-pass
+     * checks for data, if you don't necessarily need to unpack the data.
+     *
+     * @param key The String key to check for
+     * @return True if getItemMeta().hasMetadata(key)
+     */
+    public boolean hasMetadata(String key) {
+        return meta != null && meta.hasMetadata(key);
+    }
+
+    /**
+     * This may provide a more efficient check to see if this ItemStack
+     * has a specific key in its metadata store for a specific plugin,
+     * without actually unpacking the ItemMeta object.
+     * <p>
+     * Use this in place of getItemMeta().hasMetadata("field", plugin) for
+     * simple first-pass checks for data, if you don't necessarily need to
+     * unpack the data.
+     *
+     * @param key The String key to check for
+     * @param plugin The Plugin for which to check for data
+     * @return True if getItemMeta().hasMetadata(key)
+     */
+    public boolean hasMetadata(String key, Plugin plugin) {
+        return meta != null && meta.hasMetadata(key, plugin);
     }
 }

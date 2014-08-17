@@ -3,16 +3,23 @@ package org.bukkit.inventory.meta;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.metadata.Metadatable;
+import org.bukkit.plugin.Plugin;
 
 /**
  * This type represents the storage mechanism for auxiliary item data.
  * <p>
  * An implementation will handle the creation and application for ItemMeta.
  * This class should not be implemented by a plugin in a live environment.
+ * <p>
+ * The implementing class should implement Metadatable as a persistent data store attached
+ * to each ItemStack, and only accept PersistentMetadataValue entries.
  */
-public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+public interface ItemMeta extends Cloneable, ConfigurationSerializable, Metadatable {
 
     /**
      * Checks for existence of a display name.
@@ -62,6 +69,42 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
      * @param lore the lore that will be set
      */
     void setLore(List<String> lore);
+
+    /**
+     * Check to see if the Metadatable store contains any data for any
+     * Plugin.
+     *
+     * @return true if there is any custom data present
+     */
+    public boolean hasMetadata();
+
+    /**
+     * Check to see if the Metadatable store contains a specific key
+     * for a specific Plugin.
+     *
+     * @param key the String key to check for
+     * @param plugin the Plugin for which to check for data
+     * @return true if the specified key is registered in this store
+     *   for the specified Plugin
+     */
+    public boolean hasMetadata(String key, Plugin plugin);
+
+    /**
+     * Return a single metadata value for a given key and Plugin.
+     *
+     * @param metadataKey the unique metadata key being sought
+     * @param owningPlugin the plugin that owns the data being sought
+     * @return the requested value, or null if not found
+     */
+    public MetadataValue getMetadata(String metadataKey, Plugin owningPlugin);
+
+    /**
+     * Set a MetadataValue for a given key.
+     *
+     * @param metadataKey A unique key to identify this metadata.
+     * @param newMetadataValue The metadata value to apply.
+     */
+    public void setMetadata(String metadataKey, MetadataValue newMetadataValue);
 
     /**
      * Checks for the existence of any enchantments.
@@ -123,6 +166,23 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     * @return true if the enchantment conflicts, false otherwise
     */
     boolean hasConflictingEnchant(Enchantment ench);
+
+    /**
+     * See if this item is glowing for any reason.
+     * This could be due to enchantments, or to having its gow effect set with setGlowEffect(true)
+     *
+     * @return true if this item is glowing
+     */
+    boolean hasGlowEffect();
+
+    /**
+     * Force this item to glow, or remove an item's glow.
+     *
+     * Glow can only be removed this way if there are no enchantments on the item.
+     *
+     * @param glow if true, a visual glow effect will be added to the item, effect removed if false
+     */
+    void setGlowEffect(boolean glow);
 
     @SuppressWarnings("javadoc")
     ItemMeta clone();
