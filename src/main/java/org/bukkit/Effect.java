@@ -60,6 +60,42 @@ public enum Effect {
      */
     ZOMBIE_DESTROY_DOOR(1012, Type.SOUND),
     /**
+     * Sound of a Wither spawning.
+     */
+    WITHER_SPAWN(1013, Type.SOUND),
+    /**
+     * Sound of a Wither firing.
+     */
+    WITHER_SHOOT(1014, Type.SOUND),
+    /**
+     * Sound of a bat taking off.
+     */
+    BAT_TAKEOFF(1015, Type.SOUND),
+    /**
+     * Sound of villager getting infected.
+     */
+    VILLAGER_INFECT(1016, Type.SOUND),
+    /**
+     * Sound of villager being cured.
+     */
+    VILLAGER_CURE(1017, Type.SOUND),
+    /**
+     * Sound of an Enderdragon dying.
+     */
+    ENDERDRAGON_DIE(1018, Type.SOUND),
+    /**
+     * Sound of an anvil breaking.
+     */
+    ANVIL_BREAK(1020, Type.SOUND),
+    /**
+     * Sound of an anvil being used.
+     */
+    ANVIL_USE(1021, Type.SOUND),
+    /**
+     * Sound of an anvil landing.
+     */
+    ANVIL_LAND(1022, Type.SOUND),
+    /**
      * A visual smoke effect. Needs direction as additional info.
      */
     SMOKE(2000, Type.VISUAL, BlockFace.class),
@@ -79,7 +115,22 @@ public enum Effect {
     /**
      * The flames seen on a mobspawner; a visual effect.
      */
-    MOBSPAWNER_FLAMES(2004, Type.VISUAL);
+    MOBSPAWNER_FLAMES(2004, Type.VISUAL),
+    /**
+     * The green particles that appear when using bonemeal on a plant.
+     */
+    BONEMEAL_USE(2005, Type.VISUAL),
+    /**
+     * Visual effect of dust played when an entity lands on a block after
+     * falling from a high altitude. Needs an integer which is the particle
+     * speed.
+     * <p>
+     * When playing it, the location is the block the entity has fallen on,
+     * and is used to choose the appropiate texture based on the block
+     * material. The particles are rendered on top of that.
+     */
+    LAND_DUST(2006, Type.VISUAL, Integer.class),
+    ;
 
     private final int id;
     private final Type type;
