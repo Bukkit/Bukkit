@@ -1,5 +1,7 @@
 package org.bukkit.entity;
 
+import java.util.Collection;
+
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.inventory.Inventory;
@@ -7,6 +9,8 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.TradeOffer;
+import org.bukkit.merchant.Merchant;
 import org.bukkit.permissions.Permissible;
 
 /**
@@ -88,6 +92,28 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      *     opened.
      */
     public InventoryView openEnchanting(Location location, boolean force);
+
+    /**
+     * Opens a trade inventory window with the player's inventory on the bottom
+     * and the respective offers from the {@link org.bukkit.inventory.MerchantInventory#getOffers()}.
+     *
+     * @param merchant the merchant to trade with
+     * @param force if false, and the merchant is too far away from the player, the
+     *     inventory will be closed if this player is too far
+     * @return the newly opened inventory view, or null if it could not be opened
+     */
+    public InventoryView openTrade(Merchant merchant, boolean force);
+
+    /**
+     * Opens a trade inventory window with the player's inventory on the bottom and
+     * the specified offers listed in said trade inventory window.
+     *
+     * @param offers the offers to send to the player
+     * @param customName The custom name to label the trade window
+     * @return the newly opened inventory view, or null if it could not be opened
+     * @throws IllegalArgumentException if the offers are null
+     */
+    public InventoryView openTrade(Collection<TradeOffer> offers, String customName);
 
     /**
      * Opens an inventory window to the specified inventory view.
