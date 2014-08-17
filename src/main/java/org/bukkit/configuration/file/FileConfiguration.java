@@ -3,9 +3,6 @@ package org.bukkit.configuration.file;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
-import org.apache.commons.lang.Validate;
-import org.bukkit.configuration.InvalidConfigurationException;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,7 +16,9 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 

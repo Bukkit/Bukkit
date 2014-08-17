@@ -1,6 +1,7 @@
 package org.bukkit.plugin.messaging;
 
 import java.util.Set;
+
 import org.bukkit.plugin.Plugin;
 
 /**

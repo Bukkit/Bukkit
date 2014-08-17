@@ -1,5 +1,8 @@
 package org.bukkit.command.defaults;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,9 +17,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.StringUtil;
-
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableList;
 
 public class GiveCommand extends VanillaCommand {
     private static List<String> materials;

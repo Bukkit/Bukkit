@@ -1,5 +1,7 @@
 package org.bukkit.command;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,8 +16,6 @@ import org.bukkit.entity.minecart.CommandMinecart;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.util.StringUtil;
-
-import com.google.common.collect.ImmutableList;
 
 /**
  * Represents a Command, which executes various tasks upon user input

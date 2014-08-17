@@ -1,5 +1,8 @@
 package org.bukkit;
 
+import com.avaje.ebean.config.ServerConfig;
+import com.google.common.collect.ImmutableList;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.Serializable;
@@ -24,8 +27,10 @@ import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.help.HelpMap;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.map.MapView;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.PluginManager;
@@ -35,12 +40,6 @@ import org.bukkit.plugin.messaging.PluginMessageRecipient;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.util.CachedServerIcon;
-
-import com.avaje.ebean.config.ServerConfig;
-import com.google.common.collect.ImmutableList;
-
-import org.bukkit.inventory.ItemFactory;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * Represents a server implementation.

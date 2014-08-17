@@ -1,5 +1,7 @@
 package org.bukkit;
 
+import com.google.common.collect.Maps;
+
 import java.lang.reflect.Constructor;
 import java.util.Map;
 
@@ -55,8 +57,6 @@ import org.bukkit.material.WoodenStep;
 import org.bukkit.material.Wool;
 import org.bukkit.potion.Potion;
 import org.bukkit.util.Java15Compat;
-
-import com.google.common.collect.Maps;
 
 /**
  * An enum of all material IDs accepted by the official server and client

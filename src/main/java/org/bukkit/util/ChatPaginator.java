@@ -1,9 +1,9 @@
 package org.bukkit.util;
 
-import org.bukkit.ChatColor;
-
 import java.util.LinkedList;
 import java.util.List;
+
+import org.bukkit.ChatColor;
 
 /**
  * The ChatPaginator takes a raw string of arbitrary length and breaks it down

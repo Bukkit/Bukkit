@@ -1,8 +1,9 @@
 package org.bukkit.event.entity;
 
+import com.google.common.base.Function;
+
 import java.util.Map;
 
-import com.google.common.base.Function;
 import org.bukkit.entity.Entity;
 
 /**

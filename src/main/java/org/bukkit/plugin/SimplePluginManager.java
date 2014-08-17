@@ -1,5 +1,7 @@
 package org.bukkit.plugin;
 
+import com.google.common.collect.ImmutableSet;
+
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -31,8 +33,6 @@ import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.util.FileUtil;
-
-import com.google.common.collect.ImmutableSet;
 
 /**
  * Handles all plugin management from the Server

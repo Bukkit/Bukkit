@@ -3,16 +3,16 @@ package org.bukkit.entity;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.entity.minecart.CommandMinecart;
-import org.bukkit.entity.minecart.HopperMinecart;
-import org.bukkit.entity.minecart.SpawnerMinecart;
-import org.bukkit.entity.minecart.RideableMinecart;
-import org.bukkit.entity.minecart.ExplosiveMinecart;
-import org.bukkit.entity.minecart.PoweredMinecart;
-import org.bukkit.entity.minecart.StorageMinecart;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.minecart.CommandMinecart;
+import org.bukkit.entity.minecart.ExplosiveMinecart;
+import org.bukkit.entity.minecart.HopperMinecart;
+import org.bukkit.entity.minecart.PoweredMinecart;
+import org.bukkit.entity.minecart.RideableMinecart;
+import org.bukkit.entity.minecart.SpawnerMinecart;
+import org.bukkit.entity.minecart.StorageMinecart;
+import org.bukkit.inventory.ItemStack;
 
 public enum EntityType {
 

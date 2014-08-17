@@ -1,7 +1,7 @@
 package org.bukkit.material;
 
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Handles specific metadata for certain items or blocks

@@ -1,11 +1,11 @@
 package org.bukkit.conversations;
 
-import org.bukkit.plugin.Plugin;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.bukkit.plugin.Plugin;
 
 /**
  * The Conversation class is responsible for tracking the current state of a

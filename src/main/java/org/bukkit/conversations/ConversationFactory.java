@@ -1,12 +1,12 @@
 package org.bukkit.conversations;
 
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 /**
  * A ConversationFactory is responsible for creating a {@link Conversation}

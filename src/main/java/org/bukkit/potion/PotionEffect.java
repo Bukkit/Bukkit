@@ -1,5 +1,7 @@
 package org.bukkit.potion;
 
+import com.google.common.collect.ImmutableMap;
+
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -7,8 +9,6 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.LivingEntity;
-
-import com.google.common.collect.ImmutableMap;
 
 /**
  * Represents a potion effect, that can be added to a {@link LivingEntity}. A

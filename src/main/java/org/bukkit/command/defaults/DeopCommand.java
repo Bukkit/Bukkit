@@ -1,5 +1,7 @@
 package org.bukkit.command.defaults;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
-
-import com.google.common.collect.ImmutableList;
 
 public class DeopCommand extends VanillaCommand {
     public DeopCommand() {

@@ -1,6 +1,7 @@
 package org.bukkit.util.permissions;
 
 import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;

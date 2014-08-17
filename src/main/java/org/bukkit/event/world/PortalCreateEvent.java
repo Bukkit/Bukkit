@@ -1,12 +1,12 @@
 package org.bukkit.event.world;
 
-import org.bukkit.block.Block;
-import org.bukkit.World;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.HandlerList;
-
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
 /**
  * Called when a portal is created
