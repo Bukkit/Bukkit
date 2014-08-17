@@ -1,6 +1,7 @@
 package org.bukkit;
 
 import java.util.Random;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;

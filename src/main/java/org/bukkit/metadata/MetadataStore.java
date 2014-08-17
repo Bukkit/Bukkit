@@ -1,8 +1,8 @@
 package org.bukkit.metadata;
 
-import org.bukkit.plugin.Plugin;
-
 import java.util.List;
+
+import org.bukkit.plugin.Plugin;
 
 public interface MetadataStore<T> {
     /**

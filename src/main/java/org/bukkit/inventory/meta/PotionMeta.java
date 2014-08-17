@@ -1,10 +1,10 @@
 package org.bukkit.inventory.meta;
 
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.List;
 
 /**
  * Represents a potion ({@link Material#POTION}) that can have custom effects.
@@ -49,7 +49,7 @@ public interface PotionMeta extends ItemMeta {
 
     /**
      * Checks for a specific custom potion effect type on this potion.
-     * 
+     *
      * @param type the potion effect type to check for
      * @return true if the potion has this effect
      */

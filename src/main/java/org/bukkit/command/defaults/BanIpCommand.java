@@ -1,5 +1,7 @@
 package org.bukkit.command.defaults;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -11,8 +13,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import com.google.common.collect.ImmutableList;
 
 public class BanIpCommand extends VanillaCommand {
     public static final Pattern ipValidity = Pattern.compile("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");

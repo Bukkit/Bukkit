@@ -1,8 +1,8 @@
 package org.bukkit.conversations;
 
-import org.bukkit.plugin.Plugin;
-
 import java.util.Map;
+
+import org.bukkit.plugin.Plugin;
 
 /**
  * A ConversationContext provides continuity between nodes in the prompt graph

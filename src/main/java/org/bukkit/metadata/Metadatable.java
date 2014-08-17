@@ -1,8 +1,8 @@
 package org.bukkit.metadata;
 
-import org.bukkit.plugin.Plugin;
-
 import java.util.List;
+
+import org.bukkit.plugin.Plugin;
 
 /**
  * This interface is implemented by all objects that can provide metadata

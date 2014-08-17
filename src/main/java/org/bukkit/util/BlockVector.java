@@ -1,6 +1,7 @@
 package org.bukkit.util;
 
 import java.util.Map;
+
 import org.bukkit.configuration.serialization.SerializableAs;
 
 /**

@@ -1,13 +1,13 @@
 package org.bukkit.configuration;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.List;
 
 import org.bukkit.Color;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.util.Vector;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 /**
  * Represents a section of a {@link Configuration}

@@ -1,6 +1,7 @@
 package org.bukkit.map;
 
 import java.util.List;
+
 import org.bukkit.World;
 
 /**

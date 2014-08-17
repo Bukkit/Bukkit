@@ -1,19 +1,17 @@
 package org.bukkit.command.defaults;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.BanEntry;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
-
-import com.google.common.collect.ImmutableList;
 
 public class BanListCommand extends VanillaCommand {
     private static final List<String> BANLIST_TYPES = ImmutableList.of("ips", "players");

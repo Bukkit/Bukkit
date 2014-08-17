@@ -1,9 +1,10 @@
 package org.bukkit.scheduler;
 
-import org.bukkit.plugin.Plugin;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
-import java.util.List;
+
+import org.bukkit.plugin.Plugin;
 
 public interface BukkitScheduler {
 

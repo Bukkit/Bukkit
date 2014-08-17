@@ -2,13 +2,13 @@ package org.bukkit.command.defaults;
 
 import com.google.common.collect.ImmutableList;
 
+import java.util.List;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-
-import java.util.List;
 
 public class SetIdleTimeoutCommand extends VanillaCommand {
 

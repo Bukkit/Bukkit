@@ -1,5 +1,7 @@
 package org.bukkit.command.defaults;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,8 +23,6 @@ import org.bukkit.help.HelpTopic;
 import org.bukkit.help.HelpTopicComparator;
 import org.bukkit.help.IndexHelpTopic;
 import org.bukkit.util.ChatPaginator;
-
-import com.google.common.collect.ImmutableList;
 
 public class HelpCommand extends VanillaCommand {
     public HelpCommand() {

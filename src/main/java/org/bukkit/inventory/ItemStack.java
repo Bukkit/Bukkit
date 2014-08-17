@@ -1,6 +1,7 @@
 package org.bukkit.inventory;
 
 import com.google.common.collect.ImmutableMap;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
