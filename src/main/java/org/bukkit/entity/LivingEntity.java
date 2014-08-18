@@ -7,7 +7,7 @@ import java.util.List;
 import com.google.common.base.Predicate;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockTargetResult;
+import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -59,31 +59,6 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
     public List<Block> getLineOfSight(HashSet<Byte> transparent, int maxDistance);
 
     /**
-     * Gets all blocks along the living entity's line of sight.
-     * <p>
-     * This list contains all blocks from the living entity's eye position to
-     * the target inclusive, wrapped in a {@code BlockTargetResult} object;
-     * the last member of the list represents the target block.
-     * <p>
-     * For all members of the list except the final one, the
-     * {@code BlockTargetResult} object's {@code getTargetFace()} and
-     * {@code getTargetLocation()} methods will always return null.  For the
-     * final member, the {@code getTargetFace()} and
-     * {@code getTargetLocation()} methods may or may not return null.
-     *
-     * @param transparent a block transparency filter; if null, then only air
-     *     blocks will be considered transparent
-     * @param maxDistance this is the maximum distance to scan (may be limited
-     *     by the server - see {@link org.bukkit.Server#getViewDistance()})
-     * @param useHitBoxes true if block hit boxes should be used when
-     *     considering whether or not the entity's line of sight intersects
-     *     the block.  If false, the block's full volume is used.
-     * @return a list of {@code BlockTargetResult} objects, each of which
-     *     represents one block along the entity's line of sight
-     */
-    public List<BlockTargetResult> getLineOfSight(Predicate<? super Block> transparent, int maxDistance, boolean useHitBoxes);
-
-    /**
      * Gets the block that the living entity has targeted.
      *
      * @param transparent HashSet containing all transparent block IDs (set to
@@ -113,6 +88,21 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
     public List<Block> getLastTwoTargetBlocks(HashSet<Byte> transparent, int maxDistance);
 
     /**
+     * Gets a list of all blocks along the living entity's line of sight.
+     *
+     * @param transparent a block transparency filter; if null, then only air
+     *     blocks will be considered transparent
+     * @param maxDistance this is the maximum distance to scan (may be limited
+     *     by the server - see {@link org.bukkit.Server#getViewDistance()})
+     * @param useHitBoxes true if block hit boxes should be used when
+     *     considering whether or not the entity's line of sight intersects
+     *     a block; false if the block's full volume should be used.
+     * @return a list of {@link org.bukkit.block.Block} objects, each of which
+     *     represents one block along the entity's line of sight
+     */
+    public List<Block> getLineOfSight(Predicate<? super Block> transparent, int maxDistance, boolean useHitBoxes);
+
+    /**
      * Gets the block that the living entity has targeted.
      *
      * @param transparent a block transparency filter; if null, then only air
@@ -121,26 +111,36 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
      *     by the server - see {@link org.bukkit.Server#getViewDistance()})
      * @param useHitBoxes true if block hit boxes should be used when
      *     considering whether or not the entity's line of sight intersects
-     *     the block.  If false, the block's full volume is used.
-     * @return a BlockTargetResult object
+     *     a block; false if the block's full volume should be used.
+     * @return the targeted block, or null if no block was targeted
      */
-    public BlockTargetResult getTargetBlock(Predicate<? super Block> transparent, int maxDistance, boolean useHitBoxes);
+    public Block getTargetBlock(Predicate<? super Block> transparent, int maxDistance, boolean useHitBoxes);
 
     /**
-     * Gets the last two blocks along the living entity's line of sight.
-     * <p>
-     * The last member of the list represents the targeted block.
+     * Gets the face of the given block that the living entity has targeted.
+     * Typically, this block would be the return value of
+     * {@link #getTargetBlock(com.google.common.base.Predicate, int, boolean)}
      *
-     * @param transparent a block transparency filter; if null, then only air
-     *      blocks will be considered transparent
-     * @param maxDistance this is the maximum distance to scan (may be limited
-     *     by the server - see {@link org.bukkit.Server#getViewDistance()})
-     * @param useHitBoxes true if block hit boxes should be used when
-     *     considering whether or not the entity's line of sight intersects
-     *     the block.  If false, the block's full volume is used.
-     * @return a list of two BlockTargetResult objects
+     * @param block the block to check
+     * @param useHitBox true if the block's hit box should be used; false if
+     *     the block's full volume should be used
+     * @return the face of the block where the entity's line of sight
+     *     intersects, or null if there is no intersection
      */
-    public List<BlockTargetResult> getLastTwoTargetBlocks(Predicate<? super Block> transparent, int maxDistance, boolean useHitBoxes);
+    public BlockFace getTargetBlockFace(Block block, boolean useHitBox);
+
+    /**
+     * Gets the precise point on the face of the given block that the living
+     * entity has targeted. Typically, this block would be the return value of
+     * {@link #getTargetBlock(com.google.common.base.Predicate, int, boolean)}
+     *
+     * @param block the block to check
+     * @param useHitBox true if the block's hit box should be used; false if
+     *     the block's full volume should be used
+     * @return the precise point where the entity's line of sight intersects
+     *     the block face, or null if there is no intersection
+     */
+    public Location getTargetLocation(Block block, boolean useHitBox);
 
     /**
      * Throws an egg from the living entity.
