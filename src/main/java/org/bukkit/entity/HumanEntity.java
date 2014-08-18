@@ -2,6 +2,8 @@ package org.bukkit.entity;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.block.Sign;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
@@ -88,6 +90,20 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      *     opened.
      */
     public InventoryView openEnchanting(Location location, boolean force);
+
+    /**
+     * Opens a sign window for editing the specified sign. When the player closes the
+     * window, a {@link SignChangeEvent} will be triggered.
+     * @param sign The sign you want to edit.
+     * @param editable Whether the sign change should be automatically accepted by the server.
+     */
+    public void openSign(Sign sign, boolean editable);
+
+    /**
+     * Opens a sign window not linked to a physical sign in the world. When the player closes the
+     * window, a {@link SignChangeEvent} will be triggered.
+     */
+    public void openSign();
 
     /**
      * Opens an inventory window to the specified inventory view.
