@@ -15,6 +15,7 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
+import org.bukkit.util.QueuedProcess;
 import org.bukkit.util.Vector;
 
 /**
@@ -183,6 +184,28 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param z Z-coordinate of the chunk
      */
     public void loadChunk(int x, int z);
+
+    /**
+     * Loads the {@link Chunk} at the specified coordinates then runs the
+     * callback
+     * <p>
+     * Once the chunk is ready for use, the callback will be run in the main
+     * thread.
+     * <p>
+     * If the chunk is already loaded the callback will be run straight
+     * away.</br>
+     * If the chunk needs to be generated it will be loaded in the main
+     * thread.</br>
+     * Else the chunk will be loaded asynchronously.</br>
+     * <p>
+     * Note that it is possible that the chunk will never be loaded</br>
+     * This can happen if another plugin unloads it.
+     *
+     * @param x X-coordinate of the chunk
+     * @param z Z-coordinate of the chunk
+     * @param callback The callback to run after the chunk has been loaded
+     */
+    public void loadChunkWithCallback(int x, int z, QueuedProcess<? super Chunk> callback);
 
     /**
      * Loads the {@link Chunk} at the specified coordinates
