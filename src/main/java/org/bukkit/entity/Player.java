@@ -1035,4 +1035,21 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @see Player#setHealthScaled(boolean)
      */
     public double getHealthScale();
+
+    /**
+     * Sets the amount of arrows sticking in a player's body.
+     * <p>
+     * Can only use values between 0 and 127, inclusive.
+     *
+     * @param arrows the amount of arrows to stick in the body
+     * @throws IllegalArgumentException if arrows is outside the range [0, 127]
+     */
+    public void setVisibleArrows(int arrows) throws IllegalArgumentException;
+
+    /**
+     * Returns the amount of arrows stuck in the player.
+     *
+     * @return amount of arrows stuck in the player
+     */
+    public int getVisibleArrows();
 }
