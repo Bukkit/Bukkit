@@ -5,7 +5,7 @@ import org.bukkit.material.Colorable;
 /**
  * Represents a Sheep.
  */
-public interface Sheep extends Animals, Colorable {
+public interface Sheep extends Animal, Colorable {
 
     /**
      * @return Whether the sheep is sheared.
