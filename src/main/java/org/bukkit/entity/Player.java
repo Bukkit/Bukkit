@@ -117,7 +117,12 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @param msg message to print
      */
     public void chat(String msg);
-
+    
+    /**
+     * Sends a JSON formatted message to the client
+     */
+    public void sendJsonMessage(String json);
+    
     /**
      * Makes the player perform the given command
      *
