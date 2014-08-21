@@ -251,16 +251,16 @@ public enum EntityType {
     }
     
     /**
-     * Attempts to match the Material with the given name.
+     * Attempts to match the EntityType with the given name.
      * <p>
-     * This is a match lookup; names will be converted to uppercase, then
+     * This is a match lookup; names will be converted to lowercase, then
      * stripped of special characters in an attempt to format it like the
      * enum.
      * <p>
      * Using this for match by ID is deprecated.
      *
-     * @param name Name of the material to get
-     * @return Material if found, or null
+     * @param name Name of the entity type to get
+     * @return EntityType if found, or null
      */
     public static EntityType matchEntityType(final String name) {
         Validate.notNull(name, "Name cannot be null");
