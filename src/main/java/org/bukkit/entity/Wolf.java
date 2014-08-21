@@ -5,7 +5,7 @@ import org.bukkit.DyeColor;
 /**
  * Represents a Wolf
  */
-public interface Wolf extends Animals, Tameable {
+public interface Wolf extends Animal, Tameable {
 
     /**
      * Checks if this wolf is angry
