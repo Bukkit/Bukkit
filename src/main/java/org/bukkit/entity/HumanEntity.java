@@ -174,4 +174,18 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, Permissible, Inv
      * @return Experience required to level up
      */
     public int getExpToLevel();
+
+    /**
+    * Setting this to false prevents players from activating mob spawners
+    * and allows mobs to randomly spawn and despawn near them (which
+    * normally can't happen).
+    *
+    * @param affect true to prevent this player from affecting mob spawning
+    */
+    public void setAffectsMobSpawning(boolean affect);
+
+    /**
+     * @return Whether this player affects mob spawning
+    */
+    public boolean getAffectsMobSpawning();
 }
