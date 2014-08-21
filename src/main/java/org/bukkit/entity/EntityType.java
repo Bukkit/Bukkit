@@ -3,6 +3,7 @@ package org.bukkit.entity;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.entity.minecart.CommandMinecart;
 import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.SpawnerMinecart;
@@ -247,6 +248,37 @@ public enum EntityType {
             return null;
         }
         return ID_MAP.get((short) id);
+    }
+    
+    /**
+     * Attempts to match the Material with the given name.
+     * <p>
+     * This is a match lookup; names will be converted to uppercase, then
+     * stripped of special characters in an attempt to format it like the
+     * enum.
+     * <p>
+     * Using this for match by ID is deprecated.
+     *
+     * @param name Name of the material to get
+     * @return Material if found, or null
+     */
+    public static EntityType matchEntityType(final String name) {
+        Validate.notNull(name, "Name cannot be null");
+
+        EntityType result = null;
+
+        try {
+            result = fromId(Integer.parseInt(name));
+        } catch (NumberFormatException ex) {}
+
+        if (result == null) {
+            String filtered = name.toLowerCase();
+
+            filtered = filtered.replaceAll("\\s+", "_").replaceAll("\\W", "");
+            result = NAME_MAP.get(filtered);
+        }
+
+        return result;
     }
 
     /**
