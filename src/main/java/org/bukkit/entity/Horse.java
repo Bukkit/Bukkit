@@ -6,7 +6,7 @@ import org.bukkit.inventory.InventoryHolder;
 /**
  * Represents a Horse.
  */
-public interface Horse extends Animals, Vehicle, InventoryHolder, Tameable {
+public interface Horse extends Animal, Vehicle, InventoryHolder, Tameable {
 
     /**
      * Represents the different types of horses that may exist.
