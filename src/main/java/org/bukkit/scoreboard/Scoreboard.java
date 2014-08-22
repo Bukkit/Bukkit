@@ -103,8 +103,19 @@ public interface Scoreboard {
      * @param player the player to search for
      * @return the player's Team or null if the player is not on a team
      * @throws IllegalArgumentException if player is null
+     * @deprecated Scoreboards can contain entries that aren't players
      */
+    @Deprecated
     Team getPlayerTeam(OfflinePlayer player) throws IllegalArgumentException;
+
+    /**
+     * Gets an entry's Team on this Scoreboard
+     *
+     * @param entry the entry to search for
+     * @return the entry's Team or null if the entry is not on a team
+     * @throws IllegalArgumentException if entry is null
+     */
+    Team getEntryTeam(String entry) throws IllegalArgumentException;
 
     /**
      * Gets a Team by name on this Scoreboard
