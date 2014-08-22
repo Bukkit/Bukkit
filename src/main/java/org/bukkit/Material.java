@@ -13,6 +13,7 @@ import org.bukkit.material.Chest;
 import org.bukkit.material.Coal;
 import org.bukkit.material.CocoaPlant;
 import org.bukkit.material.Command;
+import org.bukkit.material.CookedFish;
 import org.bukkit.material.Crops;
 import org.bukkit.material.DetectorRail;
 import org.bukkit.material.Diode;
@@ -36,6 +37,7 @@ import org.bukkit.material.PoweredRail;
 import org.bukkit.material.PressurePlate;
 import org.bukkit.material.Pumpkin;
 import org.bukkit.material.Rails;
+import org.bukkit.material.RawFish;
 import org.bukkit.material.RedstoneTorch;
 import org.bukkit.material.RedstoneWire;
 import org.bukkit.material.Sandstone;
@@ -329,8 +331,8 @@ public enum Material {
     FISHING_ROD(346, 1, 64),
     WATCH(347),
     GLOWSTONE_DUST(348),
-    RAW_FISH(349),
-    COOKED_FISH(350),
+    RAW_FISH(349, RawFish.class),
+    COOKED_FISH(350, CookedFish.class),
     INK_SACK(351, Dye.class),
     BONE(352),
     SUGAR(353),
