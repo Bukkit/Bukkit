@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * Represents a rich Message which can be sent to Players.
+ * This is an API for Minecraft 1.7 "Json" chat messages features.
+ */
 public final class Message implements Iterable<Part> {
 
     public static Message empty() {
@@ -101,8 +105,15 @@ public final class Message implements Iterable<Part> {
         return Message.of(Part.ofLocalized(clickAction, achievement, id, parameters));
     }
 
+    /**
+     * The Parts of this Message
+     */
     private final List<Part> parts;
 
+    /**
+     * Private constructor, Message instances should be built using available
+     * static constructors.
+     */
     private Message() {
         this.parts = new ArrayList<Part>();
     }
@@ -322,10 +333,22 @@ public final class Message implements Iterable<Part> {
         return this;
     }
 
+    /**
+     * Gets the Part at the specified position in this Message's Parts list.
+     *
+     * @param i the index of the wanted Part
+     * @return the Part at the specified position
+     */
     public Part get(int i) {
         return this.parts.get(i);
     }
 
+    /**
+     * Sets the Part at the specified position in this Message's Parts list.
+     *
+     * @param i    the index
+     * @param part the Part
+     */
     public void set(int i, Part part) {
         Validate.notNull(part, "part can't be null");
         this.parts.set(i, part);
@@ -336,6 +359,12 @@ public final class Message implements Iterable<Part> {
         return this.parts.listIterator();
     }
 
+    /**
+     * This implementation of toString is used to send Message to non-Player
+     * CommandSender, like ConsoleCommandSender.
+     *
+     * @return a String representation of this Message
+     */
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();

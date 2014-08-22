@@ -6,6 +6,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
+/**
+ * Represents a part of a {@link Message}, a simple or localized String which
+ * may have a {@link Click} and/or a {@link Hover} attached to it.
+ */
 public final class Part {
 
     public static Part of(String text) {
@@ -110,20 +114,58 @@ public final class Part {
         return new Part().setClickAction(clickAction).setHover(Hover.of(achievement)).setLocalizedText(id, parameters);
     }
 
+    /**
+     * A String or a localized String identifier if
+     * {@link #isLocalizedText()} is true
+     */
     private String text;
 
+    /**
+     * Determines what is stored in {@link #getText()}, a localized String
+     * identifier if true, a simple String otherwise.
+     */
     private boolean localizedText;
+
+    /**
+     * Parameters for this localized String
+     */
     private String[] localizedTextParameters;
 
+    /**
+     * The Hover effect for this Part, if any
+     */
     private Hover hover;
+
+    /**
+     * The Click action for this Part, if any
+     */
     private Click clickAction;
 
-    Part() {}
+    /**
+     * Private constructor, Part instances should be built using available
+     * static constructors.
+     */
+    private Part() {}
 
+    /**
+     * Gets the text of this Part.
+     * <p>
+     * May be a simple String or a localized String identifier. Check
+     * {@link #isLocalizedText()}.
+     *
+     * @return the text of this Part
+     */
     public String getText() {
         return this.text;
     }
 
+    /**
+     * Sets the text of this Part.
+     *
+     * @param text the new text of this Part
+     * @return this Part for chain calls
+     * @see #setLocalizedText(String, String...)
+     */
     public Part setText(String text) {
         Validate.notNull(text, "text can't be null");
         this.text = text;
@@ -131,10 +173,22 @@ public final class Part {
         return this;
     }
 
+    /**
+     * Checks if this Part contains a localized text.
+     *
+     * @return true if this Part contains a localized text, false otherwise
+     */
     public boolean isLocalizedText() {
         return this.localizedText;
     }
 
+    /**
+     * Sets the localized text identifier and eventual parameters of this Part.
+     *
+     * @param id         the localized text identifier
+     * @param parameters the localized text parameters
+     * @return this Part for chain calls
+     */
     public Part setLocalizedText(String id, String... parameters) {
         Validate.notNull(id, "id can't be null");
         this.text = id;
@@ -143,33 +197,72 @@ public final class Part {
         return this;
     }
 
+    /**
+     * Gets this Part's localized text's parameters.
+     *
+     * @return this Part's localized text's parameters
+     */
     public String[] getLocalizedTextParameters() {
         return this.localizedTextParameters;
     }
 
+    /**
+     * Sets this Part's localized text's parameters.
+     *
+     * @param parameters this Part's new localized text's parameters
+     * @return this Part for chain calls
+     */
     public Part setLocalizedTextParameters(String... parameters) {
         this.localizedTextParameters = parameters.length == 0 ? null : parameters;
         return this;
     }
 
+    /**
+     * Gets this Part's Hover effect.
+     *
+     * @return this Part's Hover effect
+     */
     public Hover getHover() {
         return this.hover;
     }
 
+    /**
+     * Sets this Part's Hover effect.
+     *
+     * @param hover this Part's new Hover effect
+     * @return this Part for chain calls
+     */
     public Part setHover(Hover hover) {
         this.hover = hover;
         return this;
     }
 
+    /**
+     * Gets this Part's Click action.
+     *
+     * @return this Part's Click action
+     */
     public Click getClickAction() {
         return this.clickAction;
     }
 
+    /**
+     * Sets this Part's Click action.
+     *
+     * @param clickAction this Part's new Click action
+     * @return this Part for chain calls
+     */
     public Part setClickAction(Click clickAction) {
         this.clickAction = clickAction;
         return this;
     }
 
+    /**
+     * This implementation of toString is used to send Message to non-Player
+     * CommandSender, like ConsoleCommandSender.
+     *
+     * @return a String representation of this Part
+     */
     @Override
     public String toString() {
         if (this.text == null) {
