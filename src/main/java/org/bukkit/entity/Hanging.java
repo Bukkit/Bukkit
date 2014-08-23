@@ -19,4 +19,11 @@ public interface Hanging extends Entity, Attachable {
      *     attach to in order to face the given direction.
      */
     public boolean setFacingDirection(BlockFace face, boolean force);
+    
+    /**
+     * Get the type of the hanging.
+     *
+     * @return The hanging type.
+     */
+    public HangingType getHangingType();
 }
