@@ -142,7 +142,7 @@ public enum EntityType {
     WOLF("Wolf", Wolf.class, 95),
     MUSHROOM_COW("MushroomCow", MushroomCow.class, 96),
     SNOWMAN("SnowMan", Snowman.class, 97),
-    OCELOT("Ocelot", Ocelot.class, 98),
+    OCELOT("Ozelot", Ocelot.class, 98),
     IRON_GOLEM("VillagerGolem", IronGolem.class, 99),
     HORSE("EntityHorse", Horse.class, 100),
     VILLAGER("Villager", Villager.class, 120),
@@ -238,8 +238,6 @@ public enum EntityType {
         if (name == null) {
             return null;
         }
-        if (name.equalsIgnoreCase("Ozelot")) // special case in lieu of long-standing typo
-     	    return EntityType.OCELOT;
         return NAME_MAP.get(name.toLowerCase());
     }
 
