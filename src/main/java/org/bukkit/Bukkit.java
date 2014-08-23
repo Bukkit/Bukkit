@@ -24,6 +24,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
+import org.bukkit.metadata.MetadataManager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
@@ -746,5 +747,9 @@ public final class Bukkit {
     @Deprecated
     public static UnsafeValues getUnsafe() {
         return server.getUnsafe();
+    }
+
+    public static MetadataManager getMetadataManager() {
+        return server.getMetadataManager();
     }
 }

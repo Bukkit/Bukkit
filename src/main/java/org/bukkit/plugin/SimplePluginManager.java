@@ -449,6 +449,12 @@ public final class SimplePluginManager implements PluginManager {
             } catch(Throwable ex) {
                 server.getLogger().log(Level.SEVERE, "Error occurred (in the plugin loader) while unregistering plugin channels for " + plugin.getDescription().getFullName() + " (Is it up to date?)", ex);
             }
+
+            try {
+                server.getMetadataManager().clearPluginData(plugin);
+            } catch(Throwable ex) {
+                server.getLogger().log(Level.SEVERE, "Error occurred (in the plugin loader) while unregistering metadata providers for " + plugin.getDescription().getFullName() + " (Is it up to date?)", ex);
+            }
         }
     }
 

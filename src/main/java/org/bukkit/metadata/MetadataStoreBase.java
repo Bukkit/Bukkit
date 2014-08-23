@@ -1,12 +1,25 @@
 package org.bukkit.metadata;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
+import java.util.logging.Level;
 
-public abstract class MetadataStoreBase<T> {
+public abstract class MetadataStoreBase<T extends Metadatable> implements MetadataStore<T> {
     private Map<String, Map<Plugin, MetadataValue>> metadataMap = new HashMap<String, Map<Plugin, MetadataValue>>();
+    private final Map<Class<? extends Metadatable>, List<MetadataProvider<T>>> providers;
+
+    protected MetadataStoreBase(Map<Class<? extends Metadatable>, List<MetadataProvider<T>>> providers) {
+        this.providers = providers;
+    }
 
     /**
      * Adds a metadata value to an object. Each metadata value is owned by a
@@ -44,8 +57,8 @@ public abstract class MetadataStoreBase<T> {
     }
 
     /**
-     * Returns all metadata values attached to an object. If multiple
-     * have attached metadata, each will value will be included.
+     * Returns all metadata values attached to an object. If multiple plugins
+     * have attached metadata, each value will be included.
      *
      * @param subject the object being interrogated.
      * @param metadataKey the unique metadata key being sought.
@@ -55,12 +68,11 @@ public abstract class MetadataStoreBase<T> {
      */
     public synchronized List<MetadataValue> getMetadata(T subject, String metadataKey) {
         String key = disambiguate(subject, metadataKey);
-        if (metadataMap.containsKey(key)) {
+        if (metadataMap.containsKey(key) || buildProviderData(subject, metadataKey)) {
             Collection<MetadataValue> values = metadataMap.get(key).values();
             return Collections.unmodifiableList(new ArrayList<MetadataValue>(values));
-        } else {
-            return Collections.emptyList();
         }
+        return Collections.emptyList();
     }
 
     /**
@@ -73,7 +85,11 @@ public abstract class MetadataStoreBase<T> {
      */
     public synchronized boolean hasMetadata(T subject, String metadataKey) {
         String key = disambiguate(subject, metadataKey);
-        return metadataMap.containsKey(key);
+        if (metadataMap.containsKey(key)) return true;
+        if (providers.size() > 0) {
+            return buildProviderData(subject, metadataKey);
+        }
+        return false;
     }
 
     /**
@@ -102,9 +118,9 @@ public abstract class MetadataStoreBase<T> {
     }
 
     /**
-     * Invalidates all metadata in the metadata store that originates from the
-     * given plugin. Doing this will force each invalidated metadata item to
-     * be recalculated the next time it is accessed.
+     * Invalidate all metadata in the store originating from the given plugin.
+     * Doing this will force each invalidated metadata item to be recalculated
+     * the next time it is accessed.
      *
      * @param owningPlugin the plugin requesting the invalidation.
      * @see MetadataStore#invalidateAll(org.bukkit.plugin.Plugin)
@@ -133,4 +149,28 @@ public abstract class MetadataStoreBase<T> {
      * @return a unique metadata key for the given subject.
      */
     protected abstract String disambiguate(T subject, String metadataKey);
+
+    /**
+     * Retrieve provider data for this key, and set it if it's not null.
+     * @param subject The context for which we're getting this metadata
+     * @param metadataKey The key on which we're answering
+     * @return true if we got provider data, false otherwise.
+     */
+    private boolean buildProviderData(T subject, String metadataKey) {
+        boolean success = false;
+        for (MetadataProvider<T> provider : providers.get(subject.getClass())) {
+            MetadataValue providedValue = null;
+            try {
+                providedValue = provider.getValue(subject, metadataKey);
+            } catch (Exception ex) {
+                String message = String.format("Error occurred while calling metadata provider %s for key %s", provider.getClass(), metadataKey);
+                Bukkit.getLogger().log(Level.SEVERE, message, ex);
+            }
+            if (providedValue != null) {
+                setMetadata(subject, metadataKey, providedValue);
+                success = true;
+            }
+        }
+        return success;
+    }
 }

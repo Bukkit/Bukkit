@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
 import org.bukkit.permissions.Permissible;
+import org.bukkit.metadata.MetadataManager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
@@ -916,4 +917,10 @@ public interface Server extends PluginMessageRecipient {
      */
     @Deprecated
     UnsafeValues getUnsafe();
+
+    /**
+     * Get the metadata manager, used for managing metadata and registering providers.
+     * @return The metadata manager.
+     */
+    public MetadataManager getMetadataManager();
 }
