@@ -20,7 +20,12 @@ public enum HangingType {
     /**
      * An item frame on a wall.
      */
-    ITEM_FRAME(EntityType.ITEM_FRAME);
+    ITEM_FRAME(EntityType.ITEM_FRAME),
+
+    /**
+     * An unknown entity without an Entity Class
+     */
+    UNKNOWN(EntityType.UNKNOWN);
 
     /**
      * The {@link EntityType} that corresponds with this.

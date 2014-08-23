@@ -49,7 +49,13 @@ public enum VehicleType {
      */
     MINECART_MOB_SPAWNER(EntityType.MINECART_MOB_SPAWNER),
 
-    PIG(EntityType.PIG), HORSE(EntityType.HORSE);
+    PIG(EntityType.PIG), 
+    HORSE(EntityType.HORSE),
+
+    /**
+     * An unknown entity without an Entity Class
+     */
+    UNKNOWN(EntityType.UNKNOWN);
 
     /**
      * The {@link EntityType} that corresponds with this.
