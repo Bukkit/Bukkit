@@ -1,8 +1,10 @@
 package org.bukkit.entity;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.entity.minecart.CommandMinecart;
 import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.SpawnerMinecart;
@@ -13,6 +15,8 @@ import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.Location;
 import org.bukkit.World;
+
+import com.google.common.collect.Lists;
 
 public enum EntityType {
 
@@ -247,6 +251,42 @@ public enum EntityType {
             return null;
         }
         return ID_MAP.get((short) id);
+    }
+    
+    /**
+     * Attempts to match the EntityType with the given name.
+     * <p>
+     * This is a match lookup; names will be converted to lowercase, then
+     * stripped of special characters in an attempt to format it like the
+     * enum.
+     * <p>
+     * Using this for match by ID is deprecated.
+     *
+     * @param name Name of the entity type to get
+     * @return EntityType if found, or null
+     */
+    public static EntityType matchEntityType(final String name) {
+        Validate.notNull(name, "Name cannot be null");
+
+        EntityType result = null;
+
+        try {
+            result = fromId(Integer.parseInt(name));
+        } catch (NumberFormatException ex) {}
+
+        if (result == null) {
+            String filtered = name.toLowerCase();
+
+            filtered = filtered.replaceAll("\\s+", "_").replaceAll("\\W", "");
+            result = fromName(filtered);
+            if (result == null)
+            	try {
+            	    result = EntityType.valueOf(filtered.toUpperCase());
+            	}
+                catch (IllegalArgumentException ex){} // okay to swallow it; we'll just return null
+        }
+
+        return result;
     }
 
     /**
