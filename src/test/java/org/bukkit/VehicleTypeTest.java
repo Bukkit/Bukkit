@@ -3,6 +3,7 @@ package org.bukkit;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.VehicleType;
 import org.junit.Test;
 
@@ -88,6 +89,24 @@ public class VehicleTypeTest {
         for (VehicleType vehicleType : VehicleType.values()) {
             String name = vehicleType.toString().replaceAll("_", " ").toLowerCase();
             assertThat(VehicleType.matchVehicleType(name), is(vehicleType));
+        }
+    }
+
+    //EntityType conversion tests.
+    @Test
+    public void validEntityTypeShouldBeVehicleType() {
+        for (VehicleType vehicleType : VehicleType.values()) {
+            assertThat(VehicleType.isVehicle(vehicleType.getEntityType()), is(true));
+        }
+    }
+
+    @Test
+    public void validEntityTypesShouldMatchInName() {
+        //Tests that all valid vehicle types are by the by the same name in EntityType,
+        //and that they are the same value.
+        for (VehicleType vehicleType : VehicleType.values()) {
+            assertThat(EntityType.valueOf(vehicleType.name()), notNullValue());
+            assertThat(EntityType.valueOf(vehicleType.name()), is(vehicleType.getEntityType()));
         }
     }
 }

@@ -3,11 +3,13 @@ package org.bukkit;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HangingType;
 import org.junit.Test;
 
 public class HangingTypeTest {
 
+    //Getting tests.
     @Test
     public void getByName() {
         for (HangingType hangingType : HangingType.values()) {
@@ -40,6 +42,7 @@ public class HangingTypeTest {
         assertThat(HangingType.fromName(null), is(nullValue()));
     }
 
+    //Matching tests.
     @Test(expected = IllegalArgumentException.class)
     public void matchHangingTypeByNull() {
         HangingType.matchHangingType(null);
@@ -88,6 +91,24 @@ public class HangingTypeTest {
         for (HangingType hangingType : HangingType.values()) {
             String name = hangingType.toString().replaceAll("_", " ").toLowerCase();
             assertThat(HangingType.matchHangingType(name), is(hangingType));
+        }
+    }
+
+    //EntityType conversion tests.
+    @Test
+    public void validEntityTypeShouldBeHangingType() {
+        for (HangingType hangingType : HangingType.values()) {
+            assertThat(HangingType.isHanging(hangingType.getEntityType()), is(true));
+        }
+    }
+
+    @Test
+    public void validEntityTypesShouldMatchInName() {
+        //Tests that all valid hanging types are by the by the same name in EntityType,
+        //and that they are the same value.
+        for (HangingType hangingType : HangingType.values()) {
+            assertThat(EntityType.valueOf(hangingType.name()), notNullValue());
+            assertThat(EntityType.valueOf(hangingType.name()), is(hangingType.getEntityType()));
         }
     }
 }
