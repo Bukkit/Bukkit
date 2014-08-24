@@ -92,6 +92,13 @@ public class VehicleTypeTest {
         }
     }
 
+    @Test
+    public void entityTypeClassShouldMatchVehicleTypeClass() {
+        for (VehicleType vehicleType : VehicleType.values()) {
+            assertEquals(vehicleType.getEntityClass(), vehicleType.getEntityType().getEntityClass());
+        }
+    }
+
     //EntityType conversion tests.
     @Test
     public void validEntityTypeShouldBeVehicleType() {

@@ -94,6 +94,13 @@ public class HangingTypeTest {
         }
     }
 
+    @Test
+    public void entityTypeClassShouldMatchHangingTypeClass() {
+        for (HangingType hangingType : HangingType.values()) {
+            assertEquals(hangingType.getEntityClass(), hangingType.getEntityType().getEntityClass());
+        }
+    }
+
     //EntityType conversion tests.
     @Test
     public void validEntityTypeShouldBeHangingType() {
