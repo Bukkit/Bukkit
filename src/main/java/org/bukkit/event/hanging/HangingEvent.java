@@ -1,6 +1,7 @@
 package org.bukkit.event.hanging;
 
 import org.bukkit.entity.Hanging;
+import org.bukkit.entity.HangingType;
 import org.bukkit.event.Event;
 
 /**
@@ -20,5 +21,9 @@ public abstract class HangingEvent extends Event {
      */
     public Hanging getEntity() {
         return hanging;
+    }
+    
+    public HangingType getHangingType() {
+        return hanging.getHangingType();
     }
 }

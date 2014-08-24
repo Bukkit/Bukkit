@@ -1,6 +1,7 @@
 package org.bukkit.event.vehicle;
 
 import org.bukkit.entity.Vehicle;
+import org.bukkit.entity.VehicleType;
 import org.bukkit.event.Event;
 
 /**
@@ -20,5 +21,9 @@ public abstract class VehicleEvent extends Event {
      */
     public final Vehicle getVehicle() {
         return vehicle;
+    }
+    
+    public VehicleType getVehicleType() {
+        return vehicle.getVehicleType();
     }
 }
