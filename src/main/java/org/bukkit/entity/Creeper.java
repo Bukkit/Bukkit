@@ -3,7 +3,7 @@ package org.bukkit.entity;
 /**
  * Represents a Creeper
  */
-public interface Creeper extends Monster {
+public interface Creeper extends Monster, FusedExplosive {
 
     /**
      * Checks if this Creeper is powered (Electrocuted)
@@ -13,7 +13,8 @@ public interface Creeper extends Monster {
     public boolean isPowered();
 
     /**
-     * Sets the Powered status of this Creeper
+     * Sets the Powered status of this Creeper.<br>
+     * Powered creeper's explosion yield is 2 times bigger than default.
      *
      * @param value New Powered status
      */
