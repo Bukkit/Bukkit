@@ -286,111 +286,291 @@ public final class Message implements Iterable<Part> {
         this.parts = new ArrayList<Part>();
     }
 
+    /**
+     * Appends all Parts of the provided Message to this Message.
+     *
+     * @param message another Message
+     * @return this Message for chain calls
+     */
     public Message append(Message message) {
         this.parts.addAll(message.parts);
         return this;
     }
 
+    /**
+     * Appends the provided Part to this Message.
+     *
+     * @param part the Part
+     * @return this Message for chain calls
+     */
     public Message append(Part part) {
         this.parts.add(part);
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided text.
+     *
+     * @param text the text
+     * @return this Message for chain calls
+     */
     public Message append(String text) {
         append(Part.of(text));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided localized text.
+     *
+     * @param id         the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message appendLocalized(String id, String... parameters) {
         append(Part.ofLocalized(id, parameters));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided text and hover text.
+     *
+     * @param text      the text
+     * @param hoverText the hover text
+     * @return this Message for chain calls
+     */
     public Message append(String text, String... hoverText) {
         append(Part.of(text, hoverText));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided localized text and hover text.
+     *
+     * @param hoverText  the hover text, one or more lines
+     * @param id         the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message appendLocalized(String[] hoverText, String id, String... parameters) {
         append(Part.ofLocalized(hoverText, id, parameters));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided ItemStack.
+     *
+     * @param item the itemstack
+     * @return this Message for chain calls
+     */
     public Message append(ItemStack item) {
         append(Part.of(item));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided text, using the provided
+     * ItemStack description as hover text.
+     *
+     * @param item the itemstack
+     * @param text the text
+     * @return this Message for chain calls
+     */
     public Message append(ItemStack item, String text) {
         append(Part.of(item, text));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided localized text, using the
+     * provided ItemStack description as hover text.
+     *
+     * @param item       the itemstack
+     * @param id         the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message appendLocalized(ItemStack item, String id, String... parameters) {
         append(Part.ofLocalized(item, id, parameters));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided Achievement.
+     *
+     * @param achievement the achievement
+     * @return this Message for chain calls
+     */
     public Message append(Achievement achievement) {
         append(Part.of(achievement));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided text, using the provided
+     * Achievement description as hover text.
+     *
+     * @param achievement the achievement
+     * @param text        the text
+     * @return this Message for chain calls
+     */
     public Message append(Achievement achievement, String text) {
         append(Part.of(achievement, text));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided localized text, using the
+     * provided Achievement description as hover text.
+     *
+     * @param achievement the achievement
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message appendLocalized(Achievement achievement, String id, String... parameters) {
         append(Part.ofLocalized(achievement, id, parameters));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided text, linking the provided
+     * Click action to it.
+     *
+     * @param clickAction the click action
+     * @param text        the text
+     * @return this Message for chain calls
+     */
     public Message append(Click clickAction, String text) {
         append(Part.of(clickAction, text));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided localized text, linking the
+     * provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message appendLocalized(Click clickAction, String id, String... parameters) {
         append(Part.ofLocalized(clickAction, id, parameters));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided text and hover text, linking the
+     * provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param text        the text
+     * @param hoverText   the hover text
+     * @return this Message for chain calls
+     */
     public Message append(Click clickAction, String text, String... hoverText) {
         append(Part.of(clickAction, text, hoverText));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided localized text and hover text,
+     * linking the provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param hoverText   the hover text, one or more lines
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message appendLocalized(Click clickAction, String[] hoverText, String id, String... parameters) {
         append(Part.ofLocalized(clickAction, hoverText, id, parameters));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided ItemStack, linking the provided
+     * Click action to it.
+     *
+     * @param clickAction the click action
+     * @param item        the itemstack
+     * @return this Message for chain calls
+     */
     public Message append(Click clickAction, ItemStack item) {
         append(Part.of(clickAction, item));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided text, using the provided
+     * ItemStack description as hover text, linking the provided Click action
+     * to it.
+     *
+     * @param clickAction the click action
+     * @param item        the itemstack
+     * @param text        the text
+     * @return this Message for chain calls
+     */
     public Message append(Click clickAction, ItemStack item, String text) {
         append(Part.of(clickAction, item, text));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided localized text, using the
+     * provided ItemStack description as hover text, linking the provided
+     * Click action to it.
+     *
+     * @param clickAction the click action
+     * @param item        the itemstack
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message appendLocalized(Click clickAction, ItemStack item, String id, String... parameters) {
         append(Part.ofLocalized(clickAction, item, id, parameters));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided Achievement, linking the
+     * provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param achievement the achievement
+     * @return this Message for chain calls
+     */
     public Message append(Click clickAction, Achievement achievement) {
         append(Part.of(clickAction, achievement));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided text, using the provided
+     * Achievement description as hover text, linking the provided Click
+     * action to it.
+     *
+     * @param clickAction the click action
+     * @param achievement the achievement
+     * @param text        the text
+     * @return this Message for chain calls
+     */
     public Message append(Click clickAction, Achievement achievement, String text) {
         append(Part.of(clickAction, achievement, text));
         return this;
     }
 
+    /**
+     * Appends a Part built from the provided localized text, using the
+     * provided Achievement description as hover text, linking the provided
+     * Click action to it.
+     *
+     * @param clickAction the click action
+     * @param achievement the achievement
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message appendLocalized(Click clickAction, Achievement achievement, String id, String... parameters) {
         append(Part.ofLocalized(clickAction, achievement, id, parameters));
         return this;
