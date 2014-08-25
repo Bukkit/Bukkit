@@ -14,93 +14,261 @@ import java.util.ListIterator;
  */
 public final class Message implements Iterable<Part> {
 
-    public static Message empty() {
-        return new Message();
-    }
-
-    public static Message of(Part part) {
+    /**
+     * Builds a Message from zero (empty Message), one or more Parts.
+     *
+     * @param parts parts of the Message
+     * @return the built Message
+     */
+    public static Message of(Part... parts) {
         Message result = new Message();
-        result.append(part);
+        for (Part part : parts) {
+            result.append(part);
+        }
         return result;
     }
 
+    /**
+     * Builds a Message with a text as first Part.
+     *
+     * @param string the text
+     * @return the built Message
+     */
     public static Message of(String string) {
         return Message.of(Part.of(string));
     }
 
+    /**
+     * Builds a Message with a localized text as first Part.
+     *
+     * @param id         the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return the built Message
+     */
     public static Message ofLocalized(String id, String... parameters) {
         return Message.of(Part.of(id, parameters));
     }
 
+    /**
+     * Builds a Message with a text as first Part, with one or more lines of
+     * hover text.
+     *
+     * @param text      the text
+     * @param hoverText the hover text
+     * @return the built Message
+     */
     public static Message of(String text, String... hoverText) {
         return Message.of(Part.of(text, hoverText));
     }
 
-
+    /**
+     * Builds a Message with an hover text and a localized text as first Part.
+     *
+     * @param hoverText  the hover text, one or more lines
+     * @param id         the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return the built Message
+     */
     public static Message ofLocalized(String[] hoverText, String id, String... parameters) {
         return Message.of(Part.ofLocalized(hoverText, id, parameters));
     }
 
+    /**
+     * Builds a Message with an ItemStack as first Part.
+     *
+     * @param item the itemstack
+     * @return the built Message
+     */
     public static Message of(ItemStack item) {
         return Message.of(Part.of(item));
     }
 
+    /**
+     * Builds a Message with a text as first Part, using an ItemStack
+     * description as hover text.
+     *
+     * @param item the itemstack
+     * @param text the text
+     * @return the built Message
+     */
     public static Message of(ItemStack item, String text) {
         return Message.of(Part.of(item, text));
     }
 
+    /**
+     * Builds a Message with a localized text as first Part, using an
+     * ItemStack description as hover text.
+     *
+     * @param item       the itemstack
+     * @param id         the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return the built Message
+     */
     public static Message ofLocalized(ItemStack item, String id, String... parameters) {
         return Message.of(Part.ofLocalized(item, id, parameters));
     }
 
+    /**
+     * Builds a Message with an Achievement as first Part.
+     *
+     * @param achievement the achievement
+     * @return the built Message
+     */
     public static Message of(Achievement achievement) {
         return Message.of(Part.of(achievement));
     }
 
+    /**
+     * Builds a Message with a text as first Part, using an Achievement
+     * description as hover text.
+     *
+     * @param achievement the achievement
+     * @param text        the text
+     * @return the built Message
+     */
     public static Message of(Achievement achievement, String text) {
         return Message.of(Part.of(achievement, text));
     }
 
+    /**
+     * Builds a Message with a localized text as first Part, using an
+     * Achievement description as hover text.
+     *
+     * @param achievement the achievement
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return the built Message
+     */
     public static Message ofLocalized(Achievement achievement, String id, String... parameters) {
         return Message.of(Part.ofLocalized(achievement, id, parameters));
     }
 
+    /**
+     * Builds a Message with a text as first Part, linking the provided Click
+     * action to it.
+     *
+     * @param clickAction the click action
+     * @param text        the text
+     * @return the built Message
+     */
     public static Message of(Click clickAction, String text) {
         return Message.of(Part.of(clickAction, text));
     }
 
+    /**
+     * Builds a Message with a localized text as first Part, linking the
+     * provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return the built Message
+     */
     public static Message ofLocalized(Click clickAction, String id, String... parameters) {
         return Message.of(Part.ofLocalized(clickAction, id, parameters));
     }
 
+    /**
+     * Builds a Message with a text as first Part, with one or more lines of
+     * hover text, linking the provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param text        the text
+     * @param hoverText   the hover text
+     * @return the built Message
+     */
     public static Message of(Click clickAction, String text, String... hoverText) {
         return Message.of(Part.of(clickAction, text, hoverText));
     }
 
+    /**
+     * Builds a Message with a localized text as first Part, with one or more
+     * lines of hover text, linking the provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param hoverText   the hover text, one or more lines
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return the built Message
+     */
     public static Message ofLocalized(Click clickAction, String[] hoverText, String id, String... parameters) {
         return Message.of(Part.ofLocalized(clickAction, hoverText, id, parameters));
     }
 
+    /**
+     * Builds a Message with an ItemStack as first Part, linking the provided
+     * Click action to it.
+     *
+     * @param clickAction the click action
+     * @param item        the itemstack
+     * @return the built Message
+     */
     public static Message of(Click clickAction, ItemStack item) {
         return Message.of(Part.of(clickAction, item));
     }
 
+    /**
+     * Builds a Message with a text as first Part, using an ItemStack as
+     * hover text, linking the provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param item        the itemstack
+     * @param text        the text
+     * @return the built Message
+     */
     public static Message of(Click clickAction, ItemStack item, String text) {
         return Message.of(Part.of(clickAction, item, text));
     }
 
+    /**
+     * Builds a Message with a localized text as first Part, using an
+     * ItemStack as hover text, linking the provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param item        the itemstack
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return the built Message
+     */
     public static Message ofLocalized(Click clickAction, ItemStack item, String id, String... parameters) {
         return Message.of(Part.ofLocalized(clickAction, item, id, parameters));
     }
 
+    /**
+     * Builds a Message with an Achievement as first Part, linking the
+     * provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param achievement the achievement
+     * @return the built Message
+     */
     public static Message of(Click clickAction, Achievement achievement) {
         return Message.of(Part.of(clickAction, achievement));
     }
 
+    /**
+     * Builds a Message with a text as first Part, using an Achievement as
+     * hover text, linking the provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param achievement the achievement
+     * @param text        the text
+     * @return the built Message
+     */
     public static Message of(Click clickAction, Achievement achievement, String text) {
         return Message.of(Part.of(clickAction, achievement, text));
     }
 
+    /**
+     * Builds a Message with a localized text as firstPart, using an
+     * Achievement as hover text, linking the provided Click action to it.
+     *
+     * @param clickAction the click action
+     * @param achievement the achievement
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return the built Message
+     */
     public static Message ofLocalized(Click clickAction, Achievement achievement, String id, String... parameters) {
         return Message.of(Part.ofLocalized(clickAction, achievement, id, parameters));
     }
