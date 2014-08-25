@@ -576,106 +576,313 @@ public final class Message implements Iterable<Part> {
         return this;
     }
 
+    /**
+     * Inserts a Part at the provided position in this Message.
+     *
+     * @param pos  the position
+     * @param part the Part
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, Part part) {
         this.parts.add(pos, part);
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided text at the provided position
+     * in this Message.
+     *
+     * @param pos  the position
+     * @param text the text
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, String text) {
         insert(pos, Part.of(text));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided localized text at the provided
+     * position in this Message.
+     *
+     * @param pos        the position
+     * @param id         the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message insertLocalized(int pos, String id, String... parameters) {
         insert(pos, Part.ofLocalized(id, parameters));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided text and hover text at the
+     * provided position in this Message.
+     *
+     * @param pos       the position
+     * @param text      the text
+     * @param hoverText the hover text
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, String text, String... hoverText) {
         insert(pos, Part.of(text, hoverText));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided localized text and hover text
+     * at the provided position in this Message.
+     *
+     * @param pos        the position
+     * @param hoverText  the hover text, one or more lines
+     * @param id         the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message insertLocalized(int pos, String[] hoverText, String id, String... parameters) {
         insert(pos, Part.ofLocalized(hoverText, id, parameters));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided ItemStack at the provided
+     * position in this Message.
+     *
+     * @param pos  the position
+     * @param item the itemstack
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, ItemStack item) {
         insert(pos, Part.of(item));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided text, using the provided
+     * ItemStack description as hover text, at the provided position in this
+     * Message.
+     *
+     * @param pos  the position
+     * @param item the itemstack
+     * @param text the text
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, ItemStack item, String text) {
         insert(pos, Part.of(item, text));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided localized text, using the
+     * provided ItemStack description as hover text, at the provided position
+     * in this Message.
+     *
+     * @param pos        the position
+     * @param item       the itemstack
+     * @param id         the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message insertLocalized(int pos, ItemStack item, String id, String... parameters) {
         insert(pos, Part.ofLocalized(item, id, parameters));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided Achievement at the provided
+     * position in this Message.
+     *
+     * @param pos         the position
+     * @param achievement the achievement
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, Achievement achievement) {
         insert(pos, Part.of(achievement));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided text, using the provided
+     * Achievement description as hover text, at the provided position in
+     * this Message.
+     *
+     * @param pos         the position
+     * @param achievement the achievement
+     * @param text        the text
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, Achievement achievement, String text) {
         insert(pos, Part.of(achievement, text));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided localized text, using the
+     * provided Achievement description as hover text, at the provided
+     * position in this Message.
+     *
+     * @param pos         the position
+     * @param achievement the achievement
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message insertLocalized(int pos, Achievement achievement, String id, String... parameters) {
         insert(pos, Part.ofLocalized(achievement, id, parameters));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided text, linking the provided
+     * Click action to it, at the provided position in this Message.
+     *
+     * @param pos         the position
+     * @param clickAction the click action
+     * @param text        the text
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, Click clickAction, String text) {
         insert(pos, Part.of(clickAction, text));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided localized text, linking the
+     * provided Click action to it, at the provided position in this Message.
+     *
+     * @param pos         the position
+     * @param clickAction the click action
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message insertLocalized(int pos, Click clickAction, String id, String... parameters) {
         insert(pos, Part.ofLocalized(clickAction, id, parameters));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided text and hover text, linking
+     * the provided Click action to it, at the provided position in this
+     * Message.
+     *
+     * @param pos         the position
+     * @param clickAction the click action
+     * @param text        the text
+     * @param hoverText   the hover text
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, Click clickAction, String text, String... hoverText) {
         insert(pos, Part.of(clickAction, text, hoverText));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided localized text and hover text,
+     * linking the provided Click action to it, at the provided position in
+     * this Message.
+     *
+     * @param pos         the position
+     * @param clickAction the click action
+     * @param hoverText   the hover text, one or more lines
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message insertLocalized(int pos, Click clickAction, String[] hoverText, String id, String... parameters) {
         insert(pos, Part.ofLocalized(clickAction, hoverText, id, parameters));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided ItemStack, linking the provided
+     * Click action to it, at the provided position in this Message.
+     *
+     * @param pos         the position
+     * @param clickAction the click action
+     * @param item        the itemstack
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, Click clickAction, ItemStack item) {
         insert(pos, Part.of(clickAction, item));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided text, using the provided
+     * ItemStack description as hover text, linking the provided Click action
+     * to it, at the provided position in this Message.
+     *
+     * @param pos         the position
+     * @param clickAction the click action
+     * @param item        the itemstack
+     * @param text        the text
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, Click clickAction, ItemStack item, String text) {
         insert(pos, Part.of(clickAction, item, text));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided localized text, using the
+     * provided ItemStack description as hover text, linking the provided
+     * Click action to it, at the provided position in this Message.
+     *
+     * @param pos         the position
+     * @param clickAction the click action
+     * @param item        the itemstack
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message insertLocalized(int pos, Click clickAction, ItemStack item, String id, String... parameters) {
         insert(pos, Part.ofLocalized(clickAction, item, id, parameters));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided Achievement, linking the
+     * provided Click action to it, at the provided position in this Message.
+     *
+     * @param pos         the position
+     * @param clickAction the click action
+     * @param achievement the achievement
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, Click clickAction, Achievement achievement) {
         insert(pos, Part.of(clickAction, achievement));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided text, using the provided
+     * Achievement description as hover text, linking the provided Click
+     * action to it, at the provided position in this Message.
+     *
+     * @param pos         the position
+     * @param clickAction the click action
+     * @param achievement the achievement
+     * @param text        the text
+     * @return this Message for chain calls
+     */
     public Message insert(int pos, Click clickAction, Achievement achievement, String text) {
         insert(pos, Part.of(clickAction, achievement, text));
         return this;
     }
 
+    /**
+     * Inserts a Part built from the provided localized text, using the
+     * provided Achievement description as hover text, linking the provided
+     * Click action to it, at the provided position in this Message.
+     *
+     * @param pos         the position
+     * @param clickAction the click action
+     * @param achievement the achievement
+     * @param id          the localized text identifier
+     * @param parameters  the localized text parameters, if any
+     * @return this Message for chain calls
+     */
     public Message insertLocalized(int pos, Click clickAction, Achievement achievement, String id, String... parameters) {
         insert(pos, Part.ofLocalized(clickAction, achievement, id, parameters));
         return this;
