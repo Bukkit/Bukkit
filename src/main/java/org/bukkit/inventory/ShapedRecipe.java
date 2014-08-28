@@ -1,5 +1,6 @@
 package org.bukkit.inventory;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ public class ShapedRecipe implements Recipe {
     private ItemStack output;
     private String[] rows;
     private Map<Character, ItemStack> ingredients = new HashMap<Character, ItemStack>();
+    private int hash;
 
     /**
      * Create a shaped recipe to craft the specified ItemStack. The
@@ -29,6 +31,7 @@ public class ShapedRecipe implements Recipe {
      */
     public ShapedRecipe(ItemStack result) {
         this.output = new ItemStack(result);
+        calculateHashCode();
     }
 
     /**
@@ -63,7 +66,7 @@ public class ShapedRecipe implements Recipe {
             }
         }
         this.ingredients = newIngredients;
-
+        calculateHashCode();
         return this;
     }
 
@@ -108,6 +111,7 @@ public class ShapedRecipe implements Recipe {
         }
 
         ingredients.put(key, new ItemStack(ingredient, 1, (short) raw));
+        calculateHashCode();
         return this;
     }
 
@@ -144,5 +148,109 @@ public class ShapedRecipe implements Recipe {
      */
     public ItemStack getResult() {
         return output.clone();
+    }
+
+    @Override
+    public int hashCode() {
+        return hash;
+    }
+
+    private void calculateHashCode() {
+        ItemStack[] matrix = shapeToMatrix(this.getShape(), this.ingredients);
+        StringBuilder str = new StringBuilder("shaped:");
+
+        for (ItemStack item : matrix) {
+            if (item == null) {
+                str.append('0');
+            } else {
+                str.append(item.hashCode());
+            }
+            str.append(';');
+        }
+
+        str.append('=').append(output.hashCode());
+
+        hash = str.toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj instanceof ShapedRecipe) {
+            ShapedRecipe r = (ShapedRecipe) obj;
+
+            if (!this.getResult().equals(r.getResult())) {
+                return false;
+            }
+
+            return this.isSimilar(r);
+        }
+
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <br>
+     * <br>Shape is also checked horizontally mirrored if does not match as-is.
+     */
+    public boolean isSimilar(Recipe recipe) {
+        Validate.notNull(recipe, "Recipe can not be null.");
+
+        if (recipe == this) {
+            return true;
+        }
+
+        if (recipe instanceof ShapedRecipe) {
+            ShapedRecipe r = (ShapedRecipe) recipe;
+
+            // convert both shapes and ingredient maps to common ItemStack array.
+            ItemStack[] matrix1 = shapeToMatrix(this.getShape(), this.getIngredientMap());
+            ItemStack[] matrix2 = shapeToMatrix(r.getShape(), r.getIngredientMap());
+
+            // compare arrays and if they don't match run another check with one shape mirrored.
+            if (!Arrays.equals(matrix1, matrix2)) {
+                mirrorMatrix(matrix1);
+
+                return Arrays.equals(matrix1, matrix2);
+            }
+
+            return true; // ingredients match.
+        }
+
+        return false;
+    }
+
+    private static ItemStack[] shapeToMatrix(String[] shape, Map<Character, ItemStack> map) {
+        ItemStack[] matrix = new ItemStack[9];
+        int slot = 0;
+
+        for (int r = 0; r < shape.length; r++) {
+            for (char col : shape[r].toCharArray()) {
+                matrix[slot] = map.get(col);
+                slot++;
+            }
+
+            slot = ((r + 1) * 3);
+        }
+
+        return matrix;
+    }
+
+    private static void mirrorMatrix(ItemStack[] matrix) {
+        ItemStack tmp;
+
+        for (int r = 0; r < 3; r++) {
+            tmp = matrix[(r * 3)];
+            matrix[(r * 3)] = matrix[(r * 3) + 2];
+            matrix[(r * 3) + 2] = tmp;
+        }
     }
 }

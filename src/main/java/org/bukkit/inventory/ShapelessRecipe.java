@@ -16,6 +16,7 @@ import org.bukkit.material.MaterialData;
 public class ShapelessRecipe implements Recipe {
     private ItemStack output;
     private List<ItemStack> ingredients = new ArrayList<ItemStack>();
+    private int hash;
 
     /**
      * Create a shapeless recipe to craft the specified ItemStack. The
@@ -32,6 +33,7 @@ public class ShapelessRecipe implements Recipe {
      */
     public ShapelessRecipe(ItemStack result) {
         this.output = new ItemStack(result);
+        calculateHashCode();
     }
 
     /**
@@ -110,6 +112,7 @@ public class ShapelessRecipe implements Recipe {
         while (count-- > 0) {
             ingredients.add(new ItemStack(ingredient, 1, (short) rawdata));
         }
+        calculateHashCode();
         return this;
     }
 
@@ -199,6 +202,7 @@ public class ShapelessRecipe implements Recipe {
                 count--;
             }
         }
+        calculateHashCode();
         return this;
     }
 
@@ -222,5 +226,78 @@ public class ShapelessRecipe implements Recipe {
             result.add(ingredient.clone());
         }
         return result;
+    }
+
+    /**
+     * Checks if the supplied object is a recipe that has identical ingredients and identical results.<br>
+     * This is just like {@link #isSimilar(Recipe)} except it also checks results.
+     * 
+     * @return True if object is the same recipe as this recipe.
+     */
+    @Override
+    public int hashCode() {
+        return hash;
+    }
+
+    private void calculateHashCode() {
+        StringBuilder str = new StringBuilder("shapeless:");
+
+        for (ItemStack item : ingredients) {
+            str.append(item.hashCode()).append(';');
+        }
+
+        str.append('=').append(output.hashCode());
+
+        hash = str.toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj instanceof ShapelessRecipe) {
+            ShapelessRecipe r = (ShapelessRecipe) obj;
+
+            if (!this.getResult().equals(r.getResult())) {
+                return false;
+            }
+
+            return this.isSimilar(r);
+        }
+
+        return false;
+    }
+
+    public boolean isSimilar(Recipe recipe) {
+        Validate.notNull(recipe, "Recipe can not be null.");
+
+        if (recipe == this) {
+            return true;
+        }
+
+        if (recipe instanceof ShapelessRecipe) {
+            ShapelessRecipe r = (ShapelessRecipe) recipe;
+            List<ItemStack> find = r.getIngredientList(); // get the cloned ingredient list
+
+            if (find.size() != this.ingredients.size()) {
+                return false; // if they don't have the same amount of ingredients they're not equal.
+            }
+
+            for (ItemStack item : this.ingredients) {
+                if (!find.remove(item)) {
+                    return false; // if ingredient wasn't removed (not found) then they're not equal.
+                }
+            }
+
+            return find.isEmpty(); // if there are any ingredients not removed then they're not equal.
+        }
+
+        return false;
     }
 }
