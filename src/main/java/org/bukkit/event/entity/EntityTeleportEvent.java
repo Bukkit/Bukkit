@@ -14,12 +14,22 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
     private boolean cancel;
     private Location from;
     private Location to;
+    private TeleportCause cause;
 
+    /**
+     * @deprecated Use {@link #EntityTeleportEvent(Entity, Location, Location, TeleportCause)} instead
+     */
+    @Deprecated
     public EntityTeleportEvent(Entity what, Location from, Location to) {
+        this(what, from, to, TeleportCause.UNKNOWN);
+    }
+
+    public EntityTeleportEvent(Entity what, Location from, Location to, TeleportCause cause) {
         super(what);
         this.from = from;
         this.to = to;
         this.cancel = false;
+        this.cause = cause;
     }
 
     public boolean isCancelled() {
@@ -64,6 +74,39 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
      */
     public void setTo(Location to) {
         this.to = to;
+    }
+
+    /**
+     * Gets the cause for this entity teleportation
+     *
+     * @return Cause this entity teleported for
+     */
+    public TeleportCause getCause() {
+        return cause;
+    }
+
+    public enum TeleportCause {
+        /**
+         * Indicates the teleportation was caused by an Enderman teleporting
+         * himself
+         */
+        ENDERMAN,
+        /**
+         * Indicates the teleportation was caused by an entity entering a
+         * Nether portal
+         */
+        NETHER_PORTAL,
+        /**
+         * Indicates the teleportation was caused by an entity entering an End
+         * portal
+         */
+        END_PORTAL,
+        /**
+         * Indicates the teleportation was caused by an event not covered by
+         * this enum
+         */
+        UNKNOWN,
+        ;
     }
 
     @Override
