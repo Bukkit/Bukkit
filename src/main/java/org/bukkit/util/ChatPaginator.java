@@ -88,16 +88,11 @@ public class ChatPaginator {
             }
 
             if (c == ' ' || c == '\n') {
-                if (line.length() == 0 && word.length() > lineLength) { // special case: extremely long word begins a line
+                if (line.length() == 0 && word.length() - lineColorChars > lineLength) { // special case: extremely long word begins a line
                     for (String partialWord : word.toString().split("(?<=\\G.{" + lineLength + "})")) {
                         lines.add(partialWord);
                     }
-                } else if (line.length() + word.length() - lineColorChars == lineLength) { // Line exactly the correct length...newline
-                    line.append(word);
-                    lines.add(line.toString());
-                    line = new StringBuilder();
-                    lineColorChars = 0;
-                } else if (line.length() + 1 + word.length() - lineColorChars > lineLength) { // Line too long...break the line
+                } else if (line.length() > 0 && line.length() + 1 + word.length() - lineColorChars > lineLength) { // Line too long...break the line
                     for (String partialWord : word.toString().split("(?<=\\G.{" + lineLength + "})")) {
                         lines.add(line.toString());
                         line = new StringBuilder(partialWord);
