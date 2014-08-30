@@ -236,7 +236,7 @@ public abstract class JavaPlugin extends PluginBase {
     }
 
     @Override
-    public void saveResource(String resourcePath, boolean replace) {
+    public int saveResource(String resourcePath, boolean replace) {
         if (resourcePath == null || resourcePath.equals("")) {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
@@ -265,11 +265,15 @@ public abstract class JavaPlugin extends PluginBase {
                 }
                 out.close();
                 in.close();
+                return 0;
             } else {
                 logger.log(Level.WARNING, "Could not save " + outFile.getName() + " to " + outFile + " because " + outFile.getName() + " already exists.");
+                return 1;
             }
         } catch (IOException ex) {
             logger.log(Level.SEVERE, "Could not save " + outFile.getName() + " to " + outFile, ex);
+            return 2;
+            
         }
     }
 
