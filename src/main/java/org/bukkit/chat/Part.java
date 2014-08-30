@@ -2,6 +2,7 @@ package org.bukkit.chat;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Achievement;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -12,103 +13,327 @@ import java.util.Arrays;
  */
 public final class Part {
 
+    /**
+     * Builds a message part consisting of text. The text may contain
+     * {@link ChatColor}s as chars.
+     * 
+     * @param text the text that should be displayed by this part
+     * @return the part consisting of the given text
+     */
     public static Part of(String text) {
         Validate.notNull(text, "text can't be null");
         return new Part().setText(text);
     }
 
+    /**
+     * Builds a message part consisting of a localized text and localized text
+     * parameters, if any.
+     * 
+     * @param id the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return the part consisting of the given localized text
+     */
     public static Part ofLocalized(String id, String... parameters) {
         Validate.notNull(id, "id can't be null");
         return new Part().setLocalizedText(id, parameters);
     }
 
+    /**
+     * Builds a message part consisting of text, which shows another text when
+     * hovered. The text and the hover text may contain {@link ChatColor}s as
+     * chars.
+     * 
+     * @param text the text that should be displayed by this part
+     * @param hoverText the text that should be displayed by this part when
+     *        hovered, cannot be null or empty
+     * @return the hoverable part consisting of the given text and the hover
+     *         text
+     */
     public static Part of(String text, String... hoverText) {
         Validate.notNull(text, "text can't be null");
         Validate.notEmpty(hoverText, "hoverText can't be empty");
         return new Part().setText(text).setHover(Hover.of(hoverText));
     }
 
+    /**
+     * Builds a message part consisting of a localized text and localized text
+     * parameters, if any, which shows another text when hovered and executes
+     * the given {@link Click}action when clicked. The hover text may contain
+     * {@link ChatColor}s as chars.
+     * 
+     * @param hoverText the text that should be displayed by this part when
+     *        hovered, cannot be null or empty
+     * @param id the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return the hoverable part consisting of the given localized text and the
+     *         hover text
+     */
     public static Part ofLocalized(String[] hoverText, String id, String... parameters) {
         Validate.notNull(id, "id can't be null");
         return new Part().setHover(Hover.of(hoverText)).setLocalizedText(id, parameters);
     }
 
+    /**
+     * Builds a message part consisting of an {@link ItemStack}. The name of the
+     * item can be hovered to show the item details.
+     * 
+     * @param item the item that should be displayed by this part, cannot be
+     *        null
+     * @return the hoverable part consisting of the given item
+     */
     public static Part of(ItemStack item) {
         Validate.notNull(item, "item can't be null");
         return new Part().setHover(Hover.of(item));
     }
 
+    /**
+     * Builds a message part consisting of text, which shows the given item when
+     * hovered. The text may contain {@link ChatColor}s as chars.
+     * 
+     * @param item the item that should be displayed by this part when hovered,
+     *        cannot be null
+     * @param text the text that should be displayed by this part
+     * @return the hoverable part consisting of the given text and the hover
+     *         item
+     */
     public static Part of(ItemStack item, String text) {
         Validate.notNull(text, "text can't be null");
         return new Part().setHover(Hover.of(item)).setText(text);
     }
 
+    /**
+     * Builds a message part consisting of localized text, which shows the given
+     * item when hovered.
+     * 
+     * @param item the item that should be displayed by this part when hovered,
+     *        cannot be null
+     * @param id the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return the hoverable part consisting of the given localized text and the
+     *         hover item
+     */
     public static Part ofLocalized(ItemStack item, String id, String... parameters) {
         Validate.notNull(id, "id can't be null");
         return new Part().setHover(Hover.of(item)).setLocalizedText(id, parameters);
     }
 
+    /**
+     * Builds a message part consisting of an {@link Achievement}. The name of
+     * the achievement can be hovered to show the achievement details.
+     * 
+     * @param achievement the achievement that should be displayed by this part,
+     *        cannot be null
+     * @return the hoverable part consisting of the given achievement
+     */
     public static Part of(Achievement achievement) {
         Validate.notNull(achievement, "achievement can't be null");
         return new Part().setHover(Hover.of(achievement));
     }
 
+    /**
+     * Builds a message part consisting of text, which shows the given
+     * achievement when hovered. The text may contain {@link ChatColor}s as
+     * chars.
+     * 
+     * @param achievement the achievement that should be displayed by this part
+     *        when hovered, cannot be null
+     * @param text the text that should be displayed by this part
+     * @return the hoverable part consisting of the given text and the hover
+     *         achievement
+     */
     public static Part of(Achievement achievement, String text) {
         Validate.notNull(text, "text can't be null");
         return new Part().setHover(Hover.of(achievement)).setText(text);
     }
 
+    /**
+     * Builds a message part consisting of localized text, which shows the given
+     * achievement when hovered.
+     * 
+     * @param achievement the achievement that should be displayed by this part
+     *        when hovered, cannot be null
+     * @param id the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return the hoverable part consisting of the given localized text and the
+     *         hover achievement
+     */
     public static Part ofLocalized(Achievement achievement, String id, String... parameters) {
         Validate.notNull(id, "id can't be null");
         return new Part().setHover(Hover.of(achievement)).setLocalizedText(id, parameters);
     }
 
+    /**
+     * Builds a message part consisting of text, which executes the given
+     * {@link Click}action when clicked. The text may contain {@link ChatColor}s
+     * as chars.
+     * 
+     * @param clickAction the action that should be performed when the text is
+     *        clicked
+     * @param text the text that should be displayed by this part
+     * @return the clickable part consisting of the given text
+     */
     public static Part of(Click clickAction, String text) {
         Validate.notNull(text, "text can't be null");
         return new Part().setClickAction(clickAction).setText(text);
     }
 
+    /**
+     * Builds a message part consisting of a localized text and localized text
+     * parameters, if any, which executes the given {@link Click}action when
+     * clicked.
+     * 
+     * @param clickAction the action that should be performed when the text is
+     *        clicked
+     * @param id the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return the clickable part consisting of the given localized text
+     */
     public static Part ofLocalized(Click clickAction, String id, String... parameters) {
         Validate.notNull(id, "id can't be null");
         return new Part().setClickAction(clickAction).setLocalizedText(id, parameters);
     }
 
+    /**
+     * Builds a message part consisting of text, which shows another text when
+     * hovered and executes the given {@link Click}action when clicked. The text
+     * and the hover text may contain {@link ChatColor}s as chars.
+     * 
+     * @param clickAction the action that should be performed when the text is
+     *        clicked
+     * @param text the text that should be displayed by this part
+     * @param hoverText The text that should be displayed by this part when
+     *        hovered, cannot be null or empty
+     * @return the hoverable and clickable part consisting of the given text and
+     *         the hover text
+     */
     public static Part of(Click clickAction, String text, String... hoverText) {
         Validate.notNull(text, "text can't be null");
         Validate.notEmpty(hoverText, "hoverText can't be empty");
         return new Part().setClickAction(clickAction).setText(text).setHover(Hover.of(hoverText));
     }
 
+    /**
+     * Builds a message part consisting of a localized text and localized text
+     * parameters, if any, which shows another text when hovered and executes
+     * the given {@link Click}action when clicked. The hover text may contain
+     * {@link ChatColor}s as chars.
+     * 
+     * @param clickAction the action that should be performed when the text is
+     *        clicked
+     * @param hoverText The text that should be displayed by this part when
+     *        hovered, cannot be null or empty
+     * @param id the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return the hoverable and clickable part consisting of the given
+     *         localized text and the hover text
+     */
     public static Part ofLocalized(Click clickAction, String[] hoverText, String id, String... parameters) {
         Validate.notNull(id, "id can't be null");
         return new Part().setClickAction(clickAction).setHover(Hover.of(hoverText)).setLocalizedText(id, parameters);
     }
 
+    /**
+     * Builds a message part consisting of an {@link ItemStack}. The name of the
+     * item can be hovered to show the item details and executes the given
+     * {@link Click}action when clicked.
+     * 
+     * @param clickAction the action that should be performed when the item's
+     *        name is clicked
+     * @param item the item that should be displayed by this part, cannot be
+     *        null
+     * @return the hoverable and clickable part consisting of the given item
+     */
     public static Part of(Click clickAction, ItemStack item) {
         Validate.notNull(item, "item can't be null");
         return new Part().setClickAction(clickAction).setHover(Hover.of(item));
     }
 
+    /**
+     * Builds a message part consisting of text, which shows the given item when
+     * hovered and executes the given {@link Click}action when clicked. The text
+     * may contain {@link ChatColor}s as chars.
+     * 
+     * @param clickAction the action that should be performed when the text is
+     *        clicked
+     * @param item the item that should be displayed by this part when hovered,
+     *        cannot be null
+     * @param text the text that should be displayed by this part
+     * @return the hoverable and clickable part consisting of the given text and
+     *         the hover item
+     */
     public static Part of(Click clickAction, ItemStack item, String text) {
         Validate.notNull(text, "text can't be null");
         return new Part().setClickAction(clickAction).setHover(Hover.of(item)).setText(text);
     }
 
+    /**
+     * Builds a message part consisting of localized text, which shows the given
+     * item when hovered and executes the given {@link Click}action when
+     * clicked.
+     * 
+     * @param clickAction the action that should be performed when the text is
+     *        clicked
+     * @param item the item that should be displayed by this part when hovered,
+     *        cannot be null
+     * @param id the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return the hoverable and clickable part consisting of the given
+     *         localized text and the hover item
+     */
     public static Part ofLocalized(Click clickAction, ItemStack item, String id, String... parameters) {
         Validate.notNull(id, "id can't be null");
         return new Part().setClickAction(clickAction).setHover(Hover.of(item)).setLocalizedText(id, parameters);
     }
 
+    /**
+     * Builds a message part consisting of an {@link Achievement}. The name of
+     * the achievement can be hovered to show the achievement details and
+     * executes the given {@link Click}action when clicked.
+     * 
+     * @param clickAction the action that should be performed when the
+     *        achievement's name is clicked
+     * @param achievement the achievement that should be displayed by this part,
+     *        cannot be null
+     * @return the hoverable and clickable part consisting of the given
+     *         achievement
+     */
     public static Part of(Click clickAction, Achievement achievement) {
         Validate.notNull(achievement, "achievement can't be null");
         return new Part().setClickAction(clickAction).setHover(Hover.of(achievement));
     }
 
+    /**
+     * Builds a message part consisting of text, which shows the given
+     * achievement when hovered and executes the given {@link Click}action when
+     * clicked. The text may contain {@link ChatColor}s as chars.
+     * 
+     * @param clickAction the action that should be performed when the text is
+     *        clicked
+     * @param achievement the achievement that should be displayed by this part
+     *        when hovered, cannot be null
+     * @param text the text that should be displayed by this part
+     * @return the hoverable and clickable part consisting of the given text and
+     *         the hover achievement
+     */
     public static Part of(Click clickAction, Achievement achievement, String text) {
         Validate.notNull(text, "text can't be null");
         return new Part().setClickAction(clickAction).setHover(Hover.of(achievement)).setText(text);
     }
 
+    /**
+     * Builds a message part consisting of localized text, which shows the given
+     * achievement when hovered and executes the given {@link Click}action when
+     * clicked.
+     * 
+     * @param clickAction the action that should be performed when the text is
+     *        clicked
+     * @param achievement the achievement that should be displayed by this part
+     *        when hovered, cannot be null
+     * @param id the localized text identifier
+     * @param parameters the localized text parameters, if any
+     * @return the hoverable and clickable part consisting of the given
+     *         localized text and the hover achievement
+     */
     public static Part ofLocalized(Click clickAction, Achievement achievement, String id, String... parameters) {
         Validate.notNull(id, "id can't be null");
         return new Part().setClickAction(clickAction).setHover(Hover.of(achievement)).setLocalizedText(id, parameters);
