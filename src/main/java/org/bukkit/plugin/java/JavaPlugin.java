@@ -31,6 +31,7 @@ import org.bukkit.plugin.PluginBase;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginLogger;
+import org.bukkit.plugin.resourceSaveStatus;
 
 import com.avaje.ebean.EbeanServer;
 import com.avaje.ebean.EbeanServerFactory;
@@ -236,7 +237,7 @@ public abstract class JavaPlugin extends PluginBase {
     }
 
     @Override
-    public void saveResource(String resourcePath, boolean replace) {
+    public resourceSaveStatus saveResource(String resourcePath, boolean replace) {
         if (resourcePath == null || resourcePath.equals("")) {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
@@ -265,11 +266,15 @@ public abstract class JavaPlugin extends PluginBase {
                 }
                 out.close();
                 in.close();
+                return resourceSaveStatus.SUCESS;
             } else {
                 logger.log(Level.WARNING, "Could not save " + outFile.getName() + " to " + outFile + " because " + outFile.getName() + " already exists.");
+                return resourceSaveStatus.EXISTS;
             }
         } catch (IOException ex) {
             logger.log(Level.SEVERE, "Could not save " + outFile.getName() + " to " + outFile, ex);
+            return resourceSaveStatus.FAIL;
+            
         }
     }
 
