@@ -31,7 +31,10 @@ public class PlayerQuitEvent extends PlayerEvent {
      * 
      * @param who the player that had left the server
      * @param quitMessage the quit message being send to all online players
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *             {@link #PlayerQuitEvent(Player, Message)} instead.
      */
+    @Deprecated
     public PlayerQuitEvent(final Player who, final String quitMessage) {
         super(who);
         this.quitMessage = Message.of(quitMessage);
@@ -60,7 +63,10 @@ public class PlayerQuitEvent extends PlayerEvent {
      *
      * @param quitMessage the quit message to show. Can be null, empty and can
      *        contain color codes.
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *             {@link #setMessage(Message)} instead.
      */
+    @Deprecated
     public void setQuitMessage(String quitMessage) {
         if (quitMessage == null) {
             this.quitMessage = null;

@@ -62,7 +62,10 @@ public class PlayerJoinEvent extends PlayerEvent {
      *
      * @param joinMessage the join message to show. Can be null, empty and can
      *        contain color codes.
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *             {@link #setMessage(Message)} instead.
      */
+    @Deprecated
     public void setJoinMessage(String joinMessage) {
         if (joinMessage == null) {
             this.joinMessage = null;
