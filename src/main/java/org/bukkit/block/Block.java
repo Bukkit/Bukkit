@@ -329,7 +329,7 @@ public interface Block extends Metadatable {
     boolean isLiquid();
 
     /**
-     * Gets the temperature of the biome of this block
+     * Gets the temperature of this block
      *
      * @return Temperature of this block
      */
