@@ -489,7 +489,7 @@ public class Location implements Cloneable {
         }
         final Location other = (Location) obj;
 
-        if (this.world != other.world && (this.world == null || !this.world.equals(other.world))) {
+        if (this.world != other.world) {
             return false;
         }
         if (Double.doubleToLongBits(this.x) != Double.doubleToLongBits(other.x)) {
