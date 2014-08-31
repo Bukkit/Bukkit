@@ -2,6 +2,8 @@ package org.bukkit.event.player;
 
 import java.net.InetAddress;
 
+import org.apache.commons.lang.Validate;
+import org.bukkit.chat.Message;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
@@ -12,11 +14,13 @@ public class PlayerLoginEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final InetAddress address;
     private final String hostname;
-    private Result result = Result.ALLOWED;
-    private String message = "";
+    private Result result;
+    private Message message;
 
     /**
-     * @deprecated Address should be provided in other constructor
+     * @deprecated Address and hostname should be provided in other constructor.
+     *             Use {@link #PlayerLoginEvent(Player, String, InetAddress)}
+     *             instead.
      */
     @Deprecated
     public PlayerLoginEvent(final Player player) {
@@ -24,7 +28,9 @@ public class PlayerLoginEvent extends PlayerEvent {
     }
 
     /**
-     * @deprecated Address should be provided in other constructor
+     * @deprecated Address should be provided in other constructor. Use
+     *             {@link #PlayerLoginEvent(Player, String, InetAddress)}
+     *             instead.
      */
     @Deprecated
     public PlayerLoginEvent(final Player player, final String hostname) {
@@ -32,23 +38,27 @@ public class PlayerLoginEvent extends PlayerEvent {
     }
 
     /**
-     * This constructor defaults message to an empty string, and result to
-     * ALLOWED
+     * This constructor createes a new PlayerLoginEvent with the result
+     * {@link Result#ALLOWED} and no kick message.
      *
      * @param player The {@link Player} for this event
      * @param hostname The hostname that was used to connect to the server
      * @param address The address the player used to connect, provided for
-     *     timing issues
+     *        timing issues
      */
     public PlayerLoginEvent(final Player player, final String hostname, final InetAddress address) {
         super(player);
         this.hostname = hostname;
         this.address = address;
+        this.result = Result.ALLOWED;
+        this.message = null;
     }
 
     /**
-     * @deprecated Address and hostname should be provided in other
-     *     constructor
+     * @deprecated Address and hostname should be provided in other constructor.
+     *             Use
+     *             {@link #PlayerLoginEvent(Player, String, InetAddress, Result, Message)}
+     *             instead.
      */
     @Deprecated
     public PlayerLoginEvent(final Player player, final Result result, final String message) {
@@ -61,12 +71,42 @@ public class PlayerLoginEvent extends PlayerEvent {
      * @param player The {@link Player} for this event
      * @param hostname The hostname that was used to connect to the server
      * @param address The address the player used to connect, provided for
-     *     timing issues
+     *        timing issues
+     * @param result The result status for this event
+     * @param message The message to be displayed if result denies login
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *             {@link #PlayerLoginEvent(Player, String, InetAddress, Result, Message)}
+     *             instead.
+     */
+    @Deprecated
+    public PlayerLoginEvent(final Player player, String hostname, final InetAddress address, final Result result, final String message) {
+        super(player);
+        this.hostname = hostname;
+        this.address = address;
+        Validate.notNull(result, "Result cannot be Null.");
+        this.result = result;
+        if (message == null) {
+            this.message = null;
+        } else {
+            this.message = Message.of(message);
+        }
+    }
+
+    /**
+     * This constructor pre-configures the event with a result and message
+     *
+     * @param player The {@link Player} for this event
+     * @param hostname The hostname that was used to connect to the server
+     * @param address The address the player used to connect, provided for
+     *        timing issues
      * @param result The result status for this event
      * @param message The message to be displayed if result denies login
      */
-    public PlayerLoginEvent(final Player player, String hostname, final InetAddress address, final Result result, final String message) {
-        this(player, hostname, address);
+    public PlayerLoginEvent(final Player player, String hostname, final InetAddress address, final Result result, final Message message) {
+        super(player);
+        this.hostname = hostname;
+        this.address = address;
+        Validate.notNull(result, "Result cannot be Null.");
         this.result = result;
         this.message = message;
     }
@@ -81,36 +121,73 @@ public class PlayerLoginEvent extends PlayerEvent {
     }
 
     /**
-     * Sets the new result of the login, as an enum
+     * Sets the new result of the login, as an enum. If the result is set to
+     * something different than {@link Result#ALLOWED} an appropriate kick
+     * message should be set as well. Cannot be Null.
      *
-     * @param result New result to set
+     * @param result the new result to set
      */
     public void setResult(final Result result) {
+        Validate.notNull(result, "Result cannot be Null.");
         this.result = result;
     }
 
     /**
-     * Gets the current kick message that will be used if getResult() !=
-     * Result.ALLOWED
+     * Gets the current kick message that will be used if {@link #getResult()}
+     * != {@link Result#ALLOWED}
+     *
+     * @return the current kick message being used if the login was not allowed
+     */
+    public String getKickMessage() {
+        if (message == null) {
+            return null;
+        } else {
+            return message.toString();
+        }
+    }
+
+    /**
+     * Sets the kick message to display if {@link #getResult()} !=
+     * {@link Result#ALLOWED}. Can be Null.
+     *
+     * @param message the new kick message being used if the login was not
+     *        allowed
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *             {@link #setMessage(Message)} instead.
+     */
+    @Deprecated
+    public void setKickMessage(final String message) {
+        if (message == null) {
+            this.message = null;
+        } else {
+            this.message = Message.of(message);
+        }
+    }
+
+    /**
+     * Gets the current kick message that will be used if {@link #getResult()}
+     * != {@link Result#ALLOWED}. Can be Null.
      *
      * @return Current kick message
      */
-    public String getKickMessage() {
+    public Message getMessage() {
         return message;
     }
 
     /**
-     * Sets the kick message to display if getResult() != Result.ALLOWED
+     * Sets the kick message to display if {@link #getResult()} !=
+     * {@link Result#ALLOWED}. Can be null.
      *
-     * @param message New kick message
+     * @param message the new kick message being used if the login was not
+     *        allowed
      */
-    public void setKickMessage(final String message) {
+    public void setMessage(Message message) {
         this.message = message;
     }
 
     /**
-     * Gets the hostname that the player used to connect to the server, or
-     * blank if unknown
+     * Gets the hostname that the player used to connect to the server, or blank
+     * if unknown
      *
      * @return The hostname
      */
@@ -123,16 +200,38 @@ public class PlayerLoginEvent extends PlayerEvent {
      */
     public void allow() {
         result = Result.ALLOWED;
-        message = "";
+        message = null;
     }
 
     /**
      * Disallows the player from logging in, with the given reason
      *
-     * @param result New result for disallowing the player
-     * @param message Kick message to display to the user
+     * @param result the new result for disallowing the player
+     * @param message the new kick message being used
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *             {@link #disallow(Result, Message)} instead.
      */
+    @Deprecated
     public void disallow(final Result result, final String message) {
+        Validate.notNull(result, "Cannot disallow with result Null.");
+        Validate.isTrue(result != Result.ALLOWED, "Cannot disallow with status ALLOW");
+        this.result = result;
+        if (message == null) {
+            this.message = null;
+        } else {
+            this.message = Message.of(message);
+        }
+    }
+
+    /**
+     * Disallows the player from logging in, with the given reason
+     *
+     * @param result the new result for disallowing the player
+     * @param message the new kick message being used
+     */
+    public void disallow(final Result result, final Message message) {
+        Validate.notNull(result, "Cannot disallow with result Null.");
+        Validate.isTrue(result != Result.ALLOWED, "Cannot disallow with status ALLOW");
         this.result = result;
         this.message = message;
     }
@@ -143,7 +242,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      * returning null during PlayerLoginEvent.
      *
      * @return The address for this player. For legacy compatibility, this may
-     *     be null.
+     *         be null.
      */
     public InetAddress getAddress() {
         return address;
