@@ -2,9 +2,11 @@ package org.bukkit.event.player;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.chat.Message;
+import org.bukkit.chat.Part;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
@@ -166,6 +168,32 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
     public void setFormat(final String format) {
         Validate.notNull(format, "Format cannot be Null!");
         this.format = format;
+    }
+
+    private final static Pattern FORMATSPLITPATTERN = Pattern.compile("\\%[12]\\$s");
+
+    /**
+     * Gets the formated message like it would be shown to the player. Modifying
+     * the resulting {@link Message} does not have any impact on the message
+     * being shown, modifying the {@link Part}s except those created by the
+     * format will also alter the real message.
+     * 
+     * @return the formated message
+     */
+    public Message getFormatedMessage() {
+        final String[] split = FORMATSPLITPATTERN.split(format, -1);
+        final Message formatedMessage = Message.of(split[0]);
+        int index = split[0].length();
+        for (int i = 1; i < split.length; i++) {
+            final char id = format.charAt(index + 1);
+            if (id == '1')
+                formatedMessage.append(senderDetails);
+            else if (id == '2')
+                formatedMessage.append(message);
+            formatedMessage.append(split[i]);
+            index += 4 + split[i].length();
+        }
+        return formatedMessage;
     }
 
     /**
