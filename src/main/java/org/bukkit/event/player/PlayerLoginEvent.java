@@ -80,7 +80,7 @@ public class PlayerLoginEvent extends PlayerEvent {
         super(player);
         this.hostname = hostname;
         this.address = address;
-        Validate.notNull(result, "Result cannot be Null.");
+        Validate.notNull(result, "Result cannot be null.");
         this.result = result;
         setKickMessage(message);
     }
@@ -99,7 +99,7 @@ public class PlayerLoginEvent extends PlayerEvent {
         super(player);
         this.hostname = hostname;
         this.address = address;
-        Validate.notNull(result, "Result cannot be Null.");
+        Validate.notNull(result, "Result cannot be null.");
         this.result = result;
         this.message = message;
     }
@@ -116,12 +116,12 @@ public class PlayerLoginEvent extends PlayerEvent {
     /**
      * Sets the new result of the login, as an enum. If the result is set to
      * something different than {@link Result#ALLOWED} an appropriate kick
-     * message should be set as well. Cannot be Null.
+     * message should be set as well. Cannot be null.
      *
      * @param result the new result to set
      */
     public void setResult(final Result result) {
-        Validate.notNull(result, "Result cannot be Null.");
+        Validate.notNull(result, "Result cannot be null.");
         this.result = result;
     }
 
@@ -137,7 +137,7 @@ public class PlayerLoginEvent extends PlayerEvent {
 
     /**
      * Sets the kick message to display if {@link #getResult()} !=
-     * {@link Result#ALLOWED}. Can be Null.
+     * {@link Result#ALLOWED}. Can be null.
      *
      * @param message the new kick message being used if the login was not
      *     allowed
@@ -151,7 +151,7 @@ public class PlayerLoginEvent extends PlayerEvent {
 
     /**
      * Gets the current kick message that will be used if {@link #getResult()}
-     * != {@link Result#ALLOWED}. Can be Null.
+     * != {@link Result#ALLOWED}. Can be null.
      *
      * @return Current kick message
      */
@@ -198,7 +198,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      */
     @Deprecated
     public void disallow(final Result result, final String message) {
-        Validate.notNull(result, "Cannot disallow with result Null.");
+        Validate.notNull(result, "Cannot disallow with result null.");
         Validate.isTrue(result != Result.ALLOWED, "Cannot disallow with status ALLOW");
         this.result = result;
         setKickMessage(message);
@@ -211,7 +211,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      * @param message the new kick message being used
      */
     public void disallow(final Result result, final Message message) {
-        Validate.notNull(result, "Cannot disallow with result Null.");
+        Validate.notNull(result, "Cannot disallow with result null.");
         Validate.isTrue(result != Result.ALLOWED, "Cannot disallow with status ALLOW");
         this.result = result;
         this.message = message;

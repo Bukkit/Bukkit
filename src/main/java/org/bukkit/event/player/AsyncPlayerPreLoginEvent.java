@@ -28,11 +28,11 @@ public class AsyncPlayerPreLoginEvent extends Event {
      *
      * @param name the {@link Player}'s name this event is triggered for
      * @param ipAddress the address the player used to connect, provided for
-     *        timing issues
+     *     timing issues
      * @param uniqueId the player's {@link UUID} this event is triggered for
      * @deprecated Players are now identified by their {@link UUID}. Use
-     *             {@link #AsyncPlayerPreLoginEvent(String, InetAddress, UUID)}
-     *             instead.
+     *     {@link #AsyncPlayerPreLoginEvent(String, InetAddress, UUID)}
+     *     instead.
      */
     @Deprecated
     public AsyncPlayerPreLoginEvent(final String name, final InetAddress ipAddress) {
@@ -45,7 +45,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
      *
      * @param name the {@link Player}'s name this event is triggered for
      * @param ipAddress the address the player used to connect, provided for
-     *        timing issues
+     *     timing issues
      * @param uniqueId the player's {@link UUID} this event is triggered for
      */
     public AsyncPlayerPreLoginEvent(final String name, final InetAddress ipAddress, final UUID uniqueId) {
@@ -71,7 +71,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
      *
      * @return Current Result of the login
      * @deprecated This method uses a deprecated enum from
-     *             {@link PlayerPreLoginEvent}
+     *     {@link PlayerPreLoginEvent}
      * @see #getLoginResult()
      */
     @Deprecated
@@ -93,7 +93,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
      *
      * @param result New result to set
      * @deprecated This method uses a deprecated enum from
-     *             {@link PlayerPreLoginEvent}
+     *     {@link PlayerPreLoginEvent}
      * @see #setLoginResult(Result)
      */
     @Deprecated
@@ -113,12 +113,12 @@ public class AsyncPlayerPreLoginEvent extends Event {
 
     /**
      * Sets the kick message to display if {@link #getResult()} !=
-     * {@link Result#ALLOWED}. Can be Null.
+     * {@link Result#ALLOWED}. Can be null.
      *
      * @param message the new kick message being used if the login was not
-     *        allowed
+     *     allowed
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #setMessage(Message)} instead.
+     *     {@link #setMessage(Message)} instead.
      */
     @Deprecated
     public void setKickMessage(final String message) {
@@ -127,7 +127,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
 
     /**
      * Gets the current kick message that will be used if {@link #getResult()}
-     * != {@link Result#ALLOWED}. Can be Null.
+     * != {@link Result#ALLOWED}. Can be null.
      *
      * @return Current kick message
      */
@@ -140,7 +140,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * {@link Result#ALLOWED}. Can be null.
      *
      * @param message the new kick message being used if the login was not
-     *        allowed
+     *     allowed
      */
     public void setMessage(Message message) {
         this.message = message;
@@ -160,11 +160,11 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * @param result the new result for disallowing the player
      * @param message the new kick message being used
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #disallow(Result, Message)} instead.
+     *     {@link #disallow(Result, Message)} instead.
      */
     @Deprecated
     public void disallow(final Result result, final String message) {
-        Validate.notNull(result, "Cannot disallow with result Null.");
+        Validate.notNull(result, "Cannot disallow with result null.");
         Validate.isTrue(result != Result.ALLOWED, "Cannot disallow with status ALLOW");
         this.result = result;
         setKickMessage(message);
@@ -176,13 +176,13 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * @param result the new result for disallowing the player
      * @param message the new kick message being used
      * @deprecated This method uses a deprecated enum from
-     *             {@link PlayerPreLoginEvent}. Use
-     *             {@link #disallow(Result, Message)} instead.
+     *     {@link PlayerPreLoginEvent}. Use
+     *     {@link #disallow(Result, Message)} instead.
      * @see #disallow(Result, Message)
      */
     @Deprecated
     public void disallow(final PlayerPreLoginEvent.Result result, final String message) {
-        Validate.notNull(result, "Cannot disallow with result Null.");
+        Validate.notNull(result, "Cannot disallow with result null.");
         Validate.isTrue(result != PlayerPreLoginEvent.Result.ALLOWED, "Cannot disallow with status ALLOW");
         this.result = Result.valueOf(result.name());
         setKickMessage(message);
@@ -195,7 +195,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * @param message the new kick message being used
      */
     public void disallow(final Result result, final Message message) {
-        Validate.notNull(result, "Cannot disallow with result Null.");
+        Validate.notNull(result, "Cannot disallow with result null.");
         Validate.isTrue(result != Result.ALLOWED, "Cannot disallow with status ALLOW");
         this.result = result;
         this.message = message;
