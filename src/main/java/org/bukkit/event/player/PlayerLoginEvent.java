@@ -85,11 +85,7 @@ public class PlayerLoginEvent extends PlayerEvent {
         this.address = address;
         Validate.notNull(result, "Result cannot be Null.");
         this.result = result;
-        if (message == null) {
-            this.message = null;
-        } else {
-            this.message = Message.of(message);
-        }
+        setKickMessage(message);
     }
 
     /**
@@ -139,11 +135,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      * @return the current kick message being used if the login was not allowed
      */
     public String getKickMessage() {
-        if (message == null) {
-            return null;
-        } else {
-            return message.toString();
-        }
+        return message == null ? null : message.toString();
     }
 
     /**
@@ -157,11 +149,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      */
     @Deprecated
     public void setKickMessage(final String message) {
-        if (message == null) {
-            this.message = null;
-        } else {
-            this.message = Message.of(message);
-        }
+        this.message = message == null || message.isEmpty() ? null : Message.of(message);
     }
 
     /**
@@ -216,11 +204,7 @@ public class PlayerLoginEvent extends PlayerEvent {
         Validate.notNull(result, "Cannot disallow with result Null.");
         Validate.isTrue(result != Result.ALLOWED, "Cannot disallow with status ALLOW");
         this.result = result;
-        if (message == null) {
-            this.message = null;
-        } else {
-            this.message = Message.of(message);
-        }
+        setKickMessage(message);
     }
 
     /**

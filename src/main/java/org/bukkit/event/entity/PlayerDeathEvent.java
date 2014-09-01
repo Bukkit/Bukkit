@@ -134,11 +134,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
         this.newExp = newExp;
         this.newTotalExp = newTotalExp;
         this.newLevel = newLevel;
-        if (deathMessage == null) {
-            this.deathMessage = null;
-        } else {
-            this.deathMessage = Message.of(deathMessage);
-        }
+        setDeathMessage(deathMessage);
     }
 
     @Override
@@ -157,11 +153,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      */
     @Deprecated
     public void setDeathMessage(String deathMessage) {
-        if (deathMessage == null) {
-            this.deathMessage = null;
-        } else {
-            this.deathMessage = Message.of(deathMessage);
-        }
+        this.deathMessage = deathMessage == null || deathMessage.isEmpty() ? null : Message.of(deathMessage);
     }
 
     /**
@@ -174,11 +166,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      */
     @Deprecated
     public String getDeathMessage() {
-        if (deathMessage == null) {
-            return null;
-        } else {
-            return deathMessage.toString();
-        }
+        return deathMessage == null ? null : deathMessage.toString();
     }
 
     /**

@@ -45,7 +45,7 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
     public PlayerKickEvent(final Player playerKicked, final String kickReason, final String leaveMessage) {
         super(playerKicked);
         this.kickReason = kickReason;
-        this.leaveMessage = Message.of(leaveMessage);
+        setLeaveMessage(leaveMessage);
         this.cancel = false;
     }
 
@@ -69,11 +69,7 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
      */
     @Deprecated
     public String getLeaveMessage() {
-        if (leaveMessage == null) {
-            return null;
-        } else {
-            return leaveMessage.toString();
-        }
+        return leaveMessage == null ? null : leaveMessage.toString();
     }
 
     /**
@@ -112,11 +108,7 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
      */
     @Deprecated
     public void setLeaveMessage(String leaveMessage) {
-        if (leaveMessage == null) {
-            this.leaveMessage = null;
-        } else {
-            this.leaveMessage = Message.of(leaveMessage);
-        }
+        this.leaveMessage = leaveMessage == null || leaveMessage.isEmpty() ? null : Message.of(leaveMessage);
     }
 
     /**

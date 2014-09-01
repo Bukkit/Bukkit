@@ -37,7 +37,7 @@ public class PlayerJoinEvent extends PlayerEvent {
     @Deprecated
     public PlayerJoinEvent(final Player playerJoined, final String joinMessage) {
         super(playerJoined);
-        this.joinMessage = Message.of(joinMessage);
+        setJoinMessage(joinMessage);
     }
 
     /**
@@ -50,10 +50,7 @@ public class PlayerJoinEvent extends PlayerEvent {
      */
     @Deprecated
     public String getJoinMessage() {
-        if (joinMessage == null)
-            return null;
-        else
-            return joinMessage.toString();
+        return joinMessage == null ? null : joinMessage.toString();
     }
 
     /**
@@ -67,11 +64,7 @@ public class PlayerJoinEvent extends PlayerEvent {
      */
     @Deprecated
     public void setJoinMessage(String joinMessage) {
-        if (joinMessage == null) {
-            this.joinMessage = null;
-        } else {
-            this.joinMessage = Message.of(joinMessage);
-        }
+        this.joinMessage = joinMessage == null || joinMessage.isEmpty() ? null : Message.of(joinMessage);
     }
 
     /**

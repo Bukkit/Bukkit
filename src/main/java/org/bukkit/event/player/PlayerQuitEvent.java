@@ -50,11 +50,7 @@ public class PlayerQuitEvent extends PlayerEvent {
      */
     @Deprecated
     public String getQuitMessage() {
-        if (quitMessage == null) {
-            return null;
-        } else {
-            return quitMessage.toString();
-        }
+        return quitMessage == null ? null : quitMessage.toString();
     }
 
     /**
@@ -68,11 +64,7 @@ public class PlayerQuitEvent extends PlayerEvent {
      */
     @Deprecated
     public void setQuitMessage(String quitMessage) {
-        if (quitMessage == null) {
-            this.quitMessage = null;
-        } else {
-            this.quitMessage = Message.of(quitMessage);
-        }
+        this.quitMessage = quitMessage == null || quitMessage.isEmpty() ? null : Message.of(quitMessage);
     }
 
     /**

@@ -108,11 +108,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * @return the current kick message being used if the login was not allowed
      */
     public String getKickMessage() {
-        if (message == null) {
-            return null;
-        } else {
-            return message.toString();
-        }
+        return message == null ? null : message.toString();
     }
 
     /**
@@ -126,11 +122,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
      */
     @Deprecated
     public void setKickMessage(final String message) {
-        if (message == null) {
-            this.message = null;
-        } else {
-            this.message = Message.of(message);
-        }
+        this.message = message == null || message.isEmpty() ? null : Message.of(message);
     }
 
     /**
@@ -175,11 +167,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
         Validate.notNull(result, "Cannot disallow with result Null.");
         Validate.isTrue(result != Result.ALLOWED, "Cannot disallow with status ALLOW");
         this.result = result;
-        if (message == null) {
-            this.message = null;
-        } else {
-            this.message = Message.of(message);
-        }
+        setKickMessage(message);
     }
 
     /**
@@ -197,11 +185,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
         Validate.notNull(result, "Cannot disallow with result Null.");
         Validate.isTrue(result != PlayerPreLoginEvent.Result.ALLOWED, "Cannot disallow with status ALLOW");
         this.result = Result.valueOf(result.name());
-        if (message == null) {
-            this.message = null;
-        } else {
-            this.message = Message.of(message);
-        }
+        setKickMessage(message);
     }
 
     /**
