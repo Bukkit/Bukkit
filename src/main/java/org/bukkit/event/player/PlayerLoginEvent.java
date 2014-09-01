@@ -19,8 +19,7 @@ public class PlayerLoginEvent extends PlayerEvent {
 
     /**
      * @deprecated Address and hostname should be provided in other constructor.
-     *             Use {@link #PlayerLoginEvent(Player, String, InetAddress)}
-     *             instead.
+     *     Use {@link #PlayerLoginEvent(Player, String, InetAddress)} instead.
      */
     @Deprecated
     public PlayerLoginEvent(final Player player) {
@@ -29,8 +28,7 @@ public class PlayerLoginEvent extends PlayerEvent {
 
     /**
      * @deprecated Address should be provided in other constructor. Use
-     *             {@link #PlayerLoginEvent(Player, String, InetAddress)}
-     *             instead.
+     *     {@link #PlayerLoginEvent(Player, String, InetAddress)} instead.
      */
     @Deprecated
     public PlayerLoginEvent(final Player player, final String hostname) {
@@ -44,7 +42,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      * @param player The {@link Player} for this event
      * @param hostname The hostname that was used to connect to the server
      * @param address The address the player used to connect, provided for
-     *        timing issues
+     *     timing issues
      */
     public PlayerLoginEvent(final Player player, final String hostname, final InetAddress address) {
         super(player);
@@ -56,9 +54,8 @@ public class PlayerLoginEvent extends PlayerEvent {
 
     /**
      * @deprecated Address and hostname should be provided in other constructor.
-     *             Use
-     *             {@link #PlayerLoginEvent(Player, String, InetAddress, Result, Message)}
-     *             instead.
+     *     Use {@link #PlayerLoginEvent(Player, String, InetAddress, Result, Message)}
+     *     instead.
      */
     @Deprecated
     public PlayerLoginEvent(final Player player, final Result result, final String message) {
@@ -71,12 +68,12 @@ public class PlayerLoginEvent extends PlayerEvent {
      * @param player The {@link Player} for this event
      * @param hostname The hostname that was used to connect to the server
      * @param address The address the player used to connect, provided for
-     *        timing issues
+     *     timing issues
      * @param result The result status for this event
      * @param message The message to be displayed if result denies login
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #PlayerLoginEvent(Player, String, InetAddress, Result, Message)}
-     *             instead.
+     *     {@link #PlayerLoginEvent(Player, String, InetAddress, Result, Message)}
+     *     instead.
      */
     @Deprecated
     public PlayerLoginEvent(final Player player, String hostname, final InetAddress address, final Result result, final String message) {
@@ -94,7 +91,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      * @param player The {@link Player} for this event
      * @param hostname The hostname that was used to connect to the server
      * @param address The address the player used to connect, provided for
-     *        timing issues
+     *     timing issues
      * @param result The result status for this event
      * @param message The message to be displayed if result denies login
      */
@@ -143,9 +140,9 @@ public class PlayerLoginEvent extends PlayerEvent {
      * {@link Result#ALLOWED}. Can be Null.
      *
      * @param message the new kick message being used if the login was not
-     *        allowed
+     *     allowed
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #setMessage(Message)} instead.
+     *     {@link #setMessage(Message)} instead.
      */
     @Deprecated
     public void setKickMessage(final String message) {
@@ -167,7 +164,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      * {@link Result#ALLOWED}. Can be null.
      *
      * @param message the new kick message being used if the login was not
-     *        allowed
+     *     allowed
      */
     public void setMessage(Message message) {
         this.message = message;
@@ -197,7 +194,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      * @param result the new result for disallowing the player
      * @param message the new kick message being used
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #disallow(Result, Message)} instead.
+     *     {@link #disallow(Result, Message)} instead.
      */
     @Deprecated
     public void disallow(final Result result, final String message) {
@@ -226,7 +223,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      * returning null during PlayerLoginEvent.
      *
      * @return The address for this player. For legacy compatibility, this may
-     *         be null.
+     *     be null.
      */
     public InetAddress getAddress() {
         return address;

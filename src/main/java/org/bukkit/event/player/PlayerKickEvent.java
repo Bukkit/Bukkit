@@ -39,7 +39,7 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
      * @param kickReason the reason why the player has been kicked
      * @param leaveMessage the kick message being send to all online players
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #PlayerKickEvent(Player, String, Message)} instead.
+     *     {@link #PlayerKickEvent(Player, String, Message)} instead.
      */
     @Deprecated
     public PlayerKickEvent(final Player playerKicked, final String kickReason, final String leaveMessage) {
@@ -65,7 +65,7 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
      *
      * @return the leave message being shown
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #getMessage()} instead.
+     *     {@link #getMessage()} instead.
      */
     @Deprecated
     public String getLeaveMessage() {
@@ -104,7 +104,7 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
      *
      * @param leaveMessage the leave message to show
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #setMessage(Message)} instead.
+     *     {@link #setMessage(Message)} instead.
      */
     @Deprecated
     public void setLeaveMessage(String leaveMessage) {

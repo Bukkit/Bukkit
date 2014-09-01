@@ -24,7 +24,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      * @param player the player that had died
      * @param drops a list items the player will drop
      * @param droppedExp the dropped exp amount, does not have any impact on the
-     *        actual players exp
+     *     actual players exp
      * @param deathMessage the death message being send to all online players
      */
     public PlayerDeathEvent(final Player player, final List<ItemStack> drops, final int droppedExp, final Message deathMessage) {
@@ -39,11 +39,10 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      * @param player the player that had died
      * @param drops a list items the player will drop
      * @param droppedExp the dropped exp amount, does not have any impact on the
-     *        actual players exp
+     *     actual players exp
      * @param deathMessage the death message being send to all online players
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #PlayerDeathEvent(Player, List, int, Message)}
-     *             instead.
+     *     {@link #PlayerDeathEvent(Player, List, int, Message)} instead.
      */
     @Deprecated
     public PlayerDeathEvent(final Player player, final List<ItemStack> drops, final int droppedExp, final String deathMessage) {
@@ -58,7 +57,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      * @param player the player that had died
      * @param drops a list items the player will drop
      * @param droppedExp the dropped exp amount, does not have any impact on the
-     *        actual players exp
+     *     actual players exp
      * @param newExp the new exp amount the player should have after respawn
      * @param deathMessage the death message being send to all online players
      */
@@ -74,13 +73,11 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      * @param player the player that had died
      * @param drops a list items the player will drop
      * @param droppedExp the dropped exp amount, does not have any impact on the
-     *        actual players exp
+     *     actual players exp
      * @param newExp the new exp amount the player should have after respawn
-     * 
      * @param deathMessage the death message being send to all online players
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #PlayerDeathEvent(Player, List, int, int, Message)}
-     *             instead.
+     *     {@link #PlayerDeathEvent(Player, List, int, int, Message)} instead.
      */
     @Deprecated
     public PlayerDeathEvent(final Player player, final List<ItemStack> drops, final int droppedExp, final int newExp, final String deathMessage) {
@@ -95,10 +92,10 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      * @param player the player that had died
      * @param drops a list items the player will drop
      * @param droppedExp the dropped exp amount, does not have any impact on the
-     *        actual players exp
+     *     actual players exp
      * @param newExp the new exp amount the player should have after respawn
      * @param newTotalExp the new total exp amount the player should have after
-     *        respawn
+     *     respawn
      * @param newLevel the new exp level the player should have after respawn
      * @param deathMessage the death message being send to all online players
      */
@@ -118,15 +115,15 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      * @param player the player that had died
      * @param drops a list items the player will drop
      * @param droppedExp the dropped exp amount, does not have any impact on the
-     *        actual players exp
+     *     actual players exp
      * @param newExp the new exp amount the player should have after respawn
      * @param newTotalExp the new total exp amount the player should have after
-     *        respawn
+     *     respawn
      * @param newLevel the new exp level the player should have after respawn
      * @param deathMessage the death message being send to all online players
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #PlayerDeathEvent(Player, List, int, int, int, int, Message)}
-     *             instead.
+     *     {@link #PlayerDeathEvent(Player, List, int, int, int, int, Message)}
+     *     instead.
      */
     @Deprecated
     public PlayerDeathEvent(final Player player, final List<ItemStack> drops, final int droppedExp, final int newExp, final int newTotalExp, final int newLevel, final String deathMessage) {
@@ -147,9 +144,9 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      * empty to prevent the message being shown.
      *
      * @param deathMessage the death message to show. Can be null, empty and can
-     *        contain color codes.
+     *     contain color codes.
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #setMessage(Message)} instead.
+     *     {@link #setMessage(Message)} instead.
      */
     @Deprecated
     public void setDeathMessage(String deathMessage) {
@@ -162,7 +159,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      *
      * @return the death message to show
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #getMessage()} instead.
+     *     {@link #getMessage()} instead.
      */
     @Deprecated
     public String getDeathMessage() {
