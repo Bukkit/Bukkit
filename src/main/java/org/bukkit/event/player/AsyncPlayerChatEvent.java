@@ -47,7 +47,7 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
      */
     public AsyncPlayerChatEvent(final boolean async, final Player who, final Message message, final Set<Player> players) {
         super(who, async);
-        Validate.notNull(message, "Message cannot be Null!");
+        Validate.notNull(message, "Message cannot be null!");
         this.senderDetails = Message.of(who.getDisplayName(), who.getUniqueId().toString());
         this.message = message;
         recipients = players;
@@ -117,7 +117,7 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
      */
     @Deprecated
     public void setMessage(String message) {
-        Validate.notNull("Message cannot be Null!");
+        Validate.notNull("Message cannot be null!");
         this.message = Message.of(message);
     }
 
@@ -138,7 +138,7 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
      * @param message new message that the player will send
      */
     public void setChatMessage(Message message) {
-        Validate.notNull(message, "Message cannot be Null!");
+        Validate.notNull(message, "Message cannot be null!");
         this.message = message;
     }
 
@@ -163,10 +163,10 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
      * {@link #getMessage()}. It is not required to have those parameters in the
      * format, but their use is recommended.
      *
-     * @param format the message format to use. Cannot be Null.
+     * @param format the message format to use. Cannot be null.
      */
     public void setFormat(final String format) {
-        Validate.notNull(format, "Format cannot be Null!");
+        Validate.notNull(format, "Format cannot be null!");
         this.format = format;
     }
 
