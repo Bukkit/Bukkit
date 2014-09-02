@@ -548,12 +548,7 @@ public final class Part {
         part.clickAction = clickAction;
         part.hover = hover;
         part.localizedText = localizedText;
-        if (localizedTextParameters != null) {
-            part.localizedTextParameters = new String[localizedTextParameters.length];
-            for (int i = 0; i < localizedTextParameters.length; i++) {
-                part.localizedTextParameters[i] = localizedTextParameters[i];
-            }
-        }
+        part.localizedTextParameters = localizedTextParameters.clone();
         part.text = text;
         return part;
     }
