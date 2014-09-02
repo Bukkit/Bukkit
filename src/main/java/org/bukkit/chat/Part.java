@@ -541,4 +541,20 @@ public final class Part {
         result = 31 * result + (clickAction != null ? clickAction.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public Part clone() {
+        final Part part = new Part();
+        part.clickAction = clickAction;
+        part.hover = hover;
+        part.localizedText = localizedText;
+        if (localizedTextParameters != null) {
+            part.localizedTextParameters = new String[localizedTextParameters.length];
+            for (int i = 0; i < localizedTextParameters.length; i++) {
+                part.localizedTextParameters[i] = localizedTextParameters[i];
+            }
+        }
+        part.text = text;
+        return part;
+    }
 }
