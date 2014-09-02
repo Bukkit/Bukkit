@@ -103,7 +103,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
 
     /**
      * Gets the current kick message that will be used if {@link #getResult()}
-     * != {@link Result#ALLOWED}
+     * does not match {@link Result#ALLOWED}. Can be null.
      *
      * @return the current kick message being used if the login was not allowed
      */
@@ -112,8 +112,8 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * Sets the kick message to display if {@link #getResult()} !=
-     * {@link Result#ALLOWED}. Can be null.
+     * Sets the kick message to display to the joining player if
+     * {@link #getResult()} does not match {@link Result#ALLOWED}. Can be null.
      *
      * @param message the new kick message being used if the login was not
      *     allowed
@@ -127,7 +127,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
 
     /**
      * Gets the current kick message that will be used if {@link #getResult()}
-     * != {@link Result#ALLOWED}. Can be null.
+     * does not match {@link Result#ALLOWED}. Can be null.
      *
      * @return Current kick message
      */
@@ -136,8 +136,8 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * Sets the kick message to display if {@link #getResult()} !=
-     * {@link Result#ALLOWED}. Can be null.
+     * Sets the kick message to display to the joining player if
+     * {@link #getResult()} does not match {@link Result#ALLOWED}. Can be null.
      *
      * @param message the new kick message being used if the login was not
      *     allowed
@@ -147,7 +147,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * Allows the player to log in
+     * Allows the player to log in and clears any kick reason currently set.
      */
     public void allow() {
         result = Result.ALLOWED;
@@ -155,7 +155,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * Disallows the player from logging in, with the given reason
+     * Disallows the player from logging in, with the given reason.
      *
      * @param result the new result for disallowing the player
      * @param message the new kick message being used
@@ -171,7 +171,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * Disallows the player from logging in, with the given reason
+     * Disallows the player from logging in, with the given reason.
      *
      * @param result the new result for disallowing the player
      * @param message the new kick message being used
@@ -189,7 +189,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * Disallows the player from logging in, with the given reason
+     * Disallows the player from logging in, with the given reason.
      *
      * @param result the new result for disallowing the player
      * @param message the new kick message being used
