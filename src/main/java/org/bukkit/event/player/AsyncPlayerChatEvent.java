@@ -170,7 +170,7 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
         this.format = format;
     }
 
-    private final static Pattern FORMATSPLITPATTERN = Pattern.compile("\\%[12]\\$s");
+    private final static Pattern FORMATSPLITPATTERN = Pattern.compile("(\\%[12]\\$s)|(\\%s)");
 
     /**
      * Gets the formated message like it would be shown to the player. Modifying
@@ -184,14 +184,26 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
         final String[] split = FORMATSPLITPATTERN.split(format, -1);
         final Message formatedMessage = Message.of(split[0]);
         int index = split[0].length();
+        boolean showSender = true;
         for (int i = 1; i < split.length; i++) {
             final char id = format.charAt(index + 1);
-            if (id == '1')
+            if (id == '1') {
+                index += 4;
                 formatedMessage.append(senderDetails);
-            else if (id == '2')
+            } else if (id == '2') {
+                index += 4;
                 formatedMessage.append(message);
+            } else if (id == 's') {
+                index += 2;
+                if (showSender) {
+                    formatedMessage.append(senderDetails);
+                } else {
+                    formatedMessage.append(message);
+                }
+                showSender = !showSender;
+            }
             formatedMessage.append(split[i]);
-            index += 4 + split[i].length();
+            index += split[i].length();
         }
         return formatedMessage;
     }
