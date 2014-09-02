@@ -548,7 +548,7 @@ public final class Part {
         part.clickAction = clickAction;
         part.hover = hover;
         part.localizedText = localizedText;
-        part.localizedTextParameters = localizedTextParameters.clone();
+        part.localizedTextParameters = localizedTextParameters == null ? null : localizedTextParameters.clone();
         part.text = text;
         return part;
     }
