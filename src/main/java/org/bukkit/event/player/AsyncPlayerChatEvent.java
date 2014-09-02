@@ -43,7 +43,7 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
      * @param who the chat sender
      * @param message the message sent
      * @param players the players to receive the message. This may be a lazy or
-     *        unmodifiable collection.
+     *     unmodifiable collection.
      */
     public AsyncPlayerChatEvent(final boolean async, final Player who, final Message message, final Set<Player> players) {
         super(who, async);
@@ -61,7 +61,7 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
      * @param who the chat sender
      * @param message the message sent
      * @param players the players to receive the message. This may be a lazy or
-     *        unmodifiable collection.
+     *     unmodifiable collection.
      */
     @Deprecated
     public AsyncPlayerChatEvent(final boolean async, final Player who, final String message, final Set<Player> players) {
@@ -100,7 +100,7 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
      *
      * @return the player is attempting to send
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #getChatMessage()} instead.
+     *     {@link #getChatMessage()} instead.
      */
     @Deprecated
     public String getMessage() {
@@ -113,7 +113,7 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
      *
      * @param message new message that the player will send
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *             {@link #setChatMessage(Message)} instead.
+     *     {@link #setChatMessage(Message)} instead.
      */
     @Deprecated
     public void setMessage(String message) {
