@@ -62,6 +62,8 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
      * @param message the message sent
      * @param players the players to receive the message. This may be a lazy or
      *     unmodifiable collection.
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *     {@link #AsyncPlayerChatEvent(boolean, Player, Message, Set)} instead.
      */
     @Deprecated
     public AsyncPlayerChatEvent(final boolean async, final Player who, final String message, final Set<Player> players) {
