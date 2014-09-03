@@ -109,8 +109,18 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * Kicks player with custom kick message.
      *
      * @param message kick message
+     * @deprecated This method now uses {@link Message} to send the message. Use
+     *     {@link #kickPlayer(Message)} instead.
      */
+    @Deprecated
     public void kickPlayer(String message);
+
+    /**
+     * Kicks player with custom kick message.
+     *
+     * @param message kick message
+     */
+    public void kickPlayer(Message message);
 
     /**
      * Says a message (or runs a command).

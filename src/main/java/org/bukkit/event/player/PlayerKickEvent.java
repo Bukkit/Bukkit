@@ -11,7 +11,7 @@ import org.bukkit.event.HandlerList;
 public class PlayerKickEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private Message leaveMessage;
-    private String kickReason;
+    private Message kickReason;
     private Boolean cancel;
 
     /**
@@ -23,7 +23,7 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
      * @param kickReason the reason why the player has been kicked
      * @param leaveMessage the kick message being send to all online players
      */
-    public PlayerKickEvent(final Player playerKicked, final String kickReason, final Message leaveMessage) {
+    public PlayerKickEvent(final Player playerKicked, final Message kickReason, final Message leaveMessage) {
         super(playerKicked);
         this.kickReason = kickReason;
         this.leaveMessage = leaveMessage;
@@ -39,12 +39,12 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
      * @param kickReason the reason why the player has been kicked
      * @param leaveMessage the kick message being send to all online players
      * @deprecated This event now uses {@link Message} to send the message. Use
-     *     {@link #PlayerKickEvent(Player, String, Message)} instead.
+     *     {@link #PlayerKickEvent(Player, Message, Message)} instead.
      */
     @Deprecated
     public PlayerKickEvent(final Player playerKicked, final String kickReason, final String leaveMessage) {
         super(playerKicked);
-        this.kickReason = kickReason;
+        setReason(kickReason);
         setLeaveMessage(leaveMessage);
         this.cancel = false;
     }
@@ -54,8 +54,20 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
      * may contain color codes.
      *
      * @return the kick reason
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *     {@link #getReasonMessage()} instead.
      */
+    @Deprecated
     public String getReason() {
+        return kickReason == null ? null : kickReason.toString();
+    }
+
+    /**
+     * Gets the reason why the player is getting kicked. Can be null.
+     *
+     * @return the kick reason
+     */
+    public Message getReasonMessage() {
         return kickReason;
     }
 
@@ -90,11 +102,22 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
+     * Sets the reason why the player is getting kicked. Can be null/empty and
+     * may contain color codes.
+     *
+     * @param kickReason the kick reason
+     */
+    @Deprecated
+    public void setReason(String kickReason) {
+        this.kickReason = kickReason == null || kickReason.isEmpty() ? null : Message.of(kickReason);
+    }
+
+    /**
      * Sets the reason why the player is getting kicked
      *
      * @param kickReason the kick reason
      */
-    public void setReason(String kickReason) {
+    public void setReason(Message kickReason) {
         this.kickReason = kickReason;
     }
 
