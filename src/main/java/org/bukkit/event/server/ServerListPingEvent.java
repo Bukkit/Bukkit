@@ -108,7 +108,7 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
     }
 
     /**
-     * Get the message of the day message. May contain color codes.
+     * Gets the message of the day message. May contain color codes.
      *
      * @return the message of the day
      * @deprecated This event now uses {@link Message} to send the message. Use
@@ -120,8 +120,8 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
     }
 
     /**
-     * Change the message of the day message. Can contain color codes but cannot
-     * be null.
+     * Changes the message of the day message. Can contain color codes but
+     * cannot be null.
      *
      * @param motd the message of the day
      * @deprecated This event now uses {@link Message} to send the message. Use
@@ -134,7 +134,7 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
     }
 
     /**
-     * Get the message of the day message.
+     * Gets the message of the day message.
      *
      * @return the message of the day
      */
@@ -143,7 +143,7 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
     }
 
     /**
-     * Change the message of the day message. Cannot be null.
+     * Changes the message of the day message. Cannot be null.
      *
      * @param motd the message of the day
      */

@@ -154,7 +154,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
     }
 
     /**
-     * Get the death message that will be shown to everyone on the server. Can
+     * Gets the death message that will be shown to everyone on the server. Can
      * be null/empty and may contain color codes.
      *
      * @return the death message to show

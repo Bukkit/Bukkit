@@ -23,7 +23,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     private final UUID uniqueId;
 
     /**
-     * This constructor createes a new PlayerLoginEvent with the result
+     * This constructor creates a new PlayerLoginEvent with the result
      * {@link Result#ALLOWED} and no kick message.
      *
      * @param name the {@link Player}'s name this event is triggered for
@@ -40,7 +40,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * This constructor createes a new PlayerLoginEvent with the result
+     * This constructor creates a new PlayerLoginEvent with the result
      * {@link Result#ALLOWED} and no kick message.
      *
      * @param name the {@link Player}'s name this event is triggered for
@@ -67,11 +67,11 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * Gets the current result of the login, as an enum
+     * Gets the current result of the login, as an enum.
      *
      * @return Current Result of the login
-     * @deprecated This method uses a deprecated enum from
-     *     {@link PlayerPreLoginEvent}
+     * @deprecated This method uses a deprecated enum from {@link
+     *     PlayerPreLoginEvent}
      * @see #getLoginResult()
      */
     @Deprecated

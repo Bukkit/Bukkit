@@ -78,15 +78,15 @@ public class PlayerLoginEvent extends PlayerEvent {
     @Deprecated
     public PlayerLoginEvent(final Player player, String hostname, final InetAddress address, final Result result, final String message) {
         super(player);
+        Validate.notNull(result, "Result cannot be null.");
         this.hostname = hostname;
         this.address = address;
-        Validate.notNull(result, "Result cannot be null.");
         this.result = result;
         setKickMessage(message);
     }
 
     /**
-     * This constructor pre-configures the event with a result and message
+     * This constructor pre-configures the event with a result and message.
      *
      * @param player The {@link Player} for this event
      * @param hostname The hostname that was used to connect to the server
@@ -97,15 +97,15 @@ public class PlayerLoginEvent extends PlayerEvent {
      */
     public PlayerLoginEvent(final Player player, String hostname, final InetAddress address, final Result result, final Message message) {
         super(player);
+        Validate.notNull(result, "Result cannot be null.");
         this.hostname = hostname;
         this.address = address;
-        Validate.notNull(result, "Result cannot be null.");
         this.result = result;
         this.message = message;
     }
 
     /**
-     * Gets the current result of the login, as an enum
+     * Gets the current result of the login, as an enum.
      *
      * @return Current Result of the login
      */
@@ -153,7 +153,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      * Gets the current kick message that will be used if {@link #getResult()}
      * does not match {@link Result#ALLOWED}. Can be null.
      *
-     * @return Current kick message
+     * @return the current kick message being used if the login was not allowed
      */
     public Message getMessage() {
         return message;
@@ -172,7 +172,7 @@ public class PlayerLoginEvent extends PlayerEvent {
 
     /**
      * Gets the hostname that the player used to connect to the server, or blank
-     * if unknown
+     * if unknown.
      *
      * @return The hostname
      */
