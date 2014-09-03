@@ -130,6 +130,13 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public void chat(String msg);
 
     /**
+     * Says a message (or runs a command).
+     *
+     * @param msg message to print
+     */
+    public void chat(Message msg);
+
+    /**
      * Makes the player perform the given command
      *
      * @param command Command to perform
