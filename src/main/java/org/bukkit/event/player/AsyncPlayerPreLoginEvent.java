@@ -58,7 +58,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * Gets the current result of the login, as an enum
+     * Gets the current result of the login, as an enum.
      *
      * @return Current Result of the login
      */
@@ -80,7 +80,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * Sets the new result of the login, as an enum
+     * Sets the new result of the login, as an enum.
      *
      * @param result New result to set
      */
@@ -89,7 +89,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     }
 
     /**
-     * Sets the new result of the login, as an enum
+     * Sets the new result of the login, as an enum.
      *
      * @param result New result to set
      * @deprecated This method uses a deprecated enum from

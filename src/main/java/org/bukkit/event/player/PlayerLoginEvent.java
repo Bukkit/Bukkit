@@ -63,7 +63,7 @@ public class PlayerLoginEvent extends PlayerEvent {
     }
 
     /**
-     * This constructor pre-configures the event with a result and message
+     * This constructor pre-configures the event with a result and message.
      *
      * @param player The {@link Player} for this event
      * @param hostname The hostname that was used to connect to the server
