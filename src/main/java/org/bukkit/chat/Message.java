@@ -951,4 +951,13 @@ public final class Message implements Iterable<Part> {
     public int hashCode() {
         return parts.hashCode();
     }
+
+    @Override
+    public Message clone() {
+        final Message message = new Message();
+        for (Part part : parts) {
+            message.append(part.clone());
+        }
+        return message;
+    }
 }
