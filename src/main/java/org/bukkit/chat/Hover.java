@@ -1,14 +1,23 @@
 package org.bukkit.chat;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Achievement;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.inventory.ItemStack;
+
+import com.google.common.collect.ImmutableMap;
 
 /**
  * Represents a tooltip that will appear on the Client screen as soon as he
  * hovers the {@link Part} this Hover is attached to.
  */
-public final class Hover {
+@SerializableAs("ChatHover")
+public final class Hover implements ConfigurationSerializable {
 
     /**
      * Builds a new Hover of type {@link Type#SHOW_ACHIEVEMENT}.
@@ -134,6 +143,20 @@ public final class Hover {
     }
 
     @Override
+    public String toString() {
+        switch (type) {
+            case SHOW_ACHIEVEMENT:
+                return "Hover [type=SHOW_ACHIEVEMENT, object=" + ((Achievement) object).name() + "]";
+            case SHOW_ITEM:
+                return "Hover [type=SHOW_ITEM, object=" + object + "]";
+            case SHOW_TEXT:
+                return "Hover [type=SHOW_TEXT, object=" + Arrays.toString((String[]) object) + "]";
+            default:
+                throw new IllegalArgumentException("Should never be here!");
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -144,11 +167,23 @@ public final class Hover {
 
         Hover hover = (Hover) o;
 
-        if (!object.equals(hover.object)) {
-            return false;
-        }
         if (type != hover.type) {
             return false;
+        }
+        switch (type) {
+            case SHOW_ACHIEVEMENT:
+            case SHOW_ITEM:
+                if (!object.equals(hover.object)) {
+                    return false;
+                }
+                break;
+            case SHOW_TEXT:
+                if (!Arrays.equals((String[]) object, (String[]) hover.object)) {
+                    return false;
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Should never be here!");
         }
 
         return true;
@@ -159,5 +194,94 @@ public final class Hover {
         int result = type.hashCode();
         result = 31 * result + object.hashCode();
         return result;
+    }
+
+    @Override
+    public Map<String, Object> serialize() {
+        final Object serializedObject;
+        switch (type) {
+            case SHOW_ACHIEVEMENT:
+                serializedObject = ((Achievement) object).name();
+                break;
+            case SHOW_ITEM: // ItemStack is ConfigurationSerializable
+            case SHOW_TEXT: // String[] is supported automatically
+                serializedObject = object;
+                break;
+            default:
+                throw new IllegalArgumentException("Should never be here!");
+        }
+        return ImmutableMap.<String, Object> of(
+            "type", type.name(),
+            "object", serializedObject
+        );
+    }
+
+    /**
+     * Converts the given {@link Map} to a Hover chat message part.
+     * 
+     * @param the map to convert to a Hover chat message part
+     * @see ConfigurationSerializable
+     */
+    public static Hover deserialize(Map<String, Object> map) {
+        final Object typeName = map.get("type");
+        if (typeName == null) {
+            throw new IllegalArgumentException("Null is not a valid Hover.Type");
+        }
+        final Type type;
+        try {
+            type = Type.valueOf((String) typeName);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(typeName + " is not a valid Hover.Type", e);
+        }
+        final Object object = map.get("object");
+        if (object == null) {
+            throw new IllegalArgumentException("Null is not a valid Hover object");
+        }
+        final Object deserializedObject;
+        switch (type) {
+            case SHOW_ACHIEVEMENT:
+                try {
+                    deserializedObject = Achievement.valueOf((String) object);
+                    break;
+                } catch (Exception e) {
+                    throw new IllegalArgumentException(object + " is not a valid Hover Achievement", e);
+                }
+
+            case SHOW_ITEM:
+                if ((object instanceof ItemStack)) {
+                    deserializedObject = object;
+                    break;
+                } else {
+                    throw new IllegalArgumentException(object + " is not a valid Hover ItemStack");
+                }
+
+            case SHOW_TEXT:
+                if (object instanceof String) {
+                    deserializedObject = new String[] { (String) object };
+                    break;
+                } else if (object instanceof String[]) {
+                    deserializedObject = object;
+                    break;
+                } else if (object instanceof Collection) {
+                    final Object[] collection = ((Collection<?>) object).toArray();
+                    final int length = collection.length;
+                    final String[] array = new String[length];
+                    for (int i = 0; i < length; i++) {
+                        if (collection[i] instanceof String) {
+                            array[i] = (String) collection[i];
+                        } else {
+                            throw new IllegalArgumentException(collection + " is not a valid Hover Text");
+                        }
+                    }
+                    deserializedObject = array;
+                    break;
+                } else {
+                    throw new IllegalArgumentException(object + " is not a valid Hover Text");
+                }
+
+            default:
+                throw new IllegalArgumentException("Should never be here!");
+        }
+        return new Hover(type, deserializedObject);
     }
 }
