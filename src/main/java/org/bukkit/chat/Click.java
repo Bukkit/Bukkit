@@ -1,8 +1,13 @@
 package org.bukkit.chat;
 
-import org.apache.commons.lang.Validate;
-
+import java.util.Map;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.Validate;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
+
+import com.google.common.collect.ImmutableMap;
 
 /**
  * Represents an action that will be executed by the Minecraft Client as soon
@@ -10,7 +15,8 @@ import java.util.regex.Pattern;
  *
  * @see org.bukkit.chat.Click.Type
  */
-public final class Click {
+@SerializableAs("ChatClick")
+public final class Click implements ConfigurationSerializable {
 
     /**
      * Regex matching allowed URLs as accepted by the Minecraft Client
@@ -124,6 +130,11 @@ public final class Click {
     }
 
     @Override
+    public String toString() {
+        return "Click [type=" + type.name() + ", text=" + text + "]";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -149,5 +160,37 @@ public final class Click {
         int result = type.hashCode();
         result = 31 * result + text.hashCode();
         return result;
+    }
+
+    @Override
+    public Map<String, Object> serialize() {
+        return ImmutableMap.<String, Object> of(
+            "type", type.name(),
+            "text", text
+        );
+    }
+
+    /**
+     * Converts the given {@link Map} to a Click chat message part.
+     * 
+     * @param the map to convert to a Click chat message part
+     * @see ConfigurationSerializable
+     */
+    public static Click deserialize(Map<String, Object> map) {
+        final Object typeName = map.get("type");
+        if (typeName == null) {
+            throw new IllegalArgumentException("Null is not a valid Click.Type");
+        }
+        final Type type;
+        try {
+            type = Type.valueOf((String) typeName);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(typeName + " is not a valid Click.Type", e);
+        }
+        final String text = (String) map.get("text");
+        if (text == null) {
+            throw new IllegalArgumentException("Text cannot be null");
+        }
+        return forType(type, text);
     }
 }

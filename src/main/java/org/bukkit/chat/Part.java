@@ -1,17 +1,24 @@
 package org.bukkit.chat;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Achievement;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * Represents a part of a {@link Message}, a simple or localized String which
  * may have a {@link Click} and/or a {@link Hover} attached to it.
  */
-public final class Part {
+@SerializableAs("ChatPart")
+public final class Part implements ConfigurationSerializable {
 
     /**
      * Builds a message part consisting of text. The text may contain
@@ -552,4 +559,65 @@ public final class Part {
         part.text = text;
         return part;
     }
+
+    @Override
+    public Map<String, Object> serialize() {
+        final ImmutableMap.Builder<String, Object> builder = ImmutableMap.builder();
+        if (clickAction != null) {
+            builder.put("click", clickAction);
+        }
+        if (hover != null) {
+            builder.put("hover", hover);
+        }
+        builder.put("localizedText", localizedText);
+        if (localizedTextParameters != null) {
+            builder.put("localizedTextParameters", localizedTextParameters);
+        }
+        if (text != null) {
+            builder.put("text", text);
+        }
+        return builder.build();
+    }
+
+    /**
+     * Converts the given {@link Map} to a chat message Part.
+     * 
+     * @param the map to convert to a chat message Part
+     * @see ConfigurationSerializable
+     */
+    public static Part deserialize(Map<String, Object> map) {
+        Part part = new Part();
+        part.clickAction = (Click) map.get("click");
+        part.hover = (Hover) map.get("hover");
+
+        final Boolean localizedText = (Boolean) map.get("localizedText");
+        part.localizedText = localizedText == null ? false : localizedText.booleanValue();
+
+        final Object localizedTextParameters = map.get("localizedTextParameters");
+        if (localizedTextParameters != null) {
+            if (localizedTextParameters instanceof String) {
+                part.localizedTextParameters = new String[] { (String) localizedTextParameters };
+            } else if (localizedTextParameters instanceof String[]) {
+                part.localizedTextParameters = (String[]) localizedTextParameters;
+            } else if (localizedTextParameters instanceof Collection) {
+                final Object[] collection = ((Collection<?>) localizedTextParameters).toArray();
+                final int length = collection.length;
+                final String[] array = new String[length];
+                for (int i = 0; i < length; i++) {
+                    if (collection[i] instanceof String) {
+                        array[i] = (String) collection[i];
+                    } else {
+                        throw new IllegalArgumentException(collection + " is not a valid Part.localizedTextParameters");
+                    }
+                }
+                part.localizedTextParameters = array;
+            } else {
+                throw new IllegalArgumentException(localizedTextParameters + " is not a valid Part.localizedTextParameters");
+            }
+        }
+
+        part.text = (String) map.get("text");
+        return part;
+    }
+
 }

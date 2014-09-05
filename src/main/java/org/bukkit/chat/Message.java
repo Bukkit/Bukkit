@@ -1,18 +1,25 @@
 package org.bukkit.chat;
 
-import org.apache.commons.lang.Validate;
-import org.bukkit.Achievement;
-import org.bukkit.inventory.ItemStack;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
+
+import org.apache.commons.lang.Validate;
+import org.bukkit.Achievement;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
+import org.bukkit.inventory.ItemStack;
+
+import com.google.common.collect.ImmutableMap;
 
 /**
  * Represents a rich Message which can be sent to Players.
  * This is an API for Minecraft 1.7 "Json" chat messages features.
  */
-public final class Message implements Iterable<Part> {
+@SerializableAs("ChatMessage")
+public final class Message implements Iterable<Part>, ConfigurationSerializable {
 
     /**
      * Builds a Message from zero (empty Message), one or more Parts.
@@ -959,5 +966,41 @@ public final class Message implements Iterable<Part> {
             message.append(part.clone());
         }
         return message;
+    }
+
+    @Override
+    public Map<String, Object> serialize() {
+        return ImmutableMap.<String, Object> of(
+            "parts", parts
+        );
+    }
+
+    /**
+     * Converts the given {@link Map} to a chat {@link Message}.
+     * 
+     * @param the map to convert to a chat Message
+     * @see ConfigurationSerializable
+     */
+    public static Message deserialize(Map<String, Object> map) {
+        final Object parts = map.get("parts");
+        if (parts == null) {
+            throw new IllegalArgumentException("Message parts are missing");
+        }
+        if (parts instanceof Part) {
+            return new Message().append((Part) parts);
+        } else if (parts instanceof Collection) {
+            final Collection<?> collection = (Collection<?>) parts;
+            final Message message = new Message();
+            for (Object part : collection) {
+                if (part instanceof Part) {
+                    message.append((Part) part);
+                } else {
+                    throw new IllegalArgumentException(part + " is not a valid Message Part");
+                }
+            }
+            return message;
+        } else {
+            throw new IllegalArgumentException(parts + " is not a valid Message Part");
+        }
     }
 }
