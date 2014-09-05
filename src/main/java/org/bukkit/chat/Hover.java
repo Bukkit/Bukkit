@@ -248,7 +248,7 @@ public final class Hover implements ConfigurationSerializable {
                 }
 
             case SHOW_ITEM:
-                if ((object instanceof ItemStack)) {
+                if (object instanceof ItemStack) {
                     deserializedObject = object;
                     break;
                 } else {
