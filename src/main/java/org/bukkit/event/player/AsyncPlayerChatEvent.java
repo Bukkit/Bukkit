@@ -176,9 +176,8 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
 
     /**
      * Gets the formated message like it would be shown to the player. Modifying
-     * the resulting {@link Message} does not have any impact on the message
-     * being shown, modifying the {@link Part}s except those created by the
-     * format will also alter the real message.
+     * the resulting {@link Message} or its elements does not have any impact on
+     * the message being shown.
      * 
      * @return the formated message
      */
@@ -191,16 +190,16 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
             final char id = format.charAt(index + 1);
             if (id == '1') {
                 index += 4;
-                formatedMessage.append(senderDetails);
+                formatedMessage.append(senderDetails.clone());
             } else if (id == '2') {
                 index += 4;
-                formatedMessage.append(message);
+                formatedMessage.append(message.clone());
             } else if (id == 's') {
                 index += 2;
                 if (showSender) {
-                    formatedMessage.append(senderDetails);
+                    formatedMessage.append(senderDetails.clone());
                 } else {
-                    formatedMessage.append(message);
+                    formatedMessage.append(message.clone());
                 }
                 showSender = !showSender;
             }
