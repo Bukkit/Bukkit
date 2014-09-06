@@ -53,12 +53,7 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
      */
     @Deprecated
     public ServerListPingEvent(final InetAddress address, final String motd, final int numPlayers, final int maxPlayers) {
-        Validate.notNull(motd, "Motd cannot be null!");
-        Validate.isTrue(numPlayers >= 0, "Cannot have negative number of players online", numPlayers);
-        this.address = address;
-        this.motd = Message.of(motd);
-        this.numPlayers = numPlayers;
-        this.maxPlayers = maxPlayers;
+        this(address, motd == null ? null : Message.of(motd), numPlayers, maxPlayers);
     }
 
     /**
@@ -91,11 +86,7 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
      */
     @Deprecated
     protected ServerListPingEvent(final InetAddress address, final String motd, final int maxPlayers) {
-        Validate.notNull(motd, "Motd cannot be null!");
-        this.numPlayers = MAGIC_PLAYER_COUNT;
-        this.address = address;
-        this.motd = Message.of(motd);
-        this.maxPlayers = maxPlayers;
+        this(address, motd == null ? null : Message.of(motd), maxPlayers);
     }
 
     /**

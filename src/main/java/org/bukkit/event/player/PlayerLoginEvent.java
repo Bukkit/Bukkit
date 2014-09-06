@@ -45,11 +45,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      *     timing issues
      */
     public PlayerLoginEvent(final Player player, final String hostname, final InetAddress address) {
-        super(player);
-        this.hostname = hostname;
-        this.address = address;
-        this.result = Result.ALLOWED;
-        this.message = null;
+        this(player, hostname, address, Result.ALLOWED, (Message) null);
     }
 
     /**
@@ -77,11 +73,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      */
     @Deprecated
     public PlayerLoginEvent(final Player player, String hostname, final InetAddress address, final Result result, final String message) {
-        super(player);
-        Validate.notNull(result, "Result cannot be null.");
-        this.hostname = hostname;
-        this.address = address;
-        this.result = result;
+        this(player, hostname, address, result, (Message) null);
         setKickMessage(message);
     }
 
