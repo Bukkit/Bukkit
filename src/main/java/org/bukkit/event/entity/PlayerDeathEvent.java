@@ -127,10 +127,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      */
     @Deprecated
     public PlayerDeathEvent(final Player player, final List<ItemStack> drops, final int droppedExp, final int newExp, final int newTotalExp, final int newLevel, final String deathMessage) {
-        super(player, drops, droppedExp);
-        this.newExp = newExp;
-        this.newTotalExp = newTotalExp;
-        this.newLevel = newLevel;
+        this(player,drops,droppedExp,newExp, newTotalExp,newLevel, (Message) null);
         setDeathMessage(deathMessage);
     }
 

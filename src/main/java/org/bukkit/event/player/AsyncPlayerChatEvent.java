@@ -67,10 +67,7 @@ public class AsyncPlayerChatEvent extends PlayerEvent implements Cancellable {
      */
     @Deprecated
     public AsyncPlayerChatEvent(final boolean async, final Player who, final String message, final Set<Player> players) {
-        super(who, async);
-        this.senderDetails = Message.of(who.getDisplayName(), who.getUniqueId().toString());
-        this.message = Message.of(message);
-        recipients = players;
+        this(async, who, message == null ? null : Message.of(message), players);
     }
 
     /**
