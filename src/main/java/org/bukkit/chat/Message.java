@@ -24,11 +24,13 @@ public final class Message implements Iterable<Part>, ConfigurationSerializable 
     /**
      * Builds a Message from zero (empty Message), one or more Parts.
      *
-     * @param parts parts of the Message
+     * @param parts parts of the Message, cannot be null and cannot contain null
+     *     elements
      * @return the built Message
      */
     public static Message of(Part... parts) {
-        Message result = new Message();
+        Validate.notNull(parts, "Parts cannot be null!");
+        final Message result = new Message();
         for (Part part : parts) {
             result.append(part);
         }
@@ -300,6 +302,7 @@ public final class Message implements Iterable<Part>, ConfigurationSerializable 
      * @return this Message for chain calls
      */
     public Message append(Message message) {
+        Validate.notNull(message, "Message cannot be null!");
         this.parts.addAll(message.parts);
         return this;
     }
@@ -311,6 +314,7 @@ public final class Message implements Iterable<Part>, ConfigurationSerializable 
      * @return this Message for chain calls
      */
     public Message append(Part part) {
+        Validate.notNull(part, "Part cannot be null!");
         this.parts.add(part);
         return this;
     }
@@ -591,6 +595,7 @@ public final class Message implements Iterable<Part>, ConfigurationSerializable 
      * @return this Message for chain calls
      */
     public Message insert(int pos, Part part) {
+        Validate.notNull(part, "Part cannot be null!");
         this.parts.add(pos, part);
         return this;
     }
