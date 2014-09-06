@@ -31,6 +31,7 @@ public final class Click implements ConfigurationSerializable {
      * @return a new Click of type OPEN_URL
      */
     public static Click ofOpenUrl(String url) {
+        Validate.notNull(url, "Url cannot be null!");
         Validate.isTrue(HTTP_REGEX.matcher(url).matches(), "Provided url is invalid: " + url);
         return forType(Type.OPEN_URL, url);
     }
