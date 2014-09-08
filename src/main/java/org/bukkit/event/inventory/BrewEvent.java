@@ -5,6 +5,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.BlockEvent;
 import org.bukkit.inventory.BrewerInventory;
+import org.bukkit.potion.Potion;
 
 /**
  * Called when the brewing of the contents inside the Brewing Stand is
@@ -27,6 +28,16 @@ public class BrewEvent extends BlockEvent implements Cancellable {
      */
     public BrewerInventory getContents() {
         return contents;
+    }
+
+    public Potion[] getPotions() {
+        Potion[] potions = new Potion[3];
+        for (int i = 0; i < 3; i++) {
+            if (contents.getContents()[i] != null) {
+                potions[i] = Potion.fromItemStack(contents.getContents()[i]);
+            }
+        }
+        return potions;
     }
 
     public boolean isCancelled() {
