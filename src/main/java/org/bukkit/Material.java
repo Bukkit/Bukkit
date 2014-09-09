@@ -5,54 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.map.MapView;
-import org.bukkit.material.Bed;
-import org.bukkit.material.Button;
-import org.bukkit.material.Cake;
-import org.bukkit.material.Cauldron;
-import org.bukkit.material.Chest;
-import org.bukkit.material.Coal;
-import org.bukkit.material.CocoaPlant;
-import org.bukkit.material.Command;
-import org.bukkit.material.Crops;
-import org.bukkit.material.DetectorRail;
-import org.bukkit.material.Diode;
-import org.bukkit.material.Dispenser;
-import org.bukkit.material.Door;
-import org.bukkit.material.Dye;
-import org.bukkit.material.EnderChest;
-import org.bukkit.material.FlowerPot;
-import org.bukkit.material.Furnace;
-import org.bukkit.material.Gate;
-import org.bukkit.material.Ladder;
-import org.bukkit.material.Lever;
-import org.bukkit.material.LongGrass;
-import org.bukkit.material.MaterialData;
-import org.bukkit.material.MonsterEggs;
-import org.bukkit.material.Mushroom;
-import org.bukkit.material.NetherWarts;
-import org.bukkit.material.PistonBaseMaterial;
-import org.bukkit.material.PistonExtensionMaterial;
-import org.bukkit.material.PoweredRail;
-import org.bukkit.material.PressurePlate;
-import org.bukkit.material.Pumpkin;
-import org.bukkit.material.Rails;
-import org.bukkit.material.RedstoneTorch;
-import org.bukkit.material.RedstoneWire;
-import org.bukkit.material.Sandstone;
-import org.bukkit.material.Sign;
-import org.bukkit.material.Skull;
-import org.bukkit.material.SmoothBrick;
-import org.bukkit.material.SpawnEgg;
-import org.bukkit.material.Stairs;
-import org.bukkit.material.Step;
-import org.bukkit.material.Torch;
-import org.bukkit.material.TrapDoor;
-import org.bukkit.material.Tree;
-import org.bukkit.material.Tripwire;
-import org.bukkit.material.TripwireHook;
-import org.bukkit.material.Vine;
-import org.bukkit.material.WoodenStep;
-import org.bukkit.material.Wool;
+import org.bukkit.material.*;
 import org.bukkit.potion.Potion;
 import org.bukkit.util.Java15Compat;
 
@@ -74,14 +27,14 @@ public enum Material {
     STATIONARY_WATER(9, MaterialData.class),
     LAVA(10, MaterialData.class),
     STATIONARY_LAVA(11, MaterialData.class),
-    SAND(12),
+    SAND(12, Sand.class),
     GRAVEL(13),
     GOLD_ORE(14),
     IRON_ORE(15),
     COAL_ORE(16),
     LOG(17, Tree.class),
     LEAVES(18, Tree.class),
-    SPONGE(19),
+    SPONGE(19, Sponge.class),
     GLASS(20),
     LAPIS_ORE(21),
     LAPIS_BLOCK(22),
@@ -232,7 +185,7 @@ public enum Material {
     SLIME_BLOCK(165),
     BARRIER(166),
     IRON_TRAP_DOOR(167, TrapDoor.class),
-    PRISMARINE(168),
+    PRISMARINE(168, Prismarine.class),
     SEA_LANTERN(169),
     HAY_BLOCK(170),
     CARPET(171),
