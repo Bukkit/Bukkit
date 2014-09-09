@@ -229,12 +229,39 @@ public enum Material {
     LOG_2(162),
     ACACIA_STAIRS(163, Stairs.class),
     DARK_OAK_STAIRS(164, Stairs.class),
+    SLIME_BLOCK(165),
+    BARRIER(166),
+    IRON_TRAP_DOOR(167, TrapDoor.class),
+    PRISMARINE(168),
+    SEA_LANTERN(169),
     HAY_BLOCK(170),
     CARPET(171),
     HARD_CLAY(172),
     COAL_BLOCK(173),
     PACKED_ICE(174),
     DOUBLE_PLANT(175),
+    STANDING_BANNER(176),
+    WALL_BANNER(177),
+    DAYLIGHT_DETECTOR_INVERTED(178),
+    RED_SANDSTONE(179, Sandstone.class),
+    RED_SANDSTONE_STAIRS(180, Stairs.class),
+    DOUBLE_STEP_2(181, Step.class),
+    STEP_2(182, Step.class),
+    SPRUCE_FENCE_GATE(183, Gate.class),
+    BIRCH_FENCE_GATE(184, Gate.class),
+    JUNGLE_FENCE_GATE(185, Gate.class),
+    DARK_OAK_FENCE_GATE(186, Gate.class),
+    ACACIA_FENCE_GATE(187, Gate.class),
+    SPRUCE_FENCE(188),
+    BIRCH_FENCE(189),
+    JUNGLE_FENCE(190),
+    DARK_OAK_FENCE(191),
+    ACACIA_FENCE(192),
+    SPRUCE_DOOR(193, Door.class),
+    BIRCH_DOOR(194, Door.class),
+    JUNGLE_DOOR(195, Door.class),
+    ACACIA_DOOR(196, Door.class),
+    DARK_OAK_DOOR(197, Door.class),
     // ----- Item Separator -----
     IRON_SPADE(256, 1, 250),
     IRON_PICKAXE(257, 1, 250),
@@ -395,12 +422,28 @@ public enum Material {
     QUARTZ(406),
     EXPLOSIVE_MINECART(407, 1),
     HOPPER_MINECART(408, 1),
+    PRISMARINE_SHARD(409),
+    PRISMARINE_CRYSTALS(410),
+    RABBIT(411),
+    COOKED_RABBIT(412),
+    RABBIT_STEW(413),
+    RABBIT_FOOT(414),
+    RABBIT_HIDE(415),
+    ARMOR_STAND(416, 16),
     IRON_BARDING(417, 1),
     GOLD_BARDING(418, 1),
     DIAMOND_BARDING(419, 1),
     LEASH(420),
     NAME_TAG(421),
     COMMAND_MINECART(422, 1),
+    MUTTON(423),
+    COOKED_MUTTON(424),
+    BANNER(425, 16),
+    SPRUCE_DOOR_ITEM(427, 1),
+    BIRCH_DOOR_ITEM(428, 1),
+    JUNGLE_DOOR_ITEM(429, 1),
+    ACACIA_DOOR_ITEM(430, 1),
+    DARK_OAK_DOOR_ITEM(431, 1),
     GOLD_RECORD(2256, 1),
     GREEN_RECORD(2257, 1),
     RECORD_3(2258, 1),
@@ -558,6 +601,10 @@ public enum Material {
             case GOLDEN_APPLE:
             case ROTTEN_FLESH:
             case SPIDER_EYE:
+            case RABBIT:
+            case COOKED_RABBIT:
+            case MUTTON:
+            case COOKED_MUTTON:
                 return true;
             default:
                 return false;
@@ -777,6 +824,31 @@ public enum Material {
             case ACACIA_STAIRS:
             case DARK_OAK_STAIRS:
             case PACKED_ICE:
+            case SLIME_BLOCK:
+            case BARRIER:
+            case IRON_TRAP_DOOR:
+            case PRISMARINE:
+            case SEA_LANTERN:
+            case DAYLIGHT_DETECTOR_INVERTED:
+            case RED_SANDSTONE:
+            case RED_SANDSTONE_STAIRS:
+            case DOUBLE_STEP_2:
+            case STEP_2:
+            case SPRUCE_FENCE_GATE:
+            case BIRCH_FENCE_GATE:
+            case JUNGLE_FENCE_GATE:
+            case DARK_OAK_FENCE_GATE:
+            case ACACIA_FENCE_GATE:
+            case SPRUCE_FENCE:
+            case BIRCH_FENCE:
+            case JUNGLE_FENCE:
+            case DARK_OAK_FENCE:
+            case ACACIA_FENCE:
+            case SPRUCE_DOOR:
+            case BIRCH_DOOR:
+            case JUNGLE_DOOR:
+            case ACACIA_DOOR:
+            case DARK_OAK_DOOR:
                 return true;
             default:
                 return false;
@@ -837,6 +909,9 @@ public enum Material {
             case ACTIVATOR_RAIL:
             case CARPET:
             case DOUBLE_PLANT:
+            case BARRIER:
+            case STANDING_BANNER:
+            case WALL_BANNER:
                 return true;
             default:
                 return false;
@@ -889,6 +964,21 @@ public enum Material {
             case LOG_2:
             case ACACIA_STAIRS:
             case DARK_OAK_STAIRS:
+            case SPRUCE_FENCE_GATE:
+            case BIRCH_FENCE_GATE:
+            case JUNGLE_FENCE_GATE:
+            case DARK_OAK_FENCE_GATE:
+            case ACACIA_FENCE_GATE:
+            case SPRUCE_FENCE:
+            case BIRCH_FENCE:
+            case JUNGLE_FENCE:
+            case DARK_OAK_FENCE:
+            case ACACIA_FENCE:
+            case SPRUCE_DOOR:
+            case BIRCH_DOOR:
+            case JUNGLE_DOOR:
+            case ACACIA_DOOR:
+            case DARK_OAK_DOOR:
                 return true;
             default:
                 return false;
@@ -928,6 +1018,11 @@ public enum Material {
             case LOG_2:
             case CARPET:
             case DOUBLE_PLANT:
+            case SPRUCE_FENCE:
+            case BIRCH_FENCE:
+            case JUNGLE_FENCE:
+            case DARK_OAK_FENCE:
+            case ACACIA_FENCE:
                 return true;
             default:
                 return false;
@@ -1009,6 +1104,10 @@ public enum Material {
             case COAL_BLOCK:
             case LOG_2:
             case PACKED_ICE:
+            case PRISMARINE:
+            case SEA_LANTERN:
+            case RED_SANDSTONE:
+            case DOUBLE_STEP_2:
                 return true;
             default:
                 return false;
