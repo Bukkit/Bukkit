@@ -21,24 +21,26 @@
         <system>jenkins</system>
         <url>http://ci.bukkit.org</url>
     </ciManagement>
+    -->
 
     <distributionManagement>
+        <!--
         <site>
             <id>jd.bukkit.org</id>
             <url>file:///home/javadocs/public_html/</url>
         </site>
+        -->
         <repository>
-            <id>repobo-rel</id>
-            <name>repo.bukkit.org Releases</name>
-            <url>http://repo.bukkit.org/content/repositories/releases/</url>
+            <id>glowrepo-releases</id>
+            <name>repo.glowstone.net Releases</name>
+            <url>http://repo.glowstone.net/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>repobo-snap</id>
-            <name>repo.bukkit.org Snapshots</name>
-            <url>http://repo.bukkit.org/content/repositories/snapshots/</url>
+            <id>glowrepo-snapshots</id>
+            <name>repo.glowstone.net Snapshots</name>
+            <url>http://repo.glowstone.net/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-    -->
 
     <build>
         <plugins>
