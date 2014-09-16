@@ -445,7 +445,7 @@ public final class Part implements ConfigurationSerializable {
      * @return this Part for chain calls
      */
     public Part setLocalizedTextParameters(String... parameters) {
-        this.localizedTextParameters = parameters.length == 0 ? null : parameters;
+        this.localizedTextParameters = parameters == null || parameters.length == 0 ? null : parameters;
         return this;
     }
 
