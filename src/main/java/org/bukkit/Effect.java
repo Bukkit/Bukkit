@@ -60,6 +60,42 @@ public enum Effect {
      */
     ZOMBIE_DESTROY_DOOR(1012, Type.SOUND),
     /**
+     * Sound of a Wither spawning.
+     */
+    WITHER_SPAWN(1013, Type.SOUND, true),
+    /**
+     * Sound of a Wither firing.
+     */
+    WITHER_SHOOT(1014, Type.SOUND),
+    /**
+     * Sound of a bat taking off.
+     */
+    BAT_TAKEOFF(1015, Type.SOUND),
+    /**
+     * Sound of villager getting infected.
+     */
+    VILLAGER_INFECT(1016, Type.SOUND),
+    /**
+     * Sound of villager being cured.
+     */
+    VILLAGER_CURE(1017, Type.SOUND),
+    /**
+     * Sound of an Enderdragon dying.
+     */
+    ENDERDRAGON_DIE(1018, Type.SOUND, true),
+    /**
+     * Sound of an anvil breaking.
+     */
+    ANVIL_BREAK(1020, Type.SOUND),
+    /**
+     * Sound of an anvil being used.
+     */
+    ANVIL_USE(1021, Type.SOUND),
+    /**
+     * Sound of an anvil landing.
+     */
+    ANVIL_LAND(1022, Type.SOUND),
+    /**
      * A visual smoke effect. Needs direction as additional info.
      */
     SMOKE(2000, Type.VISUAL, BlockFace.class),
@@ -79,21 +115,39 @@ public enum Effect {
     /**
      * The flames seen on a mobspawner; a visual effect.
      */
-    MOBSPAWNER_FLAMES(2004, Type.VISUAL);
+    MOBSPAWNER_FLAMES(2004, Type.VISUAL),
+    /**
+     * The green particles that appear when using bonemeal on a plant; a visual
+     * effect. Needs a non-air block as additional info. An optional integer
+     * may be supplied to represent the number of particles to show, by default
+     * 15 are shown.
+     */
+    BONEMEAL_USE(2005, Type.VISUAL),
+    ;
 
     private final int id;
     private final Type type;
     private final Class<?> data;
+    private final boolean distanceIgnored;
     private static final Map<Integer, Effect> BY_ID = Maps.newHashMap();
 
     Effect(int id, Type type) {
         this(id,type,null);
     }
 
+    Effect(int id, Type type, boolean distanceIgnored) {
+        this(id, type, null, distanceIgnored);
+    }
+
     Effect(int id, Type type, Class<?> data) {
+        this(id, type, data, false);
+    }
+
+    Effect(int id, Type type, Class<?> data, boolean distanceIgnored) {
         this.id = id;
         this.type = type;
         this.data = data;
+        this.distanceIgnored = distanceIgnored;
     }
 
     /**
@@ -120,6 +174,17 @@ public enum Effect {
      */
     public Class<?> getData() {
         return this.data;
+    }
+
+    /**
+     * Gets whether or not the distance to the player is ignored by this
+     * effect. If distance is ignored, the player will hear/see the effect
+     * regardless of how far away the effect is played from them.
+     *
+     * @return True if effect ignores distance
+     */
+    public boolean isDistanceIgnored() {
+        return this.distanceIgnored;
     }
 
     /**
