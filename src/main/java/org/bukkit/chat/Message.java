@@ -915,10 +915,12 @@ public final class Message implements Iterable<Part>, ConfigurationSerializable 
      *
      * @param i    the index
      * @param part the Part
+     * @return this Message for chain calls
      */
-    public void set(int i, Part part) {
+    public Message set(int i, Part part) {
         Validate.notNull(part, "part can't be null");
         this.parts.set(i, part);
+        return this;
     }
 
     @Override
