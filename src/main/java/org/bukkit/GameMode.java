@@ -25,7 +25,13 @@ public enum GameMode {
     /**
      * Adventure mode cannot break blocks without the correct tools.
      */
-    ADVENTURE(2);
+    ADVENTURE(2),
+
+    /**
+     * Spectator mode cannot interact with the world in any way, and may spectate
+     * from the perspective of mobs and player.
+     */
+    SPECTATOR(3);
 
     private final int value;
     private final static Map<Integer, GameMode> BY_ID = Maps.newHashMap();
