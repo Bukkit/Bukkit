@@ -766,7 +766,7 @@ public interface Server extends PluginMessageRecipient {
      * @param type The type of inventory to create.
      * @param title The title of the inventory, to be displayed when it is viewed.
      * @return The new inventory.
-     * @deprecated This method now uses {@link Message} to return the title. Use
+     * @deprecated This method now uses {@link Message} to set the title. Use
      *     {@link #createInventory(InventoryHolder, InventoryType, Message)}
      *     instead.
      */
@@ -808,7 +808,7 @@ public interface Server extends PluginMessageRecipient {
      *     viewed
      * @return a new inventory
      * @throws IllegalArgumentException if the size is not a multiple of 9
-     * @deprecated This method now uses {@link Message} to return the title. Use
+     * @deprecated This method now uses {@link Message} to set the title. Use
      *     {@link #createInventory(InventoryHolder, int, Message)} instead.
      */
     @Deprecated
