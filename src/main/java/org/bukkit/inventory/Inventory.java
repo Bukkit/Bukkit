@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.bukkit.Material;
+import org.bukkit.chat.Message;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
 
@@ -348,8 +349,18 @@ public interface Inventory extends Iterable<ItemStack> {
      * Returns the title of this inventory.
      *
      * @return A String with the title.
+     * @deprecated This method now uses {@link Message} to return the title. Use
+     *     {@link #getTitleMessage()} instead.
      */
+    @Deprecated
     public String getTitle();
+
+    /**
+     * Returns the title of this inventory.
+     *
+     * @return A {@link Message} with the title.
+     */
+    public Message getTitleMessage();
 
     /**
      * Returns what type of inventory this is.

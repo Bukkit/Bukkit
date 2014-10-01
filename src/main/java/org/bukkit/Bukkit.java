@@ -624,7 +624,15 @@ public final class Bukkit {
     /**
      * @see Server#createInventory(InventoryHolder owner, InventoryType type, String title)
      */
+    @Deprecated
     public static Inventory createInventory(InventoryHolder owner, InventoryType type, String title) {
+        return server.createInventory(owner, type, title);
+    }
+
+    /**
+     * @see Server#createInventory(InventoryHolder, InventoryType, Message)
+     */
+    public static Inventory createInventory(InventoryHolder owner, InventoryType type, Message title) {
         return server.createInventory(owner, type, title);
     }
 
@@ -639,7 +647,15 @@ public final class Bukkit {
      * @see Server#createInventory(InventoryHolder owner, int size, String
      *     title)
      */
+    @Deprecated
     public static Inventory createInventory(InventoryHolder owner, int size, String title) throws IllegalArgumentException {
+        return server.createInventory(owner, size, title);
+    }
+
+    /**
+     * @see Server#createInventory(InventoryHolder, int, Message)
+     */
+    public static Inventory createInventory(InventoryHolder owner, int size, Message title) throws IllegalArgumentException {
         return server.createInventory(owner, size, title);
     }
 
