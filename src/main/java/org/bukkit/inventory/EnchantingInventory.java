@@ -18,4 +18,18 @@ public interface EnchantingInventory extends Inventory {
      * @return The current item.
      */
     ItemStack getItem();
+
+    /**
+     * Set the item in the resource slot (usually Lapis).
+     *
+     * @param item The new item
+     */
+    void setResource(ItemStack item);
+
+    /**
+     * Get the item in the resource slot (usually Lapis).
+     *
+     * @return The current item
+     */
+    ItemStack getResource();
 }
