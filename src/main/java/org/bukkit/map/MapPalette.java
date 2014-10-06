@@ -218,7 +218,7 @@ public final class MapPalette {
             }
         }
 
-        // Minecraft has 143 colors, some of which have negative byte representations
+        // Minecraft has 143 colors, some of which have negative byte representations.
         return (byte) (index < 128 ? index : -129 + (index - 127));
     }
 
