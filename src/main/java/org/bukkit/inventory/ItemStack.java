@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
 /**
- * Represents a stack of items
+ * Represents a stack of items.
  */
 public class ItemStack implements Cloneable, ConfigurationSerializable {
     private int type = 0;
@@ -27,7 +27,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     protected ItemStack() {}
 
     /**
-     * Defaults stack size to 1, with no extra data
+     * Defaults stack size to 1, with no extra data.
      *
      * @param type item material id
      * @deprecated Magic value
@@ -154,9 +154,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Sets the type of this item
+     * Sets the type of this item.
      * <p>
-     * Note that in doing so you will reset the MaterialData for this stack
+     * Note that in doing so you will reset the MaterialData for this stack.
      *
      * @param type New type to set the items in this stack to
      */
@@ -167,7 +167,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Gets the type id of this item
+     * Gets the type id of this item.
      *
      * @return Type Id of the items in this stack
      * @deprecated Magic value
@@ -178,9 +178,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Sets the type id of this item
+     * Sets the type id of this item.
      * <p>
-     * Note that in doing so you will reset the MaterialData for this stack
+     * Note that in doing so you will reset the MaterialData for this stack.
      *
      * @param type New type id to set the items in this stack to
      * @deprecated Magic value
@@ -195,7 +195,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Gets the amount of items in this stack
+     * Gets the amount of items in this stack.
      *
      * @return Amount of items in this stick
      */
@@ -204,7 +204,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Sets the amount of items in this stack
+     * Sets the amount of items in this stack.
      *
      * @param amount New amount of items in this stack
      */
@@ -213,7 +213,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Gets the MaterialData for this stack of items
+     * Gets the MaterialData for this stack of items.
      *
      * @return MaterialData for this item
      */
@@ -227,7 +227,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Sets the MaterialData for this stack of items
+     * Sets the MaterialData for this stack of items.
      *
      * @param data New MaterialData for this item
      */
@@ -246,7 +246,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Sets the durability of this item
+     * Sets the durability of this item.
      *
      * @param durability Durability of this item
      */
@@ -255,7 +255,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Gets the durability of this item
+     * Gets the durability of this item.
      *
      * @return Durability of this item
      */
@@ -363,7 +363,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Checks if this ItemStack contains the given {@link Enchantment}
+     * Checks if this ItemStack contains the given {@link Enchantment}.
      *
      * @param ench Enchantment to test
      * @return True if this has the given enchantment
@@ -373,7 +373,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Gets the level of the specified enchantment on this item stack
+     * Gets the level of the specified enchantment on this item stack.
      *
      * @param ench Enchantment to check
      * @return Level of the enchantment, or 0
@@ -469,7 +469,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
     /**
      * Removes the specified {@link Enchantment} if it exists on this
-     * ItemStack
+     * ItemStack.
      *
      * @param ench Enchantment to remove
      * @return Previous level, or 0
@@ -506,7 +506,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Required method for configuration serialization
+     * Required method for configuration serialization.
      *
      * @param args map to deserialize
      * @return deserialized item stack
@@ -583,7 +583,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     /*
-     * Cannot be overridden, so it's safe for constructor call
+     * Cannot be overridden, so it's safe for constructor call.
      */
     private boolean setItemMeta0(ItemMeta itemMeta, Material material) {
         if (itemMeta == null) {
