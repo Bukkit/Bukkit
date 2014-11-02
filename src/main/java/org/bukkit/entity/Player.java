@@ -943,23 +943,23 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public float getWalkSpeed();
 
     /**
-     * Request that the player's client download and switch texture packs.
+     * Request that the player's client download and switch resource packs.
      * <p>
-     * The player's client will download the new texture pack asynchronously
+     * The player's client will download the new resource pack asynchronously
      * in the background, and will automatically switch to it once the
-     * download is complete. If the client has downloaded and cached the same
-     * texture pack in the past, it will perform a quick timestamp check over
-     * the network to determine if the texture pack has changed and needs to
-     * be downloaded again. When this request is sent for the very first time
-     * from a given server, the client will first display a confirmation GUI
-     * to the player before proceeding with the download.
+     * download is complete. When this request is sent for the very
+     * first time from a given server, the client will first display a
+     * confirmation GUI to the player before proceeding with the download.
      * <p>
      * Notes:
      * <ul>
-     * <li>Players can disable server textures on their client, in which
+     * <li>Players can disable server resources on their client, in which
      *     case this method will have no affect on them.
-     * <li>There is no concept of resetting texture packs back to default
+     * <li>There is no concept of resetting resource packs back to default
      *     within Minecraft, so players will have to relog to do so.
+     * <li>A {@link org.bukkit.event.player.PlayerResourcePackStatusEvent} will
+     *     be fired afterward, indicating what action the client took with the
+     *     resource pack. The hash will be set to the empty string.
      * </ul>
      *
      * @param url The URL from which the client will download the texture
@@ -978,19 +978,21 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * <p>
      * The player's client will download the new resource pack asynchronously
      * in the background, and will automatically switch to it once the
-     * download is complete. If the client has downloaded and cached the same
-     * resource pack in the past, it will perform a quick timestamp check
-     * over the network to determine if the resource pack has changed and
-     * needs to be downloaded again. When this request is sent for the very
+     * download is complete. When this request is sent for the very
      * first time from a given server, the client will first display a
      * confirmation GUI to the player before proceeding with the download.
      * <p>
      * Notes:
      * <ul>
+     * <li>This triggers a force refresh of the resource pack, even if the
+     *     client is already using it.
      * <li>Players can disable server resources on their client, in which
      *     case this method will have no affect on them.
      * <li>There is no concept of resetting resource packs back to default
      *     within Minecraft, so players will have to relog to do so.
+     * <li>A {@link org.bukkit.event.player.PlayerResourcePackStatusEvent} will
+     *     be fired afterward, indicating what action the client took with the
+     *     resource pack. The hash will be set to the empty string.
      * </ul>
      *
      * @param url The URL from which the client will download the resource
@@ -1001,6 +1003,42 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      *     length restriction is an implementation specific arbitrary value.
      */
     public void setResourcePack(String url);
+
+    /**
+     * Request that the player's client download and switch resource packs.
+     * <p>
+     * The player's client will download the new resource pack asynchronously
+     * in the background, and will automatically switch to it once the
+     * download is complete. If the client has downloaded and cached the same
+     * resource pack in the past, it will compare the SHA-1 hash of the file
+     * to the given hash, to determine if the resource pack has changed and
+     * needs to be downloaded again. When this request is sent for the very
+     * first time from a given server, the client will first display a
+     * confirmation GUI to the player before proceeding with the download.
+     * <p>
+     * Notes:
+     * <ul>
+     * <li>Players can disable server resources on their client, in which
+     *     case this method will have no affect on them.
+     * <li>There is no concept of resetting resource packs back to default
+     *     within Minecraft, so players will have to relog to do so.
+     * <li>A {@link org.bukkit.event.player.PlayerResourcePackStatusEvent} will
+     *     be fired afterward, indicating what action the client took with the
+     *     resource pack. The provided hash can be used to differentiate multiple
+     *     {@link org.bukkit.event.player.PlayerResourcePackStatusEvent}s
+     * </ul>
+     *
+     * @param url The URL from which the client will download the resource
+     *     pack. The string must contain only US-ASCII characters and should
+     *     be encoded as per RFC 1738.
+     * @param shaHash The SHA-1 hash of the file to download.
+     * @throws IllegalArgumentException Thrown if the hash is longer than 40 characters
+     * @throws IllegalArgumentException Thrown if the hash is null.
+     * @throws IllegalArgumentException Thrown if the URL is null.
+     * @throws IllegalArgumentException Thrown if the URL is too long. The
+     *     length restriction is an implementation specific arbitrary value.
+     */
+    public void setResourcePack(String url, String shaHash);
 
     /**
      * Gets the Scoreboard displayed to this player
