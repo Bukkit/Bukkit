@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -391,4 +392,11 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
      * @return whether the operation was successful
      */
     public boolean setLeashHolder(Entity holder);
+
+    /**
+     * Gets the reason the living entity spawned into the world.
+     * 
+     * @return spawn reason of the living entity
+     */
+    public SpawnReason getSpawnReason();
 }
