@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.util.Iterator;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.chat.Message;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.util.CachedServerIcon;
@@ -16,11 +17,21 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
     private static final int MAGIC_PLAYER_COUNT = Integer.MIN_VALUE;
     private static final HandlerList handlers = new HandlerList();
     private final InetAddress address;
-    private String motd;
+    private Message motd;
     private final int numPlayers;
     private int maxPlayers;
 
-    public ServerListPingEvent(final InetAddress address, final String motd, final int numPlayers, final int maxPlayers) {
+    /**
+     * Creates a new ServerListPingEvent showing fixed number of player
+     * currently online.
+     * 
+     * @param address the address the ping is coming from
+     * @param motd the message of the day message to show to that player
+     * @param numPlayers the number of player currently online
+     * @param maxPlayers the maximum allowed player on this server
+     */
+    public ServerListPingEvent(final InetAddress address, final Message motd, final int numPlayers, final int maxPlayers) {
+        Validate.notNull(motd, "Motd cannot be null!");
         Validate.isTrue(numPlayers >= 0, "Cannot have negative number of players online", numPlayers);
         this.address = address;
         this.motd = motd;
@@ -29,15 +40,53 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
     }
 
     /**
+     * Creates a new ServerListPingEvent showing fixed number of player
+     * currently online.
+     * 
+     * @param address the address the ping is coming from
+     * @param motd the message of the day message to show to that player
+     * @param numPlayers the number of player currently online
+     * @param maxPlayers the maximum allowed player on this server
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *     {@link #ServerListPingEvent(InetAddress, Message, int, int)}
+     *     instead.
+     */
+    @Deprecated
+    public ServerListPingEvent(final InetAddress address, final String motd, final int numPlayers, final int maxPlayers) {
+        this(address, motd == null ? null : Message.of(motd), numPlayers, maxPlayers);
+    }
+
+    /**
      * This constructor is intended for implementations that provide the
      * {@link #iterator()} method, thus provided the {@link #getNumPlayers()}
      * count.
+     * 
+     * @param address the address the ping is coming from
+     * @param motd the message of the day message to show to that player
+     * @param maxPlayers the maximum allowed player on this server
      */
-    protected ServerListPingEvent(final InetAddress address, final String motd, final int maxPlayers) {
+    protected ServerListPingEvent(final InetAddress address, final Message motd, final int maxPlayers) {
+        Validate.notNull(motd, "Motd cannot be null!");
         this.numPlayers = MAGIC_PLAYER_COUNT;
         this.address = address;
         this.motd = motd;
         this.maxPlayers = maxPlayers;
+    }
+
+    /**
+     * This constructor is intended for implementations that provide the
+     * {@link #iterator()} method, thus provided the {@link #getNumPlayers()}
+     * count.
+     * 
+     * @param address the address the ping is coming from
+     * @param motd the message of the day message to show to that player
+     * @param maxPlayers the maximum allowed player on this server
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *     {@link #ServerListPingEvent(InetAddress, Message, int)} instead.
+     */
+    @Deprecated
+    protected ServerListPingEvent(final InetAddress address, final String motd, final int maxPlayers) {
+        this(address, motd == null ? null : Message.of(motd), maxPlayers);
     }
 
     /**
@@ -50,20 +99,47 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
     }
 
     /**
-     * Get the message of the day message.
+     * Gets the message of the day message. May contain color codes.
+     *
+     * @return the message of the day
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *     {@link #getMotd()} instead.
+     */
+    @Deprecated
+    public String getMotd() {
+        return motd.toString();
+    }
+
+    /**
+     * Changes the message of the day message. Can contain color codes but
+     * cannot be null.
+     *
+     * @param motd the message of the day
+     * @deprecated This event now uses {@link Message} to send the message. Use
+     *     {@link #setMotdMessage(Message)} instead.
+     */
+    @Deprecated
+    public void setMotd(String motd) {
+        Validate.notNull(motd, "Motd cannot be null!");
+        this.motd = Message.of(motd);
+    }
+
+    /**
+     * Gets the message of the day message.
      *
      * @return the message of the day
      */
-    public String getMotd() {
+    public Message getMotdMessage() {
         return motd;
     }
 
     /**
-     * Change the message of the day message.
+     * Changes the message of the day message. Cannot be null.
      *
      * @param motd the message of the day
      */
-    public void setMotd(String motd) {
+    public void setMotdMessage(Message motd) {
+        Validate.notNull(motd, "Motd cannot be null!");
         this.motd = motd;
     }
 

@@ -11,6 +11,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.bukkit.Warning.WarningState;
+import org.bukkit.chat.Message;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -184,6 +185,13 @@ public final class Bukkit {
      * @see Server#broadcastMessage(String message)
      */
     public static int broadcastMessage(String message) {
+        return server.broadcastMessage(message);
+    }
+
+    /**
+     * @see Server#broadcastMessage(org.bukkit.chat.Message message)
+     */
+    public static int broadcastMessage(Message message) {
         return server.broadcastMessage(message);
     }
 
@@ -430,6 +438,13 @@ public final class Bukkit {
     }
 
     /**
+     * @see Server#broadcast(Message message, String permission)
+     */
+    public static int broadcast(Message message, String permission) {
+        return server.broadcast(message, permission);
+    }
+
+    /**
      * @see Server#getOfflinePlayer(String name)
      */
     @Deprecated
@@ -609,7 +624,15 @@ public final class Bukkit {
     /**
      * @see Server#createInventory(InventoryHolder owner, InventoryType type, String title)
      */
+    @Deprecated
     public static Inventory createInventory(InventoryHolder owner, InventoryType type, String title) {
+        return server.createInventory(owner, type, title);
+    }
+
+    /**
+     * @see Server#createInventory(InventoryHolder, InventoryType, Message)
+     */
+    public static Inventory createInventory(InventoryHolder owner, InventoryType type, Message title) {
         return server.createInventory(owner, type, title);
     }
 
@@ -624,7 +647,15 @@ public final class Bukkit {
      * @see Server#createInventory(InventoryHolder owner, int size, String
      *     title)
      */
+    @Deprecated
     public static Inventory createInventory(InventoryHolder owner, int size, String title) throws IllegalArgumentException {
+        return server.createInventory(owner, size, title);
+    }
+
+    /**
+     * @see Server#createInventory(InventoryHolder, int, Message)
+     */
+    public static Inventory createInventory(InventoryHolder owner, int size, Message title) throws IllegalArgumentException {
         return server.createInventory(owner, size, title);
     }
 

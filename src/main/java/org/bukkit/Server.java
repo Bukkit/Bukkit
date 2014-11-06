@@ -13,6 +13,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.bukkit.Warning.WarningState;
+import org.bukkit.chat.Message;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -235,6 +236,17 @@ public interface Server extends PluginMessageRecipient {
      * @return the number of players
      */
     public int broadcastMessage(String message);
+
+    /**
+     * Broadcast a rich message to all players.
+     * <p>
+     * This is the same as calling {@link #broadcast(Message, String)}
+     * to {@link #BROADCAST_CHANNEL_USERS}
+     *
+     * @param message the rich message
+     * @return the number of players
+     */
+    public int broadcastMessage(Message message);
 
     /**
      * Gets the name of the update folder. The update folder is used to safely
@@ -595,6 +607,17 @@ public interface Server extends PluginMessageRecipient {
     public int broadcast(String message, String permission);
 
     /**
+     * Broadcasts the specified rich message to every user with the given
+     * permission name.
+     *
+     * @param message rich message to broadcast
+     * @param permission the required permission {@link Permissible
+     *     permissibles} must have to receive the broadcast
+     * @return number of message recipients
+     */
+    public int broadcast(Message message, String permission);
+
+    /**
      * Gets the player by the given name, regardless if they are offline or
      * online.
      * <p>
@@ -743,8 +766,26 @@ public interface Server extends PluginMessageRecipient {
      * @param type The type of inventory to create.
      * @param title The title of the inventory, to be displayed when it is viewed.
      * @return The new inventory.
+     * @deprecated This method now uses {@link Message} to set the title. Use
+     *     {@link #createInventory(InventoryHolder, InventoryType, Message)}
+     *     instead.
      */
+    @Deprecated
     Inventory createInventory(InventoryHolder owner, InventoryType type, String title);
+
+    /**
+     * Creates an empty inventory with the specified type and title. If the type
+     * is {@link InventoryType#CHEST}, the new inventory has a size of 27;
+     * otherwise the new inventory has the normal size for its type.<br />
+     * It should be noted that some inventory types do not support titles and
+     * may not render with said titles on the Minecraft client.
+     *
+     * @param owner The holder of the inventory; can be null if there's no holder.
+     * @param type The type of inventory to create.
+     * @param title The title of the inventory, to be displayed when it is viewed.
+     * @return The new inventory.
+     */
+    Inventory createInventory(InventoryHolder owner, InventoryType type, Message title);
 
     /**
      * Creates an empty inventory of type {@link InventoryType#CHEST} with the
@@ -767,8 +808,24 @@ public interface Server extends PluginMessageRecipient {
      *     viewed
      * @return a new inventory
      * @throws IllegalArgumentException if the size is not a multiple of 9
+     * @deprecated This method now uses {@link Message} to set the title. Use
+     *     {@link #createInventory(InventoryHolder, int, Message)} instead.
      */
+    @Deprecated
     Inventory createInventory(InventoryHolder owner, int size, String title) throws IllegalArgumentException;
+
+    /**
+     * Creates an empty inventory of type {@link InventoryType#CHEST} with the
+     * specified size and title.
+     *
+     * @param owner the holder of the inventory, or null to indicate no holder
+     * @param size a multiple of 9 as the size of inventory to create
+     * @param title the title of the inventory, displayed when inventory is
+     *     viewed
+     * @return a new inventory
+     * @throws IllegalArgumentException if the size is not a multiple of 9
+     */
+    Inventory createInventory(InventoryHolder owner, int size, Message title) throws IllegalArgumentException;
 
     /**
      * Gets user-specified limit for number of monsters that can spawn in a
