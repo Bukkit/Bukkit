@@ -55,7 +55,7 @@ public final class Message implements Iterable<Part>, ConfigurationSerializable 
      * @return the built Message
      */
     public static Message ofLocalized(String id, String... parameters) {
-        return Message.of(Part.of(id, parameters));
+        return Message.of(Part.ofLocalized(id, parameters));
     }
 
     /**
