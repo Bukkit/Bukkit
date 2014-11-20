@@ -55,8 +55,7 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
     /**
      * Sets the current state of this button
      *
-     * @param bool
-     *            whether or not the button is powered
+     * @param bool whether or not the button is powered
      */
     public void setPowered(boolean bool) {
         setData((byte) (bool ? (getData() | 0x8) : (getData() & ~0x8)));
@@ -71,6 +70,9 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
         byte data = (byte) (getData() & 0x7);
 
         switch (data) {
+        case 0x0:
+            return BlockFace.UP;
+
         case 0x1:
             return BlockFace.WEST;
 
@@ -82,6 +84,9 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
 
         case 0x4:
             return BlockFace.SOUTH;
+
+        case 0x5:
+            return BlockFace.DOWN;
         }
 
         return null;
@@ -94,6 +99,10 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
         byte data = (byte) (getData() & 0x8);
 
         switch (face) {
+        case DOWN:
+            data |= 0x0;
+            break;
+
         case EAST:
             data |= 0x1;
             break;
@@ -108,6 +117,10 @@ public class Button extends SimpleAttachableMaterialData implements Redstone {
 
         case NORTH:
             data |= 0x4;
+            break;
+
+        case UP:
+            data |= 0x5;
             break;
         }
 
