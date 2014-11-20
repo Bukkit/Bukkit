@@ -16,9 +16,9 @@ import com.google.common.collect.Maps;
  */
 public enum Material {
     AIR(0, 0),
-    STONE(1),
+    STONE(1, Stone.class),
     GRASS(2),
-    DIRT(3),
+    DIRT(3, Dirt.class),
     COBBLESTONE(4),
     WOOD(5, Tree.class),
     SAPLING(6, Tree.class),
@@ -192,7 +192,7 @@ public enum Material {
     HARD_CLAY(172),
     COAL_BLOCK(173),
     PACKED_ICE(174),
-    DOUBLE_PLANT(175),
+    DOUBLE_PLANT(175, DoublePlant.class),
     STANDING_BANNER(176, Banner.class),
     WALL_BANNER(177, Banner.class),
     DAYLIGHT_DETECTOR_INVERTED(178),
