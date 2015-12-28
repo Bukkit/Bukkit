@@ -32,16 +32,16 @@ public class Gate extends MaterialData implements Directional, Openable {
         switch (face) {
             default:
             case EAST:
-                data |= GATE_SOUTH;
+                data |= GATE_EAST;
                 break;
             case SOUTH:
-                data |= GATE_WEST;
+                data |= GATE_SOUTH;
                 break;
             case WEST:
-                data |= GATE_NORTH;
+                data |= GATE_WEST;
                 break;
             case NORTH:
-                data |= GATE_EAST;
+                data |= GATE_NORTH;
                 break;
         }
 
@@ -51,13 +51,13 @@ public class Gate extends MaterialData implements Directional, Openable {
     public BlockFace getFacing() {
         switch (getData() & DIR_BIT) {
             case GATE_SOUTH:
-                return BlockFace.EAST;
-            case GATE_WEST:
                 return BlockFace.SOUTH;
-            case GATE_NORTH:
+            case GATE_WEST:
                 return BlockFace.WEST;
-            case GATE_EAST:
+            case GATE_NORTH:
                 return BlockFace.NORTH;
+            case GATE_EAST:
+                return BlockFace.EAST;
         }
 
         return BlockFace.EAST;

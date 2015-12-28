@@ -1,40 +1,44 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.bukkit</groupId>
-    <artifactId>bukkit</artifactId>
-    <version>1.7.10-R0.1-SNAPSHOT</version>
-    <name>Bukkit</name>
-    <url>http://www.bukkit.org</url>
+    <groupId>net.glowstone</groupId>
+    <artifactId>glowkit</artifactId>
+    <version>1.8-R1-SNAPSHOT</version>
+    <name>Glowkit</name>
+    <url>https://github.com/GlowstoneMC/Glowkit</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <scm>
-        <developerConnection>scm:git:git@github.com:Bukkit/Bukkit.git</developerConnection>
-        <connection>scm:git:git://github.com/Bukkit/Bukkit.git</connection>
-        <url>https://github.com/Bukkit/Bukkit/tree/master/</url>
+        <developerConnection>scm:git:git@github.com:GlowstoneMC/Glowkit.git</developerConnection>
+        <connection>scm:git:git://github.com/GlowstoneMC/Glowkit.git</connection>
+        <url>https://github.com/GlowstoneMC/Glowkit/tree/master/</url>
     </scm>
 
+    <!--
     <ciManagement>
         <system>jenkins</system>
         <url>http://ci.bukkit.org</url>
     </ciManagement>
+    -->
 
     <distributionManagement>
+        <!--
         <site>
             <id>jd.bukkit.org</id>
             <url>file:///home/javadocs/public_html/</url>
         </site>
+        -->
         <repository>
-            <id>repobo-rel</id>
-            <name>repo.bukkit.org Releases</name>
-            <url>http://repo.bukkit.org/content/repositories/releases/</url>
+            <id>glowrepo-releases</id>
+            <name>repo.glowstone.net Releases</name>
+            <url>http://repo.glowstone.net/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>repobo-snap</id>
-            <name>repo.bukkit.org Snapshots</name>
-            <url>http://repo.bukkit.org/content/repositories/snapshots/</url>
+            <id>glowrepo-snapshots</id>
+            <name>repo.glowstone.net Snapshots</name>
+            <url>http://repo.glowstone.net/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -64,6 +68,33 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.0-beta-3</version>
                 <configuration>
@@ -91,6 +122,7 @@
                     </reportPlugins>
                 </configuration>
             </plugin>
+            -->
         </plugins>
     </build>
     <dependencies>

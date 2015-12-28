@@ -70,6 +70,7 @@ public class GameModeCommand extends VanillaCommand {
                         Command.broadcastCommandMessage(sender, "Set own game mode to " + mode.toString() + " mode");
                     } else {
                         Command.broadcastCommandMessage(sender, "Set " + player.getName() + "'s game mode to " + mode.toString() + " mode");
+                        player.sendMessage("Your game mode has been updated");
                     }
                 }
             } else {

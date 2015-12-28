@@ -5,8 +5,10 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
@@ -36,7 +38,16 @@ public class WeatherCommand extends VanillaCommand {
             duration = getInteger(sender, args[1], 1, 1000000) * 20;
         }
 
-        World world = Bukkit.getWorlds().get(0);
+        World world;
+
+        if (sender instanceof Player) {
+            world = ((Player) sender).getWorld();
+        } else if (sender instanceof BlockCommandSender) {
+            world = ((BlockCommandSender) sender).getBlock().getWorld();
+        } else {
+            // Fallback to default world
+            world = Bukkit.getWorlds().get(0);
+        }
 
         world.setWeatherDuration(duration);
         world.setThunderDuration(duration);

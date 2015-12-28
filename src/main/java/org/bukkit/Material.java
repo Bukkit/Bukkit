@@ -5,54 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.map.MapView;
-import org.bukkit.material.Bed;
-import org.bukkit.material.Button;
-import org.bukkit.material.Cake;
-import org.bukkit.material.Cauldron;
-import org.bukkit.material.Chest;
-import org.bukkit.material.Coal;
-import org.bukkit.material.CocoaPlant;
-import org.bukkit.material.Command;
-import org.bukkit.material.Crops;
-import org.bukkit.material.DetectorRail;
-import org.bukkit.material.Diode;
-import org.bukkit.material.Dispenser;
-import org.bukkit.material.Door;
-import org.bukkit.material.Dye;
-import org.bukkit.material.EnderChest;
-import org.bukkit.material.FlowerPot;
-import org.bukkit.material.Furnace;
-import org.bukkit.material.Gate;
-import org.bukkit.material.Ladder;
-import org.bukkit.material.Lever;
-import org.bukkit.material.LongGrass;
-import org.bukkit.material.MaterialData;
-import org.bukkit.material.MonsterEggs;
-import org.bukkit.material.Mushroom;
-import org.bukkit.material.NetherWarts;
-import org.bukkit.material.PistonBaseMaterial;
-import org.bukkit.material.PistonExtensionMaterial;
-import org.bukkit.material.PoweredRail;
-import org.bukkit.material.PressurePlate;
-import org.bukkit.material.Pumpkin;
-import org.bukkit.material.Rails;
-import org.bukkit.material.RedstoneTorch;
-import org.bukkit.material.RedstoneWire;
-import org.bukkit.material.Sandstone;
-import org.bukkit.material.Sign;
-import org.bukkit.material.Skull;
-import org.bukkit.material.SmoothBrick;
-import org.bukkit.material.SpawnEgg;
-import org.bukkit.material.Stairs;
-import org.bukkit.material.Step;
-import org.bukkit.material.Torch;
-import org.bukkit.material.TrapDoor;
-import org.bukkit.material.Tree;
-import org.bukkit.material.Tripwire;
-import org.bukkit.material.TripwireHook;
-import org.bukkit.material.Vine;
-import org.bukkit.material.WoodenStep;
-import org.bukkit.material.Wool;
+import org.bukkit.material.*;
 import org.bukkit.potion.Potion;
 import org.bukkit.util.Java15Compat;
 
@@ -63,9 +16,9 @@ import com.google.common.collect.Maps;
  */
 public enum Material {
     AIR(0, 0),
-    STONE(1),
+    STONE(1, Stone.class),
     GRASS(2),
-    DIRT(3),
+    DIRT(3, Dirt.class),
     COBBLESTONE(4),
     WOOD(5, Tree.class),
     SAPLING(6, Tree.class),
@@ -74,14 +27,14 @@ public enum Material {
     STATIONARY_WATER(9, MaterialData.class),
     LAVA(10, MaterialData.class),
     STATIONARY_LAVA(11, MaterialData.class),
-    SAND(12),
+    SAND(12, Sand.class),
     GRAVEL(13),
     GOLD_ORE(14),
     IRON_ORE(15),
     COAL_ORE(16),
     LOG(17, Tree.class),
     LEAVES(18, Tree.class),
-    SPONGE(19),
+    SPONGE(19, Sponge.class),
     GLASS(20),
     LAPIS_ORE(21),
     LAPIS_BLOCK(22),
@@ -210,7 +163,7 @@ public enum Material {
     WOOD_BUTTON(143, Button.class),
     SKULL(144, Skull.class),
     ANVIL(145),
-    TRAPPED_CHEST(146),
+    TRAPPED_CHEST(146, Chest.class),
     GOLD_PLATE(147),
     IRON_PLATE(148),
     REDSTONE_COMPARATOR_OFF(149),
@@ -229,12 +182,39 @@ public enum Material {
     LOG_2(162),
     ACACIA_STAIRS(163, Stairs.class),
     DARK_OAK_STAIRS(164, Stairs.class),
+    SLIME_BLOCK(165),
+    BARRIER(166),
+    IRON_TRAP_DOOR(167, TrapDoor.class),
+    PRISMARINE(168, Prismarine.class),
+    SEA_LANTERN(169),
     HAY_BLOCK(170),
     CARPET(171),
     HARD_CLAY(172),
     COAL_BLOCK(173),
     PACKED_ICE(174),
-    DOUBLE_PLANT(175),
+    DOUBLE_PLANT(175, DoublePlant.class),
+    STANDING_BANNER(176, Banner.class),
+    WALL_BANNER(177, Banner.class),
+    DAYLIGHT_DETECTOR_INVERTED(178),
+    RED_SANDSTONE(179, Sandstone.class),
+    RED_SANDSTONE_STAIRS(180, Stairs.class),
+    DOUBLE_STEP_2(181, Step.class),
+    STEP_2(182, Step.class),
+    SPRUCE_FENCE_GATE(183, Gate.class),
+    BIRCH_FENCE_GATE(184, Gate.class),
+    JUNGLE_FENCE_GATE(185, Gate.class),
+    DARK_OAK_FENCE_GATE(186, Gate.class),
+    ACACIA_FENCE_GATE(187, Gate.class),
+    SPRUCE_FENCE(188),
+    BIRCH_FENCE(189),
+    JUNGLE_FENCE(190),
+    DARK_OAK_FENCE(191),
+    ACACIA_FENCE(192),
+    SPRUCE_DOOR(193, Door.class),
+    BIRCH_DOOR(194, Door.class),
+    JUNGLE_DOOR(195, Door.class),
+    ACACIA_DOOR(196, Door.class),
+    DARK_OAK_DOOR(197, Door.class),
     // ----- Item Separator -----
     IRON_SPADE(256, 1, 250),
     IRON_PICKAXE(257, 1, 250),
@@ -395,12 +375,28 @@ public enum Material {
     QUARTZ(406),
     EXPLOSIVE_MINECART(407, 1),
     HOPPER_MINECART(408, 1),
+    PRISMARINE_SHARD(409),
+    PRISMARINE_CRYSTALS(410),
+    RABBIT(411),
+    COOKED_RABBIT(412),
+    RABBIT_STEW(413),
+    RABBIT_FOOT(414),
+    RABBIT_HIDE(415),
+    ARMOR_STAND(416, 16),
     IRON_BARDING(417, 1),
     GOLD_BARDING(418, 1),
     DIAMOND_BARDING(419, 1),
     LEASH(420),
     NAME_TAG(421),
     COMMAND_MINECART(422, 1),
+    MUTTON(423),
+    COOKED_MUTTON(424),
+    BANNER(425, 16),
+    SPRUCE_DOOR_ITEM(427, 1),
+    BIRCH_DOOR_ITEM(428, 1),
+    JUNGLE_DOOR_ITEM(429, 1),
+    ACACIA_DOOR_ITEM(430, 1),
+    DARK_OAK_DOOR_ITEM(431, 1),
     GOLD_RECORD(2256, 1),
     GREEN_RECORD(2257, 1),
     RECORD_3(2258, 1),
@@ -558,6 +554,10 @@ public enum Material {
             case GOLDEN_APPLE:
             case ROTTEN_FLESH:
             case SPIDER_EYE:
+            case RABBIT:
+            case COOKED_RABBIT:
+            case MUTTON:
+            case COOKED_MUTTON:
                 return true;
             default:
                 return false;
@@ -777,6 +777,31 @@ public enum Material {
             case ACACIA_STAIRS:
             case DARK_OAK_STAIRS:
             case PACKED_ICE:
+            case SLIME_BLOCK:
+            case BARRIER:
+            case IRON_TRAP_DOOR:
+            case PRISMARINE:
+            case SEA_LANTERN:
+            case DAYLIGHT_DETECTOR_INVERTED:
+            case RED_SANDSTONE:
+            case RED_SANDSTONE_STAIRS:
+            case DOUBLE_STEP_2:
+            case STEP_2:
+            case SPRUCE_FENCE_GATE:
+            case BIRCH_FENCE_GATE:
+            case JUNGLE_FENCE_GATE:
+            case DARK_OAK_FENCE_GATE:
+            case ACACIA_FENCE_GATE:
+            case SPRUCE_FENCE:
+            case BIRCH_FENCE:
+            case JUNGLE_FENCE:
+            case DARK_OAK_FENCE:
+            case ACACIA_FENCE:
+            case SPRUCE_DOOR:
+            case BIRCH_DOOR:
+            case JUNGLE_DOOR:
+            case ACACIA_DOOR:
+            case DARK_OAK_DOOR:
                 return true;
             default:
                 return false;
@@ -837,6 +862,9 @@ public enum Material {
             case ACTIVATOR_RAIL:
             case CARPET:
             case DOUBLE_PLANT:
+            case BARRIER:
+            case STANDING_BANNER:
+            case WALL_BANNER:
                 return true;
             default:
                 return false;
@@ -889,6 +917,21 @@ public enum Material {
             case LOG_2:
             case ACACIA_STAIRS:
             case DARK_OAK_STAIRS:
+            case SPRUCE_FENCE_GATE:
+            case BIRCH_FENCE_GATE:
+            case JUNGLE_FENCE_GATE:
+            case DARK_OAK_FENCE_GATE:
+            case ACACIA_FENCE_GATE:
+            case SPRUCE_FENCE:
+            case BIRCH_FENCE:
+            case JUNGLE_FENCE:
+            case DARK_OAK_FENCE:
+            case ACACIA_FENCE:
+            case SPRUCE_DOOR:
+            case BIRCH_DOOR:
+            case JUNGLE_DOOR:
+            case ACACIA_DOOR:
+            case DARK_OAK_DOOR:
                 return true;
             default:
                 return false;
@@ -928,6 +971,11 @@ public enum Material {
             case LOG_2:
             case CARPET:
             case DOUBLE_PLANT:
+            case SPRUCE_FENCE:
+            case BIRCH_FENCE:
+            case JUNGLE_FENCE:
+            case DARK_OAK_FENCE:
+            case ACACIA_FENCE:
                 return true;
             default:
                 return false;
@@ -1009,6 +1057,10 @@ public enum Material {
             case COAL_BLOCK:
             case LOG_2:
             case PACKED_ICE:
+            case PRISMARINE:
+            case SEA_LANTERN:
+            case RED_SANDSTONE:
+            case DOUBLE_STEP_2:
                 return true;
             default:
                 return false;

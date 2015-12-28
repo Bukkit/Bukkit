@@ -66,7 +66,7 @@ public class Skull extends MaterialData implements Directional {
                 break;
 
             case EAST:
-                data = 0x4;
+                data = 0x5;
                 break;
 
             case SOUTH:
@@ -74,7 +74,7 @@ public class Skull extends MaterialData implements Directional {
                 break;
 
             case WEST:
-                data = 0x5;
+                data = 0x4;
         }
 
         setData((byte) data);
@@ -94,10 +94,10 @@ public class Skull extends MaterialData implements Directional {
             case 0x3:
                 return BlockFace.SOUTH;
 
-            case 0x4:
+            case 0x5:
                 return BlockFace.EAST;
 
-            case 0x5:
+            case 0x4:
                 return BlockFace.WEST;
         }
     }
