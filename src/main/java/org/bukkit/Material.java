@@ -644,8 +644,7 @@ public enum Material {
     }
 
     /**
-     * Check if the material is a block and solid (cannot be passed through by
-     * a player)
+     * Check if the material is a block and solid (cannot be broken by liquids)
      *
      * @return True if this material is a block and solid
      */
