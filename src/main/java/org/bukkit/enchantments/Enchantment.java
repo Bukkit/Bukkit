@@ -3,6 +3,7 @@ package org.bukkit.enchantments;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.command.defaults.EnchantCommand;
 import org.bukkit.inventory.ItemStack;
 
@@ -288,5 +289,16 @@ public abstract class Enchantment {
      */
     public static Enchantment[] values() {
         return byId.values().toArray(new Enchantment[byId.size()]);
+    }
+
+    /**
+     * Checks if the given enchantment's level is safe.
+     *
+     * @param ench Enchantment to test
+     * @return True if the enchantment's level is safe
+     */
+    public static boolean isSafe(Enchantment ench, int level) {
+        Validate.notNull(ench, "Enchantment cannot be null");
+        return !((level < ench.getStartLevel()) || (level > ench.getMaxLevel()));
     }
 }
