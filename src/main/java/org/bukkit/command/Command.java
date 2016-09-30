@@ -272,7 +272,7 @@ public abstract class Command {
      * @return Permission check failed message
      */
     public String getPermissionMessage() {
-        return permissionMessage;
+        return ChatColor.translateAlternateColorCodes('&', permissionMessage);
     }
 
     /**
