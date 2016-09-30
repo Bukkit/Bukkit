@@ -43,7 +43,7 @@ public class EffectCommand extends VanillaCommand {
             return true;
         }
 
-        final Player player = sender.getServer().getPlayer(args[0]);
+        final Player player = sender.getServer().getPlayerExact(args[0]);
 
         if (player == null) {
             sender.sendMessage(ChatColor.RED + String.format("Player, %s, not found", args[0]));

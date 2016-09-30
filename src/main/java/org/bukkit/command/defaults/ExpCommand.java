@@ -40,7 +40,7 @@ public class ExpCommand extends VanillaCommand {
             }
 
             if (args.length > 1) {
-                player = Bukkit.getPlayer(args[1]);
+                player = Bukkit.getPlayerExact(args[1]);
             } else if (sender instanceof Player) {
                 player = (Player) sender;
             }
