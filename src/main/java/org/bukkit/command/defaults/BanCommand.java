@@ -32,7 +32,7 @@ public class BanCommand extends VanillaCommand {
         String reason = args.length > 0 ? StringUtils.join(args, ' ', 1, args.length) : null;
         Bukkit.getBanList(BanList.Type.NAME).addBan(args[0], reason, null, sender.getName());
 
-        Player player = Bukkit.getPlayer(args[0]);
+        Player player = Bukkit.getPlayerExact(args[0]);
         if (player != null) {
             player.kickPlayer("Banned by admin.");
         }
