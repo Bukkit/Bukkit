@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -44,8 +45,12 @@ public class DefaultGameModeCommand extends VanillaCommand {
                 mode = GameMode.CREATIVE;
             } else if (modeArg.equalsIgnoreCase("adventure") || modeArg.equalsIgnoreCase("a")) {
                 mode = GameMode.ADVENTURE;
-            } else {
+            } else if (modeArg.equalsIgnoreCase("survival") || modeArg.equalsIgnoreCase("s")) {
                 mode = GameMode.SURVIVAL;
+            } else {
+                sender.sendMessage(ChatColor.RED + "Invalid game mode specified.");
+                sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+                return false;
             }
         }
 

@@ -55,8 +55,12 @@ public class GameModeCommand extends VanillaCommand {
                     mode = GameMode.CREATIVE;
                 } else if (modeArg.equalsIgnoreCase("adventure") || modeArg.equalsIgnoreCase("a")) {
                     mode = GameMode.ADVENTURE;
-                } else {
+                } else if (modeArg.equalsIgnoreCase("survival") || modeArg.equalsIgnoreCase("s")) {
                     mode = GameMode.SURVIVAL;
+                } else {
+                    sender.sendMessage(ChatColor.RED + "Invalid game mode specified.");
+                    sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+                    return false;
                 }
             }
 
