@@ -39,7 +39,7 @@ public class EffectCommand extends VanillaCommand {
         }
 
         if (args.length < 2) {
-            sender.sendMessage(getUsage());
+            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return true;
         }
 
