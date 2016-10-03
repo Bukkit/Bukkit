@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
  * Thrown whenever a {@link Player} dies
  */
 public class PlayerDeathEvent extends EntityDeathEvent {
+    private Player player;
     private int newExp = 0;
     private String deathMessage = "";
     private int newLevel = 0;
@@ -26,10 +27,20 @@ public class PlayerDeathEvent extends EntityDeathEvent {
 
     public PlayerDeathEvent(final Player player, final List<ItemStack> drops, final int droppedExp, final int newExp, final int newTotalExp, final int newLevel, final String deathMessage) {
         super(player, drops, droppedExp);
+        this.player = player;
         this.newExp = newExp;
         this.newTotalExp = newTotalExp;
         this.newLevel = newLevel;
         this.deathMessage = deathMessage;
+    }
+    
+    /**
+     * Gets the player that dies directly.
+     * 
+     * @return The {@link Player} that dies. 
+     */
+    public Player getPlayer() {
+        return player;
     }
 
     @Override
