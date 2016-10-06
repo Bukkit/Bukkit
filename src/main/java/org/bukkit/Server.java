@@ -170,6 +170,13 @@ public interface Server extends PluginMessageRecipient {
      * @return the ID of this server
      */
     public String getServerId();
+    
+    /**
+     * Gets whether this server allows the End or not.
+     *
+     * @return Whether this server allows the End or not.
+     */
+    public boolean getAllowEnd();
 
     /**
      * Get world type (level-type setting) for default world.
