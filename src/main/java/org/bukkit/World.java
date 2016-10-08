@@ -1209,4 +1209,39 @@ public interface World extends PluginMessageRecipient, Metadatable {
             }
         }
     }
+    
+    /**
+     * Sets the default spawn {@link Location} of this world.
+     * 
+     * @param location The new spawn location for the world.
+     */
+    public void setSpawnLocation(Location location);
+    
+    /**
+     *  Gets the Monster Spawn value for the World.
+     *  
+     *  @return This worlds Monster Spawn value.
+     */
+    public boolean getMonsterSpawn();
+    
+    /**
+     * Sets the Monster Spawn value for the World.
+     * 
+     * @param value The new Monster Spawn setting.
+     */
+    public void setMonsterSpawn(boolean value);
+    
+    /**
+     *  Gets the Animal Spawn value for the World.
+     *  
+     *  @return This worlds Animal Spawn value.
+     */
+    public boolean getAnimalSpawn();
+    
+    /**
+     *  Sets the Animal Spawn value for the World.
+     *  
+     *  @param value The new Animal Spawn setting.
+     */
+    public void setAnimalSpawn(boolean value);
 }
