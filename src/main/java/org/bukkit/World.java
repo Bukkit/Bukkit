@@ -71,6 +71,49 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public int getBlockTypeIdAt(Location location);
 
     /**
+     * Gets the block meta-data at the given coordinates
+     *
+     * @param x X-coordinate of the block
+     * @param y Y-coordinate of the block
+     * @param z Z-coordinate of the block
+     * @return Meta-data of the block at the given coordinates
+     * @see #getBlockAt(org.bukkit.Location) Returns a live Block object at the given location
+     */
+    public byte getBlockMetaDataAt(int x, int y, int z);
+    
+    /**
+     * Gets the block meta-data at the given {@link Location}
+     *
+     * @param location Location of the block
+     * @return Meta-data of the block at the given location
+     * @see #getBlockAt(org.bukkit.Location) Returns a live Block object at the given location
+     */
+    public byte getBlockMetaDataAt(Location location);
+    
+    /**
+     * Sets the block type ID for the block at the given coordinates
+     *
+     * @param x X-coordinate of the block
+     * @param y Y-coordinate of the block
+     * @param z Z-coordinate of the block
+     * @param id Id for the block at the given coordinates
+     * @return Returns true on success
+     */
+    public boolean setBlockTypeIdAt(int x, int y, int z, int typeId);
+
+    /**
+     * Sets the block type ID and data for the block at the given coordinates
+     *
+     * @param x X-coordinate of the block
+     * @param y Y-coordinate of the block
+     * @param z Z-coordinate of the block
+     * @param id Id for the block at the given coordinates
+     * @param data Data setting for block
+     * @return Returns true on success
+     */
+    public boolean setBlockTypeIdAndDataAt(int x, int y, int z, int typeId, int data);
+
+    /**
      * Gets the highest non-air coordinate at the given coordinates
      *
      * @param x X-coordinate of the blocks
