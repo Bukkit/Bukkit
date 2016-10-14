@@ -1,11 +1,13 @@
 package org.bukkit.conversations;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * The Conversation class is responsible for tracking the current state of a
@@ -225,7 +227,12 @@ public class Conversation {
             }
 
             // Not abandoned, output the next prompt
-            currentPrompt = currentPrompt.acceptInput(context, input);
+            try {
+                currentPrompt = currentPrompt.acceptInput(context, input);
+            } catch (Throwable t) {
+                Bukkit.getLogger().log(Level.SEVERE, "Could not pass prompt input to " + context.getPlugin().getDescription().getFullName(), t);
+                return;
+            }
             outputNextPrompt();
         }
     }
@@ -281,9 +288,23 @@ public class Conversation {
         if (currentPrompt == null) {
             abandon(new ConversationAbandonedEvent(this));
         } else {
-            context.getForWhom().sendRawMessage(prefix.getPrefix(context) + currentPrompt.getPromptText(context));
+            String message;
+            try {
+                message = prefix.getPrefix(context) + currentPrompt.getPromptText(context);
+            } catch (Throwable t) {
+                Bukkit.getLogger().log(Level.SEVERE, "Failed to get prompt text for "
+                        + context.getPlugin().getDescription().getFullName(), t);
+                return;
+            }
+            context.getForWhom().sendRawMessage(message);
             if (!currentPrompt.blocksForInput(context)) {
-                currentPrompt = currentPrompt.acceptInput(context, null);
+                try {
+                    currentPrompt = currentPrompt.acceptInput(context, null);
+                } catch (Throwable t) {
+                    Bukkit.getLogger().log(Level.SEVERE, "Could not pass prompt input to "
+                            + context.getPlugin().getDescription().getFullName(), t);
+                    return;
+                }
                 outputNextPrompt();
             }
         }
