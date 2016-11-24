@@ -2,10 +2,15 @@ package org.bukkit.plugin.messaging;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.TestPlugin;
-import java.util.Collection;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
+import java.util.Collection;
+
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class StandardMessengerTest {
     public StandardMessenger getMessenger() {
@@ -280,6 +285,31 @@ public class StandardMessengerTest {
         assertEquals(messenger.getIncomingChannelRegistrations(plugin2, "baz"), registration5, registration6);
         assertEquals(messenger.getIncomingChannelRegistrations(plugin1, "baz"));
         assertEquals(messenger.getIncomingChannelRegistrations(plugin3, "qux"));
+    }
+
+    @Test(expected = ChannelNameTooLongException.class)
+    public void testIncomingChannelNameTooLong() {
+        Messenger messenger = getMessenger();
+        TestPlugin plugin1 = getPlugin();
+
+        messenger.registerIncomingPluginChannel(plugin1, "ThisShouldFailSinceItIsLongerAsMaximumAllowedCharacters", new TestMessageListener("foo", "bar".getBytes()));
+    }
+
+    @Test(expected = ChannelNameTooLongException.class)
+    public void testOutgoingChannelNameTooLong() {
+        Messenger messenger = getMessenger();
+        TestPlugin plugin1 = getPlugin();
+
+        messenger.registerOutgoingPluginChannel(plugin1, "ThisShouldFailSinceItIsLongerAsMaximumAllowedCharacters");
+    }
+
+    @Test
+    public void testChannelNameLengthRegister() {
+        Messenger messenger = getMessenger();
+        TestPlugin plugin1 = getPlugin();
+
+        PluginMessageListenerRegistration registration1 = messenger.registerIncomingPluginChannel(plugin1, "ThisIs20CharsLong...", new TestMessageListener("foo", "bar".getBytes()));
+        assertEquals(messenger.getIncomingChannelRegistrations(plugin1, "ThisIs20CharsLong..."), registration1);
     }
 
     private static <T> void assertEquals(Collection<T> actual, T... expected) {
