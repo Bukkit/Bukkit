@@ -361,7 +361,7 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public synchronized Plugin[] getPlugins() {
-        return plugins.toArray(new Plugin[0]);
+        return plugins.toArray(new Plugin[plugins.size()]);
     }
 
     /**
