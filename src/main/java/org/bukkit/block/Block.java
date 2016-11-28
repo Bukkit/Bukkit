@@ -327,6 +327,13 @@ public interface Block extends Metadatable {
      * @return true if this block is liquid
      */
     boolean isLiquid();
+    
+    /**
+     * Checks if this block is solid.
+     * 
+     * A block is considered solid when TODO
+     */
+    boolean isSolid();
 
     /**
      * Gets the temperature of the biome of this block
