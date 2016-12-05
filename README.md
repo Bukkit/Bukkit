@@ -10,7 +10,7 @@ Contributing Guidelines: [CONTRIBUTING.md](https://github.com/Bukkit/Bukkit/blob
 Compilation
 -----------
 
-We use maven to handle our dependencies.
+We use Maven to handle our dependencies.
 
 * Install [Maven 3](http://maven.apache.org/download.html)
 * Check out this repo and: `mvn clean install`
