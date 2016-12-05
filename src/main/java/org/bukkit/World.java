@@ -456,6 +456,18 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return The spawn location of this world
      */
     public Location getSpawnLocation();
+    
+    /*
+    * View particles
+    *
+    * @param x X coordinate
+    * @param y Y coordinate
+    * @param z Z coordinate
+    * @param z Z coordinate
+    * @param type Particles Type
+    */
+    
+    public Location displayParticles(int x, int y, int z, ParticlesType type);
 
     /**
      * Sets the spawn location of the world
