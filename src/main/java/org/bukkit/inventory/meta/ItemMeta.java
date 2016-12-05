@@ -124,6 +124,36 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
     */
     boolean hasConflictingEnchant(Enchantment ench);
 
+    /**
+     * Checks if this item meta has a glowing effect.
+     * <p>
+     * This will return true if this item meta has enchantments or if a
+     * plugin added a glowing effect with the setGlow(boolean) method.
+     * Note that this only reads enchantment glow, so this method will
+     * not reflect what can actually be seen in game for Blocks (which
+     * cannot be enchanted) and for items like Nether Stars (which already
+     * have a different kind of glow effect).
+     *
+     * @return true if this item meta has a glowing effect, false otherwise
+     */
+    boolean hasGlow();
+
+    /**
+     * Attempt to change the glowing state of this item meta.
+     * <p>
+     * This will not do anything if this item meta has enchantments.
+     * <p>
+     * Note that this only adds/removes a fake enchantment glow, so this
+     * method will not reflect what can actually be seen in game for Blocks
+     * (which cannot be enchanted) and for items like Nether Stars (which
+     * already have a different kind of glow effect).
+     *
+     * @param value new value for the glowing effect
+     * @return true if the glowing state of this item meta changed, false
+     *     otherwise
+     */
+    boolean setGlow(boolean value);
+
     @SuppressWarnings("javadoc")
     ItemMeta clone();
 }
