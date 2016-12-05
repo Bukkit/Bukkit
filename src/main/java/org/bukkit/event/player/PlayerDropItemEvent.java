@@ -30,6 +30,9 @@ public class PlayerDropItemEvent extends PlayerEvent implements Cancellable {
     public boolean isCancelled() {
         return cancel;
     }
+    public int getAmount() {
+        return drop.getItemStack().getAmount();
+    }
 
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
