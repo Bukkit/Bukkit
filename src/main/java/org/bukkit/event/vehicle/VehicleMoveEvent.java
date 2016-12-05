@@ -2,13 +2,15 @@ package org.bukkit.event.vehicle;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Vehicle;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
  * Raised when a vehicle moves.
  */
-public class VehicleMoveEvent extends VehicleEvent {
+public class VehicleMoveEvent extends VehicleEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
+    private boolean cancelled;
     private final Location from;
     private final Location to;
 
@@ -37,6 +39,13 @@ public class VehicleMoveEvent extends VehicleEvent {
         return to;
     }
 
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
+    }
 
     @Override
     public HandlerList getHandlers() {
