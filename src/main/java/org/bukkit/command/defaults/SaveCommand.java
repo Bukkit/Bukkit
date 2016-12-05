@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.world.WorldSaveEvent;
 
 import com.google.common.collect.ImmutableList;
 
@@ -28,6 +29,9 @@ public class SaveCommand extends VanillaCommand {
 
         for (World world : Bukkit.getWorlds()) {
             world.save();
+
+            WorldSaveEvent event = new WorldSaveEvent(world);
+            Bukkit.getServer().getPluginManager().callEvent(event);
         }
 
         Command.broadcastCommandMessage(sender, "Save complete.");
