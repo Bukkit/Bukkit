@@ -151,6 +151,10 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
          */
         SLIME_SPLIT,
         /**
+         * When a creature is spawned by nether portal
+         */
+        NETHER_PORTAL,
+        /**
          * When an entity calls for reinforcements
          */
         REINFORCEMENTS,
