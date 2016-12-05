@@ -67,6 +67,20 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
     public void setWhitelisted(boolean value);
 
     /**
+     * Gets this offline players current {@link GameMode}
+     *
+     * @return Current game mode
+     */
+    public GameMode getGameMode();
+
+    /**
+     * Sets this offline players current {@link GameMode}
+     *
+     * @param mode New game mode
+     */
+    public void setGameMode(GameMode mode);
+
+    /**
      * Gets a {@link Player} object that this represents, if there is one
      * <p>
      * If the player is online, this will return that player. Otherwise,
@@ -74,6 +88,7 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
      *
      * @return Online player
      */
+     
     public Player getPlayer();
 
     /**
