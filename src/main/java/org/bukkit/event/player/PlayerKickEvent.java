@@ -12,14 +12,25 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
     private String leaveMessage;
     private String kickReason;
     private Boolean cancel;
+    private Player kicker;
 
-    public PlayerKickEvent(final Player playerKicked, final String kickReason, final String leaveMessage) {
+    public PlayerKickEvent(final Player playerKicked, final Player kicker, final String kickReason, final String leaveMessage) {
         super(playerKicked);
+        this.kicker = kicker;
         this.kickReason = kickReason;
         this.leaveMessage = leaveMessage;
         this.cancel = false;
     }
-
+    
+    /**
+     * Gets the player who kicked
+     * 
+     * @return player kicker
+     */
+    public Player getKicker(){
+        return kicker;
+    }
+    
     /**
      * Gets the reason why the player is getting kicked
      *
