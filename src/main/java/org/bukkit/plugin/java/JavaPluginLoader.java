@@ -144,10 +144,14 @@ public final class JavaPluginLoader implements PluginLoader {
 
         try {
             jar = new JarFile(file);
-            JarEntry entry = jar.getJarEntry("plugin.yml");
+            JarEntry entry = jar.getJarEntry("bukkit.yml");
+            
+            if (entry == null) {
+                entry = jar.getJarEntry("plugin.yml");
+            }
 
             if (entry == null) {
-                throw new InvalidDescriptionException(new FileNotFoundException("Jar does not contain plugin.yml"));
+                throw new InvalidDescriptionException(new FileNotFoundException("Jar does not contain bukkit.yml or plugin.yml"));
             }
 
             stream = jar.getInputStream(entry);
