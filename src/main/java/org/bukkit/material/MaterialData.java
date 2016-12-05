@@ -6,9 +6,10 @@ import org.bukkit.Material;
 /**
  * Handles specific metadata for certain items or blocks
  */
-public class MaterialData implements Cloneable {
+public class MaterialData implements Cloneable implements Serializable{
     private final int type;
     private byte data = 0;
+    private static final long serialVersionUID = 3099489010508308627L;
 
     /**
      *
