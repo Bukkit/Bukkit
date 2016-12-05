@@ -51,6 +51,7 @@ If you answered yes to any of these questions, chances are high your change does
     * To create a branch in Git;
         * `git branch relevantBranchName`
         * Then checkout the new branch with `git checkout relevantBranchName`
+        * Or create and checkout your branch in a single command `git checkout -b relevantBranchName`
 * Check for unnecessary whitespace with `git diff --check` before committing.
 * Make sure your code meets [our requirements](#code-requirements).
 * If the work you want to do involves editing Minecraft classes, be sure to read over the [Using Minecraft Internals](#using-minecraft-internals) section.
