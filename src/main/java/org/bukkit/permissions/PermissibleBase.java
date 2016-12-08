@@ -67,6 +67,10 @@ public class PermissibleBase implements Permissible {
         }
 
         String name = inName.toLowerCase();
+        
+        if (checkWildcards(name)) {
+            return true;
+        }
 
         if (isPermissionSet(name)) {
             return permissions.get(name).getValue();
@@ -87,11 +91,33 @@ public class PermissibleBase implements Permissible {
         }
 
         String name = perm.getName().toLowerCase();
+        
+        if (checkWildcards(name)) {
+            return true;
+        }
 
         if (isPermissionSet(name)) {
             return permissions.get(name).getValue();
         }
         return perm.getDefault().getValue(isOp());
+    }
+    
+    public boolean checkWildcards(String name) {
+        if (isPermissionSet("*")) {
+            return permissions.get("*").getValue();
+        }
+        
+        String node = "";
+        
+        for (String part : name.split("\\.")) {
+            node += part;
+            if (isPermissionSet(node + ".*")) {
+                return permissions.get(node + ".*").getValue();
+            }
+            node += ".";
+        }
+        
+        return false;
     }
 
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
