@@ -50,7 +50,7 @@ public interface CreatureSpawner extends BlockState {
     public String getCreatureTypeId();
 
     /**
-     * Set the spawner mob type.
+     * Set the spawner creature type.
      *
      * @param creatureType The creature type's name.
      */
@@ -64,7 +64,7 @@ public interface CreatureSpawner extends BlockState {
     public String getCreatureTypeName();
 
     /**
-     * Set the spawner mob type.
+     * Set the spawner creature type.
      *
      * @param creatureType The creature type's name.
      * @deprecated Use {@link #setCreatureTypeByName(String)}.
