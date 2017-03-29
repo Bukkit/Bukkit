@@ -11,13 +11,16 @@ import org.bukkit.event.HandlerList;
 public class PlayerPickupItemEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final Item item;
-    private boolean cancel = false;
+    private boolean cancel;
     private final int remaining;
+    private final boolean pickup;
 
-    public PlayerPickupItemEvent(final Player player, final Item item, final int remaining) {
+    public PlayerPickupItemEvent(final Player player, final Item item, final int remaining, final boolean pickup) {
         super(player);
         this.item = item;
         this.remaining = remaining;
+        this.pickup = pickup;
+        this.cancel = !pickup;
     }
 
     /**
@@ -36,6 +39,16 @@ public class PlayerPickupItemEvent extends PlayerEvent implements Cancellable {
      */
     public int getRemaining() {
         return remaining;
+    }
+
+    /**
+     * Get if item could be picked up from the first place, before another
+     * plugin cancelled it
+     *
+     * @return true if item can be picked up according to vanilla minecraft
+     */
+    public boolean getPickup() {
+        return pickup;
     }
 
     public boolean isCancelled() {
