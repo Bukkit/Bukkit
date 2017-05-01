@@ -88,6 +88,20 @@ public interface Block extends Metadatable {
      */
     byte getLightLevel();
 
+    /** 
+     * Get the sky light level between 0-15
+     * 
+     * @return sky light level
+     */
+    byte getSkyLightLevel();
+    
+    /**
+     * Get the emitted light level between 0-15
+     * 
+     * @return emitted light level
+     */
+    byte getEmittedLightLevel();
+    
     /**
      * Get the amount of light at this block from the sky.
      * <p>
