@@ -21,6 +21,16 @@ public class SignChangeEvent extends BlockEvent implements Cancellable {
         this.player = thePlayer;
         this.lines = theLines;
     }
+    
+    /**
+     * Gets the player for this event
+     *
+     * @return Player player
+     */
+    public Player getPlayer()
+    {
+        return player;
+    }
 
     /**
      * Gets the player changing the sign involved in this event.
