@@ -11,4 +11,6 @@ public interface Recipe {
      * @return The result stack
      */
     ItemStack getResult();
+
+    boolean matches(Recipe other);
 }
