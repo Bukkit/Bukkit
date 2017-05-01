@@ -351,7 +351,12 @@ public class ScoreboardCommand extends VanillaCommand {
                         for (OfflinePlayer player : players) {
                             team.removePlayer(player);
                         }
-                        sender.sendMessage("Removed all " + players.size() + " player(s) from team " + team.getName());
+                        if(players.size() == 1){
+                            sender.sendMessage("Removed " + players.size() + " player from team " + team.getName());
+                        }
+                        else(players.size() != 1){
+                            sender.sendMessage("Removed all" + players.size() + " players from team " + team.getName());
+                        }
                     }
                 }
             } else if (args[1].equalsIgnoreCase("join")) {
@@ -382,7 +387,12 @@ public class ScoreboardCommand extends VanillaCommand {
                             addedPlayers.add(offlinePlayer.getName());
                         }
                     }
-                    sender.sendMessage("Added " + addedPlayers.size() + " player(s) to team " + team.getName() + ": " + stringCollectionToString(addedPlayers));
+                    if(addedPlayers.size() == 1){
+                        sender.sendMessage("Added " + addedPlayers.size() + " player to team " + team.getName() + ": " + stringCollectionToString(addedPlayers));
+                    }
+                    else(addedPlayers.size != 1){
+                        sender.sendMessage("Added " + addedPlayers.size() + " players to team " + team.getName() + ": " + stringCollectionToString(addedPlayers));
+                    }
                 }
             } else if (args[1].equalsIgnoreCase("leave")) {
                 if (!(sender instanceof Player) && args.length < 3) {
