@@ -138,6 +138,14 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public boolean isChunkLoaded(Chunk chunk);
 
     /**
+     * Saves specified chunk
+     * @param x The x coordinate
+     * @param z The z coordinate
+     * @return true if the chunk is saved, otherwise false
+     */
+    public boolean saveChunk(int x, int z);
+
+    /**
      * Gets an array of all loaded {@link Chunk}s
      *
      * @return Chunk[] containing all loaded chunks
