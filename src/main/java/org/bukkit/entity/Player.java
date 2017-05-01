@@ -742,6 +742,13 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public void setTotalExperience(int exp);
 
     /**
+     * Gets the total experience needed to level up from current level
+     *
+     * @return Total experience needed to level
+     */
+    public int getExpToLevel();
+
+    /**
      * Gets the players current exhaustion level.
      * <p>
      * Exhaustion controls how fast the food level drops. While you have a
