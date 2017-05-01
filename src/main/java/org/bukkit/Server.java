@@ -226,6 +226,13 @@ public interface Server extends PluginMessageRecipient {
     public void reloadWhitelist();
 
     /**
+     * Gets the current playerlimit for the server
+     *
+     * @return An integer with the limit
+     */
+    public int getPlayerLimit();
+    
+    /**
      * Broadcast a message to all players.
      * <p>
      * This is the same as calling {@link #broadcast(java.lang.String,
