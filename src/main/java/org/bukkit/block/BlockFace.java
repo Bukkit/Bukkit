@@ -129,4 +129,60 @@ public enum BlockFace {
 
         return BlockFace.SELF;
     }
+
+    /**
+     * Corrects BlockFaces to 90 degrees to the right. There is an
+     * inherent problem with the BlockFace to data-value mapping of
+     * directions that exists between the data value for direction
+     * and Bukkit's BlockFace implementation. The directions here are
+     * actually 90 degrees to the left of where they should be. I.E.:
+     * 
+     * BlockFace.WEST = Actually North
+     * BlockFace.SOUTH = Actually West
+     * etc.
+     * 
+     * This method corrects that. Anytime you require a representation of
+     * data value to BlockFace, use this method to correct the resulting
+     * BlockFace.
+     * @param BlockFace the block face that is being rotated
+     * @return the rotated block face, otherwise SELF if the block face is not applicable
+     */
+    public static BlockFace correctBlockFace(BlockFace face) {
+        switch (face) {
+            case WEST:
+                return BlockFace.NORTH;
+            case WEST_NORTH_WEST:
+                return BlockFace.NORTH_NORTH_EAST;
+            case NORTH_WEST:
+                return BlockFace.NORTH_EAST;
+            case NORTH_NORTH_WEST:
+                return BlockFace.EAST_NORTH_EAST;
+            case NORTH:
+                return BlockFace.EAST;
+            case NORTH_NORTH_EAST:
+                return BlockFace.EAST_SOUTH_EAST;
+            case NORTH_EAST:
+                return BlockFace.SOUTH_EAST;
+            case EAST_NORTH_EAST:
+                return BlockFace.SOUTH_SOUTH_EAST;
+            case EAST:
+                return BlockFace.SOUTH;
+            case EAST_SOUTH_EAST:
+                return BlockFace.SOUTH_SOUTH_WEST;
+            case SOUTH_EAST:
+                return BlockFace.SOUTH_WEST;
+            case SOUTH_SOUTH_EAST:
+                return BlockFace.WEST_SOUTH_WEST;
+            case SOUTH:
+                return BlockFace.WEST;
+            case SOUTH_SOUTH_WEST:
+                return BlockFace.WEST_NORTH_WEST;
+            case SOUTH_WEST:
+                return BlockFace.NORTH_WEST;
+            case WEST_SOUTH_WEST:
+                return BlockFace.NORTH_NORTH_WEST;
+        }
+
+        return BlockFace.SELF;
+    }
 }
