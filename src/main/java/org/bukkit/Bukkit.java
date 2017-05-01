@@ -690,6 +690,13 @@ public final class Bukkit {
     public static WarningState getWarningState() {
         return server.getWarningState();
     }
+    
+    /**
+     * @see Server#getAPIs()
+     */
+    public static String[] getAPIs() {
+    	return server.getAPIs();
+    }
 
     /**
      * @see Server#getItemFactory()
