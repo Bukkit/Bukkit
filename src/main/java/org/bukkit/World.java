@@ -383,14 +383,30 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return The lightning entity.
      */
     public LightningStrike strikeLightningEffect(Location loc);
-
+    
+    /**
+     * Get an Entity
+     * 
+     * @param uniqueId
+     * @return the Entity
+     */
+    public Entity getEntity(UUID uniqueId);
+    
     /**
      * Get a list of all entities in this World
      *
      * @return A List of all Entities currently residing in this world
      */
     public List<Entity> getEntities();
-
+    
+    /**
+     * Get a LivingEntity
+     * 
+     * @param uniqueId
+     * @return the LivingEntity
+     */
+    public LivingEntity getLivingEntity(UUID uniqueId);
+    
     /**
      * Get a list of all living entities in this World
      *
