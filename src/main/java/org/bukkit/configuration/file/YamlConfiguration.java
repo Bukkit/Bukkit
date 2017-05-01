@@ -23,7 +23,7 @@ import org.yaml.snakeyaml.representer.Representer;
  * Note that this implementation is not synchronized.
  */
 public class YamlConfiguration extends FileConfiguration {
-    protected static final String COMMENT_PREFIX = "# ";
+    protected static final String COMMENT_PREFIX = "#";
     protected static final String BLANK_CONFIG = "{}\n";
     private final DumperOptions yamlOptions = new DumperOptions();
     private final Representer yamlRepresenter = new YamlRepresenter();
