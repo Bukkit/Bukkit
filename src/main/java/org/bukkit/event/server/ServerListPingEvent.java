@@ -82,6 +82,9 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
         }
         return numPlayers;
     }
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+    }
 
     /**
      * Get the maximum number of players sent.
