@@ -104,7 +104,6 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         this.durability = damage;
         if (data != null) {
             createData(data);
-            this.durability = data;
         }
     }
 
