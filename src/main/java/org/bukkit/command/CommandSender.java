@@ -6,18 +6,12 @@ import org.bukkit.permissions.Permissible;
 public interface CommandSender extends Permissible {
 
     /**
-     * Sends this sender a message
+     * Sends this sender any amount of messages.
+     * Using this method without adding any arguments is equivalent to doing {@code sender.sendMessage("")}.
      *
-     * @param message Message to be displayed
+     * @param message message(s) to be displayed
      */
-    public void sendMessage(String message);
-
-    /**
-     * Sends this sender multiple messages
-     *
-     * @param messages An array of messages to be displayed
-     */
-    public void sendMessage(String[] messages);
+    public void sendMessage(String... message);
 
     /**
      * Returns the server instance that this command is running on
