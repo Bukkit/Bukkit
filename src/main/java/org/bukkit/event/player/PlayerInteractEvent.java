@@ -48,7 +48,7 @@ public class PlayerInteractEvent extends PlayerEvent implements Cancellable {
      * @return boolean cancellation state
      */
     public boolean isCancelled() {
-        return useInteractedBlock() == Result.DENY;
+        return useInteractedBlock() == Result.DENY && useItemInHand() == Result.DENY;
     }
 
     /**
