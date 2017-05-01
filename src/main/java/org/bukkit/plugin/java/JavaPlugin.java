@@ -221,6 +221,9 @@ public abstract class JavaPlugin extends PluginBase {
 
     @Override
     public void saveConfig() {
+        if (newConfig == null) {
+            return;
+        }
         try {
             getConfig().save(configFile);
         } catch (IOException ex) {
