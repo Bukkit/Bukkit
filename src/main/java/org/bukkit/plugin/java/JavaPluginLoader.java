@@ -39,6 +39,7 @@ import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.TimedRegisteredListener;
 import org.bukkit.plugin.UnknownDependencyException;
+import org.bukkit.util.Security;
 import org.yaml.snakeyaml.error.YAMLException;
 
 /**
@@ -253,7 +254,7 @@ public final class JavaPluginLoader implements PluginLoader {
                 continue;
             }
             final Class<? extends Event> eventClass = checkClass.asSubclass(Event.class);
-            method.setAccessible(true);
+            Security.setAccessible(method, server);
             Set<RegisteredListener> eventSet = ret.get(eventClass);
             if (eventSet == null) {
                 eventSet = new HashSet<RegisteredListener>();
