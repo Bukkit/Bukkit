@@ -565,7 +565,6 @@ public final class SimplePluginManager implements PluginManager {
     private HandlerList getEventListeners(Class<? extends Event> type) {
         try {
             Method method = getRegistrationClass(type).getDeclaredMethod("getHandlerList");
-            method.setAccessible(true);
             return (HandlerList) method.invoke(null);
         } catch (Exception e) {
             throw new IllegalPluginAccessException(e.toString());
