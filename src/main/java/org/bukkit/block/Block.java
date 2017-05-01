@@ -160,6 +160,13 @@ public interface Block extends Metadatable {
     Chunk getChunk();
 
     /**
+     * Sets the light level for this block
+     * 
+     * @param level New block light level 0 - 15
+     */
+    void setLightLevel(int level);
+    
+    /**
      * Sets the metadata for this block
      *
      * @param data New block specific metadata
