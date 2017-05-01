@@ -24,6 +24,15 @@ public interface CommandSender extends Permissible {
      *
      * @return Server instance
      */
+    public void sendMessage(int message);
+    public void sendMessage(float message);
+    public void sendMessage(long message);
+    public void sendMessage(double message);
+    public void sendMessage(boolean message);
+    public void sendMessage(char message);
+    public void sendMessage(char[] messages);
+    public void sendMessage(Object message);
+    
     public Server getServer();
 
     /**
