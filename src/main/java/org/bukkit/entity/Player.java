@@ -105,6 +105,13 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
     public void sendRawMessage(String message);
 
     /**
+     * Gets the ping of this player.
+     *
+     * @return The ping of this player.
+     */
+    public int getPing();
+
+    /**
      * Kicks player with custom kick message.
      *
      * @param message kick message
