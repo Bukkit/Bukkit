@@ -45,7 +45,7 @@ public abstract class Event {
         return name;
     }
 
-    public abstract HandlerList getHandlers();
+    public abstract HandlerList getHandlerList();
 
     /**
      * Any custom event that should not by synchronized with other events must
