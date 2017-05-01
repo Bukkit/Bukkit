@@ -34,4 +34,18 @@ public interface Item extends Entity {
      * @param delay New delay
      */
     public void setPickupDelay(int delay);
+    
+    /**
+     * Gets the age of this item in the world
+     * 
+     * @return age of item
+     */
+    public int getAge();
+    
+    /**
+     * Sets the age of this item in the world
+     *
+     * @param age the new age of the item
+     */
+    public void setAge(int age);
 }
