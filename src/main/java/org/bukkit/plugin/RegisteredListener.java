@@ -46,6 +46,15 @@ public class RegisteredListener {
     public EventPriority getPriority() {
         return priority;
     }
+    
+    /**
+    * Gets the executor for this registration
+    *
+    * @return Registered Executor
+    */
+    public EventExecutor getExecutor() {
+        return executor;
+    }
 
     /**
      * Calls the event executor
