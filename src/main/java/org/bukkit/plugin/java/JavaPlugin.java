@@ -291,6 +291,8 @@ public abstract class JavaPlugin extends PluginBase {
             return connection.getInputStream();
         } catch (IOException ex) {
             return null;
+        } catch (NullPointerException ex) {
+            return null;
         }
     }
 
