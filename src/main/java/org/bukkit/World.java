@@ -1120,7 +1120,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * Get existing rules
      *
      * @return An array of rules
+     * @deprecated use {@link World#getExistingGameRules()}
      */
+    @Deprecated
     public String[] getGameRules();
 
     /**
@@ -1130,7 +1132,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      *
      * @param rule Rule to look up value of
      * @return String value of rule
+     * @deprecated use {@link World#getGameRuleValue(GameRule)}
      */
+    @Deprecated
     public String getGameRuleValue(String rule);
 
     /**
@@ -1144,7 +1148,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param rule Rule to set
      * @param value Value to set rule to
      * @return True if rule was set
+     * @deprecated use {@link World#setGameRuleValue(GameRule, String)}
      */
+    @Deprecated
     public boolean setGameRuleValue(String rule, String value);
 
     /**
@@ -1154,6 +1160,34 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return True if rule exists
      */
     public boolean isGameRule(String rule);
+
+    /**
+     * Get existing rules for this world
+     *
+     * @return An array of existing {@link GameRule}s
+     */
+    public GameRule[] getExistingGameRules();
+
+    /**
+     * Gets the current state of the specified rule
+     *
+     * @param rule The {@link GameRule} to determine the value of
+     * @return String value of rule
+     */
+    public String getGameRuleValue(GameRule rule);
+
+    /**
+     * Set a specified {@link GameRule} to specified value.
+     * <p>
+     * This may validate the value to ensure it is applicable to the GameRule.
+     * If the value was not valid this will return false.
+     *
+     * @param rule The GameRule to set
+     * @param value The value to set the GameRule to
+     * @return true if the GameRule was set to the specified value; false
+     *              otherwise
+     */
+    public boolean setGameRuleValue(GameRule rule, String value);
 
     /**
      * Represents various map environment types that a world may be
