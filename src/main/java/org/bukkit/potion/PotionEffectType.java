@@ -266,4 +266,14 @@ public abstract class PotionEffectType {
     public static PotionEffectType[] values() {
         return byId.clone();
     }
+
+    /**
+     * Clear byId and byName
+     */
+    public static void clear() {
+        for (int i = 0; i < byId.length; i++) {
+            byId[i] = null;
+        }
+	byName.clear();
+    }
 }
