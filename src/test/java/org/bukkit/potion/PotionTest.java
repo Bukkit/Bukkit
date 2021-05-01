@@ -65,6 +65,7 @@ public class PotionTest {
         potion.setHasExtendedDuration(true);
         assertTrue(potion.hasExtendedDuration());
         assertTrue((potion.toDamageValue() & EXTENDED_BIT) != 0);
+        PotionEffectType.clear();
     }
 
     @Test
