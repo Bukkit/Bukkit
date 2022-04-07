@@ -112,9 +112,6 @@ public final class JavaPluginLoader implements PluginLoader {
         }
 
         for (final String pluginName : description.getDepend()) {
-            if (loaders == null) {
-                throw new UnknownDependencyException(pluginName);
-            }
             PluginClassLoader current = loaders.get(pluginName);
 
             if (current == null) {
