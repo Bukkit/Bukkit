@@ -10,7 +10,7 @@ import org.bukkit.inventory.InventoryHolder;
  * Represents a double chest.
  */
 public class DoubleChest implements InventoryHolder {
-    private DoubleChestInventory inventory;
+    private final DoubleChestInventory inventory;
 
     public DoubleChest(DoubleChestInventory chest) {
         inventory = chest;
