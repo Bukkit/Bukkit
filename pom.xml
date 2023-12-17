@@ -29,12 +29,12 @@
         <repository>
             <id>repobo-rel</id>
             <name>repo.bukkit.org Releases</name>
-            <url>http://repo.bukkit.org/content/repositories/releases/</url>
+            <url>https://repo.bukkit.org/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>repobo-snap</id>
             <name>repo.bukkit.org Snapshots</name>
-            <url>http://repo.bukkit.org/content/repositories/snapshots/</url>
+            <url>https://repo.bukkit.org/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
